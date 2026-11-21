@@ -30,6 +30,7 @@ public final class VideoScriptChecker {
     private static final Pattern TYPE = Pattern.compile("^Type(?:@\\S+)?\\s+([\"'`])(.*)\\1\\s*$");
     private static final Pattern WAIT = Pattern.compile("^Wait(\\+\\w+)?(?:@\\S+)?(?:\\s+/(.*)/)?\\s*$");
     private static final Pattern SOURCE = Pattern.compile("^Source\\s+(\\S+)\\s*$");
+    private static final Pattern SCENE = Pattern.compile("^#\\s*-+\\s*Scene\\s+\\d+:.*-+\\s*$");
 
     /** Checks every {@code .tape} file under {@code lessons/}; paths in scripts are relative to {@code root}. */
     public List<Problem> check(final Path root) {
@@ -40,9 +41,18 @@ public final class VideoScriptChecker {
                     ".narration.md"));
             if (Files.isRegularFile(narration)) {
                 problems.addAll(checkNarration(narration));
+                checkSceneCount(tape, narration).ifPresent(problems::add);
             }
         }
         return problems;
+    }
+
+    /** Captions and voice pair each scene with one narration item, so the counts must match. */
+    static Optional<Problem> checkSceneCount(final Path tape, final Path narration) {
+        final long scenes = readLines(tape).stream().filter(line -> SCENE.matcher(line).matches()).count();
+        final int items = Narration.rawParagraphs(narration).size();
+        return scenes == items ? Optional.empty() : Optional.of(new Problem(tape, scenes + " scenes but " + items
+                + " narration items; each scene needs exactly one item (look for a repeated scene line)"));
     }
 
     /** Narration is spoken, so it must never contain a command: say what happens instead. */

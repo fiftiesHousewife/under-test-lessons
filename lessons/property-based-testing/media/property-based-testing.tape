@@ -24,9 +24,6 @@ Source lessons/_shared/setup.tape
 
 # ---- Scene 1: step 1, the version catalogue ----
 Hide
-
-# ---- Scene 1: step 1, the version catalogue ----
-Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms

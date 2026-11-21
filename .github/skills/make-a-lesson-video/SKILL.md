@@ -79,6 +79,7 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 | Each scene fits on one screen; clear off-camera between scenes (`Hide`, `Type "clear"`, `Enter`, `Show`) | `Wait+Screen` can't see text printed after the screen has scrolled |
 | After each `Enter`, a `Sleep 300ms` (or a `Wait`) before typing the next command, even off-camera | VHS types the next command straight away; its echo mixes into the output of the one still running |
 | Paths in `Output` and `Screenshot` are relative | VHS rejects paths that start with `/` |
+| One narration item per scene line; never repeat a `# ---- Scene` line | Captions and voice pair them in order; a repeated line (easy to leave behind when copying a script) stops the video at the captions step. `./gradlew check` counts them |
 
 ## Captions
 

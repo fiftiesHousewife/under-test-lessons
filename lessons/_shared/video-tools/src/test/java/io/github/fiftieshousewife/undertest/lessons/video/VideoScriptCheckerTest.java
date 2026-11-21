@@ -78,7 +78,7 @@ class VideoScriptCheckerTest {
     @Test
     void reportsNarrationThatWouldReadACommandAloud() throws IOException {
         final Path media = Files.createDirectories(root.resolve("lessons/example-lesson/media"));
-        Files.writeString(media.resolve("example-lesson.tape"), "Sleep 1s\n");
+        Files.writeString(media.resolve("example-lesson.tape"), "# -- Scene 1: a --\nSleep 1s\n# -- Scene 2: b --\n");
         Files.writeString(media.resolve("example-lesson.narration.md"),
                 "1. Now we run the weak tests.\n2. Run `./gradlew pitest` now.\n");
 
@@ -111,5 +111,18 @@ class VideoScriptCheckerTest {
                         .hasMessageContaining("2 problem(s)"),
                 () -> assertThatThrownBy(VideoChecks::main).isInstanceOf(IllegalArgumentException.class),
                 () -> assertThat(new Problem(root, "x").toString()).endsWith(": x"));
+    }
+
+    @Test
+    void reportsAScriptWhoseScenesAndNarrationItemsDiffer() throws IOException {
+        final Path tape = Files.writeString(root.resolve("x.tape"),
+                "# ---- Scene 1: one ----\nHide\n# ---- Scene 1: one ----\nShow\n# ---- Scene 2: two ----\n");
+        final Path narration = Files.writeString(root.resolve("x.narration.md"), "1. One.\n2. Two.\n");
+        final Path matching = Files.writeString(root.resolve("y.narration.md"), "1. One.\n2. Two.\n3. Three.\n");
+
+        assertAll(
+                () -> assertThat(VideoScriptChecker.checkSceneCount(tape, narration)).get()
+                        .extracting(Object::toString).asString().contains("3 scenes but 2 narration items"),
+                () -> assertThat(VideoScriptChecker.checkSceneCount(tape, matching)).isEmpty());
     }
 }
