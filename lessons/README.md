@@ -31,4 +31,5 @@ The full list of planned lessons, and the order they'll be made in, is in [CATAL
 | [Recorded HTTP responses](recorded-http-responses/README.md) | [recorded-http-responses](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/recorded-http-responses/technique.yaml) | Script ready |
 | [Outside-in HTTP tests](outside-in-http-tests/README.md) | [business-rule-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/business-rule-tests/technique.yaml) | Script ready |
 | [Fake behind an interface](fake-behind-an-interface/README.md) | [fake-behind-interface](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/fake-behind-interface/technique.yaml) | Script ready |
+| [Nested tests](nested-tests/README.md) | – | Script ready |
 | [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | Script ready |

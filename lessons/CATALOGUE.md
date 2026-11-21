@@ -47,7 +47,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Parameterised tests](parameterised-tests/README.md): one test, a table of cases, each reported by name | JUnit 6 | Java only | in progress |
-| More JUnit, one idea per lesson: nested tests, dynamic tests, extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
+| [Nested tests](nested-tests/README.md): group tests by situation, so gaps stand out | JUnit 6 | Java only | in progress |
+| More JUnit, one idea per lesson: dynamic tests, extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | in progress |
 | [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | in progress |
 | Spring tests: slices, MockMvc, and full-application tests with real dependencies | Spring Boot test, Testcontainers | Docker | wave 2 |
@@ -97,7 +98,7 @@ both. The default is the "after", so `./gradlew check` passes.
 | Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock replays recorded answers, including an unknown postcode and an outage | `-Pcode=today` |
 | Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pcode=today` |
 | Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | A mock test checks each call, and misses a commit made too early | An in-memory fake queue; tests check what was delivered | `-Pcode=today` |
-| Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat class of tests with long names | `@Nested` classes, one per state, so the report reads as a specification | none: both run |
+| Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat list of tests misses a case | `@Nested` classes, one per state, asking the same questions, so the gap shows | `-Pcode=today` |
 
 ## Plan
 
