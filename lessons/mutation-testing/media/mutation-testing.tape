@@ -116,7 +116,7 @@ Show
 Wait+Screen@300s /Result: the tests caught \d+ of \d+/
 Sleep 17s
 Hide
-Type@1ms `callout "Line 24: with >= 50 changed to > 50, an order of exactly 50 loses its discount. No test tries 50."`
+Type@1ms `callout "Line 24: if >= 50 became > 50, an order of exactly £50 would lose its discount, and no test checks an order of exactly £50."`
 Enter
 Show
 Sleep 12s

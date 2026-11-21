@@ -102,7 +102,7 @@ Show
 Wait+Screen@300s /tests failed\. Report/
 Sleep 12s
 Hide
-Type@1ms `callout "3 pence net should give 1 penny of VAT, and gives 0. The round numbers never showed it."`
+Type@1ms `callout "3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five."`
 Enter
 Sleep 300ms
 Show

@@ -113,7 +113,7 @@ Show
 Wait+Screen@300s /tests failed\. Report/
 Sleep 12s
 Hide
-Type@1ms `callout "3 pence between 4 people: the first person pays all 3. The examples never tried it."`
+Type@1ms `callout "3 pence between 4 people: the first person pays all 3. None of the example tests checked a bill like this."`
 Enter
 Sleep 300ms
 Show

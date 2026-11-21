@@ -64,6 +64,8 @@ a link and never spoken.
 ## Writing for the voice
 
 - Short sentences. No semicolons: the voice runs straight through them.
+- Describe things in full, never in shorthand: "no test checks what happens when an order comes to exactly £50", not
+  "no test tries 50". The viewer doesn't know what the number refers to. The same goes for captions and callouts.
 - Never read a command aloud. Say what happens: "Now we run the strong tests". (The video checks fail on narration
   containing backticks, `./` or `gradlew`.)
 - Numbers and symbols as words: "100 percent", "greater than or equal to 50". Years go in
