@@ -1,0 +1,8 @@
+under-test
+Copyright The under-test contributors
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE). The licence covers everything in this
+repository: code, tools, decision guides, lessons, and generated videos and their layers.
+
+Third-party material:
+- Decision record format based on MADR (Markdown Architectural Decision Records), https://adr.github.io/madr/

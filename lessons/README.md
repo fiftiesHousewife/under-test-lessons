@@ -1,0 +1,23 @@
+# Lessons
+
+One folder per lesson, for anyone learning a testing technique. Each lesson has:
+
+| Part | What it is |
+|---|---|
+| `README.md` | The lesson: what the technique catches, a walk-through, how it fits the programme, common mistakes |
+| `example/` | A small runnable Gradle project (`:lessons:<id>`) with a before and an after |
+| `exercise/` | An exercise starting from the "before" state, with the "after" state as the answer (to come) |
+| `media/` | The video script (`.tape`) and narration text; videos, captions and audio are generated from them and published with releases |
+
+Shared video tools are in `_shared/`: the hidden set-up, callout and narration helpers, the render script, and
+[video checks](_shared/video-tools/build.gradle.kts) that run in `./gradlew check`. They stay inside `lessons/` so
+they move with the lessons when the lessons get their own repo.
+
+The rules a planning tool applies for each technique are kept separately, in [`techniques/`](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/README.md).
+
+To add a lesson, follow [the write-a-technique-lesson skill](../.github/skills/write-a-technique-lesson/SKILL.md).
+Words follow [GLOSSARY.md](https://github.com/fiftiesHousewife/under-test/blob/main/GLOSSARY.md).
+
+| Lesson | Technique rules | Video |
+|---|---|---|
+| [Mutation testing](mutation-testing/README.md) | [mutation-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/mutation-testing/technique.yaml) | Script ready |

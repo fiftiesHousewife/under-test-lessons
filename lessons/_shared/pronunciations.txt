@@ -1,0 +1,7 @@
+# How the lesson voice should say words it would otherwise get wrong: word = how to say it.
+# Applied to the spoken narration only; captions keep the written form. Whole words, matching case.
+PIT = pit
+JaCoCo = jacoco
+JUnit = jay unit
+reruns = re-runs
+rerun = re-run
