@@ -66,7 +66,7 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 | A task whose output you wait for always runs (`outputs.upToDateWhen { false }`, or `--rerun`) | A task skipped as up to date prints nothing, so the recording waits for output that never comes |
 | With `-q`, wait only for output the build prints at quiet level (as `mutationSummary` does) | Gradle's quiet mode hides normal task output |
 | Slow commands go through `run_with_notes` | It runs them with no terminal input; a background job that reads the terminal is stopped by the shell |
-| Don't run other Gradle builds in the repo while rendering | The recording can join a Gradle background process started elsewhere, for example inside a sandbox |
+| The shared set-up gives recordings their own Gradle daemon registry (`build/video-daemons`); keep it | Otherwise a recording can join an idle Gradle background process started elsewhere, for example inside a sandbox, where test workers cannot connect |
 | Each scene fits on one screen; clear off-camera between scenes (`Hide`, `Type "clear"`, `Enter`, `Show`) | `Wait+Screen` can't see text printed after the screen has scrolled |
 | After each `Enter`, a `Sleep 300ms` (or a `Wait`) before typing the next command, even off-camera | VHS types the next command straight away; its echo mixes into the output of the one still running |
 | Paths in `Output` and `Screenshot` are relative | VHS rejects paths that start with `/` |

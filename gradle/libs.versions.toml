@@ -1,6 +1,7 @@
 # One catalogue for the whole repository. build-logic reads it with from(files("../gradle/libs.versions.toml")).
 
 [versions]
+jetcheck = "0.3.0"
 approvaltests = "32.1.0"
 java = "25"
 junit = "6.1.3"
@@ -29,6 +30,7 @@ gradle-forbiddenapis-plugin = "3.11"
 gradle-versions-plugin = "0.67.0"
 
 [libraries]
+jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
 approvaltests = { module = "com.approvaltests:approvaltests", version.ref = "approvaltests" }
 spotbugs-annotations = { module = "com.github.spotbugs:spotbugs-annotations", version.ref = "spotbugs" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }

@@ -1,0 +1,51 @@
+# Slides: property-based testing
+
+Sources: the jetCheck README (what it is, its inspiration in QuickCheck and Hypothesis, automatic minimisation, use in
+IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
+
+## intro: What is property-based testing?
+- An example test checks one case its author thought of
+- A property states a rule that must hold for every input
+- A library tries hundreds of inputs to break the rule
+Say: An example test checks one case that its author thought of. A property test states a rule that must hold for every
+  input, like, the shares of a bill always add up to the bill. Then a library tries hundreds of inputs, looking for one
+  that breaks the rule.
+
+## intro: Why examples are not enough
+- Examples only cover the cases someone thought of
+- Bugs live in the cases nobody thought of
+- Many examples passing is not proof that the rule holds
+Say: Why are examples not enough? [pause 1s] They only cover the cases someone thought of, and bugs tend to live in the
+  cases nobody thought of. A dozen examples passing tells you those dozen cases work. It does not tell you the rule
+  holds.
+
+## intro: How jetCheck works
+- Generates random inputs from building blocks such as numbers and lists
+- Checks the property on each one
+- Shrinks a failing input to the smallest one that still fails
+Say: jetCheck builds random inputs from simple pieces, like numbers and lists, and checks the property on each one.
+  When an input breaks the rule, jetCheck shrinks it automatically, to the smallest input that still fails. That small
+  case is usually the clearest explanation of the bug.
+
+## closing: When to use property-based testing
+- Calculations, parsing and conversions, where a rule is easier to state than every answer
+- Alongside example tests, not instead of them
+- Keep each smallest failing input as an example test too
+Say: When should you use it? [pause 1s] For calculations, parsing and conversions, where a rule is easier to state than
+  every right answer. Use it alongside example tests, not instead of them. And when a property finds a bug, keep the
+  smallest failing input as an example test too.
+
+## closing: Where it came from
+- QuickCheck, by Koen Claessen and John Hughes, introduced the idea for Haskell in 2000
+- jetCheck is JetBrains' library for Java, inspired by QuickCheck and Hypothesis
+- JetBrains uses it to test IntelliJ IDEA itself
+Say: The idea comes from QuickCheck, by Koen Claessen and John Hughes, for the Haskell language, in 2000. jetCheck is
+  JetBrains' property testing library for Java, inspired by QuickCheck and by Hypothesis, and JetBrains uses it to test
+  IntelliJ IDEA itself.
+
+## closing: Find out more
+- https://github.com/JetBrains/jetCheck — jetCheck, its README and examples
+- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
+- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+Say: To find out more, start with jetCheck's README, which has more examples of properties. The links on screen also
+  take you to this lesson's code, and to the toolkit these lessons belong to.
