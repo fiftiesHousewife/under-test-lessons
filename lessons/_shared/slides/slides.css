@@ -1,0 +1,48 @@
+/* Default look for lesson slides. Override any of it with a user stylesheet (-PlessonSlideCss=<path>): redefining the
+   colour variables below also recolours every picture, which use the classes at the end of this file. */
+:root {
+  --background: #141414;
+  --background-glow: #22303a;
+  --title: #5ce1e6;
+  --text: #f0f0f0;
+  --accent: #e06cd8;
+  --teal: #5ce1e6;
+  --pink: #e06cd8;
+  --yellow: #f5c84c;
+  --green: #6bd68a;
+  --red: #f06a6a;
+  --ink: #1c1c1c;
+  --paper: #fafafa;
+  --grey: #8a8f98;
+  --disc: #1f2a33;
+  --font: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+}
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+body {
+  background: radial-gradient(circle at 78% 40%, var(--background-glow), var(--background) 62%);
+  color: var(--text);
+  font-family: var(--font);
+}
+.slide { display: grid; grid-template-columns: 1fr 640px; gap: 80px; height: 100%; padding: 0 140px; box-sizing: border-box; align-items: center; }
+h1 { color: var(--title); font-size: 76px; line-height: 1.1; margin: 0; letter-spacing: -0.5px; }
+.rule { width: 140px; height: 10px; border-radius: 5px; background: var(--accent); margin: 34px 0 46px; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { font-size: 44px; line-height: 1.35; margin: 0 0 30px; padding-left: 60px; position: relative; }
+li.point::before { content: ""; position: absolute; left: 6px; top: 20px; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); }
+li.link { color: var(--accent); font-size: 36px; }
+li.link::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.picture { margin: 0; width: 640px; height: 640px; border-radius: 50%; background: var(--disc); display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); }
+.picture svg { width: 480px; height: 480px; }
+
+/* Picture colours */
+.picture .teal { fill: var(--teal); }
+.picture .pink { fill: var(--pink); }
+.picture .yellow { fill: var(--yellow); }
+.picture .green { fill: var(--green); }
+.picture .red { fill: var(--red); }
+.picture .ink { fill: var(--ink); }
+.picture .paper { fill: var(--paper); }
+.picture .grey { fill: var(--grey); }
+.picture .line { fill: none; stroke: var(--ink); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+.picture .light-line { fill: none; stroke: var(--paper); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+.picture .thin { stroke-width: 6; }

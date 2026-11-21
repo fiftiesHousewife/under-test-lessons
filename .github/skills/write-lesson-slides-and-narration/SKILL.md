@@ -18,8 +18,7 @@ where they are. The mechanics of recording are in [make-a-lesson-video](../make-
    *strong* (or "after") tests and exactly what they do differently.
 4. **Why it matters:** why the obvious alternative isn't enough (for example, why full coverage doesn't mean safe).
 5. **How the tool works.**
-6. **How we build:** Gradle rather than Maven, build files in Kotlin, every version in one version catalogue, shared
-   build rules written once and applied as a plugin. A slide, never a terminal scene.
+6. **How we build:** the shared slide, `Include: how-we-build`. Never a terminal scene, and never rewritten per lesson.
 
 **Terminal scenes** (`media/<id>.tape`, narrated in `media/<id>.narration.md`, one item per scene):
 1. **The build, one step per scene:** the version catalogue entry, adding the plugin or library, configuring it. Show
@@ -58,7 +57,8 @@ Say: Our example is a small piece of code from an online shop. It works out the 
 Say: To find out more, start with PIT's website...
 ```
 
-Three or four short points per slide; the narration says more than the slide shows. A point that is a URL is drawn as
+Every slide gets a picture (`Picture: <name>`) that says the same thing at a glance: a bug for mutations, scales for
+comparing, a map for when to use it. Three or four short points per slide; the narration says more than the slide shows. A point that is a URL is drawn as
 a link and never spoken.
 
 ## Writing for the voice

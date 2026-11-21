@@ -11,8 +11,8 @@ class SpliceCaptionsTest {
 
     @Test
     void timesSlideCaptionsAcrossEachSegmentLeavingTheBreathSilent() {
-        final List<Slide> slides = List.of(new Slide("One", List.of(), "First slide."),
-                new Slide("Two", List.of(), "Second slide."));
+        final List<Slide> slides = List.of(new Slide(new Slide.Heading("One", ""), List.of(), "First slide."),
+                new Slide(new Slide.Heading("Two", ""), List.of(), "Second slide."));
         final List<Splicer.Segment> segments = List.of(new Splicer.Segment(Path.of("a"), 4),
                 new Splicer.Segment(Path.of("b"), 6));
         final List<Cue> cues = SpliceCaptions.slideCues(slides, segments, 10);

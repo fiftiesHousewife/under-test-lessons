@@ -4,12 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -31,16 +29,19 @@ class SlidesTest {
 
                 ## closing: Find out more
                 - https://pitest.org
+                Picture: globe
                 Say: Find out more at the PIT website.
                 """);
-        final Slides slides = Slides.read(file);
+        final Slides slides = Slides.read(file, folder);
 
         assertAll(
-                () -> assertThat(slides.intro()).containsExactly(new Slide("What is mutation testing?",
+                () -> assertThat(slides.intro()).containsExactly(new Slide(
+                        new Slide.Heading("What is mutation testing?", ""),
                         List.of("Plant a small bug", "See if a test fails"),
                         "Mutation testing plants small bugs, one at a time.")),
                 () -> assertThat(slides.closing().getFirst().points()).containsExactly("https://pitest.org"),
-                () -> assertThat(Slides.read(folder.resolve("missing.md")).intro()).isEmpty());
+                () -> assertThat(slides.closing().getFirst().heading().picture()).isEqualTo("globe"),
+                () -> assertThat(Slides.read(folder.resolve("missing.md"), folder).intro()).isEmpty());
     }
 
     @Test
@@ -49,22 +50,24 @@ class SlidesTest {
         final Path noNarration = Files.writeString(folder.resolve("b.md"), "## intro: x\n- point\n");
 
         assertAll(
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> Slides.read(badKind))
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> Slides.read(badKind, folder))
                         .withMessageContaining("intro: or closing:"),
-                () -> assertThatIllegalArgumentException().isThrownBy(() -> Slides.read(noNarration))
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> Slides.read(noNarration, folder))
                         .withMessageContaining("has no Say: line"));
     }
 
     @Test
-    void drawsAFullHdSlideWithWrappedPointsAndLinks() throws IOException {
-        final Path png = folder.resolve("slide.png");
-        SlideImage.draw(new Slide("Why coverage is not enough", List.of("A test can run a line without checking"
-                + " anything about what it produced, and still count it as covered, which this long point shows.",
-                "https://pitest.org"), "narration"), png);
-        final BufferedImage image = ImageIO.read(png.toFile());
+    void bringsInSharedSlides() throws IOException {
+        Files.writeString(folder.resolve("how-we-build.md"),
+                "# Shared\n\n## intro: How we build\n- Gradle\nSay: We use Gradle.\n");
+        final Path file = Files.writeString(folder.resolve("x.md"),
+                "## intro: First\nSay: One.\nInclude: how-we-build\n");
+        final Path missing = Files.writeString(folder.resolve("y.md"), "Include: nowhere\n");
 
         assertAll(
-                () -> assertThat(image.getWidth()).isEqualTo(1920),
-                () -> assertThat(image.getHeight()).isEqualTo(1080));
+                () -> assertThat(Slides.read(file, folder).intro()).extracting(Slide::title)
+                        .containsExactly("First", "How we build"),
+                () -> assertThatIllegalArgumentException().isThrownBy(() -> Slides.read(missing, folder))
+                        .withMessageContaining("no shared slides file"));
     }
 }

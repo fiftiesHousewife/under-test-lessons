@@ -31,12 +31,17 @@ class LessonVideoTest {
         new WavFile(100, 1, new byte[200]).write(root.resolve("clip.wav"));
         System.setProperty("video.ffprobe", standIn("ffprobe", "echo 12.0").toString());
         System.setProperty("video.ffmpeg", standIn("ffmpeg", "for last; do :; done; touch \"$last\"").toString());
+        System.setProperty("video.browser", standIn("browser",
+                "for a; do case \"$a\" in --screenshot=*) touch \"${a#--screenshot=}\";; esac; done").toString());
+        final Path shared = Files.createDirectories(root.resolve("lessons/_shared/slides/pictures"));
+        Files.writeString(shared.resolveSibling("slides.css"), "body { }");
     }
 
     @AfterEach
     void restore() {
         System.clearProperty("video.ffprobe");
         System.clearProperty("video.ffmpeg");
+        System.clearProperty("video.browser");
     }
 
     private Path standIn(final String name, final String body) throws IOException {
@@ -91,6 +96,7 @@ class LessonVideoTest {
                 () -> assertThat(media.resolve("demo.mp4")).exists(),
                 () -> assertThat(media.resolve("demo.narration.m4a")).exists(),
                 () -> assertThat(media.resolve("demo.voice/intro-1.png")).exists(),
+                () -> assertThat(media.resolve("demo.voice/intro-1.html")).exists(),
                 () -> assertThat(Files.readString(media.resolve("demo.vtt"))).contains("Hello there.")
                         .contains("First scene.").contains("Goodbye."));
     }

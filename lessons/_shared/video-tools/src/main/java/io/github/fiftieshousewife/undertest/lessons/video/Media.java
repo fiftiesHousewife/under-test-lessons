@@ -32,6 +32,15 @@ record Media(Path root, String lesson) {
         }
     }
 
+    /** The lesson's slides, with shared slides from lessons/_shared/slides. */
+    Slides slides() {
+        return Slides.read(file(".slides.md"), sharedSlides());
+    }
+
+    Path sharedSlides() {
+        return root.resolve("lessons/_shared/slides");
+    }
+
     String safeLesson() {
         return lesson.replace('\r', ' ').replace('\n', ' ');
     }

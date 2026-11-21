@@ -10,8 +10,10 @@ import java.util.List;
 /**
  * A lesson's slides, from {@code <id>.slides.md}: intro slides play before the terminal recording, closing slides
  * after it. Each slide is a heading {@code ## intro: Title} or {@code ## closing: Title}, then {@code - } lines for
- * the points on screen (a point that is a URL is drawn as a link, and never spoken), then a {@code Say:} line
- * (continued on indented lines) for the narration.
+ * the points on screen (a point that is a URL is drawn as a link, and never spoken), an optional {@code Picture:}
+ * line naming a picture in {@code lessons/_shared/slides/pictures}, then a {@code Say:} line (continued on indented
+ * lines) for the narration. A line {@code Include: <name>} brings in the slides from
+ * {@code lessons/_shared/slides/<name>.md}, so slides every lesson shares are written once.
  */
 public record Slides(List<Slide> intro, List<Slide> closing) {
 
@@ -21,15 +23,15 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
         closing = List.copyOf(closing);
     }
 
-    /** The slides in a file, or none if there is no file. */
-    public static Slides read(final Path file) {
+    /** The slides in a file, or none if there is no file. Includes come from {@code shared/<name>.md}. */
+    public static Slides read(final Path file, final Path shared) {
         if (!Files.isRegularFile(file)) {
             return new Slides(List.of(), List.of());
         }
         final List<Slide> intro = new ArrayList<>();
         final List<Slide> closing = new ArrayList<>();
         Builder current = null;
-        for (final String line : lines(file)) {
+        for (final String line : withIncludes(lines(file), shared)) {
             if (line.startsWith("## ")) {
                 add(current, intro, closing);
                 current = Builder.from(line.substring(3).strip());
@@ -39,6 +41,23 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
         }
         add(current, intro, closing);
         return new Slides(intro, closing);
+    }
+
+    /** The file's lines, with each {@code Include: <name>} line replaced by that shared file's lines. */
+    static List<String> withIncludes(final List<String> lines, final Path shared) {
+        final List<String> out = new ArrayList<>();
+        for (final String line : lines) {
+            if (line.startsWith("Include:")) {
+                final Path included = shared.resolve(line.substring("Include:".length()).strip() + ".md");
+                if (!Files.isRegularFile(included)) {
+                    throw new IllegalArgumentException("no shared slides file " + included);
+                }
+                out.addAll(lines(included));
+            } else {
+                out.add(line);
+            }
+        }
+        return out;
     }
 
     private static void add(final Builder slide, final List<Slide> intro, final List<Slide> closing) {
@@ -53,6 +72,7 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
         private final String title;
         private final List<String> points = new ArrayList<>();
         private final StringBuilder narration = new StringBuilder();
+        private String picture = "";
         private boolean saying;
 
         private Builder(final boolean closing, final String title) {
@@ -73,6 +93,8 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
             if (line.startsWith("- ")) {
                 points.add(line.substring(2).strip());
                 saying = false;
+            } else if (line.startsWith("Picture:")) {
+                picture = line.substring("Picture:".length()).strip();
             } else if (line.startsWith("Say:")) {
                 narration.append(line.substring(4).strip());
                 saying = true;
@@ -85,7 +107,7 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
             if (narration.isEmpty()) {
                 throw new IllegalArgumentException("slide \"" + title + "\" has no Say: line");
             }
-            return new Slide(title, points, narration.toString());
+            return new Slide(new Slide.Heading(title, picture), points, narration.toString());
         }
     }
 

@@ -38,8 +38,7 @@ final class Splicer {
     /** Draws a slide and joins it to its spoken clip ({@code <name>.wav} in the voice folder) as a segment. */
     static Segment slide(final Media media, final String name, final Slide slide) {
         final Path voice = media.file(".voice");
-        final Path png = voice.resolve(name + ".png");
-        SlideImage.draw(slide, png);
+        final Path png = SlideDrawing.draw(media, name, slide);
         final double seconds = WavFile.read(voice.resolve(name + ".wav")).seconds() + SLIDE_BREATH_SECONDS;
         final Path video = voice.resolve(name + ".mp4");
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-loop", "1",
@@ -58,7 +57,7 @@ final class Splicer {
             command.add(videos.get(i).toString());
             filter.append(String.format(Locale.ROOT, "[%d:v]scale=%d:%d,setsar=1,fps=30,format=yuv420p[v%d];"
                     + "[%d:a]aformat=sample_rates=48000:channel_layouts=stereo[a%d];",
-                    i, SlideImage.WIDTH, SlideImage.HEIGHT, i, i, i));
+                    i, SlideHtml.WIDTH, SlideHtml.HEIGHT, i, i, i));
         }
         for (int i = 0; i < videos.size(); i++) {
             filter.append(String.format(Locale.ROOT, "[v%d][a%d]", i, i));

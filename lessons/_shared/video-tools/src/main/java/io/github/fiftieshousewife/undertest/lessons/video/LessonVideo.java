@@ -28,14 +28,16 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        if (args.length < 3 || !List.of("record", "voice", "assemble").contains(args[0])) {
+        if (args.length < 3 || !List.of("record", "voice", "assemble", "slides").contains(args[0])) {
             throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
-                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson>");
+                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | slides <root> <lesson>");
         }
         final Media media = new Media(Path.of(args[1]), args[2]);
         switch (args[0]) {
             case "record" -> new Recorder(Clock.systemUTC()).record(media);
             case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
+            case "slides" -> log.info("{}: {} slides drawn, in the lesson's voice folder", media.safeLesson(),
+                    SlideDrawing.drawAll(media).size());
             default -> assemble(media);
         }
     }
@@ -60,7 +62,7 @@ public final class LessonVideo {
             throw new IllegalStateException("The narration does not fit the video:\n  " + String.join("\n  ", misfits));
         }
         Voiceover.track(scenes, clips).write(media.file(".narration.wav"));
-        final Slides slides = Slides.read(media.file(".slides.md"));
+        final Slides slides = media.slides();
         final Voice voice = new Voice(command, pronunciation);
         speakSlides(voice, slides.intro(), clipsFolder.resolve("intro"));
         speakSlides(voice, slides.closing(), clipsFolder.resolve("closing"));
@@ -74,7 +76,7 @@ public final class LessonVideo {
                 "-i", media.name(".silent.mp4"), "-i", media.name(".narration.wav"),
                 "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", media.name(".main.mp4")),
                 folder);
-        final Slides slides = Slides.read(media.file(".slides.md"));
+        final Slides slides = media.slides();
         final List<Splicer.Segment> intro = segments(media, slides.intro(), "intro");
         final List<Splicer.Segment> closing = segments(media, slides.closing(), "closing");
         final List<Path> videos = new ArrayList<>(intro.stream().map(Splicer.Segment::video).toList());

@@ -121,10 +121,37 @@ tasks.register<JavaExec>("assembleLessonVideo") {
 tasks.named("buildLessonCaptions") { mustRunAfter(recordLessonVideo) }
 buildLessonVoice.configure { mustRunAfter(recordLessonVideo) }
 
+// Slides are styled by lessons/_shared/slides/slides.css, then any user stylesheet: -PlessonSlideCss=<path>.
+val slideCss = providers.gradleProperty("lessonSlideCss").map { file(it).absolutePath }.orElse("")
+// Slides are screenshotted by a headless browser: -PlessonBrowser=<program>, or Google Chrome where it usually is.
+val macChrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+val slideBrowser = providers.gradleProperty("lessonBrowser")
+    .orElse(if (File(macChrome).canExecute()) macChrome else "google-chrome")
+tasks.withType<JavaExec>().configureEach {
+    systemProperty("video.slideCss", slideCss.get())
+    systemProperty("video.browser", slideBrowser.get())
+}
+
+val drawLessonSlides = tasks.register<JavaExec>("drawLessonSlides") {
+    group = "documentation"
+    description = "Draws a lesson's slides as images, for a quick look (-Plesson=<id>)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    val root = repoRoot
+    val lessonId = lesson
+    argumentProviders.add(CommandLineArgumentProvider { listOf("slides", root, lessonId.getOrElse("")) })
+}
+
+// -PslidesOnly=true draws only the slides, in about a minute, instead of making the whole video.
+val slidesOnly = providers.gradleProperty("slidesOnly").map { it.toBoolean() }.orElse(false)
 tasks.register("renderLessonVideo") {
     group = "documentation"
     description = "Makes a lesson's whole video: records it, builds captions and voice, and assembles the MP4 (-Plesson=<id>)."
-    dependsOn(recordLessonVideo, "assembleLessonVideo")
+    if (slidesOnly.get()) {
+        dependsOn(drawLessonSlides)
+    } else {
+        dependsOn(recordLessonVideo, "assembleLessonVideo")
+    }
 }
 
 tasks.check {

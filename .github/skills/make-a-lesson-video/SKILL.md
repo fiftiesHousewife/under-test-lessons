@@ -89,8 +89,20 @@ different number of items from the script's scenes.
 
 ## Slides
 
-The video tools draw each slide in `media/<id>.slides.md` as a full HD image in the videos' colours, voice it, and
-splice the intro slides before the terminal recording and the closing slides after it, with their own captions. What
+The video tools build each slide in `media/<id>.slides.md` as a small HTML page, screenshot it at full HD with a
+headless browser (Google Chrome, or `-PlessonBrowser=<program>`), voice it, and splice the intro slides before the
+terminal recording and the closing slides after it, with their own captions.
+
+- **Look:** `lessons/_shared/slides/slides.css`. A user stylesheet, `-PlessonSlideCss=<path>`, is applied after it, so
+  an organisation can restyle every slide (fonts, colours, layout) without touching the slides. Redefining the colour
+  variables recolours the pictures too.
+- **Pictures:** `Picture: <name>` on a slide places `lessons/_shared/slides/pictures/<name>.svg` beside the points.
+  Pictures are flat cartoon SVGs coloured by CSS classes (`teal`, `pink`, `yellow`, `green`, `red`, `ink`, `paper`,
+  `grey`, `line`), so they follow the stylesheet. Add a picture when no existing one fits; keep the same style.
+- **Shared slides:** `Include: <name>` brings in `lessons/_shared/slides/<name>.md`, written once for every lesson
+  (for example `Include: how-we-build`).
+- **A quick look:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
+  slides (into `media/<id>.voice/`) in about a minute. What
 goes on them is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
 
 ## Voice and the finished video
