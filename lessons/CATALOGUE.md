@@ -30,7 +30,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | in progress |
-| Fake behind an interface: an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | wave 1 |
+| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | in progress |
 | Real databases in tests: a fake locally, real PostgreSQL in container tests | Testcontainers | Docker | wave 2 |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | wave 2 |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | wave 3 |
@@ -68,7 +68,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | 1 |
 | recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | 1 |
 | business-rule-tests | [Outside-in HTTP tests](outside-in-http-tests/README.md) | 1 |
-| fake-behind-interface | Fake behind an interface | 1 |
+| fake-behind-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | 1 |
 | differential-testing | Old and new side by side: the same inputs through both versions, results compared | 2 |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | 2 |
 | feature-flags | Feature flags: old and new code paths behind one switch, both tested | 2 |
@@ -96,7 +96,7 @@ both. The default is the "after", so `./gradlew check` passes.
 | Comparing structured output (`structured-output-comparison`) | An order summary as JSON, with a timestamp and an id | A string comparison breaks on every run, so someone loosens it to "contains" | JSONUnit compares the structure, ignoring only the timestamp and id | `-Pcheck=strings` |
 | Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock replays recorded answers, including an unknown postcode and an outage | `-Pcode=today` |
 | Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pcode=today` |
-| Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | Tests mock each call to the queue client, so they repeat the code | An in-memory fake queue; tests check what arrived | `-Ptests=mocks` |
+| Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | A mock test checks each call, and misses a commit made too early | An in-memory fake queue; tests check what was delivered | `-Pcode=today` |
 | Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat class of tests with long names | `@Nested` classes, one per state, so the report reads as a specification | none: both run |
 
 ## Plan
