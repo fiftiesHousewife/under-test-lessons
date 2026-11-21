@@ -21,7 +21,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 |---|---|---|---|
 | [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | in progress |
 | [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | in progress |
-| Outside-in HTTP tests: a running service tested through its API only | REST Assured, JDK HTTP server | Java only | wave 1 |
+| [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | in progress |
 | Batch file-in, file-out: a job run on synthetic input, output compared row by row | spring-batch-test, Datafaker | Java only | wave 2 |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright | Browser | wave 3 |
 
@@ -67,7 +67,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | 1 |
 | snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | 1 |
 | recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | 1 |
-| business-rule-tests | Outside-in HTTP tests | 1 |
+| business-rule-tests | [Outside-in HTTP tests](outside-in-http-tests/README.md) | 1 |
 | fake-behind-interface | Fake behind an interface | 1 |
 | differential-testing | Old and new side by side: the same inputs through both versions, results compared | 2 |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | 2 |
@@ -95,7 +95,7 @@ both. The default is the "after", so `./gradlew check` passes.
 | Replacing hard-wired dependencies (`replacing-hard-wired-dependencies`) | An invoice in euros, priced with a live exchange-rate service | The rates come from a hard-wired singleton, so the test can't run without the service | The rates come through the constructor; the test uses a Mockito stand-in | `-Pcode=today` |
 | Comparing structured output (`structured-output-comparison`) | An order summary as JSON, with a timestamp and an id | A string comparison breaks on every run, so someone loosens it to "contains" | JSONUnit compares the structure, ignoring only the timestamp and id | `-Pcheck=strings` |
 | Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock replays recorded answers, including an unknown postcode and an outage | `-Pcode=today` |
-| Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the handler classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pservice=today` |
+| Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pcode=today` |
 | Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | Tests mock each call to the queue client, so they repeat the code | An in-memory fake queue; tests check what arrived | `-Ptests=mocks` |
 | Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat class of tests with long names | `@Nested` classes, one per state, so the report reads as a specification | none: both run |
 
