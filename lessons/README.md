@@ -18,6 +18,9 @@ The rules a planning tool applies for each technique are kept separately, in [`t
 To add a lesson, follow [the write-a-technique-lesson skill](../.github/skills/write-a-technique-lesson/SKILL.md).
 Words follow [GLOSSARY.md](https://github.com/fiftiesHousewife/under-test/blob/main/GLOSSARY.md).
 
+The full list of planned lessons, and the order they'll be made in, is in [CATALOGUE.md](CATALOGUE.md).
+
 | Lesson | Technique rules | Video |
 |---|---|---|
 | [Mutation testing](mutation-testing/README.md) | [mutation-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/mutation-testing/technique.yaml) | Script ready |
+| [Characterisation tests](characterisation-tests/README.md) | [characterisation-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml) | Script ready |

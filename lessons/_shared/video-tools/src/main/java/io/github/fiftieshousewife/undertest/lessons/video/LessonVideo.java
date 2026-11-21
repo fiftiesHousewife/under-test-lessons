@@ -60,19 +60,65 @@ public final class LessonVideo {
             throw new IllegalStateException("The narration does not fit the video:\n  " + String.join("\n  ", misfits));
         }
         Voiceover.track(scenes, clips).write(media.file(".narration.wav"));
-        log.info("{}: narration for {} scenes written", media.safeLesson(), clips.size());
+        final Slides slides = Slides.read(media.file(".slides.md"));
+        final Voice voice = new Voice(command, pronunciation);
+        speakSlides(voice, slides.intro(), clipsFolder.resolve("intro"));
+        speakSlides(voice, slides.closing(), clipsFolder.resolve("closing"));
+        log.info("{}: narration for {} scenes and {} slides written", media.safeLesson(), clips.size(),
+                slides.intro().size() + slides.closing().size());
     }
 
     static void assemble(final Media media) {
         final Path folder = media.folder();
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
-                "-i", media.name(".silent.mp4"), "-i", media.name(".narration.wav"), "-i", media.name(".vtt"),
-                "-map", "0:v", "-map", "1:a", "-map", "2:s", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
+                "-i", media.name(".silent.mp4"), "-i", media.name(".narration.wav"),
+                "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", media.name(".main.mp4")),
+                folder);
+        final Slides slides = Slides.read(media.file(".slides.md"));
+        final List<Splicer.Segment> intro = segments(media, slides.intro(), "intro");
+        final List<Splicer.Segment> closing = segments(media, slides.closing(), "closing");
+        final List<Path> videos = new ArrayList<>(intro.stream().map(Splicer.Segment::video).toList());
+        videos.add(media.file(".main.mp4"));
+        videos.addAll(closing.stream().map(Splicer.Segment::video).toList());
+        Splicer.join(videos, media.file(".joined.mp4"));
+        final List<Cue> cues = SpliceCaptions.cues(media, slides, new Splicer.Timings(intro, closing));
+        writeText(media.file(".vtt"), CaptionFile.webVtt(cues));
+        writeText(media.file(".srt"), CaptionFile.srt(cues));
+        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
+                "-i", media.name(".joined.mp4"), "-i", media.name(".vtt"), "-map", "0", "-map", "1", "-c", "copy",
                 "-c:s", "mov_text", "-metadata:s:s:0", "language=eng", media.name(".mp4")), folder);
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
-                "-i", media.name(".narration.wav"), "-c:a", "aac", "-b:a", "128k", media.name(".narration.m4a")),
+                "-i", media.name(".joined.mp4"), "-vn", "-c:a", "aac", "-b:a", "128k", media.name(".narration.m4a")),
                 folder);
-        log.info("{}: finished video written, with voice and captions", media.safeLesson());
+        log.info("{}: finished video written: {} intro slides, the recording, {} closing slides, voice and captions",
+                media.safeLesson(), intro.size(), closing.size());
+    }
+
+    private static List<Splicer.Segment> segments(final Media media, final List<Slide> slides, final String kind) {
+        final List<Splicer.Segment> segments = new ArrayList<>();
+        for (int i = 0; i < slides.size(); i++) {
+            segments.add(Splicer.slide(media, kind + "-" + (i + 1), slides.get(i)));
+        }
+        return segments;
+    }
+
+    /** The voice command and how it should say awkward words. */
+    private record Voice(List<String> command, Pronunciation pronunciation) {
+    }
+
+    private static void speakSlides(final Voice voice, final List<Slide> slides, final Path prefix) {
+        for (int i = 0; i < slides.size(); i++) {
+            speak(voice.command(), voice.pronunciation().forSpeech(slides.get(i).narration()),
+                    prefix.resolveSibling(prefix.getFileName() + "-" + (i + 1)));
+        }
+    }
+
+    private static void writeText(final Path file, final String text) {
+        try {
+            Files.writeString(file, text);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     /** Speaks a scene's narration: each part between pause markers separately, joined with the pauses' silence. */

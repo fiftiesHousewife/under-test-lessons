@@ -32,23 +32,24 @@ lessons/<id>/
 - **Safe:** no real host names, no secrets, nothing that looks like production configuration.
 - **Size:** one production class or a small package.
 
-## The video script (`media/<id>.tape`)
-Follow [the make-a-lesson-video skill](../make-a-lesson-video/SKILL.md): short (ten minutes at most, two to five is
-better), one idea, and the rules that stop a recording from hanging. In brief:
-Copy `lessons/mutation-testing/media/mutation-testing.tape` and keep its shape:
-- **Dependencies first:** `Require` each program the video needs (java, git, ...), then `Env LESSON "<id>"` and
-  `Source lessons/_shared/setup.tape`. The shared set-up runs off-camera: it fetches Gradle, resolves every plugin and
-  library, compiles the lesson, and loads the callout helper, so the video opens on a warmed-up project.
-- **House style:** keep the `Set` block identical to the other lessons (size, font, theme, typing speed, window bar).
-- **Narration on screen:** type it as shell comments (`Type "# ..."`). Slow down for a key command with `Type@70ms`.
-- **Pause:** `Sleep` long enough to read what just appeared; `Wait /regex/` for slow commands rather than guessing.
-- **Highlight:** pipe output through `grep --color=always` so the key part is coloured.
-- **Call out:** draw a box off-camera: `Hide`, `Type@1ms "callout '...'"`, `Enter`, `Show`.
-- **Zoom:** not possible inside VHS; add a zoom marker to the narration file instead (post-production step).
-- **Render** with `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>`, which shows brief timed progress and the VHS log only on failure.
-- **Check before rendering:** `./gradlew :lessons:video-tools:check` catches script mistakes that would make a
-  recording hang (a `Wait` on the last line only, a pattern that matches the typed command, Gradle output piped into
-  `grep` without `--rerun`), and tests the shared helpers. It also runs in `./gradlew check`.
+## The video (`media/<id>.tape`, `.narration.md`, `.slides.md`)
+
+Every lesson's video has the same shape, whatever the technique (mutation testing, outside-in HTTP tests, advanced
+JUnit, Spring tests...). Follow [the make-a-lesson-video skill](../make-a-lesson-video/SKILL.md) for how.
+
+1. **Intro slides:** what the technique is; why the obvious alternative isn't enough (for example, why full line
+   coverage doesn't mean you're safe); how the tool works.
+2. **The build, one step at a time:** a summary of our Gradle standard (Gradle not Maven, Kotlin DSL, one version
+   catalogue, shared build logic), then each change as its own scene with a pause: the version catalogue entry, adding
+   the plugin or library, configuring it.
+3. **The code under test,** then the weak or "before" tests.
+4. **The before run, live,** with the build's own meaningful output (add a summary task if the tool's output is noisy).
+5. **The strong or "after" tests,** then **the after run, live.**
+6. **Closing slides:** when to use the technique (which phase of the programme, and what to do next); where the tool
+   came from; links to find out more (the tool's site, its build plugin, key papers, this lesson, the toolkit).
+
+Facts on slides (history, how the tool works) are checked at the source, and the slides file names its sources.
+Add the lesson to [the catalogue](../../../lessons/CATALOGUE.md) and keep its status current.
 
 ## The README, in this order
 1. Title line: workstream, test maturity level it provides evidence for, tools.

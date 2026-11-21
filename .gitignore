@@ -69,3 +69,6 @@ lessons/*/media/*.timings
 ### Python ###
 __pycache__/
 *.pyc
+
+### ApprovalTests: output from a failed approval, for comparing with the approved file ###
+*.received.txt

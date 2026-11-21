@@ -1,0 +1,10 @@
+Statement for J. Smith, current account
+01 Mar  Salary                     1200  balance   1200
+02 Mar  Rent                      -1200  balance      0
+02 Mar  Overdraft fee               -25  balance    -25
+09 Mar  Groceries                   -80  balance   -105
+09 Mar  Overdraft fee               -25  balance   -130
+15 Mar  Bonus                      2500  balance   2370
+20 Mar  Car insurance              -340  balance   2030
+Interest earned this month: 20
+Closing balance: 2030

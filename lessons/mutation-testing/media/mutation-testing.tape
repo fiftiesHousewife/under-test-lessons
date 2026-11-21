@@ -24,37 +24,72 @@ Set CursorBlink false
 Env LESSON "mutation-testing"
 Source lessons/_shared/setup.tape
 
-# ---- Scene 1: why ----
-Hide
-Type@1ms `note "Why do we need mutation testing?"`
-Enter
-Sleep 300ms
-Type@1ms `note "Line coverage counts the lines your tests ran. It does not check that any test looked at the result."`
-Enter
-Sleep 300ms
-Type@1ms `note "A test that calls the code and ignores the answer still gives that line full coverage."`
-Enter
-Sleep 300ms
-Type@1ms `note "PIT plants one small bug at a time (a mutation), reruns your tests, and counts the bugs they catch."`
-Enter
-Show
-Sleep 32s
-
-# ---- Scene 2: the build ----
+# ---- Scene 1: our Gradle standard ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The build: one Gradle plugin, applied to every repo by the toolkit's build conventions."`
+Type@1ms `note "Our Gradle standard, in every repo:"`
+Enter
+Sleep 300ms
+Type@1ms `note "  Gradle, not Maven, with build files in the Kotlin DSL (build.gradle.kts)"`
+Enter
+Sleep 300ms
+Type@1ms `note "  Every version in one version catalogue: gradle/libs.versions.toml"`
+Enter
+Sleep 300ms
+Type@1ms `note "  Shared build logic in build-logic/, applied as one convention plugin, so each repo stays short"`
+Enter
+Sleep 300ms
+Type@1ms `note "Adding PIT takes three steps."`
+Enter
+Show
+Sleep 21s
+
+# ---- Scene 2: step 1, the version catalogue ----
+Hide
+Type@1ms "scene"
+Enter
+Sleep 300ms
+Type@1ms `note "Step 1: add PIT's versions, and the PIT Gradle plugin, to the version catalogue."`
+Enter
+Sleep 300ms
+Type@1ms `show libs.versions.toml 19 20 "gradle/libs.versions.toml: versions"`
+Enter
+Sleep 300ms
+Type@1ms `show libs.versions.toml 25 25 "gradle/libs.versions.toml: the PIT Gradle plugin's version"`
+Enter
+Sleep 300ms
+Type@1ms `show libs.versions.toml 45 45 "gradle/libs.versions.toml: the PIT Gradle plugin, as a library for build-logic"`
+Enter
+Show
+Sleep 10s
+
+# ---- Scene 3: step 2, add the plugin ----
+Hide
+Type@1ms "scene"
+Enter
+Sleep 300ms
+Type@1ms `note "Step 2: add the plugin to the shared build logic, and apply it in the convention plugin."`
+Enter
+Sleep 300ms
+Type@1ms `show build-logic/build.gradle.kts 6 6 "build-logic/build.gradle.kts: the PIT Gradle plugin on the build logic's classpath"`
 Enter
 Sleep 300ms
 Type@1ms `show java-conventions 31 31 "build conventions: plugins"`
 Enter
-Sleep 300ms
-Type@1ms `show java-conventions 271 279 "build conventions: PIT settings"`
+Show
+Sleep 9s
+
+# ---- Scene 4: step 3, configure the plugin ----
+Hide
+Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml 19 20 "gradle/libs.versions.toml"`
+Type@1ms `note "Step 3: configure PIT once, in the convention plugin."`
+Enter
+Sleep 300ms
+Type@1ms `show java-conventions 271 279 "build conventions: PIT settings"`
 Enter
 Sleep 300ms
 Type@1ms `note "This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests:"`
@@ -63,9 +98,9 @@ Sleep 300ms
 Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 10 19 "lesson build file"`
 Enter
 Show
-Sleep 18s
+Sleep 14s
 
-# ---- Scene 3: the code under test ----
+# ---- Scene 5: the code under test ----
 Hide
 Type@1ms "scene"
 Enter
@@ -76,9 +111,9 @@ Sleep 300ms
 Type@1ms `show DiscountCalculator 17 39`
 Enter
 Show
-Sleep 12s
+Sleep 11s
 
-# ---- Scene 4: the weak tests ----
+# ---- Scene 6: the weak tests ----
 Hide
 Type@1ms "scene"
 Enter
@@ -94,7 +129,7 @@ Enter
 Show
 Sleep 12s
 
-# ---- Scene 5: PIT on the weak tests ----
+# ---- Scene 7: PIT on the weak tests ----
 # PIT runs live, on camera; run_live measures how long it took, so captions and voice stay in time.
 Hide
 Type@1ms "scene"
@@ -114,7 +149,7 @@ Enter
 Show
 Sleep 12s
 
-# ---- Scene 6: the strong tests ----
+# ---- Scene 8: the strong tests ----
 Hide
 Type@1ms "scene"
 Enter
@@ -127,7 +162,7 @@ Enter
 Show
 Sleep 11s
 
-# ---- Scene 7: PIT on the strong tests ----
+# ---- Scene 9: PIT on the strong tests ----
 Hide
 Type@1ms "scene"
 Enter

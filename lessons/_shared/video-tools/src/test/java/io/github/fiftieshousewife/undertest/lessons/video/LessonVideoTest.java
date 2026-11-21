@@ -78,12 +78,21 @@ class LessonVideoTest {
     }
 
     @Test
-    void assemblesTheFinishedVideoAndNarrationAudio() {
+    void assemblesTheFinishedVideoAndNarrationAudio() throws IOException {
+        Files.writeString(media.resolve("demo.silent.mp4"), "video");
+        Files.writeString(media.resolve("demo.slides.md"), "## intro: Hello\n- A point\nSay: Hello there.\n"
+                + "## closing: Bye\n- https://example.com\nSay: Goodbye.\n");
+        final Path voice = standIn("voice", "cp " + root.resolve("clip.wav") + " \"$2\"");
+        LessonVideo.main("voice", root.toString(), "demo", voice.toString());
+
         LessonVideo.main("assemble", root.toString(), "demo");
 
         assertAll(
                 () -> assertThat(media.resolve("demo.mp4")).exists(),
-                () -> assertThat(media.resolve("demo.narration.m4a")).exists());
+                () -> assertThat(media.resolve("demo.narration.m4a")).exists(),
+                () -> assertThat(media.resolve("demo.voice/intro-1.png")).exists(),
+                () -> assertThat(Files.readString(media.resolve("demo.vtt"))).contains("Hello there.")
+                        .contains("First scene.").contains("Goodbye."));
     }
 
     @Test

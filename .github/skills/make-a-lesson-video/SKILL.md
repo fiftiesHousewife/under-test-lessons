@@ -77,6 +77,25 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 It times each scene from the script's pauses and splits its narration into short cues. It fails if a `Wait` is on
 camera or if the narration has a different number of items from the script's scenes.
 
+## Slides
+
+Intro and closing slides go in `media/<id>.slides.md`, and are spliced around the terminal recording, with their own
+voice and captions:
+
+```markdown
+## intro: Why full coverage does not mean you are safe
+- Line coverage counts the lines your tests ran
+- https://pitest.org — a point that is a URL is drawn as a link and never spoken
+Say: Why do we need mutation testing? [pause 1s] Line coverage counts the lines your tests ran...
+```
+
+- Three or four short points per slide; the narration says more than the slide shows.
+- Every lesson has the same slides: intro (what it is, why it matters, how the tool works) and closing (when to use it,
+  where the tool came from, find out more). See [the lesson skill](../write-a-technique-lesson/SKILL.md).
+- Put useful URLs on the closing "find out more" slide: the tool's site, its Gradle plugin, key papers, the lesson's
+  repo and the toolkit. Check each one works.
+- Check every fact at the source and name the sources at the top of the slides file.
+
 ## Writing narration to be spoken
 
 - Short sentences. No semicolons: the voice runs straight through them.
