@@ -39,7 +39,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| Replacing hard-wired dependencies: clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | wave 1 |
+| [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | in progress |
 | Old command-line programs: environment variables, `System.exit` and standard input | System Stubs | Java only | wave 1 |
 
 ## Write better tests
@@ -64,7 +64,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md) | ready |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | ready |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | 1 |
-| refactoring-for-testability | Replacing hard-wired dependencies | 1 |
+| refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | 1 |
 | snapshot-testing | Comparing structured output | 1 |
 | recorded-http-responses | Recorded HTTP responses | 1 |
 | business-rule-tests | Outside-in HTTP tests | 1 |

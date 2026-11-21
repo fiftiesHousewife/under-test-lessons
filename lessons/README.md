@@ -26,4 +26,5 @@ The full list of planned lessons, and the order they'll be made in, is in [CATAL
 | [Characterisation tests](characterisation-tests/README.md) | [characterisation-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml) | Script ready |
 | [Property-based testing](property-based-testing/README.md) | [property-based-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/property-based-testing/technique.yaml) | Script ready |
 | [Parameterised tests](parameterised-tests/README.md) | – | Script ready |
+| [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | [refactoring-for-testability](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/refactoring-for-testability/technique.yaml) | Script ready |
 | [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | Script ready |
