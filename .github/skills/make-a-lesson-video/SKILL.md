@@ -102,8 +102,9 @@ terminal recording and the closing slides after it, with their own captions.
 - **Shared slides:** `Include: <name>` brings in `lessons/_shared/slides/<name>.md`, written once for every lesson
   (for example `Include: how-we-build`).
 - **A quick look:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
-  slides (into `media/<id>.voice/`) in about a minute. What
-goes on them is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
+  slides (into `media/<id>.voice/`) in about a minute.
+
+What goes on the slides is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
 
 ## Voice and the finished video
 
