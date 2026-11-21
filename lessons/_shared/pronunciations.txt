@@ -6,3 +6,9 @@ JUnit = jay unit
 reruns = re-runs
 rerun = re-run
 Maven = mayven
+# Years, said the way people say them
+1978 = nineteen seventy-eight
+2000 = two thousand
+2004 = two thousand and four
+2011 = twenty eleven
+2017 = twenty seventeen

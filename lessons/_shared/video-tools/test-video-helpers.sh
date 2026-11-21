@@ -41,6 +41,18 @@ printf 'test\n' >"$WORK/repo/lessons/x/CalcStrongTest.java"; printf 'code\n' >"$
 expect "show prefers an exact file name to a partial match" "$(cd "$WORK/repo" && show Calc | plain)" "── Calc.java ──"
 expect "show uses a label when given one" "$(show "$WORK/sample.txt" 1 1 'Build settings' | plain)" "── Build settings ──"
 
+printf 'plugins {\n    java\n    id("x.y")\n}\n\ndependencies {\n    implementation(libs.a)\n    implementation(libs.b)\n}\n' >"$WORK/build.gradle.kts"
+OUT="$(_VIDEO_LAST=""; show "$WORK/build.gradle.kts" "/libs.b/" "deps" | plain)"
+expect "show /pattern/ prints the whole block around a match" "$OUT" "  6  dependencies {"
+expect "show /pattern/ prints to the block's closing brace" "$OUT" "  9  }"
+refuse "show /pattern/ leaves out other blocks" "$OUT" "plugins"
+expect "show /pattern/ prints a block the matching line opens" "$(show "$WORK/build.gradle.kts" "/^plugins/" | plain)" "  4  }"
+printf '[versions]\na = "1"\npit = "2"\nb = "3"\n\n[libraries]\npit = { module = "x" }\n' >"$WORK/libs.versions.toml"
+OUT="$(_VIDEO_LAST=""; show "$WORK/libs.versions.toml" "/^pit/" | plain)"
+expect "show /pattern/ in a catalogue shows each match under its section" "$OUT" $'  1  [versions]\n  ⋮\n  3  pit = "2"'
+expect "show /pattern/ in a catalogue shows the second section too" "$OUT" "  6  [libraries]"
+expect "note highlights a *word* in yellow" "$(note 'the *weak* tests' | cat -v)" "[1;33mweak"
+
 # --- run_with_notes --------------------------------------------------------------------------------------------------
 OUT="$(NOTE_INTERVAL=1 run_with_notes 'sleep 2.5; echo RESULT-LINE' '# first note' '# second note' '# never shown' | plain)"
 expect "run_with_notes shows the command as if typed" "$OUT" '$ sleep 2.5; echo RESULT-LINE'

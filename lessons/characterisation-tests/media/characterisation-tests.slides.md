@@ -19,6 +19,15 @@ Say: Our example is a bank's statement printer, which has run for years without 
   transactions with a running balance. It charges a 25 pound overdraft fee when the balance goes too low, and adds
   interest when the balance ends the month over 1000 pounds. Nobody remembers every rule it follows.
 
+## intro: What we'll compare
+- The code under test: the statement printer, with no real tests
+- A weak test: checks only that a statement came back
+- A characterisation test: checks the whole statement, line for line
+Say: Here is what we will compare. The code under test is the statement printer. [pause 300ms] It has one weak test,
+  which checks only that a statement came back, so it would pass whatever the amounts were. [pause 300ms] We'll add a
+  characterisation test, which checks the whole statement, line for line, against an approved copy. Then we'll see
+  which one notices when someone changes the code.
+
 ## intro: Why legacy code needs them first
 - Old code often has no tests, and nobody remembers every rule
 - Changing it without tests is guessing
@@ -34,6 +43,15 @@ Say: Why start here? [pause 1s] Old code often has no tests, and nobody remember
 Say: ApprovalTests makes this easy. It runs the code and saves the whole output as an approved file, next to the test.
   Every later run compares what it receives with what was approved. If they differ, the test fails, and keeps the
   received file, so you can see exactly what changed.
+
+## intro: How we build
+- Gradle rather than Maven, with build files written in Kotlin
+- Every library version in one file, the version catalogue: an upgrade is a one-line change
+- Build rules every repo shares are written once, in build-logic, and applied to each repo as a plugin
+Say: Before we start, a word on how we build. We use Gradle rather than Maven, and write our build files in Kotlin.
+  Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change.
+  And the build rules that every repo shares, such as code-quality checks and test settings, are written once, in a
+  shared build-logic folder, and applied to each repo as a plugin. That keeps each repo's own build file short.
 
 ## closing: When to use characterisation tests
 - In discovery and before any change to code nobody can fully explain

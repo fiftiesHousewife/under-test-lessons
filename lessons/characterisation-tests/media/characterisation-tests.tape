@@ -30,10 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add ApprovalTests to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml 4 4 "gradle/libs.versions.toml: version"`
-Enter
-Sleep 300ms
-Type@1ms `show libs.versions.toml 32 32 "gradle/libs.versions.toml: library"`
+Type@1ms `show libs.versions.toml "/approvaltests/" "gradle/libs.versions.toml"`
 Enter
 Sleep 300ms
 Show
@@ -47,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson. There is nothing to configure."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/characterisation-tests/example/build.gradle.kts 8 10 "lesson build file"`
+Type@1ms `show lessons/characterisation-tests/example/build.gradle.kts "/libs.approvaltests/" "lesson build file"`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +69,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The kind of test legacy code often has: it checks only that something came back."`
+Type@1ms `note "A *weak* test, the kind legacy code often has: it checks only that something came back."`
 Enter
 Sleep 300ms
 Type@1ms `show StatementWeakTest 16 24`
@@ -86,7 +83,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The characterisation test: print a month that reaches every rule, and approve the whole statement."`
+Type@1ms `note "The *characterisation* test: print a month that reaches every rule, and approve the whole statement."`
 Enter
 Sleep 300ms
 Type@1ms `show StatementCharacterisationTest 16 33`

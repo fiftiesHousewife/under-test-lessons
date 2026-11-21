@@ -33,10 +33,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add jetCheck to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml 4 4 "gradle/libs.versions.toml: version"`
-Enter
-Sleep 300ms
-Type@1ms `show libs.versions.toml 33 33 "gradle/libs.versions.toml: library"`
+Type@1ms `show libs.versions.toml "/jetcheck/" "gradle/libs.versions.toml"`
 Enter
 Sleep 300ms
 Show
@@ -47,10 +44,13 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 2: add it as a test dependency, and show a failing case without a stack trace."`
+Type@1ms `note "Step 2: add it as a test dependency. A switch chooses which splitter the tests run against."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/property-based-testing/example/build.gradle.kts 10 24 "lesson build file"`
+Type@1ms `show lessons/property-based-testing/example/build.gradle.kts "/libs.jetcheck/" "lesson build file: dependencies"`
+Enter
+Sleep 300ms
+Type@1ms `show lessons/property-based-testing/example/build.gradle.kts "/^tasks.test/" "lesson build file: tests"`
 Enter
 Sleep 300ms
 Show
@@ -75,7 +75,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Example tests: each checks one case its author thought of."`
+Type@1ms `note "*Example* tests: each checks one case its author thought of."`
 Enter
 Sleep 300ms
 Type@1ms `show SplitterExampleTest 12 26`
@@ -89,7 +89,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The property test: three rules for every bill, checked on a hundred random bills."`
+Type@1ms `note "The *property* test: three rules for every bill, checked on a hundred random bills."`
 Enter
 Sleep 300ms
 Type@1ms `show SplitterPropertyTest 30 47`

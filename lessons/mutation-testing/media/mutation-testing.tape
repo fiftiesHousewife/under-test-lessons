@@ -24,29 +24,7 @@ Set CursorBlink false
 Env LESSON "mutation-testing"
 Source lessons/_shared/setup.tape
 
-# ---- Scene 1: our Gradle standard ----
-Hide
-Type@1ms "scene"
-Enter
-Sleep 300ms
-Type@1ms `note "Our Gradle standard, in every repo:"`
-Enter
-Sleep 300ms
-Type@1ms `note "  Gradle, not Maven, with build files in the Kotlin DSL (build.gradle.kts)"`
-Enter
-Sleep 300ms
-Type@1ms `note "  Every version in one version catalogue: gradle/libs.versions.toml"`
-Enter
-Sleep 300ms
-Type@1ms `note "  Shared build logic in build-logic/, applied as one convention plugin, so each repo stays short"`
-Enter
-Sleep 300ms
-Type@1ms `note "Adding PIT takes three steps."`
-Enter
-Show
-Sleep 21s
-
-# ---- Scene 2: step 1, the version catalogue ----
+# ---- Scene 1: step 1, the version catalogue ----
 Hide
 Type@1ms "scene"
 Enter
@@ -54,18 +32,12 @@ Sleep 300ms
 Type@1ms `note "Step 1: add PIT's versions, and the PIT Gradle plugin, to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml 19 20 "gradle/libs.versions.toml: versions"`
-Enter
-Sleep 300ms
-Type@1ms `show libs.versions.toml 25 25 "gradle/libs.versions.toml: the PIT Gradle plugin's version"`
-Enter
-Sleep 300ms
-Type@1ms `show libs.versions.toml 45 45 "gradle/libs.versions.toml: the PIT Gradle plugin, as a library for build-logic"`
+Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml"`
 Enter
 Show
 Sleep 10s
 
-# ---- Scene 3: step 2, add the plugin ----
+# ---- Scene 2: step 2, add the plugin ----
 Hide
 Type@1ms "scene"
 Enter
@@ -73,15 +45,15 @@ Sleep 300ms
 Type@1ms `note "Step 2: add the plugin to the shared build logic, and apply it in the convention plugin."`
 Enter
 Sleep 300ms
-Type@1ms `show build-logic/build.gradle.kts 6 6 "build-logic/build.gradle.kts: the PIT Gradle plugin on the build logic's classpath"`
+Type@1ms `show build-logic/build.gradle.kts "/gradle.pitest.plugin/" "build-logic/build.gradle.kts: the plugins the build logic uses"`
 Enter
 Sleep 300ms
-Type@1ms `show java-conventions 31 31 "build conventions: plugins"`
+Type@1ms `show java-conventions "/info.solidsoft.pitest/" "build conventions: plugins"`
 Enter
 Show
 Sleep 9s
 
-# ---- Scene 4: step 3, configure the plugin ----
+# ---- Scene 3: step 3, configure the plugin ----
 Hide
 Type@1ms "scene"
 Enter
@@ -89,7 +61,7 @@ Sleep 300ms
 Type@1ms `note "Step 3: configure PIT once, in the convention plugin."`
 Enter
 Sleep 300ms
-Type@1ms `show java-conventions 271 279 "build conventions: PIT settings"`
+Type@1ms `show java-conventions "/^pitest \\{/" "build conventions: PIT settings"`
 Enter
 Sleep 300ms
 Type@1ms `note "This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests:"`
@@ -100,25 +72,25 @@ Enter
 Show
 Sleep 14s
 
-# ---- Scene 5: the code under test ----
+# ---- Scene 4: the code under test ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The code under test: a discount at 50 and at 100, plus 2% more for loyal customers."`
+Type@1ms `note "The code under test: discountPercent works out the discount, and finalPrice takes it off the total."`
 Enter
 Sleep 300ms
 Type@1ms `show DiscountCalculator 17 39`
 Enter
 Show
-Sleep 11s
+Sleep 25s
 
-# ---- Scene 6: the weak tests ----
+# ---- Scene 5: the weak tests ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The weak tests. Every line of the calculator runs, so line coverage is 100%."`
+Type@1ms `note "The *weak* tests. Every line of the calculator runs, so line coverage is 100%."`
 Enter
 Sleep 300ms
 Type@1ms `note "Each comment says what the test fails to check."`
@@ -127,15 +99,15 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorWeakTest 18 39`
 Enter
 Show
-Sleep 12s
+Sleep 24s
 
-# ---- Scene 7: PIT on the weak tests ----
+# ---- Scene 6: PIT on the weak tests ----
 # PIT runs live, on camera; run_live measures how long it took, so captions and voice stay in time.
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Run PIT against the weak tests. For every planted bug it shows which tests ran, and whether one failed."`
+Type@1ms `note "Run PIT against the *weak* tests. For every planted bug it shows which tests ran, and whether one failed."`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:mutation-testing:pitest -Psuite=weak"`
@@ -149,25 +121,25 @@ Enter
 Show
 Sleep 12s
 
-# ---- Scene 8: the strong tests ----
+# ---- Scene 7: the strong tests ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The strong tests check both sides of every boundary, with exact values."`
+Type@1ms `note "The *strong* tests check exact values, on both sides of every boundary."`
 Enter
 Sleep 300ms
 Type@1ms `show DiscountCalculatorStrongTest 18 40`
 Enter
 Show
-Sleep 11s
+Sleep 21s
 
-# ---- Scene 9: PIT on the strong tests ----
+# ---- Scene 8: PIT on the strong tests ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Run PIT against the strong tests:"`
+Type@1ms `note "Run PIT against the *strong* tests:"`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:mutation-testing:pitest"`

@@ -34,23 +34,11 @@ lessons/<id>/
 
 ## The video (`media/<id>.tape`, `.narration.md`, `.slides.md`)
 
-Every lesson's video has the same shape, whatever the technique (mutation testing, outside-in HTTP tests, advanced
-JUnit, Spring tests...). Follow [the make-a-lesson-video skill](../make-a-lesson-video/SKILL.md) for how.
-
-1. **Intro slides:** what the technique is; the example, in everyday terms (a shop's discount rules, a bank statement);
-   why the obvious alternative isn't enough (for example, why full line
-   coverage doesn't mean you're safe); how the tool works.
-2. **The build, one step at a time:** a summary of our Gradle standard (Gradle not Maven, Kotlin DSL, one version
-   catalogue, shared build logic), then each change as its own scene with a pause: the version catalogue entry, adding
-   the plugin or library, configuring it.
-3. **The code under test,** then the weak or "before" tests.
-4. **The before run, live,** with the build's own meaningful output (add a summary task if the tool's output is noisy).
-5. **The strong or "after" tests,** then **the after run, live.**
-6. **Closing slides:** when to use the technique (which phase of the programme, and what to do next); where the tool
-   came from; links to find out more (the tool's site, its build plugin, key papers, this lesson, the toolkit).
-
-Facts on slides (history, how the tool works) are checked at the source, and the slides file names its sources.
-Add the lesson to [the catalogue](../../../lessons/CATALOGUE.md) and keep its status current.
+Every lesson's video tells the same story: intro slides (what it is, our example, what we'll compare, why it matters,
+how the tool works, how we build), the build one step at a time, the code under test, the weak tests and the before
+run, the strong tests and the after run, then closing slides (when to use it, where it came from, find out more).
+Write it with [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md), and make it with
+[make-a-lesson-video](../make-a-lesson-video/SKILL.md). Add the lesson to [the catalogue](../../../lessons/CATALOGUE.md).
 
 ## The README, in this order
 1. Title line: workstream, test maturity level it provides evidence for, tools.

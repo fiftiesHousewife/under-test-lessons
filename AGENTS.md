@@ -15,7 +15,8 @@ lives in that repo; link to it by full URL.
 | Skill | Use it to |
 |---|---|
 | [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
-| [make-a-lesson-video](.github/skills/make-a-lesson-video/SKILL.md) | Write, check and make a lesson's short narrated video |
+| [write-lesson-slides-and-narration](.github/skills/write-lesson-slides-and-narration/SKILL.md) | Write a lesson video's story: slides, captions and narration |
+| [make-a-lesson-video](.github/skills/make-a-lesson-video/SKILL.md) | Script, check and make a lesson's short narrated video |
 
 ## Code standards (enforced by `./gradlew check`)
 | Standard | Enforced by |

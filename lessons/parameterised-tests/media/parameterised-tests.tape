@@ -33,13 +33,13 @@ Sleep 300ms
 Type@1ms `note "JUnit comes with the shared build logic, and parameterised tests come with JUnit: nothing to add."`
 Enter
 Sleep 300ms
-Type@1ms `show java-conventions 87 90 "build conventions: test libraries"`
+Type@1ms `show java-conventions "/junit-jupiter/" "build conventions: libraries every repo gets"`
 Enter
 Sleep 300ms
-Type@1ms `note "The lesson only asks the build to list every test it runs, and show failures without stack traces:"`
+Type@1ms `note "The lesson adds one switch, to choose which calculator the tests run against:"`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/parameterised-tests/example/build.gradle.kts 12 21 "lesson build file"`
+Type@1ms `show lessons/parameterised-tests/example/build.gradle.kts "/^tasks.test/" "lesson build file"`
 Enter
 Sleep 300ms
 Show
@@ -64,7 +64,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Copy-pasted tests: one method per case, and every amount is a round number."`
+Type@1ms `note "*Copy-pasted* tests: one method per case, and every amount is a round number."`
 Enter
 Sleep 300ms
 Type@1ms `show VatCopyPasteTest 11 28`
@@ -78,7 +78,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The parameterised test: the cases as a table, including every way a fifth of a penny can round."`
+Type@1ms `note "The *parameterised* test: the cases as a table, including every way a fifth of a penny can round."`
 Enter
 Sleep 300ms
 Type@1ms `show VatParameterisedTest 13 30`

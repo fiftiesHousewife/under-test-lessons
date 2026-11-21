@@ -5,6 +5,9 @@ description: Write, check and render the short terminal video for a lesson (less
 
 # Making a lesson video
 
+The mechanics: the script, the terminal helpers, the look, recording, captions and voice. What the video says, and in
+what order, is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
+
 A lesson video shows one technique working, in the terminal, from a script. It is regenerated from the script, never
 edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.tape`.
 
@@ -50,8 +53,10 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
 1. Copy the model script and keep its house style: `Require` lines, the `Set` block, `Env LESSON "<id>"`, then
    `Source lessons/_shared/setup.tape`.
 2. Narration appears as `note` lines drawn off-camera; keep each under one terminal row.
-3. Code panels: `show <file or part of its name> <first line> <last line> [label]`, drawn off-camera. Start below the
-   `package` line, and label build files by what they are, so long package and organisation names stay off screen.
+3. Code panels: `show <file or part of its name> <first line> <last line> [label]` for a range, or
+   `show <file> /pattern/ [label]` for context: the whole `{ }` block around the match in a build file, or matching
+   catalogue entries under their section headers. Prefer patterns for build files: they survive lines moving. Start
+   code below the `package` line, and label files by what they are, so long package names stay off screen.
 4. Draw callouts off-camera: `Hide`, ``Type@1ms `callout "..."` ``, `Enter`, `Show`.
 5. Mark each scene with a comment line `# ---- Scene N: title ----`, and write the narration file
    (`media/<id>.narration.md`) as a numbered list with **one item per scene**. Captions and voiceover come from it.
@@ -78,42 +83,15 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 ## Captions
 
 `./gradlew :lessons:video-tools:buildLessonCaptions -Plesson=<id>` writes `<id>.vtt` and `<id>.srt` next to the script.
-It times each scene from the script's pauses and splits its narration into short cues. It fails if a `Wait` is on
-camera or if the narration has a different number of items from the script's scenes.
+It times each scene from the script's pauses, and each live run from the time the recording measured, then splits the
+narration into short cues. It fails if a `Wait` is on camera without a measured run, or if the narration has a
+different number of items from the script's scenes.
 
 ## Slides
 
-Intro and closing slides go in `media/<id>.slides.md`, and are spliced around the terminal recording, with their own
-voice and captions:
-
-```markdown
-## intro: Why full coverage does not mean you are safe
-- Line coverage counts the lines your tests ran
-- https://pitest.org — a point that is a URL is drawn as a link and never spoken
-Say: Why do we need mutation testing? [pause 1s] Line coverage counts the lines your tests ran...
-```
-
-- Three or four short points per slide; the narration says more than the slide shows.
-- Every lesson has the same slides: intro (what it is, our example, why it matters, how the tool works) and closing
-  (when to use it, where the tool came from, find out more). The example slide explains the example in everyday
-  terms before anything refers to it. See [the lesson skill](../write-a-technique-lesson/SKILL.md).
-- Put useful URLs on the closing "find out more" slide: the tool's site, its Gradle plugin, key papers, the lesson's
-  repo and the toolkit. Check each one works.
-- Check every fact at the source and name the sources at the top of the slides file.
-
-## Writing narration to be spoken
-
-- Short sentences. No semicolons: the voice runs straight through them.
-- Never read a command aloud. Say what is happening: "Now we run the strong tests", not the Gradle command. The video
-  checks fail on narration containing backticks, `./` or `gradlew`.
-- Write numbers and symbols as words: "100 percent", "greater than or equal to 50".
-- If the voice stresses a phrase oddly (for example "test suites"), rephrase it rather than fight it: "the weak tests
-  or the strong tests".
-- Pause where a listener needs a moment, with a marker: `Why do we need mutation testing? [pause 1s] Line coverage...`.
-  The voice goes silent for that long; captions leave the marker out.
-- Words the voice gets wrong go in [the pronunciation list](../../../lessons/_shared/pronunciations.txt)
-  (`word = how to say it`), for example `PIT = pit` and `reruns = re-runs`. It changes only what is spoken; captions
-  keep the written form.
+The video tools draw each slide in `media/<id>.slides.md` as a full HD image in the videos' colours, voice it, and
+splice the intro slides before the terminal recording and the closing slides after it, with their own captions. What
+goes on them is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
 
 ## Voice and the finished video
 

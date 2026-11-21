@@ -18,6 +18,14 @@ Say: A parameterised test is one test method that runs once for each row of a ta
 Say: Our example works out VAT, at 20 percent, on a price in pence, and rounds it to the nearest penny. Twenty percent
   is a fifth, and a fifth of a price can end in a fraction of a penny that rounds up, or down. Every case matters.
 
+## intro: What we'll compare
+- The code under test: the VAT calculator in use today
+- Copy-pasted tests: one method per case, all round numbers
+- A parameterised test: one method, a table of cases, every way the rounding can go
+Say: Here is what we will compare. The code under test is the VAT calculator in use today. [pause 300ms] The
+  copy-pasted tests have one method per case, and every amount is a round number. [pause 300ms] The parameterised test
+  is one method with a table of cases, covering every way the rounding can go.
+
 ## intro: Why copy-pasted tests miss bugs
 - Each new case costs a whole copied method
 - So there are few cases, and they are the easy ones
@@ -31,6 +39,15 @@ Say: Why does it matter? [pause 1s] When every new case costs a whole copied met
 - JUnit names each run from the row, using the name pattern you give
 Say: In JUnit, you mark the method as a parameterised test instead of a plain test. You give the rows as comma
   separated values. JUnit runs the method once per row, and names each run from the row, using a pattern you choose.
+
+## intro: How we build
+- Gradle rather than Maven, with build files written in Kotlin
+- Every library version in one file, the version catalogue: an upgrade is a one-line change
+- Build rules every repo shares are written once, in build-logic, and applied to each repo as a plugin
+Say: Before we start, a word on how we build. We use Gradle rather than Maven, and write our build files in Kotlin.
+  Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change.
+  And the build rules that every repo shares, such as code-quality checks and test settings, are written once, in a
+  shared build-logic folder, and applied to each repo as a plugin. That keeps each repo's own build file short.
 
 ## closing: When to use parameterised tests
 - Whenever the same check runs on several inputs: boundaries, rounding, conversions, validation

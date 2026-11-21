@@ -18,6 +18,14 @@ Say: An example test checks one case that its author thought of. A property test
 Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and someone has to pay
   the pennies left over. To be fair, no two people should pay more than a penny apart.
 
+## intro: What we'll compare
+- The code under test: the bill splitter in use today
+- Example tests: each checks one bill its author thought of
+- A property test: checks three rules against a hundred different bills
+Say: Here is what we will compare. The code under test is the bill splitter in use today. [pause 300ms] The example
+  tests each check one bill that their author thought of, and they pass. [pause 300ms] The property test states three
+  rules that must hold for every bill, and checks them against a hundred different bills.
+
 ## intro: Why examples are not enough
 - Examples only cover the cases someone thought of
 - Bugs live in the cases nobody thought of
@@ -33,6 +41,15 @@ Say: Why are examples not enough? [pause 1s] They only cover the cases someone t
 Say: jetCheck builds random inputs from simple pieces, like numbers and lists, and checks the property on each one.
   When an input breaks the rule, jetCheck shrinks it automatically, to the smallest input that still fails. That small
   case is usually the clearest explanation of the bug.
+
+## intro: How we build
+- Gradle rather than Maven, with build files written in Kotlin
+- Every library version in one file, the version catalogue: an upgrade is a one-line change
+- Build rules every repo shares are written once, in build-logic, and applied to each repo as a plugin
+Say: Before we start, a word on how we build. We use Gradle rather than Maven, and write our build files in Kotlin.
+  Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change.
+  And the build rules that every repo shares, such as code-quality checks and test settings, are written once, in a
+  shared build-logic folder, and applied to each repo as a plugin. That keeps each repo's own build file short.
 
 ## closing: When to use property-based testing
 - Calculations, parsing and conversions, where a rule is easier to state than every answer

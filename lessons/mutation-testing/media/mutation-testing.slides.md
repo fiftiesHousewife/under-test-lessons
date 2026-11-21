@@ -21,6 +21,16 @@ Say: Our example is a small piece of code from an online shop. It works out the 
   pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
   more on top. We'll look at two sets of tests for it: one weak, one strong.
 
+## intro: What we'll compare
+- The code under test: the shop's discount rules
+- Weak tests: run every line, but hardly check the answers
+- Strong tests: run the same lines, and check the exact answer at every boundary
+Say: Here is what we will compare. The code under test is the shop's discount rules. We have two sets of tests for it.
+  [pause 300ms] The weak tests run every line, so coverage is 100 percent. But they hardly check the answers. One only
+  checks that the discount is more than zero. One uses an order far from any boundary. One checks nothing at all.
+  [pause 300ms] The strong tests run exactly the same lines. The difference is what they check: the exact answer, on
+  both sides of every boundary. So when the code gives a wrong answer, a strong test fails.
+
 ## intro: Why full coverage does not mean you are safe
 - Line coverage counts the lines your tests ran
 - It does not check that any test looked at the result
@@ -36,6 +46,15 @@ Say: Why do we need mutation testing? [pause 1s] Line coverage counts the lines 
 Say: PIT is the mutation testing tool for Java. It changes your compiled code in memory, one mutation at a time. It
   measures line coverage first, so for each change it runs only the tests that reach that line. That is what makes it
   fast enough for whole code bases. Then it reports every planted bug as caught or survived.
+
+## intro: How we build
+- Gradle rather than Maven, with build files written in Kotlin
+- Every library version in one file, the version catalogue: an upgrade is a one-line change
+- Build rules every repo shares are written once, in build-logic, and applied to each repo as a plugin
+Say: Before we start, a word on how we build. We use Gradle rather than Maven, and write our build files in Kotlin.
+  Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change.
+  And the build rules that every repo shares, such as code-quality checks and test settings, are written once, in a
+  shared build-logic folder, and applied to each repo as a plugin. That keeps each repo's own build file short.
 
 ## closing: When to use PIT
 - In discovery: measure how far the existing tests can be trusted
