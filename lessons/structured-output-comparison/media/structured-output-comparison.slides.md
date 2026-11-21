@@ -1,7 +1,7 @@
 # Slides: comparing structured output
 
-Sources: github.com/lukas-krecan/JsonUnit (Apache 2.0 licence, by Lukáš Křečan; first released in 2011 according to its
-history); xmlunit.org (XMLUnit, BSD licence, since 2001, the same idea for XML).
+Sources: github.com/lukas-krecan/JsonUnit (Apache 2.0 licence, by Lukáš Křečan; AssertJ, Hamcrest and JUnit support in
+its README); xmlunit.org (XMLUnit, for Java and .NET).
 
 ## intro: What is a structured comparison?
 - Compare output as data, not as text: fields, values, lists
@@ -60,10 +60,10 @@ Say: When should you use it? [pause 1s] Whenever a test checks JSON or XML: API 
 ## closing: Where JSONUnit came from
 - Written by Lukáš Křečan, free under the Apache licence
 - Works with AssertJ, Hamcrest, and plain JUnit
-- XMLUnit, the same idea for XML, has been around since 2001
+- XMLUnit does the same for XML, in Java and .NET
 Picture: book
 Say: JSONUnit was written by Lukáš Křečan, and is free under the Apache licence. It works with AssertJ, with Hamcrest,
-  and with plain JUnit. XMLUnit, the same idea for XML, has been around since 2001.
+  and with plain JUnit. XMLUnit does the same for XML, in both Java and .NET.
 
 ## closing: Find out more
 - https://github.com/lukas-krecan/JsonUnit — JSONUnit, with examples
