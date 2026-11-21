@@ -12,3 +12,6 @@ Maven = mayven
 2004 = two thousand and four
 2011 = twenty eleven
 2017 = twenty seventeen
+# Phrases the voice should say as one term
+pull requests = pull-requests
+pull request = pull-request
