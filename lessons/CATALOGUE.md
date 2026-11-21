@@ -29,7 +29,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| Recorded HTTP responses: a service you don't own, replayed from recordings | WireMock | Java only | wave 1 |
+| [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | in progress |
 | Fake behind an interface: an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | wave 1 |
 | Real databases in tests: a fake locally, real PostgreSQL in container tests | Testcontainers | Docker | wave 2 |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | wave 2 |
@@ -66,7 +66,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | 1 |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | 1 |
 | snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | 1 |
-| recorded-http-responses | Recorded HTTP responses | 1 |
+| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | 1 |
 | business-rule-tests | Outside-in HTTP tests | 1 |
 | fake-behind-interface | Fake behind an interface | 1 |
 | differential-testing | Old and new side by side: the same inputs through both versions, results compared | 2 |
@@ -94,7 +94,7 @@ both. The default is the "after", so `./gradlew check` passes.
 | Architecture rules (`architecture-rules`) | An orders app in three layers: web, service, storage | Unit tests pass while a web class reads storage directly | An ArchUnit rule names the forbidden call | `-Pcode=today` |
 | Replacing hard-wired dependencies (`replacing-hard-wired-dependencies`) | An invoice in euros, priced with a live exchange-rate service | The rates come from a hard-wired singleton, so the test can't run without the service | The rates come through the constructor; the test uses a Mockito stand-in | `-Pcode=today` |
 | Comparing structured output (`structured-output-comparison`) | An order summary as JSON, with a timestamp and an id | A string comparison breaks on every run, so someone loosens it to "contains" | JSONUnit compares the structure, ignoring only the timestamp and id | `-Pcheck=strings` |
-| Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | Tests call the real service: slow, and they fail when it's down | WireMock replays recorded responses, including the supplier's errors | `-Psupplier=down` |
+| Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock replays recorded answers, including an unknown postcode and an outage | `-Pcode=today` |
 | Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the handler classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pservice=today` |
 | Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | Tests mock each call to the queue client, so they repeat the code | An in-memory fake queue; tests check what arrived | `-Ptests=mocks` |
 | Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat class of tests with long names | `@Nested` classes, one per state, so the report reads as a specification | none: both run |

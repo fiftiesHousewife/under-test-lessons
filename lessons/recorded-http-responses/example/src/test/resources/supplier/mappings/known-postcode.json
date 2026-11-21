@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/postcodes/LS1%204AP" },
+  "response": {
+    "status": 200,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "postcode": "LS1 4AP", "town": "Leeds" }
+  }
+}

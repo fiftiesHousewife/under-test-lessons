@@ -109,15 +109,17 @@ val testFailures = tasks.register("testFailures") {
     description = "Fails the build, briefly, if any test failed."
     val results = layout.buildDirectory.dir("test-results/test")
     doLast {
-        val counts = Regex("<testsuite [^>]*?tests=\"(\\d+)\"[^>]*?failures=\"(\\d+)\"[^>]*?errors=\"(\\d+)\"")
+        val counts = Regex("<testsuite [^>]*?tests=\"(\\d+)\"[^>]*?skipped=\"(\\d+)\"[^>]*?failures=\"(\\d+)\"[^>]*?errors=\"(\\d+)\"")
         val suites = results.get().asFile.walkTopDown().filter { it.name.endsWith(".xml") }
-            .mapNotNull { counts.find(it.readText())?.destructured }.toList()
-        val total = suites.sumOf { (tests, _, _) -> tests.toInt() }
-        val failed = suites.sumOf { (_, failures, errors) -> failures.toInt() + errors.toInt() }
+            .mapNotNull { counts.find(it.readText())?.groupValues?.drop(1)?.map(String::toInt) }.toList()
+        val total = suites.sumOf { it[0] }
+        val skipped = suites.sumOf { it[1] }
+        val failed = suites.sumOf { it[2] + it[3] }
         if (failed > 0) {
             throw GradleException("$failed of $total tests failed. Report: build/reports/tests/test/index.html")
         }
-        logger.quiet("All $total tests passed.")
+        val ran = total - skipped
+        logger.quiet(if (skipped == 0) "All $total tests passed." else "All $ran tests that ran passed; $skipped skipped.")
     }
 }
 

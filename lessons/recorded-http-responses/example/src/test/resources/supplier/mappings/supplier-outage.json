@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/postcodes/M1%201AE" },
+  "response": {
+    "status": 503,
+    "headers": { "Content-Type": "text/html" },
+    "body": "<html><body>Service temporarily unavailable</body></html>"
+  }
+}

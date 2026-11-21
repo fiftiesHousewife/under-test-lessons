@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/postcodes/ZZ9%209ZZ" },
+  "response": {
+    "status": 404,
+    "headers": { "Content-Type": "application/json" },
+    "jsonBody": { "error": "unknown postcode" }
+  }
+}
