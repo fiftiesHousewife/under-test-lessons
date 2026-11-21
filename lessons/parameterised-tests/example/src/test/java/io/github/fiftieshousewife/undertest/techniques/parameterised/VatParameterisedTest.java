@@ -14,7 +14,7 @@ class VatParameterisedTest {
 
     private final VatCalculator vat = Calculators.current();
 
-    @ParameterizedTest(name = "{0} pence net gives {1} pence VAT")
+    @ParameterizedTest(name = "{0} pence net gives {1} pence VAT", quoteTextArguments = false)
     @CsvSource({
         "0,    0",
         "1,    0",

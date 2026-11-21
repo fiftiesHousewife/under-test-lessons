@@ -23,6 +23,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | in progress |
 | [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | in progress |
 | Batch file-in, file-out: a job run on synthetic input, output compared row by row | spring-batch-test, Datafaker | Java only | wave 2 |
+| [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | in progress |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright | Browser | wave 3 |
 
 ## Stand in for real systems
@@ -70,7 +71,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | 1 |
 | business-rule-tests | [Outside-in HTTP tests](outside-in-http-tests/README.md) | 1 |
 | fake-behind-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | 1 |
-| differential-testing | Old and new side by side: the same inputs through both versions, results compared | 2 |
+| differential-testing | [Differential testing](differential-testing/README.md) | 1 |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | 2 |
 | feature-flags | Feature flags: old and new code paths behind one switch, both tested | 2 |
 | embedded-jakarta-ee-tests | Old Jakarta EE code tested without an application server | 2 |

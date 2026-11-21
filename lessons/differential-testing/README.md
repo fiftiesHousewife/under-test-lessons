@@ -1,0 +1,37 @@
+# Differential testing
+
+**Run the old code and its rewrite on the same inputs, and compare every answer.**
+
+A rewrite must keep every answer customers rely on. Tests written for the rewrite only check the cases someone thought
+of, but the old code already knows every answer. A differential test asks both versions about every input, in a range,
+recorded from production or generated, and lists where they disagree. There are no expected values to write.
+
+## Run the example
+
+```bash
+./gradlew :lessons:differential-testing:test -Pcode=today   # the rewrite as typed today: the comparison finds a gap
+./gradlew :lessons:differential-testing:test                # the corrected rewrite: it agrees on every weight
+```
+
+The example prices parcels by weight.
+[`LegacyPostage`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/differential/legacy/LegacyPostage.java)
+is the old chain of ifs; [`RewrittenPostage`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/differential/rewrite/RewrittenPostage.java)
+reads a [price list](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/differential/rewrite/PriceList.java)
+with one row mistyped.
+
+- [`RewriteExamplesTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/RewriteExamplesTest.java)
+  is the "before": one typical weight per row, all passing.
+- [`OldAndNewAgreeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/OldAndNewAgreeTest.java)
+  is the "after": every weight from 1 g to 5 kg, old against new, with differences grouped into runs.
+
+## When to use it
+
+- **Whenever old code is rewritten,** moved to a new platform, or upgraded.
+- **Keep the old version in the tests** until the new one agrees everywhere; then remove both together.
+- **For whole services,** replay recorded traffic against both versions (for example with Diffy).
+
+## Find out more
+
+- William McKeeman, *Differential Testing for Software* (Digital Technical Journal, 1998)
+- [Diffy](https://github.com/opendiffy/diffy), for web services
+- The toolkit's [differential-testing technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml)
