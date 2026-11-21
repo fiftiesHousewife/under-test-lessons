@@ -22,9 +22,6 @@ Set CursorBlink false
 Env LESSON "parameterised-tests"
 Source lessons/_shared/setup.tape
 
-# ---- Scene 1: step 1, the version catalogue ----
-Hide
-
 # ---- Scene 1: the build ----
 Hide
 Type@1ms "scene"
