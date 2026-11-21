@@ -25,3 +25,4 @@ The full list of planned lessons, and the order they'll be made in, is in [CATAL
 | [Mutation testing](mutation-testing/README.md) | [mutation-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/mutation-testing/technique.yaml) | Script ready |
 | [Characterisation tests](characterisation-tests/README.md) | [characterisation-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml) | Script ready |
 | [Property-based testing](property-based-testing/README.md) | [property-based-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/property-based-testing/technique.yaml) | Script ready |
+| [Parameterised tests](parameterised-tests/README.md) | – | Script ready |

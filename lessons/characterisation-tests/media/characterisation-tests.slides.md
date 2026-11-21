@@ -11,6 +11,14 @@ characterisation tests.
 Say: A characterisation test records what code does today, bugs and quirks included. It doesn't ask what the code
   should do. It asks what it actually does. Once that is pinned down, any change in behaviour shows up straight away.
 
+## intro: Our example: a bank statement printer
+- Prints a month of transactions with a running balance
+- Charges a £25 overdraft fee when the balance goes too low
+- Adds interest when the closing balance is over £1,000
+Say: Our example is a bank's statement printer, which has run for years without tests. It prints a month of
+  transactions with a running balance. It charges a 25 pound overdraft fee when the balance goes too low, and adds
+  interest when the balance ends the month over 1000 pounds. Nobody remembers every rule it follows.
+
 ## intro: Why legacy code needs them first
 - Old code often has no tests, and nobody remembers every rule
 - Changing it without tests is guessing

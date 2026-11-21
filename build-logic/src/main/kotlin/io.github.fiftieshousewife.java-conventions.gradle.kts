@@ -103,9 +103,37 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 }
 
 // ---------- Tests and coverage ----------
+// Failing tests end the build with a short message and a report path relative to the project, instead of Gradle's long
+// message with the full path, which shows a person's home folder in recordings and logs. The build still fails.
+val testFailures = tasks.register("testFailures") {
+    description = "Fails the build, briefly, if any test failed."
+    val results = layout.buildDirectory.dir("test-results/test")
+    doLast {
+        val counts = Regex("<testsuite [^>]*?tests=\"(\\d+)\"[^>]*?failures=\"(\\d+)\"[^>]*?errors=\"(\\d+)\"")
+        val suites = results.get().asFile.walkTopDown().filter { it.name.endsWith(".xml") }
+            .mapNotNull { counts.find(it.readText())?.destructured }.toList()
+        val total = suites.sumOf { (tests, _, _) -> tests.toInt() }
+        val failed = suites.sumOf { (_, failures, errors) -> failures.toInt() + errors.toInt() }
+        if (failed > 0) {
+            throw GradleException("$failed of $total tests failed. Report: build/reports/tests/test/index.html")
+        }
+        logger.quiet("All $total tests passed.")
+    }
+}
+
 tasks.test {
     useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
+    ignoreFailures = true
+    // Each test's result shows even at Gradle's quiet logging level, which recordings use; failures without stack traces.
+    testLogging {
+        quiet {
+            events("passed", "failed")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            showStackTraces = false
+            showCauses = false
+        }
+    }
+    finalizedBy(tasks.jacocoTestReport, testFailures)
 }
 
 jacoco {

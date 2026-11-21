@@ -5,3 +5,4 @@ JaCoCo = jacoco
 JUnit = jay unit
 reruns = re-runs
 rerun = re-run
+Maven = mayven

@@ -46,7 +46,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| Advanced JUnit: parameterised, nested and dynamic tests, extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
+| [Parameterised tests](parameterised-tests/README.md): one test, a table of cases, each reported by name | JUnit 6 | Java only | in progress |
+| More JUnit, one idea per lesson: nested tests, dynamic tests, extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | in progress |
 | Architecture rules: keep layers and dependencies the way they should be | ArchUnit | Java only | wave 1 |
 | Spring tests: slices, MockMvc, and full-application tests with real dependencies | Spring Boot test, Testcontainers | Docker | wave 2 |

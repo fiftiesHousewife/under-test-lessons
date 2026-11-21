@@ -13,6 +13,14 @@ Say: Mutation testing tests your tests, not your code. It plants one small bug a
   greater than or equal to into greater than. Then it runs your tests. If a test fails, the bug is caught. If every
   test still passes, the bug survived, and your tests would miss a real bug just like it.
 
+## intro: Our example: a shop's discount rules
+- Orders of £50 or more get 5% off
+- Orders of £100 or more get 10% off
+- Loyal customers get 2% more on top
+Say: Our example is a small piece of code from an online shop. It works out the discount on an order. Orders of 50
+  pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
+  more on top. We'll look at two sets of tests for it: one weak, one strong.
+
 ## intro: Why full coverage does not mean you are safe
 - Line coverage counts the lines your tests ran
 - It does not check that any test looked at the result

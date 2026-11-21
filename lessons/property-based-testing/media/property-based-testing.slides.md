@@ -11,6 +11,13 @@ Say: An example test checks one case that its author thought of. A property test
   input, like, the shares of a bill always add up to the bill. Then a library tries hundreds of inputs, looking for one
   that breaks the rule.
 
+## intro: Our example: splitting a bill
+- Share a bill, in pence, between several people
+- Everyone pays the same, and someone pays what's left over
+- Fair means no two shares differ by more than a penny
+Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and someone has to pay
+  the pennies left over. To be fair, no two people should pay more than a penny apart.
+
 ## intro: Why examples are not enough
 - Examples only cover the cases someone thought of
 - Bugs live in the cases nobody thought of

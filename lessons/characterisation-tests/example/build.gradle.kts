@@ -53,4 +53,10 @@ tasks.test {
     systemProperty("statement.version", statement)
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching printers never shows a stale result
     finalizedBy(approvalSummary)
+    // ApprovalTests' failure message lists full file paths; the approval summary explains the difference instead.
+    testLogging {
+        quiet {
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.SHORT
+        }
+    }
 }

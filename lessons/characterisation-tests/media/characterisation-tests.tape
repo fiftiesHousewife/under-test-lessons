@@ -129,7 +129,7 @@ Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:characterisation-tests:test -Pstatement=refactored"`
 Enter
 Show
-Wait+Screen@300s /BUILD FAILED/
+Wait+Screen@300s /tests failed\. Report/
 Sleep 14s
 Hide
 Type@1ms `callout "The fee at zero has gone. Fix or bug? A question for the Application Owner."`

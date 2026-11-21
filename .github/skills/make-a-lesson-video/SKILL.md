@@ -27,9 +27,13 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
 - **Show real runs live:** run the commands viewers care about (the build, PIT) on camera with `run_live`. It shows the
   command, lets its own progress output play, and records how long it took, so captions and voice stay in time.
   `run_with_notes` is for slow steps where the output itself isn't worth watching.
-- **Quiet build output without changing the commands:** the shared set-up sets `GRADLE_OPTS` off-camera to drop
-  Gradle's deprecation summary and configuration-cache notes. Viewers see the plain command, the live progress bar, the
-  build's summary and "BUILD SUCCESSFUL". Never filter output with `grep` on camera.
+- **Quiet build output without changing the commands:** the shared set-up sets `GRADLE_OPTS` off-camera to Gradle's
+  quiet logging level, without the deprecation summary or configuration-cache notes. Viewers see the plain command,
+  each test's result, the build's own summaries ("All 12 tests passed.", the PIT summary, approval differences), and a
+  short failure message. Wait for those messages, not "BUILD SUCCESSFUL". Never filter output with `grep` on camera.
+- **No personal paths on screen:** warnings and some failure messages print full file paths, which show the recorder's
+  home folder. Quiet logging hides Gradle's warnings, failed tests end with a relative report path, and a tool whose
+  failure message lists paths uses the short failure format (see the characterisation lesson). Check every frame.
 
 ## Look
 
@@ -90,8 +94,9 @@ Say: Why do we need mutation testing? [pause 1s] Line coverage counts the lines 
 ```
 
 - Three or four short points per slide; the narration says more than the slide shows.
-- Every lesson has the same slides: intro (what it is, why it matters, how the tool works) and closing (when to use it,
-  where the tool came from, find out more). See [the lesson skill](../write-a-technique-lesson/SKILL.md).
+- Every lesson has the same slides: intro (what it is, our example, why it matters, how the tool works) and closing
+  (when to use it, where the tool came from, find out more). The example slide explains the example in everyday
+  terms before anything refers to it. See [the lesson skill](../write-a-technique-lesson/SKILL.md).
 - Put useful URLs on the closing "find out more" slide: the tool's site, its Gradle plugin, key papers, the lesson's
   repo and the toolkit. Check each one works.
 - Check every fact at the source and name the sources at the top of the slides file.

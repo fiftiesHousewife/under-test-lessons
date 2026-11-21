@@ -37,7 +37,8 @@ lessons/<id>/
 Every lesson's video has the same shape, whatever the technique (mutation testing, outside-in HTTP tests, advanced
 JUnit, Spring tests...). Follow [the make-a-lesson-video skill](../make-a-lesson-video/SKILL.md) for how.
 
-1. **Intro slides:** what the technique is; why the obvious alternative isn't enough (for example, why full line
+1. **Intro slides:** what the technique is; the example, in everyday terms (a shop's discount rules, a bank statement);
+   why the obvious alternative isn't enough (for example, why full line
    coverage doesn't mean you're safe); how the tool works.
 2. **The build, one step at a time:** a summary of our Gradle standard (Gradle not Maven, Kotlin DSL, one version
    catalogue, shared build logic), then each change as its own scene with a pause: the version catalogue entry, adding
