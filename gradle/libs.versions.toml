@@ -53,6 +53,7 @@ log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "lo
 log4j-slf4j2-impl = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }
 findsecbugs = { module = "com.h3xstream.findsecbugs:findsecbugs-plugin", version.ref = "findsecbugs" }
 json-schema-validator = { module = "com.networknt:json-schema-validator", version.ref = "json-schema-validator" }
+jackson3-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson3" }
 jackson3-yaml = { module = "tools.jackson.dataformat:jackson-dataformat-yaml", version.ref = "jackson3" }
 
 # Gradle plugins, as ordinary dependencies of build-logic

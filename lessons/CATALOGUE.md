@@ -20,7 +20,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | in progress |
-| Comparing structured output: JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | wave 1 |
+| [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | in progress |
 | Outside-in HTTP tests: a running service tested through its API only | REST Assured, JDK HTTP server | Java only | wave 1 |
 | Batch file-in, file-out: a job run on synthetic input, output compared row by row | spring-batch-test, Datafaker | Java only | wave 2 |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright | Browser | wave 3 |
@@ -65,7 +65,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | ready |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | 1 |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | 1 |
-| snapshot-testing | Comparing structured output | 1 |
+| snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | 1 |
 | recorded-http-responses | Recorded HTTP responses | 1 |
 | business-rule-tests | Outside-in HTTP tests | 1 |
 | fake-behind-interface | Fake behind an interface | 1 |
