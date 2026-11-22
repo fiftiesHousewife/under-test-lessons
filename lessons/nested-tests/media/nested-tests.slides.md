@@ -3,13 +3,14 @@
 Sources: junit.org, the JUnit user guide (nested tests with @Nested, and display names with @DisplayName, both part of
 JUnit Jupiter since JUnit 5 in 2017; JUnit 6 is the current generation).
 
-## intro: What are nested tests?
-- Tests grouped into classes inside a test class, one for each situation
-- Each group sets up its situation once, before its tests
-- The report shows the groups as a tree, with readable names
-Picture: folders
-Say: Nested tests are tests grouped into classes inside a test class, one class for each situation. Each group sets up
-  its situation once, before its tests. And the report shows the groups as a tree, with readable names.
+## intro: A loan nobody approved is marked repaid
+- A loan that was only requested can be marked repaid, skipping approval
+- The 4 tests pass: none of them asks
+- In one flat list, with long names, the missing question is invisible
+Picture: bug
+Say: Here is the problem. A loan that was only requested, and never approved, can be marked as repaid. It skips the
+  approval altogether. Yet the 4 tests all pass, because none of them asks. They are one flat list, with long names,
+  and in a list like that a missing question is invisible.
 
 ## intro: Our example: a loan
 - A loan is requested, then approved, then repaid
@@ -19,31 +20,23 @@ Picture: statement
 Say: Our example is a loan. A loan is requested, then approved, then repaid. Each step is allowed only from the state
   just before it, and every other step must be refused.
 
-## intro: What we'll compare
-- The code under test: today's loan, which misses one refusal
-- Flat tests: one list of tests with long names
-- Nested tests: one class per situation, asking the same questions of each
-Picture: scales
-Say: Here is what we will compare. The code under test is today's loan, which misses one refusal. [pause 300ms] Flat
-  tests are one long list, with long names. [pause 300ms] And nested tests have one class per situation, asking the
-  same questions of each.
-
-## intro: Why structure helps
-- In a flat list, a missing case is invisible
-- Grouped by situation, every situation gets the same questions, so gaps stand out
-- The report becomes a specification people can read
-Picture: magnifier
-Say: Why does the structure matter? [pause 1600ms] In a flat list, a missing case is invisible. Grouped by situation,
-  every situation gets the same questions, so a gap stands out. And the report becomes a specification that anyone can
-  read, including people who don't write code.
+## intro: The fix: group the tests by situation
+- One group of tests for each state: requested, approved, repaid
+- Each group asks the same questions: can it be approved? can it be repaid?
+- Asked in every state, the missing question stands out, and it fails
+Picture: folders
+Say: The fix is to group the tests by situation, one group for each state the loan can be in: requested, approved and
+  repaid. Groups inside a test class are called nested tests. Each group asks the same 2 questions: can it be
+  approved, and can it be repaid? Asked in every state, the missing question stands out. And today, it fails.
 
 ## intro: How JUnit nests tests
-- Mark an inner class with @Nested
-- Give classes and tests sentence names with @DisplayName
-- An inner class's @BeforeEach runs after the outer one, building up the situation
+- @Nested on an inner class, with @DisplayName("when approved")
+- Its @BeforeEach sets up the state: loan.approve()
+- The report reads as a sentence: A loan > when requested > cannot be repaid FAILED
 Picture: robot
-Say: In JUnit, you mark an inner class as nested. You give classes and tests sentence names, with display name. And an
-  inner class's set-up runs after the outer one's, so each level builds up its situation.
+Say: How does JUnit nest tests? You mark an inner class as nested, and give it a name that reads as words, a display
+  name, like when approved. Its set-up step runs before each of its tests, and puts the loan in that state. And the
+  report reads as a sentence: a loan, when requested, cannot be repaid. Failed.
 
 ## closing: When to nest tests
 - For anything with states or situations: workflows, accounts, orders, permissions

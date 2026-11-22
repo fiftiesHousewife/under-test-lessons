@@ -1328,3 +1328,4 @@ items:
       - "No deck has a separate \"what we'll compare\" slide"
       - "Each reworked deck is voiced again and checked by ear"
     notes: "From the review of the JUnit tags deck: the words on the slides made little sense until the examples. Tags is reworked; 33 decks still open with definitions and a what-we'll-compare slide."
+    status: "done"

@@ -4,47 +4,41 @@ Sources: junit.org (JUnit 6 is the current generation; the programmer-friendly t
 Maven Central (junit-jupiter-params, first released with JUnit 5.0.0 in September 2017); JUnit 4's API documentation
 (org.junit.runners.Parameterized, the runner for tests run once per row of parameters).
 
-## intro: What is a parameterised test?
-- One test method, run once for each row of a table
-- Each row holds the inputs and the expected result
-- Each row is reported as its own test, with its own name
-Picture: table
-Say: A parameterised test is one test method that runs once for each row of a table. Each row holds the inputs and the
-  result you expect. And each row is reported as its own test, with its own name, so you can see exactly which case
-  passed and which one failed.
+## intro: The VAT comes out a penny short
+- On a price of 3 pence, VAT should be 1 penny: the calculator says 0
+- On 998 pence, it should be 200: the calculator says 199
+- The 3 tests pass: they try only 0 pence, £1 and £10, round numbers
+Picture: bug
+Say: Here is the problem. On a price of 3 pence, the VAT should be 1 penny, and the calculator says 0. On 998 pence,
+  it should be 200, and the calculator says 199. Yet all 3 tests pass. They try only nothing, £1 and £10, round
+  numbers where rounding never comes into it. Each case is a whole copied test, so nobody added the awkward ones.
 
 ## intro: Our example: VAT on a price
 - Work out VAT at 20% on a net price, in pence
 - Round the result to the nearest penny
-- A fifth of a penny can round up or down, so every case matters
+- 20% is a fifth, and a fifth of a price can end in part of a penny
 Picture: tag
-Say: Our example works out VAT, at 20 percent, on a price in pence, and rounds it to the nearest penny. Twenty percent
-  is a fifth, and a fifth of a price can end in a fraction of a penny that rounds up, or down. Every case matters.
+Say: Our example works out VAT, at 20 percent, on a price before tax, in pence, and rounds it to the nearest penny.
+  20 percent is a fifth, and a fifth of a price can end in part of a penny, which should round up, or down. So every
+  way the rounding can go is a case worth checking.
 
-## intro: What we'll compare
-- The code under test: the VAT calculator in use today
-- Copy-pasted tests: one method per case, all round numbers
-- A parameterised test: one method, a table of cases, every way the rounding can go
-Picture: scales
-Say: Here is what we will compare. The code under test is the VAT calculator in use today. [pause 300ms] The
-  copy-pasted tests have one method per case, and every amount is a round number. [pause 300ms] The parameterised test
-  is one method with a table of cases, covering every way the rounding can go.
+## intro: The fix: one test, a table of cases
+- Write the check once, and list the cases as rows of a table
+- Each row holds a price and the VAT it should give
+- A new case is one more row, so the awkward ones get added
+Picture: table
+Say: The fix is to write the check once, and list the cases as a table. This is called a parameterised test: one test
+  that runs once for each row. Each row holds a price and the VAT it should give. A new case costs one more row, not a
+  copied test, so the awkward cases, like 3 pence, get added.
 
-## intro: Why copy-pasted tests miss bugs
-- Each new case costs a whole copied method
-- So there are few cases, and they are the easy ones
-- Boundaries and rounding go untested
-Picture: checklist
-Say: Why does it matter? [pause 1600ms] When every new case costs a whole copied method, people write few cases, and they
-  pick the easy ones, like round numbers. The boundaries and the rounding, where the bugs are, go untested.
-
-## intro: How JUnit runs them
-- Mark the method with @ParameterizedTest instead of @Test
-- Give the rows as comma-separated values with @CsvSource
-- JUnit names each run from the row, using the name pattern you give
+## intro: How JUnit runs the table
+- @ParameterizedTest(name = "{0} pence net gives {1} pence VAT")
+- @CsvSource({"3, 1", "998, 200"}): one row per case
+- Each row is its own test: 3 pence net gives 1 pence VAT FAILED
 Picture: robot
-Say: In JUnit, you mark the method as a parameterised test instead of a plain test. You give the rows as comma
-  separated values. JUnit runs the method once per row, and names each run from the row, using a pattern you choose.
+Say: How does JUnit run the table? You mark the method as a parameterised test, with a pattern for each run's name.
+  You give the rows as comma separated values, a price and its VAT. JUnit runs the method once per row, and reports
+  each row by its name. So the failure says exactly which case broke: 3 pence net gives 1 pence VAT.
 
 Include: how-we-build
 

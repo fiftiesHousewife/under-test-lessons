@@ -3,14 +3,14 @@
 Sources: the jetCheck README (what it is, its inspiration in QuickCheck and Hypothesis, automatic minimisation, use in
 IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
 
-## intro: What is property-based testing?
-- An example test checks one case its author thought of
-- A property states a rule that must hold for every input
-- A library tries hundreds of inputs to break the rule
-Picture: dice
-Say: An example test checks one case that its author thought of. A property test states a rule that must hold for every
-  input, like, the shares of a bill always add up to the bill. Then a library tries hundreds of inputs, looking for one
-  that breaks the rule.
+## intro: One person pays every penny left over
+- Split 3 pence between 4 people: the first pays 3, the others 0
+- The tests pass: £9 between 3, £1 between 3, £1.01 between 2
+- Each leaves at most a penny over, so nobody saw the bug
+Picture: bug
+Say: Here is the problem. Split 3 pence between 4 people, and the first person pays all 3, while the others pay
+  nothing. With a bigger bill, one person pays several pence more than everyone else. Yet the tests pass. They split
+  £9 between 3, £1 between 3, and £1.01 between 2. Each of those leaves at most a penny over, so nobody saw the bug.
 
 ## intro: Our example: splitting a bill
 - Share a bill, in pence, between several people
@@ -20,32 +20,24 @@ Picture: pizza
 Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and someone has to pay
   the pennies left over. To be fair, no two people should pay more than a penny apart.
 
-## intro: What we'll compare
-- The code under test: the bill splitter in use today
-- Example tests: each checks one bill its author thought of
-- A property test: checks three rules against a hundred different bills
-Picture: scales
-Say: Here is what we will compare. The code under test is the bill splitter in use today. [pause 300ms] The example
-  tests each check one bill that their author thought of, and they pass. [pause 300ms] The property test states three
-  rules that must hold for every bill, and checks them against a hundred different bills.
+## intro: The fix: state the rules, try a hundred bills
+- Write rules that hold for every bill, not one bill at a time
+- One share each, shares that add up to the bill, no two more than a penny apart
+- A library makes up a hundred bills, and looks for one that breaks a rule
+Picture: dice
+Say: The fix is to state the rules that must hold for every bill, instead of checking one bill at a time. A rule like
+  this is called a property, so this is a property test. Here there are 3 rules: one share for each person, shares
+  that add up to the bill, and no two shares more than a penny apart. Then a library makes up a hundred bills, and
+  looks for one that breaks a rule.
 
-## intro: Why examples are not enough
-- Examples only cover the cases someone thought of
-- Bugs live in the cases nobody thought of
-- Many examples passing is not proof that the rule holds
-Picture: magnifier
-Say: Why are examples not enough? [pause 1600ms] They only cover the cases someone thought of, and bugs tend to live in the
-  cases nobody thought of. A dozen examples passing tells you those dozen cases work. It does not tell you the rule
-  holds.
-
-## intro: How jetCheck works
-- Generates random inputs from building blocks such as numbers and lists
-- Checks the property on each one
-- Shrinks a failing input to the smallest one that still fails
+## intro: How jetCheck looks
+- Bills from building blocks: integers(0, 1_000) pence, integers(1, 12) people
+- forAll(bills, this::isFair) checks the rules on each one
+- It shrinks a failure to the smallest: 3 pence between 4 people gives [3, 0, 0, 0]
 Picture: robot
-Say: jetCheck builds random inputs from simple pieces, like numbers and lists, and checks the property on each one.
-  When an input breaks the rule, jetCheck shrinks it automatically, to the smallest input that still fails. That small
-  case is usually the clearest explanation of the bug.
+Say: Here is how jetCheck looks. It builds each bill from simple pieces: a number of pence up to 1,000, and between 1
+  and 12 people. It checks the rules on every bill it makes. When a bill breaks a rule, jetCheck shrinks it, to the
+  smallest bill that still fails. Here that is 3 pence between 4 people, the clearest explanation of the bug.
 
 Include: how-we-build
 

@@ -6,14 +6,15 @@ checks every 100 milliseconds unless told otherwise); the JUnit user guide (repe
 "Eradicating Non-Determinism in Tests", martinfowler.com, April 2011; John Micco, "Flaky Tests at Google and How We
 Mitigate Them", Google Testing Blog, May 2016.
 
-## intro: What is a flaky test?
-- A test that sometimes passes and sometimes fails, with no change to the code or the test
-- Usually caused by time, by the order tests run in, or by state they share
-- A test that sleeps for a fixed time is the commonest kind
-Picture: dice
-Say: A flaky test sometimes passes and sometimes fails, with no change to the code or the test. It is usually caused by
-  time, by the order the tests run in, or by state the tests share. The commonest kind is a test that sleeps for a fixed
-  time, and hopes the work it is waiting for is done.
+## intro: It passes twice, fails once, then passes again
+- The test places an order, sleeps 200 milliseconds, then checks the email went
+- On a busy build machine, every third email waits 600 milliseconds
+- Run 5 times, it fails on run 3 only: nothing changed, so people just rerun it
+Picture: bug
+Say: Here is the problem. The test places an order, sleeps for 200 milliseconds, and then checks that the
+  confirmation email went. On a busy build machine, every third email waits 600 milliseconds. So, run 5 times, the
+  test passes twice, fails on its third run, and passes again. Nothing changed. A test like this is called flaky, and
+  every flaky failure teaches people to rerun the build, and then to ignore real failures too.
 
 ## intro: Our example: order confirmations
 - A shop's order desk takes an order and returns at once
@@ -24,34 +25,25 @@ Say: Our example is a shop's order desk. It takes an order and returns at once. 
   later, on a background thread, so the customer is never kept waiting. On a busy, shared build machine, the mail
   server is sometimes slow.
 
-## intro: What we'll compare
-- The code under test: the mail server on today's busy machine, where every third message waits
-- The sleeping test: places an order, sleeps a fixed 200 milliseconds, then checks
-- The waiting test: checks again and again until the confirmation has gone, for at most 2 seconds
-- Each test runs 5 times
-Picture: scales
-Say: Here is what we will compare. The code under test is the mail server on today's busy machine, where every third
-  message waits. [pause 300ms] The sleeping test places an order, sleeps for a fixed 200 milliseconds, and then checks.
-  [pause 300ms] The waiting test checks again and again until the confirmation has gone, for at most 2 seconds. And
-  each test runs 5 times.
-
-## intro: Why flaky tests matter
-- A flaky failure teaches people to rerun the build, and then to ignore real failures
-- A longer sleep makes every run slower, and still fails on a slow enough day
-- One clean run proves little: run a new test 5 times before it goes in
+## intro: The fix: wait for the email, not for a fixed time
+- Check again and again until the confirmation has gone, for at most 2 seconds
+- Go on the moment it has: no time wasted on a quiet machine
+- Run every new test 5 times before it goes in: one clean run proves little
 Picture: magnifier
-Say: Why do flaky tests even matter? [pause 1600ms] Every flaky failure teaches people to rerun the build until it
-  passes, and before long they ignore the real failures too. A longer sleep is no cure. It makes every run slower, and
-  still fails on a slow enough day. And one clean run proves little, so run a new test 5 times before it goes in.
+Say: The fix is to wait for the email, not for a fixed time. The test checks again and again until the confirmation
+  has gone, for at most 2 seconds, and goes on the moment it has. A longer sleep is no cure: it slows every run, and
+  still fails on a slow enough day. And because one clean run proves little, every new test runs 5 times before it
+  goes in.
 
-## intro: How Awaitility works
-- You say what you are waiting for, as a condition that is true when the work is done
-- Awaitility checks it again and again, every 100 milliseconds unless told otherwise
-- It goes on the moment the condition is true, and fails with a clear message at the time limit
+## intro: How Awaitility and JUnit look
+- await("the confirmation of order 3").atMost(Duration.ofSeconds(2))
+- .pollInterval(Duration.ofMillis(50)).until(() -> the email has gone)
+- @RepeatedTest(5): run 1 of 5 PASSED ... run 5 of 5 PASSED
 Picture: robot
-Say: With Awaitility, you say what you are waiting for, as a condition that is true when the work is done. Awaitility
-  checks it again and again, every 100 milliseconds unless you tell it otherwise. It goes on the moment the condition
-  is true. And if the time limit passes first, it fails with a message that names what it was waiting for.
+Say: Here is how it looks. With a library called Awaitility, the test says what it is waiting for, here the
+  confirmation of the order, and for how long at most, 2 seconds. Awaitility checks every 50 milliseconds, until the
+  email has gone. If the time runs out first, it fails with a message naming what it was waiting for. And JUnit's
+  repeated test runs the test 5 times, each run reported on its own.
 
 Include: how-we-build
 

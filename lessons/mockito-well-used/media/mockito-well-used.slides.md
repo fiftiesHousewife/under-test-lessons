@@ -7,49 +7,43 @@ a type you don't own, don't mock value objects, don't mock everything); site.moc
 (MIT licence; started by Szczepan Faber in 2008); Martin Fowler, "Mocks Aren't Stubs" (martinfowler.com), for mocks,
 stubs and fakes.
 
-## intro: What is Mockito well used?
-- Mockito makes stand-ins, so a test can replace part of the system
-- Used well, it replaces only the edges the code owns, and checks results
-- Used badly, it mocks everything, and checks the calls the code makes
-Picture: robot
-Say: Mockito is a Java library that makes stand-ins, so a test can replace part of the system. Used well, it replaces
-  only the edges your code owns, and the test checks results. Used badly, it mocks everything, and the test checks the
-  calls the code makes, which just repeats the code.
+## intro: A £12.50 mug comes back, and £37.50 is refunded
+- The customer returns a mug: £12.50 should go back to the card
+- The card gets the whole order back: £37.50
+- The test passes: it makes stand-ins for everything, and any refund will do
+Picture: bug
+Say: Here is the problem. A customer returns a mug, so £12.50 should go back to their card. Instead, the card gets the
+  whole order back: £37.50. Yet the test passes. It replaces everything around the refunds with stand-ins, called
+  mocks, made by a library called Mockito. Then it checks only that the order was looked up, and that some refund was
+  sent. Any refund will do.
 
 ## intro: Our example: refunds for returned items
 - A customer orders a mug at £12.50 and a teapot at £25
 - The mug comes back, so £12.50 goes back to the card
 - The money leaves through the card provider
 Picture: basket
-Say: Our example is a shop's refunds. A customer orders a mug at 12 pounds 50, and a teapot at 25 pounds. The mug comes
-  back, so 12 pounds 50 should go back to the card the order was paid with. And that money leaves the shop through the
-  card provider.
+Say: Our example is a shop's refunds. A customer orders a mug at £12.50, and a teapot at £25. The mug comes back, so
+  £12.50 should go back to the card the order was paid with. And that money leaves the shop through the card
+  provider.
 
-## intro: What we'll compare
-- The code under test: today's refunds, which send the card the whole order's total
-- A weak test that mocks everything and checks that a refund was sent
-- A strong test with a fake order book, and an argument captor that checks what was sent
+## intro: The fix: mock only where the money leaves
+- One mock, for the shop's own interface to the card provider
+- The orders come from a fake: a small map of real orders
+- Catch the refund the code sent, and check its card and amount
 Picture: scales
-Say: Here is what we will compare. The code under test is today's refunds, which send the card the whole order's
-  total. [pause 300ms] A weak test mocks everything, and checks that some refund was sent. [pause 300ms] And a strong
-  test uses a fake order book, and an argument captor, to check exactly what was sent.
+Say: The fix is to mock only the edge where money leaves the shop: the shop's own interface to the card provider. The
+  orders come from a fake instead, a small working stand-in, here a map of real orders. Then the test catches the
+  refund the code really sent, and checks its card and its amount, like any other result. A test that only checks
+  calls repeats the code, so it agrees with the code's mistakes.
 
-## intro: Why it matters
-- A test that checks calls repeats the code, so it agrees with the code's mistakes
-- Checking that a call was made says nothing about what it carried
-- Tests full of mocks break when code is tidied, and pass when it is wrong
-Picture: magnifier
-Say: Why does it even matter? [pause 1600ms] A test that checks calls repeats the code, so it agrees with the code's
-  mistakes. Checking that a call was made says nothing about what it carried. And tests full of mocks break when the
-  code is tidied, while still passing when it is wrong.
-
-## intro: How Mockito works
-- mock() makes a stand-in; when() says what it answers
-- verify() checks a call was made
-- An argument captor catches what was passed, so the test can check it
+## intro: How Mockito looks
+- mock(CardPayments.class): the one stand-in
+- ArgumentCaptor<Refund>, then verify(payments).refund(sent.capture())
+- expected: Refund[card=card ending 4242, pence=1250] but was: pence=3750
 Picture: plug
-Say: Mockito makes a stand-in with mock, and when says what the stand-in answers. Verify checks that a call was made.
-  And an argument captor catches what the code passed in that call, so the test can check it, like any other result.
+Say: Here is how Mockito looks. Mock makes the one stand-in, for the card payments. An argument captor catches what
+  the code passed, when verify checks that the refund was sent. Then the test checks the captured refund. Today it
+  expected 1,250 pence to the card ending 4242, and found 3,750.
 
 Include: how-we-build
 

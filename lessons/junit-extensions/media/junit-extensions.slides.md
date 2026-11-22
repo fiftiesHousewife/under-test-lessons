@@ -4,14 +4,14 @@ Sources: junit.org and the JUnit user guide (the extension model, in contrast to
 lifecycle callbacks; keeping state in extensions; JUnit 5 in 2017; JUnit 6 is the current generation), and JUnit 4's
 release notes for version 4.7 (rules, such as TemporaryFolder and ExternalResource).
 
-## intro: What is a JUnit extension?
-- A small class JUnit runs around your tests: before each one, after each one, or both
-- It sets up what the tests need, and cleans up after them
-- Written once, used by any test class with one line
-Picture: plug
-Say: A JUnit extension is a small class that JUnit runs around your tests: before each one, after each one, or both.
-  It sets up what the tests need, and cleans up after them. You write it once, and any test class can use it, with
-  one line.
+## intro: The receipt test fails, and the receipt is fine
+- The trade invoice test switches VAT off for the whole shop, and leaves it off
+- The next test, the shop receipt, gets £100.00 + VAT, not £120.00
+- The failure blames the receipt, and only shows when the tests run in that order
+Picture: bug
+Say: Here is the problem. The test of a trade invoice switches VAT off for the whole shop, and leaves it off. So the
+  next test, of a shop receipt, gets £100 plus VAT, not £120, and fails. The failure blames the receipt, which is
+  fine. And it only shows when the tests run in that order, so it comes and goes.
 
 ## intro: Our example: a shop's settings
 - Old systems often keep settings shared by the whole program
@@ -22,32 +22,24 @@ Say: Our example is a shop. Like many old systems, it keeps settings shared by t
   prices include VAT, and what the VAT rate is. Shop receipts read those settings. Trade invoices, for business
   customers, show prices without VAT.
 
-## intro: What we'll compare
-- The code under test: today's trade invoice
-- Tests with set-up by hand: settings set once, never put back
-- Tests that use an extension: set up, put back and checked around every test
-Picture: scales
-Say: Here is what we will compare. The code under test is today's trade invoice. [pause 300ms] One set of tests sets
-  the shop's settings up by hand, once, and never puts them back. [pause 300ms] The other uses an extension, which sets
-  them up, puts them back, and checks them, around every test.
-
-## intro: Why it matters
-- A test that leaves something changed breaks a later test, not itself
-- The failure blames the wrong code, and comes and goes with the order tests run in
-- Clean-up copied into every class is the part people forget
-Picture: bug
-Say: Why does this even matter? [pause 1600ms] A test that leaves something changed doesn't fail itself. It breaks a
-  later test. So the failure blames the wrong code, and it comes and goes with the order the tests run in. And when
-  every test class copies its own clean-up by hand, the clean-up is the part people forget.
+## intro: The fix: guard the settings around every test
+- Before each test, set the standard settings: VAT included, at 20%
+- After each test, put them back, and fail the test that left one changed
+- Written once, as a JUnit extension, and used by any test class
+Picture: plug
+Say: The fix is to guard the shop's settings around every test. Before each test, set the standard settings: prices
+  include VAT, at 20 percent. After each test, put them back, and fail the test that left one changed. JUnit calls a
+  small class like this, which it runs around your tests, an extension. It's written once, and any test class can
+  use it.
 
 ## intro: How JUnit runs an extension
-- The extension implements callbacks, such as before each test and after each test
-- @ExtendWith on a test class asks JUnit to use it
-- An exception in the after-each callback fails that test, so a leak is caught where it starts
+- class StandardShopSettings implements BeforeEachCallback, AfterEachCallback
+- @ExtendWith(StandardShopSettings.class) on the test class
+- The test that leaks fails: prices.include.vat was true, now false
 Picture: robot
-Say: How does JUnit run an extension? An extension implements callbacks, such as before each test, and after each
-  test. Marking a test class with extend with asks JUnit to use it. And if the after-each callback throws an
-  exception, that test fails. So a leak is caught in the test where it starts.
+Say: How does JUnit run an extension? The extension has 2 methods JUnit calls back: one before each test, and one
+  after. Marking a test class with extend with asks JUnit to use it. And now the test that leaks is the one that
+  fails, saying the setting for prices including VAT was true, and is now false.
 
 ## closing: When to use an extension
 - When many test classes repeat the same set-up and clean-up: settings, clocks, folders, data

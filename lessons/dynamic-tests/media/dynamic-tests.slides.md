@@ -3,13 +3,14 @@
 Sources: junit.org, the JUnit user guide (dynamic tests with @TestFactory, part of JUnit Jupiter since JUnit 5 in 2017;
 JUnit 6 is the current generation).
 
-## intro: What are dynamic tests?
-- Tests made while the tests run, from data: one test per file, row or case
-- Each one runs, passes or fails, and is reported on its own
-- Add data, and you add tests, with no new test code
-Picture: folders
-Say: Dynamic tests are made while the tests run, from data: one test for each file, row, or case. Each one runs,
-  passes or fails, and is reported on its own. Add more data, and you add more tests, with no new test code.
+## intro: Letters go out to Mr Patrick O'brien
+- 3 of 5 example names come out wrong: O'brien, Smith-jones, Mary-ann
+- The test loops over all 5, and stops at the first wrong one
+- It reports 1 failure, with no example's name: the other 2 stay hidden
+Picture: bug
+Say: Here is the problem. Letters go out to Mister Patrick O'brien, with a small b. 3 of the 5 example names come out
+  wrong: O'brien, Smith-jones, and Mary-ann. The test loops over all 5 examples, and stops at the first wrong one. So it
+  reports a single failure, and its name doesn't say which example broke. The other 2 stay hidden.
 
 ## intro: Our example: names on letters
 - Customer records are stored as SURNAME,FIRST NAME,TITLE, in capitals
@@ -20,30 +21,24 @@ Say: Our example writes names on letters. The old system stores customer records
   all in capitals. Letters need the name written properly, such as Mister Patrick O'Brien. And a folder of example
   files shows the expected name for each record.
 
-## intro: What we'll compare
-- The code under test: today's name formatter
-- One test that loops over every example file
-- A test factory: one test for each example, named after its file
-Picture: scales
-Say: Here is what we will compare. The code under test is today's name formatter. [pause 300ms] One test loops over
-  every example file. [pause 300ms] And a test factory makes one test for each example, named after its file.
-
-## intro: Why one test per example
-- A loop stops at the first failure, hiding the rest
-- Its name never says which example broke
-- Old systems often come with folders of examples: turn each into a test
-Picture: magnifier
-Say: Why one test per example? [pause 1600ms] A loop stops at the first failure, and hides the rest. Its name never says
-  which example broke. And old systems often come with whole folders of examples, from regression packs and old bug
-  reports. Each one deserves to be its own test.
+## intro: The fix: one test for each example file
+- Make the tests from the folder, while the tests run: one per file
+- Each is named after its file, and passes or fails on its own
+- Adding an example is adding a file, with no new test code
+Picture: folders
+Say: The fix is to make one test for each example file, from the folder, while the tests run. Tests made like this,
+  from data, are called dynamic tests. Each one is named after its file, and passes or fails on its own, so all 3
+  wrong names are reported. And adding an example is adding a file, with no new test code.
 
 ## intro: How JUnit makes them
-- A method marked @TestFactory returns a stream of dynamic tests
-- Each dynamic test has a name and the code to run
-- JUnit runs and reports each one, like any other test
+- @TestFactory on a method that returns Stream<DynamicTest>
+- dynamicTest(fileName, () -> check the file): a name, and the code to run
+- Each is reported by name: apostrophe.txt FAILED, double-barrelled.txt FAILED
 Picture: robot
-Say: In JUnit, a method marked as a test factory returns a stream of dynamic tests. Each one has a name, and the code
-  to run. JUnit runs each one, and reports it, just like any other test.
+Say: How does JUnit make them? You mark a method as a test factory, and it returns a stream of dynamic tests. Each
+  one has a name, here the file's name, and the code to run. JUnit runs and reports each one like any other test. So
+  the report names every example that broke: the apostrophe, the double-barrelled surname, and the hyphenated first
+  name.
 
 ## closing: When to use dynamic tests
 - When the cases live in files: regression packs, sample messages, old bug reports
