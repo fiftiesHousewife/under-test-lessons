@@ -2,15 +2,15 @@ $ ./gradlew :lessons:mutation-testing:pitest -Pcode=answer
 Line coverage: 13 of 13 lines run by the tests (100%)
 Planted bugs:  13, caught 6, missed 7
 Caught - a test failed, as it should:
-  line 19  if (total < 0) {                         condition reversed     failed: bigOrderGetsDiscount and 6 more
-  line 23  if (total >= 10_000) {                   condition reversed     failed: smallOrder, mediumOrder and 1 more
+  line 19  if (total < 0) {                         condition reversed     failed: mediumOrder, bigOrderGetsDiscount and 5 more
+  line 23  if (total >= 10_000) {                   condition reversed     failed: mediumOrder, smallOrder and 1 more
   line 25  } else if (total >= 5_000) {             boundary moved by one  failed: discountStartsAtExactlyFiftyPounds
-  line 25  } else if (total >= 5_000) {             condition reversed     failed: smallOrder, mediumOrder and 1 more
-  line 30  if (loyalCustomer) {                     condition reversed     failed: smallOrder, mediumOrder and 1 more
-  line 33  return percent;                          result replaced with 0 failed: bigOrderGetsDiscount, mediumOrder and 1 more
+  line 25  } else if (total >= 5_000) {             condition reversed     failed: mediumOrder, smallOrder and 1 more
+  line 30  if (loyalCustomer) {                     condition reversed     failed: mediumOrder, smallOrder and 1 more
+  line 33  return percent;                          result replaced with 0 failed: mediumOrder, bigOrderGetsDiscount and 1 more
 Missed - every test that ran still passed:
-  line 19  if (total < 0) {                         boundary moved by one  passed: bigOrderGetsDiscount and 6 more
-  line 23  if (total >= 10_000) {                   boundary moved by one  passed: bigOrderGetsDiscount, smallOrder and 4 more
+  line 19  if (total < 0) {                         boundary moved by one  passed: mediumOrder, bigOrderGetsDiscount and 5 more
+  line 23  if (total >= 10_000) {                   boundary moved by one  passed: mediumOrder, bigOrderGetsDiscount and 4 more
   line 31  percent += 2;                            += 2 became -= 2       passed: loyalCustomer
   line 39  return total - (total * percent / 100);  * became /             passed: finalPrice
   line 39  return total - (total * percent / 100);  / became *             passed: finalPrice

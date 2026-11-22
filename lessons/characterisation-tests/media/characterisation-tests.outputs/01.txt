@@ -3,5 +3,6 @@ RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASS
 RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
 StatementCharacterisationTest > printsTheSameStatementAsToday() PASSED
 StatementWeakTest > printsSomething() PASSED
-All 4 tests passed.
+ZeroBalanceStatementAnswerTest > chargesTheFeeWhenTheBalanceReachesExactlyZero() PASSED
+All 5 tests passed.
 Approvals: every output matches its approved file.

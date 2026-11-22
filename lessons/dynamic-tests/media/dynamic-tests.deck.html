@@ -183,7 +183,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  18                      assertThat(Formatters.current().forLetter(lines.get(0))).isEqualTo(lines.get(1));
  19                  }));
  20      }</pre></figure></main><aside class="notes">Now, a test factory. It makes one test for each example file, and names each test after its file.</aside><audio class="voice" preload="none" src="dynamic-tests.deck-voice/ddddaff6c0f2d3e2.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Every failure named</h1><div class="rule"></div><p class="scene-text">We run the tests against today's formatter. The loop shows one failure, then stops, and its name doesn't say which example. The factory runs every example, and names all three failures: an apostrophe, and two hyphens.</p><p class="callout">The loop shows one failure, then stops. The factory names all three: apostrophes and hyphens.</p></section><figure class="code" style="--code-size: 13px"><pre class="command">$ ./gradlew :lessons:dynamic-tests:test -Pcode=today</pre><pre class="output">AllExamplesInOneTest &gt; everyExampleFormatsAsExpected() FAILED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Every failure named</h1><div class="rule"></div><p class="scene-text">We run the tests against today's formatter. The loop shows one failure, then stops, and its name doesn't say which example. The factory runs every example, and names all three failures: an apostrophe, and two hyphens.</p><p class="callout">The loop shows one failure, then stops. The factory names all three: apostrophes and hyphens.</p></section><figure class="code" style="--code-size: 21px"><pre class="command">$ ./gradlew :lessons:dynamic-tests:test -Pcode=today</pre><pre class="output">AllExamplesInOneTest &gt; everyExampleFormatsAsExpected() FAILED
     org.opentest4j.AssertionFailedError:
     expected: &quot;Mr Patrick O'Brien&quot;
      but was: &quot;Mr Patrick O'brien&quot;
@@ -201,10 +201,7 @@ EachExampleTest &gt; eachExampleFormatsAsExpected() &gt; hyphenated-first-name.t
      but was: &quot;Mrs Mary-ann Lee&quot;
 EachExampleTest &gt; eachExampleFormatsAsExpected() &gt; plain-name.txt PASSED
 EachExampleTest &gt; eachExampleFormatsAsExpected() &gt; several-words.txt PASSED
-6 tests completed, 4 failed
-* What went wrong:
-Execution failed for task ':lessons:dynamic-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 4 of 6 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests against today's formatter. The loop shows one failure, then stops, and its name doesn't say which example. The factory runs every example, and names all three failures: an apostrophe, and two hyphens.</aside><audio class="voice" preload="none" src="dynamic-tests.deck-voice/2e3188924da27224.m4a"></audio></section>
+6 tests completed, 4 failed</pre></figure></main><aside class="notes">We run the tests against today's formatter. The loop shows one failure, then stops, and its name doesn't say which example. The factory runs every example, and names all three failures: an apostrophe, and two hyphens.</aside><audio class="voice" preload="none" src="dynamic-tests.deck-voice/2e3188924da27224.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed formatter</h1><div class="rule"></div><p class="scene-text">Now the formatter that starts a new word after a space, a hyphen, or an apostrophe. We run the same tests. Every example passes. And adding an example is just adding a file.</p><p class="callout">Every example passes. A new example is just a new file: no new test code.</p></section><figure class="code" style="--code-size: 21px"><figcaption>the fixed formatter</figcaption><pre> 14      private static String capitalise(final String part) {
  15          final StringBuilder name = new StringBuilder(part.length());
  16          boolean startOfWord = true;

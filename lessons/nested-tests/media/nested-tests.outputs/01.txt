@@ -12,6 +12,3 @@ A loan > when repaid > cannot be approved PASSED
 A loan > when approved > cannot be approved again PASSED
 A loan > when approved > can be repaid PASSED
 10 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:nested-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 10 tests failed. Report: build/reports/tests/test/index.html

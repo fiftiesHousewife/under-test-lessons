@@ -170,10 +170,10 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  66  artemis = &quot;2.57.0&quot;
  67  jakarta-jms = &quot;3.1.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
-128  artemis-jakarta-server = { module = &quot;org.apache.artemis:artemis-jakarta-server&quot;, version.ref = &quot;artemis&quot; }
-129  jakarta-jms-api = { module = &quot;jakarta.jms:jakarta.jms-api&quot;, version.ref = &quot;jakarta-jms&quot; }</pre></figure></main><aside class="notes">Step one. Add Apache Artemis, a message broker, and the programming interface for JMS, the Java standard for sending and receiving messages, to the version catalogue.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/f426162d2a4d5f92.m4a"></audio></section>
+133  artemis-jakarta-server = { module = &quot;org.apache.artemis:artemis-jakarta-server&quot;, version.ref = &quot;artemis&quot; }
+134  jakarta-jms-api = { module = &quot;jakarta.jms:jakarta.jms-api&quot;, version.ref = &quot;jakarta-jms&quot; }</pre></figure></main><aside class="notes">Step one. Add Apache Artemis, a message broker, and the programming interface for JMS, the Java standard for sending and receiving messages, to the version catalogue.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/f426162d2a4d5f92.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><p class="scene-text">Step two. The shop's code compiles against the JMS interface alone. The tests get the whole broker, which runs inside the test, with no network and no container.</p></section><figure class="code" style="--code-size: 15px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      compileOnly(libs.jakarta.jms.api) // the application server or the client library provides it in production</mark>
 <mark> 11      testImplementation(libs.artemis.jakarta.server) // the broker, and its JMS client, run inside the test</mark>
@@ -250,7 +250,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  36          assertThat(broker.browse(EmbeddedBroker.DEAD_LETTERS)).as(&quot;dead-letter queue&quot;)
  37                  .isEqualTo(List.of(ExampleMessages.forOrder(&quot;A-1003&quot;)));
  38      }</pre></figure></main><aside class="notes">And the strong tests. They send the example messages to the broker, and check what the consumer did. In the first, the payment book is busy once, for order A 1002. Every payment must still be recorded. In the second, the message no one can read must end up in the dead-letter queue.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/48d7295f97f7bb38.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The broker finds lost payments</h1><div class="rule"></div><p class="scene-text">We run the tests against today's consumer. The unit test passes. On the broker, order A 1002 is lost, because it was acknowledged before the book refused it. And the dead-letter queue is empty, so the unreadable message has vanished without a trace.</p><p class="callout">The hand-built test passes. On the broker, a payment is lost and the unreadable message vanishes.</p></section><figure class="code" style="--code-size: 13px"><pre class="command">$ ./gradlew :lessons:message-consumers:test -Pcode=today</pre><pre class="output">BrowsingTest &gt; browsingReadsEveryMessageWithoutTakingAny() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The broker finds lost payments</h1><div class="rule"></div><p class="scene-text">We run the tests against today's consumer. The unit test passes. On the broker, order A 1002 is lost, because it was acknowledged before the book refused it. And the dead-letter queue is empty, so the unreadable message has vanished without a trace.</p><p class="callout">The hand-built test passes. On the broker, a payment is lost and the unreadable message vanishes.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:message-consumers:test -Pcode=today</pre><pre class="output">BrowsingTest &gt; browsingReadsEveryMessageWithoutTakingAny() PASSED
 PaymentByHandTest &gt; recordsThePaymentInAMessage() PASSED
 PaymentsOnABrokerTest &gt; aMessageDeliveredAgainIsRecordedOnce() FAILED
     java.lang.AssertionError: [payments recorded for an order delivered twice]
@@ -264,10 +264,7 @@ PaymentsOnABrokerTest &gt; aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() FAILED
     org.opentest4j.AssertionFailedError: [payments recorded]
     expected: [&quot;A-1001&quot;, &quot;A-1002&quot;, &quot;A-1004&quot;]
      but was: [&quot;A-1001&quot;, &quot;A-1004&quot;]
-5 tests completed, 3 failed
-* What went wrong:
-Execution failed for task ':lessons:message-consumers:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 3 of 5 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests against today's consumer. The unit test passes. On the broker, order A 1002 is lost, because it was acknowledged before the book refused it. And the dead-letter queue is empty, so the unreadable message has vanished without a trace.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/566c92dd7876d531.m4a"></audio></section>
+5 tests completed, 3 failed</pre></figure></main><aside class="notes">We run the tests against today's consumer. The unit test passes. On the broker, order A 1002 is lost, because it was acknowledged before the book refused it. And the dead-letter queue is empty, so the unreadable message has vanished without a trace.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/566c92dd7876d531.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed consumer</h1><div class="rule"></div><p class="scene-text">Now the consumer with a transacted session. It commits each message only after the payment is recorded. If recording fails, it rolls back, and the broker delivers the message again. We run the same tests. Nothing is lost.</p><p class="callout">Every payment recorded, the bad message kept for people to look at, and all in seconds.</p></section><figure class="code" style="--code-size: 17px"><figcaption>the fixed consumer</figcaption><pre> 30      public void takeWaiting() throws JMSException {
  31          try (Connection connection = factory.createConnection();
  32                  Session session = connection.createSession(Session.SESSION_TRANSACTED)) {

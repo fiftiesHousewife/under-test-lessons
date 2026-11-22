@@ -1,0 +1,21 @@
+$ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=answer
+KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
+PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
+WholeJobTest > aCleanedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [closing line]
+    expected: ClosingRecord[count=6, total=427.14]
+     but was: null
+WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() FAILED
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [closing line]
+    expected: ClosingRecord[count=12, total=17148.88]
+     but was: null
+ManyChunksAnswerTest > theClosingLineCoversEveryChunk() FAILED
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [closing line]
+    expected: "TRAILER,250,2196.25"
+     but was: "PAY,00000250,17.50"
+SettlementTotalsTest > aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
+SettlementTotalsTest > aFreshStepStartsFromNothing() PASSED
+7 tests completed, 3 failed

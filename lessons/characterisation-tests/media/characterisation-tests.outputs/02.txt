@@ -17,6 +17,3 @@ Approvals: the output differs from its approved file (- approved, + received):
   + 20 Mar  Car insurance              -340  balance   2055
   - Closing balance: 2030
   + Closing balance: 2055
-* What went wrong:
-Execution failed for task ':lessons:characterisation-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 4 tests failed. Report: build/reports/tests/test/index.html

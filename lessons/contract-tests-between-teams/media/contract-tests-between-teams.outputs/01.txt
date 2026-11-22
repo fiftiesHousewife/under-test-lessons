@@ -14,6 +14,3 @@ StockServicePactTest > meetsThePact(PactVerificationContext) > order-screen - a 
 StockServiceTest > anItemNobodyStocks() PASSED
 StockServiceTest > anItemOnTheShelves() PASSED
 5 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:contract-tests-between-teams:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 5 tests failed. Report: build/reports/tests/test/index.html

@@ -1,0 +1,9 @@
+$ ./gradlew :lessons:structured-output-comparison:test -Pcode=answer
+CompareJsonTest > summaryHasTheExpectedLinesAndTotal() FAILED
+    org.opentest4j.AssertionFailedError: JSON documents are different:
+    Different value found in node "totalPence", expected: <1120> but was: <370>.
+ContainsTextTest > summaryMentionsEveryItemAndATotal() PASSED
+FixedClockAnswerTest > summaryHasTheTimeFromItsClock() FAILED
+    org.opentest4j.AssertionFailedError: JSON documents are different:
+    Different value found in node "totalPence", expected: <1120> but was: <370>.
+3 tests completed, 2 failed

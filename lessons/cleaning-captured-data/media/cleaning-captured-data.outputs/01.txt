@@ -17,6 +17,3 @@ ReportsStillWorkTest > ordersStillMatchPaymentsByAccount() FAILED
      but was: [140]
 SyntheticCleaningTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
 8 tests completed, 3 failed
-* What went wrong:
-Execution failed for task ':lessons:cleaning-captured-data:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 3 of 8 tests failed. Report: build/reports/tests/test/index.html

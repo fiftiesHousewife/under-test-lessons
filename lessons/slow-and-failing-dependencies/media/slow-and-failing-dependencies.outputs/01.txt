@@ -16,6 +16,3 @@ SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [3] fa
 SupplierFaultTest > slowSupplierCostsTheShopOneTimeout() FAILED
     org.opentest4j.AssertionFailedError: the shop kept the customer waiting for the supplier ==> execution timed out after 3000 ms
 6 tests completed, 4 failed
-* What went wrong:
-Execution failed for task ':lessons:slow-and-failing-dependencies:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 4 of 6 tests failed. Report: build/reports/tests/test/index.html

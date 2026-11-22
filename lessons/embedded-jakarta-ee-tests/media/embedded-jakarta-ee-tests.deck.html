@@ -169,11 +169,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  14  weld = &quot;7.0.0.Final&quot;
  15  jakarta-cdi = &quot;5.0.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
- 76  weld-junit5 = { module = &quot;org.jboss.weld:weld-junit5&quot;, version.ref = &quot;weld-junit&quot; }
- 77  weld-core-bom = { module = &quot;org.jboss.weld:weld-core-bom&quot;, version.ref = &quot;weld&quot; }
- 78  jakarta-cdi-api = { module = &quot;jakarta.cdi:jakarta.cdi-api&quot;, version.ref = &quot;jakarta-cdi&quot; }</pre></figure></main><aside class="notes">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/f72f1e28482be92e.m4a"></audio></section>
+ 81  weld-junit5 = { module = &quot;org.jboss.weld:weld-junit5&quot;, version.ref = &quot;weld-junit&quot; }
+ 82  weld-core-bom = { module = &quot;org.jboss.weld:weld-core-bom&quot;, version.ref = &quot;weld&quot; }
+ 83  jakarta-cdi-api = { module = &quot;jakarta.cdi:jakarta.cdi-api&quot;, version.ref = &quot;jakarta-cdi&quot; }</pre></figure></main><aside class="notes">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/f72f1e28482be92e.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><p class="scene-text">Step two. The lesson compiles against the CDI interface, which the application server provides in production. And its tests use Weld.</p></section><figure class="code" style="--code-size: 19px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      compileOnly(libs.jakarta.cdi.api) // the application server provides it in production</mark>
 <mark> 11      testImplementation(platform(libs.weld.core.bom)) // Weld 7, the CDI 5 container</mark>
@@ -223,16 +223,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  22      void addsVatAtTheStandardRate() {
  23          assertThat(weld.select(Checkouts.chosen()).get().totalPence(1000)).isEqualTo(1200);
  24      }</pre></figure></main><aside class="notes">Now, a test in a container. Weld, the same container application servers use, starts inside the test, and wires the beans exactly as the server would.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/a18d5e70e0e21217.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The container finds the wiring bug</h1><div class="rule"></div><p class="scene-text">We run the tests against today's checkout. By hand, it's right. In the container, the checkout gets the reduced rate, because it's the only one without a mark. Five percent, instead of twenty.</p><p class="callout">By hand, it's right. In the container, the checkout gets the reduced rate: 5% instead of 20%.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=today</pre><pre class="output">CheckoutByHandTest &gt; addsVatAtTheStandardRate() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The container finds the wiring bug</h1><div class="rule"></div><p class="scene-text">We run the tests against today's checkout. By hand, it's right. In the container, the checkout gets the reduced rate, because it's the only one without a mark. Five percent, instead of twenty.</p><p class="callout">By hand, it's right. In the container, the checkout gets the reduced rate: 5% instead of 20%.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=today</pre><pre class="output">CheckoutByHandTest &gt; addsVatAtTheStandardRate() PASSED
 CheckoutInContainerTest &gt; theReducedRateIsStillThereForThingsThatNeedIt() PASSED
 CheckoutInContainerTest &gt; addsVatAtTheStandardRate() FAILED
     org.opentest4j.AssertionFailedError:
     expected: 1200
      but was: 1050
-3 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:embedded-jakarta-ee-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 1 of 3 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests against today's checkout. By hand, it's right. In the container, the checkout gets the reduced rate, because it's the only one without a mark. Five percent, instead of twenty.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/dc7420254871e132.m4a"></audio></section>
+3 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against today's checkout. By hand, it's right. In the container, the checkout gets the reduced rate, because it's the only one without a mark. Five percent, instead of twenty.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/dc7420254871e132.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed checkout</h1><div class="rule"></div><p class="scene-text">Now the checkout that asks for the standard rate, by name. We run the same tests. It's wired as intended.</p><p class="callout">Wired as intended, and tested in seconds, with no application server.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the fixed checkout</figcaption><pre> 15      @Inject
 <mark> 16      public StandardCheckout(@Standard final TaxRate rate) {</mark>
  17          this.rate = rate;

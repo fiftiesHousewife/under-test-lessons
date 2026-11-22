@@ -55,6 +55,21 @@ class LessonFileChecksTest {
     }
 
     @Test
+    void aLessonWithAnExampleMustTeachATechniqueAndAMapNeedNot() {
+        TestRepo.write(root, "lessons/feature-flags/lesson.yaml", "id: feature-flags\ntitle: Flags\ntechniques: []\n");
+        final List<String> withoutExample = LessonFileChecks.check(root, Optional.empty()).stream()
+                .map(Problem::message).toList();
+        TestRepo.write(root, "lessons/feature-flags/example/build.gradle.kts", "plugins { }\n");
+
+        final List<String> withExample = LessonFileChecks.check(root, Optional.empty()).stream()
+                .map(Problem::message).toList();
+
+        assertAll(
+                () -> assertThat(withoutExample).noneMatch(message -> message.contains("names no toolkit technique")),
+                () -> assertThat(withExample).anyMatch(message -> message.contains("names no toolkit technique")));
+    }
+
+    @Test
     void failsTheBuildOnAnyProblem() {
         TestRepo.write(root, "lessons/new-lesson/README.md", "# New\n");
 

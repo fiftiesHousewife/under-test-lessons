@@ -92,6 +92,9 @@ Say: JUnit has made temporary folders for tests since version five point four, i
 - https://www.datafaker.net — Datafaker, and its guide to repeatable results
 - https://junit.org — JUnit, with its user guide on temporary folders
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: run the job on 250 payments, three chunks, and check the closing line; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the Spring Batch guide to testing jobs, Datafaker's guide, and the JUnit user guide on
   temporary folders. The links on screen also take you to this lesson's test code and examples, to run yourself.
+  And try the exercise in the README: run the whole job on 250 payments, enough for 3 chunks, and check the closing
+  line covers them all.

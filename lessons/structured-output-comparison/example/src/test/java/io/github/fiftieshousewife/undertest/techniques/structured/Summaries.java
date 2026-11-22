@@ -4,8 +4,12 @@ import io.github.fiftieshousewife.undertest.techniques.structured.fixed.FixedOrd
 import io.github.fiftieshousewife.undertest.techniques.structured.today.TodaysOrderSummary;
 import java.time.Clock;
 import java.util.List;
+import java.util.Set;
 
-/** The summary the tests run against: the fixed one, or today's with -Pcode=today. Both use the real clock. */
+/**
+ * The summary the tests run against: the fixed one, or today's with -Pcode=today (and with -Pcode=answer, which adds
+ * the exercise's answer). Both use the real clock.
+ */
 final class Summaries {
 
     static final List<Line> ORDER = List.of(new Line("Tea", 250, 4), new Line("Biscuits", 120, 1));
@@ -15,7 +19,7 @@ final class Summaries {
 
     static String jsonForTheOrder() {
         final Clock clock = Clock.systemUTC();
-        final OrderSummary summary = "today".equals(System.getProperty("code"))
+        final OrderSummary summary = Set.of("today", "answer").contains(System.getProperty("code"))
                 ? new TodaysOrderSummary(clock) : new FixedOrderSummary(clock);
         return summary.json(ORDER);
     }

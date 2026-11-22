@@ -14,6 +14,3 @@ PaymentsOnABrokerTest > aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() FAILED
     expected: ["A-1001", "A-1002", "A-1004"]
      but was: ["A-1001", "A-1004"]
 5 tests completed, 3 failed
-* What went wrong:
-Execution failed for task ':lessons:message-consumers:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 3 of 5 tests failed. Report: build/reports/tests/test/index.html

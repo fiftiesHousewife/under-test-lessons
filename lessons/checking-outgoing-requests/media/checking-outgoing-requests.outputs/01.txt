@@ -28,6 +28,3 @@ RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
       "currency" : "GBP"
     }>
 4 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:checking-outgoing-requests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 4 tests failed. Report: build/reports/tests/test/index.html

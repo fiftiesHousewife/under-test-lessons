@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: mockito-well-used
 title: Mockito well used
-techniques: []
+techniques: [mockito-well-used]

@@ -6,6 +6,3 @@ CheckoutInContainerTest > addsVatAtTheStandardRate() FAILED
     expected: 1200
      but was: 1050
 3 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:embedded-jakarta-ee-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 3 tests failed. Report: build/reports/tests/test/index.html

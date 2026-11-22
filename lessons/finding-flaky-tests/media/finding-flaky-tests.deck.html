@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  55  awaitility = &quot;4.3.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
-114  awaitility = { module = &quot;org.awaitility:awaitility&quot;, version.ref = &quot;awaitility&quot; }</pre></figure></main><aside class="notes">Step one. Add Awaitility to the version catalogue.</aside><audio class="voice" preload="none" src="finding-flaky-tests.deck-voice/8fd30c57a54200c4.m4a"></audio></section>
+119  awaitility = { module = &quot;org.awaitility:awaitility&quot;, version.ref = &quot;awaitility&quot; }</pre></figure></main><aside class="notes">Step one. Add Awaitility to the version catalogue.</aside><audio class="voice" preload="none" src="finding-flaky-tests.deck-voice/8fd30c57a54200c4.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it to the lesson. Only the tests need to wait, so it is a test dependency.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.awaitility)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it to the lesson. Only the tests need to wait, so it is a test dependency.</aside><audio class="voice" preload="none" src="finding-flaky-tests.deck-voice/f5c0d20e9d091e4b.m4a"></audio></section>
@@ -194,7 +194,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  22          assertThat(MAIL.sent()).withFailMessage(&quot;no confirmation of order %d after 200 ms&quot;, order)
  23                  .contains(&quot;Order &quot; + order + &quot; confirmed&quot;);
  24      }</pre></figure></main><aside class="notes">Now, the sleeping test. It places an order, sleeps for 200 milliseconds, and then checks that the confirmation has gone. The sleep is a guess at how long that takes. A repeated test runs it 5 times.</aside><audio class="voice" preload="none" src="finding-flaky-tests.deck-voice/5c6a64c034313200.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Five runs find the flaky test</h1><div class="rule"></div><p class="scene-text">We run the tests on today's busy machine. The sleeping test passes twice, fails on its third run, and then passes again. Nothing changed between the runs. That is a flaky test. Run only once, it would have passed, and been merged.</p><p class="callout">Nothing changed between runs: run 3 waited 600 ms for the mail queue, longer than the test slept.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:finding-flaky-tests:test -Pcode=today</pre><pre class="output">SleepingTest &gt; the confirmation is sent &gt; run 1 of 5 PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Five runs find the flaky test</h1><div class="rule"></div><p class="scene-text">We run the tests on today's busy machine. The sleeping test passes twice, fails on its third run, and then passes again. Nothing changed between the runs. That is a flaky test. Run only once, it would have passed, and been merged.</p><p class="callout">Nothing changed between runs: run 3 waited 600 ms for the mail queue, longer than the test slept.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:finding-flaky-tests:test -Pcode=today</pre><pre class="output">SleepingTest &gt; the confirmation is sent &gt; run 1 of 5 PASSED
 SleepingTest &gt; the confirmation is sent &gt; run 2 of 5 PASSED
 SleepingTest &gt; the confirmation is sent &gt; run 3 of 5 FAILED
     java.lang.AssertionError: no confirmation of order 3 after 200 ms
@@ -205,10 +205,7 @@ WaitingTest &gt; the confirmation is sent &gt; run 2 of 5 PASSED
 WaitingTest &gt; the confirmation is sent &gt; run 3 of 5 PASSED
 WaitingTest &gt; the confirmation is sent &gt; run 4 of 5 PASSED
 WaitingTest &gt; the confirmation is sent &gt; run 5 of 5 PASSED
-10 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:finding-flaky-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 1 of 10 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests on today's busy machine. The sleeping test passes twice, fails on its third run, and then passes again. Nothing changed between the runs. That is a flaky test. Run only once, it would have passed, and been merged.</aside><audio class="voice" preload="none" src="finding-flaky-tests.deck-voice/29b90bbc521466cd.m4a"></audio></section>
+10 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests on today's busy machine. The sleeping test passes twice, fails on its third run, and then passes again. Nothing changed between the runs. That is a flaky test. Run only once, it would have passed, and been merged.</aside><audio class="voice" preload="none" src="finding-flaky-tests.deck-voice/29b90bbc521466cd.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The waiting test</h1><div class="rule"></div><p class="scene-text">Now, the waiting test, with Awaitility. It checks every 50 milliseconds whether the confirmation has gone, for at most 2 seconds. It goes on the moment the message is there. On the busy machine, it passed all 5 runs.</p></section><figure class="code" style="--code-size: 20px"><figcaption>the waiting test</figcaption><pre> 15      @DisplayName(&quot;the confirmation is sent&quot;)
  16      @RepeatedTest(value = 5, name = &quot;run {currentRepetition} of {totalRepetitions}&quot;)
  17      void confirmsTheOrder(final RepetitionInfo run) {

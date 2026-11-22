@@ -239,7 +239,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  54              assertThatIllegalStateException().isThrownBy(loan::approve);
  55          }
  56      }</pre></figure></main><aside class="notes">The same two questions for an approved loan, and again for a repaid one. Each situation sets itself up once, before its tests.</aside><audio class="voice" preload="none" src="nested-tests.deck-voice/e9595dad46e38607.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The gap shows</h1><div class="rule"></div><p class="scene-text">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</p><p class="callout">The report reads like a specification. A requested loan can be repaid: money back that was never lent.</p></section><figure class="code" style="--code-size: 13px"><pre class="command">$ ./gradlew :lessons:nested-tests:test -Pcode=today</pre><pre class="output">FlatLoanTest &gt; approvingRequestedLoanApprovesIt() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The gap shows</h1><div class="rule"></div><p class="scene-text">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</p><p class="callout">The report reads like a specification. A requested loan can be repaid: money back that was never lent.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:nested-tests:test -Pcode=today</pre><pre class="output">FlatLoanTest &gt; approvingRequestedLoanApprovesIt() PASSED
 FlatLoanTest &gt; repayingRepaidLoanIsRefused() PASSED
 FlatLoanTest &gt; newLoanIsRequested() PASSED
 FlatLoanTest &gt; repayingApprovedLoanRepaysIt() PASSED
@@ -251,10 +251,7 @@ A loan &gt; when repaid &gt; cannot be repaid again PASSED
 A loan &gt; when repaid &gt; cannot be approved PASSED
 A loan &gt; when approved &gt; cannot be approved again PASSED
 A loan &gt; when approved &gt; can be repaid PASSED
-10 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:nested-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 1 of 10 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</aside><audio class="voice" preload="none" src="nested-tests.deck-voice/5b9a01a12cf7e267.m4a"></audio></section>
+10 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</aside><audio class="voice" preload="none" src="nested-tests.deck-voice/5b9a01a12cf7e267.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed loan</h1><div class="rule"></div><p class="scene-text">Now the loan that allows each step only from the state before it. We run the same tests. Every situation behaves.</p><p class="callout">Every situation, every question, answered. Nesting made the missing case easy to see.</p></section><figure class="code" style="--code-size: 19px"><figcaption>the fixed loan</figcaption><pre> 16      public void approve() {
  17          move(State.REQUESTED, State.APPROVED, &quot;only a requested loan can be approved&quot;);
  18      }

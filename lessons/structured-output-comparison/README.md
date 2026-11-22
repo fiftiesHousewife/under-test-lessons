@@ -24,6 +24,22 @@ forgets the quantities.
 - [`CompareJsonTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/CompareJsonTest.java)
   is the "after": a structured comparison that names the wrong field and both values.
 
+## Exercise
+
+`CompareJsonTest` lets `generatedAt` be any text at all, even "yesterday". But the time comes from a clock, so a test
+can stop the clock and check the time exactly. Only the id, new on every run, needs a placeholder.
+
+1. Add a test class beside [`CompareJsonTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/CompareJsonTest.java) that makes the summary with
+   `Clock.fixed(...)`, choosing today's or the fixed summary the way
+   [`Summaries`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/Summaries.java) does.
+2. Expect the exact time in `generatedAt`, and keep `${json-unit.any-string}` for the id alone.
+3. Compare with the answer, [`FixedClockAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/answer/FixedClockAnswerTest.java), which runs against
+   today's total with:
+
+```bash
+./gradlew :lessons:structured-output-comparison:test -Pcode=answer   # today's total: 2 of 3 tests fail, each on totalPence alone, so the time matched exactly
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) (its source is [`media/structured-output-comparison.deck.html`](media/structured-output-comparison.deck.html)). Arrow keys

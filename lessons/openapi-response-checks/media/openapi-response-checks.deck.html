@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  58  openapi-request-validator = &quot;3.0.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
-117  openapi-request-validator-restassured = { module = &quot;com.atlassian.oai:openapi-request-validator-restassured&quot;, version.ref = &quot;openapi-request-validator&quot; }</pre></figure></main><aside class="notes">Step one. Add Atlassian's OpenAPI request validator to the version catalogue. It used to be called the Swagger request validator.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/e9b13e6418ef710f.m4a"></audio></section>
+122  openapi-request-validator-restassured = { module = &quot;com.atlassian.oai:openapi-request-validator-restassured&quot;, version.ref = &quot;openapi-request-validator&quot; }</pre></figure></main><aside class="notes">Step one. Add Atlassian's OpenAPI request validator to the version catalogue. It used to be called the Swagger request validator.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/e9b13e6418ef710f.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson, beside REST Assured, which sends the requests.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
  10      testImplementation(libs.rest.assured)
@@ -255,10 +255,7 @@ ParcelDocumentTest &gt; aParcelOnItsWay() FAILED
     java.lang.AssertionError: GET /parcels/P-1001 answered 200, field weightGrams: string found, integer expected
 ParcelFieldsTest &gt; aParcelNobodySent() PASSED
 ParcelFieldsTest &gt; aParcelOnItsWay() PASSED
-4 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:openapi-response-checks:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 2 of 4 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run both against today's service. The weak tests pass. The strong tests fail, and say exactly where. The weight is a string, where the document says a whole number. The 404 answer has no error field, and a message field the document doesn't have.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/e9c1845cfe5c2238.m4a"></audio></section>
+4 tests completed, 2 failed</pre></figure></main><aside class="notes">We run both against today's service. The weak tests pass. The strong tests fail, and say exactly where. The weight is a string, where the document says a whole number. The 404 answer has no error field, and a message field the document doesn't have.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/e9c1845cfe5c2238.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed service</h1><div class="rule"></div><p class="scene-text">Now the service that answers as the document says. We run the same tests. Every test passes. The service and its document agree again.</p><p class="callout">The service and its document agree, and every test that calls it keeps them that way.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the fixed answers</figcaption><pre> 10      @Override
  11      public Map&lt;String, Object&gt; parcel(final Parcel parcel) {
  12          return Map.of(

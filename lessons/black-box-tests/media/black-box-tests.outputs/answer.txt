@@ -1,0 +1,17 @@
+$ ./gradlew :lessons:black-box-tests:test -Pcode=answer
+OrderServiceTest > anOrderWithoutStockIsRefusedAndNothingIsWritten() PASSED
+OrderServiceTest > anOrderIsReservedAnsweredAndKept() FAILED
+    org.opentest4j.AssertionFailedError: [rows written]
+    expected: ["O-1001 C-42 W-881 PEN-01 3"]
+     but was: []
+OrderTakingTest > anOrderWithStockIsPlacedAndKept() PASSED
+OrderTakingTest > anOrderWithoutStockIsRefusedAndNotKept() PASSED
+TwoOrdersAnswerTest > twoOrdersInARowAreBothKept() FAILED
+    org.opentest4j.AssertionFailedError: [orders kept]
+    Expecting actual:
+      []
+    to contain exactly (and in same order):
+      ["O-1001 C-42", "O-1002 C-43"]
+    but could not find the following elements:
+      ["O-1001 C-42", "O-1002 C-43"]
+5 tests completed, 2 failed

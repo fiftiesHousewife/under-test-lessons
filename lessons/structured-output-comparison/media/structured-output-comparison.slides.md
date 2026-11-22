@@ -69,6 +69,8 @@ Say: JSONUnit was written by Lukáš Křečan, and is free under the Apache lice
 - https://github.com/lukas-krecan/JsonUnit — JSONUnit, with examples
 - https://www.xmlunit.org — XMLUnit, for XML
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: stop the clock, and check the time exactly; the README has the steps and the answer
 Picture: globe
 Say: To find out more, JSONUnit's page has plenty of examples, and XMLUnit's site covers XML. The links on screen
-  also take you to this lesson's test code and examples, to run yourself.
+  also take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: stop
+  the clock, and check the time exactly, so only the id needs a placeholder.

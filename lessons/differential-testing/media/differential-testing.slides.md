@@ -68,6 +68,8 @@ Say: William McKeeman named differential testing in 1998, when comparing C compi
 ## closing: Find out more
 - {toolkit-repo} — the toolkit, with its differential testing technique
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check that both versions refuse the same weights; the README has the steps and the answer
 Picture: globe
 Say: To find out more, the toolkit's technique says which tools to use for whole services. The links on screen also
-  take you to this lesson's test code and examples, to run yourself.
+  take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: compare what
+  both versions refuse, not only what they charge.

@@ -5,6 +5,3 @@ SplitterExampleTest > splitsEvenly() PASSED
 SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() FAILED
     java.lang.AssertionError: Unfair bill found: 3 pence between 4 people gives [3, 0, 0, 0]
 4 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:property-based-testing:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 4 tests failed. Report: build/reports/tests/test/index.html

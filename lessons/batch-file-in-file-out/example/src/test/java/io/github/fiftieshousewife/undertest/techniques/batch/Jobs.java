@@ -4,15 +4,19 @@ import io.github.fiftieshousewife.undertest.techniques.batch.fixed.BankSettlemen
 import io.github.fiftieshousewife.undertest.techniques.batch.today.TodaysSettlementJob;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
+import java.util.Set;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
 
-/** The job the tests run (the fixed one, or today's with -Pcode=today), and the files kept with the tests. */
+/**
+ * The job the tests run (the fixed one, or today's with -Pcode=today and with -Pcode=answer, which adds the exercise's
+ * answer), and the files kept with the tests.
+ */
 @Configuration(proxyBeanMethods = false)
 @Import(Jobs.Chosen.class)
-class Jobs {
+public class Jobs {
 
     static Path knownFile(final String name) {
         try {
@@ -27,7 +31,7 @@ class Jobs {
 
         @Override
         public String[] selectImports(final AnnotationMetadata metadata) {
-            final Class<?> job = "today".equals(System.getProperty("code"))
+            final Class<?> job = Set.of("today", "answer").contains(System.getProperty("code"))
                     ? TodaysSettlementJob.class : BankSettlementJob.class;
             return new String[] {job.getName()};
         }

@@ -15,6 +15,3 @@ Approvals: the output differs from its approved file (- approved, + received):
   + {"email":"jo.bloggs@example.com"}
   - {"id":"C-1001","email":"customer@example.invalid","tier":"gold","points":120}
   + {"id":"C-1001","email":"jo.bloggs@example.com","tier":"gold","points":120}
-* What went wrong:
-Execution failed for task ':lessons:capturing-with-logbook:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 3 tests failed. Report: build/reports/tests/test/index.html

@@ -7,6 +7,3 @@ OrderServiceTest > anOrderIsReservedAnsweredAndKept() FAILED
 OrderTakingTest > anOrderWithStockIsPlacedAndKept() PASSED
 OrderTakingTest > anOrderWithoutStockIsRefusedAndNotKept() PASSED
 4 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:black-box-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 4 tests failed. Report: build/reports/tests/test/index.html

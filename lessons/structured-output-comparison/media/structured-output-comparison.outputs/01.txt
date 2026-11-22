@@ -4,6 +4,3 @@ CompareJsonTest > summaryHasTheExpectedLinesAndTotal() FAILED
     Different value found in node "totalPence", expected: <1120> but was: <370>.
 ContainsTextTest > summaryMentionsEveryItemAndATotal() PASSED
 2 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:structured-output-comparison:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 2 tests failed. Report: build/reports/tests/test/index.html

@@ -4,4 +4,5 @@ PaymentImportTest > stopsAtThePaymentOverTheLimitAndEndsWithOne() PASSED
 PaymentLineTest > refusesALineWithoutAnAmount() PASSED
 PaymentLineTest > readsTheAccountAndTheAmount() PASSED
 PaymentLineTest > allowsAPaymentOfExactlyTheLimit() PASSED
-All 5 tests passed.
+NoLimitSetAnswerTest > withNoLimitSetTheProgramFailsBeforeImportingAnything() PASSED
+All 6 tests passed.

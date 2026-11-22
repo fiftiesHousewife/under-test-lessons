@@ -24,6 +24,21 @@ with one row mistyped.
 - [`OldAndNewAgreeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/OldAndNewAgreeTest.java)
   is the "after": every weight from 1 g to 5 kg, old against new, with differences grouped into runs.
 
+## Exercise
+
+`OldAndNewAgreeTest` compares prices from 1 g to 5 kg. But customers also rely on what the old calculator refuses: a
+differential test compares failures as well as answers.
+
+1. Add a test class beside [`OldAndNewAgreeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/OldAndNewAgreeTest.java) that asks both versions about weights
+   outside the range: -1 g, 0 g, 5001 g and 10000 g.
+2. Turn each answer into text, the price or "refused" with the error's message, and check the two lists are the same.
+3. Compare with the answer, [`RefusalsAgreeAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/answer/RefusalsAgreeAnswerTest.java), which runs against
+   the rewrite as typed today with:
+
+```bash
+./gradlew :lessons:differential-testing:test -Pcode=answer   # the rewrite as typed today: only the price comparison fails, 1 of 7; the refusals agree
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) (its source is [`media/differential-testing.deck.html`](media/differential-testing.deck.html)). Arrow keys

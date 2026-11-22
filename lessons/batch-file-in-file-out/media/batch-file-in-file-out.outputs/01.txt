@@ -1,6 +1,4 @@
 $ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today
-KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
-PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
 WholeJobTest > aCleanedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
     	org.opentest4j.AssertionFailedError: [closing line]
@@ -11,9 +9,8 @@ WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() FAILED
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=12, total=17148.88]
      but was: null
+KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
+PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
 SettlementTotalsTest > aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
 SettlementTotalsTest > aFreshStepStartsFromNothing() PASSED
 6 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:batch-file-in-file-out:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 6 tests failed. Report: build/reports/tests/test/index.html

@@ -1,7 +1,6 @@
 package io.github.fiftieshousewife.undertest.techniques.recorded;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -31,10 +30,12 @@ class CredentialsTest {
     @Test
     void theCleanerDropsEveryCredentialInBothDirections() {
         final String cleaned = Clients.cleaner().clean(EVERY_KIND);
-        assertAll(
-                () -> assertThat(credentialsIn(cleaned)).as("credentials left in the recording").isEmpty(),
-                () -> assertThat(cleaned).as("what the test needs is kept")
-                        .contains("format=json", "Content-Type"));
+        assertThat(String.join(" ", credentialsIn(cleaned))).as("credentials left in the recording").isEmpty();
+    }
+
+    @Test
+    void theCleanerKeepsWhatTheTestsNeed() {
+        assertThat(Clients.cleaner().clean(EVERY_KIND)).contains("format=json", "Content-Type");
     }
 
     @Test

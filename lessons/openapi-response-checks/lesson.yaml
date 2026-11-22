@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: openapi-response-checks
 title: Responses checked against the OpenAPI document
-techniques: []
+techniques: [openapi-response-checks]

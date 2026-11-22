@@ -21,6 +21,3 @@ VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 998 pence net give
      but was: 199
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 1000 pence net gives 200 pence VAT PASSED
 12 tests completed, 3 failed
-* What went wrong:
-Execution failed for task ':lessons:parameterised-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 3 of 12 tests failed. Report: build/reports/tests/test/index.html

@@ -49,6 +49,21 @@ into a settlement line in pounds, and writes the line.
   HMAC-SHA256 (`javax.crypto.Mac`) and a fixed test key. The same number always gets the same substitute, so each
   payment still matches its settlement line. (The lesson's capture is made up, and cleaned the same way.)
 
+## Exercise
+
+The job writes in chunks of 100 payments, but the whole-job tests run only 6 and 12, one chunk each. A real day has
+more, and the closing line must count and add up across every chunk.
+
+1. Add a test class beside [`WholeJobTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/WholeJobTest.java), configured the same way, that writes an input
+   file of 250 payments, three chunks' worth, into its temporary folder.
+2. Run the whole job on it and check the settlement file's last line: the count, 250, and the total of every payment.
+3. Compare with the answer, [`ManyChunksAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/answer/ManyChunksAnswerTest.java), which runs against
+   today's job with:
+
+```bash
+./gradlew :lessons:batch-file-in-file-out:test -Pcode=answer   # today's job: 3 of 7 tests fail; the answer expected TRAILER,250,2196.25 as the last line
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) (its source is [`media/batch-file-in-file-out.deck.html`](media/batch-file-in-file-out.deck.html)). Arrow keys

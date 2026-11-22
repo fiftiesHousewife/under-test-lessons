@@ -1,0 +1,12 @@
+$ ./gradlew :lessons:outside-in-http-tests:test -Pcode=answer
+BookingApiTest > bookingTwoNightsCreatesABooking() FAILED
+    java.lang.AssertionError: 1 expectation failed.
+    Expected status code <201> but was <200>.
+BookingApiTest > bookingNoNightsIsRefused() FAILED
+    java.lang.AssertionError: 1 expectation failed.
+    Expected status code <400> but was <200>.
+BookingRulesTest > twoNightsCostTwiceTheNightlyRate() PASSED
+MisspeltFieldAnswerTest > bookingWithAMisspeltFieldIsRefused() FAILED
+    java.lang.AssertionError: 1 expectation failed.
+    Expected status code <400> but was <200>.
+4 tests completed, 3 failed

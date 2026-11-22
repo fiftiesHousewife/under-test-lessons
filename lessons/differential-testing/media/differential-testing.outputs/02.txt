@@ -5,4 +5,5 @@ RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 200 g costs 1
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 400 g costs 195 pence PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 800 g costs 315 pence PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 1500 g costs 435 pence PASSED
-All 6 tests passed.
+RefusalsAgreeAnswerTest > rewriteRefusesTheSameWeightsAsTheOldCalculator() PASSED
+All 7 tests passed.

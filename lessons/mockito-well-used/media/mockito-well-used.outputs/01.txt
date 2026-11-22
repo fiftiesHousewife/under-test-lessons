@@ -8,6 +8,3 @@ MockEverythingTest > refundsTheReturnedMug() PASSED
 OrderTest > returningOneOfTwoMugsRefundsOneMug() PASSED
 OrderTest > anItemNotOnTheOrderOrReturnedTooOftenIsRefused() PASSED
 4 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:mockito-well-used:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 4 tests failed. Report: build/reports/tests/test/index.html

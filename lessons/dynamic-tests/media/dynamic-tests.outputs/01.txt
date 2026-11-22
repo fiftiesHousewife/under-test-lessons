@@ -18,6 +18,3 @@ EachExampleTest > eachExampleFormatsAsExpected() > hyphenated-first-name.txt FAI
 EachExampleTest > eachExampleFormatsAsExpected() > plain-name.txt PASSED
 EachExampleTest > eachExampleFormatsAsExpected() > several-words.txt PASSED
 6 tests completed, 4 failed
-* What went wrong:
-Execution failed for task ':lessons:dynamic-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 4 of 6 tests failed. Report: build/reports/tests/test/index.html

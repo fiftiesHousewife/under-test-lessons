@@ -1,5 +1,6 @@
 package io.github.fiftieshousewife.undertest.lessons.checks;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Entry point: {@code <repository root> [<toolkit checkout>]}. Fails if the lesson.yaml files, the catalogue, the
- * lessons index and (when a toolkit checkout is given) the toolkit's techniques disagree.
+ * lessons index and (when a toolkit checkout is given) the toolkit's techniques disagree, or if a lesson with an
+ * example teaches no toolkit technique.
  */
 @Slf4j
 public final class LessonFileChecks {
@@ -36,10 +38,27 @@ public final class LessonFileChecks {
         final List<Lesson> lessons = new LessonReader().read(root, problems);
         problems.addAll(LessonTables.catalogue(root, lessons, techniques));
         problems.addAll(LessonTables.index(root, lessons));
+        problems.addAll(lessonsWithoutATechnique(root, lessons));
         techniques.ifPresent(ids -> {
             problems.addAll(unknownTechniques(root, lessons, ids));
             problems.addAll(TechniqueLinks.check(root, ids));
         });
+        return problems;
+    }
+
+    /**
+     * Every lesson with an example teaches at least one of the toolkit's techniques, so the two repositories match
+     * both ways. A lesson without an example, such as the overview, which maps the others, needn't name one.
+     */
+    private static List<Problem> lessonsWithoutATechnique(final Path root, final List<Lesson> lessons) {
+        final List<Problem> problems = new ArrayList<>();
+        for (final Lesson lesson : lessons) {
+            final Path folder = root.resolve("lessons/" + lesson.id());
+            if (lesson.techniques().isEmpty() && Files.isDirectory(folder.resolve("example"))) {
+                problems.add(new Problem(folder.resolve("lesson.yaml"), "names no toolkit technique: name the one"
+                        + " it teaches in techniques, or ask for one to be added to the toolkit"));
+            }
+        }
         return problems;
     }
 

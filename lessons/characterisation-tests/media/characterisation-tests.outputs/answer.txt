@@ -1,0 +1,25 @@
+$ ./gradlew :lessons:characterisation-tests:test -Pcode=answer
+StatementCharacterisationTest > printsTheSameStatementAsToday() FAILED
+    java.lang.Error at StatementCharacterisationTest.java:25
+RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
+RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
+StatementWeakTest > printsSomething() PASSED
+ZeroBalanceStatementAnswerTest > chargesTheFeeWhenTheBalanceReachesExactlyZero() FAILED
+    java.lang.Error at ZeroBalanceStatementAnswerTest.java:27
+5 tests completed, 2 failed
+Approvals: the output differs from its approved file (- approved, + received):
+  - 02 Mar  Overdraft fee               -25  balance    -25
+  - 09 Mar  Groceries                   -80  balance   -105
+  - 09 Mar  Overdraft fee               -25  balance   -130
+  - 15 Mar  Bonus                      2500  balance   2370
+  - 20 Mar  Car insurance              -340  balance   2030
+  + 09 Mar  Groceries                   -80  balance    -80
+  + 09 Mar  Overdraft fee               -25  balance   -105
+  + 15 Mar  Bonus                      2500  balance   2395
+  + 20 Mar  Car insurance              -340  balance   2055
+  - Closing balance: 2030
+  + Closing balance: 2055
+Approvals: the output differs from its approved file (- approved, + received):
+  - 02 Mar  Overdraft fee               -25  balance    -25
+  - Closing balance: -25
+  + Closing balance: 0

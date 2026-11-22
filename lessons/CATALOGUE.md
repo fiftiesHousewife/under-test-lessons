@@ -125,6 +125,13 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | batch-file-in-file-out | [Batch file-in, file-out](batch-file-in-file-out/README.md) | built |
 | testcontainers | [Real databases in tests](real-databases-in-tests/README.md), [Database changes with Liquibase](database-changes-with-liquibase/README.md) | built |
 | contract-testing | [Contract tests between teams](contract-tests-between-teams/README.md) | built |
+| repeatable-tests | [JUnit extensions](junit-extensions/README.md), [Temporary folders](junit-temporary-folders/README.md), [Finding flaky tests](finding-flaky-tests/README.md) | built |
+| tests-from-cases | [Parameterised tests](parameterised-tests/README.md), [Dynamic tests](dynamic-tests/README.md), [Nested tests](nested-tests/README.md) | built |
+| junit-tags | [Tags: fast tests first, slow tests apart](junit-tags/README.md) | built |
+| mockito-well-used | [Mockito well used](mockito-well-used/README.md) | built |
+| spring-tests-in-slices | [Spring tests in slices](spring-tests-in-slices/README.md) | built |
+| in-memory-databases | [When an in-memory database is enough](in-memory-databases/README.md) | built |
+| openapi-response-checks | [Responses checked against the OpenAPI document](openapi-response-checks/README.md) | built |
 | database-unit-tests | Stored procedures tested inside the database | later |
 | ai-written-tests | AI-written tests that pass an acceptance check | later |
 | stand-in-commands | Stand-in commands | last |
@@ -137,7 +144,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 
 Each lesson compares a weak "before" with a strong "after", switched by one Gradle property so the same command shows
 both. The default is the "after", so `./gradlew check` passes. Every lesson has a row here; design a new lesson by
-adding its row first. The four oldest lessons use their own switch names, from before the convention.
+adding its row first.
 
 | Lesson (folder) | Example | Before | After | Switch |
 |---|---|---|---|---|

@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: junit-tags
 title: "Tags: fast tests first, slow tests apart"
-techniques: []
+techniques: [junit-tags]

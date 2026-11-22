@@ -7,6 +7,3 @@ ParcelDocumentTest > aParcelOnItsWay() FAILED
 ParcelFieldsTest > aParcelNobodySent() PASSED
 ParcelFieldsTest > aParcelOnItsWay() PASSED
 4 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:openapi-response-checks:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 4 tests failed. Report: build/reports/tests/test/index.html

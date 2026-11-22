@@ -7,6 +7,3 @@ BookingApiTest > bookingNoNightsIsRefused() FAILED
     Expected status code <400> but was <200>.
 BookingRulesTest > twoNightsCostTwiceTheNightlyRate() PASSED
 3 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:outside-in-http-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 3 tests failed. Report: build/reports/tests/test/index.html

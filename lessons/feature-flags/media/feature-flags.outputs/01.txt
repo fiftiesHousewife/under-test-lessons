@@ -7,6 +7,3 @@ BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new ship
      but was: 0
 DefaultFlagsTest > smallBasketPaysForDeliveryAndBigBasketDoesNot() PASSED
 3 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:feature-flags:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 3 tests failed. Report: build/reports/tests/test/index.html

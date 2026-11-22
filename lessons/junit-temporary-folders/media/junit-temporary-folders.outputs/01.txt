@@ -1,10 +1,7 @@
 $ ./gradlew :lessons:junit-temporary-folders:test -Pcode=today
+FixedFolderTest > writesOneLinePerOrder() PASSED
+FixedFolderTest > leavesOutCancelledOrders() PASSED
 TempDirTest > writesOneLinePerOrder(Path) PASSED
 TempDirTest > leavesOutCancelledOrders(Path) FAILED
     java.lang.AssertionError: No orders.csv was written
-FixedFolderTest > writesOneLinePerOrder() PASSED
-FixedFolderTest > leavesOutCancelledOrders() PASSED
 4 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:junit-temporary-folders:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 4 tests failed. Report: build/reports/tests/test/index.html

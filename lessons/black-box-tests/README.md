@@ -18,7 +18,7 @@ approach behind [outside-in HTTP tests](../outside-in-http-tests/README.md),
 
 ```bash
 ./gradlew :lessons:black-box-tests:test -Pcode=today   # today's code: only the black-box test of a placed order fails: no rows were written
-./gradlew :lessons:black-box-tests:test                # the fix: all 4 tests pass
+./gradlew :lessons:black-box-tests:test                # the fix: all 5 tests pass
 ```
 
 The example is a shop's order service, run on the JDK's own small web server. A customer posts an order to
@@ -35,6 +35,21 @@ the test writes its own settings file and starts the service through the same en
 - [`OrderServiceTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/blackbox/OrderServiceTest.java) is the "after": WireMock as the warehouse, the service started from
   a settings file, an order posted with REST Assured, and the answer, the warehouse call (WireMock's `verify`) and
   the rows written (read with plain JDBC) checked.
+
+## Exercise
+
+`OrderServiceTest` places one order. A shop takes many: the second must get its own id, and both must be kept.
+
+1. Add a test class beside [`OrderServiceTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/blackbox/OrderServiceTest.java) that starts the service the same way,
+   from a settings file, with WireMock as the warehouse.
+2. Post two orders, from customers `C-42` and `C-43`, then check that the warehouse was asked twice (WireMock's
+   `verify(2, ...)`) and that the orders table holds `O-1001` and `O-1002`.
+3. Compare with the answer, [`TwoOrdersAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/blackbox/answer/TwoOrdersAnswerTest.java), which runs against
+   today's order service with:
+
+```bash
+./gradlew :lessons:black-box-tests:test -Pcode=answer   # today's code: 2 of 5 tests fail; the answer finds neither O-1001 nor O-1002 kept
+```
 
 ## Watch it, or present it
 

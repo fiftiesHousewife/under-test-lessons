@@ -1,14 +1,9 @@
 $ ./gradlew :lessons:recorded-http-responses:test -Pcode=today
 CredentialsTest > noRecordingKeptWithTheTestsHoldsACredential() PASSED
 CredentialsTest > theCleanerDropsEveryCredentialInBothDirections() FAILED
-    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	java.lang.AssertionError: [credentials left in the recording]
-    Expecting empty but was: ["?token=",
-        "&api_key=",
-        ""Authorization"",
-        ""Cookie"",
-        ""X-Api-Key"",
-        ""Set-Cookie""]
+    java.lang.AssertionError: [credentials left in the recording]
+    Expecting empty but was: "?token= &api_key= "Authorization" "Cookie" "X-Api-Key" "Set-Cookie""
+CredentialsTest > theCleanerKeepsWhatTheTestsNeed() PASSED
 RecordedSupplierTest > unknownPostcodeGivesNoTown() FAILED
     java.lang.AssertionError:
     Expecting an empty Optional but was containing value: ""
@@ -26,7 +21,4 @@ RecordingTest > cleanedFirstTheFilesHoldSubstitutes() FAILED
     expected: ["person-ea08c4400378ace1", "person-ea08c4400378ace1"]
      but was: ["Ada Lovelace", "Ada Lovelace"]
 RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
-9 tests completed, 4 failed, 1 skipped
-* What went wrong:
-Execution failed for task ':lessons:recorded-http-responses:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 4 of 9 tests failed. Report: build/reports/tests/test/index.html
+10 tests completed, 4 failed, 1 skipped

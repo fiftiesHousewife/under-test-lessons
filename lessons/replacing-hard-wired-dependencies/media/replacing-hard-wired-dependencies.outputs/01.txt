@@ -4,6 +4,3 @@ InvoiceTest > anEmptyInvoiceCostsNothing() FAILED
 InvoiceTest > convertsTheTotalRoundingToTheNearestCent() FAILED
     java.lang.IllegalStateException: cannot reach the bank's exchange-rate service
 2 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:replacing-hard-wired-dependencies:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 2 tests failed. Report: build/reports/tests/test/index.html

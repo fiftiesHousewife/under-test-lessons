@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: in-memory-databases
 title: When an in-memory database is enough
-techniques: []
+techniques: [in-memory-databases]

@@ -95,7 +95,8 @@ Say: A black-box test knows only the inputs and outputs, never the code inside. 
 - https://rest-assured.io — REST Assured, with its user guide
 - https://h2database.com — the H2 database
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: place two orders in a row, and check both are kept; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with WireMock's guide to checking the calls it received, and the REST Assured user
   guide. The links on screen also take you to the H2 database, and to this lesson's test code and examples, to run
-  yourself.
+  yourself. And try the exercise in the README: place two orders in a row, and check that both are kept.

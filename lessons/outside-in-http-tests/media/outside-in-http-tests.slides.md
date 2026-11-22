@@ -68,6 +68,8 @@ Say: REST Assured was created by Johan Haleby, and is free under the Apache lice
 ## closing: Find out more
 - https://rest-assured.io — REST Assured, with its user guide
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check that a request with a misspelt field is refused; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the REST Assured user guide. The links on screen also take you to this lesson's
-  test code and examples, to run yourself.
+  test code and examples, to run yourself. And try the exercise in the README: check that a request with a misspelt
+  field is refused, not answered with OK.

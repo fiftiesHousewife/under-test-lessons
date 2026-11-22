@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
   7  mockito = &quot;5.24.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
- 73  mockito-core = { module = &quot;org.mockito:mockito-core&quot;, version.ref = &quot;mockito&quot; }</pre></figure></main><aside class="notes">Step one. Add Mockito to the version catalogue.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/7e7510525234b019.m4a"></audio></section>
+ 78  mockito-core = { module = &quot;org.mockito:mockito-core&quot;, version.ref = &quot;mockito&quot; }</pre></figure></main><aside class="notes">Step one. Add Mockito to the version catalogue.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/7e7510525234b019.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. One setting tells Mockito to make its stand-ins as plain subclasses, so it never needs special access to the test's Java process.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.mockito.core)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. One setting tells Mockito to make its stand-ins as plain subclasses, so it never needs special access to the test's Java process.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/52d2289ed821e156.m4a"></audio></section>
@@ -202,14 +202,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  31          assertThat(Invoices.pricedWith(rates).totalInEuroCents(List.of())).isZero();
  32      }
  33  }</pre></figure></main><aside class="notes">Now, the test. Mockito makes a stand-in for the exchange rates, which always says one euro seventeen to the pound. The test checks the rounding, and that an empty invoice costs nothing.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/04911d1d659f7480.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's invoice can't be tested</h1><div class="rule"></div><p class="scene-text">We run the test against today's invoice. Both tests fail. Today's invoice has nowhere to take the stand-in, so it calls the live service, which a test machine can't reach.</p><p class="callout">Today's invoice has nowhere to take the stand-in, so it calls the live service, and the test can't run.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=today</pre><pre class="output">InvoiceTest &gt; anEmptyInvoiceCostsNothing() FAILED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's invoice can't be tested</h1><div class="rule"></div><p class="scene-text">We run the test against today's invoice. Both tests fail. Today's invoice has nowhere to take the stand-in, so it calls the live service, which a test machine can't reach.</p><p class="callout">Today's invoice has nowhere to take the stand-in, so it calls the live service, and the test can't run.</p></section><figure class="code" style="--code-size: 21px"><pre class="command">$ ./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=today</pre><pre class="output">InvoiceTest &gt; anEmptyInvoiceCostsNothing() FAILED
     java.lang.IllegalStateException: cannot reach the bank's exchange-rate service
 InvoiceTest &gt; convertsTheTotalRoundingToTheNearestCent() FAILED
     java.lang.IllegalStateException: cannot reach the bank's exchange-rate service
-2 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:replacing-hard-wired-dependencies:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 2 of 2 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the test against today's invoice. Both tests fail. Today's invoice has nowhere to take the stand-in, so it calls the live service, which a test machine can't reach.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/fa06f7d175745999.m4a"></audio></section>
+2 tests completed, 2 failed</pre></figure></main><aside class="notes">We run the test against today's invoice. Both tests fail. Today's invoice has nowhere to take the stand-in, so it calls the live service, which a test machine can't reach.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/fa06f7d175745999.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The rates passed in</h1><div class="rule"></div><p class="scene-text">Now the invoice after one small change. The rates are passed in, through the constructor. Production passes the live rates. A test passes the stand-in.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the invoice, rates passed in</figcaption><pre>  9  /** FIXED: the rates are passed in. Production passes the live rates; a test passes a stand-in. */
  10  public final class Invoice implements PricedInvoice {
  11  

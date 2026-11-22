@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  49  datafaker = &quot;2.7.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
-102  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. Datafaker, which makes up realistic test data, is already in the version catalogue. The keyed hash needs no library at all: it comes with Java.</aside><audio class="voice" preload="none" src="cleaning-captured-data.deck-voice/8eb15ea7561fc212.m4a"></audio></section>
+107  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. Datafaker, which makes up realistic test data, is already in the version catalogue. The keyed hash needs no library at all: it comes with Java.</aside><audio class="voice" preload="none" src="cleaning-captured-data.deck-voice/8eb15ea7561fc212.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><p class="scene-text">Step two. The example's build file uses Datafaker for its third way of cleaning, the made-up values.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      implementation(libs.datafaker)</mark>
  10      compileOnly(libs.spotbugs.annotations)
@@ -257,7 +257,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 77          }</mark>
  78          return kinds;
  79      }</pre></figure></main><aside class="notes">The second strong test is a detector. It scans every field of the cleaned capture, including fields nobody wrote a rule for. It looks for email addresses, the shapes of bank, card, phone, postcode and National Insurance numbers, and any customer's name.</aside><audio class="voice" preload="none" src="cleaning-captured-data.deck-voice/b16f0d36c7c33507.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's cleaning breaks the reports</h1><div class="rule"></div><p class="scene-text">We run the tests against today's cleaning. The weak test passes. But with every customer called removed, the report sees one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the notes.</p><p class="callout">Fixed text merges every customer and account, so both reports go wrong. And the notes still hold an email and a name.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:cleaning-captured-data:test -Pcode=today</pre><pre class="output">CleanedFieldsTest &gt; namesEmailsAndAccountsAreReplaced() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's cleaning breaks the reports</h1><div class="rule"></div><p class="scene-text">We run the tests against today's cleaning. The weak test passes. But with every customer called removed, the report sees one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the notes.</p><p class="callout">Fixed text merges every customer and account, so both reports go wrong. And the notes still hold an email and a name.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:cleaning-captured-data:test -Pcode=today</pre><pre class="output">CleanedFieldsTest &gt; namesEmailsAndAccountsAreReplaced() PASSED
 DetectorFindsTest &gt; detectorFindsEveryKindOfPersonalDataBeforeCleaning() PASSED
 DetectorFindsTest &gt; detectorFindsEachKnownShapeOfPersonalNumber() PASSED
 DetectorFindsTest &gt; detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
@@ -274,10 +274,7 @@ ReportsStillWorkTest &gt; ordersStillMatchPaymentsByAccount() FAILED
     expected: [-500, 640]
      but was: [140]
 SyntheticCleaningTest &gt; syntheticValuesKeepTheReportsAndRepeat() PASSED
-8 tests completed, 3 failed
-* What went wrong:
-Execution failed for task ':lessons:cleaning-captured-data:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 3 of 8 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests against today's cleaning. The weak test passes. But with every customer called removed, the report sees one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the notes.</aside><audio class="voice" preload="none" src="cleaning-captured-data.deck-voice/7f09d354c60154ac.m4a"></audio></section>
+8 tests completed, 3 failed</pre></figure></main><aside class="notes">We run the tests against today's cleaning. The weak test passes. But with every customer called removed, the report sees one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the notes.</aside><audio class="voice" preload="none" src="cleaning-captured-data.deck-voice/7f09d354c60154ac.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Keyed substitutes</h1><div class="rule"></div><p class="scene-text">The fix uses keyed substitutes. HMAC, a keyed hash, mixes each value with a secret key. We turn the start of the result into 16 letters. The same value and key always give the same letters, so a customer keeps one substitute everywhere, in both files.</p></section><figure class="code" style="--code-size: 16px"><figcaption>keyed substitutes</figcaption><pre> 32      /** Sixteen capital letters standing for the value: always the same ones for the same value. */
  33      public String of(final String value) {
 <mark> 34          final byte[] keyed = mac.doFinal(value.getBytes(StandardCharsets.UTF_8));</mark>

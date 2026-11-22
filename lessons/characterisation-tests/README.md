@@ -26,6 +26,23 @@ It has a quirk nobody remembered: the overdraft fee is charged when the balance 
   is a cleaner rewrite that quietly changes the fee rule. With `-Pcode=today` the characterisation test fails,
   and the build prints which statement lines changed.
 
+## Exercise
+
+When today's rewrite fails the characterisation test, the difference runs to 11 lines: the fee at zero went, and every
+balance after it moved. A smaller approval, one per behaviour, says the same thing in fewer lines.
+
+1. Add a test class beside [`StatementCharacterisationTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/StatementCharacterisationTest.java)
+   that approves the statement for just two transactions, a salary of 1200 and a rent of -1200, so the balance reaches
+   exactly zero. Choose the printer the same way that test does.
+2. Run `./gradlew :lessons:characterisation-tests:test`, read the received file, and approve it by renaming it to
+   `.approved.txt`. Then run it again with `-Pcode=today`: your approval fails too, and its difference is 3 lines.
+3. Compare with the answer, [`ZeroBalanceStatementAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/answer/ZeroBalanceStatementAnswerTest.java),
+   which runs against the rewrite with:
+
+```bash
+./gradlew :lessons:characterisation-tests:test -Pcode=answer   # the rewrite: 2 of 5 tests fail; the small approval's difference is the fee and the closing balance
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/characterisation-tests.html) (its source is [`media/characterisation-tests.deck.html`](media/characterisation-tests.deck.html)). Arrow keys

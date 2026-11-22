@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: nested-tests
 title: Nested tests
-techniques: []
+techniques: [tests-from-cases]

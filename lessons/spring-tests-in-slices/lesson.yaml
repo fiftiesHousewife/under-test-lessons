@@ -1,4 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: spring-tests-in-slices
 title: Spring tests in slices
-techniques: []
+techniques: [spring-tests-in-slices]

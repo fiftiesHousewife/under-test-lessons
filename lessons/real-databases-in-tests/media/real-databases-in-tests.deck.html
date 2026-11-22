@@ -168,13 +168,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  17  postgresql = &quot;42.7.14&quot;
  18  h2 = &quot;2.5.252&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
- 79  testcontainers-postgresql = { module = &quot;org.testcontainers:testcontainers-postgresql&quot;, version.ref = &quot;testcontainers&quot; }
- 80  testcontainers-junit-jupiter = { module = &quot;org.testcontainers:testcontainers-junit-jupiter&quot;, version.ref = &quot;testcontainers&quot; }
- 81  postgresql = { module = &quot;org.postgresql:postgresql&quot;, version.ref = &quot;postgresql&quot; }
+ 84  testcontainers-postgresql = { module = &quot;org.testcontainers:testcontainers-postgresql&quot;, version.ref = &quot;testcontainers&quot; }
+ 85  testcontainers-junit-jupiter = { module = &quot;org.testcontainers:testcontainers-junit-jupiter&quot;, version.ref = &quot;testcontainers&quot; }
+ 86  postgresql = { module = &quot;org.postgresql:postgresql&quot;, version.ref = &quot;postgresql&quot; }
    ⋮
- 83  h2 = { module = &quot;com.h2database:h2&quot;, version.ref = &quot;h2&quot; }</pre></figure></main><aside class="notes">Step one. Add Testcontainers, the PostgreSQL driver, and the H2 database, to the version catalogue.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/741076efa099452c.m4a"></audio></section>
+ 88  h2 = { module = &quot;com.h2database:h2&quot;, version.ref = &quot;h2&quot; }</pre></figure></main><aside class="notes">Step one. Add Testcontainers, the PostgreSQL driver, and the H2 database, to the version catalogue.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/741076efa099452c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, a suite for container tests</h1><div class="rule"></div><p class="scene-text">Step two. Tests that need a container get a suite of their own, called integration test. Ordinary tests stay quick, and machines with no container runtime skip only the container tests.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  9  testing {
  10      suites {
  11          named&lt;JvmTestSuite&gt;(&quot;test&quot;) {

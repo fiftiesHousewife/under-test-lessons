@@ -10,7 +10,10 @@ dependencies {
 }
 
 // Today's change is a rewrite of the printer, so -Pcode=today chooses the rewrite; without it, the legacy printer runs.
-val statement = if (providers.gradleProperty("code").getOrElse("fixed") == "today") "refactored" else "legacy"
+// `./gradlew :lessons:characterisation-tests:test -Pcode=answer` runs the rewrite too, with the exercise's answer
+// (answer/*AnswerTest, a smaller approval), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
+val statement = if (code == "today" || code == "answer") "refactored" else "legacy"
 val testSources = layout.projectDirectory.dir("src/test/java").asFile
 
 val approvalSummary = tasks.register("approvalSummary") {
@@ -54,6 +57,12 @@ tasks.test {
     systemProperty("statement.version", statement)
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching printers never shows a stale result
     finalizedBy(approvalSummary)
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
+    // A received file left by an earlier run of a test this run leaves out would show in the summary: clear them first.
+    val dir = testSources
+    doFirst { dir.walkTopDown().filter { it.name.endsWith(".received.txt") }.forEach { it.delete() } }
     // ApprovalTests' failure message lists full file paths; the approval summary explains the difference instead.
     testLogging {
         quiet {

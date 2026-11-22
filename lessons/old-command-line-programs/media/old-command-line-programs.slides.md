@@ -81,6 +81,8 @@ Say: System Stubs grew from Stefan Birkner's System Rules, a set of JUnit 4 rule
 - https://github.com/webcompere/system-stubs — System Stubs, with its guide
 - https://openjdk.org/jeps/486 — why Java 24 permanently disabled the security manager
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: pin what the program does when its limit isn't set; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the System Stubs guide. The links on screen also explain why the security manager
-  is gone, and take you to this lesson's test code and examples, to run yourself.
+  is gone, and take you to this lesson's test code and examples, to run yourself. And try the exercise in the README:
+  pin what the program does on a night when nobody set its limit.

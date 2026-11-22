@@ -88,10 +88,13 @@ OUT="$(run_live "printf 'A > one PASSED\\n\\nA > two FAILED\\n\\n* What went wro
 refuse "run_live leaves out the blank line after each test's result" "$OUT" $'PASSED\n\n'
 expect "run_live keeps every result and the reason it failed" "$OUT" $'A > one PASSED\nA > two FAILED\n* What went wrong:\n> 1 of 2 failed'
 refuse "run_live leaves out Gradle's general advice" "${OUT#*$'\n'}" "stacktrace"
+OUT="$(run_live "printf 'A > two FAILED\\n2 tests completed, 1 failed\\n* What went wrong:\\nExecution failed for task \\x27:lessons:demo:testFailures\\x27.\\n> 1 of 2 tests failed.\\n'" | plain)"
+refuse "run_live leaves out the test summary's what-went-wrong block, which repeats the results" "${OUT#*$'\n'}" "went wrong"
+expect "run_live keeps the results line the block repeats" "$OUT" "2 tests completed, 1 failed"
 OUT="$(run_with_notes "printf 'X PASSED\\n\\nY PASSED\\n'" | plain)"
 expect "run_with_notes shows the output the same way" "$OUT" $'X PASSED\nY PASSED'
 run_live 'true' >/dev/null
-expect "run_live records one measured time per run" "$(wc -l <"$VIDEO_TIMINGS" | tr -d ' ')" "3"
+expect "run_live records one measured time per run" "$(wc -l <"$VIDEO_TIMINGS" | tr -d ' ')" "4"
 expect "run_live records how long the run took" "$(head -1 "$VIDEO_TIMINGS")" "1."
 
 # --- code that rolls in, callouts that slide in (recordings only: VIDEO_ROLL=1) -------------------------------------

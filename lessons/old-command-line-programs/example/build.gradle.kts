@@ -24,3 +24,15 @@ tasks.jacocoTestCoverageVerification {
     val fixedCode = sourceSets.main.get().output.classesDirs.asFileTree.matching { exclude("**/today/**") }
     classDirectories.setFrom(fixedCode)
 }
+
+// `./gradlew :lessons:old-command-line-programs:test -Pcode=answer` runs the exercise's answer (answer/*AnswerTest)
+// alone, against today's program: today's System.exit would end the run in the strong tests. -Pcode=today leaves it out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
+tasks.named<Test>("test") {
+    filter {
+        when (code) {
+            "today" -> excludeTestsMatching("*AnswerTest")
+            "answer" -> includeTestsMatching("*AnswerTest")
+        }
+    }
+}

@@ -33,6 +33,9 @@ Chosen: the first option. `./gradlew check` runs `checkLessonFiles` ([tools/less
 which fails if:
 
 * a lesson folder has no `lesson.yaml`, or one that breaks the schema or names the wrong folder;
+* a lesson with an example names no technique: every such lesson teaches at least one of the toolkit's techniques,
+  so the two repositories match both ways (a lesson without an example, such as the overview, which maps the others,
+  needn't name one). Where a lesson teaches something the toolkit has no technique for, the toolkit gains one;
 * a row of [the catalogue's technique table](../../lessons/CATALOGUE.md#every-toolkit-technique-and-its-lesson)
   links other lessons than those whose `lesson.yaml` names that technique, or a technique has no row;
 * a row of [the lessons index](../../lessons/README.md#all-lessons) links other techniques than its lesson names;

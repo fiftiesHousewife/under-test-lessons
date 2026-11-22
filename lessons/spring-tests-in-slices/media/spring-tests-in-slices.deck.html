@@ -263,21 +263,18 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 25          assertThat(json.write(answer)).isStrictlyEqualToJson(&quot;&quot;&quot;</mark>
 <mark> 26                  {&quot;reference&quot;: &quot;D-1001&quot;, &quot;dueOn&quot;: &quot;2026-11-23&quot;, &quot;tracking&quot;: &quot;At the depot&quot;}&quot;&quot;&quot;);</mark>
  27      }</pre></figure></main><aside class="notes">And the JSON slice starts only Jackson, set up as the application sets it up. It checks the answer for one delivery, field by field, exactly as the description promises it.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/5bab7048e532c93d.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice names the date</h1><div class="rule"></div><p class="scene-text">We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.</p><p class="callout">Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where 2026-11-23 was promised.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:spring-tests-in-slices:test -Pcode=today</pre><pre class="output">DeliveryJsonSliceTest &gt; writesTheFieldsTheDescriptionPromises() FAILED
-    java.lang.AssertionError: JSON Comparison failure: dueOn
-    Expected: 2026-11-23
-         got: 23/11/2026
-DeliveriesApplicationTest &gt; showsWhatTheCourierSays() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice names the date</h1><div class="rule"></div><p class="scene-text">We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.</p><p class="callout">Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where 2026-11-23 was promised.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:spring-tests-in-slices:test -Pcode=today</pre><pre class="output">DeliveriesApplicationTest &gt; showsWhatTheCourierSays() PASSED
 DeliveriesApplicationTest &gt; listsTheCustomersDeliveries() PASSED
 DeliveriesApplicationTest &gt; leavesOutWhatHasBeenDelivered() PASSED
 DeliveriesWiringTest &gt; answersWithEveryPartJoinedUp() PASSED
 DeliveryDataSliceTest &gt; findsTheDeliveriesStillToComeEarliestFirst() PASSED
+DeliveryJsonSliceTest &gt; writesTheFieldsTheDescriptionPromises() FAILED
+    java.lang.AssertionError: JSON Comparison failure: dueOn
+    Expected: 2026-11-23
+         got: 23/11/2026
 DeliveryWebSliceTest &gt; answersWithTheCustomersDeliveries() PASSED
 DeliveryWebSliceTest &gt; answersNotFoundForAnAddressItDoesNotHave() PASSED
-8 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:spring-tests-in-slices:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 1 of 8 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/abcc8ce4b6b3dcdb.m4a"></audio></section>
+8 tests completed, 1 failed</pre></figure></main><aside class="notes">We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/abcc8ce4b6b3dcdb.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed service</h1><div class="rule"></div><p class="scene-text">Now the fixed answer. It writes the date as the description promises. We run the same tests. All 8 tests pass. The slices check each layer, and one test of the whole application checks the wiring.</p><p class="callout">All 8 tests pass: the slices check each layer, and one whole-application test checks the wiring.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the fixed delivery answer</figcaption><pre>  7  /** FIXED: the due date is written as the description promises, an ISO date such as 2026-11-23. */
 <mark>  8  public record DeliveryView(String reference, LocalDate dueOn, String tracking) implements DeliveryAnswer {</mark>
   9  

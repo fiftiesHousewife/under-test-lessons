@@ -9,6 +9,3 @@ ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on th
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt PASSED
 6 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:behaviour-as-examples:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 6 tests failed. Report: build/reports/tests/test/index.html

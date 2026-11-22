@@ -11,6 +11,3 @@ WaitingTest > the confirmation is sent > run 3 of 5 PASSED
 WaitingTest > the confirmation is sent > run 4 of 5 PASSED
 WaitingTest > the confirmation is sent > run 5 of 5 PASSED
 10 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:finding-flaky-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 10 tests failed. Report: build/reports/tests/test/index.html

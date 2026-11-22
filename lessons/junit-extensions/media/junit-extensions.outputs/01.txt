@@ -10,6 +10,3 @@ HandSetUpTest > shopReceiptShowsPriceWithVat() FAILED
 PricesTest > aCreditIsWrittenWithItsSignInFront() PASSED
 PricesTest > vatIsRoundedToTheNearestPenny() PASSED
 6 tests completed, 2 failed
-* What went wrong:
-Execution failed for task ':lessons:junit-extensions:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 6 tests failed. Report: build/reports/tests/test/index.html

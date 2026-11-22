@@ -73,6 +73,8 @@ Say: Michael Feathers named characterisation tests in his 2004 book, Working Eff
 - https://approvaltests.com — ApprovalTests' website
 - https://github.com/approvals/ApprovalTests.Java — the Java library and its documentation
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: approve a small statement that pins down the fee at exactly zero; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the ApprovalTests website and its Java library. The links on screen also take you
-  to this lesson's test code and examples, so you can run them yourself.
+  to this lesson's test code and examples, so you can run them yourself. And try the exercise in the README: approve
+  a small statement that pins down the fee at exactly zero, and see how short its difference is.

@@ -8,13 +8,29 @@
 # It takes out only padding, never a result:
 #   - blank lines, which Gradle prints after every test's result line;
 #   - Gradle's general advice after a failure ("* Try:" and its "> Run with --stacktrace" lines), and its
-#     "FAILURE: Build failed with an exception." heading; "* What went wrong:" and its reason stay.
+#     "FAILURE: Build failed with an exception." heading;
+#   - the "* What went wrong:" block of the build's own test summary task (testFailures), which only repeats the line
+#     "N tests completed, M failed" printed just above it. Any other "* What went wrong:" and its reason stay.
 use strict;
 use warnings;
 
 $| = 1;    # pass each line on at once, so the video shows the run as it happens
 my $in_advice = 0;
+my $held = undef;    # a "* What went wrong:" line, held until the next line says what failed
 while (my $line = <STDIN>) {
+    if (defined $held) {
+        my $summary = $line =~ /^Execution failed for task '[^']*:\w*[Ff]ailures'/;
+        print $held unless $summary;
+        $held = undef;
+        if ($summary) {
+            $in_advice = 1;    # its "> N of M tests failed" line goes with it
+            next;
+        }
+    }
+    if ($line =~ /^\* What went wrong:/) {
+        $held = $line;
+        next;
+    }
     if ($line =~ /^\* Try:/) {
         $in_advice = 1;
         next;

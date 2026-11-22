@@ -5,6 +5,3 @@ LayerRulesTest > onlyTheServiceLayerUsesStorage() FAILED
     Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>
 OrderSummaryPageTest > bothPagesCountTheOrders() PASSED
 2 tests completed, 1 failed
-* What went wrong:
-Execution failed for task ':lessons:architecture-rules:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 2 tests failed. Report: build/reports/tests/test/index.html

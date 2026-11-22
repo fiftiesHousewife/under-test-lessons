@@ -47,6 +47,22 @@ the tests after it never run. Today's code can't finish in any test, so the buil
   `System.getenv` returns; otherwise the process attaches the agent to itself, which newer JDKs warn about and some
   sandboxes refuse.
 
+## Exercise
+
+The strong tests pin the program's two normal endings, 0 and 1. A script that runs it every night meets a third: a
+night when nobody set `PAYMENT_LIMIT_PENCE`. Pin what the program does then, before anyone changes it.
+
+1. Add a test class beside [`PaymentImportTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/commandline/PaymentImportTest.java) whose `EnvironmentVariables` removes
+   `PAYMENT_LIMIT_PENCE`, and give the program one payment on standard input.
+2. Check what happens: it fails with a `NumberFormatException` before it reads a payment, prints nothing, and never
+   reaches its exit.
+3. Compare with the answer, [`NoLimitSetAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/commandline/answer/NoLimitSetAnswerTest.java). Today's program behaves
+   the same without reaching `System.exit`, so the answer runs alone against today's program with:
+
+```bash
+./gradlew :lessons:old-command-line-programs:test -Pcode=answer   # the answer alone, against today's program: all 1 tests passed, so it holds before the change too
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/old-command-line-programs.html) (its source is [`media/old-command-line-programs.deck.html`](media/old-command-line-programs.deck.html)). Arrow keys

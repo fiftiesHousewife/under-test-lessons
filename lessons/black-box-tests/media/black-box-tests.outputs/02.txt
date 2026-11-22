@@ -3,4 +3,5 @@ OrderServiceTest > anOrderWithoutStockIsRefusedAndNothingIsWritten() PASSED
 OrderServiceTest > anOrderIsReservedAnsweredAndKept() PASSED
 OrderTakingTest > anOrderWithStockIsPlacedAndKept() PASSED
 OrderTakingTest > anOrderWithoutStockIsRefusedAndNotKept() PASSED
-All 4 tests passed.
+TwoOrdersAnswerTest > twoOrdersInARowAreBothKept() PASSED
+All 5 tests passed.

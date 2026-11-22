@@ -1,4 +1,5 @@
 $ ./gradlew :lessons:structured-output-comparison:test
 CompareJsonTest > summaryHasTheExpectedLinesAndTotal() PASSED
 ContainsTextTest > summaryMentionsEveryItemAndATotal() PASSED
-All 2 tests passed.
+FixedClockAnswerTest > summaryHasTheTimeFromItsClock() PASSED
+All 3 tests passed.
