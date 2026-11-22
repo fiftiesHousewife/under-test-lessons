@@ -26,8 +26,8 @@ The example is a shop in three layers: web, service and storage.
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/architecture-rules.deck.html`](media/architecture-rules.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) (its source is [`media/architecture-rules.deck.html`](media/architecture-rules.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/architecture-rules.tape), [the narration](media/architecture-rules.narration.md) and
   [the slides](media/architecture-rules.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=architecture-rules`.

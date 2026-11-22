@@ -28,8 +28,8 @@ It has a quirk nobody remembered: the overdraft fee is charged when the balance 
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/characterisation-tests.deck.html`](media/characterisation-tests.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/characterisation-tests.html) (its source is [`media/characterisation-tests.deck.html`](media/characterisation-tests.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/characterisation-tests.tape), [the narration](media/characterisation-tests.narration.md) and
   [the slides](media/characterisation-tests.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=characterisation-tests`.

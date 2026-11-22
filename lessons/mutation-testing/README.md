@@ -54,8 +54,8 @@ Try it: delete one assertion from the strong suite, re-run PIT, and find the mut
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/mutation-testing.deck.html`](media/mutation-testing.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/mutation-testing.html) (its source is [`media/mutation-testing.deck.html`](media/mutation-testing.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/mutation-testing.tape), [the narration](media/mutation-testing.narration.md) and
   [the slides](media/mutation-testing.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=mutation-testing`.

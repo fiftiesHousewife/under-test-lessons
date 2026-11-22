@@ -25,8 +25,8 @@ into [a settlement file for the bank](example/src/test/resources/settlement/expe
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/batch-file-in-file-out.deck.html`](media/batch-file-in-file-out.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) (its source is [`media/batch-file-in-file-out.deck.html`](media/batch-file-in-file-out.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/batch-file-in-file-out.tape), [the narration](media/batch-file-in-file-out.narration.md) and
   [the slides](media/batch-file-in-file-out.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=batch-file-in-file-out`.

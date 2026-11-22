@@ -27,8 +27,8 @@ The example works out shipping: £3.99, free from £50.
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/feature-flags.deck.html`](media/feature-flags.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/feature-flags.html) (its source is [`media/feature-flags.deck.html`](media/feature-flags.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/feature-flags.tape), [the narration](media/feature-flags.narration.md) and
   [the slides](media/feature-flags.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=feature-flags`.

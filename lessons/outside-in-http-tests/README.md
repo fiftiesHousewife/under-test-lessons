@@ -27,8 +27,8 @@ The example is a hotel booking service on the JDK's own web server
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/outside-in-http-tests.deck.html`](media/outside-in-http-tests.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/outside-in-http-tests.html) (its source is [`media/outside-in-http-tests.deck.html`](media/outside-in-http-tests.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/outside-in-http-tests.tape), [the narration](media/outside-in-http-tests.narration.md) and
   [the slides](media/outside-in-http-tests.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=outside-in-http-tests`.

@@ -29,8 +29,8 @@ Today's invoice can't run in any test, so the build leaves it out of the coverag
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/replacing-hard-wired-dependencies.deck.html`](media/replacing-hard-wired-dependencies.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) (its source is [`media/replacing-hard-wired-dependencies.deck.html`](media/replacing-hard-wired-dependencies.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/replacing-hard-wired-dependencies.tape), [the narration](media/replacing-hard-wired-dependencies.narration.md) and
   [the slides](media/replacing-hard-wired-dependencies.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=replacing-hard-wired-dependencies`.

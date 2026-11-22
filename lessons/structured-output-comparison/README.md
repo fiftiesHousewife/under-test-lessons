@@ -26,8 +26,8 @@ forgets the quantities.
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/structured-output-comparison.deck.html`](media/structured-output-comparison.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) (its source is [`media/structured-output-comparison.deck.html`](media/structured-output-comparison.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/structured-output-comparison.tape), [the narration](media/structured-output-comparison.narration.md) and
   [the slides](media/structured-output-comparison.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=structured-output-comparison`.

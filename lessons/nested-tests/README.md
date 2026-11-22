@@ -24,8 +24,8 @@ The example is a loan: requested, then approved, then repaid.
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/nested-tests.deck.html`](media/nested-tests.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) (its source is [`media/nested-tests.deck.html`](media/nested-tests.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/nested-tests.tape), [the narration](media/nested-tests.narration.md) and
   [the slides](media/nested-tests.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=nested-tests`.

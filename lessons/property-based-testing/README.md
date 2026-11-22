@@ -28,8 +28,8 @@ gives everything left over to the first person: fine with a penny left over, unf
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/property-based-testing.deck.html`](media/property-based-testing.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) (its source is [`media/property-based-testing.deck.html`](media/property-based-testing.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/property-based-testing.tape), [the narration](media/property-based-testing.narration.md) and
   [the slides](media/property-based-testing.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=property-based-testing`.

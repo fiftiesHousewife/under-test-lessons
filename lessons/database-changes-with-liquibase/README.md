@@ -30,8 +30,8 @@ The example adds a loyalty level to each customer.
 
 ## Watch it, or present it
 
-- **Slide deck:** [`media/database-changes-with-liquibase.deck.html`](media/database-changes-with-liquibase.deck.html). Download it and open it in a browser: arrow keys move
-  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) (its source is [`media/database-changes-with-liquibase.deck.html`](media/database-changes-with-liquibase.deck.html)). Arrow keys
+  move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/database-changes-with-liquibase.tape), [the narration](media/database-changes-with-liquibase.narration.md) and
   [the slides](media/database-changes-with-liquibase.slides.md) with
   `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=database-changes-with-liquibase`.
