@@ -5,6 +5,9 @@ technique and its lesson, is in [the catalogue](../lessons/CATALOGUE.md).
 
 ## Videos to make
 
+**Review the slides and decks first** (they're published at the deck links in the README); render videos only once
+they're agreed, since every video carries its slides.
+
 Videos are generated, not committed (`*.mp4` and `*.gif` are ignored); they are published with releases. Make each with
 `./gradlew --no-daemon :lessons:video-tools:renderLessonVideo -Plesson=<id>`, one at a time.
 
@@ -63,11 +66,13 @@ zoom, `fade` in and out). Items 4 and 5 belong in `lessons/_shared/callout.sh`.
 
 ## Pictures
 
-- The colour set (`lessons/_shared/slides/pictures/`) has a picture for every slide.
-- The black-and-white newspaper set (`pictures/ink/`) has the seven shared pictures: bug, robot, scales, magnifier,
-  map, book, globe. Draw the rest in the same style (explicit black strokes, white fills, the shared `#hatch`,
-  `#cross-hatch` and `#dots` patterns from `pictures/defs.svg`); until then the colour picture is used.
-- The pizza still needs a better drawing in both sets.
+- **Black-and-white look (the default):** each slide's picture is a hand-drawn figure (`slides/figures/`, from Open
+  Peeps) chosen by the kind of slide, with a speech bubble of a few words, built by `tools/compose-pictures.py`. Pictures
+  sit in a soft round frame; `lessonPictureFrame` can be `none` or `circle`.
+- **Next for the pictures:** objects on the slides about the subject ("What is it?", "Our example", ideas such as
+  boundaries), drawn large in the same hand-drawn style, alongside the figures on the other slides; and different
+  people in different lessons, so the same figure doesn't appear in every lesson.
+- The colour set (`pictures/`) is kept, and is used when both look settings are empty.
 
 ## Before adding more lessons
 
