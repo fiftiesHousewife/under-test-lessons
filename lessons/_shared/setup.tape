@@ -15,6 +15,10 @@ Sleep 300ms
 Type `export GRADLE_OPTS="$GRADLE_OPTS -Dorg.gradle.warning.mode=none -Dorg.gradle.configuration-cache=false -Dorg.gradle.daemon.registry.base=$PWD/build/video-daemons -Dorg.gradle.logging.level=quiet"`
 Enter
 Sleep 300ms
+# Container tests use Colima where it is running; Testcontainers can't find its socket on its own.
+Type `[ -S "$HOME/.colima/default/docker.sock" ] && export DOCKER_HOST="unix://$HOME/.colima/default/docker.sock" TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE=/var/run/docker.sock; true`
+Enter
+Sleep 300ms
 Type "./gradlew -q --console=plain help >/dev/null 2>&1; ./gradlew -q --console=plain :lessons:${LESSON}:testClasses >/dev/null 2>&1; echo SETUP-$((1+1))-DONE"
 Enter
 Wait+Screen@600s /SETUP-2-DONE/
