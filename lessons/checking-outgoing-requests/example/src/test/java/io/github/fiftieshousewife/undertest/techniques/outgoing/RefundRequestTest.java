@@ -34,11 +34,11 @@ class RefundRequestTest {
 
     @Test
     void sendsTheRefundTheProviderExpects() {
-        Clients.at(provider.baseUrl()).send(new Refund("A-1001", 1250));
+        Clients.at(provider.baseUrl()).send(new Refund("RF-5501", "A-1001", 1250));
         provider.verify(postRequestedFor(urlEqualTo("/refunds"))
                 .withHeader("Authorization", equalTo("Bearer " + Clients.TEST_KEY))
                 .withHeader("Content-Type", equalTo("application/json"))
-                .withHeader("Idempotency-Key", equalTo("refund-A-1001"))
+                .withHeader("Idempotency-Key", equalTo("RF-5501"))
                 .withRequestBody(equalToJson("""
                         {"orderId": "A-1001", "amount": 1250, "currency": "GBP"}""")));
     }

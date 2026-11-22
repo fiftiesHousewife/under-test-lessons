@@ -18,5 +18,5 @@ spoken.
    header. Its body must equal this JSON, compared field by field, so spacing and the order of the fields don't matter.
 6. We run the tests against today's code. The weak tests pass. The strong test fails, and WireMock shows the request it
    expected beside the closest one it got. The Idempotency-Key header is missing, and the amount is 12.5, not 1250.
-7. Now the fixed client. It sends the amount in pence, and adds the Idempotency-Key header, made from the order's
-   number. We run the same tests. [pause 1s] Every test passes. The request is the one the provider expects.
+7. Now the fixed client. It sends the amount in pence, and adds the Idempotency-Key header, made from the refund's
+   own id, so a retry repeats it and a second refund on the same order doesn't. We run the same tests. [pause 1s] Every test passes. The request is the one the provider expects.

@@ -35,16 +35,16 @@ class RefundAnswerTest {
     @Test
     void acceptedRefundGivesItsId() {
         provider.stubFor(post(urlEqualTo("/refunds")).willReturn(okJson("{\"refundId\": \"R-7731\"}").withStatus(201)));
-        assertThat(Clients.at(provider.baseUrl()).send(new Refund("A-1001", 1250))).isEqualTo("R-7731");
+        assertThat(Clients.at(provider.baseUrl()).send(Clients.REFUND)).isEqualTo("R-7731");
     }
 
     @Test
     void outageAndSilenceSayTheProviderIsUnavailable() {
         provider.stubFor(post(urlEqualTo("/refunds")).willReturn(aResponse().withStatus(503)));
-        final Throwable outage = catchThrowable(() -> Clients.at(provider.baseUrl()).send(new Refund("A-1001", 1250)));
+        final Throwable outage = catchThrowable(() -> Clients.at(provider.baseUrl()).send(Clients.REFUND));
         final String address = provider.baseUrl();
         provider.stop();
-        final Throwable silence = catchThrowable(() -> Clients.at(address).send(new Refund("A-1001", 1250)));
+        final Throwable silence = catchThrowable(() -> Clients.at(address).send(Clients.REFUND));
         assertAll(
                 () -> assertThat(describe(outage)).as("an outage")
                         .isEqualTo("ProviderUnavailableException: the payment provider answered 503"),

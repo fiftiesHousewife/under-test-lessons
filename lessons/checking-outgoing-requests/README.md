@@ -21,7 +21,11 @@ paid once. The provider answers `201 Created` with a refund id.
 
 - [`TodaysRefundClient`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/outgoing/today/TodaysRefundClient.java)
   sends the amount in pounds and no `Idempotency-Key` header. [`RefundClient`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/outgoing/fixed/RefundClient.java)
-  sends pence and the header.
+  sends pence and the header, made from the refund's own id: made once when the refund is decided, so a retry repeats
+  the key and the provider pays it once, while a second partial refund on the same order has a new key and is paid
+  too. A key made from the order's number would treat that second refund as a repeat, and never pay it.
+  [`RefundKeyTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundKeyTest.java)
+  checks both.
 - [`RefundAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundAnswerTest.java)
   is the "before": WireMock answers, and the tests check the answer was handled (a refund id, an outage, no answer at
   all). They pass on both versions.

@@ -6,7 +6,7 @@ import io.github.fiftieshousewife.undertest.techniques.outgoing.Refunds;
 import java.net.http.HttpRequest;
 import tools.jackson.databind.node.ObjectNode;
 
-/** FIXED: sends the amount in pence, and an Idempotency-Key header, so the provider pays a repeated refund once. */
+/** FIXED: sends the amount in pence, and the refund's id as its Idempotency-Key, so a repeated refund is paid once. */
 public final class RefundClient implements Refunds {
 
     private final ProviderHttp provider;
@@ -23,7 +23,7 @@ public final class RefundClient implements Refunds {
                 .put("currency", "GBP");
         return provider.send(provider.refundRequest()
                 .header("Content-Type", "application/json")
-                .header("Idempotency-Key", "refund-" + refund.orderId())
+                .header("Idempotency-Key", refund.refundId())
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build());
     }
