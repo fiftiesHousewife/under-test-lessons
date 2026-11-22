@@ -27,6 +27,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
 | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
+| Recording current behaviour from real traffic: [Keploy](https://keploy.io/) records a small Spring Boot service's API calls and its MySQL and HTTP calls, then replays them as tests with its own stand-ins | Keploy (native, no admin rights), WireMock to compare | Keploy binary | later: after the toolkit's Keploy trial |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | last: needs other tools |
 
 ## Stand in for real systems
@@ -95,7 +96,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | ai-written-tests | AI-written tests that pass an acceptance check | later |
 | stand-in-commands | Stand-in commands | last |
 | server-rendered-ui-tests | Server-rendered pages | last |
-| traffic-record-and-replay | Recorded traffic replayed against a new version | last |
+| traffic-record-and-replay | Recording current behaviour from real traffic (planned) | later: after the toolkit's Keploy trial |
 | machine-state-checks | Checking a machine after an install script | last |
 | post-release-checks | Checks that run against production after a release | last |
 
