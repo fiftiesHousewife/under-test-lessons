@@ -36,7 +36,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |  | Lesson: slow and failing dependencies | deliverable | Lessons Owner | ai | – |
 |  | Lesson: coverage of changed code | deliverable | Lessons Owner | ai | – |
 |  | Lesson: more JUnit, one idea per lesson | deliverable | Lessons Owner | ai | – |
-|  | Lesson: running old code safely on your own machine | deliverable | Lessons Owner | ai | – |
+|  | Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson) | deliverable | Lessons Owner | ai | – |
 |  | Lesson: the overview's video, from its slides | deliverable | Lessons Owner | ai | Slides-only videos: a lesson whose video is its slides and their narration, The overview's deck, voiced: a map of testing old Java code |
 |  | Lesson: Mockito well used | deliverable | Lessons Owner | ai | Set Mockito's agent in build-logic for JDK 25 |
 |  | Lesson: Spring tests in slices | deliverable | Lessons Owner | ai | Check WireMock 3 against Spring Boot 4 before a Spring lesson |
