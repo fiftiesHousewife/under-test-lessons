@@ -90,23 +90,121 @@ body.show-notes .deck-counter { display: none; }
 }
 .code pre.command { color: var(--green); }
 
+/* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
+   -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
+:root {
+  --background: #f3efe4;
+  --background-glow: #f3efe4;
+  --title: #111;
+  --text: #1a1a1a;
+  --accent: #111;
+  --grey: #555;
+  --disc: #fff;
+  --font: Georgia, "Times New Roman", serif;
+}
+h1 { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+.rule { height: 6px; border-radius: 0; width: 100%; max-width: 600px; }
+li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
+.picture { border: 6px solid #111; box-shadow: 10px 10px 0 #111; }
+.picture svg { filter: url(#wobble); overflow: visible; }
+
+/* Every coloured shape becomes white or hatched, outlined in ink. */
+.picture .teal, .picture .pink, .picture .yellow, .picture .green, .picture .red, .picture .grey, .picture .paper {
+  stroke: #111; stroke-width: 5; stroke-linejoin: round;
+}
+.picture .paper, .picture .yellow { fill: #fff; }
+.picture .teal { fill: url(#hatch); }
+.picture .pink { fill: url(#dots); }
+.picture .grey { fill: url(#cross-hatch); }
+.picture .green { fill: #fff; }
+.picture .red { fill: url(#cross-hatch); }
+.picture .ink { fill: #111; stroke: none; }
+.picture text { fill: #111; stroke: none; font-family: Georgia, serif; }
+.picture text.paper, .picture text.ink { fill: #111; stroke: none; }
+.picture .line, .picture .light-line { stroke: #111 !important; }
+.picture .red + .light-line, .picture .ink + .light-line { stroke: #fff !important; }
+
+/* Decks: code set like a printed listing, callouts boxed in ink. */
+:root { --code-background: #fff; --code-text: #111; }
+.code pre { border: 3px solid #111; border-radius: 0; box-shadow: 6px 6px 0 #111; }
+.code pre.command { color: #111; font-weight: bold; }
+.scene .callout { border-color: #111; color: #111; border-radius: 0; font-style: italic; }
+
 </style></head><body class="deck"><svg class="picture-defs" width="0" height="0" style="position:absolute" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="2.5"/></pattern><pattern id="cross-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="2.5"/><line x1="0" y1="0" x2="10" y2="0" stroke="#111" stroke-width="2.5"/></pattern><pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="#fff"/><circle cx="4.5" cy="4.5" r="1.8" fill="#111"/></pattern><filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></defs></svg>
 <section class="deck-slide"><main class="slide"><section class="text"><h1>What are nested tests?</h1><div class="rule"></div><ul><li class="point">Tests grouped into classes inside a test class, one for each situation</li><li class="point">Each group sets up its situation once, before its tests</li><li class="point">The report shows the groups as a tree, with readable names</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="teal" d="M40 70 L130 70 L150 95 L360 95 L360 340 L40 340 Z"/><rect class="paper" x="70" y="125" width="270" height="56" rx="10"/><rect class="paper" x="100" y="196" width="240" height="56" rx="10"/><rect class="paper" x="100" y="267" width="240" height="56" rx="10"/><g class="line thin"><path d="M90 153 L240 153 M120 224 L250 224 M120 295 L230 295"/></g><circle class="green" cx="310" cy="224" r="14"/><circle class="green" cx="310" cy="153" r="14"/><circle class="red" cx="310" cy="295" r="14"/></svg>
 </figure></main><aside class="notes">Nested tests are tests grouped into classes inside a test class, one class for each situation. Each group sets up its situation once, before its tests. And the report shows the groups as a tree, with readable names.</aside></section>
 <section class="deck-slide"><main class="slide"><section class="text"><h1>Our example: a loan</h1><div class="rule"></div><ul><li class="point">A loan is requested, then approved, then repaid</li><li class="point">Each step is allowed only from the state before it</li><li class="point">Every other step must be refused</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M80 40 L320 40 L320 350 L300 335 L280 350 L260 335 L240 350 L220 335 L200 350 L180 335 L160 350 L140 335 L120 350 L100 335 L80 350 Z"/><rect class="teal" x="80" y="40" width="240" height="56"/><g class="line thin"><path d="M110 130 L220 130 M250 130 L290 130 M110 170 L200 170 M250 170 L290 170 M110 210 L230 210 M250 210 L290 210 M110 250 L190 250 M250 250 L290 250"/></g><path class="line thin" d="M110 290 L290 290" style="stroke:var(--grey)"/><circle class="yellow" cx="320" cy="300" r="56"/><circle class="line thin" cx="320" cy="300" r="42" style="stroke:var(--ink)"/><text x="320" y="318" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="52" class="ink">£</text></svg>
 </figure></main><aside class="notes">Our example is a loan. A loan is requested, then approved, then repaid. Each step is allowed only from the state just before it, and every other step must be refused.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>What we'll compare</h1><div class="rule"></div><ul><li class="point">The code under test: today's loan, which misses one refusal</li><li class="point">Flat tests: one list of tests with long names</li><li class="point">Nested tests: one class per situation, asking the same questions of each</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M200 70 L200 340 M130 350 L270 350"/><path class="line" d="M70 110 L330 150"/><circle class="yellow" cx="200" cy="65" r="18"/><path class="line thin" d="M70 110 L40 190 M70 110 L100 190 M330 150 L300 280 M330 150 L360 280"/><path class="teal" d="M30 190 L110 190 Q70 230 30 190 Z"/><path class="pink" d="M290 280 L370 280 Q330 320 290 280 Z"/><path class="paper" d="M60 175 Q75 130 95 120 Q85 155 60 175 Z"/><rect class="grey" x="305" y="230" width="50" height="50" rx="8"/><text x="330" y="265" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="22" class="paper">KG</text></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>What we'll compare</h1><div class="rule"></div><ul><li class="point">The code under test: today's loan, which misses one refusal</li><li class="point">Flat tests: one list of tests with long names</li><li class="point">Nested tests: one class per situation, asking the same questions of each</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M120 360 H280 L262 330 H138 Z" fill="url(#cross-hatch)" stroke-width="6"/>
+<path d="M192 330 V78 M208 330 V78" stroke-width="6"/><path d="M192 330 V78 H208 V330" fill="url(#hatch)" stroke="none"/>
+<circle cx="200" cy="66" r="15" fill="#fff" stroke-width="6"/>
+<path d="M60 122 L340 92" stroke-width="9"/>
+<circle cx="60" cy="122" r="6" fill="#111"/><circle cx="340" cy="92" r="6" fill="#111"/>
+<path d="M60 122 L22 205 M60 122 L98 205" stroke-width="3"/><path d="M340 92 L298 245 M340 92 L382 245" stroke-width="3"/>
+<path d="M12 205 H108 Q100 238 60 240 Q20 238 12 205 Z" fill="#fff" stroke-width="6"/>
+<path d="M288 245 H392 Q384 280 340 282 Q296 280 288 245 Z" fill="#fff" stroke-width="6"/>
+<path d="M36 196 Q52 140 92 120 Q76 160 50 192" fill="#fff" stroke-width="4"/>
+<path d="M44 186 Q64 160 86 128 M54 176 L66 170 M60 164 L74 160 M68 152 L80 148" stroke-width="2.5"/>
+<path d="M312 245 L322 196 H358 L368 245 Z" fill="url(#cross-hatch)" stroke-width="5"/>
+<path d="M330 196 Q340 180 350 196" stroke-width="5"/>
+<rect x="320" y="212" width="40" height="22" fill="#fff" stroke="none"/>
+<text x="340" y="230" font-family="Georgia, serif" font-weight="bold" font-size="20" fill="#111" stroke="none" text-anchor="middle">1 kg</text>
+<text x="60" y="270" font-family="Georgia, serif" font-style="italic" font-size="24" fill="#111" stroke="none" text-anchor="middle">weak</text>
+<text x="340" y="312" font-family="Georgia, serif" font-style="italic" font-size="24" fill="#111" stroke="none" text-anchor="middle">strong</text>
+</svg>
 </figure></main><aside class="notes">Here is what we will compare. The code under test is today's loan, which misses one refusal. Flat tests are one long list, with long names. And nested tests have one class per situation, asking the same questions of each.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>Why structure helps</h1><div class="rule"></div><ul><li class="point">In a flat list, a missing case is invisible</li><li class="point">Grouped by situation, every situation gets the same questions, so gaps stand out</li><li class="point">The report becomes a specification people can read</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="paper" x="40" y="60" width="250" height="290" rx="20"/><g class="line thin"><path d="M70 110 L250 110 M70 150 L210 150 M90 190 L240 190 M90 230 L190 230 M70 270 L230 270 M70 310 L170 310"/></g><circle class="teal" cx="245" cy="215" r="98" opacity="0.35"/><circle class="line" cx="245" cy="215" r="98" style="stroke-width:16"/><path class="line" d="M315 285 L370 340" style="stroke-width:30"/><ellipse class="red" cx="245" cy="225" rx="34" ry="40"/><circle class="ink" cx="245" cy="186" r="20"/><circle class="paper" cx="238" cy="182" r="6"/><circle class="paper" cx="252" cy="182" r="6"/><path class="line thin" d="M215 220 L198 210 M275 220 L292 210 M218 245 L200 255 M272 245 L290 255"/></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Why structure helps</h1><div class="rule"></div><ul><li class="point">In a flat list, a missing case is invisible</li><li class="point">Grouped by situation, every situation gets the same questions, so gaps stand out</li><li class="point">The report becomes a specification people can read</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M50 60 H250 L280 90 V350 H50 Z" fill="#fff" stroke-width="6"/>
+<path d="M250 60 V90 H280" fill="url(#hatch)" stroke-width="5"/>
+<path d="M58 352 H284 V96" stroke-width="10" opacity="0.9"/>
+<g stroke-width="4"><path d="M75 100 H200 M75 125 H160 M95 150 H230 M95 175 H190 M75 200 H215 M95 225 H170 M95 250 H240 M75 275 H180 M75 300 H220"/></g>
+<circle cx="210" cy="215" r="88" fill="#fff" stroke="none"/>
+<g stroke-width="4" clip-path="circle(88px at 210px 215px)"><path d="M140 175 H240 M140 250 H250"/></g>
+<ellipse cx="212" cy="222" rx="30" ry="36" fill="url(#cross-hatch)" stroke-width="5"/>
+<circle cx="212" cy="182" r="18" fill="#fff" stroke-width="5"/>
+<circle cx="205" cy="180" r="4" fill="#111" stroke="none"/><circle cx="219" cy="180" r="4" fill="#111" stroke="none"/>
+<path d="M184 210 L164 198 M240 210 L260 198 M184 232 L162 240 M240 232 L262 240 M190 252 L174 270 M234 252 L250 270 M204 166 L196 150 M220 166 L228 150" stroke-width="4"/>
+<circle cx="210" cy="215" r="88" stroke-width="14"/>
+<circle cx="210" cy="215" r="98" stroke-width="3"/>
+<path d="M160 160 Q175 140 200 135" stroke-width="5"/>
+<path d="M280 285 L350 355" stroke-width="30"/><path d="M280 285 L350 355" stroke="#fff" stroke-width="18"/><path d="M296 301 L345 350" stroke="url(#hatch)" stroke-width="16"/>
+<path d="M272 277 L292 297" stroke-width="20"/>
+</svg>
 </figure></main><aside class="notes">Why does the structure matter? In a flat list, a missing case is invisible. Grouped by situation, every situation gets the same questions, so a gap stands out. And the report becomes a specification that anyone can read, including people who don't write code.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>How JUnit nests tests</h1><div class="rule"></div><ul><li class="point">Mark an inner class with @Nested</li><li class="point">Give classes and tests sentence names with @DisplayName</li><li class="point">An inner class's @BeforeEach runs after the outer one, building up the situation</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M200 70 L200 40"/><circle class="pink" cx="200" cy="34" r="14"/><rect class="teal" x="115" y="70" width="170" height="130" rx="34"/><circle class="paper" cx="165" cy="128" r="24"/><circle class="paper" cx="235" cy="128" r="24"/><circle class="ink" cx="170" cy="132" r="11"/><circle class="ink" cx="240" cy="132" r="11"/><path class="line thin" d="M170 172 Q200 188 230 172"/><rect class="grey" x="135" y="210" width="130" height="120" rx="24"/><rect class="yellow" x="170" y="240" width="60" height="16" rx="8"/><rect class="yellow" x="170" y="270" width="40" height="16" rx="8"/><path class="line" d="M135 240 L80 285 M265 240 L310 200"/><path class="line" d="M165 330 L160 372 M235 330 L240 372"/><ellipse class="red" cx="322" cy="180" rx="30" ry="34"/><circle class="ink" cx="322" cy="148" r="16"/><path class="line thin" d="M300 176 L282 166 M344 176 L362 166 M302 200 L286 210 M342 200 L358 210"/><rect class="paper" x="40" y="285" width="80" height="60" rx="10"/><path class="line thin" d="M54 305 L104 305 M54 325 L90 325"/></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>How JUnit nests tests</h1><div class="rule"></div><ul><li class="point">Mark an inner class with @Nested</li><li class="point">Give classes and tests sentence names with @DisplayName</li><li class="point">An inner class's @BeforeEach runs after the outer one, building up the situation</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="185" cy="370" rx="115" ry="12" fill="url(#hatch)" stroke="none"/>
+<rect x="40" y="250" width="150" height="110" rx="6" fill="#fff" stroke-width="5" transform="rotate(-6 115 305)"/>
+<g stroke-width="4" transform="rotate(-6 115 305)"><path d="M58 275 H150 M58 295 H170 M70 315 H140 M58 335 H160"/></g>
+<path d="M200 54 V30" stroke-width="5"/><circle cx="200" cy="24" r="9" fill="#111"/>
+<path d="M184 22 Q176 16 170 22 M216 22 Q224 16 230 22" stroke-width="3"/>
+<rect x="135" y="54" width="130" height="100" rx="14" fill="#fff" stroke-width="8"/>
+<path d="M135 128 H265 V140 Q265 154 251 154 H149 Q135 154 135 140 Z" fill="url(#cross-hatch)" stroke="none"/>
+<circle cx="175" cy="100" r="20" fill="#fff" stroke-width="5"/><circle cx="225" cy="100" r="20" fill="#fff" stroke-width="5"/>
+<circle cx="181" cy="104" r="8" fill="#111" stroke="none"/><circle cx="231" cy="104" r="8" fill="#111" stroke="none"/>
+<path d="M168 82 L186 86 M232 86 L250 82" stroke-width="4"/>
+<path d="M178 134 H222" stroke-width="4"/>
+<rect x="150" y="160" width="100" height="120" rx="10" fill="#fff" stroke-width="8"/>
+<path d="M150 240 H250 V270 Q250 280 240 280 H160 Q150 280 150 270 Z" fill="url(#hatch)" stroke="none"/>
+<rect x="168" y="178" width="64" height="38" rx="4" fill="#fff" stroke-width="4"/>
+<path d="M176 198 L188 190 L198 204 L210 186 L224 198" stroke-width="3"/>
+<g fill="#111" stroke="none"><circle cx="160" cy="170" r="3.5"/><circle cx="240" cy="170" r="3.5"/><circle cx="160" cy="270" r="3.5"/><circle cx="240" cy="270" r="3.5"/></g>
+<path d="M170 280 V345 M230 280 V345" stroke-width="10"/><path d="M152 350 H188 M212 350 H248" stroke-width="10"/>
+<path d="M150 200 Q120 230 128 262" stroke-width="10"/>
+<path d="M250 195 Q290 170 305 140" stroke-width="10"/>
+<path d="M298 132 L318 110 M312 138 L334 120" stroke-width="5"/>
+<ellipse cx="335" cy="96" rx="17" ry="13" fill="url(#cross-hatch)" stroke-width="4"/>
+<circle cx="350" cy="88" r="7" fill="#111" stroke="none"/>
+<path d="M322 104 L312 112 M330 108 L326 120 M342 106 L346 118 M352 96 L364 104" stroke-width="3"/>
+<path d="M352 60 Q362 70 360 80 M370 66 Q376 76 372 88" stroke-width="3"/>
+</svg>
 </figure></main><aside class="notes">In JUnit, you mark an inner class as nested. You give classes and tests sentence names, with display name. And an inner class's set-up runs after the outer one's, so each level builds up its situation.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</p></section><figure class="code" style="--code-size: 20px"><figcaption>today's loan</figcaption><pre> 23      @Override
  24      public void repay() {
- 25          if (state == State.REPAID) {
+ 25          if (current == State.REPAID) {
  26              throw new IllegalStateException(&quot;only an approved loan can be repaid&quot;);
  27          }
- 28          state = State.REPAID;
+ 28          current = State.REPAID;
  29      }</pre></figure></main><aside class="notes">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The flat tests</h1><div class="rule"></div><p class="scene-text">These are flat tests: one long list, where each name packs in a situation and a result. They all pass. Can you spot what's missing? It's hard to tell.</p></section><figure class="code" style="--code-size: 21px"><figcaption>flat tests</figcaption><pre> 10  
  11      @Test
@@ -191,17 +289,48 @@ body.show-notes .deck-counter { display: none; }
  23      }
  24  
  25      private void move(final State from, final State to, final String refusal) {
- 26          if (state != from) {
+ 26          if (current != from) {
  27              throw new IllegalStateException(refusal);
  28          }
- 29          state = to;
+ 29          current = to;
  30      }
  31  }</pre><pre class="command">$ ./gradlew :lessons:nested-tests:test</pre></figure></main><aside class="notes">Now the loan that allows each step only from the state before it. We run the same tests. Every situation behaves.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>When to nest tests</h1><div class="rule"></div><ul><li class="point">For anything with states or situations: workflows, accounts, orders, permissions</li><li class="point">Ask the same questions in every situation, so gaps show</li><li class="point">Keep nesting shallow: two or three levels at most</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M40 90 L140 60 L260 100 L360 70 L360 330 L260 360 L140 320 L40 350 Z"/><path class="line thin" d="M140 60 L140 320 M260 100 L260 360" style="stroke:var(--grey)"/><path class="line" d="M90 290 Q140 200 200 230 Q270 260 300 150" style="stroke-dasharray:4 22"/><g><path class="teal" d="M90 300 C60 260 60 230 90 230 C120 230 120 260 90 300 Z"/><text x="90" y="268" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">1</text><path class="pink" d="M200 245 C170 205 170 175 200 175 C230 175 230 205 200 245 Z"/><text x="200" y="213" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">2</text><path class="yellow" d="M300 165 C270 125 270 95 300 95 C330 95 330 125 300 165 Z"/><text x="300" y="133" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">3</text></g></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>When to nest tests</h1><div class="rule"></div><ul><li class="point">For anything with states or situations: workflows, accounts, orders, permissions</li><li class="point">Ask the same questions in every situation, so gaps show</li><li class="point">Keep nesting shallow: two or three levels at most</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M30 90 L140 60 L260 95 L370 65 V320 L260 350 L140 315 L30 345 Z" fill="#fff" stroke-width="7"/>
+<path d="M140 60 V315 L260 350 V95 Z" fill="url(#hatch)" stroke="none" opacity="0.5"/>
+<path d="M140 60 V315 M260 95 V350" stroke-width="5"/>
+<path d="M60 150 Q80 130 100 150 T120 160 M175 250 Q195 230 220 250 M290 200 Q310 180 340 196" stroke-width="3"/>
+<path d="M70 290 Q120 230 175 245 Q240 262 255 205 Q270 150 320 130" stroke-width="5" stroke-dasharray="3 16"/>
+<g stroke-width="5"><circle cx="70" cy="290" r="18" fill="#fff"/><circle cx="175" cy="245" r="18" fill="#fff"/><circle cx="255" cy="200" r="18" fill="#fff"/></g>
+<g font-family="Georgia, serif" font-weight="bold" font-size="22" fill="#111" stroke="none" text-anchor="middle"><text x="70" y="298">1</text><text x="175" y="253">2</text><text x="255" y="208">3</text></g>
+<path d="M305 115 L335 145 M335 115 L305 145" stroke-width="9"/>
+<g transform="translate(78 118)"><circle r="30" fill="#fff" stroke-width="4"/><path d="M0 -38 L8 0 L0 38 L-8 0 Z" fill="url(#cross-hatch)" stroke-width="3"/><path d="M-38 0 L0 -6 L38 0 L0 6 Z" stroke-width="3"/><text y="-44" font-family="Georgia, serif" font-weight="bold" font-size="16" fill="#111" stroke="none" text-anchor="middle">N</text></g>
+</svg>
 </figure></main><aside class="notes">When should you nest tests? For anything with states or situations: workflows, accounts, orders and permissions. Ask the same questions in every situation, so the gaps show. And keep the nesting shallow: two or three levels at most.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>Where nested tests came from</h1><div class="rule"></div><ul><li class="point">Part of JUnit since JUnit 5, in 2017, along with display names</li><li class="point">The style comes from behaviour-driven tools such as RSpec, with describe and context</li><li class="point">JUnit 6 is the current generation</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M40 140 Q120 110 200 150 L200 340 Q120 300 40 330 Z"/><path class="paper" d="M360 140 Q280 110 200 150 L200 340 Q280 300 360 330 Z"/><path class="line" d="M200 150 L200 340"/><g class="line thin" style="stroke:var(--grey)"><path d="M70 180 Q120 165 170 185 M70 220 Q120 205 170 225 M70 260 Q120 245 170 265 M230 185 Q280 165 330 180 M230 225 Q280 205 330 220"/></g><circle class="yellow" cx="300" cy="100" r="70"/><circle class="paper" cx="300" cy="100" r="54"/><path class="line" d="M300 100 L300 66 M300 100 L326 114"/></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Where nested tests came from</h1><div class="rule"></div><ul><li class="point">Part of JUnit since JUnit 5, in 2017, along with display names</li><li class="point">The style comes from behaviour-driven tools such as RSpec, with describe and context</li><li class="point">JUnit 6 is the current generation</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="200" cy="358" rx="170" ry="14" fill="url(#hatch)" stroke="none"/>
+<path d="M30 170 Q115 140 200 175 Q285 140 370 170 V345 Q285 318 200 350 Q115 318 30 345 Z" fill="url(#cross-hatch)" stroke-width="7"/>
+<path d="M40 160 Q118 128 200 165 V335 Q118 302 40 332 Z" fill="#fff" stroke-width="6"/>
+<path d="M360 160 Q282 128 200 165 V335 Q282 302 360 332 Z" fill="#fff" stroke-width="6"/>
+<g stroke-width="3"><path d="M62 185 Q118 165 180 188 M62 210 Q118 190 180 213 M62 235 Q118 215 180 238 M62 260 Q118 240 180 263 M62 285 Q118 265 150 278"/><path d="M220 188 Q282 165 338 185 M220 213 Q282 190 338 210 M250 238 Q295 222 338 235"/></g>
+<path d="M200 165 V335" stroke-width="6"/>
+<path d="M230 300 Q260 220 330 150 Q300 230 238 300 Z" fill="#fff" stroke-width="4"/><path d="M234 300 Q280 230 326 158 M262 262 L276 256 M276 240 L292 234 M290 216 L306 212" stroke-width="2.5"/>
+<circle cx="300" cy="78" r="56" fill="#fff" stroke-width="7"/><circle cx="300" cy="78" r="46" stroke-width="2"/>
+<g stroke-width="4"><path d="M300 36 V44 M300 112 V120 M258 78 H266 M334 78 H342"/></g>
+<path d="M300 78 V50 M300 78 L322 92" stroke-width="6"/><circle cx="300" cy="78" r="5" fill="#111"/>
+<path d="M286 16 H314 M300 16 V22" stroke-width="6"/>
+</svg>
 </figure></main><aside class="notes">Nested tests and display names have been part of JUnit since JUnit 5, in 2017. The style comes from behaviour driven tools, such as RSpec in Ruby, with its describe and context blocks. JUnit 6 is the current generation.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>Find out more</h1><div class="rule"></div><ul><li class="link">https://junit.org — JUnit, with its user guide on nested tests</li><li class="link">https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself</li><li class="link">https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><circle class="teal" cx="180" cy="190" r="140"/><path class="green" d="M110 100 Q150 90 160 130 Q140 170 100 160 Q80 130 110 100 Z M200 190 Q250 170 270 210 Q260 270 210 280 Q180 240 200 190 Z M130 240 Q160 250 150 290 Q120 290 110 260 Z"/><g class="line thin"><circle cx="180" cy="190" r="140"/><ellipse cx="180" cy="190" rx="60" ry="140"/><path d="M40 190 L320 190 M60 120 L300 120 M60 260 L300 260"/></g><g class="line" style="stroke:var(--pink);stroke-width:16"><rect x="250" y="270" width="80" height="44" rx="22"/><rect x="300" y="300" width="80" height="44" rx="22"/></g></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Find out more</h1><div class="rule"></div><ul><li class="link">https://junit.org — JUnit, with its user guide on nested tests</li><li class="link">https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself</li><li class="link">https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M130 360 H250 L236 335 H144 Z" fill="url(#cross-hatch)" stroke-width="6"/><path d="M190 335 V312" stroke-width="10"/>
+<path d="M88 300 A140 140 0 0 0 300 76" stroke-width="8"/>
+<circle cx="180" cy="180" r="120" fill="#fff" stroke-width="8"/>
+<path d="M180 60 A120 120 0 0 1 180 300 A60 120 0 0 1 180 60 Z" fill="url(#hatch)" stroke="none" opacity="0.6"/>
+<g stroke-width="3"><ellipse cx="180" cy="180" rx="60" ry="120"/><path d="M180 60 V300 M60 180 H300 M74 120 H286 M74 240 H286"/></g>
+<path d="M110 105 Q140 92 150 125 Q132 160 100 150 Q88 125 110 105 Z M190 175 Q235 160 255 195 Q245 250 205 258 Q178 225 190 175 Z M120 210 Q148 220 140 255 Q115 255 104 232 Z" fill="url(#cross-hatch)" stroke-width="4"/>
+<g stroke-width="11"><rect x="262" y="262" width="78" height="42" rx="21" fill="#fff"/><rect x="306" y="290" width="78" height="42" rx="21"/></g>
+<g stroke="#fff" stroke-width="4"><rect x="262" y="262" width="78" height="42" rx="21"/></g>
+</svg>
 </figure></main><aside class="notes">To find out more, read the JUnit user guide's section on nested tests. The links on screen also take you to this lesson's code, and to the toolkit these lessons belong to.</aside></section>
 <script>
 // Slide deck controls: arrow keys, space or a click move between slides; N shows the speaker notes; the address

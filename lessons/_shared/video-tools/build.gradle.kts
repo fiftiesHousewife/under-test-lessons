@@ -124,7 +124,7 @@ buildLessonVoice.configure { mustRunAfter(recordLessonVideo) }
 // Slides are styled by lessons/_shared/slides/slides.css, then any user stylesheet: -PlessonSlideCss=<path>.
 // A relative path is taken from the repository root, where the commands are run.
 val repositoryDir = rootDir
-val slideCss = providers.gradleProperty("lessonSlideCss")
+val slideCss = providers.gradleProperty("lessonSlideCss").filter { it.isNotBlank() }
     .map { File(it).let { css -> if (css.isAbsolute) css else repositoryDir.resolve(it) }.absolutePath }.orElse("")
 // Slides are screenshotted by a headless browser: -PlessonBrowser=<program>, or Google Chrome where it usually is.
 val macChrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
@@ -132,7 +132,7 @@ val slideBrowser = providers.gradleProperty("lessonBrowser")
     .orElse(if (File(macChrome).canExecute()) macChrome else "google-chrome")
 // Your own pictures, by name, used before the shared ones: -PlessonPictures=<folder> (for example the ink set,
 // lessons/_shared/slides/pictures/ink). Set it, and lessonSlideCss, in gradle.properties to use them on every run.
-val pictureFolder = providers.gradleProperty("lessonPictures")
+val pictureFolder = providers.gradleProperty("lessonPictures").filter { it.isNotBlank() }
     .map { File(it).let { dir -> if (dir.isAbsolute) dir else repositoryDir.resolve(it) }.absolutePath }.orElse("")
 tasks.withType<JavaExec>().configureEach {
     systemProperty("video.pictures", pictureFolder.get())

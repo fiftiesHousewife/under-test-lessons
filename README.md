@@ -124,14 +124,16 @@ which always rebuilds every deck and slide image:
 ./gradlew :lessons:video-tools:buildLessonSlides
 ```
 
-Point it at your own files with `-PlessonSlideCss=<file>` and `-PlessonPictures=<folder>`, or set them once in
-`gradle.properties`. Two looks come with the lessons: the default, in colour, and a newspaper style in black ink on
-newsprint with cartoons drawn in line and hatching:
+The look is set in `gradle.properties`. By default it is a newspaper style, black ink on newsprint, with cartoons
+drawn in line and hatching:
 
 ```properties
 lessonSlideCss=lessons/_shared/slides/themes/newspaper.css
 lessonPictures=lessons/_shared/slides/pictures/ink
 ```
+
+Point those at your own stylesheet and pictures folder to rebrand (pictures are found by name there first, then in the
+shared set), or set both to nothing for the colour look the shared files give on their own.
 
 How the videos are made, and the rules that keep them short and reliable, are in
 [the make-a-lesson-video skill](.github/skills/make-a-lesson-video/SKILL.md).
