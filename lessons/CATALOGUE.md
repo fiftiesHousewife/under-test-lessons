@@ -13,29 +13,29 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Mutation testing](mutation-testing/README.md) | PIT | Java only | ready |
+| [Mutation testing](mutation-testing/README.md) | PIT | Java only | built |
 
 ## Record what the code does today (outside in, black box)
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | in progress |
-| [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | in progress |
-| [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | in progress |
-| [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders; spring-batch-test for Spring jobs | Java only | in progress |
-| [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | in progress |
-| [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | in progress |
-| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | in progress |
+| [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | built |
+| [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | built |
+| [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | built |
+| [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders; spring-batch-test for Spring jobs | Java only | built |
+| [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
+| [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
+| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | wave 3 |
 
 ## Stand in for real systems
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | in progress |
-| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | in progress |
-| [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | in progress |
-| [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | in progress |
+| [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | built |
+| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | built |
+| [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | built |
+| [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | wave 1 |
 | Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | wave 1 |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | wave 2 |
@@ -45,19 +45,19 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | in progress |
+| [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | built |
 | Old command-line programs: environment variables, `System.exit` and standard input | System Stubs | Java only | wave 1 |
 
 ## Write better tests
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Parameterised tests](parameterised-tests/README.md): one test, a table of cases, each reported by name | JUnit 6 | Java only | in progress |
-| [Nested tests](nested-tests/README.md): group tests by situation, so gaps stand out | JUnit 6 | Java only | in progress |
-| [Dynamic tests](dynamic-tests/README.md): one test per example file, each named | JUnit 6 | Java only | in progress |
+| [Parameterised tests](parameterised-tests/README.md): one test, a table of cases, each reported by name | JUnit 6 | Java only | built |
+| [Nested tests](nested-tests/README.md): group tests by situation, so gaps stand out | JUnit 6 | Java only | built |
+| [Dynamic tests](dynamic-tests/README.md): one test per example file, each named | JUnit 6 | Java only | built |
 | More JUnit, one idea per lesson: extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
-| [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | in progress |
-| [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | in progress |
+| [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
+| [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
 | Spring tests: slices, MockMvc, and full-application tests with real dependencies | Spring Boot test, Testcontainers | Docker | wave 2 |
 | AI-written tests that pass an acceptance check | PIT, the toolkit's checks | Java only | wave 2 |
 
@@ -68,9 +68,9 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 
 | Technique | Lesson | Wave |
 |---|---|---|
-| mutation-testing | [Mutation testing](mutation-testing/README.md) | ready |
-| characterisation-tests | [Characterisation tests](characterisation-tests/README.md) | ready |
-| property-based-testing | [Property-based testing](property-based-testing/README.md) | ready |
+| mutation-testing | [Mutation testing](mutation-testing/README.md) | built |
+| characterisation-tests | [Characterisation tests](characterisation-tests/README.md) | built |
+| property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | 1 |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | 1 |
 | snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | 1 |
@@ -106,6 +106,24 @@ both. The default is the "after", so `./gradlew check` passes.
 | Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pcode=today` |
 | Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | A mock test checks each call, and misses a commit made too early | An in-memory fake queue; tests check what was delivered | `-Pcode=today` |
 | Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat list of tests misses a case | `@Nested` classes, one per state, asking the same questions, so the gap shows | `-Pcode=today` |
+
+## Next lessons
+
+From [the technology and gap review](../docs/research/technology-gap-review.md), in order:
+
+1. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+   responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
+   Datafaker input, and compares records rather than plain text.
+2. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
+   up for JDK 25.
+3. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+4. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
+5. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+6. **TypeScript tests that check something,** then StrykerJS on them.
+7. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+8. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
+9. **Coverage of changed code,** with PIT run only on what changed.
+10. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

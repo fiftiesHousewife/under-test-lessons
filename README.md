@@ -149,7 +149,7 @@ route it:
 | Gradle itself | `services.gradle.org` (`gradle/wrapper/gradle-wrapper.properties`) | Point `distributionUrl` at the repository manager's copy |
 | Libraries and Gradle plugins | Maven Central and the Gradle Plugin Portal (`settings.gradle.kts`) | A Gradle init script that replaces both with the repository manager |
 | JDK 25 | Only if none is installed: the Foojay resolver in `settings.gradle.kts` | Install the approved JDK and set `org.gradle.java.installations.auto-download=false` |
-| Container images (`postgres:17-alpine`) | Docker Hub, through Testcontainers | Set `hub.image.name.prefix` in `~/.testcontainers.properties` to the company registry |
+| Container images (`postgres:17-alpine`, and Testcontainers' own clean-up image, Ryuk) | Docker Hub, through Testcontainers | Set `hub.image.name.prefix` in `~/.testcontainers.properties` to the company registry, which must also mirror the Ryuk image |
 | Browser for slides and decks | Nothing: uses the installed Google Chrome | Name another approved browser with `-PlessonBrowser=<program>` |
 | Browser for browser tests (Playwright, planned) | Playwright downloads its own browsers on first use | Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` and launch the installed Chrome (`setChannel("chrome")`) |
 | Voice model (video making only) | GitHub releases | Mirror the model files and pass `-PlessonVoiceModelsUrl=<mirror>`, or your own voice with `-PlessonVoiceCommand` |

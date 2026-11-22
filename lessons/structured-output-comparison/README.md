@@ -1,6 +1,6 @@
 # Comparing structured output
 
-**Compare JSON and XML as data, ignoring only the parts that must vary.**
+**Compare JSON as data, ignoring only the parts that must vary. (XMLUnit does the same for XML.)**
 
 Output with an id or a time in it differs on every run, so a test that compares the whole text fails every time.
 Someone then loosens it to check for a few words, and it passes whatever the numbers are.

@@ -36,10 +36,11 @@ with one row mistyped.
 
 - **Whenever old code is rewritten,** moved to a new platform, or upgraded.
 - **Keep the old version in the tests** until the new one agrees everywhere; then remove both together.
-- **For whole services,** replay recorded traffic against both versions (for example with Diffy).
+- **For whole services,** replay recorded traffic against both versions, as the toolkit's technique describes (Keploy,
+  or WireMock recordings compared with ApprovalTests). Not Diffy: it is archived, and its only fork has a
+  non-commercial licence.
 
 ## Find out more
 
 - William McKeeman, *Differential Testing for Software* (Digital Technical Journal, 1998)
-- [Diffy](https://github.com/opendiffy/diffy), for web services
 - The toolkit's [differential-testing technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml)

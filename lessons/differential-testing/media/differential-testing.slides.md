@@ -1,7 +1,8 @@
 # Slides: differential testing
 
 Sources: William M. McKeeman, "Differential Testing for Software", Digital Technical Journal, volume 10, number 1,
-1998; Diffy, open-sourced by Twitter in 2015 (github.com/opendiffy/diffy) for comparing HTTP services.
+1998; the toolkit's differential-testing technique (replaying recorded traffic with Keploy, or WireMock recordings
+with ApprovalTests; not Diffy, which is archived and whose only fork has a non-commercial licence).
 
 ## intro: What is differential testing?
 - Run two versions of the code on the same inputs
@@ -57,17 +58,17 @@ Say: When should you use it? [pause 1s] Whenever old code is rewritten, moved to
 
 ## closing: Where the idea came from
 - William McKeeman named it in 1998, comparing C compilers
-- Twitter's Diffy, in 2015, compared old and new web services on live traffic
+- For whole services, recorded traffic is replayed against both versions
 - It needs no library: two versions and a loop
 Picture: book
-Say: William McKeeman named differential testing in 1998, when comparing C compilers. In 2015, Twitter's Diffy did
-  the same for web services, on live traffic. And for code like ours, it needs no library at all: two versions, and a
+Say: William McKeeman named differential testing in 1998, when comparing C compilers. For whole services, the same
+  idea replays recorded traffic against both the old version and the new. And for code like ours, it needs no library at all: two versions, and a
   loop.
 
 ## closing: Find out more
-- https://github.com/opendiffy/diffy — Diffy, for comparing web services
+- https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml — the technique
 - https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
 - https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
 Picture: globe
-Say: To find out more, look at Diffy, for comparing web services. The links on screen also take you to this lesson's
-  code, and to the toolkit these lessons belong to.
+Say: To find out more, the toolkit's technique says which tools to use for whole services. The links on screen also
+  take you to this lesson's code, and to the toolkit these lessons belong to.

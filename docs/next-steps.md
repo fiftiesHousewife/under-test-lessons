@@ -8,7 +8,8 @@ technique and its lesson, is in [the catalogue](../lessons/CATALOGUE.md).
 Videos are generated, not committed (`*.mp4` and `*.gif` are ignored); they are published with releases. Make each with
 `./gradlew --no-daemon :lessons:video-tools:renderLessonVideo -Plesson=<id>`, one at a time.
 
-- **Made with the current slides:** mutation testing, characterisation tests, property-based testing, replacing
+- **All videos need re-rendering in the black-and-white look,** now the default; the ones below were made in colour.
+- **Made with the colour slides:** mutation testing, characterisation tests, property-based testing, replacing
   hard-wired dependencies, comparing structured output, recorded HTTP responses, outside-in HTTP tests.
 - **Still to make:** parameterised tests and architecture rules (both failed once and have since been fixed), fake
   behind an interface, nested tests, differential testing, feature flags, dynamic tests, batch file-in file-out,
@@ -51,6 +52,12 @@ zoom, `fade` in and out). Items 4 and 5 belong in `lessons/_shared/callout.sh`.
 - The pizza still needs a better drawing in both sets.
 
 ## Lessons
+
+- **Fixes from the review** (cheapest first): the fake lesson's ArchUnit rule, recording and personal-data removal in
+  the recorded-responses lesson, spring-batch-test and Datafaker in the batch lesson. The Diffy recommendation and the
+  XML claim are already fixed.
+- **Build:** set Mockito's `-javaagent` in build-logic for JDK 25; check WireMock 3 (Jetty 11) against Spring Boot 4
+  before a Spring lesson; pin the voice's Python packages.
 
 - The next lessons to add, and gaps against the toolkit's plan, are in
   [the technology and gap review](research/technology-gap-review.md) and the catalogue.
