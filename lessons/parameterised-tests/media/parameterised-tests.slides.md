@@ -34,7 +34,7 @@ Say: Here is what we will compare. The code under test is the VAT calculator in 
 - So there are few cases, and they are the easy ones
 - Boundaries and rounding go untested
 Picture: checklist
-Say: Why does it matter? [pause 1s] When every new case costs a whole copied method, people write few cases, and they
+Say: Why does it matter? [pause 1600ms] When every new case costs a whole copied method, people write few cases, and they
   pick the easy ones, like round numbers. The boundaries and the rounding, where the bugs are, go untested.
 
 ## intro: How JUnit runs them
@@ -52,7 +52,7 @@ Include: how-we-build
 - Give every row a readable name, so a failure says which case broke
 - Keep one idea per test; rows that need different checks belong in different tests
 Picture: map
-Say: When should you use them? [pause 1s] Whenever the same check runs on several inputs, like boundaries, rounding,
+Say: When should you use them? [pause 1600ms] Whenever the same check runs on several inputs, like boundaries, rounding,
   conversions, and validation rules. Give every row a readable name, so a failure tells you which case broke. And keep
   one idea per test.
 

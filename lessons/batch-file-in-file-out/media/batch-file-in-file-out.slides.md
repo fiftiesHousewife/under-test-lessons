@@ -33,7 +33,7 @@ Say: Here is what we will compare. The code under test is today's nightly job. [
 - Tests of the pieces miss what lies between them
 - Old batch jobs are often the least tested, and the most relied on
 Picture: magnifier
-Say: Why test the whole file? [pause 1s] The system that reads the file sees all of it: the header, the order of
+Say: Why test the whole file? [pause 1600ms] The system that reads the file sees all of it: the header, the order of
   lines, the closing line, even the line endings. Tests of the pieces miss what lies between them. And old batch jobs
   are often the least tested code there is, and the most relied on.
 
@@ -51,7 +51,7 @@ Say: Keep a small, known input file, and the output you expect, next to the test
 - Make input files small and synthetic, never copies of real customer data
 - For jobs built with Spring Batch, spring-batch-test runs a job or a single step
 Picture: map
-Say: When should you use them? [pause 1s] For every batch job that reads or writes files other systems use. Make the
+Say: When should you use them? [pause 1600ms] For every batch job that reads or writes files other systems use. Make the
   input files small and synthetic, never copies of real customer data. And for jobs built with Spring Batch, its test
   library can run a whole job, or a single step.
 

@@ -33,7 +33,7 @@ Say: Here is what we will compare. The code under test is today's name formatter
 - Its name never says which example broke
 - Old systems often come with folders of examples: turn each into a test
 Picture: magnifier
-Say: Why one test per example? [pause 1s] A loop stops at the first failure, and hides the rest. Its name never says
+Say: Why one test per example? [pause 1600ms] A loop stops at the first failure, and hides the rest. Its name never says
   which example broke. And old systems often come with whole folders of examples, from regression packs and old bug
   reports. Each one deserves to be its own test.
 
@@ -50,7 +50,7 @@ Say: In JUnit, a method marked as a test factory returns a stream of dynamic tes
 - Name each test after its file, so a failure points straight at it
 - For cases written in the test itself, parameterised tests are simpler
 Picture: map
-Say: When should you use dynamic tests? [pause 1s] When the cases live in files: regression packs, sample messages, and
+Say: When should you use dynamic tests? [pause 1600ms] When the cases live in files: regression packs, sample messages, and
   old bug reports. Name each test after its file, so a failure points straight at it. And for cases written in the test
   itself, parameterised tests are simpler.
 

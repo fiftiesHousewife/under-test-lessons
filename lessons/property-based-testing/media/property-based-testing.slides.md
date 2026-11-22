@@ -34,7 +34,7 @@ Say: Here is what we will compare. The code under test is the bill splitter in u
 - Bugs live in the cases nobody thought of
 - Many examples passing is not proof that the rule holds
 Picture: magnifier
-Say: Why are examples not enough? [pause 1s] They only cover the cases someone thought of, and bugs tend to live in the
+Say: Why are examples not enough? [pause 1600ms] They only cover the cases someone thought of, and bugs tend to live in the
   cases nobody thought of. A dozen examples passing tells you those dozen cases work. It does not tell you the rule
   holds.
 
@@ -54,7 +54,7 @@ Include: how-we-build
 - Alongside example tests, not instead of them
 - Keep each smallest failing input as an example test too
 Picture: map
-Say: When should you use it? [pause 1s] For calculations, parsing and conversions, where a rule is easier to state than
+Say: When should you use it? [pause 1600ms] For calculations, parsing and conversions, where a rule is easier to state than
   every right answer. Use it alongside example tests, not instead of them. And when a property finds a bug, keep the
   smallest failing input as an example test too.
 

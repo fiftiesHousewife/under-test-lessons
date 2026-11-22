@@ -34,7 +34,7 @@ Say: Here is what we will compare. The code under test is today's new shipping r
 - The new code goes untested until the day it's switched on
 - Every flag doubles the paths; tests must cover each one that can be switched on
 Picture: magnifier
-Say: Why test both ways? [pause 1s] Tests usually run with every flag at its default, which means the old code. So the
+Say: Why test both ways? [pause 1600ms] Tests usually run with every flag at its default, which means the old code. So the
   new code goes untested until the day someone switches it on, in production. Every flag doubles the paths through the
   code, and tests must cover each one.
 
@@ -54,7 +54,7 @@ Include: how-we-build
 - Test every flag both ways while both paths exist
 - Remove the flag and the old code as soon as the new code has proved itself
 Picture: map
-Say: When should you use feature flags? [pause 1s] To change old code in small, safe steps, a pattern called branch by
+Say: When should you use feature flags? [pause 1600ms] To change old code in small, safe steps, a pattern called branch by
   abstraction. Test every flag both ways, while both paths exist. And remove the flag, and the old code, as soon as the
   new code has proved itself.
 

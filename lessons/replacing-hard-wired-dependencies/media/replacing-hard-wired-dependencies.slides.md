@@ -35,7 +35,7 @@ Say: Here is what we will compare. Today's invoice gets its rate from a hard-wir
 - Tests either can't run, or need the real service: slow, flaky, and sometimes unsafe
 - Passing dependencies in is often the first change that makes old code testable
 Picture: magnifier
-Say: Why does it matter? [pause 1s] Old code is full of hard-wired services, clocks and files. Its tests either can't
+Say: Why does it matter? [pause 1600ms] Old code is full of hard-wired services, clocks and files. Its tests either can't
   run at all, or need the real service, which makes them slow, flaky, and sometimes unsafe. Passing dependencies in is
   often the very first change that makes old code testable.
 
@@ -54,7 +54,7 @@ Include: how-we-build
 - Make the smallest change: a constructor parameter, with the old default for production
 - Time is a dependency too: pass in a java.time Clock, never call now()
 Picture: map
-Say: When should you do this? [pause 1s] Before changing old code that calls a service, a clock, the file system, or
+Say: When should you do this? [pause 1600ms] Before changing old code that calls a service, a clock, the file system, or
   a static helper. Make the smallest change you can: a constructor parameter, with the old object as the default in
   production. And remember that time is a dependency too: pass in a clock, rather than asking for the time.
 

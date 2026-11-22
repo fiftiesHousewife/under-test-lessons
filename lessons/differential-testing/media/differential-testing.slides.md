@@ -34,7 +34,7 @@ Say: Here is what we will compare. The code under test is the rewrite, as it is 
 - Tests written for the rewrite only check the cases someone thought of
 - The old code already knows every answer: ask it
 Picture: magnifier
-Say: Why compare with the old version? [pause 1s] A rewrite must keep every answer customers rely on, including the
+Say: Why compare with the old version? [pause 1600ms] A rewrite must keep every answer customers rely on, including the
   odd ones. Tests written for the rewrite only check the cases someone thought of. But the old code already knows every
   answer. So ask it.
 
@@ -52,7 +52,7 @@ Say: First, choose the inputs: every value in a range, real inputs recorded from
 - Keep the old version running in tests until the new one agrees everywhere
 - For services, replay recorded traffic against both versions
 Picture: map
-Say: When should you use it? [pause 1s] Whenever old code is rewritten, moved to a new platform, or upgraded. Keep
+Say: When should you use it? [pause 1600ms] Whenever old code is rewritten, moved to a new platform, or upgraded. Keep
   the old version running in the tests until the new one agrees everywhere. And for whole services, replay recorded
   traffic against both versions.
 

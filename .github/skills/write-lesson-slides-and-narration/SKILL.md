@@ -8,6 +8,13 @@ description: Write the story of a lesson video - its intro and closing slides, i
 The viewer is an engineer who has never used the technique. Every video tells the same story, so viewers always know
 where they are. The mechanics of recording are in [make-a-lesson-video](../make-a-lesson-video/SKILL.md).
 
+## Questions
+
+A question the narration asks before answering it ("So, why do we even need mutation testing?") ends on a short,
+open phrase, so the voice lifts at the end, and is followed by `[pause 1600ms]` before the answer. The voice can't be told to stress
+a word (capitals and asterisks change nothing), so choose words that carry the stress: "why do we even need it?" puts
+it on "need".
+
 ## The story, in order
 
 **Intro slides** (`media/<id>.slides.md`, `## intro:` headings):

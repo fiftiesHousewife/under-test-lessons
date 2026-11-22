@@ -36,7 +36,7 @@ Say: Here is what we will compare. The code under test is the statement printer.
 - Changing it without tests is guessing
 - Tests that only check "something came back" don't protect you
 Picture: magnifier
-Say: Why start here? [pause 1s] Old code often has no tests, and nobody remembers every rule it follows. Changing it
+Say: Why start here? [pause 1600ms] Old code often has no tests, and nobody remembers every rule it follows. Changing it
   without tests is guessing. And the tests it does have often check only that something came back, which protects
   nothing.
 
@@ -56,7 +56,7 @@ Include: how-we-build
 - On outputs that are files, reports, messages or long text
 - A difference is a question, not automatically a bug: approve it, or fix the code
 Picture: map
-Say: When should you use them? [pause 1s] Before you change code that nobody can fully explain, and wherever the output
+Say: When should you use them? [pause 1600ms] Before you change code that nobody can fully explain, and wherever the output
   is a file, a report, or a message. When a test fails, treat the difference as a question. If the change is intended,
   approve the new output. If not, fix the code. Then use mutation testing to check how much the tests really check.
 

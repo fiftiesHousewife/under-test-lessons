@@ -35,7 +35,7 @@ Say: Here is what we will compare. The code under test is today's order placemen
 - It can't see behaviour, such as what a commit does
 - It breaks when the code is tidied, even when the results are the same
 Picture: magnifier
-Say: Why not just use mocks? [pause 1s] A mock test lists the calls the code makes, so it repeats the code, line by
+Say: Why not just use mocks? [pause 1600ms] A mock test lists the calls the code makes, so it repeats the code, line by
   line. It can't see the system's behaviour, such as what a commit does. And it breaks whenever the code is tidied,
   even when the results are just the same.
 
@@ -52,7 +52,7 @@ Say: A fake implements the same interface as the real connection code. It keeps 
 - Keep the real connection code thin, behind the interface, and test it separately against the real system
 - An architecture rule can stop other code reaching the real system directly
 Picture: map
-Say: When should you use a fake? [pause 1s] For systems your code talks to a lot: queues, stores, caches and file
+Say: When should you use a fake? [pause 1600ms] For systems your code talks to a lot: queues, stores, caches and file
   systems. Keep the real connection code thin, behind the interface, and test that part separately, against the real
   system. And an architecture rule can stop other code from reaching the real system directly.
 

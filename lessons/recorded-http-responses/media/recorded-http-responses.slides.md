@@ -34,7 +34,7 @@ Say: Here is what we will compare. The code under test is today's client, writte
 - They need accounts and passwords on every test machine
 - They won't fail on demand, so error handling goes untested
 Picture: magnifier
-Say: Why not just use the real service? [pause 1s] Real services are slow, and they're down just when you need them.
+Say: Why not just use the real service? [pause 1600ms] Real services are slow, and they're down just when you need them.
   They need accounts and passwords on every test machine. And they won't fail on demand, so the code that handles
   their errors goes untested.
 
@@ -53,7 +53,7 @@ Include: how-we-build
 - Record the real answers once, then add the rare ones by hand: errors, timeouts, odd data
 - Check recordings against the real service now and then; contract tests do this between teams
 Picture: map
-Say: When should you use them? [pause 1s] Whenever code calls a service you don't own. Record the real answers once,
+Say: When should you use them? [pause 1600ms] Whenever code calls a service you don't own. Record the real answers once,
   then add the rare ones by hand: errors, slow answers, and odd data. And check the recordings against the real service
   now and then. Between teams, contract tests do that job.
 

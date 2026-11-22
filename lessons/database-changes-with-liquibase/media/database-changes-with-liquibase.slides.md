@@ -35,7 +35,7 @@ Say: Here is what we will compare. The code under test is today's changelog, wit
 - Databases accept different SQL and types
 - Changes are hard to undo once they've run, so find out first
 Picture: magnifier
-Say: Why test changes on the real database? [pause 1s] A failed change stops a release part way through, on
+Say: Why test changes on the real database? [pause 1600ms] A failed change stops a release part way through, on
   production data. Databases accept different SQL, and different types. And changes are hard to undo once they've run,
   so you want to find out first.
 
@@ -55,7 +55,7 @@ Include: how-we-build
 - Prefer Liquibase changes to raw SQL; when raw SQL is needed, test it on every database you run
 - Check the licence: Liquibase 5 uses the Functional Source License; Flyway is an alternative
 Picture: map
-Say: When should you test database changes? [pause 1s] Every change, every time: apply the whole changelog to a fresh,
+Say: When should you test database changes? [pause 1600ms] Every change, every time: apply the whole changelog to a fresh,
   real database in the build. Prefer Liquibase changes to raw SQL, and when you need raw SQL, test it on every database
   you run. And check the licence: Liquibase five uses the Functional Source License, so confirm your company
   accepts it. Flyway is another choice, with the same idea.

@@ -33,7 +33,7 @@ Say: Here is what we will compare. The code under test is today's service, which
 - Inside tests miss the wiring: routes, status codes, headers, JSON
 - Outside tests survive rewrites, so they protect old services while they change
 Picture: magnifier
-Say: Why test from outside? [pause 1s] A service's callers only ever see status codes, headers and bodies. Tests from
+Say: Why test from outside? [pause 1600ms] A service's callers only ever see status codes, headers and bodies. Tests from
   inside miss the wiring in between. And because outside tests don't depend on the classes inside, they keep working
   while an old service is rewritten underneath them.
 
@@ -53,7 +53,7 @@ Include: how-we-build
 - Start with the journeys callers rely on most, including the refusals
 - Run the service as it really starts, with stand-ins only for what it calls
 Picture: map
-Say: When should you test from outside? [pause 1s] For every service that other systems call, before you change it.
+Say: When should you test from outside? [pause 1600ms] For every service that other systems call, before you change it.
   Start with the journeys callers rely on most, including the refusals and errors. And run the service the way it
   really starts, with stand-ins only for the systems it calls.
 

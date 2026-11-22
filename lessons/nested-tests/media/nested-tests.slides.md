@@ -33,7 +33,7 @@ Say: Here is what we will compare. The code under test is today's loan, which mi
 - Grouped by situation, every situation gets the same questions, so gaps stand out
 - The report becomes a specification people can read
 Picture: magnifier
-Say: Why does the structure matter? [pause 1s] In a flat list, a missing case is invisible. Grouped by situation,
+Say: Why does the structure matter? [pause 1600ms] In a flat list, a missing case is invisible. Grouped by situation,
   every situation gets the same questions, so a gap stands out. And the report becomes a specification that anyone can
   read, including people who don't write code.
 
@@ -50,7 +50,7 @@ Say: In JUnit, you mark an inner class as nested. You give classes and tests sen
 - Ask the same questions in every situation, so gaps show
 - Keep nesting shallow: two or three levels at most
 Picture: map
-Say: When should you nest tests? [pause 1s] For anything with states or situations: workflows, accounts, orders and
+Say: When should you nest tests? [pause 1600ms] For anything with states or situations: workflows, accounts, orders and
   permissions. Ask the same questions in every situation, so the gaps show. And keep the nesting shallow: two or three
   levels at most.
 

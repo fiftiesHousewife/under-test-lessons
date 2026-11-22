@@ -34,7 +34,7 @@ Say: Here is what we will compare. The code under test is today's checkout, whic
 - A new class can change that, without touching the code that uses it
 - Tests on a real server are slow, so they're rare; embedded tests take seconds
 Picture: magnifier
-Say: Why test the wiring? [pause 1s] In enterprise Java, the container decides what each part gets. Adding a new
+Say: Why test the wiring? [pause 1600ms] In enterprise Java, the container decides what each part gets. Adding a new
   class can change that, without touching the code that uses it. And tests on a real server are slow, so teams run
   them rarely. Embedded tests take seconds.
 
@@ -53,7 +53,7 @@ Include: how-we-build
 - Before adding a bean that could change what others get
 - Keep server-level tests for what truly needs the server: security, transactions across systems
 Picture: map
-Say: When should you use them? [pause 1s] For old Java E E and Jakarta E E code: CDI beans, and E J Bs too, with
+Say: When should you use them? [pause 1600ms] For old Java E E and Jakarta E E code: CDI beans, and E J Bs too, with
   Weld's extra support. Use them before adding any bean that could change what others get. And keep the slow server
   tests for what truly needs a server.
 

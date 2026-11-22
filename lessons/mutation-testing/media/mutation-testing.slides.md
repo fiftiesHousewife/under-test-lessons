@@ -51,7 +51,7 @@ Say: Here is what we will compare. The code under test is the shop's discount ru
 - It does not check that any test looked at the result
 - A test with no assertions can still give 100% line coverage
 Picture: coverage
-Say: Why do we need mutation testing? [pause 1s] Line coverage counts the lines your tests ran. It does not check
+Say: So, why do we even need mutation testing? [pause 1600ms] Line coverage counts the lines your tests ran. It does not check
   that any test looked at the result. A test can call the discount calculator, ignore the answer, and still give that
   line full coverage. If the calculator gave 50 percent off instead of 5, that test would still pass.
 
@@ -71,7 +71,7 @@ Include: how-we-build
 - Then strengthen the tests in key code until PIT catches the planted bugs
 - In pull requests: report surviving bugs on changed code, without failing the build at first
 Picture: map
-Say: When should you use it? [pause 1s] First, in discovery, when you are judging how far the existing tests can be
+Say: When should you use it? [pause 1600ms] First, in discovery, when you are judging how far the existing tests can be
   trusted. Coverage tells you what ran. PIT tells you what was checked. Then, strengthen the tests in the code that
   matters most, until PIT catches the planted bugs there. Later, run it on each pull request, and report the bugs that
   survive in the changed code, without failing the build at first.

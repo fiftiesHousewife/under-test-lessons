@@ -35,7 +35,7 @@ Say: Here is what we will compare. The code under test is today's query, which s
 - A test on a different database checks a different program
 - Real databases used to mean shared test servers; containers make them quick and private
 Picture: magnifier
-Say: Why isn't an in-memory database enough? [pause 1s] Databases differ, in sorting, dates, text, locking, and even
+Say: Why isn't an in-memory database enough? [pause 1600ms] Databases differ, in sorting, dates, text, locking, and even
   the SQL they accept. A test on a different database is checking a different program. Real databases used to mean
   shared test servers, slow and fragile. Containers make them quick, and private to each test run.
 
@@ -54,7 +54,7 @@ Include: how-we-build
 - Keep quick in-memory or fake tests for logic that doesn't depend on the database
 - Machines without containers still run every other test; CI runs the container tests
 Picture: map
-Say: When should you use a real database? [pause 1s] For every query, stored procedure and schema change that
+Say: When should you use a real database? [pause 1600ms] For every query, stored procedure and schema change that
   production depends on. Keep quick tests, with fakes, for logic that doesn't depend on the database. And machines
   without containers still run every other test, while the build server runs the container tests.
 

@@ -35,7 +35,7 @@ Say: Here is what we will compare. The code under test is the admin page, which 
 - Each shortcut skips the rules, and makes the next change harder
 - Shortcuts pile up quietly; reviews miss them
 Picture: magnifier
-Say: Why do we need this? [pause 1s] A shortcut past the service layer still gives the right answer, for now. So the
+Say: Why do we need this? [pause 1600ms] A shortcut past the service layer still gives the right answer, for now. So the
   unit tests pass. But every shortcut skips the shop's rules, and makes the next change harder. In old code these
   shortcuts pile up quietly, and reviews miss them.
 
@@ -54,7 +54,7 @@ Include: how-we-build
 - On old code, freeze today's breaks so only new ones fail the build
 - Keep rules few and named, so a failure says what was agreed
 Picture: map
-Say: When should you use them? [pause 1s] Whenever a team agrees how the code should be shaped, write it down as a
+Say: When should you use them? [pause 1600ms] Whenever a team agrees how the code should be shaped, write it down as a
   rule, so the build keeps the agreement. On old code with many breaks already, ArchUnit can freeze today's breaks, so
   only new ones fail the build. And keep the rules few, with clear names.
 
