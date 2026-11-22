@@ -197,9 +197,10 @@ How the videos are made, and the rules that keep them short and reliable, are in
 
 The lessons are built to run where everything comes through a company's repository manager, container images come
 from its own registry and traffic goes through a proxy server. [Using the lessons inside a company](docs/using-inside-a-company.md)
-lists everything they fetch and the settings that route it: the Gradle distribution, libraries, the JDK, your own
-container images (`postgresImage`), Testcontainers' clean-up image, proxy settings, the installed browser, licences,
-and the links on slides.
+says what a company takes and runs (the whole repository, but never the video and voice tools, and no AI tool),
+everything the lessons fetch and the settings that route it (the Gradle distribution, libraries, the JDK, your own
+container images, Testcontainers' clean-up image, proxy settings, the installed browser), licences, how to use the
+finished videos, how a person records a changed slide, and the links on slides.
 
 ## Working on this repo
 
