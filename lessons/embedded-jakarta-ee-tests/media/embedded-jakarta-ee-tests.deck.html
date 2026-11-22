@@ -169,11 +169,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  14  weld = &quot;7.0.0.Final&quot;
  15  jakarta-cdi = &quot;5.0.0&quot;
    ⋮
- 54  [libraries]
+ 76  [libraries]
    ⋮
- 61  weld-junit5 = { module = &quot;org.jboss.weld:weld-junit5&quot;, version.ref = &quot;weld-junit&quot; }
- 62  weld-core-bom = { module = &quot;org.jboss.weld:weld-core-bom&quot;, version.ref = &quot;weld&quot; }
- 63  jakarta-cdi-api = { module = &quot;jakarta.cdi:jakarta.cdi-api&quot;, version.ref = &quot;jakarta-cdi&quot; }</pre></figure></main><aside class="notes">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/770310369e72fa1e.m4a"></audio></section>
+ 83  weld-junit5 = { module = &quot;org.jboss.weld:weld-junit5&quot;, version.ref = &quot;weld-junit&quot; }
+ 84  weld-core-bom = { module = &quot;org.jboss.weld:weld-core-bom&quot;, version.ref = &quot;weld&quot; }
+ 85  jakarta-cdi-api = { module = &quot;jakarta.cdi:jakarta.cdi-api&quot;, version.ref = &quot;jakarta-cdi&quot; }</pre></figure></main><aside class="notes">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/770310369e72fa1e.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><p class="scene-text">Step two. The lesson compiles against the CDI interface, which the application server provides in production. And its tests use Weld.</p></section><figure class="code" style="--code-size: 19px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      compileOnly(libs.jakarta.cdi.api) // the application server provides it in production</mark>
 <mark> 11      testImplementation(platform(libs.weld.core.bom)) // Weld 7, the CDI 5 container</mark>
@@ -278,6 +278,10 @@ All 3 tests passed.</pre></figure></main><aside class="notes">Now the checkout t
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
+  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
+  // narration stays.
+  var GAP_MS = 400;
+  var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
@@ -293,11 +297,11 @@ All 3 tests passed.</pre></figure></main><aside class="notes">Now the checkout t
   function slideRead() {
     if (!listening) { return; }
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
-    nextTimer = setTimeout(function () { advance(); }, 1500);
+    nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
   function playVoice() {
     var source = clipSource(current);
-    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
     player.play().catch(function () { setListening(false); });

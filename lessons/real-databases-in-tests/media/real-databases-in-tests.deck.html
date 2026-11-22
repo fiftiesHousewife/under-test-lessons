@@ -168,13 +168,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  17  postgresql = &quot;42.7.14&quot;
  18  h2 = &quot;2.5.252&quot;
    ⋮
- 54  [libraries]
+ 76  [libraries]
    ⋮
- 64  testcontainers-postgresql = { module = &quot;org.testcontainers:testcontainers-postgresql&quot;, version.ref = &quot;testcontainers&quot; }
- 65  testcontainers-junit-jupiter = { module = &quot;org.testcontainers:testcontainers-junit-jupiter&quot;, version.ref = &quot;testcontainers&quot; }
- 66  postgresql = { module = &quot;org.postgresql:postgresql&quot;, version.ref = &quot;postgresql&quot; }
+ 86  testcontainers-postgresql = { module = &quot;org.testcontainers:testcontainers-postgresql&quot;, version.ref = &quot;testcontainers&quot; }
+ 87  testcontainers-junit-jupiter = { module = &quot;org.testcontainers:testcontainers-junit-jupiter&quot;, version.ref = &quot;testcontainers&quot; }
+ 88  postgresql = { module = &quot;org.postgresql:postgresql&quot;, version.ref = &quot;postgresql&quot; }
    ⋮
- 68  h2 = { module = &quot;com.h2database:h2&quot;, version.ref = &quot;h2&quot; }</pre></figure></main><aside class="notes">Step one. Add Testcontainers, the PostgreSQL driver, and the H2 database, to the version catalogue.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/741076efa099452c.m4a"></audio></section>
+ 90  h2 = { module = &quot;com.h2database:h2&quot;, version.ref = &quot;h2&quot; }</pre></figure></main><aside class="notes">Step one. Add Testcontainers, the PostgreSQL driver, and the H2 database, to the version catalogue.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/741076efa099452c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, a suite for container tests</h1><div class="rule"></div><p class="scene-text">Step two. Tests that need a container get a suite of their own, called integration test. Ordinary tests stay quick, and machines with no container runtime skip only the container tests.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  9  testing {
  10      suites {
  11          named&lt;JvmTestSuite&gt;(&quot;test&quot;) {
@@ -281,6 +281,10 @@ All 1 tests passed.</pre></figure></main><aside class="notes">Now the query that
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
+  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
+  // narration stays.
+  var GAP_MS = 400;
+  var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
@@ -296,11 +300,11 @@ All 1 tests passed.</pre></figure></main><aside class="notes">Now the query that
   function slideRead() {
     if (!listening) { return; }
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
-    nextTimer = setTimeout(function () { advance(); }, 1500);
+    nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
   function playVoice() {
     var source = clipSource(current);
-    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
     player.play().catch(function () { setListening(false); });

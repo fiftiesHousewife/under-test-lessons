@@ -258,6 +258,10 @@ All 2 tests passed.</pre></figure></main><aside class="notes">Now the refunds th
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
+  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
+  // narration stays.
+  var GAP_MS = 400;
+  var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
@@ -273,11 +277,11 @@ All 2 tests passed.</pre></figure></main><aside class="notes">Now the refunds th
   function slideRead() {
     if (!listening) { return; }
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
-    nextTimer = setTimeout(function () { advance(); }, 1500);
+    nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
   function playVoice() {
     var source = clipSource(current);
-    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
     player.play().catch(function () { setListening(false); });

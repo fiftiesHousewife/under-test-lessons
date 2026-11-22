@@ -36,7 +36,8 @@ global.location = { hash: '', search: '' };
 global.history = { replaceState() {} };
 global.Audio = FakeAudio;
 const timers = [];
-global.setTimeout = fn => { timers.push(fn); return timers.length; };
+const delays = [];
+global.setTimeout = (fn, ms) => { timers.push(fn); delays.push(ms); return timers.length; };
 global.clearTimeout = id => { if (id) { timers[id - 1] = null; } };
 function runTimers() { while (timers.some(Boolean)) { const i = timers.findIndex(Boolean); const fn = timers[i]; timers[i] = null; fn(); } }
 global.document = {
@@ -65,4 +66,5 @@ for (let i = 0; i < 3; i++) {
 check('the second slide plays after the first, without another click', started[1] === 'b.m4a');
 check('the third slide plays after the second', started[2] === 'c.m4a');
 check('the deck says when its last slide has been read', finished);
+check('the next slide follows its narration after a short gap, under half a second', delays.length > 0 && delays.every(ms => ms < 500));
 process.exit(failures ? 1 : 0);

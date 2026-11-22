@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  11  openfeature = &quot;1.23.0&quot;
    ⋮
- 54  [libraries]
+ 76  [libraries]
    ⋮
- 69  openfeature-sdk = { module = &quot;dev.openfeature:sdk&quot;, version.ref = &quot;openfeature&quot; }</pre></figure></main><aside class="notes">Step one. Add the OpenFeature software development kit to the version catalogue.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ce8dabe2b5e82b8.m4a"></audio></section>
+ 91  openfeature-sdk = { module = &quot;dev.openfeature:sdk&quot;, version.ref = &quot;openfeature&quot; }</pre></figure></main><aside class="notes">Step one. Add the OpenFeature software development kit to the version catalogue.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ce8dabe2b5e82b8.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it to the lesson. The code itself asks the flag, so it is an ordinary dependency, not just a test one.</p></section><figure class="code" style="--code-size: 19px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      implementation(libs.openfeature.sdk)</mark>
  10      // OpenFeature's classes carry SpotBugs annotations; the compiler wants to see them.
@@ -262,6 +262,10 @@ All 3 tests passed.</pre></figure></main><aside class="notes">Now the new rules,
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
+  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
+  // narration stays.
+  var GAP_MS = 400;
+  var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
@@ -277,11 +281,11 @@ All 3 tests passed.</pre></figure></main><aside class="notes">Now the new rules,
   function slideRead() {
     if (!listening) { return; }
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
-    nextTimer = setTimeout(function () { advance(); }, 1500);
+    nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
   function playVoice() {
     var source = clipSource(current);
-    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
     player.play().catch(function () { setListening(false); });

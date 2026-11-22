@@ -171,9 +171,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  42  gradle-pitest-plugin = &quot;1.19.0&quot;
    ⋮
- 54  [libraries]
+ 76  [libraries]
    ⋮
- 90  gradle-pitest-plugin = { module = &quot;info.solidsoft.gradle.pitest:gradle-pitest-plugin&quot;, version.ref = &quot;gradle-pitest-plugin&quot; }</pre></figure></main><aside class="notes">Step one. Add PIT's versions to the version catalogue, with the PIT Gradle plugin, so the build logic can use it.</aside><audio class="voice" preload="none" src="mutation-testing.deck-voice/c05e9c974026b897.m4a"></audio></section>
+112  gradle-pitest-plugin = { module = &quot;info.solidsoft.gradle.pitest:gradle-pitest-plugin&quot;, version.ref = &quot;gradle-pitest-plugin&quot; }</pre></figure></main><aside class="notes">Step one. Add PIT's versions to the version catalogue, with the PIT Gradle plugin, so the build logic can use it.</aside><audio class="voice" preload="none" src="mutation-testing.deck-voice/c05e9c974026b897.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, add the plugin</h1><div class="rule"></div><p class="scene-text">Step two. Add the plugin to the shared build logic, and apply it in the convention plugin.</p></section><figure class="code" style="--code-size: 22px"><figcaption>build-logic/build.gradle.kts: the plugins the build logic uses</figcaption><pre>  5  dependencies {
   6      implementation(libs.gradle.pitest.plugin)
   7      implementation(libs.gradle.spotbugs.plugin)
@@ -381,6 +381,10 @@ Result: the tests caught 13 of 13 planted bugs (100%).</pre></figure></main><asi
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
+  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
+  // narration stays.
+  var GAP_MS = 400;
+  var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
@@ -396,11 +400,11 @@ Result: the tests caught 13 of 13 planted bugs (100%).</pre></figure></main><asi
   function slideRead() {
     if (!listening) { return; }
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
-    nextTimer = setTimeout(function () { advance(); }, 1500);
+    nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
   function playVoice() {
     var source = clipSource(current);
-    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
     player.play().catch(function () { setListening(false); });

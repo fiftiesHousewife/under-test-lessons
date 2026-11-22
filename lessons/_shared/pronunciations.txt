@@ -3,6 +3,9 @@
 # Whole words, matching case. To check a fix before rendering, see how the voice will stress it:
 #   build/voice/venv/bin/python -c "from kokoro_onnx.tokenizer import Tokenizer; print(Tokenizer().phonemize('open a pullrequest', 'en-gb'))"
 # The main stress is marked ˈ before its syllable.
+# Where spelling can't put the stress in the right place, give the sounds between slashes, stress marked:
+#   rewrite = /ɹˈiːɹaɪt/
+# Entries apply in order, so a phrase (the noun in "each record") comes before its single word (the verb "record").
 PIT = pit
 JaCoCo = jacoco
 JUnit = jay unit
@@ -15,7 +18,7 @@ API = A P I
 SDK = S D K
 JVM = J V M
 EJB = E J B
-JSON = jay-son
+JSON = /dʒˈeɪsən/
 # Years, said the way people say them
 1978 = nineteen seventy-eight
 1998 = nineteen ninety-eight
@@ -59,3 +62,26 @@ A 1003 = A ten oh 3
 A 1004 = A ten oh 4
 1997 = nineteen ninety-seven
 ICO = I C O
+# "record": the noun where a phrase shows it, the verb everywhere else; "records" the verb only in these phrases.
+the record = the /ɹˈɛkɔːd/
+each record = each /ɹˈɛkɔːd/
+Every record = Every /ɹˈɛkɔːd/
+every record = every /ɹˈɛkɔːd/
+customer record = customer /ɹˈɛkɔːd/
+a record = a /ɹˈɛkɔːd/
+record by record = /ɹˈɛkɔːd/ by /ɹˈɛkɔːd/
+record = /ɹɪkˈɔːd/
+Record = /ɹɪkˈɔːd/
+records what = /ɹɪkˈɔːdz/ what
+records which = /ɹɪkˈɔːdz/ which
+records the = /ɹɪkˈɔːdz/ the
+# The noun: a rewrite, stressed on re.
+rewrite's = /ɹˈiːɹaɪts/
+rewrites = /ɹˈiːɹaɪts/
+rewrite = /ɹˈiːɹaɪt/
+Rewrite = /ɹˈiːɹaɪt/
+# Stressed on out and in.
+Outside-in = /ˈaʊtsaɪd ˈɪn/
+outside-in = /ˈaʊtsaɪd ˈɪn/
+# Stressed on what the service does, not on the service.
+old service receives and sends = /əʊld sɜːvɪs ɹɪsˈiːvz ən sˈɛndz/

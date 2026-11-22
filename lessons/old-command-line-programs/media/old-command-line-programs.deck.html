@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  52  system-stubs = &quot;2.1.8&quot;
    ⋮
- 57  [libraries]
+ 76  [libraries]
    ⋮
- 99  system-stubs-jupiter = { module = &quot;uk.org.webcompere:system-stubs-jupiter&quot;, version.ref = &quot;system-stubs&quot; }</pre></figure></main><aside class="notes">Step one. Add System Stubs to the version catalogue.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/a745acc30875574c.m4a"></audio></section>
+118  system-stubs-jupiter = { module = &quot;uk.org.webcompere:system-stubs-jupiter&quot;, version.ref = &quot;system-stubs&quot; }</pre></figure></main><aside class="notes">Step one. Add System Stubs to the version catalogue.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/a745acc30875574c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. System Stubs' own classes carry SpotBugs annotations, so the build needs those too, only to compile.</p></section><figure class="code" style="--code-size: 17px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.system.stubs.jupiter)</mark>
  10      testCompileOnly(libs.spotbugs.annotations) // System Stubs' classes carry SpotBugs annotations
@@ -225,7 +225,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 22      private final SystemIn input = new SystemIn();</mark>
 <mark> 23      @SystemStub</mark>
 <mark> 24      private final SystemOut output = new SystemOut();</mark>
- 25      private final AtomicInteger exitCode = new AtomicInteger(); // stands in for System.exit: it only records the code</pre></figure></main><aside class="notes">Now the strong test. It runs the whole program. System Stubs sets the environment variable to 50000 pence, gives the program its standard input, and catches what it prints. The exit code needs something else. System Stubs used to catch System exit with Java's security manager, which Java 24 removed. So the test keeps its own exit code, which only records the number.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/db878e23065141e1.m4a"></audio></section>
+ 25      private final AtomicInteger exitCode = new AtomicInteger(); // stands in for System.exit: it only records the code</pre></figure></main><aside class="notes">Now the strong test. It runs the whole program. System Stubs sets the environment variable to 50000 pence, gives the program its standard input, and catches what it prints. The exit code needs something else. System Stubs used to catch System exit with Java's security manager, which Java 24 removed. So the test keeps its own exit code, which only records the number.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/8432da8887b79845.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong test, one test</h1><div class="rule"></div><p class="scene-text">Here is one test. It lowers the limit to 2000 pence, and gives the program three payments. It expects the first to be accepted, the second to stop the program, and the exit code to be 1.</p></section><figure class="code" style="--code-size: 14px"><figcaption>one strong test</figcaption><pre> 37      @Test
  38      void stopsAtThePaymentOverTheLimitAndEndsWithOne() throws Throwable {
 <mark> 39          environment.set(&quot;PAYMENT_LIMIT_PENCE&quot;, &quot;2000&quot;);</mark>
@@ -301,6 +301,10 @@ All 5 tests passed.</pre></figure></main><aside class="notes">We run the same te
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
+  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
+  // narration stays.
+  var GAP_MS = 400;
+  var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
@@ -316,11 +320,11 @@ All 5 tests passed.</pre></figure></main><aside class="notes">We run the same te
   function slideRead() {
     if (!listening) { return; }
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
-    nextTimer = setTimeout(function () { advance(); }, 1500);
+    nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
   function playVoice() {
     var source = clipSource(current);
-    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
     player.play().catch(function () { setListening(false); });
