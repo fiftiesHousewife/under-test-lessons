@@ -48,8 +48,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #89 | [Mutation testing: money in pence, its history, and changed-code routes](https://github.com/fiftiesHousewife/under-test-lessons/issues/89) | deliverable | Lessons Owner | ai | – |
-| #90 | [Corrected history facts](https://github.com/fiftiesHousewife/under-test-lessons/issues/90) | deliverable | Lessons Owner | ai | – |
 | #63 | [Differential testing also replays saved requests offline against two running builds](https://github.com/fiftiesHousewife/under-test-lessons/issues/63) | deliverable | Lessons Owner | ai | – |
 | #64 | [Comparing structured output shows keyed substitutes need no ignore rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/64) | deliverable | Lessons Owner | ai | – |
 | #41 | [The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI](https://github.com/fiftiesHousewife/under-test-lessons/issues/41) | deliverable | Lessons Owner | ai | – |
