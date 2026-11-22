@@ -7,7 +7,8 @@
 Each live command (run_live or run_with_notes in lessons/<id>/media/<id>.tape) runs from the repository root, as a
 recording runs it, and its output is kept in lessons/<id>/media/<id>.outputs/01.txt, 02.txt and so on, the command on
 the first line. Colour codes, notices the JVM or a sandbox adds, and Gradle's closing time line are left out. A run
-that couldn't start, or whose output shows a personal path, isn't kept: the script stops and says why.
+that couldn't start, or whose output still shows a personal path after paths are made machine-independent, isn't kept:
+the script stops and says why.
 
 It runs the commands itself, one after another, rather than from inside a Gradle build: a Gradle build that starts
 more Gradle builds of the same project fails on the project's own lock files.
@@ -36,8 +37,11 @@ def commands(lesson):
 
 
 def clean(output):
-    """The output as a viewer sees it: no colour codes, no notices, no blank lines at either end."""
-    lines = [line.rstrip() for line in ESCAPE.sub("", output).splitlines() if not line.startswith(NOISE)]
+    """The output as a viewer sees it: no colour codes, no notices, no blank lines at either end, and paths that read
+    the same on any machine (the repository's own folder made relative, any home folder shown as ~)."""
+    text = ESCAPE.sub("", output).replace(ROOT + os.sep, "").replace(ROOT, ".")
+    text = text.replace(os.path.expanduser("~"), "~")
+    lines = [line.rstrip() for line in text.splitlines() if not line.startswith(NOISE)]
     return "\n".join(lines).strip()
 
 
@@ -61,7 +65,10 @@ def capture(lesson):
         output = clean(run.stdout)
         reason = problem(output)
         if reason:
-            sys.exit(f"`{command}` didn't run properly, so its output isn't kept: {reason}")
+            message = f"`{command}` didn't run properly, so its output isn't kept: {reason}"
+            if os.environ.get("GITHUB_ACTIONS"):
+                print(f"::error title=Live command didn't run::{message}")  # shown as an annotation on the run
+            sys.exit(message)
         with open(os.path.join(folder, f"{index:02d}.txt"), "w", encoding="utf-8") as f:
             f.write(f"$ {command}\n{output}\n")
     print(f"{lesson}: output of {len(commands(lesson))} live commands kept")

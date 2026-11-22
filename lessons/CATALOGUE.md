@@ -40,6 +40,7 @@ and see what its existing tests really check.
 | [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | built |
 | [Comparing structured output](structured-output-comparison/README.md): JSON results that differ only in timestamps or order (XML works the same way, with XMLUnit) | JSONUnit, XMLUnit | Java only | built |
 | [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | built |
+| [Black-box tests of a whole application](black-box-tests/README.md): the order service started as it ships, driven through its API, its warehouse and database stood in for | WireMock, REST Assured, H2 (a container database where needed) | Java only | built |
 | [Batch file-in, file-out](batch-file-in-file-out/README.md): a Spring Batch job run on synthetic input and a cleaned captured day, its output compared record by record | spring-batch-test, Datafaker, JUnit temporary folders | Java only | built |
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
@@ -104,7 +105,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | Technique | Lesson | When |
 |---|---|---|
 | mutation-testing | [Mutation testing](mutation-testing/README.md) | built |
-| characterisation-tests | [Characterisation tests](characterisation-tests/README.md) | built |
+| characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md) | built |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
@@ -155,6 +156,7 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
 | Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
 | Slow and failing dependencies (`slow-and-failing-dependencies`) | A shop checking a supplier's stock before promising delivery | A stand-in answers at once, with stock or 503, so a client with no timeout that throws on a dropped connection passes | WireMock answers 2 seconds late, resets the connection, answers empty or broken; each test allows 1 second and expects "supplier unavailable" | `-Pcode=today` |
+| Black-box tests of a whole application (`black-box-tests`) | A shop's order service: reserve stock at the warehouse, keep the order as 2 rows | Unit tests of the order rules with stand-ins pass while the order is never committed | The service started from its entry point and a settings file; WireMock as the warehouse; the answer, the warehouse call and the rows written are checked | `-Pcode=today` |
 | Behaviour written down as examples (`behaviour-as-examples`) | A shop's refund rules | Tests written from the code, far from the 30-day boundary | The returns team's named examples, as a table, find the 30th-day refund that the code gets wrong | `-Pcode=today` |
 | Batch file-in, file-out (`batch-file-in-file-out`) | A nightly settlement file | Tests of the pieces | The whole Spring Batch job, file in and file out, on Datafaker input and a cleaned captured day, compared record by record | `-Pcode=today` |
 | Embedded Jakarta EE tests (`embedded-jakarta-ee-tests`) | VAT at a checkout, with two tax-rate beans | A unit test that wires the checkout by hand | Weld wires it as the server would, and it gets the wrong rate | `-Pcode=today` |
@@ -182,18 +184,14 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
    customer's email; the after filters them at source and keeps the examples as approval tests.
 6. **Cleaning captured data so tests still work:** fixed text breaks the tests, keyed substitutes keep joins and repeated
    values working, and a detector check fails on a field the cleaning missed.
-7. **Black-box tests of a whole application:** start the application as it ships, drive it only through its external
-   interfaces (HTTP, messages, files), stand in for everything it calls (WireMock for services, a container database),
-   and check what comes out: responses, outgoing calls, rows written. The approach that joins outside-in HTTP tests,
-   batch file-in file-out and characterisation tests, and the first tests an untested application usually gets.
-8. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+7. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
-9. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-10. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-11. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-12. **Coverage of changed code,** with PIT run only on what changed.
-13. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+8. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+9. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+10. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+11. **Coverage of changed code,** with PIT run only on what changed.
+12. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

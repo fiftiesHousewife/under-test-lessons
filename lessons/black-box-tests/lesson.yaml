@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: black-box-tests
+title: Black-box tests of a whole application
+techniques: [characterisation-tests]

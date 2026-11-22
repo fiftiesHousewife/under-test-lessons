@@ -286,6 +286,7 @@ items:
       - "Its README, slides, narration and script are written and its deck is voiced"
       - "Its facts are checked at their sources, named in its slides file"
     notes: "Names capture as a source of inputs. Start the application as it ships, drive it only through its external interfaces, stand in for everything it calls, and check what comes out."
+    status: "done"
   - key: "lesson-mockito-well-used"
     type: "deliverable"
     title: "Lesson: Mockito well used"

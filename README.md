@@ -57,7 +57,7 @@ which is not always what it *should* do; differences found later are questions f
 | [Outside-in HTTP tests](lessons/outside-in-http-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/outside-in-http-tests.html) | [REST Assured](https://rest-assured.io/) | REST Assured finds a service answering `200 OK` to a refused booking |
 | [Batch file-in, file-out](lessons/batch-file-in-file-out/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) | [JUnit](https://junit.org/) temporary folders | A nightly settlement file compared line by line finds a missing closing line |
 | [Differential testing](lessons/differential-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) | [JUnit](https://junit.org/) (no extra library) | An old calculator and its rewrite compared on all 5,000 weights find a mistyped price |
-| *Black-box tests of a whole application* | [WireMock](https://wiremock.org/), [Testcontainers](https://testcontainers.com/), [REST Assured](https://rest-assured.io/) | *coming* |
+| [Black-box tests of a whole application](lessons/black-box-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/black-box-tests.html) | [WireMock](https://wiremock.org/), [REST Assured](https://rest-assured.io/), [H2](https://h2database.com) | The order service, started as it ships, answers and calls its warehouse correctly but never keeps the order; only checking the rows written finds it |
 
 ### 3. Agree what the code should do
 
@@ -130,9 +130,7 @@ The lessons in italics above, in the order they will be made, from [the catalogu
 1. **Before you change anything:** the safety inventory, running old code unplugged (once the airgap agent's first
    release exists) and anti-patterns in existing tests.
 2. **Capturing what an old service receives and sends,** and **cleaning captured data so tests still work.**
-3. **Black-box tests of a whole application:** start the application as it ships, drive it only through its API,
-   messages and files, stand in for everything it calls, and check what comes out.
-4. **Spring tests in slices,** **message consumers** (JMS, then Kafka), **responses checked against the OpenAPI
+3. **Spring tests in slices,** **message consumers** (JMS, then Kafka), **responses checked against the OpenAPI
    document,** **coverage of changed code,** and **AI-written tests that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).

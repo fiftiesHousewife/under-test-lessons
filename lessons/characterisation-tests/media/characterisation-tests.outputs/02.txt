@@ -33,5 +33,3 @@ Execution failed for task ':lessons:characterisation-tests:testFailures' (regist
 > Run with --info or --debug option to get more log output.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
-
-BUILD FAILED in 2s
