@@ -2,26 +2,42 @@ package io.github.fiftieshousewife.undertest.techniques.cleaning;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Scans every field of a cleaned capture for anything that still looks personal: an email address outside the
- * example domain kept for tests, a run of 8 to 19 digits (a card or account number), or a name from the capture.
+ * Scans every field of a cleaned capture for anything that still has a known personal shape: an email address
+ * outside the domain kept for tests, a card or account number, an IBAN, a sort code, a UK phone number, a postcode, a
+ * National Insurance number, or a name from the capture. It finds known shapes only: a capture it passes still needs
+ * its cleaning rules reviewed, and is still treated as personal data.
  */
 public final class PersonalDataDetector {
 
     private static final Pattern EMAIL = Pattern.compile("[\\w.+-]+@([\\w.-]+)");
-    private static final Pattern LONG_NUMBER = Pattern.compile("\\b\\d{8,19}\\b");
-    private static final String TEST_DOMAIN = "example.com";
+    private static final String TEST_DOMAIN = "example.invalid";
+    private static final Map<String, Pattern> SHAPES = shapes();
 
     private final List<Pattern> knownNames;
 
     /** A detector that also looks for these names: the customers' names, taken from the capture before cleaning. */
     public PersonalDataDetector(final Collection<String> knownNames) {
         this.knownNames = knownNames.stream().distinct().map(PersonalDataDetector::anyCase).toList();
+    }
+
+    /** Each kind of personal number, and its shape. Digits next to letters count: an IBAN's digits follow its bank code. */
+    private static Map<String, Pattern> shapes() {
+        final Map<String, Pattern> shapes = new LinkedHashMap<>();
+        shapes.put("a card or account number", Pattern.compile("(?<!\\d)\\d{8,19}(?!\\d)"));
+        shapes.put("an IBAN", Pattern.compile("\\b[A-Z]{2}\\d{2}[A-Z0-9]{11,30}\\b"));
+        shapes.put("a sort code", Pattern.compile("(?<!\\d)\\d{2}-\\d{2}-\\d{2}(?![\\d-])"));
+        shapes.put("a phone number", Pattern.compile("(?<![\\w+])(?:\\+44 ?|0)\\d{2,4}[ -]?\\d{3,4}[ -]?\\d{3,4}(?!\\d)"));
+        shapes.put("a postcode", Pattern.compile("\\b[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}\\b"));
+        shapes.put("a National Insurance number",
+                Pattern.compile("\\b[A-CEGHJ-PR-TW-Z]{2} ?\\d{2} ?\\d{2} ?\\d{2} ?[A-D]\\b"));
+        return shapes;
     }
 
     private static Pattern anyCase(final String name) {
@@ -47,9 +63,11 @@ public final class PersonalDataDetector {
         if (hasRealEmail(value)) {
             kinds.add("an email address");
         }
-        if (LONG_NUMBER.matcher(value).find()) {
-            kinds.add("a card or account number");
-        }
+        SHAPES.forEach((kind, shape) -> {
+            if (shape.matcher(value).find()) {
+                kinds.add(kind);
+            }
+        });
         if (knownNames.stream().anyMatch(name -> name.matcher(value).find())) {
             kinds.add("a customer's name");
         }
