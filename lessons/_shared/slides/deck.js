@@ -39,12 +39,22 @@
     if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
-    player.play().catch(function () { setListening(false); });
+    player.play().catch(waitForClick);
   }
   function advance() {
     if (current < slides.length - 1) { show(current + 1); } else { setListening(false); }
   }
+  // A browser plays sound only after a click on the page. Arriving from the index's listen link, or from the end of the
+  // last lesson, there hasn't been one, so the deck asks for it rather than falling silent.
+  var waiting = false;
+  function waitForClick() {
+    setListening(false);
+    waiting = true;
+    if (listen) { listen.textContent = 'Click to listen'; listen.classList.add('waiting'); }
+  }
   function setListening(on) {
+    waiting = false;
+    if (listen) { listen.classList.remove('waiting'); }
     listening = on;
     stopVoice();
     if (listen) { listen.textContent = on ? 'Pause' : 'Listen'; listen.setAttribute('aria-pressed', String(on)); }
@@ -75,6 +85,7 @@
     if ((event.key === 'v' || event.key === 'V') && listen) { setListening(!listening); }
   });
   document.addEventListener('click', function (event) {
+    if (waiting) { setListening(true); return; }
     if (!event.target.closest('a, .notes, button')) { show(event.clientX < window.innerWidth / 3 ? current - 1 : current + 1); }
   });
   window.addEventListener('resize', fit);

@@ -21,7 +21,7 @@ class FakeAudio {
   getAttribute(name) { return name === 'src' ? this.src : null; }
 }
 function element(tag) {
-  return { tagName: tag, className: '', textContent: '', attributes: {}, listeners: {}, classList: { toggle() {}, add() {} },
+  return { tagName: tag, className: '', textContent: '', attributes: {}, listeners: {}, classList: { toggle() {}, add() {}, remove() {} },
     setAttribute(k, v) { this.attributes[k] = v; }, getAttribute(k) { return this.attributes[k]; },
     addEventListener(n, fn) { (this.listeners[n] = this.listeners[n] || []).push(fn); },
     click() { clickInProgress = true; (this.listeners.click || []).forEach(fn => fn({ target: this })); clickInProgress = false; },
@@ -67,4 +67,24 @@ check('the second slide plays after the first, without another click', started[1
 check('the third slide plays after the second', started[2] === 'c.m4a');
 check('the deck says when its last slide has been read', finished);
 check('the next slide follows its narration after a short gap, under half a second', delays.length > 0 && delays.every(ms => ms < 500));
-process.exit(failures ? 1 : 0);
+
+// Arriving with no click yet (the index's listen link, or the last lesson carrying on): the browser refuses to play,
+// so the deck asks for a click, and the next click on the page starts it. A fresh deck, as a newly opened page has.
+const freshClips = ['x.m4a', 'y.m4a'].map(src => new FakeAudio(src));
+const freshSlides = freshClips.map(clip => Object.assign(element('section'), { querySelector: s => (s === 'audio.voice' ? clip : null) }));
+appended.length = 0;
+Object.keys(documentListeners).forEach(name => delete documentListeners[name]);
+global.document.querySelectorAll = s => (s === '.deck-slide' ? freshSlides : []);
+global.document.querySelector = s => (s === 'audio.voice' ? freshClips[0] : null);
+eval(script);
+const freshListen = appended.find(el => el.className === 'deck-listen');
+const before = started.length;
+(documentListeners.keydown || []).forEach(fn => fn({ key: 'v', preventDefault() {} })); // no click: refused
+Promise.resolve().then(() => Promise.resolve()).then(() => {
+  check('a start the browser refuses asks for a click, rather than falling silent', freshListen.textContent === 'Click to listen');
+  clickInProgress = true;
+  (documentListeners.click || []).forEach(fn => fn({ target: { closest: () => null }, clientX: 1500 }));
+  clickInProgress = false;
+  check('the next click on the page starts the voice', started.length > before && freshListen.textContent === 'Pause');
+  process.exit(failures ? 1 : 0);
+});

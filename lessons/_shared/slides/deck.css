@@ -21,6 +21,7 @@ body.show-notes .deck-counter { display: none; }
   background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
 }
 .deck-listen[aria-pressed="true"] { color: inherit; border-color: currentColor; }
+.deck-listen.waiting { color: inherit; border-color: currentColor; font-weight: bold; }
 body.show-notes .deck-listen { display: none; }
 @media print {
   @page { size: 1920px 1080px; margin: 0; }
