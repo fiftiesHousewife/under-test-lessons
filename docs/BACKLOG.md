@@ -24,6 +24,10 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #30 | [Decide the forbidden-API exception for the old command-line programs lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/30) | decision | Lessons Owner | person | – |
 | #14 | [The overview's deck, voiced: a map of testing old Java code](https://github.com/fiftiesHousewife/under-test-lessons/issues/14) | deliverable | Lessons Owner | ai | – |
 | #16 | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) | deliverable | Lessons Owner | ai | – |
+| #59 | [Lesson: the safety inventory](https://github.com/fiftiesHousewife/under-test-lessons/issues/59) | deliverable | Lessons Owner | ai | – |
+| #60 | [Lesson: anti-patterns in existing tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/60) | deliverable | Lessons Owner | ai | – |
+| #61 | [Lesson: capturing what an old service receives and sends, with Logbook](https://github.com/fiftiesHousewife/under-test-lessons/issues/61) | deliverable | Lessons Owner | ai | – |
+| #62 | [Lesson: cleaning captured data so tests still work](https://github.com/fiftiesHousewife/under-test-lessons/issues/62) | deliverable | Lessons Owner | ai | – |
 | #17 | [Lesson: behaviour written down as examples](https://github.com/fiftiesHousewife/under-test-lessons/issues/17) | deliverable | Lessons Owner | ai | – |
 | #18 | [Lesson: black-box tests of a whole application](https://github.com/fiftiesHousewife/under-test-lessons/issues/18) | deliverable | Lessons Owner | ai | – |
 | #20 | [Lesson: checking the requests your code sends](https://github.com/fiftiesHousewife/under-test-lessons/issues/20) | deliverable | Lessons Owner | ai | – |
@@ -53,6 +57,8 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #38 | [The fake lesson gets its promised ArchUnit rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/38) | deliverable | Lessons Owner | ai | – |
 | #39 | [The recorded-responses lesson shows recording and removing personal data](https://github.com/fiftiesHousewife/under-test-lessons/issues/39) | deliverable | Lessons Owner | ai | – |
 | #40 | [The batch lesson uses spring-batch-test and Datafaker, and compares records](https://github.com/fiftiesHousewife/under-test-lessons/issues/40) | deliverable | Lessons Owner | ai | – |
+| #63 | [Differential testing also replays saved requests offline against two running builds](https://github.com/fiftiesHousewife/under-test-lessons/issues/63) | deliverable | Lessons Owner | ai | – |
+| #64 | [Comparing structured output shows keyed substitutes need no ignore rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/64) | deliverable | Lessons Owner | ai | – |
 | #41 | [The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI](https://github.com/fiftiesHousewife/under-test-lessons/issues/41) | deliverable | Lessons Owner | ai | – |
 | #42 | [Lessons for the tools the toolkit names that none uses yet](https://github.com/fiftiesHousewife/under-test-lessons/issues/42) | deliverable | Lessons Owner | ai | – |
 | #43 | [Lesson examples get the toolkit's assessment files and connection lists](https://github.com/fiftiesHousewife/under-test-lessons/issues/43) | deliverable | Lessons Owner | ai | – |
