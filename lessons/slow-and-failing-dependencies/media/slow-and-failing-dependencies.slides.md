@@ -34,12 +34,12 @@ Say: Our example is an online shop. Before it promises a delivery date, it asks 
 ## intro: What we'll compare
 - The code under test: today's stock client
 - The weak tests: a stand-in supplier answers at once, with stock or with 503
-- The strong tests: the stand-in answers 2 seconds late, or breaks the connection
-- Each strong test allows the shop 1 second, and expects "supplier unavailable"
+- The strong tests: the stand-in answers 5 seconds late, or breaks the connection
+- Each strong test allows the shop 3 seconds, and expects "supplier unavailable"
 Picture: scales
 Say: Here is what we will compare. The code under test is today's stock client. [pause 300ms] The weak tests use a
   stand-in supplier that answers at once, either with the stock or with an outage, 503. [pause 300ms] The strong tests
-  make the same stand-in answer 2 seconds late, or break the connection. Each one allows the shop 1 second, and
+  make the same stand-in answer 5 seconds late, or break the connection. Each one allows the shop 3 seconds, and
   expects a clear answer: supplier unavailable.
 
 ## intro: Why a healthy stand-in isn't enough

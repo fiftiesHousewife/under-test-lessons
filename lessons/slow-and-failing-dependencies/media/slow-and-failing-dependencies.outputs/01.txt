@@ -1,4 +1,8 @@
 $ ./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today
+StockAnswerTest > supplierWithStockGivesTheUnits() PASSED
+
+StockAnswerTest > supplierOutageSaysTheSupplierIsUnavailable() PASSED
+
 SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [1] fault = CONNECTION_RESET_BY_PEER FAILED
     org.opentest4j.AssertionFailedError: [CONNECTION_RESET_BY_PEER]
     expected: "supplier unavailable: the connection failed"
@@ -15,11 +19,7 @@ SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [3] fa
      but was: "UncheckedIOException: java.io.IOException: Illegal character in chunk size: 108"
 
 SupplierFaultTest > slowSupplierCostsTheShopOneTimeout() FAILED
-    org.opentest4j.AssertionFailedError: the shop kept the customer waiting for the supplier ==> execution timed out after 1000 ms
-
-StockAnswerTest > supplierWithStockGivesTheUnits() PASSED
-
-StockAnswerTest > supplierOutageSaysTheSupplierIsUnavailable() PASSED
+    org.opentest4j.AssertionFailedError: the shop kept the customer waiting for the supplier ==> execution timed out after 3000 ms
 
 6 tests completed, 4 failed
 

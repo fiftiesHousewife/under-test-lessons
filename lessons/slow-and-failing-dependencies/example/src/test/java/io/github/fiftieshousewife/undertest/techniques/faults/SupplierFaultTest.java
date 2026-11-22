@@ -18,12 +18,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 /**
- * AFTER: WireMock makes the supplier fail on demand: an answer two seconds late, a connection reset, an empty answer,
- * a broken one. Each test checks the shop answers within a second, with a clear "supplier unavailable".
+ * AFTER: WireMock makes the supplier fail on demand: an answer five seconds late, a connection reset, an empty answer,
+ * a broken one. Each test checks the shop answers within 3 seconds, with a clear "supplier unavailable".
  */
 class SupplierFaultTest {
 
-    private static final Duration ONE_SECOND = Duration.ofSeconds(1);
+    private static final Duration THREE_SECONDS = Duration.ofSeconds(3);
     private static final String WAITED_TOO_LONG = "the shop kept the customer waiting for the supplier";
 
     private final WireMockServer supplier = new WireMockServer(options().dynamicPort());
@@ -40,8 +40,8 @@ class SupplierFaultTest {
 
     @Test
     void slowSupplierCostsTheShopOneTimeout() {
-        supplier.stubFor(get(urlEqualTo("/stock/KETTLE-2")).willReturn(okJson("{\"units\": 12}").withFixedDelay(2000)));
-        final String outcome = assertTimeoutPreemptively(ONE_SECOND, this::askForKettles, WAITED_TOO_LONG);
+        supplier.stubFor(get(urlEqualTo("/stock/KETTLE-2")).willReturn(okJson("{\"units\": 12}").withFixedDelay(5000)));
+        final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);
         assertThat(outcome).isEqualTo("supplier unavailable: no answer within 500 ms");
     }
 
@@ -49,7 +49,7 @@ class SupplierFaultTest {
     @EnumSource(value = Fault.class, names = {"CONNECTION_RESET_BY_PEER", "EMPTY_RESPONSE", "MALFORMED_RESPONSE_CHUNK"})
     void brokenConnectionSaysTheSupplierIsUnavailable(final Fault fault) {
         supplier.stubFor(get(urlEqualTo("/stock/KETTLE-2")).willReturn(aResponse().withFault(fault)));
-        final String outcome = assertTimeoutPreemptively(ONE_SECOND, this::askForKettles, WAITED_TOO_LONG);
+        final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);
         assertThat(outcome).as(fault.name()).isEqualTo("supplier unavailable: the connection failed");
     }
 

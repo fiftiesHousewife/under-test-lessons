@@ -13,7 +13,7 @@ delay (`withFixedDelay`) holds an answer back, and faults (`Fault.CONNECTION_RES
 ## Run the example
 
 ```bash
-./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today   # today's code: the 2 weak tests pass and the 4 strong tests fail, the slow supplier stopped after 1 second
+./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today   # today's code: the 2 weak tests pass and the 4 strong tests fail, the slow supplier stopped after 3 seconds
 ./gradlew :lessons:slow-and-failing-dependencies:test                # the fix: all 6 tests pass
 ```
 
@@ -29,8 +29,8 @@ unavailable", so it can tell the customer it will confirm by email.
 - [`StockAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/faults/StockAnswerTest.java)
   is the "before": a stand-in supplier answers at once, with 12 in stock or with 503. Both versions pass.
 - [`SupplierFaultTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/faults/SupplierFaultTest.java)
-  is the "after": the supplier answers 2 seconds late, or resets the connection, sends nothing, or sends an OK status
-  followed by garbage. Each test allows the shop 1 second (`assertTimeoutPreemptively`, so a client with no timeout
+  is the "after": the supplier answers 5 seconds late, or resets the connection, sends nothing, or sends an OK status
+  followed by garbage. Each test allows the shop 3 seconds (`assertTimeoutPreemptively`, so a client with no timeout
   fails quickly instead of hanging the build) and expects "supplier unavailable".
 
 ## Watch it, or present it

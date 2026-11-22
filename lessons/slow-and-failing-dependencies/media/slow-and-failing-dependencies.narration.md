@@ -12,12 +12,12 @@ Written to be spoken.
 4. This is [pause 300ms] the weak test. A stand-in supplier, made with WireMock, answers at once. Once with 12 kettles
    in stock, and once with an outage, 503. Both are handled. But nothing tries a supplier that is slow, or one that
    drops the connection.
-5. Now, [pause 300ms] the strong tests. The first makes the supplier answer 2 seconds late, with a fixed delay. The
-   shop is allowed 1 second, and the test stops it there if it is still waiting. The second test runs 3 times, once for
+5. Now, [pause 300ms] the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The
+   shop is allowed 3 seconds, and the test stops it there if it is still waiting. The second test runs 3 times, once for
    each fault: a connection reset, an empty response, and a broken answer. Every time, the shop must say, supplier
    unavailable.
 6. We run the tests against today's code. The weak tests pass. The 4 strong tests fail. The slow supplier kept the shop
-   waiting past its second. And each broken connection came back as an exception, not as a clear answer.
+   waiting past its 3 seconds. And each broken connection came back as an exception, not as a clear answer.
 7. Now the fixed client. It has a connect timeout, and a read timeout of half a second on each request. A timeout, or
    any failed connection, becomes supplier unavailable, with the reason. We run the same tests. [pause 1s] Every test
    passes, and none of them waits more than a second.
