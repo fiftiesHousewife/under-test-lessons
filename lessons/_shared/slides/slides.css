@@ -50,3 +50,7 @@ li.link::before { content: "→"; position: absolute; left: 0; color: var(--acce
 .picture .line { fill: none; stroke: var(--ink); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
 .picture .light-line { fill: none; stroke: var(--paper); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
 .picture .thin { stroke-width: 6; }
+/* Slides in videos build up one point at a time: points still to come keep their places, hidden, and the picture
+   arrives with the first point. */
+.later { visibility: hidden; }
+.before-picture .picture { visibility: hidden; }

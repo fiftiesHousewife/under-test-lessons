@@ -15,6 +15,10 @@ final class Splicer {
     static final double SLIDE_BREATH_SECONDS = 1.5;
     /** How long a slide takes to fade up from black, and back down to black. */
     static final double FADE_SECONDS = 1.0 / 3;
+    /** The share of a slide's narration over which its points appear, one after another. */
+    static final double BUILD_UP = 0.8;
+    /** How long each point takes to fade in. */
+    static final double CROSSFADE_SECONDS = 0.3;
     /** How much a slide grows over the time it shows: a slow, gentle zoom towards its centre. */
     static final double SLIDE_ZOOM = 0.04;
 
@@ -39,18 +43,71 @@ final class Splicer {
     private Splicer() {
     }
 
-    /** Draws a slide and joins it to its spoken clip ({@code <name>.wav} in the voice folder) as a segment. */
+    /** A slide's stages (one picture each), its spoken clip, and how long the clip speaks for, in seconds. */
+    record Cut(List<Path> stages, Path voice, double spoken) {
+
+        /** Keeps its own copy of the stages. */
+        Cut {
+            stages = List.copyOf(stages);
+        }
+
+        double seconds() {
+            return spoken + SLIDE_BREATH_SECONDS;
+        }
+    }
+
+    /** Draws a slide, stage by stage, and joins it to its spoken clip ({@code <name>.wav}) as a segment. */
     static Segment slide(final Media media, final String name, final Slide slide) {
         final Path voice = media.file(".voice");
-        final Path png = SlideDrawing.draw(media, name, slide);
-        final double seconds = WavFile.read(voice.resolve(name + ".wav")).seconds() + SLIDE_BREATH_SECONDS;
+        final Path wav = voice.resolve(name + ".wav");
+        final Cut cut = new Cut(SlideDrawing.drawStages(media, name, slide), wav, WavFile.read(wav).seconds());
         final Path video = voice.resolve(name + ".mp4");
-        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-loop", "1",
-                "-framerate", "30", "-i", png.toString(), "-i", voice.resolve(name + ".wav").toString(),
-                "-vf", motion(seconds), "-af", "apad", "-t", String.format(Locale.ROOT, "%.3f", seconds),
-                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "2",
-                video.toString()), voice);
-        return new Segment(video, seconds);
+        ExternalCommand.run(command(cut, video), voice);
+        return new Segment(video, cut.seconds());
+    }
+
+    /**
+     * The ffmpeg command that makes a slide's segment: each stage in turn, crossfading into the next as its point
+     * appears ({@link #appearances}), with the slide's {@link #motion} over the whole, and its voice. The segment lasts
+     * exactly {@link Cut#seconds()}.
+     */
+    static List<String> command(final Cut cut, final Path video) {
+        final double seconds = cut.seconds();
+        final List<Double> appear = appearances(cut.stages().size() - 1, cut.spoken());
+        final List<String> command = new ArrayList<>(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error"));
+        final StringBuilder filter = new StringBuilder();
+        for (int i = 0; i < cut.stages().size(); i++) {
+            final double offset = i == 0 ? 0 : offset(appear.get(i - 1));
+            final double length = i == cut.stages().size() - 1 ? seconds - offset : seconds;
+            command.addAll(List.of("-loop", "1", "-framerate", "30", "-t", number(length), "-i",
+                    cut.stages().get(i).toString()));
+            filter.append(String.format(Locale.ROOT, "[%d:v]fps=30,format=yuv420p,settb=AVTB[s%d];", i, i));
+        }
+        String last = "s0";
+        for (int i = 1; i < cut.stages().size(); i++) {
+            filter.append(String.format(Locale.ROOT, "[%s][s%d]xfade=transition=fade:duration=%s:offset=%s[x%d];",
+                    last, i, number(CROSSFADE_SECONDS), number(offset(appear.get(i - 1))), i));
+            last = "x" + i;
+        }
+        filter.append('[').append(last).append(']').append(motion(seconds)).append("[v]");
+        command.addAll(List.of("-i", cut.voice().toString(), "-filter_complex", filter.toString(), "-map", "[v]",
+                "-map", cut.stages().size() + ":a", "-af", "apad", "-t", number(seconds), "-c:v", "libx264",
+                "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "2", video.toString()));
+        return command;
+    }
+
+    /** When each of a slide's points appears: evenly through the first {@link #BUILD_UP} of its narration. */
+    static List<Double> appearances(final int points, final double spoken) {
+        final List<Double> times = new ArrayList<>();
+        for (int point = 1; point <= points; point++) {
+            times.add(BUILD_UP * spoken * point / points);
+        }
+        return times;
+    }
+
+    /** Where a crossfade starts, so it is half done when its point appears. */
+    private static double offset(final double appears) {
+        return Math.max(0.01, appears - CROSSFADE_SECONDS / 2);
     }
 
     /**

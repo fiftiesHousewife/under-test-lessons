@@ -16,6 +16,7 @@ final class SlideHtml {
 
     static final int WIDTH = 1920;
     static final int HEIGHT = 1080;
+    private static final java.util.regex.Pattern POINT = java.util.regex.Pattern.compile("<li class=\"(point|link)\">");
 
     private SlideHtml() {
     }
@@ -69,6 +70,22 @@ final class SlideHtml {
                     .append(read(picture(pictures, slide.heading().picture()))).append("</figure>");
         }
         return html.append("</main>").toString();
+    }
+
+    /**
+     * One stage of a slide that builds up: its first {@code shown} points as they are, the rest hidden but keeping
+     * their places ({@code later}), and its picture hidden until the first point arrives ({@code before-picture}).
+     */
+    static String stage(final String page, final int shown) {
+        final java.util.regex.Matcher item = POINT.matcher(page);
+        final StringBuilder out = new StringBuilder();
+        int index = 0;
+        while (item.find()) {
+            item.appendReplacement(out, index++ < shown ? "$0" : "<li class=\"$1 later\">");
+        }
+        item.appendTail(out);
+        return shown > 0 ? out.toString() : out.toString().replaceFirst("<body class=\"([^\"]*)\">",
+                "<body class=\"$1 before-picture\">");
     }
 
     static String escape(final String text) {

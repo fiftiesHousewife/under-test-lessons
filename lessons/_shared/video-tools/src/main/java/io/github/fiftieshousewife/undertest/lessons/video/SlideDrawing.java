@@ -32,6 +32,31 @@ final class SlideDrawing {
         }
     }
 
+    /**
+     * Draws a slide once for each stage of its build-up, as {@code <name>-0.png}, {@code <name>-1.png} and so on: the
+     * title alone, then one more point each time, the picture arriving with the first. A slide without points is one
+     * stage, drawn whole.
+     */
+    static List<Path> drawStages(final Media media, final String name, final Slide slide) {
+        final Path folder = media.file(".voice");
+        final int points = slide.points().size();
+        final List<Path> stages = new ArrayList<>();
+        try {
+            Files.createDirectories(folder);
+            final String page = SlideHtml.page(slide, stylesheets(media), media.pictureFolders());
+            for (int shown = 0; shown <= points; shown++) {
+                final Path html = folder.resolve(name + "-" + shown + ".html");
+                Files.writeString(html, points == 0 ? page : SlideHtml.stage(page, shown));
+                final Path png = folder.resolve(name + "-" + shown + ".png");
+                Browser.screenshot(html, png);
+                stages.add(png);
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+        return stages;
+    }
+
     /** Draws every slide of a lesson, for a quick look without making the whole video. */
     static List<Path> drawAll(final Media media) {
         final Slides slides = media.slides();

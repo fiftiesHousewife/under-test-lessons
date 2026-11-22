@@ -96,8 +96,9 @@ class LessonVideoTest {
                 () -> assertThat(media.resolve("demo.mp4")).exists(),
                 () -> assertThat(media.resolve("demo.narration.m4a")).exists(),
                 () -> assertThat(media.resolve("demo.captioned.mp4.captions/001.png")).as("captions drawn").exists(),
-                () -> assertThat(media.resolve("demo.voice/intro-1.png")).exists(),
-                () -> assertThat(media.resolve("demo.voice/intro-1.html")).exists(),
+                () -> assertThat(media.resolve("demo.voice/intro-1-0.png")).as("the title alone").exists(),
+                () -> assertThat(media.resolve("demo.voice/intro-1-1.png")).as("with its point").exists(),
+                () -> assertThat(Files.readString(media.resolve("demo.voice/intro-1-0.html"))).contains("later"),
                 () -> assertThat(Files.readString(media.resolve("demo.vtt"))).contains("Hello there.")
                         .contains("First scene.").contains("Goodbye."));
     }
