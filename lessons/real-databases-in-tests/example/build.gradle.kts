@@ -8,7 +8,7 @@ plugins {
 //   ./gradlew :lessons:real-databases-in-tests:test integrationTest                the fixed query: both databases agree
 testing {
     suites {
-        val test by getting(JvmTestSuite::class) {
+        named<JvmTestSuite>("test") {
             dependencies {
                 implementation(libs.h2)
             }

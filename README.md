@@ -135,7 +135,8 @@ how to route it:
 | VHS (video making only) | Homebrew or GitHub releases | Not usually available; record videos outside the company network |
 
 Liquibase is pinned to 4.33.0, its last release under the Apache licence; version 5 moved to the Functional Source
-License, which many companies must approve first.
+License, which many companies must approve first. Dependencies held back on purpose are listed, with the reason, as
+`quality.holdBack` in [`gradle.properties`](gradle.properties), so the out-of-date check accepts them.
 
 ## What's here
 
