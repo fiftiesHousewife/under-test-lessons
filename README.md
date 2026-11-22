@@ -3,6 +3,11 @@
 [![Build](https://github.com/fiftiesHousewife/under-test-lessons/actions/workflows/build.yml/badge.svg)](https://github.com/fiftiesHousewife/under-test-lessons/actions/workflows/build.yml)
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](LICENSE)
 ![Java 25](https://img.shields.io/badge/Java-25-blue)
+![Gradle 9.9](https://img.shields.io/badge/Gradle-9.9-blue)
+![JUnit 6](https://img.shields.io/badge/JUnit-6-blue)
+[![Lessons: 18](https://img.shields.io/badge/lessons-18-brightgreen)](lessons/CATALOGUE.md)
+[![Slide decks: HTML](https://img.shields.io/badge/slide%20decks-HTML%20%2B%20CSS-lightgrey)](docs/decisions/0003-the-look-is-set-by-css-and-the-newspaper-style-is-the-default.md)
+[![Works behind a proxy](https://img.shields.io/badge/company%20networks-repository%20manager%20%2B%20proxy-lightgrey)](docs/using-inside-a-company.md)
 
 **Short, practical lessons on testing old code: each one a runnable before-and-after example, a narrated video and a
 slide deck.**
@@ -140,25 +145,11 @@ How the videos are made, and the rules that keep them short and reliable, are in
 
 ## Using these lessons inside a company
 
-Corporate machines usually fetch nothing from the internet: everything comes through the company's repository manager
-(such as Artifactory or Nexus), and browsers are installed centrally. Every download these lessons make, and how to
-route it:
-
-| What | Fetched from by default | Inside a company |
-|---|---|---|
-| Gradle itself | `services.gradle.org` (`gradle/wrapper/gradle-wrapper.properties`) | Point `distributionUrl` at the repository manager's copy |
-| Libraries and Gradle plugins | Maven Central and the Gradle Plugin Portal (`settings.gradle.kts`) | A Gradle init script that replaces both with the repository manager |
-| JDK 25 | Only if none is installed: the Foojay resolver in `settings.gradle.kts` | Install the approved JDK and set `org.gradle.java.installations.auto-download=false` |
-| Container images (`postgres:17-alpine`, and Testcontainers' own clean-up image, Ryuk) | Docker Hub, through Testcontainers | Set `hub.image.name.prefix` in `~/.testcontainers.properties` to the company registry, which must also mirror the Ryuk image |
-| Browser for slides and decks | Nothing: uses the installed Google Chrome | Name another approved browser with `-PlessonBrowser=<program>` |
-| Browser for browser tests (Playwright, planned) | Playwright downloads its own browsers on first use | Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` and launch the installed Chrome (`setChannel("chrome")`) |
-| Voice model (video making only) | GitHub releases | Mirror the model files and pass `-PlessonVoiceModelsUrl=<mirror>`, or your own voice with `-PlessonVoiceCommand` |
-| Voice's Python packages (video making only) | PyPI, through pip | pip's own settings (`pip.conf`) pointing at the repository manager |
-| VHS (video making only) | Homebrew or GitHub releases | Not usually available; record videos outside the company network |
-
-Licences: everything is under the Apache, MIT, BSD or Eclipse licences except Liquibase 5, which uses the Functional
-Source License (FSL-1.1-ALv2, becoming Apache 2.0 after two years); check your company accepts it. Dependencies held
-back on purpose are listed, with the reason, as `quality.holdBack` in [`gradle.properties`](gradle.properties).
+The lessons are built to run where everything comes through a company's repository manager, container images come
+from its own registry and traffic goes through a proxy server. [Using the lessons inside a company](docs/using-inside-a-company.md)
+lists everything they fetch and the settings that route it: the Gradle distribution, libraries, the JDK, your own
+container images (`postgresImage`), Testcontainers' clean-up image, proxy settings, the installed browser, licences,
+and the links on slides.
 
 ## Working on this repo
 
@@ -176,7 +167,7 @@ back on purpose are listed, with the reason, as `quality.holdBack` in [`gradle.p
 | `build-logic/`, `config/quality/` | Convention plugins that every module of this build applies, and the quality-check rules (copied from the toolkit) |
 | [`.github/skills/`](.github/skills/) | AI assistant skills for writing lessons and making their videos |
 | `tools/` | Helpers for working on the repo |
-| [`docs/`](docs/decisions/README.md) | This repo's decisions, next steps, and research behind the lesson plan |
+| [`docs/`](docs/decisions/README.md) | This repo's decisions, using the lessons inside a company, next steps, and research |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words lessons use, on top of the toolkit's word list |
 
 ## Licence

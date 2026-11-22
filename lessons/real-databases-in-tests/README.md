@@ -9,7 +9,8 @@ where there is no container runtime, so every other test still runs everywhere.
 
 ## Run the example
 
-Needs a container runtime, such as Docker Desktop, Colima or Podman.
+Needs a container runtime, such as Docker Desktop, Colima or Podman. Inside a company, name your own approved image
+with `postgresImage`; see [Using the lessons inside a company](../../docs/using-inside-a-company.md).
 
 ```bash
 ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest -Pcode=today

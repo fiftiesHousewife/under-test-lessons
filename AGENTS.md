@@ -20,6 +20,7 @@ lives in that repo; link to it by full URL.
 | `lessons/_shared/` | Video set-up and helpers, slide styles, themes and pictures, and `video-tools` |
 | [`docs/decisions/`](docs/decisions/README.md) | This repo's decisions, in MADR form |
 | [`docs/next-steps.md`](docs/next-steps.md) | Work in hand |
+| [`docs/using-inside-a-company.md`](docs/using-inside-a-company.md) | Repository manager, own container images, proxies, licences |
 | [`docs/research/`](docs/research/technology-gap-review.md) | Research behind the lesson plan |
 | `build-logic/`, `config/quality/` | Convention plugins every module applies, and the quality-check rules |
 | `tools/` | Helpers, such as running PMD and Checkstyle without Gradle worker processes |

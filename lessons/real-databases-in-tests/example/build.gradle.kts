@@ -30,6 +30,8 @@ testing {
 
 tasks.withType<Test>().configureEach {
     systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    // The PostgreSQL image container tests start: a company's own, from its registry, with -PpostgresImage=<name>.
+    systemProperty("postgres.image", providers.gradleProperty("postgresImage").getOrElse("postgres:17-alpine"))
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

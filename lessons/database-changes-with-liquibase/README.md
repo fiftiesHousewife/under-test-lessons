@@ -9,7 +9,8 @@ PostgreSQL, started by [Testcontainers](https://testcontainers.com), finds out f
 
 ## Run the example
 
-Needs a container runtime, such as Docker Desktop, Colima or Podman.
+Needs a container runtime, such as Docker Desktop, Colima or Podman. Inside a company, name your own approved image
+with `postgresImage`; see [Using the lessons inside a company](../../docs/using-inside-a-company.md).
 
 ```bash
 ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today
