@@ -40,7 +40,7 @@ interface. Messages are delivered on commit.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/fake-behind-an-interface.tape), [the narration](media/fake-behind-an-interface.narration.md) and
   [the slides](media/fake-behind-an-interface.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=fake-behind-an-interface`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=fake-behind-an-interface`.
 
 ## When to use it
 

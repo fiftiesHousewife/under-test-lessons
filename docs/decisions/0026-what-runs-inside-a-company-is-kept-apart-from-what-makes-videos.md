@@ -44,12 +44,15 @@ Chosen: **three groups, each in its own place, with the line checked by the buil
 
 Chrome counts as inside, because it is already installed and allowed on company machines.
 
-* **Two Gradle modules replace `video-tools`.** `:lessons:video-checks` is inside: the checks, deck building, slide
-  drawing, captions and the shared model of scenes, narration and slides. `:production:video-render` is production
-  and depends on `video-checks`. `settings.gradle.kts` includes `production` only when its folder is there, so a
-  copy without it still builds.
+* **Two Gradle modules.** `:lessons:video-tools` (in `lessons/_shared/video-tools`) is inside: the checks, deck
+  building, slide drawing, captions and the shared model of scenes, narration and slides. It keeps its name, so the
+  commands every lesson's README and video script name stay as they are. `:production:video-render` (in
+  `production/video-render`) is production: recording, voicing, assembling, the recording check and reading decks
+  aloud, with `speak-kokoro.py` and the helpers' own tests. It depends on `video-tools`, never the other way round.
+  `settings.gradle.kts` includes it only when its folder is there, so a copy without it still builds.
 * **One top-level folder per outside group:** `production/` and `maintainer/`. Everything else is inside.
-* **An ArchUnit rule** in `./gradlew check`: no class in `video-checks` depends on `video-render`.
+* **The build keeps the line.** `video-tools` has no dependency on `video-render`, so a class of the inside module that
+  used a production class wouldn't compile; no extra rule is needed for that.
 * **A CI job proves the inside copy builds inside a company.** It copies the repo without `production/` and
   `maintainer/`, then runs `./gradlew check` with the network limited to one Maven repository.
 * **The Gradle wrapper's download address is a setting,** so a company that allows only its own repository manager can
@@ -74,7 +77,7 @@ changes with each release.
 
 ### Confirmation
 
-The ArchUnit rule and the inside-copy CI job, both in the build.
+The modules' dependency, which the compiler enforces, and the inside-copy CI job.
 
 ## Pros and Cons of the Options
 

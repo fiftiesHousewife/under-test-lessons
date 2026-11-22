@@ -35,7 +35,7 @@ class VideoCheckTest {
         final Path shared = Files.createDirectories(root.resolve("lessons/_shared/slides/pictures"));
         Files.writeString(shared.resolveSibling("slides.css"), "body { }");
         Files.writeString(shared.resolve("checklist.svg"), "<svg></svg>");
-        Files.createDirectories(root.resolve("lessons/_shared/video-tools"));
+        Files.createDirectories(root.resolve("production/video-render"));
         Files.copy(Path.of("video-check.tape"), root.resolve(VideoCheck.TAPE));
         System.setProperty("video.vhs", standIn("vhs", "mkdir -p build/video-check; echo '7 9 41' >"
                 + " build/video-check/video-check.zooms; touch build/video-check/video-check.silent.mp4").toString());
@@ -66,7 +66,7 @@ class VideoCheckTest {
 
     @Test
     void theCheckRecordingsZoomHasTimeToRun() {
-        final Path repo = java.nio.file.Path.of("../../..").toAbsolutePath().normalize();
+        final Path repo = java.nio.file.Path.of("../..").toAbsolutePath().normalize();
 
         assertAll(
                 () -> assertThat(ZoomChecks.problems(repo, repo.resolve(VideoCheck.TAPE))).isEmpty(),

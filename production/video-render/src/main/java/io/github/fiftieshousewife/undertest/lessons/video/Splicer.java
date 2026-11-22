@@ -11,8 +11,6 @@ import java.util.Locale;
  */
 final class Splicer {
 
-    /** Time a slide stays up after its narration ends. */
-    static final double SLIDE_BREATH_SECONDS = 1.5;
     /** How long a slide takes to fade up from black, and back down to black. */
     static final double FADE_SECONDS = 1.0 / 3;
     /** The share of a slide's narration over which its points appear, one after another. */
@@ -52,7 +50,7 @@ final class Splicer {
         }
 
         double seconds() {
-            return spoken + SLIDE_BREATH_SECONDS;
+            return spoken + Slide.BREATH_SECONDS;
         }
     }
 
@@ -74,7 +72,7 @@ final class Splicer {
     static List<String> command(final Cut cut, final Path video) {
         final double seconds = cut.seconds();
         final List<Double> appear = appearances(cut.stages().size() - 1, cut.spoken());
-        final List<String> command = new ArrayList<>(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error"));
+        final List<String> command = new ArrayList<>(List.of(Ffmpeg.program(), "-y", "-loglevel", "error"));
         final StringBuilder filter = new StringBuilder();
         for (int i = 0; i < cut.stages().size(); i++) {
             final double offset = i == 0 ? 0 : offset(appear.get(i - 1));
@@ -133,7 +131,7 @@ final class Splicer {
 
     /** Joins videos, each with sound, end to end into one. */
     static void join(final List<Path> videos, final Path out) {
-        final List<String> command = new ArrayList<>(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error"));
+        final List<String> command = new ArrayList<>(List.of(Ffmpeg.program(), "-y", "-loglevel", "error"));
         final StringBuilder filter = new StringBuilder();
         for (int i = 0; i < videos.size(); i++) {
             command.add("-i");

@@ -76,7 +76,7 @@ for Java 8, which Pact no longer supports actively.
 - **Video:** made from [the script](media/contract-tests-between-teams.tape),
   [the narration](media/contract-tests-between-teams.narration.md) and
   [the slides](media/contract-tests-between-teams.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=contract-tests-between-teams`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=contract-tests-between-teams`.
 
 ## When to use it
 

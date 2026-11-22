@@ -53,7 +53,7 @@ the tests after it never run. Today's code can't finish in any test, so the buil
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/old-command-line-programs.tape), [the narration](media/old-command-line-programs.narration.md) and
   [the slides](media/old-command-line-programs.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=old-command-line-programs`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=old-command-line-programs`.
 
 ## When to use it
 

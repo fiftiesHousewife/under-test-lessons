@@ -30,7 +30,7 @@ The example is a shop in three layers: web, service and storage.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/architecture-rules.tape), [the narration](media/architecture-rules.narration.md) and
   [the slides](media/architecture-rules.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=architecture-rules`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=architecture-rules`.
 
 ## When to use it
 

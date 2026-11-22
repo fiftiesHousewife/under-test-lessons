@@ -30,7 +30,7 @@ with one row mistyped.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/differential-testing.tape), [the narration](media/differential-testing.narration.md) and
   [the slides](media/differential-testing.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=differential-testing`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=differential-testing`.
 
 ## When to use it
 

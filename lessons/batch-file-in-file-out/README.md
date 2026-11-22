@@ -55,7 +55,7 @@ into a settlement line in pounds, and writes the line.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/batch-file-in-file-out.tape), [the narration](media/batch-file-in-file-out.narration.md) and
   [the slides](media/batch-file-in-file-out.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=batch-file-in-file-out`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=batch-file-in-file-out`.
 
 ## When to use it
 

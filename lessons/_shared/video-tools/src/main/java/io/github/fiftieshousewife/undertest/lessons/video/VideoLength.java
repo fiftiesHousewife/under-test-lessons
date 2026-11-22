@@ -27,7 +27,7 @@ final class VideoLength {
         final Slides slides = media.slides();
         double seconds = 0;
         for (final Slide slide : concat(slides.intro(), slides.closing())) {
-            seconds += spoken(slide.narration()) + Splicer.SLIDE_BREATH_SECONDS;
+            seconds += spoken(slide.narration()) + Slide.BREATH_SECONDS;
         }
         final List<Double> runs = new ArrayList<>(media.measuredRuns());
         runs.addAll(Collections.nCopies(waits(media.file(".tape")), UNTIMED_RUN_SECONDS));

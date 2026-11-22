@@ -1,5 +1,5 @@
 # Terminal video for the checking the requests your code sends lesson. Make it from the repository root with:
-#   ./gradlew :lessons:video-tools:renderLessonVideo -Plesson=checking-outgoing-requests
+#   ./gradlew :production:video-render:renderLessonVideo -Plesson=checking-outgoing-requests
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
 

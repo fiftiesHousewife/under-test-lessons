@@ -136,6 +136,6 @@ class LessonVideoTest {
                 () -> assertThatIllegalStateException()
                         .isThrownBy(() -> ExternalCommand.run(List.of(failing.toString()), root))
                         .withMessageContaining("exit code 3").withMessageContaining("broken"),
-                () -> assertThat(ExternalCommand.videoSeconds(root.resolve("missing.mp4"))).isEmpty());
+                () -> assertThat(Ffmpeg.videoSeconds(root.resolve("missing.mp4"))).isEmpty());
     }
 }

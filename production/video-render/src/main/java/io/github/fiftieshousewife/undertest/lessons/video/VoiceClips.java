@@ -32,7 +32,7 @@ final class VoiceClips {
         final Path deckClips = media.file(DeckVoice.FOLDER);
         final Path deckClip = deckClips.resolve(spoken.clipName());
         if (Files.isRegularFile(deckClip) && ClipLedger.read(deckClips).readFrom(spoken.clipName(), spoken.saidKey())) {
-            ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-i",
+            ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i",
                     deckClip.toString(), "-c:a", "pcm_s16le", wav.toString()), Path.of("").toAbsolutePath());
             return WavFile.read(wav);
         }

@@ -17,7 +17,8 @@ lives in that repo; link to it by full URL.
 | Path | What |
 |---|---|
 | [`lessons/`](lessons/README.md) | One folder per lesson; [the catalogue](lessons/CATALOGUE.md) is the plan |
-| `lessons/_shared/` | Video set-up and helpers, slide styles, themes and pictures, and `video-tools` |
+| `lessons/_shared/` | Video set-up and helpers, slide styles, themes and pictures, and `video-tools`: the checks of video scripts, captions, slide pictures and decks, which run anywhere, inside a company included |
+| `production/video-render/` | The tools that make videos and read narration aloud (VHS, ffmpeg, the Kokoro voice): run only on the machine that makes the videos, never inside a company; the build works without this folder |
 | [`docs/decisions/`](docs/decisions/README.md) | This repo's decisions, in MADR form |
 | [`plan/lessons-backlog.yaml`](plan/lessons-backlog.yaml), [`docs/BACKLOG.md`](docs/BACKLOG.md) | Work in hand: the backlog file, loaded into GitHub issues, and the page generated from them |
 | [`docs/using-inside-a-company.md`](docs/using-inside-a-company.md) | Repository manager, own container images, proxies, licences |

@@ -26,13 +26,6 @@ final class Zoom {
     static final double MAX_ZOOM = 1.8;
     /** Less magnification than this isn't worth the movement, so the picture stays as it is. */
     static final double SMALLEST_ZOOM = 1.15;
-    /** Seconds after the code appears before the zoom starts, and before the scene ends that it is back out. */
-    static final double DELAY = 1.0;
-    /** Seconds the zoom takes to ease in, and to ease out. */
-    static final double EASE = 0.8;
-    /** The shortest hold worth zooming for, in seconds. */
-    static final double SHORTEST_HOLD = 1.0;
-
     private static final Pattern SET = Pattern.compile("^Set\\s+(Width|Height|Padding|WindowBar)\\s+(\\S+)\\s*$");
     private static final Pattern REPORTED_ROWS = Pattern.compile("^\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*$");
     /** VHS's defaults, and the height of its window bar. */
@@ -66,25 +59,6 @@ final class Zoom {
 
         double top() {
             return corner.top();
-        }
-    }
-
-    /** When a zoom's code is on screen, in seconds of video: from when it appears to the end of its scene. */
-    record Span(double start, double end) {
-
-        /** How far in the zoom is at a moment: 0 (not at all) to 1 (fully), eased at both ends. */
-        double amount(final double time) {
-            if (end - start < 2 * (DELAY + EASE) + SHORTEST_HOLD) {
-                return 0;
-            }
-            final double in = (time - start - DELAY) / EASE;
-            final double out = (end - DELAY - time) / EASE;
-            final double progress = Math.max(0, Math.min(1, Math.min(in, out)));
-            return (1 - Math.cos(Math.PI * progress)) / 2;
-        }
-
-        Span scaled(final double factor) {
-            return new Span(start * factor, end * factor);
         }
     }
 
@@ -150,18 +124,18 @@ final class Zoom {
      */
     static Path zoomed(final Media media) {
         final Path silent = media.file(".silent.mp4");
-        final List<Span> spans = media.zooms();
+        final List<ZoomTiming.Span> spans = Recording.zooms(media);
         if (spans.isEmpty()) {
             return silent;
         }
         final List<Optional<Rows>> rows = rows(media.file(".zooms"));
         if (rows.size() != spans.size()) {
             log.warn("{}: the script has {} zooms but the recording reported rows for {}; made without zooming",
-                    media.safeLesson(), spans.size(), rows.size());
+                    LogSafe.lesson(media), spans.size(), rows.size());
             return silent;
         }
         final Geometry geometry = geometry(media.file(".tape"));
-        final List<Span> used = new ArrayList<>();
+        final List<ZoomTiming.Span> used = new ArrayList<>();
         final List<Window> windows = new ArrayList<>();
         for (int i = 0; i < spans.size(); i++) {
             if (rows.get(i).isPresent()) {
@@ -169,7 +143,7 @@ final class Zoom {
                 windows.add(window(geometry, rows.get(i).get()));
             } else {
                 log.warn("{}: zoom {} has no rows (the terminal didn't say where the cursor was); left out",
-                        media.safeLesson(), i + 1);
+                        LogSafe.lesson(media), i + 1);
             }
         }
         final String filter = filter(geometry, used, windows);
@@ -177,7 +151,7 @@ final class Zoom {
             return silent;
         }
         final Path zoomed = media.file(".zoomed.mp4");
-        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-i", silent.toString(),
+        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i", silent.toString(),
                 "-vf", filter, "-c:v", "libx264", "-pix_fmt", "yuv420p", zoomed.toString()), media.folder());
         return zoomed;
     }
@@ -186,7 +160,7 @@ final class Zoom {
      * The ffmpeg filter for the zooms: scale each frame up by the zoom at that moment, then crop it back to the frame's
      * size at the window. Empty when there is nothing to zoom. Spans and windows pair up in order.
      */
-    static String filter(final Geometry geometry, final List<Span> spans, final List<Window> windows) {
+    static String filter(final Geometry geometry, final List<ZoomTiming.Span> spans, final List<Window> windows) {
         final int count = Math.min(spans.size(), windows.size());
         if (count == 0) {
             return "";
@@ -211,13 +185,14 @@ final class Zoom {
                 String.join("+", left), String.join("+", top));
     }
 
-    /** {@link Span#amount} as an ffmpeg expression of the frame's time, {@code t}. */
-    private static String amount(final Span span) {
-        if (span.end() - span.start() < 2 * (DELAY + EASE) + SHORTEST_HOLD) {
+    /** {@link ZoomTiming.Span#amount} as an ffmpeg expression of the frame's time, {@code t}. */
+    private static String amount(final ZoomTiming.Span span) {
+        if (span.end() - span.start() < 2 * (ZoomTiming.DELAY + ZoomTiming.EASE) + ZoomTiming.SHORTEST_HOLD) {
             return "0";
         }
-        final String in = String.format(Locale.ROOT, "(t-%s)/%s", number(span.start() + DELAY), number(EASE));
-        final String out = String.format(Locale.ROOT, "(%s-t)/%s", number(span.end() - DELAY), number(EASE));
+        final String ease = number(ZoomTiming.EASE);
+        final String in = String.format(Locale.ROOT, "(t-%s)/%s", number(span.start() + ZoomTiming.DELAY), ease);
+        final String out = String.format(Locale.ROOT, "(%s-t)/%s", number(span.end() - ZoomTiming.DELAY), ease);
         return String.format(Locale.ROOT, "if(between(t,%s,%s),(1-cos(PI*clip(min(%s,%s),0,1)))/2,0)",
                 number(span.start()), number(span.end()), in, out);
     }

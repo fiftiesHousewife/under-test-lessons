@@ -1,15 +1,13 @@
-import java.net.URI
-
 plugins {
     id("io.github.fiftieshousewife.java-conventions")
 }
 
-// Tools for lesson videos, slides and decks. The main tasks:
+// The video tools that run anywhere the lessons do, inside a company included: the checks of lesson video scripts,
+// captions from narration, slide pictures and decks. The tools that make videos and read narration aloud are in
+// production/video-render, which only the machine that makes the videos runs. The main tasks:
 //   checkVideoScripts:  catches script mistakes before recording: waits that hang, scene and narration counts, code
 //                       panels that would show the wrong file or lines, scenes too short for their narration, slides
-//                       without sources or repository links.
-//   testVideoHelpers:   tests the in-terminal helpers against a stand-in for VHS (needs bash).
-//   renderLessonVideo:  makes a lesson's video (-Plesson=<id>; -PslidesOnly=true for just its slides).
+//                       without sources or repository links, live runs that don't fit one screen.
 //   buildLessonSlides:  rebuilds every deck and slide image from the current stylesheets and pictures.
 
 dependencies {
@@ -19,9 +17,6 @@ dependencies {
 
 val repoRoot = rootDir.absolutePath
 val lesson = providers.gradleProperty("lesson")
-// The voice: any command that turns a text file into a WAV file. Default: the offline Kokoro voice (see speak-kokoro.py).
-val voiceCommand = providers.gradleProperty("lessonVoiceCommand").map { it.split(" ") }.orElse(
-    listOf("$repoRoot/build/voice/venv/bin/python", "$repoRoot/lessons/_shared/video-tools/speak-kokoro.py"))
 
 val checkVideoScripts = tasks.register<JavaExec>("checkVideoScripts") {
     group = "verification"
@@ -29,13 +24,6 @@ val checkVideoScripts = tasks.register<JavaExec>("checkVideoScripts") {
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = "io.github.fiftieshousewife.undertest.lessons.video.VideoChecks"
     args(repoRoot)
-}
-
-val testVideoHelpers = tasks.register<Exec>("testVideoHelpers") {
-    group = "verification"
-    description = "Tests the in-terminal video helpers in lessons/_shared/callout.sh."
-    workingDir = rootDir
-    commandLine("bash", "lessons/_shared/video-tools/test-video-helpers.sh")
 }
 
 tasks.register<JavaExec>("buildLessonCaptions") {
@@ -46,132 +34,13 @@ tasks.register<JavaExec>("buildLessonCaptions") {
     args(listOfNotNull(repoRoot, providers.gradleProperty("lesson").orNull))
 }
 
-val recordLessonVideo = tasks.register<JavaExec>("recordLessonVideo") {
-    group = "documentation"
-    description = "Records a lesson's silent video and GIF with VHS, showing brief progress (-Plesson=<id>)."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
-    val root = repoRoot
-    val lessonId = lesson
-    argumentProviders.add(CommandLineArgumentProvider { listOf("record", root, lessonId.getOrElse("")) })
-}
-
-// The offline voice, set up once per machine under build/voice. An organisation can use its own Python
-// (-PlessonVoicePython) and a mirror of the model files (-PlessonVoiceModelsUrl); pip uses the machine's own pip settings.
-val voiceDir = rootDir.resolve("build/voice")
-val voicePython = providers.gradleProperty("lessonVoicePython").orElse("python3.13")
-val voiceModelsUrl = providers.gradleProperty("lessonVoiceModelsUrl")
-    .orElse("https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0")
-val voiceModels = listOf("kokoro-v1.0.onnx", "voices-v1.0.bin")
-
-val createVoiceEnvironment = tasks.register<Exec>("createVoiceEnvironment") {
-    val dir = voiceDir
-    onlyIf { !dir.resolve("venv/bin/python").isFile }
-    commandLine(voicePython.get(), "-m", "venv", dir.resolve("venv").absolutePath)
-}
-
-// The voice's packages, at exact versions, so the voice sounds the same on every machine. Changing a version here
-// installs it again on the next run.
-val voicePackages = listOf("kokoro-onnx==0.6.1", "soundfile==0.14.0")
-val installVoicePackages = tasks.register<Exec>("installVoicePackages") {
-    val dir = voiceDir
-    val packages = voicePackages
-    dependsOn(createVoiceEnvironment)
-    onlyIf {
-        val installed = dir.resolve("venv/.packages-installed")
-        !installed.isFile || installed.readText().trim() != packages.joinToString(" ")
-    }
-    commandLine(listOf(dir.resolve("venv/bin/pip").absolutePath, "install", "-q") + packages)
-    doLast { dir.resolve("venv/.packages-installed").writeText(packages.joinToString(" ") + "\n") }
-}
-
-val setUpLessonVoice = tasks.register("setUpLessonVoice") {
-    group = "documentation"
-    description = "Sets up the offline Kokoro voice under build/voice: Python environment, packages and model files."
-    val dir = voiceDir
-    val base = voiceModelsUrl
-    val models = voiceModels
-    dependsOn(installVoicePackages)
-    onlyIf { models.any { !dir.resolve(it).isFile } }
-    doLast {
-        models.filterNot { dir.resolve(it).isFile }.forEach { name ->
-            URI.create("${base.get()}/$name").toURL().openStream().use { input ->
-                dir.resolve("$name.part").outputStream().use { input.copyTo(it) }
-            }
-            dir.resolve("$name.part").renameTo(dir.resolve(name))
-        }
-    }
-}
-
-val buildLessonVoice = tasks.register<JavaExec>("buildLessonVoice") {
-    dependsOn(setUpLessonVoice)
-    group = "documentation"
-    description = "Reads each scene's narration aloud and builds the narration track (-Plesson=<id>)."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
-    workingDir = rootDir
-    environment("KOKORO_MODELS", "$repoRoot/build/voice")
-    val root = repoRoot
-    val lessonId = lesson
-    val voice = voiceCommand
-    argumentProviders.add(CommandLineArgumentProvider { listOf("voice", root, lessonId.getOrElse("")) + voice.get() })
-}
-
-tasks.register<JavaExec>("assembleLessonVideo") {
-    group = "documentation"
-    description = "Combines the silent video, narration and captions into the finished MP4 (-Plesson=<id>)."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
-    val root = repoRoot
-    val lessonId = lesson
-    argumentProviders.add(CommandLineArgumentProvider { listOf("assemble", root, lessonId.getOrElse("")) })
-    dependsOn("buildLessonCaptions", buildLessonVoice)
-}
-
-// Later steps use the recorded video's real length, so they run after recording when both are asked for.
-tasks.named("buildLessonCaptions") { mustRunAfter(recordLessonVideo) }
-buildLessonVoice.configure { mustRunAfter(recordLessonVideo) }
-
-// Slides are styled by lessons/_shared/slides/slides.css, then any user stylesheet: -PlessonSlideCss=<path>.
-// A relative path is taken from the repository root, where the commands are run.
-val repositoryDir = rootDir
-val slideCss = providers.gradleProperty("lessonSlideCss").filter { it.isNotBlank() }
-    .map { File(it).let { css -> if (css.isAbsolute) css else repositoryDir.resolve(it) }.absolutePath }.orElse("")
-// Slides are screenshotted by a headless browser: -PlessonBrowser=<program>, or Google Chrome where it usually is.
-val macChrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-val slideBrowser = providers.gradleProperty("lessonBrowser")
-    .orElse(if (File(macChrome).canExecute()) macChrome else "google-chrome")
-// Your own pictures, by name, used before the shared ones: -PlessonPictures=<folder> (for example the ink set,
-// lessons/_shared/slides/pictures/ink). Set it, and lessonSlideCss, in gradle.properties to use them on every run.
-val pictureFolder = providers.gradleProperty("lessonPictures").filter { it.isNotBlank() }
-    .map { File(it).let { dir -> if (dir.isAbsolute) dir else repositoryDir.resolve(it) }.absolutePath }.orElse("")
-// Where the lessons and the toolkit live, for the links on slides: lessonsRepoUrl and toolkitRepoUrl in
-// gradle.properties. Unset, slides describe the repositories without an address.
-val lessonsRepoUrl = providers.gradleProperty("lessonsRepoUrl").orElse("")
-val toolkitRepoUrl = providers.gradleProperty("toolkitRepoUrl").orElse("")
-// How pictures are framed on slides: soft (a blurred round edge), none, or circle. lessonPictureFrame in gradle.properties.
-val pictureFrame = providers.gradleProperty("lessonPictureFrame").orElse("soft")
-// Burned-in captions are drawn with Java's 2D graphics, which needs no screen: run headless everywhere.
-val burnCaptions = providers.gradleProperty("lessonBurnCaptions").orElse("true")
-tasks.test {
-    systemProperty("java.awt.headless", "true")
-}
-tasks.withType<JavaExec>().configureEach {
-    systemProperty("java.awt.headless", "true")
-    systemProperty("video.burnCaptions", burnCaptions.get())
-    systemProperty("video.pictureFrame", pictureFrame.get())
-    systemProperty("video.lessonsRepo", lessonsRepoUrl.get())
-    systemProperty("video.toolkitRepo", toolkitRepoUrl.get())
-    systemProperty("video.pictures", pictureFolder.get())
-    systemProperty("video.slideCss", slideCss.get())
-    systemProperty("video.browser", slideBrowser.get())
-}
+apply(from = rootDir.resolve("lessons/_shared/video-settings.gradle.kts"))
 
 val drawLessonSlides = tasks.register<JavaExec>("drawLessonSlides") {
     group = "documentation"
     description = "Draws a lesson's slides as images, for a quick look (-Plesson=<id>)."
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonDecks"
     val root = repoRoot
     val lessonId = lesson
     argumentProviders.add(CommandLineArgumentProvider { listOf("slides", root, lessonId.getOrElse("all")) })
@@ -183,44 +52,12 @@ tasks.register<JavaExec>("buildLessonDecks") {
     group = "documentation"
     description = "Writes each lesson's slide deck as HTML (and PDF with -PlessonDeckPdf=true)."
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonDecks"
     val root = repoRoot
     val lessonId = lesson
     val pdf = providers.gradleProperty("lessonDeckPdf").map { it.toBoolean() }.orElse(false)
     argumentProviders.add(CommandLineArgumentProvider {
         listOf("deck", root, lessonId.getOrElse("all")) + (if (pdf.get()) listOf("pdf") else emptyList())
-    })
-}
-
-// Half a minute that checks every step a lesson video goes through, with the real tools, before any lesson is recorded:
-// a few seconds of VHS (code rolling in, a zoom, a callout sliding in), a slide built up by the browser, the two joined
-// and a caption burned in. Leaves build/video-check/video-check.mp4 to watch.
-tasks.register<JavaExec>("checkVideoInRecording") {
-    group = "verification"
-    description = "Checks every video step with the real tools in half a minute, leaving a short video to watch."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.VideoCheck"
-    workingDir = rootDir
-    val root = repoRoot
-    argumentProviders.add(CommandLineArgumentProvider { listOf(root) })
-}
-
-// A deck's voice: each slide's narration read aloud with the lesson voice into <id>.deck-voice/ beside the deck, which
-// is rewritten to play it (Listen, or V). Clips are named by what they say, so only changed slides are read again.
-// Commit the clips with the deck; they are published with it. -Plesson=<id>, or every lesson.
-tasks.register<JavaExec>("buildLessonDeckVoice") {
-    dependsOn(setUpLessonVoice)
-    group = "documentation"
-    description = "Reads each deck slide's narration aloud, so the deck can be heard without the video (-Plesson=<id>)."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
-    workingDir = rootDir
-    environment("KOKORO_MODELS", "$repoRoot/build/voice")
-    val root = repoRoot
-    val lessonId = lesson
-    val voice = voiceCommand
-    argumentProviders.add(CommandLineArgumentProvider {
-        listOf("deckvoice", root, lessonId.getOrElse("all")) + voice.get()
     })
 }
 
@@ -232,18 +69,6 @@ tasks.register("buildLessonSlides") {
     dependsOn("buildLessonDecks", drawLessonSlides)
 }
 
-// -PslidesOnly=true draws only the slides, in about a minute, instead of making the whole video.
-val slidesOnly = providers.gradleProperty("slidesOnly").map { it.toBoolean() }.orElse(false)
-tasks.register("renderLessonVideo") {
-    group = "documentation"
-    description = "Makes a lesson's whole video: records it, builds captions and voice, and assembles the MP4 (-Plesson=<id>)."
-    if (slidesOnly.get()) {
-        dependsOn(drawLessonSlides)
-    } else {
-        dependsOn(recordLessonVideo, "assembleLessonVideo")
-    }
-}
-
 tasks.check {
-    dependsOn(checkVideoScripts, testVideoHelpers)
+    dependsOn(checkVideoScripts)
 }

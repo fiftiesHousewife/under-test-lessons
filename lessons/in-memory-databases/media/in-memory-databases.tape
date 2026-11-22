@@ -1,5 +1,5 @@
 # Terminal video for the when an in-memory database is enough lesson. Make it from the repository root with:
-#   ./gradlew :lessons:video-tools:renderLessonVideo -Plesson=in-memory-databases
+#   ./gradlew :production:video-render:renderLessonVideo -Plesson=in-memory-databases
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
 

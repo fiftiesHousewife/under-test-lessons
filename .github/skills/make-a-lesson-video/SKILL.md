@@ -64,7 +64,7 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
   the machine awake: a recording waiting on a live run fails if the machine sleeps.
 - **Container lessons** fetch their image off camera first; the shared set-up points Testcontainers at Colima by itself
   where Colima is running.
-- **Before the first recording on a machine,** run `./gradlew :lessons:video-tools:checkVideoInRecording`: half a
+- **Before the first recording on a machine,** run `./gradlew :production:video-render:checkVideoInRecording`: half a
   minute that runs every step a video goes through with the real tools (code rolling in, the zoom, a callout sliding in,
   a slide building up, captions burned in), leaving `build/video-check/video-check.mp4` to watch.
 - **`./gradlew :lessons:video-tools:checkVideoScripts` before recording** catches waits that would hang, scene and
@@ -154,17 +154,17 @@ terminal recording and the closing slides after it, with their own captions.
   command as a recording would and keeps its output in `media/<id>.outputs/` (commit it), so the deck shows what the
   video shows. Run it again after changing the lesson's code or its live commands; `./gradlew check` fails a live
   command without its output. The database lessons need a container runtime for a true capture.
-- **The deck's voice:** `./gradlew :lessons:video-tools:buildLessonDeckVoice -Plesson=<id>` reads each slide's
+- **The deck's voice:** `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` reads each slide's
   narration aloud into `media/<id>.deck-voice/` (commit it) and rebuilds the deck, which then plays it (Listen, or V).
   Only changed slides are read again. Run it after changing narration or slides; a slide without its clip is silent.
-- **A quick look:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
+- **A quick look:** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
   slides (into `media/<id>.voice/`) in about a minute.
 
 What goes on the slides is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
 
 ## Voice and the finished video
 
-1. **One command makes the whole video:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>`. It records
+1. **One command makes the whole video:** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>`. It records
    the silent video and GIF with VHS (timed progress, and a heartbeat during slow steps), builds the captions, reads
    each scene's narration aloud, checks every clip fits its scene, and writes the finished `<id>.mp4` (voice and a
    captions track) and `<id>.narration.m4a`. The first run sets up the offline voice under `build/voice` by itself
@@ -180,7 +180,7 @@ What goes on the slides is in [write-lesson-slides-and-narration](../write-lesso
 ## Check, render, look
 
 1. `./gradlew :lessons:video-tools:check` checks the script and the shared helpers.
-2. `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>` makes it (see above). On failure it shows the end of
+2. `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` makes it (see above). On failure it shows the end of
    the VHS log.
 3. If a render stalls, don't guess: copy the script, replace the stuck `Wait` with `Sleep 60s`, render that, and look at
    the last frame (`ffmpeg -sseof -0.1 -i <gif> -frames:v 1 frame.png`).

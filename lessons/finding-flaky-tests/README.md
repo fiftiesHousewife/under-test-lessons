@@ -38,7 +38,7 @@ on every run. Real flaky tests are rarely so polite; that is why five runs, not 
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/finding-flaky-tests.tape), [the narration](media/finding-flaky-tests.narration.md) and
   [the slides](media/finding-flaky-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=finding-flaky-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=finding-flaky-tests`.
 
 ## When to use it
 

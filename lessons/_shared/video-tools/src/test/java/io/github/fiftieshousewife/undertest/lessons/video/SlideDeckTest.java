@@ -43,7 +43,7 @@ class SlideDeckTest {
         assertThat(browser.toFile().setExecutable(true)).isTrue();
         System.setProperty("video.browser", browser.toString());
 
-        LessonVideo.main("deck", root.toString(), "all", "pdf");
+        LessonDecks.main("deck", root.toString(), "all", "pdf");
         final String deck = Files.readString(media.resolve("demo.deck.html"));
 
         assertAll(

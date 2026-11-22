@@ -27,7 +27,7 @@ public final class TapeTimeline {
     private final Path root;
     private final java.util.Deque<Double> measured;
     private final List<Scene> collected = new ArrayList<>();
-    private final List<Zoom.Span> zoomSpans = new ArrayList<>();
+    private final List<ZoomTiming.Span> zoomSpans = new ArrayList<>();
     private final List<Double> zoomStarts = new ArrayList<>();
     private double time;
     private boolean hidden;
@@ -50,7 +50,7 @@ public final class TapeTimeline {
      * scene draws anything else (a callout, a panel, a note, a run) or ends, in the order the script has them.
      * Measured run times as for {@link #scenes(Path, Path, List)}.
      */
-    public static List<Zoom.Span> zooms(final Path root, final Path tape, final List<Double> measured) {
+    public static List<ZoomTiming.Span> zooms(final Path root, final Path tape, final List<Double> measured) {
         final TapeTimeline timeline = new TapeTimeline(root, measured);
         timeline.read(tape);
         timeline.endScene();
@@ -120,7 +120,7 @@ public final class TapeTimeline {
     }
 
     private void endZooms() {
-        zoomStarts.forEach(start -> zoomSpans.add(new Zoom.Span(start, time)));
+        zoomStarts.forEach(start -> zoomSpans.add(new ZoomTiming.Span(start, time)));
         zoomStarts.clear();
     }
 

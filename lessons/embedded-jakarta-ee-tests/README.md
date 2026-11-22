@@ -32,7 +32,7 @@ added later, has no mark.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/embedded-jakarta-ee-tests.tape), [the narration](media/embedded-jakarta-ee-tests.narration.md) and
   [the slides](media/embedded-jakarta-ee-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=embedded-jakarta-ee-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=embedded-jakarta-ee-tests`.
 
 ## When to use it
 

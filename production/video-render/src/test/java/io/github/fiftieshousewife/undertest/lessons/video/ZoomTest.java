@@ -63,15 +63,15 @@ class ZoomTest {
 
     @Test
     void easesInAfterTheCodeAppearsHoldsAndEasesOutBeforeTheSceneEnds() {
-        final Zoom.Span span = new Zoom.Span(10, 20);
+        final ZoomTiming.Span span = new ZoomTiming.Span(10, 20);
 
         assertAll(
                 () -> assertThat(span.amount(10.5)).isZero(),
-                () -> assertThat(span.amount(10 + Zoom.DELAY + Zoom.EASE / 2)).isCloseTo(0.5, within(1e-9)),
+                () -> assertThat(span.amount(10 + ZoomTiming.DELAY + ZoomTiming.EASE / 2)).isCloseTo(0.5, within(1e-9)),
                 () -> assertThat(span.amount(15)).isEqualTo(1),
-                () -> assertThat(span.amount(20 - Zoom.DELAY - Zoom.EASE / 2)).isCloseTo(0.5, within(1e-9)),
+                () -> assertThat(span.amount(20 - ZoomTiming.DELAY - ZoomTiming.EASE / 2)).isCloseTo(0.5, within(1e-9)),
                 () -> assertThat(span.amount(19.5)).isZero(),
-                () -> assertThat(new Zoom.Span(10, 13).amount(11.5)).as("too short to zoom").isZero());
+                () -> assertThat(new ZoomTiming.Span(10, 13).amount(11.5)).as("too short to zoom").isZero());
     }
 
     @Test
@@ -89,7 +89,7 @@ class ZoomTest {
                 Sleep 3s
                 """);
 
-        assertThat(TapeTimeline.zooms(root, tape, List.of())).containsExactly(new Zoom.Span(2, 10));
+        assertThat(TapeTimeline.zooms(root, tape, List.of())).containsExactly(new ZoomTiming.Span(2, 10));
     }
 
     @Test
@@ -109,12 +109,12 @@ class ZoomTest {
                 Sleep 5s
                 """);
 
-        assertThat(TapeTimeline.zooms(root, tape, List.of())).containsExactly(new Zoom.Span(0, 6));
+        assertThat(TapeTimeline.zooms(root, tape, List.of())).containsExactly(new ZoomTiming.Span(0, 6));
     }
 
     @Test
     void writesOneFilterThatScalesAndCropsEveryFrameToTheSameSize() {
-        final String filter = Zoom.filter(FRAME, List.of(new Zoom.Span(10, 20), new Zoom.Span(30, 40)),
+        final String filter = Zoom.filter(FRAME, List.of(new ZoomTiming.Span(10, 20), new ZoomTiming.Span(30, 40)),
                 List.of(Zoom.window(FRAME, new Zoom.Rows(20, 22, 40)), Zoom.window(FRAME, new Zoom.Rows(5, 6, 40))));
 
         assertAll(
@@ -130,7 +130,7 @@ class ZoomTest {
         final Path zoomed = root.resolve("zoomed.mp4");
         ExternalCommand.run(List.of("ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
                 "testsrc=size=1920x1080:rate=10", "-t", "6", "-pix_fmt", "yuv420p", source.toString()), root);
-        final String filter = Zoom.filter(FRAME, List.of(new Zoom.Span(0.5, 6)),
+        final String filter = Zoom.filter(FRAME, List.of(new ZoomTiming.Span(0.5, 6)),
                 List.of(Zoom.window(FRAME, new Zoom.Rows(20, 22, 40))));
 
         ExternalCommand.run(List.of("ffmpeg", "-y", "-loglevel", "error", "-i", source.toString(), "-vf", filter,

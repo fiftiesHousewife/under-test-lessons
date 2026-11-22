@@ -13,7 +13,7 @@ A scene's on-screen time must cover its narration: about (words / 2.6) * 1.35 + 
 import sys
 
 HEAD = '''# Terminal video for the {title} lesson. Make it from the repository root with:
-#   ./gradlew :lessons:video-tools:renderLessonVideo -Plesson={id}
+#   ./gradlew :production:video-render:renderLessonVideo -Plesson={id}
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
 

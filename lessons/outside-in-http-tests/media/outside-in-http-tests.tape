@@ -1,5 +1,5 @@
 # Terminal video for the outside-in HTTP tests lesson. Make it from the repository root with:
-#   ./gradlew :lessons:video-tools:renderLessonVideo -Plesson=outside-in-http-tests
+#   ./gradlew :production:video-render:renderLessonVideo -Plesson=outside-in-http-tests
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
 

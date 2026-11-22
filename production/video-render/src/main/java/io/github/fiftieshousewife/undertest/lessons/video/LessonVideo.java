@@ -11,7 +11,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Entry point for making a lesson video:
+ * Entry point for making a lesson video, on the machine that makes the videos (slides and decks: {@code LessonDecks}):
  * <ul>
  *   <li>{@code record <root> <id>}: records the silent video ({@code <id>.silent.mp4} and the GIF) with VHS;</li>
  *   <li>{@code voice <root> <id> <command...>}: reads each scene's narration aloud with the given command (which turns
@@ -31,40 +31,22 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        final List<String> commands = List.of("record", "voice", "assemble", "slides", "deck", "deckvoice");
+        final List<String> commands = List.of("record", "voice", "assemble", "deckvoice");
         if (args.length < 3 || !commands.contains(args[0])) {
             throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
-                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | slides <root> <lesson>"
-                    + " | deck <root> <lesson|all> [pdf] | deckvoice <root> <lesson|all> <command...>");
+                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson>"
+                    + " | deckvoice <root> <lesson|all> <command...>");
         }
-        if (forDecks(args)) {
+        if ("deckvoice".equals(args[0])) {
+            deckVoice(Path.of(args[1]), args[2], List.of(Arrays.copyOfRange(args, 3, args.length)));
             return;
         }
         final Media media = new Media(Path.of(args[1]), args[2]);
         switch (args[0]) {
             case "record" -> new Recorder(Clock.systemUTC()).record(media);
             case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
-            case "slides" -> SlideDeck.lessons(media.root(), args[2]).forEach(lesson -> log.info(
-                    "{}: {} slides drawn, in the lesson's voice folder", lesson.safeLesson(),
-                    SlideDrawing.drawAll(lesson).size()));
             default -> assemble(media);
         }
-    }
-
-    /** The commands that work on decks, for one lesson or all: true if args named one of them, and it ran. */
-    private static boolean forDecks(final String... args) {
-        final Path root = Path.of(args[1]);
-        switch (args[0]) {
-            case "deckvoice" -> deckVoice(root, args[2], List.of(Arrays.copyOfRange(args, 3, args.length)));
-            case "deck" -> {
-                final boolean pdf = args.length > 3 && "pdf".equals(args[3]);
-                SlideDeck.lessons(root, args[2]).forEach(media -> SlideDeck.write(media, pdf));
-            }
-            default -> {
-                return false;
-            }
-        }
-        return true;
     }
 
     static void deckVoice(final Path root, final String lesson, final List<String> command) {
@@ -72,7 +54,7 @@ public final class LessonVideo {
             throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
         }
         SlideDeck.lessons(root, lesson).forEach(media -> {
-            DeckVoice.speak(media, command);
+            DeckReader.speak(media, command);
             SlideDeck.write(media, false);
         });
     }
@@ -81,7 +63,7 @@ public final class LessonVideo {
         if (command.isEmpty()) {
             throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
         }
-        final List<Scene> scenes = media.scenes();
+        final List<Scene> scenes = Recording.scenes(media);
         final Pronunciation pronunciation = DeckVoice.pronunciation(media);
         final List<Spoken> narration = Narration.paragraphs(media.file(".narration.md")).stream()
                 .map(paragraph -> Spoken.of(paragraph, pronunciation)).toList();
@@ -100,14 +82,14 @@ public final class LessonVideo {
         final Voice voice = new Voice(media, command, pronunciation);
         speakSlides(voice, slides.intro(), "intro");
         speakSlides(voice, slides.closing(), "closing");
-        log.info("{}: narration for {} scenes and {} slides written", media.safeLesson(), clips.size(),
+        log.info("{}: narration for {} scenes and {} slides written", LogSafe.lesson(media), clips.size(),
                 slides.intro().size() + slides.closing().size());
     }
 
     static void assemble(final Media media) {
         final Path folder = media.folder();
         final String recording = String.valueOf(Zoom.zoomed(media).getFileName());
-        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
+        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
                 "-i", recording, "-i", media.name(".narration.wav"),
                 "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", media.name(".main.mp4")),
                 folder);
@@ -122,14 +104,14 @@ public final class LessonVideo {
         writeText(media.file(".vtt"), CaptionFile.webVtt(cues));
         writeText(media.file(".srt"), CaptionFile.srt(cues));
         final String picture = burnCaptions() ? burned(media, cues) : media.name(".joined.mp4");
-        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
+        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
                 "-i", picture, "-i", media.name(".vtt"), "-map", "0", "-map", "1", "-c", "copy",
                 "-c:s", "mov_text", "-metadata:s:s:0", "language=eng", media.name(".mp4")), folder);
-        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
+        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
                 "-i", media.name(".joined.mp4"), "-vn", "-c:a", "aac", "-b:a", "128k", media.name(".narration.m4a")),
                 folder);
         log.info("{}: finished video written: {} intro slides, the recording, {} closing slides, voice and captions",
-                media.safeLesson(), intro.size(), closing.size());
+                LogSafe.lesson(media), intro.size(), closing.size());
     }
 
     /** Captions are burned into the picture unless {@code lessonBurnCaptions} is false. */

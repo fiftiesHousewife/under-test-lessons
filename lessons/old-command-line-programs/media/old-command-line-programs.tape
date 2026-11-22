@@ -1,5 +1,5 @@
 # Terminal video for the old command-line programs lesson. Make it from the repository root with:
-#   ./gradlew :lessons:video-tools:renderLessonVideo -Plesson=old-command-line-programs
+#   ./gradlew :production:video-render:renderLessonVideo -Plesson=old-command-line-programs
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
 

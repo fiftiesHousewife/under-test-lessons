@@ -43,7 +43,7 @@ The example looks up a town for a postcode, using a supplier's web service.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/recorded-http-responses.tape), [the narration](media/recorded-http-responses.narration.md) and
   [the slides](media/recorded-http-responses.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=recorded-http-responses`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=recorded-http-responses`.
 
 ## When to use it
 

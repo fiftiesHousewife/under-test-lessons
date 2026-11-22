@@ -40,7 +40,7 @@ published as [`openapi.yaml`](example/src/main/resources/openapi.yaml).
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/openapi-response-checks.tape), [the narration](media/openapi-response-checks.narration.md) and
   [the slides](media/openapi-response-checks.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=openapi-response-checks`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=openapi-response-checks`.
 
 ## When to use it
 

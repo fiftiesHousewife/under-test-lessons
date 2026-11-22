@@ -29,7 +29,7 @@ public final class Captions {
 
     static void write(final Path root, final String lesson) {
         final Media media = new Media(root, lesson);
-        final List<Scene> scenes = media.scenes();
+        final List<Scene> scenes = media.plannedScenes();
         final List<Cue> cues = CaptionFile.cues(scenes, Narration.paragraphs(media.file(".narration.md")));
         writeFile(media.file(".vtt"), CaptionFile.webVtt(cues));
         writeFile(media.file(".srt"), CaptionFile.srt(cues));

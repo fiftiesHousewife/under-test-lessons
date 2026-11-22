@@ -53,7 +53,7 @@ Collect them in a test environment first, with the queue owner's agreement, then
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/message-consumers.tape), [the narration](media/message-consumers.narration.md) and
   [the slides](media/message-consumers.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=message-consumers`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=message-consumers`.
 
 ## When to use it
 

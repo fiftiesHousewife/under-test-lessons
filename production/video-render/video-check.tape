@@ -1,5 +1,5 @@
 # A short recording for the video check, before any lesson is recorded:
-#   ./gradlew :lessons:video-tools:checkVideoInRecording
+#   ./gradlew :production:video-render:checkVideoInRecording
 # One code panel rolls in with --zoom 22-24, as in lessons, so the helper reports where those lines landed, then a
 # callout slides in.
 Require bash

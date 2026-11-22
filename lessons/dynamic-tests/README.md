@@ -30,7 +30,7 @@ The example turns customer records such as `O'BRIEN,PATRICK,MR` into names for l
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/dynamic-tests.tape), [the narration](media/dynamic-tests.narration.md) and
   [the slides](media/dynamic-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=dynamic-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=dynamic-tests`.
 
 ## When to use it
 

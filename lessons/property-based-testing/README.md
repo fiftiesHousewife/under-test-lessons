@@ -32,7 +32,7 @@ gives everything left over to the first person: fine with a penny left over, unf
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/property-based-testing.tape), [the narration](media/property-based-testing.narration.md) and
   [the slides](media/property-based-testing.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=property-based-testing`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=property-based-testing`.
 
 ## When to use it
 

@@ -39,7 +39,7 @@ paid once. The provider answers `201 Created` with a refund id.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/checking-outgoing-requests.tape), [the narration](media/checking-outgoing-requests.narration.md) and
   [the slides](media/checking-outgoing-requests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=checking-outgoing-requests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=checking-outgoing-requests`.
 
 ## When to use it
 

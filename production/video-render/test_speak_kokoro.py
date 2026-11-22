@@ -1,5 +1,5 @@
 """Tests speak-kokoro.py's handling of sounds given exactly, without the voice installed:
-    python3 lessons/_shared/video-tools/test_speak_kokoro.py
+    python3 production/video-render/test_speak_kokoro.py
 """
 import importlib.util
 import os

@@ -61,7 +61,7 @@ Here the code stays the same and the tests change, so `-Pcode=today` chooses tod
   speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/mutation-testing.tape), [the narration](media/mutation-testing.narration.md) and
   [the slides](media/mutation-testing.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=mutation-testing`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=mutation-testing`.
 
 ## When to use it
 

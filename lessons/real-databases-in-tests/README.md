@@ -32,7 +32,7 @@ holds today's query (`ORDER BY last_order`) and the fixed one (`ORDER BY last_or
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/real-databases-in-tests.tape), [the narration](media/real-databases-in-tests.narration.md) and
   [the slides](media/real-databases-in-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=real-databases-in-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=real-databases-in-tests`.
 
 ## When to use it
 

@@ -28,7 +28,7 @@ The example is a loan: requested, then approved, then repaid.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/nested-tests.tape), [the narration](media/nested-tests.narration.md) and
   [the slides](media/nested-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=nested-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=nested-tests`.
 
 ## When to use it
 

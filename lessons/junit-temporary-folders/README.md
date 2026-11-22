@@ -40,7 +40,7 @@ test fails, so you can look at what was written, and `NEVER` always keeps it.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/junit-temporary-folders.tape), [the narration](media/junit-temporary-folders.narration.md) and
   [the slides](media/junit-temporary-folders.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=junit-temporary-folders`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=junit-temporary-folders`.
 
 ## When to use it
 

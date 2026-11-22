@@ -83,13 +83,13 @@ class DeckVoiceTest {
     void readsOnlySlidesWithoutAClipAndRemovesClipsTheVoiceMadeThatNoSlideUses() throws IOException {
         final Media demo = new Media(root, "demo");
         final Path folder = media.resolve("demo.deck-voice");
-        final int first = DeckVoice.speak(demo, List.of(voice.toString()));
+        final int first = DeckReader.speak(demo, List.of(voice.toString()));
         final long partsAfterFirst = spokenParts();
         Files.writeString(folder.resolve("notes.txt"), "not a clip");
 
-        final int second = DeckVoice.speak(demo, List.of(voice.toString()));
+        final int second = DeckReader.speak(demo, List.of(voice.toString()));
         Files.writeString(media.resolve("demo.slides.md"), "## intro: Hello\n- A point\nSay: Hello there.\n");
-        DeckVoice.speak(demo, List.of(voice.toString()));
+        DeckReader.speak(demo, List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(first).isEqualTo(3),
@@ -103,10 +103,10 @@ class DeckVoiceTest {
     @Test
     void aPronunciationFixReadsTheClipAgainUnderTheSameName() throws IOException {
         final Media demo = new Media(root, "demo");
-        DeckVoice.speak(demo, List.of(voice.toString()));
+        DeckReader.speak(demo, List.of(voice.toString()));
         Files.writeString(root.resolve("lessons/_shared/pronunciations.txt"), "PIT = pitt\n");
 
-        final int made = DeckVoice.speak(demo, List.of(voice.toString()));
+        final int made = DeckReader.speak(demo, List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(made).isEqualTo(1),
@@ -119,7 +119,7 @@ class DeckVoiceTest {
         Files.writeString(folder.resolve(clip("Hello there.")), "a person's recording");
         Files.writeString(folder.resolve("0000000000000000.m4a"), "another recording, of a slide since removed");
 
-        final int made = DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+        final int made = DeckReader.speak(new Media(root, "demo"), List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(made).isEqualTo(2),
@@ -133,7 +133,7 @@ class DeckVoiceTest {
         final Spoken run = new Spoken("Run PIT now.", "Run pit now.");
         Files.writeString(folder.resolve(run.earlierClipName()), "read before");
 
-        DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+        DeckReader.speak(new Media(root, "demo"), List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(folder.resolve(run.clipName())).hasContent("read before"),
@@ -145,11 +145,11 @@ class DeckVoiceTest {
     void clipsMadeBeforeLedgersAreTheVoicesSoAPronunciationFixStillReadsThemAgain() throws IOException {
         final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
         Files.writeString(folder.resolve(clip("Goodbye.")), "read before ledgers");
-        DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+        DeckReader.speak(new Media(root, "demo"), List.of(voice.toString()));
         final long partsBeforeTheFix = spokenParts();
         Files.writeString(root.resolve("lessons/_shared/pronunciations.txt"), "PIT = pit\nGoodbye = good bye\n");
 
-        final int made = DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+        final int made = DeckReader.speak(new Media(root, "demo"), List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(partsBeforeTheFix).as("read before the fix: the two slides with no clip").isEqualTo(2),
@@ -184,7 +184,7 @@ class DeckVoiceTest {
     @Test
     void theVideoTakesTheClipsTheDeckHasAlreadyReadAloud() throws IOException {
         final Media demo = new Media(root, "demo");
-        DeckVoice.speak(demo, List.of(voice.toString()));
+        DeckReader.speak(demo, List.of(voice.toString()));
         final long partsAfterDeck = spokenParts();
 
         DeckVoice.spoken(demo).forEach(slide -> VoiceClips.wav(demo, List.of(voice.toString()), slide));
@@ -198,7 +198,7 @@ class DeckVoiceTest {
         DeckVoice.spoken(demo).forEach(slide -> VoiceClips.wav(demo, List.of(voice.toString()), slide));
         final long partsAfterVideo = spokenParts();
 
-        final int made = DeckVoice.speak(demo, List.of(voice.toString()));
+        final int made = DeckReader.speak(demo, List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(made).isEqualTo(3),
@@ -219,7 +219,7 @@ class DeckVoiceTest {
     @Test
     void onAFreshCloneTheDecksClipIsDecodedRatherThanReadAloudAgain() throws IOException {
         final Media demo = new Media(root, "demo");
-        DeckVoice.speak(demo, List.of(voice.toString()));
+        DeckReader.speak(demo, List.of(voice.toString()));
         final long partsAfterDeck = spokenParts();
         deleteStore();
         System.setProperty("video.ffmpeg",

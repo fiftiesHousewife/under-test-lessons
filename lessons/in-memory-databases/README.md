@@ -48,7 +48,7 @@ covered this way, so a mode is never evidence of what the real database does.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/in-memory-databases.tape), [the narration](media/in-memory-databases.narration.md) and
   [the slides](media/in-memory-databases.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=in-memory-databases`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=in-memory-databases`.
 
 ## When to use it
 

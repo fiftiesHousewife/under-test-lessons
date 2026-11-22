@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Tests the in-terminal helpers for lesson videos (lessons/_shared/callout.sh) in a few seconds, so a broken helper is
 # found before a real recording shows it. Run from the repository root:
-#   bash lessons/_shared/video-tools/test-video-helpers.sh
+#   bash production/video-render/test-video-helpers.sh
 set -uo pipefail
-cd "$(dirname "$0")/../../.."
+cd "$(dirname "$0")/../.."
 FAILURES=0
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/video-helpers-test.XXXXXX")"
 trap 'rm -rf "$WORK"' EXIT

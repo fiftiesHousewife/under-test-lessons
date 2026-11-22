@@ -83,7 +83,7 @@ final class BurnedCaptions {
         final Path folder = out.resolveSibling(out.getFileName() + ".captions");
         createFolder(folder);
         final Look look = look();
-        final List<String> command = new ArrayList<>(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
+        final List<String> command = new ArrayList<>(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
                 "-i", video.toString()));
         final StringBuilder filter = new StringBuilder();
         String last = "0:v";

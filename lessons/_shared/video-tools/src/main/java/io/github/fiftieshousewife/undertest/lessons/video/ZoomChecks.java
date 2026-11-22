@@ -74,13 +74,13 @@ final class ZoomChecks {
 
     /** Each zoom's scene shows it long enough; scenes with live runs are checked once a recording has timed them. */
     private static List<Problem> timeToZoom(final Path root, final Path tape) {
-        final List<Zoom.Span> spans;
+        final List<ZoomTiming.Span> spans;
         try {
             spans = TapeTimeline.zooms(root, tape, measured(tape));
         } catch (IllegalStateException | UncheckedIOException e) {
             return List.of(); // a live run not yet timed, or a missing Source file, which another check reports
         }
-        final double needed = 2 * (Zoom.DELAY + Zoom.EASE) + Zoom.SHORTEST_HOLD;
+        final double needed = 2 * (ZoomTiming.DELAY + ZoomTiming.EASE) + ZoomTiming.SHORTEST_HOLD;
         final List<Problem> problems = new ArrayList<>();
         for (int i = 0; i < spans.size(); i++) {
             final double shown = spans.get(i).end() - spans.get(i).start();

@@ -30,7 +30,7 @@ forgets the quantities.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/structured-output-comparison.tape), [the narration](media/structured-output-comparison.narration.md) and
   [the slides](media/structured-output-comparison.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=structured-output-comparison`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=structured-output-comparison`.
 
 ## When to use it
 

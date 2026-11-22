@@ -163,7 +163,7 @@ Every lesson comes three ways, all generated from the same few text files in its
 narration or the code shows up everywhere:
 
 - **A narrated video**, about three minutes: slides, then the example running in a terminal, then closing slides,
-  with captions. Made with `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>`, using
+  with captions. Made with `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>`, using
   [VHS](https://github.com/charmbracelet/vhs) to record the terminal and an offline voice (Kokoro).
 - **A slide deck**, `media/<id>.deck.html`, published as a web page ([all decks](https://fiftieshousewife.github.io/under-test-lessons/)): one self-contained page with the intro slides, a slide for each step of the
   example showing its code and commands, and the closing slides. Arrow keys move between slides, N shows the speaker

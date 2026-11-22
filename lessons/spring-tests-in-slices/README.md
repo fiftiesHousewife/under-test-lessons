@@ -56,7 +56,7 @@ service a `RestClient` calls.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/spring-tests-in-slices.tape), [the narration](media/spring-tests-in-slices.narration.md) and
   [the slides](media/spring-tests-in-slices.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=spring-tests-in-slices`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=spring-tests-in-slices`.
 
 ## When to use it
 

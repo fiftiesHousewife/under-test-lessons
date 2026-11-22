@@ -3,7 +3,7 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 import java.nio.file.Path;
 import java.util.List;
 
-/** Where a lesson's video files live (lessons/<id>/media/<id>.*), and its scenes timed to the recorded video. */
+/** Where a lesson's video files live (lessons/<id>/media/<id>.*), and its scenes as its script plans them. */
 record Media(Path root, String lesson) {
 
     Path folder() {
@@ -52,25 +52,13 @@ record Media(Path root, String lesson) {
         return lesson.replace('\r', ' ').replace('\n', ' ');
     }
 
-    /** Scenes from the script, stretched to the recorded silent video's real length when it exists. */
-    List<Scene> scenes() {
-        final List<Scene> planned = TapeTimeline.scenes(root, file(".tape"), measuredRuns());
-        final double factor = stretch(planned.getLast().end());
-        return planned.stream().map(s -> new Scene(s.title(), s.start() * factor, s.end() * factor)).toList();
+    /** The scenes, timed as the script plans them; {@code Recording} stretches them to a recorded video. */
+    List<Scene> plannedScenes() {
+        return TapeTimeline.scenes(root, file(".tape"), measuredRuns());
     }
 
-    /** The zooms on key code, stretched to the recorded video's real length as the scenes are. */
-    List<Zoom.Span> zooms() {
-        final List<Zoom.Span> planned = TapeTimeline.zooms(root, file(".tape"), measuredRuns());
-        if (planned.isEmpty()) {
-            return planned;
-        }
-        final double factor = stretch(TapeTimeline.scenes(root, file(".tape"), measuredRuns()).getLast().end());
-        return planned.stream().map(span -> span.scaled(factor)).toList();
-    }
-
-    /** How much longer (or shorter) the recording came out than the script planned. */
-    private double stretch(final double plannedLength) {
-        return ExternalCommand.videoSeconds(file(".silent.mp4")).orElse(plannedLength) / plannedLength;
+    /** The zooms on key code, timed as the script plans them. */
+    List<ZoomTiming.Span> plannedZooms() {
+        return TapeTimeline.zooms(root, file(".tape"), measuredRuns());
     }
 }

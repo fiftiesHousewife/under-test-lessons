@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class VideoCheck {
 
-    static final Path TAPE = Path.of("lessons/_shared/video-tools/video-check.tape");
+    static final Path TAPE = Path.of("production/video-render/video-check.tape");
     static final Path FOLDER = Path.of("build/video-check");
     /** The tape zooms on lines 22 to 24: three lines, two rows apart. */
     private static final int ROWS_APART = 2;
@@ -56,7 +56,7 @@ public final class VideoCheck {
         final String filter = Zoom.filter(geometry, TapeTimeline.zooms(root, root.resolve(TAPE), List.of()),
                 List.of(Zoom.window(geometry, rows)));
         final Path folder = root.resolve(FOLDER);
-        ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-i",
+        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i",
                 "video-check.silent.mp4", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-vf", filter,
                 "-shortest", "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "video-check.zoomed.mp4"),
                 folder);

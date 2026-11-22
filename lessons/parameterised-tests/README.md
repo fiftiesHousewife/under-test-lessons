@@ -29,7 +29,7 @@ divides by five, which rounds down: 3 pence net should give 1 penny VAT, and giv
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/parameterised-tests.tape), [the narration](media/parameterised-tests.narration.md) and
   [the slides](media/parameterised-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=parameterised-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=parameterised-tests`.
 
 ## When to use it
 

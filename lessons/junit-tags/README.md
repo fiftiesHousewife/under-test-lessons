@@ -39,7 +39,7 @@ are the same both ways, and `-Pcode=today` keeps today's build, whose test task 
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/junit-tags.tape), [the narration](media/junit-tags.narration.md) and
   [the slides](media/junit-tags.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=junit-tags`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=junit-tags`.
 
 ## When to use it
 

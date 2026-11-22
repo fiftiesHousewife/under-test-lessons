@@ -44,7 +44,7 @@ later, so the lesson's build only adds `mockito-core` as a test dependency.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/mockito-well-used.tape), [the narration](media/mockito-well-used.narration.md) and
   [the slides](media/mockito-well-used.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=mockito-well-used`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=mockito-well-used`.
 
 ## When to use it
 

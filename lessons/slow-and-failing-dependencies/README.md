@@ -39,7 +39,7 @@ unavailable", so it can tell the customer it will confirm by email.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/slow-and-failing-dependencies.tape), [the narration](media/slow-and-failing-dependencies.narration.md) and
   [the slides](media/slow-and-failing-dependencies.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=slow-and-failing-dependencies`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=slow-and-failing-dependencies`.
 
 ## When to use it
 

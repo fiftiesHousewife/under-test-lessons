@@ -70,7 +70,7 @@ own history. A team can just as well pass the list as a Gradle property, or poin
   between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/coverage-of-changed-code.tape),
   [the narration](media/coverage-of-changed-code.narration.md) and [the slides](media/coverage-of-changed-code.slides.md)
-  with `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=coverage-of-changed-code`.
+  with `./gradlew :production:video-render:renderLessonVideo -Plesson=coverage-of-changed-code`.
 
 ## When to use it
 

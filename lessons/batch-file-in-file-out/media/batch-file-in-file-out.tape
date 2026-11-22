@@ -1,5 +1,5 @@
 # Terminal video for the batch file-in, file-out lesson. Make it from the repository root with:
-#   ./gradlew :lessons:video-tools:renderLessonVideo -Plesson=batch-file-in-file-out
+#   ./gradlew :production:video-render:renderLessonVideo -Plesson=batch-file-in-file-out
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
 

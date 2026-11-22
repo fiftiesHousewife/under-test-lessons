@@ -12,7 +12,7 @@ final class SpliceCaptions {
     static List<Cue> cues(final Media media, final Slides slides, final Splicer.Timings timings) {
         final List<Cue> cues = new ArrayList<>(slideCues(slides.intro(), timings.intro(), 0));
         final double introSeconds = timings.introSeconds();
-        final List<Scene> scenes = media.scenes();
+        final List<Scene> scenes = Recording.scenes(media);
         for (final Cue cue : CaptionFile.cues(scenes, Narration.paragraphs(media.file(".narration.md")))) {
             cues.add(new Cue(cue.start() + introSeconds, cue.end() + introSeconds, cue.text()));
         }
@@ -27,7 +27,7 @@ final class SpliceCaptions {
         for (int i = 0; i < slides.size(); i++) {
             final double end = time + segments.get(i).seconds();
             cues.addAll(CaptionFile.cuesFor(new Scene(slides.get(i).title(), time,
-                    end - Splicer.SLIDE_BREATH_SECONDS), slides.get(i).narration()));
+                    end - Slide.BREATH_SECONDS), slides.get(i).narration()));
             time = end;
         }
         return cues;

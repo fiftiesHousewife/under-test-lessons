@@ -51,7 +51,7 @@ and Java 8, is no longer the maintained line.
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/capturing-with-logbook.tape), [the narration](media/capturing-with-logbook.narration.md) and
   [the slides](media/capturing-with-logbook.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=capturing-with-logbook`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=capturing-with-logbook`.
 
 ## When to use it
 

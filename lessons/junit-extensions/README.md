@@ -35,7 +35,7 @@ Both test classes fix their order with `@TestMethodOrder`, so the leak shows the
   move between slides, N shows the speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/junit-extensions.tape), [the narration](media/junit-extensions.narration.md) and
   [the slides](media/junit-extensions.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=junit-extensions`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=junit-extensions`.
 
 ## When to use it
 

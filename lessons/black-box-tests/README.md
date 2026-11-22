@@ -43,7 +43,7 @@ the test writes its own settings file and starts the service through the same en
   speaker notes, and printing gives one slide per page.
 - **Video:** made from [the script](media/black-box-tests.tape), [the narration](media/black-box-tests.narration.md)
   and [the slides](media/black-box-tests.slides.md) with
-  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=black-box-tests`.
+  `./gradlew :production:video-render:renderLessonVideo -Plesson=black-box-tests`.
 
 ## When to use it
 
