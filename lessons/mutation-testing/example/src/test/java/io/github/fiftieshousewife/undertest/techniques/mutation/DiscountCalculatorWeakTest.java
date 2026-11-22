@@ -17,25 +17,25 @@ class DiscountCalculatorWeakTest {
 
     @Test
     void bigOrderGetsDiscount() {
-        // Weak: "> 0" also passes for 5% or 12%. Survives: `total >= 100` replaced with false.
-        assertTrue(calc.discountPercent(200, false) > 0);
+        // Weak: "> 0" also passes for 5% or 12%. Survives: `total >= 10_000` replaced with false.
+        assertTrue(calc.discountPercent(20_000, false) > 0);
     }
 
     @Test
     void mediumOrder() {
-        // Weak: 70 is far from either boundary. Survives: `>= 50` changed to `> 50`.
-        assertEquals(5, calc.discountPercent(70, false));
+        // Weak: £70 is far from either boundary. Survives: `>= 5_000` changed to `> 5_000`.
+        assertEquals(5, calc.discountPercent(7_000, false));
     }
 
     @Test
     void smallOrder() {
-        assertEquals(0, calc.discountPercent(10, false));
+        assertEquals(0, calc.discountPercent(1_000, false));
     }
 
     @Test
     void loyalCustomer() {
         // Weak: no assertion at all. Survives: `+= 2` changed to `-= 2`, loyalty branch removed.
-        calc.discountPercent(10, true);
+        calc.discountPercent(1_000, true);
     }
 
     @Test
@@ -47,6 +47,6 @@ class DiscountCalculatorWeakTest {
     @Test
     void finalPrice() {
         // Weak: an int is never null. Survives: every arithmetic mutant on the price line.
-        assertNotNull(calc.finalPrice(200, false));
+        assertNotNull(calc.finalPrice(20_000, false));
     }
 }

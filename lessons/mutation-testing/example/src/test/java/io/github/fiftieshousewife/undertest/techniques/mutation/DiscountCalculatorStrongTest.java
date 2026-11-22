@@ -19,18 +19,18 @@ class DiscountCalculatorStrongTest {
     void discountChangesExactlyAtEachBoundary() {
         assertAll(
                 () -> assertThat(calc.discountPercent(0, false)).isZero(),        // kills `< 0` -> `<= 0`
-                () -> assertThat(calc.discountPercent(49, false)).isZero(),
-                () -> assertThat(calc.discountPercent(50, false)).isEqualTo(5),   // kills `>= 50` -> `> 50`
-                () -> assertThat(calc.discountPercent(99, false)).isEqualTo(5),
-                () -> assertThat(calc.discountPercent(100, false)).isEqualTo(10)  // kills `>= 100` -> `> 100`
+                () -> assertThat(calc.discountPercent(4_999, false)).isZero(),
+                () -> assertThat(calc.discountPercent(5_000, false)).isEqualTo(5),   // kills `>= 5_000` -> `> 5_000`
+                () -> assertThat(calc.discountPercent(9_999, false)).isEqualTo(5),
+                () -> assertThat(calc.discountPercent(10_000, false)).isEqualTo(10)  // kills `>= 10_000` -> `> 10_000`
         );
     }
 
     @Test
     void loyalCustomerGetsExactlyTwoPercentMore() {
         assertAll(
-                () -> assertThat(calc.discountPercent(10, true)).isEqualTo(2),
-                () -> assertThat(calc.discountPercent(100, true)).isEqualTo(12)
+                () -> assertThat(calc.discountPercent(1_000, true)).isEqualTo(2),
+                () -> assertThat(calc.discountPercent(10_000, true)).isEqualTo(12)
         );
     }
 
@@ -42,8 +42,8 @@ class DiscountCalculatorStrongTest {
     @Test
     void finalPriceAppliesTheDiscount() {
         assertAll(
-                () -> assertThat(calc.finalPrice(200, false)).isEqualTo(180),
-                () -> assertThat(calc.finalPrice(200, true)).isEqualTo(176)
+                () -> assertThat(calc.finalPrice(20_000, false)).isEqualTo(18_000),
+                () -> assertThat(calc.finalPrice(20_000, true)).isEqualTo(17_600)
         );
     }
 }

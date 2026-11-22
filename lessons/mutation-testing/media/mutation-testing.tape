@@ -80,7 +80,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: discountPercent works out the discount, and finalPrice takes it off the total."`
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculator 17 39 --zoom 22-24`
+Type@1ms `show DiscountCalculator 18 40 --zoom 23-25`
 Enter
 Show
 Sleep 33s
@@ -119,12 +119,12 @@ Hide
 Type "clear"
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculator 17 39 --mark 18,22,24,29,30,32,38 --zoom 24`
+Type@1ms `show DiscountCalculator 18 40 --mark 19,23,25,30,31,33,39 --zoom 25`
 Enter
 Show
 Sleep 6s
 Hide
-Type@1ms `callout "Line 24: if >= 50 became > 50, an order of exactly £50 would lose its discount, and no test checks an order of exactly £50."`
+Type@1ms `callout "Line 25: if >= 5_000 became > 5_000, an order of exactly £50 would lose its discount, and no test checks an order of exactly £50."`
 Enter
 Show
 Sleep 12s
@@ -140,7 +140,7 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorStrongTest 18 40 --zoom 22-23`
 Enter
 Show
-Sleep 26s
+Sleep 29s
 
 # ---- Scene 8: PIT on the strong tests ----
 Hide
@@ -159,7 +159,7 @@ Hide
 Type "clear"
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculator 17 39 --mark 18,22,24,29,30,32,38`
+Type@1ms `show DiscountCalculator 18 40 --mark 19,23,25,30,31,33,39`
 Enter
 Show
 Sleep 6s

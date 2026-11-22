@@ -5,7 +5,9 @@ points shown on screen (a URL is drawn as a link and never spoken), and a Say: l
 
 Sources: pitest.org (its home page, FAQ and basic concepts pages, for how PIT works, its first release in 2011, its
 original name and Henry Coles's part); R. A. DeMillo, R. J. Lipton and F. G. Sayward, "Hints on Test Data Selection:
-Help for the Practicing Programmer", IEEE Computer, 1978.
+Help for the Practicing Programmer", IEEE Computer, 1978; Y. Jia and M. Harman, "An Analysis and Survey of the
+Development of Mutation Testing", IEEE Transactions on Software Engineering, 2011 (the idea traced to Richard Lipton's
+1971 student paper).
 
 ## intro: What is mutation testing?
 - It tests your tests, not your code
@@ -79,11 +81,12 @@ Say: When should you use it? [pause 1600ms] First, in discovery, when you are ju
   survive in the changed code, without failing the build at first.
 
 ## closing: Where PIT came from
-- Mutation testing was first described by DeMillo, Lipton and Sayward in 1978
+- The idea goes back to a student paper by Richard Lipton in 1971, and a 1978 paper made it widely known
 - PIT is largely the work of Henry Coles, in Edinburgh, with many contributors
 - First released in 2011; the name first stood for Parallel Isolated Test
 Picture: book
-Say: The idea of mutation testing goes back to a 1978 paper by DeMillo, Lipton and Sayward. PIT itself is largely the
+Say: The idea of mutation testing goes back to a student paper by Richard Lipton in 1971, and a 1978 paper by DeMillo,
+  Lipton and Sayward made it widely known. PIT itself is largely the
   work of Henry Coles, in Edinburgh, with help from many contributors. It was first released in 2011. It began as a
   tool to run tests in parallel and in isolation, so the name first stood for Parallel Isolated Test. Now, it just
   stands for PIT.
@@ -91,7 +94,7 @@ Say: The idea of mutation testing goes back to a 1978 paper by DeMillo, Lipton a
 ## closing: Find out more
 - https://pitest.org — PIT's website, quick start and FAQ
 - https://gradle-pitest-plugin.solidsoft.info — the PIT plugin for Gradle
-- https://doi.org/10.1109/C-M.1978.218136 — the 1978 paper that started it
+- https://doi.org/10.1109/C-M.1978.218136 — the 1978 paper that made it widely known
 - {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
 Say: To find out more, start with PIT's website, and the PIT plugin for Gradle. The links on screen also take you to

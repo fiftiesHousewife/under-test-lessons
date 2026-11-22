@@ -28,7 +28,7 @@ Line coverage: 13 of 13 lines run by the tests (100%)
 Planted bugs:  13, caught 5, missed 8
 ...
 Missed - every test that ran still passed:
-  line 24  } else if (total >= 50) {                boundary moved by one  passed: mediumOrder, smallOrder and 1 more
+  line 25  } else if (total >= 5_000) {             boundary moved by one  passed: mediumOrder, smallOrder, loyalCustomer
 ...
 Result: the tests caught 5 of 13 planted bugs (38%).
 ```
@@ -37,7 +37,7 @@ The full report is in `lessons/mutation-testing/example/build/reports/pitest/ind
 planted bug, and hovering over the number beside a line lists each one.
 
 - [`DiscountCalculator`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculator.java)
-  is the code under test: a shop's discount rules.
+  is the code under test: a shop's discount rules, with money in pence, so £49.99 is `4999`.
 - [`DiscountCalculatorWeakTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculatorWeakTest.java)
   runs every line but hardly checks the answers.
 - [`DiscountCalculatorStrongTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculatorStrongTest.java)
@@ -45,7 +45,7 @@ planted bug, and hovering over the number beside a line lists each one.
 
 | Weakness in the weak tests | Planted bug that survives | Fix in the strong tests |
 |---|---|---|
-| Inputs far from the boundary (`70`, `-1`) | `>= 50` becomes `> 50`; `< 0` becomes `<= 0` | Test both sides of every boundary: `0`, `49`, `50`, `99`, `100` |
+| Inputs far from the boundary (£70, `-1`) | `>= 5_000` becomes `> 5_000`; `< 0` becomes `<= 0` | Test both sides of every boundary, in pence: `0`, `4_999`, `5_000`, `9_999`, `10_000` |
 | A vague assertion (`> 0`) | Returning the wrong percentage | Assert the exact value |
 | No assertion at all | `+= 2` becomes `-= 2` | Every test checks its result |
 | `assertNotNull` on a number | Every arithmetic change on the price line | Assert the computed price (`180`, `176`) |
@@ -70,6 +70,10 @@ code stays the same and the tests change.
 - **Then, in key code:** strengthen the tests until PIT catches the planted bugs that matter. The toolkit has a prompt
   for this: strengthen tests until PIT catches the planted bugs.
 - **In pull requests:** report planted bugs that survive in the changed code, without failing the build at first.
+  Open-source PIT has no git support of its own, so there are two routes. The free one is to narrow PIT's
+  `targetClasses` to the classes a change touched, as [Coverage of changed code](../coverage-of-changed-code/README.md)
+  shows. The other is [Arcmutate](https://www.arcmutate.com/), PIT's commercial extension, which reads git itself
+  and reports on the pull request; it needs a licence.
 - **Not yet** where there are almost no tests: there's nothing to strengthen. Record what the code does first, with
   [characterisation tests](../characterisation-tests/README.md).
 - **Never on a whole large repository at once:** limit PIT's `targetClasses` to high-risk code, or to what a pull

@@ -1,7 +1,8 @@
 # Slides: parameterised tests
 
 Sources: junit.org (JUnit 6 is the current generation; the programmer-friendly testing framework for Java and the JVM);
-Maven Central (junit-jupiter-params, first released with JUnit 5.0.0 in September 2017).
+Maven Central (junit-jupiter-params, first released with JUnit 5.0.0 in September 2017); JUnit 4's API documentation
+(org.junit.runners.Parameterized, the runner for tests run once per row of parameters).
 
 ## intro: What is a parameterised test?
 - One test method, run once for each row of a table
