@@ -6,9 +6,10 @@
 
 Each live command (run_live or run_with_notes in lessons/<id>/media/<id>.tape) runs from the repository root, as a
 recording runs it, and its output is kept in lessons/<id>/media/<id>.outputs/01.txt, 02.txt and so on, the command on
-the first line. It goes through lessons/_shared/screen-output.pl, as the video's run_live does. Colour codes, notices the JVM or a sandbox adds, and Gradle's closing time line are left out. A run
-that couldn't start, or whose output still shows a personal path after paths are made machine-independent, isn't kept:
-the script stops and says why.
+the first line. A README's exercise answer command (-Pcode=answer) is kept as answer.txt beside them. Output goes
+through lessons/_shared/screen-output.pl, as the video's run_live does. Colour codes, notices the JVM or a sandbox
+adds, and Gradle's closing time line are left out. A run that couldn't start, or whose output still shows a personal
+path after paths are made machine-independent, isn't kept: the script stops and says why.
 
 It runs the commands itself, one after another, rather than from inside a Gradle build: a Gradle build that starts
 more Gradle builds of the same project fails on the project's own lock files.
@@ -20,6 +21,8 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCREEN_FILTER = os.path.join(ROOT, "lessons", "_shared", "screen-output.pl")
+# The README's command for a lesson's exercise answer, which no video runs: kept as answer.txt.
+ANSWER = re.compile(r"^(\./gradlew :lessons:\S+[^#]*-Pcode=answer)\b")
 LIVE = re.compile(r"^Type(?:@\S+)?\s+[`\"](?:run_live|run_with_notes)\s+\"([^\"]+)\"")
 ESCAPE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 NOISE = ("Picked up JAVA_TOOL_OPTIONS", "Caught exception: Could not", "BUILD SUCCESSFUL in ", "BUILD FAILED in ")
@@ -61,23 +64,45 @@ def problem(output):
     return None
 
 
+def answer_command(lesson):
+    """The command the lesson's README gives for its exercise answer (-Pcode=answer), or None."""
+    readme = os.path.join(ROOT, "lessons", lesson, "README.md")
+    if not os.path.isfile(readme):
+        return None
+    with open(readme, encoding="utf-8") as f:
+        for line in f:
+            found = ANSWER.match(line.strip())
+            if found:
+                return " ".join(found.group(1).split())
+    return None
+
+
+def keep(command, path):
+    """Runs a command as a recording would and keeps what it showed, or stops and says why it can't be kept."""
+    environment = dict(os.environ, GRADLE_OPTS=os.environ.get("GRADLE_OPTS", "") + QUIET)
+    run = subprocess.run(["bash", "-c", command], cwd=ROOT, env=environment, stdin=subprocess.DEVNULL,
+                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
+    output = clean(on_screen(run.stdout))
+    reason = problem(output)
+    if reason:
+        message = f"`{command}` didn't run properly, so its output isn't kept: {reason}"
+        if os.environ.get("GITHUB_ACTIONS"):
+            print(f"::error title=Live command didn't run::{message}")  # shown as an annotation on the run
+        sys.exit(message)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(f"$ {command}\n{output}\n")
+
+
 def capture(lesson):
     folder = os.path.join(ROOT, "lessons", lesson, "media", lesson + ".outputs")
     os.makedirs(folder, exist_ok=True)
-    environment = dict(os.environ, GRADLE_OPTS=os.environ.get("GRADLE_OPTS", "") + QUIET)
     for index, command in enumerate(commands(lesson), 1):
-        run = subprocess.run(["bash", "-c", command], cwd=ROOT, env=environment, stdin=subprocess.DEVNULL,
-                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
-        output = clean(on_screen(run.stdout))
-        reason = problem(output)
-        if reason:
-            message = f"`{command}` didn't run properly, so its output isn't kept: {reason}"
-            if os.environ.get("GITHUB_ACTIONS"):
-                print(f"::error title=Live command didn't run::{message}")  # shown as an annotation on the run
-            sys.exit(message)
-        with open(os.path.join(folder, f"{index:02d}.txt"), "w", encoding="utf-8") as f:
-            f.write(f"$ {command}\n{output}\n")
-    print(f"{lesson}: output of {len(commands(lesson))} live commands kept")
+        keep(command, os.path.join(folder, f"{index:02d}.txt"))
+    answer = answer_command(lesson)
+    if answer:
+        keep(answer, os.path.join(folder, "answer.txt"))
+    answered = ", and the exercise answer's" if answer else ""
+    print(f"{lesson}: output of {len(commands(lesson))} live commands kept{answered}")
 
 
 def lessons():

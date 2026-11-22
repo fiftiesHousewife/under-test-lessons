@@ -96,6 +96,8 @@ Say: The idea of mutation testing goes back to a student paper by Richard Lipton
 - https://gradle-pitest-plugin.solidsoft.info — the PIT plugin for Gradle
 - https://doi.org/10.1109/C-M.1978.218136 — the 1978 paper that made it widely known
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: write the one test that catches the missed bug on line 25; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with PIT's website, and the PIT plugin for Gradle. The links on screen also take you to
-  the paper that started it all, to this lesson's test code and examples, so you can run them yourself.
+  the paper that made it widely known, and to this lesson's test code and examples, so you can run them yourself.
+  And try the exercise in the README: write the one test that catches the missed bug on line 25.

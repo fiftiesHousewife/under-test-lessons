@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 final class LiveOutputs {
 
     static final String FOLDER = ".outputs";
+    /** The kept output of the lesson's exercise answer, which no video runs. */
+    static final String ANSWER_FILE = "answer.txt";
     /** What the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar. */
     static final int SCREEN_ROWS = 36;
     static final int SCREEN_COLUMNS = 150;
@@ -45,6 +47,16 @@ final class LiveOutputs {
     /** The output kept for the live command at this place in the script, or none if it is missing or out of date. */
     static List<String> read(final Media media, final int index, final String command) {
         final Path file = media.file(FOLDER).resolve(fileName(index));
+        if (!Files.isRegularFile(file)) {
+            return List.of();
+        }
+        final List<String> lines = lines(file);
+        return !lines.isEmpty() && lines.getFirst().equals("$ " + command) ? lines.subList(1, lines.size()) : List.of();
+    }
+
+    /** What the lesson's exercise answer command printed, kept as {@code answer.txt}; empty if not kept for it. */
+    static List<String> readAnswer(final Media media, final String command) {
+        final Path file = media.file(FOLDER).resolve(ANSWER_FILE);
         if (!Files.isRegularFile(file)) {
             return List.of();
         }

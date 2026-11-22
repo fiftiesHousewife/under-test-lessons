@@ -14,11 +14,14 @@ import java.util.regex.Pattern;
  * Holds a lesson's README to what its commands really print. Each {@code ./gradlew :lessons:...} line in the README
  * must be one of the video's live commands, whose output is kept ({@link LiveOutputs}); and what its comment says must
  * match that output: every number it gives appears there, "only ... fails" means exactly one test failed, "fails" that
- * one did, and "every ... passes" (or holds, matches) that none did. CI keeps the outputs afresh before checking, so
- * there the commands really run.
+ * one did, and "every ... passes" (or holds, matches) that none did. A lesson's exercise answer ({@code -Pcode=answer})
+ * isn't in the video; its output is kept beside the live ones and checked the same way. CI keeps the outputs afresh
+ * before checking, so there the commands really run.
  */
 final class ReadmeCommands {
 
+    /** How a README runs a lesson's exercise answer. */
+    static final String ANSWER_SWITCH = "-Pcode=answer";
     private static final Pattern COMMAND = Pattern.compile("^(\\./gradlew :lessons:[^#]*?)\\s*(?:#\\s*(.*))?$");
     private static final Pattern NUMBER = Pattern.compile("\\b\\d+\\b");
     private static final Pattern FAILED_TEST = Pattern.compile("^[A-Za-z].* > .* FAILED$");
@@ -37,22 +40,41 @@ final class ReadmeCommands {
         final List<Problem> problems = new ArrayList<>();
         for (final String line : lines(readme)) {
             final Matcher command = COMMAND.matcher(line.strip());
-            if (!command.matches()) {
-                continue;
-            }
-            final String typed = command.group(1).replaceAll("\\s+", " ");
-            final int index = live.indexOf(typed);
-            if (index < 0) {
-                problems.add(new Problem(readme, "`" + typed + "` isn't one of the video's live commands, so what"
-                        + " the README says it shows can't be checked; run it in the video, or leave it out"));
-            } else if (command.group(2) != null) {
-                final List<String> output = LiveOutputs.read(media, index, typed);
-                if (!output.isEmpty()) {
-                    problems.addAll(contradictions(new Claim(readme, typed, command.group(2)), output));
-                }
+            if (command.matches()) {
+                final String says = command.group(2) == null ? "" : command.group(2);
+                final String typed = command.group(1).replaceAll("\\s+", " ");
+                problems.addAll(checked(media, live, new Claim(readme, typed, says)));
             }
         }
         return problems;
+    }
+
+    /** What is wrong with one README command and what it says: a live command, or the exercise's answer. */
+    private static List<Problem> checked(final Media media, final List<String> live, final Claim claim) {
+        final int index = live.indexOf(claim.command());
+        if (index < 0 && claim.command().endsWith(ANSWER_SWITCH)) {
+            return answer(media, claim);
+        }
+        if (index < 0) {
+            return List.of(new Problem(claim.readme(), "`" + claim.command() + "` isn't one of the video's live"
+                    + " commands, so what the README says it shows can't be checked; run it in the video, or leave it"
+                    + " out"));
+        }
+        final List<String> output = LiveOutputs.read(media, index, claim.command());
+        return claim.says().isEmpty() || output.isEmpty() ? List.of() : contradictions(claim, output);
+    }
+
+    /**
+     * The exercise's answer command, which no video runs: its output is kept as {@code answer.txt} with the live ones
+     * ({@link LiveOutputs#readAnswer}), and what the README says about it is held to that.
+     */
+    private static List<Problem> answer(final Media media, final Claim claim) {
+        final List<String> output = LiveOutputs.readAnswer(media, claim.command());
+        if (output.isEmpty()) {
+            return List.of(new Problem(claim.readme(), "`" + claim.command() + "` has no kept output; run python3"
+                    + " tools/capture-lesson-outputs.py " + media.safeLesson()));
+        }
+        return contradictions(claim, output);
     }
 
     /** A README line's command and what its comment says it shows. */

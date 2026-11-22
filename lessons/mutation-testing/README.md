@@ -50,9 +50,23 @@ planted bug, and hovering over the number beside a line lists each one.
 | No assertion at all | `+= 2` becomes `-= 2` | Every test checks its result |
 | `assertNotNull` on a number | Every arithmetic change on the price line | Assert the computed price (`180`, `176`) |
 
-Try it: delete one assertion from the strong tests, run PIT again, and find the planted bug that now survives.
 
 Here the code stays the same and the tests change, so `-Pcode=today` chooses today's tests, the weak ones.
+
+## Exercise
+
+Today's tests miss 8 of the 13 planted bugs. One of them is on line 25, where `>= 5_000` becomes `> 5_000`: an order
+of exactly £50 would lose its discount.
+
+1. Run `./gradlew :lessons:mutation-testing:pitest -Pcode=today` and find that bug in the "Missed" list.
+2. Add one test to [`DiscountCalculatorWeakTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mutation/DiscountCalculatorWeakTest.java)
+   that catches it, and run PIT again: it should now catch 6.
+3. Compare with the answer, [`DiscountCalculatorAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mutation/answer/DiscountCalculatorAnswerTest.java),
+   which PIT runs beside today's tests with:
+
+```bash
+./gradlew :lessons:mutation-testing:pitest -Pcode=answer   # today's tests and the answer: 6 of 13 planted bugs caught
+```
 
 ## Watch it, or present it
 

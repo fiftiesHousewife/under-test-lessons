@@ -78,4 +78,23 @@ class ReadmeCommandsTest {
                         && p.contains("isn't one of the video's live commands")),
                 () -> assertThat(problems).anyMatch(p -> p.contains("says every test passes")));
     }
+
+    @Test
+    void holdsTheExerciseAnswerToItsOwnKeptOutput() throws IOException {
+        final String readme = """
+                ```bash
+                ./gradlew :lessons:demo:test -Pcode=answer   # the answer: 9 of 13 caught
+                ```
+                """;
+        final List<String> withoutOutput = problems(readme);
+        Files.writeString(lessonFolder.resolve("media/demo.outputs/answer.txt"),
+                "$ ./gradlew :lessons:demo:test -Pcode=answer\n9 of 13 planted bugs caught\n");
+        final List<String> bornOut = problems(readme);
+        final List<String> contradicted = problems(readme.replace("9 of 13", "10 of 13"));
+
+        assertAll(
+                () -> assertThat(withoutOutput).singleElement().asString().contains("has no kept output"),
+                () -> assertThat(bornOut).isEmpty(),
+                () -> assertThat(contradicted).singleElement().asString().contains("says 10"));
+    }
 }

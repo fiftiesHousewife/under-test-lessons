@@ -40,7 +40,7 @@ class OrderServiceTest {
     @BeforeEach
     void start(@TempDir final Path folder) throws IOException {
         warehouse.start();
-        database = "jdbc:h2:" + folder.resolve("shop");
+        database = "jdbc:h2:" + folder.resolve("shop").toString().replace('\\', '/'); // as a settings file needs
         final Path settings = Files.writeString(folder.resolve("order-service.properties"), "port=0\n"
                 + "database.url=" + database + "\n" + "warehouse.url=" + warehouse.baseUrl() + "\n");
         service = Applications.start(Settings.load(settings));

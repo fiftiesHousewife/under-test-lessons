@@ -61,9 +61,30 @@ tasks.jacocoTestCoverageVerification {
 
 In this order: title; one bold line saying what the technique does; a paragraph on the problem it solves and the tool;
 **Run the example** (the two commands, each with what it shows; run them, don't predict); a short list linking today's
-code, the weak test and the strong test; **Watch it, or present it** (deck and video sources); **When to use it**;
+code, the weak test and the strong test; **Exercise** (below); **Watch it, or present it** (deck and video sources); **When to use it**;
 **Find out more** (primary sources, and the toolkit's technique rule). Add the lesson to `lessons/README.md`, the
 catalogue (both tables, status "built") and the README's group table.
+
+## 3a. The exercise
+
+Every lesson has one exercise whose answer the build checks
+([decision](../../../docs/decisions/0029-every-lesson-has-a-checked-exercise.md)).
+[Mutation testing](../../../lessons/mutation-testing/README.md) is the worked example.
+
+- **One step the lesson didn't take**, starting from today's code, small enough to do in a few minutes: one more test
+  that catches a bug the strong tests leave alone, one more case for a table, one more rule for a check.
+- **The answer** lives in an `answer` package beside `fixed` (for a test, `src/test/java/.../answer/`, named
+  `*AnswerTest`). `./gradlew check` runs it like any other test, so it must pass on the fixed code.
+- **`-Pcode=answer`** runs it the way the exercise asks: the lesson's switch chooses today's code (or today's tests)
+  with the answer added, and the run shows the answer working, with a number the README can state (6 of 13 caught,
+  the bug named). Wire it in the lesson's build file next to `-Pcode=today`.
+- **The README's Exercise section**, before "Watch it, or present it": what to do, in two or three numbered steps,
+  each naming the file to change; then the answer's file and its command in a `bash` block,
+  `./gradlew :lessons:<id>:<task> -Pcode=answer   # what it shows`. `tools/capture-lesson-outputs.py` keeps that
+  command's output as `.outputs/answer.txt`, and `checkVideoScripts` holds the comment to it, as it does the video's
+  live commands.
+- **The deck's last slide** gets one point naming the exercise ("Exercise: ...; the README has the steps and the
+  answer"), and its narration one sentence. The video stays as it is.
 
 ## 4. The video, slides and deck
 
@@ -82,5 +103,7 @@ catalogue (both tables, status "built") and the README's group table.
 - [ ] `./gradlew check` passes (PMD and Checkstyle included); every README command was run.
 - [ ] Narration fits: each scene's pause covers (words / 2.6) * 1.35 + 1.5 seconds.
 - [ ] Each live run's output fits one screen, 36 rows with its command (`checkVideoScripts` checks it).
+- [ ] The exercise: an `answer` package run by `-Pcode=answer` and by `check`; the README's Exercise section, whose
+  answer command's output is kept; one point and one sentence on the deck's last slide.
 - [ ] Deck rebuilt and committed; lesson listed in `lessons/README.md`, the catalogue and the README.
 - [ ] No account names, personal paths or package names on screen; checked against the glossary.
