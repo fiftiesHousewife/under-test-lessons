@@ -214,7 +214,10 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  11      compileOnly(libs.spotbugs.annotations)
  12      testCompileOnly(libs.spotbugs.annotations)
  13  }</pre></figure></main><aside class="notes">Step two. Add it to the lesson. The code itself asks the flag, so it is an ordinary dependency, not just a test one.</aside></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The checkout and its flag</h1><div class="rule"></div><p class="scene-text">The checkout asks a flag, called new shipping, which rules to use: the old ones, or the new ones. The flag is off unless someone switches it on.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the checkout</figcaption><pre></pre></figure></main><aside class="notes">The checkout asks a flag, called new shipping, which rules to use: the old ones, or the new ones. The flag is off unless someone switches it on.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The checkout and its flag</h1><div class="rule"></div><p class="scene-text">The checkout asks a flag, called new shipping, which rules to use: the old ones, or the new ones. The flag is off unless someone switches it on.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the checkout</figcaption><pre> 18      public int shippingPence(final int basketPence) {
+ 19          final boolean useNew = flags.getBooleanValue(&quot;new-shipping&quot;, false);
+ 20          return (useNew ? replacement : classic).pence(basketPence);
+ 21      }</pre></figure></main><aside class="notes">The checkout asks a flag, called new shipping, which rules to use: the old ones, or the new ones. The flag is off unless someone switches it on.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's new shipping rules, waiting behind the flag. The threshold for free delivery now has a name.</p></section><figure class="code" style="--code-size: 22px"><figcaption>today's new rules</figcaption><pre>  8      private static final int FREE_FROM_POUNDS = 50;
   9      private static final int CHARGE_PENCE = 399;
  10  

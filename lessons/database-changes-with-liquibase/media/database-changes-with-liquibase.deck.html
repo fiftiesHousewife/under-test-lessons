@@ -225,16 +225,16 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  19              assertThat(connection.getMetaData().getColumns(null, null, &quot;CUSTOMERS&quot;, &quot;LOYALTY_LEVEL&quot;).next()).isTrue();
  20          }
  21      }</pre></figure></main><aside class="notes">This is a test that applies every change to H2, the in-memory database the developers use, and checks the new column is there.</aside></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on real PostgreSQL</h1><div class="rule"></div><p class="scene-text">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the test on PostgreSQL</figcaption><pre> 20      @Test
- 21      void everyChangeApplies() throws SQLException {
- 22          final String changelog = &quot;today&quot;.equals(System.getProperty(&quot;code&quot;))
- 23                  ? &quot;db/changelog-today.yaml&quot; : &quot;db/changelog.yaml&quot;;
- 24          try (Connection connection = DriverManager.getConnection(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(),
- 25                  POSTGRES.getPassword())) {
- 26              DatabaseChanges.apply(connection, changelog);
- 27              assertThat(connection.getMetaData().getColumns(null, null, &quot;customers&quot;, &quot;loyalty_level&quot;).next()).isTrue();
- 28          }
- 29      }</pre></figure></main><aside class="notes">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on real PostgreSQL</h1><div class="rule"></div><p class="scene-text">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the test on PostgreSQL</figcaption><pre> 20      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName
+ 21              .parse(System.getProperty(&quot;postgres.image&quot;, &quot;postgres:17-alpine&quot;)).asCompatibleSubstituteFor(&quot;postgres&quot;));
+ 22  
+ 23      @Test
+ 24      void everyChangeApplies() throws SQLException {
+ 25          final String changelog = &quot;today&quot;.equals(System.getProperty(&quot;code&quot;))
+ 26                  ? &quot;db/changelog-today.yaml&quot; : &quot;db/changelog.yaml&quot;;
+ 27          try (Connection connection = DriverManager.getConnection(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(),
+ 28                  POSTGRES.getPassword())) {
+ 29              DatabaseChanges.apply(connection, changelog);</pre></figure></main><aside class="notes">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>PostgreSQL refuses the change</h1><div class="rule"></div><p class="scene-text">We run both suites against today's changelog. H2 takes the change. PostgreSQL refuses it: it has no tiny int type. This release would have failed in production, part way through.</p><p class="callout">H2 takes the change. PostgreSQL has no TINYINT type: this release would have failed in production.</p></section><figure class="code" style="--code-size: 14px"><pre class="command">$ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today</pre></figure></main><aside class="notes">We run both suites against today's changelog. H2 takes the change. PostgreSQL refuses it: it has no tiny int type. This release would have failed in production, part way through.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed changelog</h1><div class="rule"></div><p class="scene-text">Now the change written as a Liquibase change, which writes the right SQL for each database. We run both suites again. Both databases take every change.</p><p class="callout">Both databases take every change. Liquibase wrote SMALLINT for PostgreSQL.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed changelog</figcaption><pre> 11    - changeSet:
  12        id: add-loyalty-level

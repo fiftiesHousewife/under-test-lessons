@@ -32,6 +32,8 @@ class SlideDeckTest {
         Files.writeString(media.resolve("demo.slides.md"), "## intro: Hello\n- A point\nSay: Hi [pause 1s] there.\n"
                 + "## closing: Bye\nSay: Bye.\n");
         Files.writeString(media.resolveSibling("Thing.java"), "class Thing {\n    int size() { return 1; }\n}\n");
+        final Path other = Files.createDirectories(root.resolve("lessons/another/media"));
+        Files.writeString(other.resolveSibling("Thing.java"), "class SomeoneElsesThing {\n}\n");
         Files.writeString(media.resolve("demo.tape"), "# ---- Scene 1: the code under test ----\n"
                 + "Type@1ms `show Thing 1 2 \"the thing\"`\nType@1ms `run_live \"./gradlew test\"`\n"
                 + "Type@1ms `callout \"It passes.\"`\nSleep 1s\n");

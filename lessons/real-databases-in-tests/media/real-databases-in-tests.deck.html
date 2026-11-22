@@ -249,20 +249,20 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  22  
  23          assertThat(customers.whoToCallFirst()).containsExactly(&quot;Bob&quot;, &quot;Cy&quot;, &quot;Ada&quot;);
  24      }</pre></figure></main><aside class="notes">This is a test on H2, a database held in memory. It's quick, and needs nothing installed. But it isn't the database production uses.</aside></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on real PostgreSQL</h1><div class="rule"></div><p class="scene-text">Now, the same test on real PostgreSQL, the database production uses. Testcontainers starts it in a container for this test, and throws it away afterwards.</p></section><figure class="code" style="--code-size: 18px"><figcaption>the test on PostgreSQL</figcaption><pre> 17  @Testcontainers(disabledWithoutDocker = true)
- 18  class RealPostgresTest {
- 19  
- 20      @Container
- 21      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(&quot;postgres:17-alpine&quot;);
- 22  
- 23      @Test
- 24      void customersWhoNeverOrderedComeFirst() throws SQLException {
- 25          final PGSimpleDataSource postgres = new PGSimpleDataSource();
- 26          postgres.setUrl(POSTGRES.getJdbcUrl());
- 27          postgres.setUser(POSTGRES.getUsername());
- 28          postgres.setPassword(POSTGRES.getPassword());
- 29          final CustomerRepository customers = new CustomerRepository(postgres::getConnection,
- 30                  !&quot;today&quot;.equals(System.getProperty(&quot;code&quot;)));</pre></figure></main><aside class="notes">Now, the same test on real PostgreSQL, the database production uses. Testcontainers starts it in a container for this test, and throws it away afterwards.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on real PostgreSQL</h1><div class="rule"></div><p class="scene-text">Now, the same test on real PostgreSQL, the database production uses. Testcontainers starts it in a container for this test, and throws it away afterwards.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the test on PostgreSQL</figcaption><pre> 17   */
+ 18  @Testcontainers(disabledWithoutDocker = true)
+ 19  class RealPostgresTest {
+ 20  
+ 21      @Container
+ 22      // The image: postgresImage in gradle.properties, such as a company's own approved build of PostgreSQL.
+ 23      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName
+ 24              .parse(System.getProperty(&quot;postgres.image&quot;, &quot;postgres:17-alpine&quot;)).asCompatibleSubstituteFor(&quot;postgres&quot;));
+ 25  
+ 26      @Test
+ 27      void customersWhoNeverOrderedComeFirst() throws SQLException {
+ 28          final PGSimpleDataSource postgres = new PGSimpleDataSource();
+ 29          postgres.setUrl(POSTGRES.getJdbcUrl());
+ 30          postgres.setUser(POSTGRES.getUsername());</pre></figure></main><aside class="notes">Now, the same test on real PostgreSQL, the database production uses. Testcontainers starts it in a container for this test, and throws it away afterwards.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>PostgreSQL disagrees</h1><div class="rule"></div><p class="scene-text">We run both suites against today's query. On H2, it passes. On PostgreSQL, it fails. H2 puts customers who never ordered first. PostgreSQL puts them last. So the sales team would never call them.</p><p class="callout">H2 puts customers who never ordered first. PostgreSQL puts them last: sales would never call them.</p></section><figure class="code" style="--code-size: 16px"><pre class="command">$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest -Pcode=today</pre></figure></main><aside class="notes">We run both suites against today's query. On H2, it passes. On PostgreSQL, it fails. H2 puts customers who never ordered first. PostgreSQL puts them last. So the sales team would never call them.</aside></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed query</h1><div class="rule"></div><p class="scene-text">Now the query that says where customers who never ordered belong: first. We run both suites again. Both databases agree.</p><p class="callout">Both databases agree, because the query no longer leaves it to the database.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the fixed query</figcaption><pre> 18      /** FIXED: customers who never ordered come first, on every database. */
  19      public static final String FIXED_QUERY = &quot;SELECT name FROM customers ORDER BY last_order NULLS FIRST&quot;;</pre><pre class="command">$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest</pre></figure></main><aside class="notes">Now the query that says where customers who never ordered belong: first. We run both suites again. Both databases agree.</aside></section>

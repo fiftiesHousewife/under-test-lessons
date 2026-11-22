@@ -102,9 +102,11 @@ show() {
     file="$target"
   else
     # An exact file name wins over a partial match, so "DiscountCalculator" never picks DiscountCalculatorTest.
-    file=$(find lessons build-logic gradle \( -name "$target.java" -o -name "$target" \) -type f 2>/dev/null \
+    # Search the lesson's own folder first, so a file name used in two lessons never shows the other lesson's file.
+    local places="lessons/${LESSON:-} lessons/_shared build-logic gradle"
+    file=$(find $places \( -name "$target.java" -o -name "$target" \) -type f 2>/dev/null \
       | grep -v '/build/' | head -1)
-    [ -n "$file" ] || file=$(find lessons build-logic gradle -name "*$target*" -type f 2>/dev/null \
+    [ -n "$file" ] || file=$(find $places -name "*$target*" -type f 2>/dev/null \
       | grep -v '/build/' | head -1)
   fi
   [ -n "$file" ] || { echo "show: nothing found for $target" >&2; return 1; }
