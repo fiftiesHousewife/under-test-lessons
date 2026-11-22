@@ -15,7 +15,7 @@ narration, in [mockito-well-used.slides.md](mockito-well-used.slides.md). Writte
 4. And the strong test. The order book is a fake: a map holding a real order, with nothing to stub. The only mock is
    card payments, where money leaves. An argument captor catches the refund the code really sent, so the test can
    check it, as well as the amount the code reports.
-5. We run both tests against today's refunds. The weak test passes. The strong test fails. The refund sent to the card
+5. We run the tests against today's refunds. The weak test passes. The strong test fails. The refund sent to the card
    was 3750 pence, when only the mug, at 1250 pence, came back.
 6. Now the refunds that send the price of the returned items. We run the same tests. [pause 1s] Every test passes. And
    the strong test would keep passing if the code were tidied, because it checks what was sent, not how.

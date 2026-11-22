@@ -2,4 +2,8 @@ $ ./gradlew :lessons:mockito-well-used:test
 CapturedRefundTest > refundsOnlyTheReturnedMug() PASSED
 
 MockEverythingTest > refundsTheReturnedMug() PASSED
-All 2 tests passed.
+
+OrderTest > returningOneOfTwoMugsRefundsOneMug() PASSED
+
+OrderTest > anItemNotOnTheOrderOrReturnedTooOftenIsRefused() PASSED
+All 4 tests passed.

@@ -30,6 +30,10 @@ in its [`OrderBook`](example/src/main/java/io/github/fiftieshousewife/undertest/
   `ArgumentCaptor` catches the refund sent, so the test checks its card and amount. It fails on today's code with
   `expected: Refund[card=card ending 4242, pence=1250] but was: Refund[card=card ending 4242, pence=3750]`.
 - [`FixedRefunds`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/fixed/FixedRefunds.java) sends the price of the returned items.
+- [`Order`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/Order.java) prices a
+  return by matching each returned item to one line, each line used once, so returning one of two mugs refunds one
+  mug; an item not on the order is refused. [`OrderTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mockito/OrderTest.java)
+  checks both.
 
 Mockito's agent is given to every test JVM by the build conventions, as Mockito's documentation asks on Java 21 and
 later, so the lesson's build only adds `mockito-core` as a test dependency.
