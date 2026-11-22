@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "JUnit comes with the shared build logic, and parameterised tests come with JUnit: nothing to add."`
 Enter
 Sleep 300ms
-Type@1ms `show java-conventions "/junit-jupiter/" "build conventions: libraries every repo gets"`
+Type@1ms `show java-conventions "/junit-jupiter/" "convention plugin: libraries every module gets"`
 Enter
 Sleep 300ms
 Type@1ms `note "The lesson adds one switch, to choose which calculator the tests run against:"`

@@ -127,7 +127,7 @@ License, which many companies must approve first.
 |---|---|
 | [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, video script, narration and slides |
 | `lessons/_shared/` | Shared video set-up, slide styles and pictures, pronunciation list, and `video-tools` |
-| `build-logic/`, `config/quality/` | Gradle conventions and quality-check rules (a copy of the toolkit's) |
+| `build-logic/`, `config/quality/` | Convention plugins that every module of this build applies, and the quality-check rules (copied from the toolkit) |
 | [`.github/skills/`](.github/skills/) | AI assistant skills for writing lessons and making their videos |
 
 ## Licence
