@@ -1,0 +1,10 @@
+$ ./gradlew :lessons:spring-tests-in-slices:test
+DeliveryJsonSliceTest > writesTheFieldsTheDescriptionPromises() PASSED
+DeliveriesApplicationTest > showsWhatTheCourierSays() PASSED
+DeliveriesApplicationTest > listsTheCustomersDeliveries() PASSED
+DeliveriesApplicationTest > leavesOutWhatHasBeenDelivered() PASSED
+DeliveriesWiringTest > answersWithEveryPartJoinedUp() PASSED
+DeliveryDataSliceTest > findsTheDeliveriesStillToComeEarliestFirst() PASSED
+DeliveryWebSliceTest > answersWithTheCustomersDeliveries() PASSED
+DeliveryWebSliceTest > answersNotFoundForAnAddressItDoesNotHave() PASSED
+All 8 tests passed.

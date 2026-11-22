@@ -1,0 +1,16 @@
+$ ./gradlew :lessons:spring-tests-in-slices:test -Pcode=today
+DeliveryJsonSliceTest > writesTheFieldsTheDescriptionPromises() FAILED
+    java.lang.AssertionError: JSON Comparison failure: dueOn
+    Expected: 2026-11-23
+         got: 23/11/2026
+DeliveriesApplicationTest > showsWhatTheCourierSays() PASSED
+DeliveriesApplicationTest > listsTheCustomersDeliveries() PASSED
+DeliveriesApplicationTest > leavesOutWhatHasBeenDelivered() PASSED
+DeliveriesWiringTest > answersWithEveryPartJoinedUp() PASSED
+DeliveryDataSliceTest > findsTheDeliveriesStillToComeEarliestFirst() PASSED
+DeliveryWebSliceTest > answersWithTheCustomersDeliveries() PASSED
+DeliveryWebSliceTest > answersNotFoundForAnAddressItDoesNotHave() PASSED
+8 tests completed, 1 failed
+* What went wrong:
+Execution failed for task ':lessons:spring-tests-in-slices:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 8 tests failed. Report: build/reports/tests/test/index.html

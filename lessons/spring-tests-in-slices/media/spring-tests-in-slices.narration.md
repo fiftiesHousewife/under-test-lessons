@@ -1,0 +1,14 @@
+# Narration: Spring tests in slices
+
+One item per scene of [spring-tests-in-slices.tape](spring-tests-in-slices.tape). The intro and closing slides have
+their own narration, in [spring-tests-in-slices.slides.md](spring-tests-in-slices.slides.md). Written to be spoken.
+
+1. Step one. Spring Boot's list of versions goes in the version catalogue, with the test starters it sets the versions of. Every slice comes from those starters.
+2. Step two. The lesson's build file adds the test starters for the web slice and the data slice, the in-memory database, and WireMock's standalone jar, which stands in for the courier.
+3. Here is the code under test, today's delivery answer. A change for the printed delivery notes gave the due date a day-first pattern. So the service now writes the date day first, where its description promises year first.
+4. Now, [pause 300ms] the weak tests. Each one starts the whole application: the database, a stand-in for the courier, and every setting. And each one only looks for words in the answer. None of them reads the date.
+5. Now, [pause 300ms] the strong tests, one slice at a time. The web slice starts only the controller and Spring's web layer. Mockito stands in for the service. It checks the address, the status, and the list of references.
+6. The data slice starts only the repository, and an in-memory database, and rolls back each test's rows. It checks the query returns Ann's deliveries still to come, earliest first.
+7. And the JSON slice starts only Jackson, set up as the application sets it up. It checks the answer for one delivery, field by field, exactly as the description promises it.
+8. We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.
+9. Now the fixed answer. It writes the date as the description promises. We run the same tests. [pause 1s] All 8 tests pass. The slices check each layer, and one test of the whole application checks the wiring.

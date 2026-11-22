@@ -56,6 +56,7 @@ Words follow [GLOSSARY.md](../GLOSSARY.md). The rules for when each technique ap
 | [Comparing structured output](structured-output-comparison/README.md) | [structured-output-comparison](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/structured-output-comparison/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) |
 | [Responses checked against the OpenAPI document](openapi-response-checks/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) |
 | [Slow and failing dependencies](slow-and-failing-dependencies/README.md) | [recorded-http-responses](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/recorded-http-responses/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) |
+| [Spring tests in slices](spring-tests-in-slices/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/spring-tests-in-slices.html) |
 | [Tags: fast tests first, slow tests apart](junit-tags/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-tags.html) |
 | [Temporary folders](junit-temporary-folders/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-temporary-folders.html) |
 | [Testing old Java code: a map](testing-old-java-code/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/testing-old-java-code.html) |

@@ -125,7 +125,7 @@ in every new test, and when reviewing tests written by people or by AI.
 | [Temporary folders](lessons/junit-temporary-folders/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-temporary-folders.html) | [JUnit](https://junit.org/) | A file left in a shared folder hides an export that writes nothing; @TempDir gives each test its own folder, and the test fails |
 | [Tags: fast tests first, slow tests apart](lessons/junit-tags/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-tags.html) | [JUnit](https://junit.org/), [Gradle](https://gradle.org/) | Every change runs the slow warehouse tests too; tagged, the quick task runs 4 and the build machine runs the 2 slow ones |
 | [Architecture rules](lessons/architecture-rules/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) | [ArchUnit](https://www.archunit.org/) | ArchUnit finds a web page reaching straight into storage |
-| *Spring tests in slices* | [Spring Boot](https://spring.io/projects/spring-boot) | *coming* |
+| [Spring tests in slices](lessons/spring-tests-in-slices/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/spring-tests-in-slices.html) | [Spring Boot](https://spring.io/projects/spring-boot)'s test slices | Whole-application tests pass while the due date is written day first; the JSON slice names it, and one test is kept for the wiring |
 | [Finding flaky tests](lessons/finding-flaky-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/finding-flaky-tests.html) | [Awaitility](https://github.com/awaitility/awaitility) | A test that sleeps passes twice, then fails on its third of five runs with nothing changed; Awaitility waits and passes all five |
 
 ## Coming next
@@ -134,8 +134,7 @@ The lessons in italics above, in the order they will be made, from [the catalogu
 
 1. **Before you change anything:** the safety inventory, running old code unplugged with the airgap agent, and
    anti-patterns in existing tests.
-2. **Spring tests in slices,** **message consumers on Kafka,** and **AI-written tests that pass the acceptance
-   check.**
+2. **Message consumers on Kafka,** and **AI-written tests that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

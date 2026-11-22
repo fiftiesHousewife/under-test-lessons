@@ -333,6 +333,7 @@ items:
       - "Its facts are checked at their sources, named in its slides file"
     blocked_by:
       - "wiremock-against-spring-boot-4"
+    status: "done"
   - key: "lesson-finding-flaky-tests"
     type: "deliverable"
     title: "Lesson: finding flaky tests"
@@ -753,6 +754,8 @@ items:
     done_by: "ai"
     done_when:
       - "WireMock 3 (Jetty 11) is shown to work with Spring Boot 4, or the alternative is chosen"
+    notes: "Plain WireMock 3 (Jetty 11) can't start beside Spring Boot 4, whose dependency list sets Jetty 12; wiremock-standalone, which carries its own Jetty, works, as the Spring tests in slices lesson shows. Spring's MockRestServiceServer is the alternative."
+    status: "done"
   - key: "pin-the-voices-python-packages"
     type: "deliverable"
     title: "Pin the voice's Python packages"

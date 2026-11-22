@@ -96,7 +96,7 @@ and see what its existing tests really check.
 | [Tags: fast tests first, slow tests apart](junit-tags/README.md): the slow tests labelled, the quick ones run on every change, the slow ones by the build machine | JUnit 6, Gradle | Java only | built |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
 | [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
-| Spring tests: slices, MockMvc, and full-application tests with real dependencies | Spring Boot test, Testcontainers | Docker | later: needs containers or more set-up |
+| [Spring tests in slices](spring-tests-in-slices/README.md): each layer of a Spring Boot 4 service tested on its own (web, data, JSON), and one test of the whole application kept for the wiring | Spring Boot test, H2, WireMock standalone | Java only | built |
 | AI-written tests that pass an acceptance check | PIT, the toolkit's checks | Java only | later: needs containers or more set-up |
 
 ## Every toolkit technique, and its lesson
@@ -162,6 +162,7 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Cleaning captured data so tests still work (`cleaning-captured-data`) | A shop's captured day: orders and payments joined by account | Fixed-text cleaning; a test checks the named fields changed | The reports give the same answers before and after cleaning, and a detector scans every field, finding the missed note | `-Pcode=today` |
 | Finding flaky tests (`finding-flaky-tests`) | Order confirmations sent on a background thread | Sleeps a fixed 200 ms, then checks; passes on a quiet machine | Awaitility waits for the confirmation, at most 2 s; both run 5 times | `-Pcode=today` |
 | JUnit extensions (`junit-extensions`) | A shop's shared settings: prices with VAT or not | Settings set by hand once and never put back; a leak makes an innocent receipt test fail | An extension sets, restores and checks the settings around each test, failing the trade invoice test that left one changed | `-Pcode=today` |
+| Spring tests in slices (`spring-tests-in-slices`) | A shop's delivery service: a customer's deliveries still to come, with due dates and tracking | Every test starts the whole application and looks for words in the answer, while a pattern writes the due date day first | A web, a data and a JSON slice, each checking its layer exactly, and one whole-application test for the wiring; the JSON slice names the date | `-Pcode=today` |
 | Temporary folders (`junit-temporary-folders`) | A shop's end-of-day export to orders.csv | Tests write to a fixed folder and never clean up, so a leftover file hides an export that writes nothing | Each test gets its own folder with @TempDir; the cancelled-order test finds no file and fails | `-Pcode=today` |
 | Tags: fast tests first, slow tests apart (`junit-tags`) | A shop's delivery charge and stock checks, and a slow warehouse system | One test task runs every test, the slow warehouse tests too, on every change | @Tag("slow") through a composed @Slow; the quick task leaves them out, and a slowTest task that check depends on runs them | `-Pcode=today` |
 | When an in-memory database is enough (`in-memory-databases`) | A shop's invoice numbers | Tests share one long-lived test database full of leftover rows, so the first invoice being number 0 is never seen | Each test gets a fresh in-memory H2 database with the real schema, and checks exact numbers | `-Pcode=today` |
@@ -191,8 +192,7 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
    report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules.
 3. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
    check and listed.
-4. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-5. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+4. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 
