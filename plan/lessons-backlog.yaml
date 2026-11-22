@@ -108,6 +108,7 @@ items:
       - "Videos carry captions in the picture, styled by the look (font, size, a band behind the text)"
       - "The separate captions track and files are kept for players that show their own"
     notes: "QuickTime and some players hide the captions track until it is switched on. ffmpeg's subtitles filter, in the final assembly step."
+    status: "done"
   - key: "objects-on-the-subject-slides"
     type: "deliverable"
     title: "Large hand-drawn objects on the slides about the subject"
@@ -141,6 +142,7 @@ items:
     done_when:
       - "checkVideoScripts fails a script whose estimated on-camera length is over ten minutes"
     notes: "The make-a-lesson-video skill states the limit, but nothing checks it."
+    status: "done"
   - key: "render-videos-in-ci-and-publish-with-releases"
     type: "deliverable"
     title: "Render videos in CI and publish them with each release"

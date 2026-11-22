@@ -16,7 +16,8 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>{@code record <root> <id>}: records the silent video ({@code <id>.silent.mp4} and the GIF) with VHS;</li>
  *   <li>{@code voice <root> <id> <command...>}: reads each scene's narration aloud with the given command (which turns
  *   a text file into a WAV file), checks each clip fits its scene, and writes {@code <id>.narration.wav};</li>
- *   <li>{@code assemble <root> <id>}: combines the silent video, the narration and the captions into {@code <id>.mp4},
+ *   <li>{@code assemble <root> <id>}: combines the silent video, the narration and the captions (burned into the
+ *   picture unless {@code video.burnCaptions} is false, and as a captions track) into {@code <id>.mp4},
  *   and writes the narration as {@code <id>.narration.m4a} too;</li>
  *   <li>{@code deckvoice <root> <id|all> <command...>}: reads each deck slide's narration aloud into
  *   {@code <id>.deck-voice/}, then rewrites the deck so it can play them ({@link DeckVoice});</li>
@@ -124,14 +125,26 @@ public final class LessonVideo {
         final List<Cue> cues = SpliceCaptions.cues(media, slides, new Splicer.Timings(intro, closing));
         writeText(media.file(".vtt"), CaptionFile.webVtt(cues));
         writeText(media.file(".srt"), CaptionFile.srt(cues));
+        final String picture = burnCaptions() ? burned(media, cues) : media.name(".joined.mp4");
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
-                "-i", media.name(".joined.mp4"), "-i", media.name(".vtt"), "-map", "0", "-map", "1", "-c", "copy",
+                "-i", picture, "-i", media.name(".vtt"), "-map", "0", "-map", "1", "-c", "copy",
                 "-c:s", "mov_text", "-metadata:s:s:0", "language=eng", media.name(".mp4")), folder);
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
                 "-i", media.name(".joined.mp4"), "-vn", "-c:a", "aac", "-b:a", "128k", media.name(".narration.m4a")),
                 folder);
         log.info("{}: finished video written: {} intro slides, the recording, {} closing slides, voice and captions",
                 media.safeLesson(), intro.size(), closing.size());
+    }
+
+    /** Captions are burned into the picture unless {@code lessonBurnCaptions} is false. */
+    private static boolean burnCaptions() {
+        return Boolean.parseBoolean(System.getProperty("video.burnCaptions", "true"));
+    }
+
+    /** The joined video with its captions burned in, as {@code <id>.captioned.mp4}; returns its file name. */
+    private static String burned(final Media media, final List<Cue> cues) {
+        BurnedCaptions.burn(media.file(".joined.mp4"), cues, media.file(".captioned.mp4"));
+        return media.name(".captioned.mp4");
     }
 
     private static List<Splicer.Segment> segments(final Media media, final List<Slide> slides, final String kind) {

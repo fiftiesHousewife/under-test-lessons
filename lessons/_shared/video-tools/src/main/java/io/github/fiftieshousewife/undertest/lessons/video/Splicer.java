@@ -13,6 +13,10 @@ final class Splicer {
 
     /** Time a slide stays up after its narration ends. */
     static final double SLIDE_BREATH_SECONDS = 1.5;
+    /** How long a slide takes to fade up from black, and back down to black. */
+    static final double FADE_SECONDS = 1.0 / 3;
+    /** How much a slide grows over the time it shows: a slow, gentle zoom towards its centre. */
+    static final double SLIDE_ZOOM = 0.04;
 
     /** A video file and its length in seconds. */
     record Segment(Path video, double seconds) {
@@ -43,9 +47,31 @@ final class Splicer {
         final Path video = voice.resolve(name + ".mp4");
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-loop", "1",
                 "-framerate", "30", "-i", png.toString(), "-i", voice.resolve(name + ".wav").toString(),
-                "-af", "apad", "-t", String.format(Locale.ROOT, "%.3f", seconds), "-c:v", "libx264",
-                "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "2", video.toString()), voice);
+                "-vf", motion(seconds), "-af", "apad", "-t", String.format(Locale.ROOT, "%.3f", seconds),
+                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "2",
+                video.toString()), voice);
         return new Segment(video, seconds);
+    }
+
+    /**
+     * The movement on a slide that shows for this long: a slow zoom of {@link #SLIDE_ZOOM} towards its centre, and a
+     * fade up from black at the start and down to black at the end. Every frame stays the slide's size, and the
+     * length doesn't change, so captions and voice stay in time. Too short a slide gets the zoom without the fades.
+     */
+    static String motion(final double seconds) {
+        final String zoom = String.format(Locale.ROOT, "(1+%s*t/%s)", SLIDE_ZOOM, number(seconds));
+        final String moving = String.format(Locale.ROOT, "scale=w='trunc((iw*%1$s+1)/2)*2':h='trunc((ih*%1$s+1)/2)*2'"
+                + ":eval=frame,crop=w=%2$d:h=%3$d:x='(in_w-%2$d)/2':y='(in_h-%3$d)/2'", zoom, SlideHtml.WIDTH,
+                SlideHtml.HEIGHT);
+        if (seconds < 3 * FADE_SECONDS) {
+            return moving;
+        }
+        return moving + String.format(Locale.ROOT, ",fade=t=in:st=0:d=%1$s,fade=t=out:st=%2$s:d=%1$s",
+                number(FADE_SECONDS), number(seconds - FADE_SECONDS));
+    }
+
+    private static String number(final double value) {
+        return String.format(Locale.ROOT, "%.3f", value);
     }
 
     /** Joins videos, each with sound, end to end into one. */

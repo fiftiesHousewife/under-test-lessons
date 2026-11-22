@@ -105,7 +105,7 @@ class ZoomTest {
 
     @Test
     void ffmpegAcceptsTheFilterAndZoomsOnlyWhileTheSpanHolds() {
-        Assumptions.assumeTrue(onPath("ffmpeg") && onPath("ffprobe"), "needs ffmpeg and ffprobe");
+        Assumptions.assumeTrue(RealFfmpeg.installed(), "needs ffmpeg and ffprobe");
         final Path source = root.resolve("source.mp4");
         final Path zoomed = root.resolve("zoomed.mp4");
         ExternalCommand.run(List.of("ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
@@ -117,21 +117,14 @@ class ZoomTest {
                 "-c:v", "libx264", "-pix_fmt", "yuv420p", zoomed.toString()), root);
 
         assertAll(
-                () -> assertThat(probe(zoomed, "stream=width,height")).isEqualTo("1920,1080"),
-                () -> assertThat(probe(zoomed, "stream=nb_frames")).isEqualTo(probe(source, "stream=nb_frames")),
+                () -> assertThat(RealFfmpeg.probe(root, zoomed, "stream=width,height")).isEqualTo("1920,1080"),
+                () -> assertThat(RealFfmpeg.probe(root, zoomed, "stream=nb_frames"))
+                        .isEqualTo(RealFfmpeg.probe(root, source, "stream=nb_frames")),
                 () -> assertThat(frameDiffers(source, zoomed, 0.2)).as("before the zoom").isFalse(),
                 () -> assertThat(frameDiffers(source, zoomed, 3.5)).as("while it holds").isTrue());
     }
 
-    private static boolean onPath(final String program) {
-        return java.util.Arrays.stream(System.getenv().getOrDefault("PATH", "").split(java.io.File.pathSeparator))
-                .anyMatch(folder -> Files.isExecutable(Path.of(folder, program)));
-    }
 
-    private String probe(final Path video, final String entries) {
-        return ExternalCommand.run(List.of("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
-                entries, "-of", "csv=p=0", video.toString()), root).strip();
-    }
 
     /** True if the two videos' frames at that moment differ by more than encoding noise (PSNR below 40 dB). */
     private boolean frameDiffers(final Path first, final Path second, final double seconds) {

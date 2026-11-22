@@ -95,6 +95,7 @@ class LessonVideoTest {
         assertAll(
                 () -> assertThat(media.resolve("demo.mp4")).exists(),
                 () -> assertThat(media.resolve("demo.narration.m4a")).exists(),
+                () -> assertThat(media.resolve("demo.captioned.mp4.captions/001.png")).as("captions drawn").exists(),
                 () -> assertThat(media.resolve("demo.voice/intro-1.png")).exists(),
                 () -> assertThat(media.resolve("demo.voice/intro-1.html")).exists(),
                 () -> assertThat(Files.readString(media.resolve("demo.vtt"))).contains("Hello there.")

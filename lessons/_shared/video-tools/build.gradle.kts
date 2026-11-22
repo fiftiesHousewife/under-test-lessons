@@ -144,7 +144,14 @@ val lessonsRepoUrl = providers.gradleProperty("lessonsRepoUrl").orElse("")
 val toolkitRepoUrl = providers.gradleProperty("toolkitRepoUrl").orElse("")
 // How pictures are framed on slides: soft (a blurred round edge), none, or circle. lessonPictureFrame in gradle.properties.
 val pictureFrame = providers.gradleProperty("lessonPictureFrame").orElse("soft")
+// Burned-in captions are drawn with Java's 2D graphics, which needs no screen: run headless everywhere.
+val burnCaptions = providers.gradleProperty("lessonBurnCaptions").orElse("true")
+tasks.test {
+    systemProperty("java.awt.headless", "true")
+}
 tasks.withType<JavaExec>().configureEach {
+    systemProperty("java.awt.headless", "true")
+    systemProperty("video.burnCaptions", burnCaptions.get())
     systemProperty("video.pictureFrame", pictureFrame.get())
     systemProperty("video.lessonsRepo", lessonsRepoUrl.get())
     systemProperty("video.toolkitRepo", toolkitRepoUrl.get())
