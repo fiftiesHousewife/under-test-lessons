@@ -1,18 +1,17 @@
 # Who or what made each voice clip: "voice <key>" is the machine voice, from what it was given; a clip not listed was recorded by a person.
-285df945a7d4da90.m4a voice 4d438e508a5b15af
 29f1d70eb06f1158.m4a voice 29f1d70eb06f1158
 2ce8dabe2b5e82b8.m4a voice 2ce8dabe2b5e82b8
 2ed6313dbe6ecce9.m4a voice 2ed6313dbe6ecce9
-3014aaef093726b3.m4a voice 3014aaef093726b3
-383cee1335b417ae.m4a voice 383cee1335b417ae
 3988221ae378d312.m4a voice 3988221ae378d312
+5b4dc97a74250649.m4a voice 1dfd248d4fe50a14
 6666f796e82050cb.m4a voice 394a81425ec3678c
-6bbbf8e59038de02.m4a voice 97a0cf384c0d1220
+7290d35ebbff9a2e.m4a voice dd620e8fd9e6c408
 76cc862b1ede3aef.m4a voice 647900f1c094ffc3
+82de1cd7c75f66ec.m4a voice 098c74d07fbf4e65
 86ec7dc165596017.m4a voice 86ec7dc165596017
 9fb198082c703d17.m4a voice 9fb198082c703d17
 acde22311146c93c.m4a voice 2bc1d09c5705453b
+ca3ec6b88956f883.m4a voice f2ffcd3826536edf
 e0e501d101b6a964.m4a voice a6f94817b3ad326b
 e5fdae46123814a2.m4a voice 911bd0b6242f4825
-e8c7246dab03c225.m4a voice e8c7246dab03c225
 eeb791a737aa006e.m4a voice f26434f6ce38b28a

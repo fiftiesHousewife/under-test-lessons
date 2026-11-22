@@ -11,59 +11,51 @@ first published in 2015); approvaltests.com and the ApprovalTests Java repositor
 file when a result differs); Michael Feathers, Working Effectively with Legacy Code (2004), which named
 characterisation tests.
 
-## intro: What is capturing with Logbook?
-- Recording every request and response a service receives and sends, as they really happen
-- Logbook does it from inside the service: a servlet filter, and a hook in its HTTP client
-- Its filters remove secrets before anything is written
-- A capture checked by a person is kept as an approved file, and tests compare against it
-Picture: camera
-Say: Capturing means recording every request and response a service receives and sends, as they really happen.
-  Logbook does it from inside the service. A servlet filter sees what comes in, and a hook in its HTTP client sees what
-  goes out. Its filters remove secrets before anything is written. And once a person has checked a capture, it is kept
-  as an approved file, which later tests compare against.
+## intro: The recording keeps the secrets
+- We record what an old service receives and sends, before anyone changes it
+- Today the recording holds the caller's token, the loyalty provider's key and a customer's email
+- The test passes: it checks only that each request and answer was recorded
+- Once a secret is written to a log or a file, it is hard to take back
+Picture: bug
+Say: Here is the problem. Before anyone changes an old service, we record every request it receives and sends, as
+  they really happen. But today the recording holds the caller's token, the loyalty provider's key, and a customer's
+  email address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only checks that
+  each request and answer was recorded. It never reads what was written. And once a secret is written to a log or a
+  file, it is hard to take back.
 
 ## intro: Our example: an old customer service
 - Callers ask it for a customer, with their own token in an Authorization header
 - It asks a loyalty provider for the customer's points, posting their email address, with its own key
 - It answers with the customer's email, tier and points, as JSON
-- Nobody has written down what it receives and sends, so we capture it
+- Nobody has written down what it receives and sends
 Picture: server
-Say: Our example is an old customer service. Callers ask it for a customer, and send their own token in a header
+Say: Our example is that old customer service. Callers ask it for a customer, and send their own token in a header
   called Authorization. To answer, the service asks a loyalty provider how many points the customer has. It posts the
   customer's email address, with its own key. Then it answers with the customer's email, loyalty tier and points, as
-  JSON. Nobody has written down what it receives and sends, so we capture it, before anyone changes it.
+  JSON. Nobody has written down what it receives and sends, so we capture it.
 
-## intro: What we'll compare
-- The code under test: today's capture set-up, a Logbook with one header filter
-- The weak test: checks that the capture recorded each request and answer
-- The strong tests: no secret may be in the capture, and the capture must match its approved file
-Picture: scales
-Say: Here is what we will compare. The code under test is today's capture set-up, a Logbook with one header filter.
-  [pause 300ms] The weak test checks that the capture recorded each request and each answer. It never reads what
-  was written. [pause 300ms] The strong tests read it. No secret may be in the capture, and the whole capture must
-  match its approved file, line for line.
+## intro: The fix: filter the capture, then approve it
+- Logbook captures from inside the service: a servlet filter, and a hook in its HTTP client
+- Its filters remove secrets before anything is written
+- A person checks the capture once, and it's kept as an approved file
+- Later tests compare against it, line by line, and fail on any secret
+Picture: camera
+Say: The fix is to filter the capture, then approve it. Logbook, a small Java library, captures from inside the
+  service. A servlet filter, a hook in the web server, sees what comes in, and a hook in its HTTP client sees what
+  goes out. Its filters remove secrets before anything is written. A person checks the capture once, and it is kept as
+  the approved file. Later tests compare each new capture with it, line by line, and fail if any secret is there.
 
-## intro: Why a capture needs checking
-- A capture holds whatever crossed the wire: tokens, keys and customers' details
-- Once written to a log or a file, a secret is hard to take back
-- Logbook hides the Authorization header by default, but giving it your own header filter replaces that default
-- A test that only checks something was recorded never notices
-Picture: bug
-Say: Why does a capture even need checking? [pause 1600ms] A capture holds whatever crossed the wire: tokens, keys,
-  and customers' details. Once a secret is written to a log or a file, it is hard to take back. Logbook hides the
-  Authorization header by default. But if you give it a header filter of your own, yours replaces that default. A
-  test that only checks that something was recorded never notices.
-
-## intro: How Logbook works
-- It works in phases: decide what to record, filter it, format it, write it
-- Header filters and body filters change each message before it is formatted
-- A formatter turns each message into text, and a writer sends it where it should go
-- The same Logbook serves the servlet filter and the HTTP client's hook
+## intro: How Logbook's filters look
+- Our one header filter replaced Logbook's default, which hides the Authorization header
+- Put it back: .headerFilter(HeaderFilters.authorization())
+- Clean the bodies: .bodyFilter(JsonBodyFilters.replaceJsonStringProperty(Set.of("email"), "customer@example.invalid"))
+- Today: - Authorization: XXX + Authorization: Bearer caller-7f3a9c
 Picture: plug
-Say: Logbook works in phases. It decides what to record, filters it, formats it, and writes it. Header filters and
-  body filters change each message before it is formatted, so a secret they remove never reaches the writer. A
-  formatter turns each message into text, and a writer sends it where it should go, here a list the tests can read.
-  The same Logbook serves both the servlet filter and the HTTP client's hook.
+Say: Here is how the filters look. Logbook hides the Authorization header by default. But today's set-up gives it one
+  header filter of its own, to drop the headers that change on every run, and that replaces the default. So we put
+  Logbook's authorization filter back, which writes 3 Xs in place of the token. A body filter replaces every email
+  field with an address that can't be anyone's. Today the approved file and the new capture differ: the approved file
+  has the Xs, and the capture has the caller's real token.
 
 Include: how-we-build
 

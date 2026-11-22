@@ -4,48 +4,44 @@ Sources: site.mockito.org and github.com/mockito/mockito (MIT licence; started b
 EasyMock); github.com/powermock/powermock (no release since 2020); Mockito 5 documentation (static and constructor
 stand-ins built in).
 
-## intro: What is a hard-wired dependency?
-- Code that reaches out for what it needs, instead of being given it
-- A singleton, a static call, or a new inside a method
-- A test can't swap it for a stand-in, so the test runs the real thing
-Picture: plug
-Say: A hard-wired dependency is something code reaches out for, instead of being given it: a singleton, a static call,
-  or a new object made inside a method. A test can't swap it for a stand-in, so the test has to run the real thing:
-  the real network, the real database, the real clock.
+## intro: The invoice can't be tested
+- An invoice of £12.50 should come to €14.63 at a rate of 1.17
+- But the code fetches the rate itself, from the bank's live service
+- On a test machine: cannot reach the bank's exchange-rate service
+- So every test fails before it checks a single number
+Picture: bug
+Say: Here is the problem. An invoice of £12.50 should come to 14 euros 63 cents, at a rate of 1.17 euros to the
+  pound. But the code fetches the rate itself, from the bank's live rate service. A test machine has no network and no
+  account for it. So both tests fail with the same error, cannot reach the bank's exchange-rate service, before they
+  check a single number.
 
 ## intro: Our example: an invoice in euros
 - Lines are priced in pounds, in pence
-- The total is charged in euros, at today's exchange rate
+- The total is charged in euros, at today's exchange rate, to the nearest cent
 - The rate comes from the bank's live rate service
 Picture: statement
-Say: Our example is an invoice. The lines are priced in pounds, in pence, and the total is charged in euros, at
-  today's exchange rate. And the rate comes from the bank's live rate service, over the network.
+Say: Our example is that invoice. The lines are priced in pounds, in pence, and the total is charged in euros, at
+  today's exchange rate, rounded to the nearest cent. And the rate comes from the bank's live rate service, over the
+  network.
 
-## intro: What we'll compare
-- Today's invoice: the rate comes from a hard-wired singleton
-- The invoice after one small change: the rate is passed in
-- The same test for both, with stand-in rates made by Mockito
-Picture: scales
-Say: Here is what we will compare. Today's invoice gets its rate from a hard-wired singleton. [pause 300ms] The
-  invoice after one small change has the rate passed in. [pause 300ms] And the same test runs against both, with
-  stand-in rates made by Mockito.
+## intro: The fix: pass the rates in
+- Today the invoice reaches for a singleton, the one live rate service: a hard-wired dependency
+- One small change: the invoice takes its rates through its constructor
+- Production passes the live rates; a test passes a stand-in fixed at 1.17
+Picture: plug
+Say: The fix is to pass the rates in. Today the invoice reaches out for a singleton, the one and only live rate
+  service. Something code reaches for, instead of being given, is called a hard-wired dependency, and a test can't swap
+  it. One small change fixes that: the invoice takes its rates through its constructor. Production passes the live
+  rates, and a test passes a stand-in, fixed at 1.17.
 
-## intro: Why it matters
-- Old code is full of hard-wired services, clocks and files
-- Tests either can't run, or need the real service: slow, flaky, and sometimes unsafe
-- Passing dependencies in is often the first change that makes old code testable
-Picture: magnifier
-Say: Why does it matter? [pause 1600ms] Old code is full of hard-wired services, clocks and files. Its tests either can't
-  run at all, or need the real service, which makes them slow, flaky, and sometimes unsafe. Passing dependencies in is
-  often the very first change that makes old code testable.
-
-## intro: How Mockito works
-- mock() makes a stand-in for an interface or class
-- when(...).thenReturn(...) says what the stand-in answers
-- verify(...) can check how the code under test used it
+## intro: How Mockito makes the stand-in
+- Make it: mock(ExchangeRates.class)
+- Say what it answers: when(rates.eurosPerPound()).thenReturn(new BigDecimal("1.17"))
+- Hand it over: new Invoice(rates), and £12.50 comes to 1463 euro cents
 Picture: robot
-Say: Mockito makes stand-ins. You ask it for a mock of an interface or a class. You tell the stand-in what to answer,
-  with when, and then return. And if you need to, you can verify how the code under test used it.
+Say: Here is how Mockito makes the stand-in. You ask it for a mock, a stand-in, of the exchange rates. You tell the
+  stand-in what to answer: when asked for euros per pound, return 1.17. Then you hand it to the invoice. Now the test
+  runs with no network, and checks that £12.50 comes to 1463 euro cents.
 
 Include: how-we-build
 

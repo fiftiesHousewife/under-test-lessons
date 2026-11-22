@@ -13,55 +13,49 @@ au.com.dius.pact.provider:junit5, 4.7.7); martinfowler.com, Ian Robinson's "Cons
 Evolution Pattern", 12 June 2006; the toolkit's contract-testing technique and its decision guide "Contract tests share
 pacts as versioned artifacts through the package repository, without a broker".
 
-## intro: What is a contract test?
-- Two teams' services talk to each other: one calls, one answers
-- A contract test checks both sides keep to one written agreement about those requests and answers
-- The calling team, the consumer, writes the agreement; the answering team, the provider, checks it in its own build
-Picture: plug
-Say: When two teams' services talk to each other, one calls and the other answers. A contract test checks that both
-  sides keep to one written agreement about those requests and answers. The team that calls, the consumer, writes the
-  agreement down. The team that answers, the provider, checks it in its own build, every time it changes.
+## intro: A renamed field passes both teams' builds
+- A tidy-up in the stock service renames available to quantityInStock
+- The order screen's tests pass: they run against a stand-in their own team wrote
+- The stock service's tests pass: they check the status code and the item's code
+- The break shows only when the two services meet
+Picture: bug
+Say: Here is the problem. A tidy-up in a shop's stock service renames the field that says how many kettles are
+  available. The order screen, run by another team, still looks for the old name. Both teams' builds pass. The order
+  screen's tests run against a stand-in for the stock service that their own team wrote, so it agrees with them,
+  always. The stock service's tests check only the status code and the item's code. So the break shows up only when the
+  two services finally meet, in a shared test environment, or in production.
 
 ## intro: Our example: an order screen and a stock service
 - The order screen asks the stock service how many of an item are available, by the item's code
 - The answer has the code, and a whole number called available
 - An item nobody stocks gets 404
 Picture: basket
-Say: Our example is a shop. One team runs the order screen. Before it takes an order, it asks the stock service how
+Say: Our example is that shop. One team runs the order screen. Before it takes an order, it asks the stock service how
   many of an item are available, by the item's code. Another team runs the stock service. Its answer has the item's
   code, and a whole number called available. And when nobody stocks the item, the answer is 404.
 
-## intro: Why each team's own tests aren't enough
-- Each team tests its side against what it believes the other side does
-- A stand-in written by the caller agrees with the caller, always
-- So both builds pass, and the break shows up only when the two services meet
-Picture: magnifier
-Say: Why aren't each team's own tests enough? [pause 1600ms] Each team tests its side against what it believes the
-  other side does. A stand-in written by the calling team agrees with the calling team, always. So both builds pass,
-  and the break shows up only when the two services finally meet, in a shared test environment, or in production.
+## intro: The fix: one agreement, checked from both sides
+- The order screen, the consumer, writes down each answer it relies on: the agreement, a pact
+- The stock service, the provider, checks the pact in its own build, on every change
+- The pact travels as a versioned artifact through the company's package repository
+Picture: plug
+Say: The fix is a contract test: one written agreement, checked from both sides. The team that calls, the consumer,
+  writes down each request it makes and the answer it relies on. Pact, the tool, calls that agreement a pact. The team
+  that answers, the provider, checks the pact in its own build, every time it changes. The pact travels as a versioned
+  artifact, a numbered build output, through the company's package repository, where builds already publish their
+  libraries. So there is no new service to run.
 
-## intro: How Pact works
-- The consumer's test lists each request it makes and the answer it needs, with rules such as "any whole number"
-- Pact stands in for the provider with exactly those answers, and writes them to a pact file
-- The provider's test replays every request in the pact against the real service, and compares the answers
+## intro: How Pact looks
+- The order screen's test: .integerType("available", 3), any whole number, named available
+- The stock service's test: @Provider("stock-service") @PactFolder("package-repository/order-screen-pacts/1.0.0")
+- Today: body: $ Actual map is missing the following keys: available
+- Pact JVM 4.7 needs Java 17 or later; Java 8 code bases need the older 4.1 line
 Picture: robot
-Say: Pact works in two halves. The consumer's test lists each request it makes, and the answer it needs, with rules
-  such as "any whole number". Pact stands in for the provider with exactly those answers while the consumer's test
-  runs, and writes them to a file, the pact. The provider's test then replays every request in the pact against the
-  real service, and compares each answer with the rules.
-
-## intro: How the pact travels: the package repository
-- The consumer's build publishes the pact file as a versioned artifact, beside its other build outputs
-- The provider's build fetches the consumer versions it supports, and verifies each one in its own CI
-- No new service to run; a Pact Broker only where the platform team hosts one
-- Pact JVM 4.7 needs Java 17 or later; 4.5 needs Java 11; Java 8 code bases need the older 4.1 line
-Picture: tag
-Say: How does the pact get from one team to the other? [pause 1600ms] Through the company's package repository,
-  where builds already publish their libraries. The consumer's build publishes the pact file as a versioned artifact.
-  The provider's build fetches the consumer versions it supports, such as the newest one, and each one in production,
-  and verifies them in its own continuous integration, the build that runs on every change. There is no new service to
-  run. A Pact Broker adds more, but it is a service someone must host, so use one only where the platform team runs
-  it. The versions of Pact JVM for older Java are on the slide.
+Say: Here is how Pact looks. The order screen's test says the answer needs a field called available, holding any whole
+  number. Pact stands in for the stock service with exactly that answer while the test runs, and writes the pact file.
+  The stock service's test reads version 1.0.0 of the published pact, and replays every request in it against the real
+  service. Today it fails, and says the answer is missing the key, available. One more thing: Pact JVM 4.7 needs Java
+  17 or later, and code bases still on Java 8 need the older 4.1 line.
 
 Include: how-we-build
 

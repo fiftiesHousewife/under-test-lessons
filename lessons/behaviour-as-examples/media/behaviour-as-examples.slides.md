@@ -8,50 +8,47 @@ integrated test" (Ward Cunningham invented Fit in 2002; customers' examples in t
 dannorth.net, first in Better Software magazine, March 2006; Gojko Adzic, "Specification by Example", Manning, 2011
 (gojko.net).
 
-## intro: What is it?
-- The rules, written down as examples by the people who know them
-- Each example has a name, the situation, and the answer they expect
-- The examples run as tests against the code
-Picture: checklist
-Say: Behaviour written down as examples means this. The people who know the rules write them down, not as paragraphs,
-  but as examples. Each example has a name, the situation, and the answer they expect. Then the examples run as tests,
-  against the code.
+## intro: The 30th day gets the wrong refund
+- A customer returns an item on the 30th day, with the receipt
+- The tills give store credit: the returns team says it's a refund to the card
+- The tests pass: they were written by reading the code, on days far from 30
+Picture: bug
+Say: Here is the problem. A customer bought an item on the 1st of March, and brings it back on the 31st, the 30th
+  day, with the receipt. The tills give store credit. The returns team says that customer should get a refund to the
+  card. Yet the tests pass. They were written by reading the code, so they agree with it, mistakes and all, and they
+  only try days far from the 30th.
 
 ## intro: Our example: a shop's refunds
 - Returned within 30 days, with a receipt: a refund to the card
 - Within 30 days without a receipt, or later with one: store credit
 - Later, and no receipt: nothing
 Picture: statement
-Say: Our example is a shop's refund rules. An item returned within 30 days of buying, with a receipt, gets a refund to
-  the card. Within 30 days without a receipt, or later with one, the customer gets store credit. Later, and with no
-  receipt, they get nothing. The returns team knows these rules better than anyone.
+Say: Our example is that shop's refund rules. An item returned within 30 days of buying, with a receipt, gets a
+  refund to the card. Within 30 days without a receipt, or later with one, the customer gets store credit. Later, and
+  with no receipt, they get nothing. The rule hides a question: does within 30 days include the 30th? The returns team
+  knows the answer better than anyone.
 
-## intro: What we'll compare
-- The code under test: today's refunds, as the tills run them
-- Tests written from the code: they check what it does
-- The returns team's examples: what it should do, in their words
-Picture: scales
-Say: Here is what we will compare. The code under test is today's refunds, as the tills run them. [pause 300ms] The
-  weak tests were written by reading the code, so they check what it does. [pause 300ms] The strong tests are the
-  returns team's own examples, which say what it should do, in their words.
+## intro: The fix: the experts' examples, run as tests
+- The returns team writes the rules down as 5 named examples
+- Each has the situation and one answer: the 30th day, with a receipt, is a refund to the card
+- The examples run as tests, so the code must agree with the team
+Picture: checklist
+Say: The fix is to write the behaviour down as examples, by the people who know the rules. The returns team writes 5
+  examples. Each has a name, the situation, and the one answer they expect. Returned on the 30th day with a receipt,
+  for example, is a refund to the card. Then the examples run as tests, so the code has to agree with the team, not
+  the other way round.
 
-## intro: Why examples from the experts?
-- Tests written from the code agree with the code, mistakes and all
-- A rule in a paragraph hides its questions: does within 30 days include the 30th?
-- An example has one answer, and someone who can say whether it's right
-Picture: magnifier
-Say: Why do we need examples from the experts? [pause 1600ms] Tests written by reading the code agree with the code,
-  mistakes and all. A rule written as a paragraph hides its questions. Does within 30 days include the 30th day? An
-  example has exactly one answer, and someone who can say whether it's right.
-
-## intro: How JUnit runs a table of examples
-- A parameterised test runs once for each row of a table
-- The table can live in its own file, which a spreadsheet can open
-- Each row is reported by its name, so a failure names the example
+## intro: How JUnit runs the team's table
+- The table is a file a spreadsheet opens: returns-team-examples.csv
+- @ParameterizedTest(name = "{0}") with @CsvFileSource(resources = "/returns-team-examples.csv")
+- A failure names the example: [returned on the 30th day with a receipt] expected: "refund to card"
 Picture: table
-Say: JUnit, the usual Java test framework, comes with parameterised tests. A parameterised test runs once for each row
-  of a table. The table can live in its own file, which the experts can open in a spreadsheet. And each row is
-  reported by its name, so a failure says exactly which example broke.
+Say: How does JUnit, the usual Java test framework, run the team's table? [pause 1600ms] The table is a file the team can open in a
+  spreadsheet, one example to a row. A parameterised test runs once for each row, and reads the rows from that file.
+  Each row is reported by its own name. So today, the failure names the team's example, returned on the 30th day with
+  a receipt, and says it expected a refund to the card, and got store credit.
+
+Include: how-we-build
 
 ## closing: When to use it
 - For rules the business owns: prices, refunds, eligibility, deadlines

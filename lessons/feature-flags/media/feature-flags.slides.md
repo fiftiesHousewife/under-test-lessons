@@ -4,48 +4,45 @@ Sources: openfeature.dev (OpenFeature, a Cloud Native Computing Foundation proje
 Maven Central as dev.openfeature:sdk since October 2022); Pete Hodgson, "Feature Toggles (aka Feature Flags)",
 martinfowler.com, 2017; Paul Hammant, "Branch by Abstraction", 2007.
 
-## intro: What is a feature flag?
-- A switch, read while the code runs, that chooses between two ways of doing something
-- New code ships switched off, and is switched on when it's ready
-- Old and new code live side by side until the old code is removed
-Picture: switch
-Say: A feature flag is a switch, read while the code runs, that chooses between two ways of doing something. New code
-  ships switched off, and is switched on when it's ready. Until then, the old code and the new code live side by side.
+## intro: The new rules ship a £20 basket free
+- New shipping rules wait, switched off, beside the old ones
+- They compare a basket in pence with a threshold in pounds: free from 50p, not £50
+- The tests pass: they never switch the new rules on
+- The mistake waits for the day someone does, in production
+Picture: bug
+Say: Here is the problem. A shop has written new shipping rules, and they wait, switched off, beside the old ones.
+  But they compare a basket in pence with a threshold in pounds. So delivery is free from 50 pence, not from £50, and a
+  £20 basket ships free. The tests all pass, because they never switch the new rules on. So the mistake waits for the
+  day someone does, in production.
 
 ## intro: Our example: shipping costs
 - Delivery costs £3.99, and is free from £50
 - The old rules have run for years
-- New rules, written for the same prices, wait behind a flag
+- New rules, written for the same prices, wait behind a switch
 Picture: basket
-Say: Our example works out shipping costs. Delivery costs three pounds ninety nine, and it's free from fifty pounds.
-  The old rules have run for years. New rules, written to give the same prices, wait behind a flag.
+Say: Our example works out that shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules
+  have run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
 
-## intro: What we'll compare
-- The code under test: today's new shipping rules, behind the flag
-- Tests with the default flag: run only the old rules
-- Tests both ways: the same checks with the flag off and on
-Picture: scales
-Say: Here is what we will compare. The code under test is today's new shipping rules, behind the flag. [pause 300ms]
-  Tests with the default flag only ever run the old rules. [pause 300ms] And tests both ways run the same checks, with
-  the flag off and on.
+## intro: The fix: test both ways
+- The switch is a feature flag, read while the code runs: new-shipping, off by default
+- While both rules exist, run every check with the flag off and on
+- A £20 basket pays £3.99 both ways, and a £60 basket pays nothing
+Picture: switch
+Say: The fix is to test both ways. The switch is called a feature flag: a setting, read while the code runs, that
+  chooses between the old rules and the new ones. Ours is called new shipping, and it's off unless someone switches it
+  on. While both rules exist, run every check with the flag off, and again with it on. A £20 basket must pay £3.99
+  both ways, and a £60 basket must pay nothing.
 
-## intro: Why flags need testing both ways
-- Tests usually run with flags at their defaults: the old code
-- The new code goes untested until the day it's switched on
-- Every flag doubles the paths; tests must cover each one that can be switched on
-Picture: magnifier
-Say: Why test both ways? [pause 1600ms] Tests usually run with every flag at its default, which means the old code. So the
-  new code goes untested until the day someone switches it on, in production. Every flag doubles the paths through the
-  code, and tests must cover each one.
-
-## intro: How OpenFeature works
-- The code asks a client for a flag's value, with a default
-- A provider answers: a flag service in production, or an in-memory one in tests
-- The code never knows which provider is behind it
+## intro: How OpenFeature looks
+- The code asks for the flag, with a default: flags.getBooleanValue("new-shipping", false)
+- Tests use the in-memory provider: new InMemoryProvider(Map.of("new-shipping", flag))
+- One test, run twice: @ValueSource(booleans = {false, true})
+- Today, switched on: [a £20 basket] expected: 399 but was: 0
 Picture: robot
-Say: With OpenFeature, the code asks a client for a flag's value, giving a default. A provider answers: a flag service
-  in production, or a simple in memory provider in tests. The code never knows which provider is behind it, so the
-  same code runs in both.
+Say: Here is how OpenFeature, an open standard for flags, looks. The code asks a client for the flag's value, giving
+  a default, off. A provider answers: a flag service in production, or, in tests, a simple provider kept in memory, set
+  up with the flag on or off. The same test runs twice, once each way. Today, with the flag switched on, the £20 basket
+  expected to pay 399 pence for delivery, and paid nothing.
 
 Include: how-we-build
 

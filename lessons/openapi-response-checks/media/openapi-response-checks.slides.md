@@ -11,50 +11,45 @@ application's messages and channels, a contract between senders and receivers; t
 Linux Foundation); the toolkit's contract-testing technique (Pact contract tests need the provider team to verify, and
 don't suit an outside supplier's API).
 
-## intro: What is a response checked against the document?
-- Many services publish an OpenAPI document: every path, status code and field they promise
-- Other teams build their code against that document, not against yours
-- A check compares every real answer your tests see with what the document promises
-Picture: checklist
-Say: Many web services publish an OpenAPI document. It lists every path the service answers, every status code, and
-  every field, with its type. Other teams build their code against that document, not against yours. So a check
-  compares every real answer your tests see with what the document promises.
+## intro: The answer changed, and the tests still pass
+- Today the service sends a parcel's weight as text, "1200", not the number 1200
+- A tidy-up renamed the 404's error field to message
+- The tests pass: they check the status code and 2 fields, never the weight or the error
+Picture: bug
+Say: Here is the problem. Today a parcel service sends a parcel's weight as text, 1200 in quotes, not the number 1200.
+  And a tidy-up renamed the field that gives the reason for a 404, from error to message. The service's own tests still
+  pass. They check the status code and 2 fields, the ones someone thought of. But every team that reads the weight as a
+  number, or looks for the error field, is now broken.
 
 ## intro: Our example: a parcel tracking service
 - Callers ask where a parcel is, by its id
 - The answer has the id, a status and the weight in grams, as a whole number
 - An unknown id gets 404, with the reason in a field called error
 Picture: basket
-Say: Our example is a parcel tracking service. Callers ask where a parcel is, by its id. The answer has the parcel's
+Say: Our example is that parcel tracking service. Callers ask where a parcel is, by its id. The answer has the parcel's
   id, its status, and its weight in grams, as a whole number. And when no parcel has that id, the answer is 404, with
-  the reason in a field called error.
+  the reason in a field called error. The service promises all of this in a published document.
 
-## intro: What we'll compare
-- The code under test: today's service, which sends the weight as text and renamed the error field
-- Weak tests: the status code and the few fields someone thought to check
-- Strong tests: the same tests, with every answer checked against the document
-Picture: scales
-Say: Here is what we will compare. The code under test is today's service. It sends the weight as text, and a tidy-up
-  renamed the error field. [pause 300ms] The weak tests check the status code, and the few fields someone thought to
-  check. [pause 300ms] The strong tests are the same tests, with every answer checked against the document.
+## intro: The fix: check every answer against the document
+- The service publishes an OpenAPI document: every path, status code and field, with its type
+- Other teams build against that document, not against the code
+- So check every answer the tests already see against it
+Picture: checklist
+Say: The fix is to check every answer against the document. The service publishes an OpenAPI document, a file that
+  lists every path it answers, every status code, and every field, with its type. Other teams build their code against
+  that document, not against the service's code. So check every answer the existing tests see against what the document
+  promises. There are no new tests to write.
 
-## intro: Why check against the document
-- Tests check the fields their author thought of, and nothing else
-- A renamed field or a number sent as text breaks the teams who read the document
-- The document already lists every rule, so the check costs a line or two per test class
-Picture: magnifier
-Say: Why check against the document? [pause 1600ms] Tests check the fields their author thought of, and nothing else.
-  But a renamed field, or a number sent as text, breaks every team that built against the document. The document
-  already lists every rule. So checking against it costs a line or two in each test class.
-
-## intro: How the validator works
-- It reads the OpenAPI document, in YAML or JSON
-- A REST Assured filter sees every request and answer the tests make
-- Anything the document doesn't allow fails the test: the path, the field and the rule
+## intro: How the validator looks
+- The document says weightGrams: type: integer, and error is required
+- The tests add one filter: given().port(service.port()).filter(THE_DOCUMENT)
+- Today it fails: field weightGrams: string found, integer expected
+- And: required property 'error' not found
 Picture: robot
-Say: Atlassian's OpenAPI request validator reads the document, in YAML or JSON. A filter in REST Assured sees every
-  request the tests send, and every answer that comes back. Anything the document doesn't allow fails the test, and the
-  message names the request, the field, and the rule it breaks.
+Say: Here is how it looks. The document says the weight is an integer, a whole number, and that a 404 must have an
+  error field. Atlassian's OpenAPI request validator reads that document. The tests add it as one filter in REST
+  Assured, the library they already use to send requests, so it sees every request and every answer. Today it fails
+  twice. The weight was text where a whole number was expected. And the required error field was not found.
 
 Include: how-we-build
 
