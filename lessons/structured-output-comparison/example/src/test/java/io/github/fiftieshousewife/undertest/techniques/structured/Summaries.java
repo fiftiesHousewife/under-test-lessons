@@ -14,9 +14,9 @@ final class Summaries {
     }
 
     static String jsonForTheOrder() {
-        final SummaryJson json = new SummaryJson(Clock.systemUTC());
+        final Clock clock = Clock.systemUTC();
         final OrderSummary summary = "today".equals(System.getProperty("code"))
-                ? new TodaysOrderSummary(json) : new FixedOrderSummary(json);
+                ? new TodaysOrderSummary(clock) : new FixedOrderSummary(clock);
         return summary.json(ORDER);
     }
 }

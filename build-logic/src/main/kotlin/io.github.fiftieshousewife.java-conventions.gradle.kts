@@ -105,9 +105,10 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 // ---------- Tests and coverage ----------
 // Failing tests end the build with a short message and a report path relative to the project, instead of Gradle's long
 // message with the full path, which shows a person's home folder in recordings and logs. The build still fails.
-val testFailures = tasks.register("testFailures") {
-    description = "Fails the build, briefly, if any test failed."
-    val results = layout.buildDirectory.dir("test-results/test")
+/** Registers the short summary for one test task: "All N tests passed.", or "N of M tests failed. Report: ...". */
+fun registerFailureSummary(testTask: String) = tasks.register(if (testTask == "test") "testFailures" else "${testTask}Failures") {
+    description = "Fails the build, briefly, if any test in $testTask failed."
+    val results = layout.buildDirectory.dir("test-results/$testTask")
     doLast {
         val counts = Regex("<testsuite [^>]*?tests=\"(\\d+)\"[^>]*?skipped=\"(\\d+)\"[^>]*?failures=\"(\\d+)\"[^>]*?errors=\"(\\d+)\"")
         val suites = results.get().asFile.walkTopDown().filter { it.name.endsWith(".xml") }
@@ -116,11 +117,34 @@ val testFailures = tasks.register("testFailures") {
         val skipped = suites.sumOf { it[1] }
         val failed = suites.sumOf { it[2] + it[3] }
         if (failed > 0) {
-            throw GradleException("$failed of $total tests failed. Report: build/reports/tests/test/index.html")
+            throw GradleException("$failed of $total tests failed. Report: build/reports/tests/$testTask/index.html")
         }
         val ran = total - skipped
-        logger.quiet(if (skipped == 0) "All $total tests passed." else "All $ran tests that ran passed; $skipped skipped.")
+        logger.quiet(
+            when {
+                skipped == 0 -> "All $total tests passed."
+                ran == 0 -> "No tests ran; $skipped skipped."
+                else -> "All $ran tests that ran passed; $skipped skipped."
+            },
+        )
     }
+}
+val testFailures = registerFailureSummary("test")
+registerFailureSummary("integrationTest")
+
+// The container tests' task, integrationTest, reports the same way, where a project has one.
+tasks.withType<Test>().matching { it.name == "integrationTest" }.configureEach {
+    useJUnitPlatform()
+    ignoreFailures = true
+    testLogging {
+        quiet {
+            events("passed", "failed", "skipped")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            showStackTraces = false
+            showCauses = false
+        }
+    }
+    finalizedBy("integrationTestFailures")
 }
 
 tasks.test {

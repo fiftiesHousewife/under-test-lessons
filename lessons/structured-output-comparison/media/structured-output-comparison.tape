@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's total. It adds up the prices, and forgets the quantities."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysOrderSummary 17 20 "today's total"`
+Type@1ms `show TodaysOrderSummary 18 21 "today's total"`
 Enter
 Sleep 300ms
 Show
@@ -135,7 +135,7 @@ Sleep 300ms
 Type@1ms `note "The total that multiplies price by quantity:"`
 Enter
 Sleep 300ms
-Type@1ms `show FixedOrderSummary 17 20 "the fixed total"`
+Type@1ms `show FixedOrderSummary 18 21 "the fixed total"`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:structured-output-comparison:test"`
