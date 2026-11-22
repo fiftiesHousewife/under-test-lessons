@@ -155,7 +155,7 @@ Sleep 300ms
 Type@1ms `note "The consumer with a *transacted* session: commit after recording, roll back on failure:"`
 Enter
 Sleep 300ms
-Type@1ms `show FixedPaymentConsumer 29 44 "the fixed consumer" --zoom 36-40`
+Type@1ms `show FixedPaymentConsumer 30 45 "the fixed consumer" --zoom 37-41`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:message-consumers:test"`

@@ -36,4 +36,15 @@ class PaymentsOnABrokerTest {
         assertThat(broker.browse(EmbeddedBroker.DEAD_LETTERS)).as("dead-letter queue")
                 .isEqualTo(List.of(ExampleMessages.forOrder("A-1003")));
     }
+
+    @Test
+    void aMessageDeliveredAgainIsRecordedOnce() throws JMSException {
+        final BusyOnceBook book = new BusyOnceBook();
+        final String payment = ExampleMessages.forOrder("A-1001");
+        broker.sendPayments(List.of(payment, payment));
+
+        Consumers.using(broker.factory(), book).takeWaiting();
+
+        assertThat(book.recorded()).as("payments recorded for an order delivered twice").hasSize(1);
+    }
 }

@@ -23,6 +23,11 @@ final class BusyOnceBook implements PaymentBook {
         payments.add(payment);
     }
 
+    @Override
+    public boolean has(final String order) {
+        return payments.stream().anyMatch(payment -> payment.order().equals(order));
+    }
+
     List<Payment> recorded() {
         return List.copyOf(payments);
     }

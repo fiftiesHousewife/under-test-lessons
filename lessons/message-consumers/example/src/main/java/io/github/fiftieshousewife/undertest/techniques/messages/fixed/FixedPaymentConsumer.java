@@ -1,5 +1,6 @@
 package io.github.fiftieshousewife.undertest.techniques.messages.fixed;
 
+import io.github.fiftieshousewife.undertest.techniques.messages.Payment;
 import io.github.fiftieshousewife.undertest.techniques.messages.PaymentBook;
 import io.github.fiftieshousewife.undertest.techniques.messages.PaymentConsumer;
 import io.github.fiftieshousewife.undertest.techniques.messages.PaymentMessages;
@@ -43,8 +44,15 @@ public final class FixedPaymentConsumer implements PaymentConsumer {
         }
     }
 
+    /**
+     * Records the message's payment once. A transacted session can deliver a message again after its payment was
+     * recorded, if the commit then failed, so a payment already in the book is not recorded a second time.
+     */
     @Override
     public void handle(final Message message) throws JMSException {
-        book.record(PaymentMessages.read(message));
+        final Payment payment = PaymentMessages.read(message);
+        if (!book.has(payment.order())) {
+            book.record(payment);
+        }
     }
 }
