@@ -4,48 +4,45 @@ Sources: Martin Fowler, "Mocks Aren't Stubs" (martinfowler.com, 2007) for the na
 xUnit Test Patterns (2007), which defines fakes; ArchUnit (archunit.org) for keeping connection code behind the
 interface.
 
-## intro: What is a fake?
-- A small, working stand-in for a real system, in memory
-- It behaves like the real thing in the ways that matter, such as delivering on commit
-- The code reaches the real system through an interface, so a test can hand over the fake
-Picture: queue
-Say: A fake is a small, working stand-in for a real system, held in memory. It behaves like the real thing in the
-  ways that matter, such as delivering messages only when they are committed. The code reaches the real system through
-  an interface, so a test can hand over the fake instead.
+## intro: A £150 order never reaches the fraud check
+- An order of £150 should go to the warehouse, and for a fraud check
+- The code commits the queue too early, so the fraud check message is never delivered
+- The mock test passes: every call it lists was made
+Picture: bug
+Say: Here is the problem. A customer places an order of £150. It should go to the warehouse, and, because it is £100
+  or more, for a fraud check as well. But the code commits the queue too early, before it sends the fraud check
+  message. So that message is never delivered. And the test passes. It uses a mock, a stand-in that only records the
+  calls made. Every call the test lists was made, so it can't see that the message never arrived.
 
 ## intro: Our example: orders on a message queue
 - Every order is sent to the warehouse
 - Orders of £100 or more are also sent for a fraud check
 - The queue delivers messages only when they are committed
 Picture: basket
-Say: Our example sends orders on a message queue. Every order goes to the warehouse. Orders of a hundred pounds or more
-  also go for a fraud check. And the queue delivers messages only when they are committed.
+Say: Our example sends orders on a message queue. Every order goes to the warehouse. Orders of £100 or more also go
+  for a fraud check. And the queue delivers messages only when they are committed.
 
-## intro: What we'll compare
-- The code under test: today's order placement, which commits too early
-- A mock queue: checks each call was made
-- A fake queue: checks what was delivered
-Picture: scales
-Say: Here is what we will compare. The code under test is today's order placement, which commits too early.
-  [pause 300ms] A mock queue checks that each call was made. [pause 300ms] And a fake queue checks what was actually
-  delivered.
+## intro: The fix: a fake queue that delivers on commit
+- A fake is a small, working stand-in, kept in memory
+- It holds messages until commit, then delivers them, as the real queue does
+- The code reaches the queue through an interface, so a test can hand over the fake
+- The test checks what was delivered, not which calls were made
+Picture: queue
+Say: The fix is a fake queue. A fake is a small, working stand-in for a real system, kept in memory. This one holds
+  messages until they are committed, then delivers them, just as the real queue does. The shop's code reaches the
+  queue through an interface, a short list of what a queue can do, so a test can hand over the fake instead. And the
+  test checks what was delivered, not which calls were made.
 
-## intro: Why mocks can mislead
-- A mock test lists the calls the code makes, so it repeats the code
-- It can't see behaviour, such as what a commit does
-- It breaks when the code is tidied, even when the results are the same
-Picture: magnifier
-Say: Why not just use mocks? [pause 1600ms] A mock test lists the calls the code makes, so it repeats the code, line by
-  line. It can't see the system's behaviour, such as what a commit does. And it breaks whenever the code is tidied,
-  even when the results are just the same.
-
-## intro: How a fake works
-- It implements the same interface as the real connection code
-- It keeps state: here, messages waiting, and messages delivered
-- Tests check that state: what arrived, not how
+## intro: How the fake looks
+- The interface: send(topic, message) and commit()
+- The fake: class InMemoryMessageQueue implements MessageQueue
+- The test: assertThat(queue.delivered("fraud-checks")).containsExactly("A-1 15000")
+- Today: expected ["A-1 15000"], but the fraud checks were []
 Picture: robot
-Say: A fake implements the same interface as the real connection code. It keeps state: here, the messages waiting, and
-  the messages delivered. And tests check that state: what arrived, not how it got there.
+Say: Here is how it looks. The interface has 2 methods: send a message on a topic, and commit. The fake implements
+  that interface, with a list of messages waiting, and a list of messages delivered. The test places an order of
+  15000 pence, that's £150, and checks what was delivered for fraud checks. Today, it expected that order, and found
+  nothing.
 
 ## closing: When to use a fake
 - For systems the code talks to a lot: queues, stores, caches, file systems

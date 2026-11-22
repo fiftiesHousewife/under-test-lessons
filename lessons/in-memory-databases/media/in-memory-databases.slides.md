@@ -9,14 +9,16 @@ code with it); h2database.com licence page (MPL 2.0 or EPL 1.0); this repository
 inside a company (many company laptops, Windows ones especially, can't run containers); the toolkit's
 database-unit-tests technique (an in-memory database is not evidence of what a different database product does).
 
-## intro: What is an in-memory database in a test?
-- A database that runs inside the test itself, and keeps its data in memory
-- Each test can have a new one, with the real schema, in milliseconds
-- Nothing to install, and no container, so the tests run on any machine
-Picture: database
-Say: An in-memory database runs inside the test itself, and keeps its data in memory. Each test can have a new one,
-  with the real schema, in a few milliseconds. There's nothing to install, and no container, so the tests run on any
-  machine, even the many company laptops where containers can't run.
+## intro: The shop's first invoice is number 0
+- A new shop's first invoice should be number 1, but the code gives it 0
+- The tests pass: they share one test database that is never empty
+- It holds 2 old invoices, and every row earlier runs left behind
+- So the tests can only check "more than 0", and the bug hides
+Picture: bug
+Say: Here is the problem. A new shop's first invoice should be number 1. The code gives it number 0. And the tests
+  pass. They share one test database, set up by hand long ago, and it is never empty. It holds 2 old invoices, and
+  every row that earlier runs left behind. So the tests can't know what the next number should be. They only check
+  that it's more than 0, and the bug hides behind the leftovers.
 
 ## intro: Our example: a shop's invoice numbers
 - Every invoice the shop sends gets its own number
@@ -26,35 +28,28 @@ Picture: statement
 Say: Our example is a shop's invoices. Every invoice it sends gets its own number. Each new number is one more than
   the highest so far. And the shop's very first invoice should be number 1.
 
-## intro: What we'll compare
-- The code under test: today's invoice book, and its SQL for the next number
-- Weak tests on one shared test database, which every test leaves rows in
-- Strong tests, each on a fresh in-memory database with the real schema
-Picture: scales
-Say: Here is what we will compare. The code under test is today's invoice book, and the SQL that works out the next
-  number. [pause 300ms] Weak tests run on one shared test database, which every test leaves its rows in. [pause 300ms]
-  And strong tests run each on a fresh in-memory database, with the real schema.
+## intro: The fix: a fresh in-memory database for each test
+- An in-memory database runs inside the test, and keeps its data in memory
+- Each test gets a new one, empty, with the real schema, in milliseconds
+- So the tests check exact numbers: 1, then 2, then 3
+- No container needed, so it runs on any machine, even company laptops
+Picture: database
+Say: The fix is to give each test a fresh database of its own. An in-memory database runs inside the test, and keeps
+  its data in memory. Each test gets a new one, empty, with the real schema, the table definitions production uses.
+  It takes a few milliseconds. Starting empty, the tests can check exact numbers: 1, then 2, then 3. And there's no
+  container to run, so the tests work on any machine, even the many company laptops where containers can't run.
 
-## intro: Why a fresh database for each test
-- A shared test database fills up with rows that earlier tests left behind
-- Tests then depend on each other's leftovers, and on the order they run in
-- Setting it up by hand is slow, and its tables drift from production's
-- A fresh database starts empty every time, so leftovers can't hide a bug
-Picture: magnifier
-Say: Why does each test need a fresh database? [pause 1600ms] A shared test database fills up with rows that earlier
-  tests left behind. Tests come to depend on each other's leftovers, and on the order they run in. It's slow to set
-  up by hand, and drifts from production. A fresh database starts empty every time, so no leftover can hide a bug.
-
-## intro: How H2 works
-- H2 is a SQL database written in Java: one library on the test classpath
-- A named in-memory database lives while a connection to it is open
-- Compatibility modes bring it closer to other databases, such as PostgreSQL
-- H2's own documentation says only a small part of the differences are covered
+## intro: How H2 looks
+- jdbc:h2:mem:invoices-1, a named database held in memory
+- ;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+- It lives while a connection is open: close it, and the rows are gone
+- Today: expected [1, 2, 3] but was [0, 1, 2]
 Picture: robot
-Say: H2 is a SQL database written in Java, so it's one library on the test classpath. A named in-memory database
-  lives while a connection to it is open. Compatibility modes bring it closer to other databases, such as
-  PostgreSQL. But H2's own documentation says only a small part of the differences are covered. A mode narrows the
-  gap. It doesn't close it.
+Say: Here is how H2 looks. H2 is a SQL database written in Java, one library for the tests. Each test names its own
+  database, held in memory. A compatibility mode brings it closer to PostgreSQL. But H2's own documentation says only
+  a small part of the differences are covered, so a mode narrows the gap, and doesn't close it. The database lives
+  while a connection to it is open. Close it, and the rows are gone. Today, the numbers expected were 1, 2 and 3.
+  The shop gave 0, 1 and 2.
 
 Include: how-we-build
 

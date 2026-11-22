@@ -4,14 +4,15 @@ Sources: testcontainers.org and github.com/testcontainers/testcontainers-java (M
 2015; now looked after by Docker); postgresql.org documentation, ORDER BY (nulls sort as if larger than any value, so
 last in ascending order, unless NULLS FIRST is given); h2database.com (H2 sorts nulls first by default).
 
-## intro: What is a real database in a test?
-- The test starts the same database production uses, in a container
-- Each test run gets a fresh, empty database, thrown away afterwards
-- Tests that need containers live in their own suite, and skip where there's no container runtime
-Picture: database
-Say: A real database in a test means the test starts the same database production uses, in a container. Each run gets
-  a fresh, empty database, which is thrown away afterwards. And tests that need containers live in a suite of their
-  own, which skips itself on machines with no container runtime.
+## intro: The customer who never ordered is called last
+- Sales should call Bob first: he has never ordered
+- On H2, the in-memory database the tests use, Bob comes first, and the test passes
+- On PostgreSQL, the database production uses, a missing date sorts last, so Bob comes last
+Picture: bug
+Say: Here is the problem. A sales team calls customers who never ordered first. Bob has never ordered, so Bob should
+  be first. The tests run the query on H2, a database held in memory, and there Bob comes first, so the test
+  passes. But production runs PostgreSQL. There, a missing date sorts after every real one, so Bob comes last. The
+  test checked a different database, so it checked a different program.
 
 ## intro: Our example: who to call first
 - Customers, and the date of their last order
@@ -21,31 +22,27 @@ Picture: statement
 Say: Our example keeps customers, and the date of their last order. The sales team calls those who never ordered
   first, then those who ordered longest ago. And that order comes from a SQL query.
 
-## intro: What we'll compare
-- The code under test: today's query, which sorts by the last order date
-- A test on H2, a database held in memory
-- The same test on real PostgreSQL, started by Testcontainers
-Picture: scales
-Say: Here is what we will compare. The code under test is today's query, which sorts by the date of the last order.
-  [pause 300ms] A test runs it on H2, a database held in memory. [pause 300ms] And the same test runs it on real
-  PostgreSQL, started by Testcontainers.
+## intro: The fix: test on the real database
+- Run the test on PostgreSQL itself, started in a container
+- A container is a packaged, private copy of a program: here, a fresh, empty database for each run
+- Tests that need containers live in their own suite, and skip where there's no container runtime
+Picture: database
+Say: The fix is to test on the database production uses. The test starts PostgreSQL itself, in a container. A
+  container is a packaged, private copy of a program, so each run gets a fresh, empty database, thrown away
+  afterwards. Real databases used to mean shared test servers, slow and fragile. Containers make them quick. Tests
+  that need containers live in a suite of their own, which skips itself on machines with no container runtime.
 
-## intro: Why an in-memory database isn't enough
-- Databases differ: sorting, dates, text, locking, the SQL they accept
-- A test on a different database checks a different program
-- Real databases used to mean shared test servers; containers make them quick and private
-Picture: magnifier
-Say: Why isn't an in-memory database enough? [pause 1600ms] Databases differ, in sorting, dates, text, locking, and even
-  the SQL they accept. A test on a different database is checking a different program. Real databases used to mean
-  shared test servers, slow and fragile. Containers make them quick, and private to each test run.
-
-## intro: How Testcontainers works
-- Name the image, such as postgres:17-alpine, in the test
-- It starts the container before the tests, on a free port, and gives the test its address
-- It stops and removes the container when the tests finish
+## intro: How Testcontainers looks
+- @Testcontainers(disabledWithoutDocker = true)
+- @Container static final PostgreSQLContainer POSTGRES = ... "postgres:17-alpine"
+- The test asks it for the address: POSTGRES.getJdbcUrl()
+- The fix in the query: ORDER BY last_order NULLS FIRST
 Picture: robot
-Say: With Testcontainers, you name the database image in the test. It starts the container before the tests, on a free
-  port, and gives the test its address and password. When the tests finish, it stops the container and removes it.
+Say: Here is how Testcontainers looks. A label on the test class tells it to skip the tests where there is no
+  container runtime. Another label marks the container, named by its image, here a small build of PostgreSQL
+  version 17. Testcontainers starts it before the tests, on a free port, and gives the test its address and
+  password. When the tests finish, it removes it. And the fix to the query is to say, in so many words, that missing
+  dates come first.
 
 Include: how-we-build
 

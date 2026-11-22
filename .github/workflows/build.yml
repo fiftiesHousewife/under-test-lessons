@@ -38,11 +38,9 @@ jobs:
 
   # The lessons on Windows, run the way a person there runs them: gradlew.bat, with Windows' own line endings in
   # play. Container tests skip themselves (the runner's Docker runs only Windows containers). The video tools' tests,
-  # which use shell scripts as stand-ins, and the production tools that make videos, run on the Linux job only. Not yet required: it reports while
-  # the first Windows failures are found and fixed.
+  # which use shell scripts as stand-ins, and the production tools that make videos, run on the Linux job only.
   windows:
     runs-on: windows-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v5
       - uses: actions/checkout@v5

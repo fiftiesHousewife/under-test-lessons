@@ -11,15 +11,16 @@ snapshot); kafka.apache.org design documentation (consumer groups; saving the po
 at-most-once, after processing at-least-once); the toolkit's research on capturing and cleaning data (browsing a JMS
 queue and reading a Kafka topic with its own consumer group, in non-production first).
 
-## intro: What is a message consumer test?
-- Many systems talk by messages, through a broker: a program that holds messages on queues until they are taken
-- JMS (Jakarta Messaging) is the Java standard for sending and taking them
-- A message consumer test sends real messages to a real broker, started inside the test, and checks what the consumer did
-Picture: queue
-Say: Many systems talk to each other by messages, through a broker. A broker is a program that holds messages on
-  queues, until another program takes them. In Java, the standard way to send and take them is JMS, now called Jakarta
-  Messaging. A message consumer test sends real messages to a real broker, started inside the test, and checks what
-  the consumer did with them.
+## intro: A payment is lost, and another is recorded twice
+- When the payment book is busy for a moment, payment A-1002 is lost for good
+- When a payment arrives a second time, A-1001 is recorded twice
+- The old till's message, which no one can read, just disappears
+- The unit test passes: it hands the consumer one message, with no broker behind it
+Picture: bug
+Say: Here is the problem. A shop records card payments sent from its tills. When the payment book is busy for a
+  moment, one payment, order A-1002, is lost for good. When a payment arrives a second time, order A-1001 is
+  recorded twice. And a message from an old till, which no one can read, simply disappears. The unit test passes. It
+  hands the consumer one message it built by hand, so it can't see any of this.
 
 ## intro: Our example: card payments for a shop
 - The till sends one message per card payment: the order, the customer and the amount in pence
@@ -32,43 +33,31 @@ Say: Our example is a shop's card payments. The till sends one message for each 
   book. The book is a database, so now and then it is busy for a moment. And one old till still sends pounds, so one
   message can never be read.
 
-## intro: What we'll compare
-- The code under test: today's consumer, which acknowledges each message as soon as it arrives
-- A unit test: one hand-built message, handed straight to the consumer
-- Tests on a broker: the example messages sent to Artemis, then what was recorded, and what is left on each queue
-Picture: scales
-Say: Here is what we will compare. The code under test is today's consumer, which acknowledges each message as soon
-  as it arrives. [pause 300ms] A unit test hands it one hand-built message. [pause 300ms] And tests on a broker send
-  the example messages to Artemis, then check what was recorded, and what is left on each queue.
+## intro: The fix: test on a real broker, inside the test
+- A broker holds messages on queues until they are taken: JMS is Java's standard for it
+- Today's consumer acknowledges each message on arrival, so the broker forgets it before it is recorded
+- A message consumer test sends the example messages to a real broker, and checks what was recorded
+- The example messages were browsed from a test queue, without taking any, then cleaned
+Picture: queue
+Say: The fix is to test on a real broker. A broker is a program that holds messages on queues, until another program
+  takes them. In Java, the standard way to send and take them is JMS, now called Jakarta Messaging. Acknowledging a
+  message tells the broker it can forget it. Today's consumer acknowledges each one as it arrives, before the payment
+  is recorded, so a failure loses it. A message consumer test sends the example messages to a real broker, started
+  inside the test, and checks what was recorded, and what is left on each queue. The example messages were read from
+  a test queue with a queue browser, which takes none off it. Then they were cleaned of secrets, and each identifier
+  was swapped for a substitute that stays the same.
 
-## intro: Why test on a real broker
-- Acknowledging a message tells the broker to forget it
-- Acknowledge before the work is done, and a failure loses the message
-- A hand-built message has no broker behind it, so the test can't see either
-Picture: magnifier
-Say: Why test on a real broker? [pause 1600ms] Acknowledging a message tells the broker it can forget it. If the
-  consumer acknowledges before the work is done, any failure loses the message for good. A hand-built message has no
-  broker behind it, so a unit test can't see when it was acknowledged, or where a failed one went.
-
-## intro: Example messages: browsed, then cleaned
-- A queue browser reads every message on a JMS queue, without taking any off it
-- On Kafka, the same comes from a consumer with its own group, which leaves other readers alone
-- Collect in a test environment first, then clean: drop secrets, replace identifiers with substitutes that stay the same
-Picture: files
-Say: Where do example messages come from? [pause 1600ms] On a JMS queue, a queue browser reads every message without
-  taking any off it, though it may miss some while other consumers are busy. On Kafka, a consumer with its own group
-  does the same, and leaves the other readers alone. Collect them in a test environment first, then clean them. Drop
-  any secrets, and replace each identifier with a substitute that stays the same, so the messages still fit together.
-
-## intro: How an embedded Artemis broker works
-- The broker is plain Java, so a test can start it in a fraction of a second
-- Clients in the same program reach it in memory, with no network
-- With persistence off, nothing is written to disk
-- Redelivery and the dead-letter queue are set as on production's broker
+## intro: How an embedded Artemis broker looks
+- new EmbeddedActiveMQ(), reached in memory at vm://0, with setPersistenceEnabled(false)
+- As production: setMaxDeliveryAttempts(3), setDeadLetterAddress("payments.dead-letter")
+- The fix: createSession(Session.SESSION_TRANSACTED), then commit or rollback
+- Today: payments recorded expected [A-1001, A-1002, A-1004] but was [A-1001, A-1004]
 Picture: server
-Say: Artemis is plain Java, so a test can start it in a fraction of a second. Clients in the same program reach it in
-  memory, with no network at all. With persistence turned off, it writes nothing to disk. And the test sets up
-  redelivery and the dead-letter queue as production's broker does.
+Say: Here is how it looks. Artemis is a broker written in plain Java, so the test starts it in a fraction of a
+  second. The consumer reaches it in memory, with no network, and nothing is written to disk. The test sets it up as
+  production's broker is set up: 3 tries at each message, then the dead-letter queue, where messages no one can
+  take are kept. The fixed consumer commits each message only after the payment is recorded, and rolls it back on a
+  failure, so the broker delivers it again. Today, the test expected 3 payments recorded, and found 2.
 
 Include: how-we-build
 

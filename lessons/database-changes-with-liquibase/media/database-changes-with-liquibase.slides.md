@@ -4,14 +4,16 @@ Sources: liquibase.org and github.com/liquibase/liquibase (changelogs and change
 FSL-1.1-ALv2, which becomes Apache 2.0 after two years, per the licence in its Maven Central POM); postgresql.org
 data types (no TINYINT; SMALLINT is the smallest integer type).
 
-## intro: What is a database changelog?
-- The database's history, written down: one change at a time, in order
-- A tool such as Liquibase applies the changes a database hasn't had yet
-- The same changelog builds every database: developers', test, and production
-Picture: changelog
-Say: A database changelog is the database's history, written down: one change at a time, in order. A tool such as
-  Liquibase applies the changes a database hasn't had yet. So the same changelog builds every database: the
-  developers' databases, the test databases, and production.
+## intro: The change works on H2, and fails on production
+- A new change adds a loyalty level to each customer, as a TINYINT column
+- H2, the developers' in-memory database, accepts it, and the test passes
+- PostgreSQL, the database production uses, has no TINYINT, and refuses it
+- A failed change stops a release part way through, on production data
+Picture: bug
+Say: Here is the problem. A shop adds a loyalty level to each customer. The change asks for a column of a very small
+  number type, called tiny int. The developers' in-memory database, H2, accepts it, and the test passes. But
+  production runs PostgreSQL, which has no such type, and refuses the change. A failed change stops a release part
+  way through, on production data. And changes are hard to undo once they've run.
 
 ## intro: Our example: a loyalty level
 - Customers are stored in a customers table
@@ -21,32 +23,26 @@ Picture: statement
 Say: Our example stores customers in a customers table. A new change adds a loyalty level to each customer. And that
   change was only ever tried on the developers' in-memory database.
 
-## intro: What we'll compare
-- The code under test: today's changelog, with one change written as raw SQL
-- A test applying every change to H2, in memory
-- The same test applying every change to real PostgreSQL, in a container
-Picture: scales
-Say: Here is what we will compare. The code under test is today's changelog, with one change written as raw SQL.
-  [pause 300ms] A test applies every change to H2, in memory. [pause 300ms] And the same test applies every change to
-  real PostgreSQL, in a container.
+## intro: The fix: a changelog, tested on the real database
+- A changelog is the database's history, written down: one change at a time, in order
+- Liquibase applies the changes a database hasn't had yet, so one changelog builds every database
+- Write the change as a Liquibase change, not raw SQL, and apply every change to PostgreSQL in a test
+Picture: changelog
+Say: The fix comes in 2 parts. The changes are kept in a changelog: the database's history, written down, one change
+  at a time, in order. Liquibase applies the changes a database hasn't had yet. So the same changelog builds every
+  database: the developers', the test ones, and production. First, write the change as a Liquibase change, not raw
+  SQL, so it becomes the right SQL for each database. Then apply every change to real PostgreSQL, in a test.
 
-## intro: Why test database changes on the real database
-- A failed change stops a release part way through, on production data
-- Databases accept different SQL and types
-- Changes are hard to undo once they've run, so find out first
-Picture: magnifier
-Say: Why test changes on the real database? [pause 1600ms] A failed change stops a release part way through, on
-  production data. Databases accept different SQL, and different types. And changes are hard to undo once they've run,
-  so you want to find out first.
-
-## intro: How Liquibase works
-- A changelog lists changesets, each with an id and author
-- It records which changesets each database has had, in a table of its own
-- Changes written as Liquibase changes become the right SQL for each database
+## intro: How a Liquibase changelog looks
+- changeSet: id: add-loyalty-level, author: shop
+- Today: sql: ALTER TABLE customers ADD COLUMN loyalty_level TINYINT
+- Fixed: addColumn: tableName: customers, type: tinyint
+- On PostgreSQL, Liquibase writes SMALLINT, its smallest number type
 Picture: robot
-Say: A Liquibase changelog lists change sets, each with an id and an author. Liquibase records which change sets each
-  database has had, in a table of its own. And changes written as Liquibase changes, rather than raw SQL, become the
-  right SQL for each kind of database.
+Say: Here is how a changelog looks. Each change set has an id and an author, here add loyalty level, by the shop.
+  Liquibase records which change sets each database has had, in a table of its own. Today's change is raw SQL, sent
+  to the database as written. The fixed one is a Liquibase change: add a column to the customers table. On
+  PostgreSQL, Liquibase turns its type into small int, the smallest number type PostgreSQL has.
 
 Include: how-we-build
 

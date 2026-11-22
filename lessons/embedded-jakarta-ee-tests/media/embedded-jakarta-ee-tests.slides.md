@@ -3,48 +3,46 @@
 Sources: weld.cdi-spec.org (Weld, the reference implementation of CDI, Apache 2.0 licence, used in WildFly and other
 servers); github.com/weld/weld-testing (weld-junit5); jakarta.ee (CDI, first released as part of Java EE 6 in 2009).
 
-## intro: What is an embedded Jakarta EE test?
-- Old enterprise Java runs inside an application server, which wires its parts together
-- An embedded test starts just the piece it needs, such as the CDI (Contexts and Dependency Injection) container, inside the test
-- The parts are wired exactly as in production, without deploying anything
-Picture: server
-Say: Old enterprise Java runs inside an application server, which wires its parts together. An embedded test starts
-  just the piece it needs, such as the container that does the wiring, inside the test itself. The parts are wired
-  exactly as they are in production, without deploying anything.
+## intro: The checkout charges 5% VAT, not 20%
+- On a £10 item, the checkout should charge £12: 20% VAT
+- Since a reduced rate of 5% was added, the server wires in that one, and charges £10.50
+- The unit test passes: it builds the checkout by hand, and hands it the rate it wants
+Picture: bug
+Say: Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. But since a reduced rate of
+  5% was added, the server gives the checkout that rate instead, and it charges £10.50. Nobody changed the checkout's
+  code. And the unit test passes, because it builds the checkout by hand, and hands it the rate it wants. It never
+  sees what the server chooses.
 
 ## intro: Our example: VAT at the checkout
 - The checkout adds VAT to a net price
 - The standard rate is 20%, marked as standard
 - A reduced rate of 5% was added later, with no mark
 Picture: tag
-Say: Our example is a checkout that adds VAT to a net price. The standard rate is twenty percent, and is marked as
-  standard. A reduced rate of five percent was added later, with no mark.
+Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. A
+  reduced rate of 5% was added later, with no mark.
 
-## intro: What we'll compare
-- The code under test: today's checkout, which asks for "a tax rate"
-- A unit test: builds the checkout by hand, with the rate it chooses
-- A test in a container: Weld wires the checkout as the server does
-Picture: scales
-Say: Here is what we will compare. The code under test is today's checkout, which asks the container for a tax rate.
-  [pause 300ms] A unit test builds the checkout by hand, with the rate it chooses. [pause 300ms] And a test in a
-  container lets Weld wire the checkout, as the server does.
+## intro: The fix: let the real wiring build the checkout
+- Old enterprise Java runs in an application server, whose container wires the parts together
+- An embedded test starts just that container, inside the test, in seconds
+- It wires the checkout exactly as production does, so the test sees the wrong rate
+- The fixed checkout asks for the rate marked standard
+Picture: server
+Say: The fix is to let the real wiring build the checkout. Old enterprise Java runs inside an application server.
+  Its container decides what each part gets, and wires them together. The standard for that wiring is called CDI,
+  short for contexts and dependency injection. An embedded test starts just that container, inside the test, in
+  seconds, with no server to deploy to. It wires the checkout exactly as production does, so the test sees the wrong
+  rate. And the fixed checkout asks for the rate marked standard.
 
-## intro: Why test the wiring
-- In enterprise Java, the container decides what each part gets
-- A new class can change that, without touching the code that uses it
-- Tests on a real server are slow, so they're rare; embedded tests take seconds
-Picture: magnifier
-Say: Why test the wiring? [pause 1600ms] In enterprise Java, the container decides what each part gets. Adding a new
-  class can change that, without touching the code that uses it. And tests on a real server are slow, so teams run
-  them rarely. Embedded tests take seconds.
-
-## intro: How Weld's JUnit support works
-- List the beans the test needs; Weld starts a container with just those
-- Ask the container for a bean, and it arrives fully wired
-- The container stops when the test ends
+## intro: How Weld's JUnit support looks
+- @ExtendWith(WeldJunit5Extension.class)
+- @WeldSetup WeldInitiator.of(checkout, StandardRate.class, ReducedRate.class)
+- weld.select(...).get().totalPence(1000), expected 1200
+- Today: expected 1200 but was 1050
 Picture: robot
-Say: With Weld's JUnit support, you list the beans the test needs, and Weld starts a container with just those. Ask
-  the container for a bean, and it arrives fully wired. When the test ends, the container stops.
+Say: Here is how it looks, with Weld, the container many servers use. A JUnit extension starts it for each test. The
+  test lists the parts it needs: the checkout and both rates. Weld starts a container with just those. The test asks
+  it for the checkout, which arrives fully wired, and works out the total on 1000 pence. Today it expected 1200
+  pence, and got 1050.
 
 Include: how-we-build
 

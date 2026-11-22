@@ -12,14 +12,16 @@ testing", MIT licence, used in Shopify's development and test environments since
 and other toxics); java.testcontainers.org/modules/toxiproxy (the Testcontainers module that runs it); pragprog.com,
 Release It! by Michael Nygard (second edition 2018; its stability patterns include Timeouts and Circuit Breaker).
 
-## intro: What is testing slow and failing dependencies?
-- Tests that make another service slow, or broken, on purpose
-- An answer that comes late, a connection that drops, an answer cut short
-- Each test checks your code gives a clear answer, in a known time
-Picture: plug
-Say: Testing slow and failing dependencies means making another service slow, or broken, on purpose, in a test. An
-  answer that comes late. A connection that drops. An answer that is cut short. Each test checks that your code still
-  gives a clear answer, in a time you know.
+## intro: A slow supplier holds up the shop
+- When the supplier answers 5 seconds late, the shop waits all 5, with no limit
+- When the connection drops, the shop throws an error page at the customer
+- The tests pass: the stand-in supplier always answers at once
+Picture: bug
+Say: Here is the problem. A shop asks its supplier how many kettles are in stock. When the supplier answers 5
+  seconds late, the shop waits all 5 seconds, because it sets no limit on how long to wait. When the connection
+  drops, the shop throws an error at the customer. And the tests pass, because the stand-in supplier in the tests
+  always answers at once. Real services slow down and drop connections, most often when they are busy. And one slow
+  supplier then holds up every page that asks it.
 
 ## intro: Our example: checking a supplier's stock
 - A shop asks its supplier how many kettles are in stock
@@ -31,38 +33,26 @@ Say: Our example is an online shop. Before it promises a delivery date, it asks 
   in stock, say kettles. The supplier answers with a number, as JSON. When the supplier can't say, the shop should
   tell the customer it will confirm by email. It must never keep the customer waiting, or show them an error page.
 
-## intro: What we'll compare
-- The code under test: today's stock client
-- The weak tests: a stand-in supplier answers at once, with stock or with 503
-- The strong tests: the stand-in answers 5 seconds late, or breaks the connection
-- Each strong test allows the shop 3 seconds, and expects "supplier unavailable"
-Picture: scales
-Say: Here is what we will compare. The code under test is today's stock client. [pause 300ms] The weak tests use a
-  stand-in supplier that answers at once, either with the stock or with an outage, 503. [pause 300ms] The strong tests
-  make the same stand-in answer 5 seconds late, or break the connection. Each one allows the shop 3 seconds, and
-  expects a clear answer: supplier unavailable.
-
-## intro: Why a healthy stand-in isn't enough
-- Real services slow down and drop connections, often under load
-- Without a timeout, Java's HTTP client waits for ever
-- One slow supplier then holds up every page that asks it
-- The real supplier won't fail on demand, so the failure is never tested
-Picture: bug
-Say: Why isn't a healthy stand-in enough? [pause 1600ms] Real services slow down, and drop connections, most often
-  when they are busy. Without a timeout, Java's own HTTP client waits for ever. So one slow supplier holds up every
-  page that asks it, and the shop grinds to a halt. And the real supplier won't fail when you ask it to, so that path
-  is never tested.
+## intro: The fix: make the supplier fail, on purpose
+- In the test, the stand-in answers late, drops the connection, or sends garbage
+- The shop is allowed 3 seconds, and must say "supplier unavailable"
+- The code sets a time limit, a timeout, of half a second
+Picture: plug
+Say: The fix is to make the supplier slow, or broken, on purpose, in a test. This is called testing slow and failing
+  dependencies. The stand-in answers 5 seconds late, or drops the connection, or sends an OK status followed by
+  garbage. Each test allows the shop 3 seconds, and expects a clear answer: supplier unavailable. To pass, the code
+  sets a timeout, a limit on how long it will wait, of half a second.
 
 ## intro: How WireMock makes a service fail
-- A fixed delay holds each answer back, for as long as the test says
-- Faults break the answer: an empty response, garbage after an OK status
-- Or a reset connection, as when the other side gives up
-- All inside the test's own process: no network, no containers
+- Late: okJson("{\"units\": 12}").withFixedDelay(5000)
+- Broken: aResponse().withFault(Fault.CONNECTION_RESET_BY_PEER)
+- The limit: assertTimeoutPreemptively(THREE_SECONDS, ...)
+- Today: execution timed out after 3000 ms
 Picture: server
-Say: WireMock is a stand-in web server that runs inside the test. A fixed delay holds each answer back, for as many
-  milliseconds as the test says. Faults break the answer instead. An empty response. An OK status, followed by
-  garbage. Or a connection reset, as when the other side gives up. It all happens inside the test's own process, with
-  no network and no containers.
+Say: Here is how WireMock makes a service fail. A fixed delay holds the answer back, here for 5000 milliseconds.
+  A fault breaks the answer instead: a reset connection, an empty response, or garbage after an OK status. The test
+  gives the shop 3 seconds, and stops it if it takes longer, so a shop with no timeout can't hang the build. Today,
+  the slow supplier test stopped after 3 seconds, with the shop still waiting.
 
 Include: how-we-build
 

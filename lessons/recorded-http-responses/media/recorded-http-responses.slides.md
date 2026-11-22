@@ -5,13 +5,17 @@ playback described in its documentation, including recording from a target and c
 Maven Central (com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); RFC 2104 (HMAC, a keyed hash
 for signing data); Java Security Standard Algorithm Names (HmacSHA256, which every Java must provide).
 
-## intro: What are recorded HTTP responses?
-- Answers from a web service you don't own, saved as files
-- A local stand-in server replays them to your code
-- Your code can't tell the difference, so tests run without the real service
-Picture: camera
-Say: Recorded HTTP responses are answers from a web service you don't own, saved as files. A local stand-in server
-  replays them to your code. Your code can't tell the difference, so its tests run without the real service.
+## intro: The postcode client trips on the rare answers
+- Asked for a postcode the supplier doesn't know, it returns an empty town, not "no town"
+- When the supplier is down, it fails reading a web page as data, not "the supplier answered 503"
+- Nobody saw: the only test needs the real service and an account, so it is skipped
+- And recordings saved as recorded keep a person's name, email address and password token
+Picture: bug
+Say: Here is the problem. A shop's postcode client works for a postcode the supplier knows. Ask for one it doesn't
+  know, and the client hands back an empty town, instead of saying there is none. When the supplier is down, it
+  answers 503, with a web page. The client tries to read that page as data, and fails with a confusing error. Nobody
+  saw either one, because the only test needs the real service and an account, so it is skipped. And when we record
+  the supplier's answers to test with, the files keep a person's name, email address and password token.
 
 ## intro: Our example: a postcode lookup
 - A supplier's web service turns a postcode into a town
@@ -19,48 +23,33 @@ Say: Recorded HTTP responses are answers from a web service you don't own, saved
 - Our client must handle all three
 Picture: map
 Say: Our example looks up postcodes, using a supplier's web service, which turns a postcode into a town. The service
-  can answer in three ways: here is the town; I don't know that postcode; or, sorry, I'm down. Our client must handle
+  can answer in three ways: here is the town. I don't know that postcode. Or, sorry, I'm down. Our client must handle
   all three.
 
-## intro: What we'll compare
-- The code under test: today's client, written against the happy answer
-- A test against the real service: needs the network and an account
-- Tests with WireMock: replay recorded answers, including the rare ones
-- Recordings saved as recorded, and recordings cleaned before they are saved
-Picture: scales
-Say: Here is what we will compare. The code under test is today's client, written against the happy answer.
-  [pause 300ms] A test against the real service needs the network and an account. [pause 300ms] And tests with
-  WireMock replay recorded answers, including the rare ones. We will also make the recordings, and compare saving
-  them as recorded with cleaning them first.
+## intro: The fix: replay the supplier's answers
+- Save each answer as a file: a recorded HTTP response
+- A stand-in server in the test replays them: no network, no account
+- Add the rare answers by hand: the unknown postcode, the outage
+- Clean each recording before it is saved: drop tokens, swap names for keyed substitutes
+Picture: camera
+Say: The fix is to replay the supplier's answers. Each answer, saved as a file, is called a recorded HTTP response.
+  A stand-in server inside the test replays them to the client, which can't tell the difference. So the tests need
+  no network and no account. The rare answers, the unknown postcode and the outage, are added by hand. And each
+  recording is cleaned before it is saved. The tokens are dropped, and each name and email address is swapped for a
+  keyed substitute. That is a code made from the value and a secret key, with a standard method called H-MAC. The
+  same person always gets the same code, but nobody without the key can work back to them.
 
-## intro: Why real services make poor test partners
-- They are slow, and down when you need them
-- They need accounts and passwords on every test machine
-- They won't fail on demand, so error handling goes untested
-Picture: magnifier
-Say: Why not just use the real service? [pause 1600ms] Real services are slow, and they're down just when you need them.
-  They need accounts and passwords on every test machine. And they won't fail on demand, so the code that handles
-  their errors goes untested.
-
-## intro: How WireMock works
-- It runs a small web server inside the test, on a free port
-- Each recording pairs a request with the answer to send
-- It can record answers from the real service, or you write them by hand
+## intro: How WireMock looks
+- A recording: request GET /postcodes/M1%201AE, response "status": 503
+- The server: new WireMockServer(options().dynamicPort().usingFilesUnderClasspath("supplier"))
+- Recording: startRecording(recordSpec().forTarget(standIn.baseUrl()))
+- Today: expected "the postcode supplier answered 503" but was StreamReadException
 Picture: robot
-Say: WireMock runs a small web server inside the test, on a free port. Each recording pairs a request with the answer
-  to send back. You can record the answers from the real service, or write them by hand, including the errors.
-
-## intro: Recordings can hold personal data
-- A recording is a copy of a real answer, and of the question's headers
-- Names, email addresses and password tokens end up in files everyone can read
-- Clean each recording before it is saved: drop tokens, swap personal data for keyed substitutes
-- A keyed substitute is made with a secret key: the same value always gets the same one
-Picture: tag
-Say: Recordings bring a risk of their own. A recording is a copy of a real answer, and of the question's headers.
-  So names, email addresses and password tokens end up in files that everyone can read. The answer is to clean each
-  recording before it is saved. Drop the tokens, and swap personal data for keyed substitutes. A keyed substitute is
-  made from the value and a secret key, with a standard method called H-MAC. The same value always gets the same
-  substitute, so recordings still match each other. But nobody without the key can work back to the person.
+Say: Here is how WireMock looks. A recording is a small file that pairs a request with the answer to send back. This
+  one says: asked for the postcode M1 1AE, answer 503. The test starts WireMock's server on a free port, with the
+  recordings kept beside the tests. To make recordings, WireMock passes the questions on to a service and saves what
+  comes back. Today, the outage test expected the client to say the supplier answered 503. It got an error from
+  reading a web page as data instead.
 
 Include: how-we-build
 

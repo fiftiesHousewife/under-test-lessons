@@ -41,4 +41,12 @@ class PronunciationTest {
         assertThat(Pronunciation.read(file).forSpeech("Record each record, then record the API."))
                 .isEqualTo("Record each /ɹˈɛkɔːd/, then /ɹɪkˈɔːd/ the A P I.");
     }
+
+    @Test
+    void saysSumsOfMoneyAsAPersonDoes() throws IOException {
+        final Path file = Files.writeString(folder.resolve("p.txt"), "PIT = pit\n");
+        final Pronunciation pronunciation = Pronunciation.read(file);
+        assertThat(pronunciation.forSpeech("£12.50, £1, £150, £1,200, £0.50 and £49.99 with PIT"))
+                .isEqualTo("12 pounds 50, 1 pound, 150 pounds, 1200 pounds, 50 pence and 49 pounds 99 with pit");
+    }
 }

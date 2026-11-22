@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
  * word inside it, and what one rule puts in is never changed by another.
  */
 final class Pronunciation {
+
+    private static final Pattern MONEY = Pattern.compile("£(\\d{1,3}(?:,\\d{3})+|\\d+)(?:\\.(\\d{2}))?");
 
     private final Map<String, String> spoken;
     private final Pattern words;
@@ -45,12 +48,27 @@ final class Pronunciation {
         return new Pronunciation(spoken);
     }
 
-    /** The text with each listed word (whole words only, matching case) replaced by how to say it. */
+    /**
+     * The text with each listed word (whole words only, matching case) replaced by how to say it, and sums of money
+     * said as a person says them: "£12.50" as "12 pounds 50", "£1" as "1 pound".
+     */
     String forSpeech(final String text) {
+        final String money = MONEY.matcher(text).replaceAll(Pronunciation::pounds);
         if (words == null) {
-            return text;
+            return money;
         }
-        return words.matcher(text).replaceAll(found -> Matcher.quoteReplacement(spoken.get(found.group())));
+        return words.matcher(money).replaceAll(found -> Matcher.quoteReplacement(spoken.get(found.group())));
+    }
+
+    /** "£12.50" as "12 pounds 50", "£1.00" as "1 pound", "£0.50" as "50 pence". */
+    private static String pounds(final MatchResult money) {
+        final String whole = money.group(1).replace(",", "");
+        final String pence = money.group(2);
+        if ("0".equals(whole) && pence != null) {
+            return Integer.parseInt(pence) + " pence";
+        }
+        final String unit = "1".equals(whole) ? "pound" : "pounds";
+        return pence == null || "00".equals(pence) ? whole + " " + unit : whole + " " + unit + " " + pence;
     }
 
     private static java.util.List<String> lines(final Path file) {
