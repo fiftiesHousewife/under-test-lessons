@@ -167,15 +167,22 @@ Slides, decks and videos share one look, set by CSS. To rebrand, edit a styleshe
 which always rebuilds every deck and slide image:
 
 ```bash
-./gradlew :lessons:video-tools:buildLessonSlides
+./gradlew :lessons:video-tools:buildLessonSlides                                   # every deck and slide image
+./gradlew :lessons:video-tools:buildLessonSlides -Plesson=mutation-testing         # one lesson
+./gradlew :lessons:video-tools:buildLessonSlides -PlessonPictureFrame=none         # pictures without a frame
+./gradlew :lessons:video-tools:buildLessonSlides -PlessonSlideCss= -PlessonPictures=   # the colour look
+./gradlew :lessons:video-tools:buildLessonDecks -Plesson=mutation-testing -PlessonDeckPdf=true   # a deck and its PDF
 ```
 
-The look is set in `gradle.properties`. By default it is a newspaper style, black ink on newsprint, with cartoons
-drawn in line and hatching:
+Decks are written to `lessons/<id>/media/<id>.deck.html`, and slide images to `lessons/<id>/media/<id>.voice/`.
+
+The look is set in `gradle.properties`. By default it is a newspaper style, black ink on newsprint, with hand-drawn figures in a soft
+round frame, each with a speech bubble saying what its slide is about:
 
 ```properties
 lessonSlideCss=lessons/_shared/slides/themes/newspaper.css
 lessonPictures=lessons/_shared/slides/pictures/ink
+lessonPictureFrame=soft        # or none, or circle
 ```
 
 Point those at your own stylesheet and pictures folder to rebrand (pictures are found by name there first, then in the

@@ -65,7 +65,8 @@ final class SlideDeck {
         final StringBuilder html = new StringBuilder("<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
                 + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>")
                 .append(SlideHtml.escape(title(media))).append("</title><style>\n")
-                .append(SlideHtml.styles(sheets)).append("</style></head><body class=\"deck\">")
+                .append(SlideHtml.styles(sheets)).append("</style></head><body class=\"deck ")
+                .append(SlideHtml.frameClass()).append("\">")
                 .append(SlideHtml.definitions(pictures));
         slides.intro().forEach(slide -> html.append(section(slide, pictures, "")));
         final List<Slide> scenes = scenes(media);

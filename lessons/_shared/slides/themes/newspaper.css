@@ -13,7 +13,8 @@
 h1 { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
 .rule { height: 6px; border-radius: 0; width: 100%; max-width: 600px; }
 li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
-.picture { border: 6px solid #111; box-shadow: 10px 10px 0 #111; }
+.frame-circle .picture { border: 6px solid #111; box-shadow: 10px 10px 0 #111; }
+.frame-soft .picture { background: radial-gradient(circle, #fff 50%, rgba(255, 255, 255, 0) 70%); }
 .picture svg { filter: url(#wobble); overflow: visible; }
 
 /* Every coloured shape becomes white or hatched, outlined in ink. */

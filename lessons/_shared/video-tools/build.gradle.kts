@@ -142,7 +142,10 @@ val pictureFolder = providers.gradleProperty("lessonPictures").filter { it.isNot
 // gradle.properties. Unset, slides describe the repositories without an address.
 val lessonsRepoUrl = providers.gradleProperty("lessonsRepoUrl").orElse("")
 val toolkitRepoUrl = providers.gradleProperty("toolkitRepoUrl").orElse("")
+// How pictures are framed on slides: soft (a blurred round edge), none, or circle. lessonPictureFrame in gradle.properties.
+val pictureFrame = providers.gradleProperty("lessonPictureFrame").orElse("soft")
 tasks.withType<JavaExec>().configureEach {
+    systemProperty("video.pictureFrame", pictureFrame.get())
     systemProperty("video.lessonsRepo", lessonsRepoUrl.get())
     systemProperty("video.toolkitRepo", toolkitRepoUrl.get())
     systemProperty("video.pictures", pictureFolder.get())

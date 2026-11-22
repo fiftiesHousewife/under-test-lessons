@@ -23,7 +23,8 @@ final class SlideHtml {
     /** The page for a slide, styled by the given stylesheets in order, each picture from the first folder with it. */
     static String page(final Slide slide, final List<Path> stylesheets, final List<Path> pictures) {
         return "<!doctype html><html><head><meta charset=\"utf-8\"><style>\n" + styles(stylesheets)
-                + "</style></head><body>" + definitions(pictures) + body(slide, pictures, "") + "</body></html>\n";
+                + "</style></head><body class=\"" + frameClass() + "\">" + definitions(pictures)
+                + body(slide, pictures, "") + "</body></html>\n";
     }
 
     /** Shared picture definitions (hatching, a hand-drawn wobble) that stylesheets can use, if the folder has them. */
@@ -36,6 +37,12 @@ final class SlideHtml {
     static Path picture(final List<Path> pictures, final String name) {
         return pictures.stream().map(folder -> folder.resolve(name + ".svg")).filter(Files::isRegularFile)
                 .findFirst().orElseGet(() -> pictures.getLast().resolve(name + ".svg"));
+    }
+
+    /** How pictures are framed (video.pictureFrame: soft, none or circle), as a class stylesheets can style. */
+    static String frameClass() {
+        final String frame = System.getProperty("video.pictureFrame", "soft").strip();
+        return "frame-" + (frame.matches("soft|none|circle") ? frame : "soft");
     }
 
     /** The stylesheets, one after another, so later ones override earlier ones. */

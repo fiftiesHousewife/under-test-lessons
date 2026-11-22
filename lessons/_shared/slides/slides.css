@@ -33,6 +33,10 @@ li.link { color: var(--accent); font-size: 36px; }
 li.link::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
 .picture { margin: 0; width: 640px; height: 640px; border-radius: 50%; background: var(--disc); display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); }
 .picture svg { width: 480px; height: 480px; }
+/* Frames (lessonPictureFrame): a blurred round edge, none at all, or a hard circle. */
+.frame-soft .picture { background: radial-gradient(circle, var(--disc) 52%, transparent 71%); box-shadow: none; }
+.frame-none .picture { background: none; box-shadow: none; }
+.frame-none .picture svg, .frame-soft .picture svg { width: 560px; height: 560px; }
 
 /* Picture colours */
 .picture .teal { fill: var(--teal); }
