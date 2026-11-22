@@ -12,6 +12,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #78 | [A check lists missing and unused deck clips, and decks out of date](https://github.com/fiftiesHousewife/under-test-lessons/issues/78) | deliverable | Lessons Owner | ai | – |
 | #83 | [Pronunciation rules match words like C++ and apply in one pass, longest first](https://github.com/fiftiesHousewife/under-test-lessons/issues/83) | deliverable | Lessons Owner | ai | – |
 | #84 | [Spoken text has no semicolons](https://github.com/fiftiesHousewife/under-test-lessons/issues/84) | deliverable | Lessons Owner | ai | – |
+| #105 | [Every deck opens with the problem in its example, not with definitions](https://github.com/fiftiesHousewife/under-test-lessons/issues/105) | deliverable | Lessons Owner | ai | – |
 | #66 | [Publish each lesson's video as a release asset, with a manifest](https://github.com/fiftiesHousewife/under-test-lessons/issues/66) | deliverable | Lessons Owner | ai | – |
 | #68 | [The voice is made the same way every time on the machine that renders](https://github.com/fiftiesHousewife/under-test-lessons/issues/68) | deliverable | Lessons Owner | ai | – |
 | #81 | [A manifest records who or what made each deck clip](https://github.com/fiftiesHousewife/under-test-lessons/issues/81) | deliverable | Lessons Owner | ai | – |
