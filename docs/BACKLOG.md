@@ -67,13 +67,13 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |---|---|---|---|---|---|
 | #86 | [Lessons run on Windows](https://github.com/fiftiesHousewife/under-test-lessons/issues/86) | deliverable | Lessons Owner | ai | – |
 | #50 | [Automatic rebranding of each release's videos](https://github.com/fiftiesHousewife/under-test-lessons/issues/50) | deliverable | Lessons Owner | tool | – |
-| #69 | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) | deliverable | Lessons Owner | ai | – |
+| #70 | [CI proves the inside copy builds with only a company's Maven repository](https://github.com/fiftiesHousewife/under-test-lessons/issues/70) | deliverable | Lessons Owner | ai | – |
 | #71 | [The Gradle wrapper's download address is a setting](https://github.com/fiftiesHousewife/under-test-lessons/issues/71) | deliverable | Lessons Owner | ai | – |
 | #72 | [The lesson checks skip, with a message, when the toolkit isn't checked out](https://github.com/fiftiesHousewife/under-test-lessons/issues/72) | deliverable | Lessons Owner | ai | – |
+| #73 | [AGENTS.md and the video skills say which group each step is in](https://github.com/fiftiesHousewife/under-test-lessons/issues/73) | deliverable | Lessons Owner | ai | – |
 | #76 | [A recording script for a person to voice a lesson's clips](https://github.com/fiftiesHousewife/under-test-lessons/issues/76) | deliverable | Lessons Owner | ai | – |
 | #77 | [Decks play recorded clips as .m4a, .wav or .mp3](https://github.com/fiftiesHousewife/under-test-lessons/issues/77) | deliverable | Lessons Owner | ai | – |
-| #70 | [CI proves the inside copy builds with only a company's Maven repository](https://github.com/fiftiesHousewife/under-test-lessons/issues/70) | deliverable | Lessons Owner | ai | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) |
-| #73 | [AGENTS.md and the video skills say which group each step is in](https://github.com/fiftiesHousewife/under-test-lessons/issues/73) | deliverable | Lessons Owner | ai | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) |
+| #103 | [This repo's upkeep tools in a maintainer/ folder](https://github.com/fiftiesHousewife/under-test-lessons/issues/103) | deliverable | Lessons Owner | ai | – |
 
 ## [This repo keeps itself in order: its checks, sync, CI and tools](https://github.com/fiftiesHousewife/under-test-lessons/issues/51)
 
