@@ -38,6 +38,7 @@ test passes. The full plan, with every toolkit technique and its lesson, is in [
 | [Recorded HTTP responses](lessons/recorded-http-responses/README.md) | WireMock replays a supplier's errors, finding two bugs the real service never shows on demand |
 | [Fake behind an interface](lessons/fake-behind-an-interface/README.md) | A mock test passes while a message is lost; an in-memory fake queue finds it |
 | [Real databases in tests](lessons/real-databases-in-tests/README.md) | A query passes on H2 and fails on real PostgreSQL, started by Testcontainers |
+| [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) | A change that works on the developers' database fails on real PostgreSQL, before production does |
 | [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
 
 **Make old code testable**

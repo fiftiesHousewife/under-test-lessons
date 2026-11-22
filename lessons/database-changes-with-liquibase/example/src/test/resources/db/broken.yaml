@@ -1,0 +1,7 @@
+# A changelog with a change no database accepts, to check failures are reported clearly.
+databaseChangeLog:
+  - changeSet:
+      id: broken
+      author: test
+      changes:
+        - sql: THIS IS NOT SQL

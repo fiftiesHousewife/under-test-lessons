@@ -26,7 +26,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | in progress |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | in progress |
 | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | in progress |
-| Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright | Browser | wave 3 |
+| Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | wave 3 |
 
 ## Stand in for real systems
 
@@ -35,7 +35,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | in progress |
 | [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | in progress |
 | [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | in progress |
-| Database changes with Liquibase: every change applied to real PostgreSQL in a test, before production | Liquibase, Testcontainers | Docker | wave 2 |
+| [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 4.33 (Apache licence), Testcontainers | Docker | in progress |
 | Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | wave 1 |
 | Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | wave 1 |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | wave 2 |
