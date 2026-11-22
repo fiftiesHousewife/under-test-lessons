@@ -32,7 +32,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add PIT's versions, and the PIT Gradle plugin, to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml"`
+Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml" --zoom 36-37`
 Enter
 Show
 Sleep 13s
@@ -48,7 +48,7 @@ Sleep 300ms
 Type@1ms `show build-logic/build.gradle.kts "/gradle.pitest.plugin/" "build-logic/build.gradle.kts: the plugins the build logic uses"`
 Enter
 Sleep 300ms
-Type@1ms `show java-conventions "/info.solidsoft.pitest/" "build conventions: plugins"`
+Type@1ms `show java-conventions "/info.solidsoft.pitest/" "build conventions: plugins" --zoom 31`
 Enter
 Show
 Sleep 11s
@@ -67,7 +67,7 @@ Sleep 300ms
 Type@1ms `note "This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests:"`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 10 19 "lesson build file"`
+Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 10 19 "lesson build file" --zoom 10-13`
 Enter
 Show
 Sleep 15s
@@ -80,7 +80,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: discountPercent works out the discount, and finalPrice takes it off the total."`
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculator 17 39`
+Type@1ms `show DiscountCalculator 17 39 --zoom 22-24`
 Enter
 Show
 Sleep 33s
@@ -96,7 +96,7 @@ Sleep 300ms
 Type@1ms `note "Each comment says what the test fails to check."`
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculatorWeakTest 18 39`
+Type@1ms `show DiscountCalculatorWeakTest 18 39 --zoom 26-27`
 Enter
 Show
 Sleep 35s
@@ -119,7 +119,7 @@ Hide
 Type "clear"
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculator 17 39 --mark 18,22,24,29,30,32,38`
+Type@1ms `show DiscountCalculator 17 39 --mark 18,22,24,29,30,32,38 --zoom 24`
 Enter
 Show
 Sleep 6s
@@ -137,7 +137,7 @@ Sleep 300ms
 Type@1ms `note "The *strong* tests check exact values, on both sides of every boundary."`
 Enter
 Sleep 300ms
-Type@1ms `show DiscountCalculatorStrongTest 18 40`
+Type@1ms `show DiscountCalculatorStrongTest 18 40 --zoom 22-23`
 Enter
 Show
 Sleep 26s
