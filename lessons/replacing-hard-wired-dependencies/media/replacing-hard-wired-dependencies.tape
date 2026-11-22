@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Mockito to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/mockito/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/mockito/" gradle/libs.versions.toml --zoom 7`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/replacing-hard-wired-dependencies/example/build.gradle.kts "/^dependencies/" "lesson build file"`
+Type@1ms `show lessons/replacing-hard-wired-dependencies/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 9`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's invoice. It gets the exchange rate from a *hard-wired* singleton."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysInvoice 9 17 "today's invoice"`
+Type@1ms `show TodaysInvoice 9 17 "today's invoice" --zoom 15`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "The test hands over *stand-in* rates, made by Mockito: always 1.17 euros to the pound."`
 Enter
 Sleep 300ms
-Type@1ms `show InvoiceTest 13 33 "the test"`
+Type@1ms `show InvoiceTest 13 33 "the test" --zoom 20`
 Enter
 Sleep 300ms
 Show
@@ -107,7 +107,7 @@ Sleep 300ms
 Type@1ms `note "The invoice after one small change: the rates are *passed in* through the constructor."`
 Enter
 Sleep 300ms
-Type@1ms `show Invoice.java 9 24 "the invoice, rates passed in"`
+Type@1ms `show Invoice.java 9 24 "the invoice, rates passed in" --zoom 14-16`
 Enter
 Sleep 300ms
 Show

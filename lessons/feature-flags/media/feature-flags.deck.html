@@ -160,22 +160,22 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add the OpenFeature software development kit to the version catalogue.</p></section><figure class="code" style="--code-size: 20px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
- 11  openfeature = &quot;1.23.0&quot;
+<mark> 11  openfeature = &quot;1.23.0&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  62  openfeature-sdk = { module = &quot;dev.openfeature:sdk&quot;, version.ref = &quot;openfeature&quot; }</pre></figure></main><aside class="notes">Step one. Add the OpenFeature software development kit to the version catalogue.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ce8dabe2b5e82b8.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it to the lesson. The code itself asks the flag, so it is an ordinary dependency, not just a test one.</p></section><figure class="code" style="--code-size: 19px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
-  9      implementation(libs.openfeature.sdk)
+<mark>  9      implementation(libs.openfeature.sdk)</mark>
  10      // OpenFeature's classes carry SpotBugs annotations; the compiler wants to see them.
  11      compileOnly(libs.spotbugs.annotations)
  12      testCompileOnly(libs.spotbugs.annotations)
  13  }</pre></figure></main><aside class="notes">Step two. Add it to the lesson. The code itself asks the flag, so it is an ordinary dependency, not just a test one.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/86ec7dc165596017.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The checkout and its flag</h1><div class="rule"></div><p class="scene-text">The checkout asks a flag, called new shipping, which rules to use: the old ones, or the new ones. The flag is off unless someone switches it on.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the checkout</figcaption><pre> 18      public int shippingPence(final int basketPence) {
- 19          final boolean useNew = flags.getBooleanValue(&quot;new-shipping&quot;, false);
+<mark> 19          final boolean useNew = flags.getBooleanValue(&quot;new-shipping&quot;, false);</mark>
  20          return (useNew ? replacement : classic).pence(basketPence);
  21      }</pre></figure></main><aside class="notes">The checkout asks a flag, called new shipping, which rules to use: the old ones, or the new ones. The flag is off unless someone switches it on.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/9fb198082c703d17.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's new shipping rules, waiting behind the flag. The threshold for free delivery now has a name.</p></section><figure class="code" style="--code-size: 22px"><figcaption>today's new rules</figcaption><pre>  8      private static final int FREE_FROM_POUNDS = 50;
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's new shipping rules, waiting behind the flag. The threshold for free delivery now has a name.</p></section><figure class="code" style="--code-size: 22px"><figcaption>today's new rules</figcaption><pre><mark>  8      private static final int FREE_FROM_POUNDS = 50;</mark>
   9      private static final int CHARGE_PENCE = 399;
  10  
  11      @Override
@@ -184,14 +184,14 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  14      }</pre></figure></main><aside class="notes">Here is the code under test, today's new shipping rules, waiting behind the flag. The threshold for free delivery now has a name.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/3988221ae378d312.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests with the default flag</h1><div class="rule"></div><p class="scene-text">These are tests that never set the flag. So they only ever run the old rules, which is what customers get today.</p></section><figure class="code" style="--code-size: 17px"><figcaption>tests with the default flag</figcaption><pre> 11      @Test
  12      void smallBasketPaysForDeliveryAndBigBasketDoesNot() {
- 13          final Checkout checkout = Checkouts.withDefaultFlags();
+<mark> 13          final Checkout checkout = Checkouts.withDefaultFlags();</mark>
  14  
  15          assertAll(
  16                  () -&gt; assertThat(checkout.shippingPence(2000)).as(&quot;a £20 basket&quot;).isEqualTo(399),
  17                  () -&gt; assertThat(checkout.shippingPence(6000)).as(&quot;a £60 basket&quot;).isZero());
  18      }</pre></figure></main><aside class="notes">These are tests that never set the flag. So they only ever run the old rules, which is what customers get today.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/a6f94817b3ad326b.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests both ways</h1><div class="rule"></div><p class="scene-text">Now, tests that run both ways: the same checks, with the flag off, and then on. Until the old rules are removed, both ways must agree.</p></section><figure class="code" style="--code-size: 17px"><figcaption>tests both ways</figcaption><pre> 12      @ParameterizedTest(name = &quot;new shipping rules switched on: {0}&quot;)
- 13      @ValueSource(booleans = {false, true})
+<mark> 13      @ValueSource(booleans = {false, true})</mark>
  14      void smallBasketPaysForDeliveryAndBigBasketDoesNot(final boolean newShipping) {
  15          final Checkout checkout = Checkouts.withNewShipping(newShipping);
  16  
@@ -224,7 +224,7 @@ Execution failed for task ':lessons:feature-flags:testFailures' (registered by p
 &gt; Get more help at https://help.gradle.org.
 
 BUILD FAILED in 2s</pre></figure></main><aside class="notes">We run the tests against today's new rules. The default tests pass. With the flag on, a twenty pound basket ships free. The threshold is fifty pounds, but it's compared with pence.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ed6313dbe6ecce9.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed new rules</h1><div class="rule"></div><p class="scene-text">Now the new rules, comparing pence with pence. We run the same tests. Both ways agree.</p><p class="callout">Both ways agree. Now the flag can be switched on, and later the old rules removed.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed new rules</figcaption><pre>  8      private static final int FREE_FROM_PENCE = 50 * 100;
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed new rules</h1><div class="rule"></div><p class="scene-text">Now the new rules, comparing pence with pence. We run the same tests. Both ways agree.</p><p class="callout">Both ways agree. Now the flag can be switched on, and later the old rules removed.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed new rules</figcaption><pre><mark>  8      private static final int FREE_FROM_PENCE = 50 * 100;</mark>
   9      private static final int CHARGE_PENCE = 399;
  10  
  11      @Override

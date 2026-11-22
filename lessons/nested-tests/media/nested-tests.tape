@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's loan. Repaying is refused only when the loan is already repaid."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysLoan 23 29 "today's loan"`
+Type@1ms `show TodaysLoan 23 29 "today's loan" --zoom 25`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "*Nested* tests: one class per situation. First, a requested loan."`
 Enter
 Sleep 300ms
-Type@1ms `show LoanTest 12 33 "nested tests: when requested"`
+Type@1ms `show LoanTest 12 33 "nested tests: when requested" --zoom 17-19`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "The same two questions for an approved loan, and again for a repaid one."`
 Enter
 Sleep 300ms
-Type@1ms `show LoanTest 35 56 "nested tests: when approved"`
+Type@1ms `show LoanTest 35 56 "nested tests: when approved" --zoom 39-42`
 Enter
 Sleep 300ms
 Show
@@ -107,7 +107,7 @@ Sleep 300ms
 Type@1ms `note "The loan that allows each step only from the state before it:"`
 Enter
 Sleep 300ms
-Type@1ms `show FixedLoan 16 31 "the fixed loan"`
+Type@1ms `show FixedLoan 16 31 "the fixed loan" --zoom 26`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:nested-tests:test"`

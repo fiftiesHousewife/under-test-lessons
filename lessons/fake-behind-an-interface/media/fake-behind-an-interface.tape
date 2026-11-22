@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "The shop talks to its message queue through an *interface*. Messages are delivered on commit."`
 Enter
 Sleep 300ms
-Type@1ms `show MessageQueue 3 13 "the shop's interface to the queue"`
+Type@1ms `show MessageQueue 3 13 "the shop's interface to the queue" --zoom 9-12`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's order placement. Look at where it *commits*."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysOrderPlacement 16 22 "today's order placement"`
+Type@1ms `show TodaysOrderPlacement 16 22 "today's order placement" --zoom 18-20`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "A test with a *mock* queue: it checks each call was made."`
 Enter
 Sleep 300ms
-Type@1ms `show MockedQueueTest 16 23 "the mock test"`
+Type@1ms `show MockedQueueTest 16 23 "the mock test" --zoom 20-22`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "A *fake* queue: it holds messages until commit, then delivers them, like the real queue."`
 Enter
 Sleep 300ms
-Type@1ms `show InMemoryMessageQueue 14 28 "the fake queue"`
+Type@1ms `show InMemoryMessageQueue 14 28 "the fake queue" --zoom 20-22`
 Enter
 Sleep 300ms
 Show
@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "A test with the *fake*: it checks what was *delivered*."`
 Enter
 Sleep 300ms
-Type@1ms `show FakeQueueTest 13 20 "the fake test"`
+Type@1ms `show FakeQueueTest 13 20 "the fake test" --zoom 18-19`
 Enter
 Sleep 300ms
 Show
@@ -121,7 +121,7 @@ Sleep 300ms
 Type@1ms `note "The order placement that commits once, at the end:"`
 Enter
 Sleep 300ms
-Type@1ms `show FixedOrderPlacement 16 22 "the fixed order placement"`
+Type@1ms `show FixedOrderPlacement 16 22 "the fixed order placement" --zoom 21`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:fake-behind-an-interface:test"`

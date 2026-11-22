@@ -160,34 +160,34 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add WireMock to the version catalogue.</p></section><figure class="code" style="--code-size: 22px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-  9  wiremock = &quot;3.13.2&quot;
+<mark>  9  wiremock = &quot;3.13.2&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  53  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
- 10      testImplementation(libs.wiremock)
+<mark> 10      testImplementation(libs.wiremock)</mark>
  11  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/fa1b2f2e26b9b678.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's postcode client. It asks the supplier's web service for a postcode, and reads the town from every answer, whatever the supplier said.</p></section><figure class="code" style="--code-size: 21px"><figcaption>today's postcode client</figcaption><pre> 16      @Override
  17      public Optional&lt;String&gt; town(final String postcode) {
- 18          return Optional.of(SupplierHttp.townIn(supplier.get(postcode).body()));
+<mark> 18          return Optional.of(SupplierHttp.townIn(supplier.get(postcode).body()));</mark>
  19      }</pre></figure></main><aside class="notes">Here is the code under test, today's postcode client. It asks the supplier's web service for a postcode, and reads the town from every answer, whatever the supplier said.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/bc874613140cf0e7.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test against the real service</h1><div class="rule"></div><p class="scene-text">This is a test against the supplier's real service. It runs only where the network and an account are available, so almost everywhere, it is skipped.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the test against the real service</figcaption><pre> 14      @Test
- 15      @EnabledIfEnvironmentVariable(named = &quot;POSTCODE_SUPPLIER_URL&quot;, matches = &quot;https://.+&quot;)
+<mark> 15      @EnabledIfEnvironmentVariable(named = &quot;POSTCODE_SUPPLIER_URL&quot;, matches = &quot;https://.+&quot;)</mark>
  16      void knownPostcodeGivesItsTown() {
  17          assertThat(Clients.at(System.getenv(&quot;POSTCODE_SUPPLIER_URL&quot;)).town(&quot;LS1 4AP&quot;)).contains(&quot;Leeds&quot;);
  18      }</pre></figure></main><aside class="notes">This is a test against the supplier's real service. It runs only where the network and an account are available, so almost everywhere, it is skipped.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/bc3df8fd2b274756.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>A recorded answer</h1><div class="rule"></div><p class="scene-text">This is a recorded answer. It holds the request, and what the supplier sent back. This one is an outage: a five oh three error, with a web page instead of JSON.</p></section><figure class="code" style="--code-size: 22px"><figcaption>recorded answer</figcaption><pre>  1  {
   2    &quot;request&quot;: { &quot;method&quot;: &quot;GET&quot;, &quot;url&quot;: &quot;/postcodes/M1%201AE&quot; },
   3    &quot;response&quot;: {
-  4      &quot;status&quot;: 503,
-  5      &quot;headers&quot;: { &quot;Content-Type&quot;: &quot;text/html&quot; },
-  6      &quot;body&quot;: &quot;&lt;html&gt;&lt;body&gt;Service temporarily unavailable&lt;/body&gt;&lt;/html&gt;&quot;
+<mark>  4      &quot;status&quot;: 503,</mark>
+<mark>  5      &quot;headers&quot;: { &quot;Content-Type&quot;: &quot;text/html&quot; },</mark>
+<mark>  6      &quot;body&quot;: &quot;&lt;html&gt;&lt;body&gt;Service temporarily unavailable&lt;/body&gt;&lt;/html&gt;&quot;</mark>
   7    }
   8  }</pre></figure></main><aside class="notes">This is a recorded answer. It holds the request, and what the supplier sent back. This one is an outage: a five oh three error, with a web page instead of JSON.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/55843cb9645a0f0d.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests with recordings</h1><div class="rule"></div><p class="scene-text">Now, the tests with WireMock. It replays every recording on a local port: a known postcode, an unknown one, and an outage.</p></section><figure class="code" style="--code-size: 15px"><figcaption>tests with recorded answers</figcaption><pre> 18      private final WireMockServer supplier = new WireMockServer(options().dynamicPort()
- 19              .usingFilesUnderClasspath(&quot;supplier&quot;));
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests with recordings</h1><div class="rule"></div><p class="scene-text">Now, the tests with WireMock. It replays every recording on a local port: a known postcode, an unknown one, and an outage.</p></section><figure class="code" style="--code-size: 15px"><figcaption>tests with recorded answers</figcaption><pre><mark> 18      private final WireMockServer supplier = new WireMockServer(options().dynamicPort()</mark>
+<mark> 19              .usingFilesUnderClasspath(&quot;supplier&quot;));</mark>
  20  
  21      @BeforeEach
  22      void start() {
@@ -245,10 +245,10 @@ BUILD FAILED in 4s</pre></figure></main><aside class="notes">We run the tests ag
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed client</h1><div class="rule"></div><p class="scene-text">Now the client that checks what the supplier said first. We run the same tests. Every recorded answer is handled.</p><p class="callout">Every recorded answer is handled, in seconds, with no network and no account.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the fixed client</figcaption><pre> 18      @Override
  19      public Optional&lt;String&gt; town(final String postcode) {
  20          final HttpResponse&lt;String&gt; answer = supplier.get(postcode);
- 21          return switch (answer.statusCode()) {
- 22              case 200 -&gt; Optional.of(SupplierHttp.townIn(answer.body()));
- 23              case 404 -&gt; Optional.empty();
- 24              default -&gt; throw new SupplierUnavailableException(&quot;the postcode supplier answered &quot; + answer.statusCode());
+<mark> 21          return switch (answer.statusCode()) {</mark>
+<mark> 22              case 200 -&gt; Optional.of(SupplierHttp.townIn(answer.body()));</mark>
+<mark> 23              case 404 -&gt; Optional.empty();</mark>
+<mark> 24              default -&gt; throw new SupplierUnavailableException(&quot;the postcode supplier answered &quot; + answer.statusCode());</mark>
  25          };
  26      }</pre><pre class="command">$ ./gradlew :lessons:recorded-http-responses:test</pre><pre class="output">RecordedSupplierTest &gt; unknownPostcodeGivesNoTown() PASSED
 

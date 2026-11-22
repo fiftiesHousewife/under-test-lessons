@@ -162,11 +162,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
   2  PAY,12345678,12.50
   3  PAY,87654321,8.99
   4  PAY,11112222,100.00
-  5  TRAILER,3,121.49</pre></figure></main><aside class="notes">Here are two files kept with the tests: a known input file of three payments, and the settlement file the bank expects back, with a header, a line for each payment, and a closing line with the count and the total.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/6eebac56a5b78d22.m4a"></audio></section>
+<mark>  5  TRAILER,3,121.49</mark></pre></figure></main><aside class="notes">Here are two files kept with the tests: a known input file of three payments, and the settlement file the bank expects back, with a header, a line for each payment, and a closing line with the count and the total.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/6eebac56a5b78d22.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's nightly job. It writes a header, then one line for each payment.</p></section><figure class="code" style="--code-size: 20px"><figcaption>today's job</figcaption><pre> 11      @Override
  12      public List&lt;String&gt; settle(final List&lt;Payment&gt; payments) {
- 13          final List&lt;String&gt; lines = new ArrayList&lt;&gt;(List.of(&quot;HEADER,SETTLEMENT&quot;));
- 14          payments.forEach(payment -&gt; lines.add(payment.settlementLine()));
+<mark> 13          final List&lt;String&gt; lines = new ArrayList&lt;&gt;(List.of(&quot;HEADER,SETTLEMENT&quot;));</mark>
+<mark> 14          payments.forEach(payment -&gt; lines.add(payment.settlementLine()));</mark>
  15          return lines;
  16      }</pre></figure></main><aside class="notes">Here is the code under test, today's nightly job. It writes a header, then one line for each payment.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/eb92e053829d616f.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests of the pieces</h1><div class="rule"></div><p class="scene-text">These are tests of the pieces. They read one line, and write one line, and check both.</p></section><figure class="code" style="--code-size: 17px"><figcaption>tests of the pieces</figcaption><pre> 11      @Test
@@ -174,8 +174,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  13          final Payment payment = Payment.parse(&quot;12345678,1250&quot;);
  14  
  15          assertAll(
- 16                  () -&gt; assertThat(payment).isEqualTo(new Payment(&quot;12345678&quot;, 1250)),
- 17                  () -&gt; assertThat(payment.settlementLine()).isEqualTo(&quot;PAY,12345678,12.50&quot;),
+<mark> 16                  () -&gt; assertThat(payment).isEqualTo(new Payment(&quot;12345678&quot;, 1250)),</mark>
+<mark> 17                  () -&gt; assertThat(payment.settlementLine()).isEqualTo(&quot;PAY,12345678,12.50&quot;),</mark>
  18                  () -&gt; assertThat(new Payment(&quot;1&quot;, 899).settlementLine()).isEqualTo(&quot;PAY,1,8.99&quot;));
  19      }</pre></figure></main><aside class="notes">These are tests of the pieces. They read one line, and write one line, and check both.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/31a83b9d82689787.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The whole job</h1><div class="rule"></div><p class="scene-text">Now, a test of the whole job. It runs the job on the known input file, writes into a fresh temporary folder, and compares the output with the expected file, line by line.</p></section><figure class="code" style="--code-size: 16px"><figcaption>test of the whole job</figcaption><pre> 17      @TempDir
@@ -187,8 +187,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  23  
  24          Jobs.current().run(Jobs.knownFile(&quot;payments.csv&quot;), settlement);
  25  
- 26          assertThat(Files.readAllLines(settlement)).as(&quot;settlement file&quot;)
- 27                  .containsExactlyElementsOf(Files.readAllLines(Jobs.knownFile(&quot;expected-settlement.csv&quot;)));
+<mark> 26          assertThat(Files.readAllLines(settlement)).as(&quot;settlement file&quot;)</mark>
+<mark> 27                  .containsExactlyElementsOf(Files.readAllLines(Jobs.knownFile(&quot;expected-settlement.csv&quot;)));</mark>
  28      }</pre></figure></main><aside class="notes">Now, a test of the whole job. It runs the job on the known input file, writes into a fresh temporary folder, and compares the output with the expected file, line by line.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/c98ac9b976633b26.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The file comparison finds the gap</h1><div class="rule"></div><p class="scene-text">We run the tests against today's job. Every piece is right, so those tests pass. But the file is not: the closing line, with the count and the total, is missing. The bank would reject it.</p><p class="callout">Every piece is right. The file is not: the closing line with the count and total is missing.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today</pre><pre class="output">PaymentLineTest &gt; readsAPaymentAndWritesItsSettlementLine() PASSED
 
@@ -227,8 +227,8 @@ BUILD FAILED in 2s</pre></figure></main><aside class="notes">We run the tests ag
  12      public List&lt;String&gt; settle(final List&lt;Payment&gt; payments) {
  13          final List&lt;String&gt; lines = new ArrayList&lt;&gt;(List.of(&quot;HEADER,SETTLEMENT&quot;));
  14          payments.forEach(payment -&gt; lines.add(payment.settlementLine()));
- 15          final int total = payments.stream().mapToInt(Payment::pence).sum();
- 16          lines.add(&quot;TRAILER,%d,%d.%02d&quot;.formatted(payments.size(), total / 100, total % 100));
+<mark> 15          final int total = payments.stream().mapToInt(Payment::pence).sum();</mark>
+<mark> 16          lines.add(&quot;TRAILER,%d,%d.%02d&quot;.formatted(payments.size(), total / 100, total % 100));</mark>
  17          return lines;
  18      }</pre><pre class="command">$ ./gradlew :lessons:batch-file-in-file-out:test</pre><pre class="output">WholeJobTest &gt; knownPaymentsGiveTheExpectedSettlementFile() PASSED
 

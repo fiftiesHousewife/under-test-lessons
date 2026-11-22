@@ -177,9 +177,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  19          if (grams &lt;= 0 || grams &gt; MAX_GRAMS) {
  20              throw new IllegalArgumentException(&quot;a parcel weighs from 1 g to 5 kg&quot;);
  21          }
- 22          for (final Band band : bands) {
- 23              if (grams &lt;= band.upToGrams()) {
- 24                  return band.pence();
+<mark> 22          for (final Band band : bands) {</mark>
+<mark> 23              if (grams &lt;= band.upToGrams()) {</mark>
+<mark> 24                  return band.pence();</mark>
  25              }
  26          }
  27          final Band last = bands.getLast();
@@ -189,7 +189,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
   9  class RewriteExamplesTest {
  10  
  11      @ParameterizedTest(name = &quot;{0} g costs {1} pence&quot;, quoteTextArguments = false)
- 12      @CsvSource({&quot;50, 85&quot;, &quot;200, 155&quot;, &quot;400, 195&quot;, &quot;800, 315&quot;, &quot;1500, 435&quot;})
+<mark> 12      @CsvSource({&quot;50, 85&quot;, &quot;200, 155&quot;, &quot;400, 195&quot;, &quot;800, 315&quot;, &quot;1500, 435&quot;})</mark>
  13      void typicalWeightCostsTheListedPrice(final int grams, final int pence) {
  14          assertThat(Rewrites.current().pence(grams)).isEqualTo(pence);
  15      }
@@ -203,8 +203,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  20      void rewriteAgreesWithTheOldCalculatorOnEveryWeight() {
  21          final List&lt;String&gt; differences = new ArrayList&lt;&gt;();
  22          int from = 0;
- 23          for (int grams = 1; grams &lt;= Postage.MAX_GRAMS + 1; grams++) {
- 24              final boolean differs = grams &lt;= Postage.MAX_GRAMS &amp;&amp; legacy.pence(grams) != rewrite.pence(grams);
+<mark> 23          for (int grams = 1; grams &lt;= Postage.MAX_GRAMS + 1; grams++) {</mark>
+<mark> 24              final boolean differs = grams &lt;= Postage.MAX_GRAMS &amp;&amp; legacy.pence(grams) != rewrite.pence(grams);</mark>
  25              if (differs &amp;&amp; from == 0) {
  26                  from = grams;
  27              } else if (!differs &amp;&amp; from &gt; 0) {
@@ -246,11 +246,11 @@ Execution failed for task ':lessons:differential-testing:testFailures' (register
 BUILD FAILED in 2s</pre></figure></main><aside class="notes">We run the tests against the rewrite as it is today. Every example passes. The comparison finds fifty weights, from four hundred and fifty one grams to five hundred, where the rewrite charges more.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/979494840be6616b.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The corrected price list</h1><div class="rule"></div><p class="scene-text">Here is why: in today's price list, up to five hundred grams was typed as four hundred and fifty. With the price list checked against the printed one, we run the same tests. The rewrite agrees on every weight.</p><p class="callout">The rewrite agrees with the old calculator on all 5,000 weights. Now the old one can go.</p></section><figure class="code" style="--code-size: 18px"><figcaption>the price list</figcaption><pre>  8      /** As typed today: &quot;up to 500 g&quot; was typed as 450. */
   9      public static final List&lt;Band&gt; AS_TYPED_TODAY = List.of(
- 10              new Band(100, 85), new Band(250, 155), new Band(450, 195), new Band(1000, 315));
- 11  
- 12      /** Checked against the printed list. */
- 13      public static final List&lt;Band&gt; CORRECTED = List.of(
- 14              new Band(100, 85), new Band(250, 155), new Band(500, 195), new Band(1000, 315));</pre><pre class="command">$ ./gradlew :lessons:differential-testing:test</pre><pre class="output">OldAndNewAgreeTest &gt; rewriteAgreesWithTheOldCalculatorOnEveryWeight() PASSED
+<mark> 10              new Band(100, 85), new Band(250, 155), new Band(450, 195), new Band(1000, 315));</mark>
+<mark> 11  </mark>
+<mark> 12      /** Checked against the printed list. */</mark>
+<mark> 13      public static final List&lt;Band&gt; CORRECTED = List.of(</mark>
+<mark> 14              new Band(100, 85), new Band(250, 155), new Band(500, 195), new Band(1000, 315));</mark></pre><pre class="command">$ ./gradlew :lessons:differential-testing:test</pre><pre class="output">OldAndNewAgreeTest &gt; rewriteAgreesWithTheOldCalculatorOnEveryWeight() PASSED
 
 RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 50 g costs 85 pence PASSED
 

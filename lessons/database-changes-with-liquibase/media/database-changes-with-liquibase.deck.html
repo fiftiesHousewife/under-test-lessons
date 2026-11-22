@@ -160,30 +160,30 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add Liquibase to the version catalogue. Version five is under the Functional Source License, which becomes the Apache licence after two years; check your company accepts it.</p></section><figure class="code" style="--code-size: 19px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
- 20  liquibase = &quot;5.0.4&quot;
+<mark> 20  liquibase = &quot;5.0.4&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  60  liquibase-core = { module = &quot;org.liquibase:liquibase-core&quot;, version.ref = &quot;liquibase&quot; }</pre></figure></main><aside class="notes">Step one. Add Liquibase to the version catalogue. Version five is under the Functional Source License, which becomes the Apache licence after two years; check your company accepts it.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/986baf905edec4fc.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependency</h1><div class="rule"></div><p class="scene-text">Step two. The application applies its own database changes when it starts, so Liquibase is an ordinary dependency.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
- 10      implementation(libs.liquibase.core)
+<mark> 10      implementation(libs.liquibase.core)</mark>
  11  }</pre></figure></main><aside class="notes">Step two. The application applies its own database changes when it starts, so Liquibase is an ordinary dependency.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/691678828c1d0898.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's changelog: the database's history, one change at a time. The second change adds a loyalty level to each customer. It was written as raw SQL, and tried only on the developers' database.</p></section><figure class="code" style="--code-size: 22px"><figcaption>today's changelog</figcaption><pre> 11    - changeSet:
  12        id: add-loyalty-level
  13        author: shop
  14        changes:
- 15          - sql: ALTER TABLE customers ADD COLUMN loyalty_level TINYINT</pre></figure></main><aside class="notes">Here is the code under test, today's changelog: the database's history, one change at a time. The second change adds a loyalty level to each customer. It was written as raw SQL, and tried only on the developers' database.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/3da9e3bc632c9e4e.m4a"></audio></section>
+<mark> 15          - sql: ALTER TABLE customers ADD COLUMN loyalty_level TINYINT</mark></pre></figure></main><aside class="notes">Here is the code under test, today's changelog: the database's history, one change at a time. The second change adds a loyalty level to each customer. It was written as raw SQL, and tried only on the developers' database.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/3da9e3bc632c9e4e.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on an in-memory database</h1><div class="rule"></div><p class="scene-text">This is a test that applies every change to H2, the in-memory database the developers use, and checks the new column is there.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the test on H2</figcaption><pre> 13      @Test
  14      void everyChangeApplies() throws SQLException {
  15          final JdbcDataSource h2 = new JdbcDataSource();
  16          h2.setURL(&quot;jdbc:h2:mem:changes;DB_CLOSE_DELAY=-1&quot;);
  17          try (Connection connection = h2.getConnection()) {
- 18              DatabaseChanges.apply(connection, Changelogs.current());
- 19              assertThat(connection.getMetaData().getColumns(null, null, &quot;CUSTOMERS&quot;, &quot;LOYALTY_LEVEL&quot;).next()).isTrue();
+<mark> 18              DatabaseChanges.apply(connection, Changelogs.current());</mark>
+<mark> 19              assertThat(connection.getMetaData().getColumns(null, null, &quot;CUSTOMERS&quot;, &quot;LOYALTY_LEVEL&quot;).next()).isTrue();</mark>
  20          }
  21      }</pre></figure></main><aside class="notes">This is a test that applies every change to H2, the in-memory database the developers use, and checks the new column is there.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/8aadffaf09a03791.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on real PostgreSQL</h1><div class="rule"></div><p class="scene-text">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the test on PostgreSQL</figcaption><pre> 20      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName
- 21              .parse(System.getProperty(&quot;postgres.image&quot;, &quot;postgres:17-alpine&quot;)).asCompatibleSubstituteFor(&quot;postgres&quot;));
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on real PostgreSQL</h1><div class="rule"></div><p class="scene-text">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the test on PostgreSQL</figcaption><pre><mark> 20      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName</mark>
+<mark> 21              .parse(System.getProperty(&quot;postgres.image&quot;, &quot;postgres:17-alpine&quot;)).asCompatibleSubstituteFor(&quot;postgres&quot;));</mark>
  22  
  23      @Test
  24      void everyChangeApplies() throws SQLException {
@@ -219,10 +219,10 @@ BUILD FAILED in 39s</pre></figure></main><aside class="notes">We run both suites
  12        id: add-loyalty-level
  13        author: shop
  14        changes:
- 15          - addColumn:
- 16              tableName: customers
- 17              columns:
- 18                - column: {name: loyalty_level, type: tinyint}</pre><pre class="command">$ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest</pre><pre class="output">FailedChangeTest &gt; aRefusedChangeSaysWhy() PASSED
+<mark> 15          - addColumn:</mark>
+<mark> 16              tableName: customers</mark>
+<mark> 17              columns:</mark>
+<mark> 18                - column: {name: loyalty_level, type: tinyint}</mark></pre><pre class="command">$ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest</pre><pre class="output">FailedChangeTest &gt; aRefusedChangeSaysWhy() PASSED
 
 InMemoryChangesTest &gt; everyChangeApplies() PASSED
 All 2 tests passed.

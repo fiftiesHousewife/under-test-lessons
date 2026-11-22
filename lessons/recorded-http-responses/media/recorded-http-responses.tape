@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add WireMock to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/wiremock/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/wiremock/" gradle/libs.versions.toml --zoom 9`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/recorded-http-responses/example/build.gradle.kts "/^dependencies/" "lesson build file"`
+Type@1ms `show lessons/recorded-http-responses/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's postcode client. It reads a town from *every* answer."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysPostcodeClient 16 19 "today's postcode client"`
+Type@1ms `show TodaysPostcodeClient 16 19 "today's postcode client" --zoom 18`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "A test against the supplier's *real* service: it needs the network and an account."`
 Enter
 Sleep 300ms
-Type@1ms `show RealSupplierTest 14 18 "the test against the real service"`
+Type@1ms `show RealSupplierTest 14 18 "the test against the real service" --zoom 15`
 Enter
 Sleep 300ms
 Show
@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "A *recorded* answer: the request, and what the supplier sent back. Here, an outage."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/recorded-http-responses/example/src/test/resources/supplier/mappings/supplier-outage.json 1 8 "recorded answer"`
+Type@1ms `show lessons/recorded-http-responses/example/src/test/resources/supplier/mappings/supplier-outage.json 1 8 "recorded answer" --zoom 4-6`
 Enter
 Sleep 300ms
 Show
@@ -100,7 +100,7 @@ Sleep 300ms
 Type@1ms `note "Tests with WireMock: it replays every recording on a local port."`
 Enter
 Sleep 300ms
-Type@1ms `show RecordedSupplierTest 18 45 "tests with recorded answers"`
+Type@1ms `show RecordedSupplierTest 18 45 "tests with recorded answers" --zoom 18-19`
 Enter
 Sleep 300ms
 Show
@@ -135,7 +135,7 @@ Sleep 300ms
 Type@1ms `note "The client that checks what the supplier said first:"`
 Enter
 Sleep 300ms
-Type@1ms `show PostcodeClient 18 26 "the fixed client"`
+Type@1ms `show PostcodeClient 18 26 "the fixed client" --zoom 21-24`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:recorded-http-responses:test"`

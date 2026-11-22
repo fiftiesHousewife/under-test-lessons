@@ -39,7 +39,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Liquibase to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/liquibase/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/liquibase/" gradle/libs.versions.toml --zoom 20`
 Enter
 Sleep 300ms
 Show
@@ -53,7 +53,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: the application applies its own changes when it starts, so Liquibase is a main dependency."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/database-changes-with-liquibase/example/build.gradle.kts "/^dependencies/" "lesson build file"`
+Type@1ms `show lessons/database-changes-with-liquibase/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10`
 Enter
 Sleep 300ms
 Show
@@ -67,7 +67,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's changelog. The second change was written as *raw SQL*."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/database-changes-with-liquibase/example/src/main/resources/db/changelog-today.yaml 11 15 "today's changelog"`
+Type@1ms `show lessons/database-changes-with-liquibase/example/src/main/resources/db/changelog-today.yaml 11 15 "today's changelog" --zoom 15`
 Enter
 Sleep 300ms
 Show
@@ -81,7 +81,7 @@ Sleep 300ms
 Type@1ms `note "A test applies every change to *H2*, the in-memory database the developers use."`
 Enter
 Sleep 300ms
-Type@1ms `show InMemoryChangesTest 13 21 "the test on H2"`
+Type@1ms `show InMemoryChangesTest 13 21 "the test on H2" --zoom 18-19`
 Enter
 Sleep 300ms
 Show
@@ -95,7 +95,7 @@ Sleep 300ms
 Type@1ms `note "The same changes applied to *real PostgreSQL*, in a throwaway container."`
 Enter
 Sleep 300ms
-Type@1ms `show RealPostgresChangesTest 20 29 "the test on PostgreSQL"`
+Type@1ms `show RealPostgresChangesTest 20 29 "the test on PostgreSQL" --zoom 20-21`
 Enter
 Sleep 300ms
 Show
@@ -130,7 +130,7 @@ Sleep 300ms
 Type@1ms `note "The change written as a Liquibase change, which writes the right SQL for each database:"`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/database-changes-with-liquibase/example/src/main/resources/db/changelog.yaml 11 18 "the fixed changelog"`
+Type@1ms `show lessons/database-changes-with-liquibase/example/src/main/resources/db/changelog.yaml 11 18 "the fixed changelog" --zoom 15-18`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest"`

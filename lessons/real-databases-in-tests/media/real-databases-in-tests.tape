@@ -39,7 +39,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Testcontainers, the PostgreSQL driver, and H2 to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/testcontainers|postgresql|h2/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/testcontainers|postgresql|h2/" gradle/libs.versions.toml --zoom 16-18`
 Enter
 Sleep 300ms
 Show
@@ -53,7 +53,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: container tests get their own suite, so tests that need no containers stay quick."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/real-databases-in-tests/example/build.gradle.kts "/^testing/" "lesson build file"`
+Type@1ms `show lessons/real-databases-in-tests/example/build.gradle.kts "/^testing/" "lesson build file" --zoom 16`
 Enter
 Sleep 300ms
 Show
@@ -67,7 +67,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's query. Who should sales call first? Oldest order first."`
 Enter
 Sleep 300ms
-Type@1ms `show CustomerRepository 15 16 "today's query"`
+Type@1ms `show CustomerRepository 15 16 "today's query" --zoom 16`
 Enter
 Sleep 300ms
 Show
@@ -81,7 +81,7 @@ Sleep 300ms
 Type@1ms `note "A test on *H2*, a database held in memory: quick, and not the database production uses."`
 Enter
 Sleep 300ms
-Type@1ms `show InMemoryDatabaseTest 13 24 "the test on H2"`
+Type@1ms `show InMemoryDatabaseTest 13 24 "the test on H2" --zoom 15-16`
 Enter
 Sleep 300ms
 Show
@@ -95,7 +95,7 @@ Sleep 300ms
 Type@1ms `note "The same test on *real PostgreSQL*, started in a container for the test, and thrown away after."`
 Enter
 Sleep 300ms
-Type@1ms `show RealPostgresTest 17 30 "the test on PostgreSQL"`
+Type@1ms `show RealPostgresTest 17 30 "the test on PostgreSQL" --zoom 21-24`
 Enter
 Sleep 300ms
 Show
@@ -130,7 +130,7 @@ Sleep 300ms
 Type@1ms `note "The query that says where customers who never ordered belong:"`
 Enter
 Sleep 300ms
-Type@1ms `show CustomerRepository 18 19 "the fixed query"`
+Type@1ms `show CustomerRepository 18 19 "the fixed query" --zoom 19`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest"`

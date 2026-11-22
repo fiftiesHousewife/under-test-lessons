@@ -160,22 +160,22 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add REST Assured to the version catalogue.</p></section><figure class="code" style="--code-size: 19px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
- 10  rest-assured = &quot;6.3.0&quot;
+<mark> 10  rest-assured = &quot;6.3.0&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  63  rest-assured = { module = &quot;io.rest-assured:rest-assured&quot;, version.ref = &quot;rest-assured&quot; }</pre></figure></main><aside class="notes">Step one. Add REST Assured to the version catalogue.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/9b82daaae800171d.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
- 10      testImplementation(libs.rest.assured)
+<mark> 10      testImplementation(libs.rest.assured)</mark>
  11  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/fa1b2f2e26b9b678.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's booking service. It works out the price, or refuses the booking. Either way, it answers two hundred, O K, and puts any error in the body.</p></section><figure class="code" style="--code-size: 15px"><figcaption>today's booking service</figcaption><pre> 13      @Override
  14      public void handle(final HttpExchange exchange) throws IOException {
  15          final int nights = Exchanges.body(exchange).path(&quot;nights&quot;).asInt();
  16          try {
- 17              Exchanges.send(exchange, 200, Map.of(&quot;nights&quot;, nights, &quot;pricePence&quot;, BookingRules.pricePence(nights)));
- 18          } catch (IllegalArgumentException e) {
- 19              Exchanges.send(exchange, 200, Map.of(&quot;error&quot;, e.getMessage()));
+<mark> 17              Exchanges.send(exchange, 200, Map.of(&quot;nights&quot;, nights, &quot;pricePence&quot;, BookingRules.pricePence(nights)));</mark>
+<mark> 18          } catch (IllegalArgumentException e) {</mark>
+<mark> 19              Exchanges.send(exchange, 200, Map.of(&quot;error&quot;, e.getMessage()));</mark>
  20          }
  21      }</pre></figure></main><aside class="notes">Here is the code under test, today's booking service. It works out the price, or refuses the booking. Either way, it answers two hundred, O K, and puts any error in the body.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/8ddea146b6868511.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests from inside</h1><div class="rule"></div><p class="scene-text">These are tests from inside. They call the service's classes directly, and check the price and the refusal. They never see what a caller gets back.</p></section><figure class="code" style="--code-size: 15px"><figcaption>tests from inside</figcaption><pre>  9  /** BEFORE: tests of the classes inside the service. They pass, and never see what a caller gets back over HTTP. */
@@ -184,18 +184,18 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  12      @Test
  13      void twoNightsCostTwiceTheNightlyRate() {
  14          assertAll(
- 15                  () -&gt; assertThat(BookingRules.pricePence(2)).isEqualTo(18_000),
- 16                  () -&gt; assertThatIllegalArgumentException().isThrownBy(() -&gt; BookingRules.pricePence(0))
- 17                          .withMessage(&quot;nights must be at least 1&quot;));
+<mark> 15                  () -&gt; assertThat(BookingRules.pricePence(2)).isEqualTo(18_000),</mark>
+<mark> 16                  () -&gt; assertThatIllegalArgumentException().isThrownBy(() -&gt; BookingRules.pricePence(0))</mark>
+<mark> 17                          .withMessage(&quot;nights must be at least 1&quot;));</mark>
  18      }
  19  }</pre></figure></main><aside class="notes">These are tests from inside. They call the service's classes directly, and check the price and the refusal. They never see what a caller gets back.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/aa265ebcaac075b8.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests from outside</h1><div class="rule"></div><p class="scene-text">Now, tests from outside. REST Assured sends real web requests to the running service, as a caller would, and checks the status code, the headers, and the body.</p></section><figure class="code" style="--code-size: 15px"><figcaption>tests from outside</figcaption><pre> 20      @Test
  21      void bookingTwoNightsCreatesABooking() {
  22          given().port(service.port()).contentType(&quot;application/json&quot;).body(&quot;{\&quot;room\&quot;: \&quot;101\&quot;, \&quot;nights\&quot;: 2}&quot;)
  23                  .when().post(&quot;/bookings&quot;)
- 24                  .then().statusCode(201)
- 25                  .header(&quot;Location&quot;, startsWith(&quot;/bookings/&quot;))
- 26                  .body(&quot;pricePence&quot;, equalTo(18_000));
+<mark> 24                  .then().statusCode(201)</mark>
+<mark> 25                  .header(&quot;Location&quot;, startsWith(&quot;/bookings/&quot;))</mark>
+<mark> 26                  .body(&quot;pricePence&quot;, equalTo(18_000));</mark>
  27      }
  28  
  29      @Test
@@ -236,9 +236,9 @@ BUILD FAILED in 2s</pre></figure></main><aside class="notes">We run the tests ag
  19          try {
  20              final int price = BookingRules.pricePence(nights);
  21              exchange.getResponseHeaders().set(&quot;Location&quot;, &quot;/bookings/&quot; + lastId.incrementAndGet());
- 22              Exchanges.send(exchange, 201, Map.of(&quot;nights&quot;, nights, &quot;pricePence&quot;, price));
- 23          } catch (IllegalArgumentException e) {
- 24              Exchanges.send(exchange, 400, Map.of(&quot;error&quot;, e.getMessage()));
+<mark> 22              Exchanges.send(exchange, 201, Map.of(&quot;nights&quot;, nights, &quot;pricePence&quot;, price));</mark>
+<mark> 23          } catch (IllegalArgumentException e) {</mark>
+<mark> 24              Exchanges.send(exchange, 400, Map.of(&quot;error&quot;, e.getMessage()));</mark>
  25          }
  26      }</pre><pre class="command">$ ./gradlew :lessons:outside-in-http-tests:test</pre><pre class="output">BookingApiTest &gt; bookingTwoNightsCreatesABooking() PASSED
 

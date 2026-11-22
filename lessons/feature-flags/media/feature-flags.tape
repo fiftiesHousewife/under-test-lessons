@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add the OpenFeature SDK to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/openfeature/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/openfeature/" gradle/libs.versions.toml --zoom 11`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it to the lesson. The code itself asks the flag, so it is a main dependency."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/feature-flags/example/build.gradle.kts "/^dependencies/" "lesson build file"`
+Type@1ms `show lessons/feature-flags/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 9`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The checkout asks a *flag* which shipping rules to use: the old ones, or the new ones."`
 Enter
 Sleep 300ms
-Type@1ms `show Checkout 18 21 "the checkout"`
+Type@1ms `show Checkout 18 21 "the checkout" --zoom 19`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's *new* shipping rules, behind the flag."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysNewShipping 8 14 "today's new rules"`
+Type@1ms `show TodaysNewShipping 8 14 "today's new rules" --zoom 8`
 Enter
 Sleep 300ms
 Show
@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "Tests that never set the flag: they only run the *old* rules."`
 Enter
 Sleep 300ms
-Type@1ms `show DefaultFlagsTest 11 18 "tests with the default flag"`
+Type@1ms `show DefaultFlagsTest 11 18 "tests with the default flag" --zoom 13`
 Enter
 Sleep 300ms
 Show
@@ -100,7 +100,7 @@ Sleep 300ms
 Type@1ms `note "Tests that run *both ways*: the same checks with the flag off, then on."`
 Enter
 Sleep 300ms
-Type@1ms `show BothWaysTest 12 20 "tests both ways"`
+Type@1ms `show BothWaysTest 12 20 "tests both ways" --zoom 13`
 Enter
 Sleep 300ms
 Show
@@ -135,7 +135,7 @@ Sleep 300ms
 Type@1ms `note "The new rules, comparing pence with pence:"`
 Enter
 Sleep 300ms
-Type@1ms `show NewShipping 8 14 "the fixed new rules"`
+Type@1ms `show NewShipping 8 14 "the fixed new rules" --zoom 8`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:feature-flags:test"`

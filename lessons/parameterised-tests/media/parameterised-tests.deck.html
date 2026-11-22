@@ -169,7 +169,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  85      runtimeOnly(library(&quot;log4j-slf4j2-impl&quot;))
  86  
  87      testImplementation(platform(library(&quot;junit-bom&quot;)))
- 88      testImplementation(library(&quot;junit-jupiter&quot;))
+<mark> 88      testImplementation(library(&quot;junit-jupiter&quot;))</mark>
  89      testImplementation(library(&quot;assertj-core&quot;))
  90      testRuntimeOnly(library(&quot;junit-platform-launcher&quot;))
  91  
@@ -180,7 +180,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  13  }</pre></figure></main><aside class="notes">JUnit comes with the shared build logic, and parameterised tests come with JUnit, so there is nothing to add. The lesson only asks the build to list every test it runs.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/e6bc8cc021f7660f.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test. It works out VAT at 20 percent. Twenty percent is a fifth, so it divides by five.</p></section><figure class="code" style="--code-size: 22px"><figcaption>RoundingDownVat.java</figcaption><pre>  9      @Override
  10      public int vatPence(final int netPence) {
- 11          return netPence / 5;
+<mark> 11          return netPence / 5;</mark>
  12      }</pre></figure></main><aside class="notes">Here is the code under test. It works out VAT at 20 percent. Twenty percent is a fifth, so it divides by five.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/6ad43b75594a441d.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The copy-pasted tests</h1><div class="rule"></div><p class="scene-text">These are copy-pasted tests, one method per case. Every amount is a round number.</p></section><figure class="code" style="--code-size: 22px"><figcaption>VatCopyPasteTest.java</figcaption><pre> 11  class VatCopyPasteTest {
  12  
@@ -193,7 +193,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  19  
  20      @Test
  21      void vatOnOnePound() {
- 22          assertThat(vat.vatPence(100)).isEqualTo(20);
+<mark> 22          assertThat(vat.vatPence(100)).isEqualTo(20);</mark>
  23      }
  24  
  25      @Test
@@ -207,11 +207,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  17      @ParameterizedTest(name = &quot;{0} pence net gives {1} pence VAT&quot;, quoteTextArguments = false)
  18      @CsvSource({
  19          &quot;0,    0&quot;,
- 20          &quot;1,    0&quot;,
- 21          &quot;2,    0&quot;,
- 22          &quot;3,    1&quot;,
- 23          &quot;4,    1&quot;,
- 24          &quot;5,    1&quot;,
+<mark> 20          &quot;1,    0&quot;,</mark>
+<mark> 21          &quot;2,    0&quot;,</mark>
+<mark> 22          &quot;3,    1&quot;,</mark>
+<mark> 23          &quot;4,    1&quot;,</mark>
+<mark> 24          &quot;5,    1&quot;,</mark>
  25          &quot;998,  200&quot;,
  26          &quot;1000, 200&quot;,
  27      })
@@ -268,7 +268,7 @@ Execution failed for task ':lessons:parameterised-tests:testFailures' (registere
 BUILD FAILED in 3s</pre></figure></main><aside class="notes">We run the tests against the calculator in use today. The copy-pasted tests pass. Three rows of the table fail, and each one is named. Three pence net should give one penny of VAT, and gives none.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/d68f610d71581e56.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The nearest-penny calculator</h1><div class="rule"></div><p class="scene-text">Now the calculator that rounds to the nearest penny. We run the same tests. Every row passes.</p><p class="callout">Every row passes: each case named, each case checked.</p></section><figure class="code" style="--code-size: 17px"><figcaption>NearestPennyVat.java</figcaption><pre>  6      @Override
   7      public int vatPence(final int netPence) {
-  8          return Math.floorDiv(netPence * 2 + 5, 10);
+<mark>  8          return Math.floorDiv(netPence * 2 + 5, 10);</mark>
   9      }</pre><pre class="command">$ ./gradlew :lessons:parameterised-tests:test</pre><pre class="output">VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 0 pence net gives 0 pence VAT PASSED
 
 VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 1 pence net gives 0 pence VAT PASSED

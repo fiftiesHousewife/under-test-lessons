@@ -160,26 +160,26 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add JSONUnit to the version catalogue.</p></section><figure class="code" style="--code-size: 16px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-  8  json-unit = &quot;6.4.1&quot;
+<mark>  8  json-unit = &quot;6.4.1&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  52  json-unit-assertj = { module = &quot;net.javacrumbs.json-unit:json-unit-assertj&quot;, version.ref = &quot;json-unit&quot; }</pre></figure></main><aside class="notes">Step one. Add JSONUnit to the version catalogue.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/95507898c779eabc.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. JSONUnit reads JSON with Jackson, which the code already uses.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
- 10      testImplementation(libs.json.unit.assertj)
+<mark> 10      testImplementation(libs.json.unit.assertj)</mark>
  11  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. JSONUnit reads JSON with Jackson, which the code already uses.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/711abed8098f2fba.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The output</h1><div class="rule"></div><p class="scene-text">The code writes an order summary as JSON, for the warehouse. It has a new id, and the time it was made, so those two fields are different on every run.</p></section><figure class="code" style="--code-size: 22px"><figcaption>writing the summary</figcaption><pre> 21      public String write(final List&lt;Line&gt; lines, final int totalPence) {
  22          final Map&lt;String, Object&gt; summary = new LinkedHashMap&lt;&gt;();
- 23          summary.put(&quot;id&quot;, UUID.randomUUID().toString());
- 24          summary.put(&quot;generatedAt&quot;, clock.instant().toString());
+<mark> 23          summary.put(&quot;id&quot;, UUID.randomUUID().toString());</mark>
+<mark> 24          summary.put(&quot;generatedAt&quot;, clock.instant().toString());</mark>
  25          summary.put(&quot;lines&quot;, lines);
  26          summary.put(&quot;totalPence&quot;, totalPence);
  27          return JSON.writeValueAsString(summary);
  28      }</pre></figure></main><aside class="notes">The code writes an order summary as JSON, for the warehouse. It has a new id, and the time it was made, so those two fields are different on every run.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/02c208b01731cf48.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's total. It adds up each line's price, and forgets how many were bought.</p></section><figure class="code" style="--code-size: 20px"><figcaption>today's total</figcaption><pre> 18      @Override
  19      public String json(final List&lt;Line&gt; lines) {
- 20          return writer.write(lines, lines.stream().mapToInt(Line::pricePence).sum());
+<mark> 20          return writer.write(lines, lines.stream().mapToInt(Line::pricePence).sum());</mark>
  21      }</pre></figure></main><aside class="notes">Here is the code under test, today's total. It adds up each line's price, and forgets how many were bought.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/be7aaf8cbac07bd1.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The loosened test</h1><div class="rule"></div><p class="scene-text">This is a loosened test. Comparing the whole text broke on every run, because of the id and the time. So someone loosened it, and now it only checks that some words are there.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the loosened test</figcaption><pre>  7  /**
   8   * BEFORE: comparing the whole text broke on every run, because the id and the time change. So someone loosened it to
@@ -189,7 +189,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  12  
  13      @Test
  14      void summaryMentionsEveryItemAndATotal() {
- 15          assertThat(Summaries.jsonForTheOrder()).contains(&quot;\&quot;Tea\&quot;&quot;, &quot;\&quot;Biscuits\&quot;&quot;, &quot;\&quot;totalPence\&quot;&quot;);
+<mark> 15          assertThat(Summaries.jsonForTheOrder()).contains(&quot;\&quot;Tea\&quot;&quot;, &quot;\&quot;Biscuits\&quot;&quot;, &quot;\&quot;totalPence\&quot;&quot;);</mark>
  16      }
  17  }</pre></figure></main><aside class="notes">This is a loosened test. Comparing the whole text broke on every run, because of the id and the time. So someone loosened it, and now it only checks that some words are there.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/86d0fdd7d5f541dc.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The structured comparison</h1><div class="rule"></div><p class="scene-text">Now, a structured comparison, with JSONUnit. It checks every field and every value, in any order. The id and the time only have to be there, as text.</p></section><figure class="code" style="--code-size: 20px"><figcaption>the structured comparison</figcaption><pre> 13      @Test
@@ -202,8 +202,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  20                              {&quot;item&quot;: &quot;Biscuits&quot;, &quot;pricePence&quot;: 120, &quot;quantity&quot;: 1}
  21                            ],
  22                            &quot;totalPence&quot;: 1120,
- 23                            &quot;id&quot;: &quot;${json-unit.any-string}&quot;,
- 24                            &quot;generatedAt&quot;: &quot;${json-unit.any-string}&quot;
+<mark> 23                            &quot;id&quot;: &quot;${json-unit.any-string}&quot;,</mark>
+<mark> 24                            &quot;generatedAt&quot;: &quot;${json-unit.any-string}&quot;</mark>
  25                          }
  26                          &quot;&quot;&quot;);
  27      }</pre></figure></main><aside class="notes">Now, a structured comparison, with JSONUnit. It checks every field and every value, in any order. The id and the time only have to be there, as text.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/98d550b32d00b4d1.m4a"></audio></section>
@@ -230,7 +230,7 @@ Execution failed for task ':lessons:structured-output-comparison:testFailures' (
 BUILD FAILED in 3s</pre></figure></main><aside class="notes">We run both tests against today's total. The loosened test passes. The structured comparison fails, and says exactly what is wrong: the total, what it expected, and what it found.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/eb8922591325dc19.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed total</h1><div class="rule"></div><p class="scene-text">Now the total that multiplies price by quantity. We run the same tests. Both pass, on every run.</p><p class="callout">The structured comparison passes on every run, whatever the id and the time.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed total</figcaption><pre> 18      @Override
  19      public String json(final List&lt;Line&gt; lines) {
- 20          return writer.write(lines, lines.stream().mapToInt(line -&gt; line.pricePence() * line.quantity()).sum());
+<mark> 20          return writer.write(lines, lines.stream().mapToInt(line -&gt; line.pricePence() * line.quantity()).sum());</mark>
  21      }</pre><pre class="command">$ ./gradlew :lessons:structured-output-comparison:test</pre><pre class="output">CompareJsonTest &gt; summaryHasTheExpectedLinesAndTotal() PASSED
 
 ContainsTextTest &gt; summaryMentionsEveryItemAndATotal() PASSED

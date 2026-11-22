@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add jetCheck to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/jetcheck/" "gradle/libs.versions.toml"`
+Type@1ms `show libs.versions.toml "/jetcheck/" "gradle/libs.versions.toml" --zoom 4`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency. A switch chooses which splitter the tests run against."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/property-based-testing/example/build.gradle.kts "/libs.jetcheck/" "lesson build file: dependencies"`
+Type@1ms `show lessons/property-based-testing/example/build.gradle.kts "/libs.jetcheck/" "lesson build file: dependencies" --zoom 9`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/property-based-testing/example/build.gradle.kts "/^tasks.test/" "lesson build file: tests"`
@@ -61,7 +61,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: everyone pays the same, and the first person pays whatever is left over."`
 Enter
 Sleep 300ms
-Type@1ms `show FirstPayerSplitter 14 19`
+Type@1ms `show FirstPayerSplitter 14 19 --zoom 17`
 Enter
 Sleep 300ms
 Show
@@ -89,7 +89,7 @@ Sleep 300ms
 Type@1ms `note "The *property* test: three rules for every bill, checked on a hundred random bills."`
 Enter
 Sleep 300ms
-Type@1ms `show SplitterPropertyTest 30 47`
+Type@1ms `show SplitterPropertyTest 30 47 --zoom 44-46`
 Enter
 Sleep 300ms
 Show
@@ -124,7 +124,7 @@ Sleep 300ms
 Type@1ms `note "The fair splitter shares the leftover pence one each:"`
 Enter
 Sleep 300ms
-Type@1ms `show FairSplitter 9 16`
+Type@1ms `show FairSplitter 9 16 --zoom 13`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:property-based-testing:test"`

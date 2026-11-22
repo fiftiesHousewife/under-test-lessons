@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "JUnit comes with the shared build logic, and parameterised tests come with JUnit: nothing to add."`
 Enter
 Sleep 300ms
-Type@1ms `show java-conventions "/junit-jupiter/" "convention plugin: libraries every module gets"`
+Type@1ms `show java-conventions "/junit-jupiter/" "convention plugin: libraries every module gets" --zoom 88`
 Enter
 Sleep 300ms
 Type@1ms `note "The lesson adds one switch, to choose which calculator the tests run against:"`
@@ -50,7 +50,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: VAT at 20%. Twenty percent is a fifth, so it divides by five."`
 Enter
 Sleep 300ms
-Type@1ms `show RoundingDownVat 9 12`
+Type@1ms `show RoundingDownVat 9 12 --zoom 11`
 Enter
 Sleep 300ms
 Show
@@ -64,7 +64,7 @@ Sleep 300ms
 Type@1ms `note "*Copy-pasted* tests: one method per case, and every amount is a round number."`
 Enter
 Sleep 300ms
-Type@1ms `show VatCopyPasteTest 11 28`
+Type@1ms `show VatCopyPasteTest 11 28 --zoom 22`
 Enter
 Sleep 300ms
 Show
@@ -78,7 +78,7 @@ Sleep 300ms
 Type@1ms `note "The *parameterised* test: the cases as a table, including every way a fifth of a penny can round."`
 Enter
 Sleep 300ms
-Type@1ms `show VatParameterisedTest 13 30`
+Type@1ms `show VatParameterisedTest 13 30 --zoom 20-24`
 Enter
 Sleep 300ms
 Show
@@ -113,7 +113,7 @@ Sleep 300ms
 Type@1ms `note "The calculator that rounds to the nearest penny:"`
 Enter
 Sleep 300ms
-Type@1ms `show NearestPennyVat 6 9`
+Type@1ms `show NearestPennyVat 6 9 --zoom 8`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:parameterised-tests:test"`

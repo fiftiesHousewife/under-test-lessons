@@ -161,20 +161,20 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's name formatter. It capitalises the first letter of each word, and makes the rest lower case.</p></section><figure class="code" style="--code-size: 19px"><figcaption>today's formatter</figcaption><pre> 11      @Override
  12      public String forLetter(final String record) {
  13          return NameFormatter.assemble(record, part -&gt; Arrays.stream(part.split(&quot; &quot;))
- 14                  .map(word -&gt; word.charAt(0) + word.substring(1).toLowerCase(Locale.ROOT))
+<mark> 14                  .map(word -&gt; word.charAt(0) + word.substring(1).toLowerCase(Locale.ROOT))</mark>
  15                  .collect(Collectors.joining(&quot; &quot;)));
  16      }</pre></figure></main><aside class="notes">Here is the code under test, today's name formatter. It capitalises the first letter of each word, and makes the rest lower case.</aside><audio class="voice" preload="none" src="dynamic-tests.deck-voice/e66fce18b4f08b91.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>One test for all</h1><div class="rule"></div><p class="scene-text">This is one test that loops over every example, checking each in turn.</p></section><figure class="code" style="--code-size: 18px"><figcaption>one test for every example</figcaption><pre> 12      @Test
  13      void everyExampleFormatsAsExpected() {
- 14          for (final Path example : Formatters.examples()) {
- 15              final List&lt;String&gt; lines = Formatters.lines(example);
- 16              assertThat(Formatters.current().forLetter(lines.get(0))).isEqualTo(lines.get(1));
+<mark> 14          for (final Path example : Formatters.examples()) {</mark>
+<mark> 15              final List&lt;String&gt; lines = Formatters.lines(example);</mark>
+<mark> 16              assertThat(Formatters.current().forLetter(lines.get(0))).isEqualTo(lines.get(1));</mark>
  17          }
  18      }</pre></figure></main><aside class="notes">This is one test that loops over every example, checking each in turn.</aside><audio class="voice" preload="none" src="dynamic-tests.deck-voice/f01fea5fd726f1fa.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>A test for each</h1><div class="rule"></div><p class="scene-text">Now, a test factory. It makes one test for each example file, and names each test after its file.</p></section><figure class="code" style="--code-size: 16px"><figcaption>one test for each example</figcaption><pre> 13      @TestFactory
  14      Stream&lt;DynamicTest&gt; eachExampleFormatsAsExpected() {
- 15          return Formatters.examples().stream().map(example -&gt; DynamicTest.dynamicTest(
- 16                  String.valueOf(example.getFileName()), () -&gt; {
+<mark> 15          return Formatters.examples().stream().map(example -&gt; DynamicTest.dynamicTest(</mark>
+<mark> 16                  String.valueOf(example.getFileName()), () -&gt; {</mark>
  17                      final List&lt;String&gt; lines = Formatters.lines(example);
  18                      assertThat(Formatters.current().forLetter(lines.get(0))).isEqualTo(lines.get(1));
  19                  }));
@@ -223,7 +223,7 @@ BUILD FAILED in 2s</pre></figure></main><aside class="notes">We run the tests ag
  16          boolean startOfWord = true;
  17          for (final char c : part.toLowerCase(Locale.ROOT).toCharArray()) {
  18              name.append(startOfWord ? Character.toUpperCase(c) : c);
- 19              startOfWord = c == ' ' || c == '-' || c == '\'';
+<mark> 19              startOfWord = c == ' ' || c == '-' || c == '\'';</mark>
  20          }
  21          return name.toString();
  22      }</pre><pre class="command">$ ./gradlew :lessons:dynamic-tests:test</pre><pre class="output">AllExamplesInOneTest &gt; everyExampleFormatsAsExpected() PASSED

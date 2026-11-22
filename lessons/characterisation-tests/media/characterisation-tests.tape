@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add ApprovalTests to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/approvaltests/" "gradle/libs.versions.toml"`
+Type@1ms `show libs.versions.toml "/approvaltests/" "gradle/libs.versions.toml" --zoom 5`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson. There is nothing to configure."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/characterisation-tests/example/build.gradle.kts "/libs.approvaltests/" "lesson build file"`
+Type@1ms `show lessons/characterisation-tests/example/build.gradle.kts "/libs.approvaltests/" "lesson build file" --zoom 9`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: a statement printer that has run for years without tests."`
 Enter
 Sleep 300ms
-Type@1ms `show LegacyStatement 14 31`
+Type@1ms `show LegacyStatement 14 31 --zoom 21-22`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "A *weak* test, the kind legacy code often has: it checks only that something came back."`
 Enter
 Sleep 300ms
-Type@1ms `show StatementWeakTest 16 24`
+Type@1ms `show StatementWeakTest 16 24 --zoom 22-23`
 Enter
 Sleep 300ms
 Show
@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "The *characterisation* test: print a month that reaches every rule, and approve the whole statement."`
 Enter
 Sleep 300ms
-Type@1ms `show StatementCharacterisationTest 16 33`
+Type@1ms `show StatementCharacterisationTest 16 33 --zoom 25`
 Enter
 Sleep 300ms
 Show
@@ -106,7 +106,7 @@ Show
 Wait+Screen@300s /Approvals: every output matches/
 Sleep 3s
 Hide
-Type@1ms `show StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt 1 10 "the approved statement"`
+Type@1ms `show StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt 1 10 "the approved statement" --zoom 3-4`
 Enter
 Sleep 300ms
 Type@1ms `callout "After the rent the balance is exactly 0, and a fee is charged: a quirk, now pinned down."`

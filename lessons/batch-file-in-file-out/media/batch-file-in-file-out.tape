@@ -33,7 +33,7 @@ Sleep 300ms
 Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/payments.csv 1 3 "known input: payments.csv"`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/expected-settlement.csv 1 5 "expected output: expected-settlement.csv"`
+Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/expected-settlement.csv 1 5 "expected output: expected-settlement.csv" --zoom 5`
 Enter
 Sleep 300ms
 Show
@@ -47,7 +47,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's nightly job. A header, then one line per payment."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysSettlementJob 11 16 "today's job"`
+Type@1ms `show TodaysSettlementJob 11 16 "today's job" --zoom 13-14`
 Enter
 Sleep 300ms
 Show
@@ -61,7 +61,7 @@ Sleep 300ms
 Type@1ms `note "Tests of the *pieces*: one line read, one line written."`
 Enter
 Sleep 300ms
-Type@1ms `show PaymentLineTest 11 19 "tests of the pieces"`
+Type@1ms `show PaymentLineTest 11 19 "tests of the pieces" --zoom 16-17`
 Enter
 Sleep 300ms
 Show
@@ -75,7 +75,7 @@ Sleep 300ms
 Type@1ms `note "A test of the *whole job*: known file in, output file compared line by line, in a temporary folder."`
 Enter
 Sleep 300ms
-Type@1ms `show WholeJobTest 17 28 "test of the whole job"`
+Type@1ms `show WholeJobTest 17 28 "test of the whole job" --zoom 26-27`
 Enter
 Sleep 300ms
 Show
@@ -110,7 +110,7 @@ Sleep 300ms
 Type@1ms `note "The job that writes the closing line the bank checks:"`
 Enter
 Sleep 300ms
-Type@1ms `show BankSettlementJob 11 18 "the fixed job"`
+Type@1ms `show BankSettlementJob 11 18 "the fixed job" --zoom 15-16`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:batch-file-in-file-out:test"`

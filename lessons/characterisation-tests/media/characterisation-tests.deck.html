@@ -160,13 +160,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add ApprovalTests to the version catalogue.</p></section><figure class="code" style="--code-size: 18px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-  5  approvaltests = &quot;32.1.0&quot;
+<mark>  5  approvaltests = &quot;32.1.0&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  49  approvaltests = { module = &quot;com.approvaltests:approvaltests&quot;, version.ref = &quot;approvaltests&quot; }</pre></figure></main><aside class="notes">Step one. Add ApprovalTests to the version catalogue.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/fe9e974d61549d88.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. There is nothing to configure.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
-  9      testImplementation(libs.approvaltests)
+<mark>  9      testImplementation(libs.approvaltests)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. There is nothing to configure.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/493a7b6c23b7d0f7.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, a bank statement printer that has run for years without tests. It keeps a running balance, charges an overdraft fee, and adds interest on a high balance.</p></section><figure class="code" style="--code-size: 14px"><figcaption>LegacyStatement.java</figcaption><pre> 14      @Override
  15      public String print(final String account, final List&lt;Transaction&gt; transactions) {
@@ -175,8 +175,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  18          for (final Transaction t : transactions) {
  19              balance += t.amount();
  20              out.append(String.format(&quot;%s  %-24s %6d  balance %6d%n&quot;, t.date(), t.description(), t.amount(), balance));
- 21              if (balance &lt;= 0 &amp;&amp; t.amount() &lt; 0) {
- 22                  balance -= OVERDRAFT_FEE;
+<mark> 21              if (balance &lt;= 0 &amp;&amp; t.amount() &lt; 0) {</mark>
+<mark> 22                  balance -= OVERDRAFT_FEE;</mark>
  23                  out.append(String.format(&quot;%s  %-24s %6d  balance %6d%n&quot;, t.date(), &quot;Overdraft fee&quot;, -OVERDRAFT_FEE,
  24                          balance));
  25              }
@@ -192,8 +192,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  19                  new Transaction(&quot;01 Mar&quot;, &quot;Salary&quot;, 1200), new Transaction(&quot;02 Mar&quot;, &quot;Rent&quot;, -1200)));
  20  
  21          assertAll(
- 22                  () -&gt; assertNotNull(statement),
- 23                  () -&gt; assertTrue(statement.contains(&quot;Closing balance&quot;)));
+<mark> 22                  () -&gt; assertNotNull(statement),</mark>
+<mark> 23                  () -&gt; assertTrue(statement.contains(&quot;Closing balance&quot;)));</mark>
  24      }</pre></figure></main><aside class="notes">Now, a weak test, the kind legacy code often has. It checks that something came back, so it would pass whatever the amounts were.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/97a24697254a2a3e.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The characterisation test</h1><div class="rule"></div><p class="scene-text">Now, the characterisation test. It prints a month that reaches every rule, and approves the whole statement.</p></section><figure class="code" style="--code-size: 20px"><figcaption>StatementCharacterisationTest.java</figcaption><pre> 16      private static final List&lt;Transaction&gt; MONTH = List.of(
  17              new Transaction(&quot;01 Mar&quot;, &quot;Salary&quot;, 1200),
@@ -204,7 +204,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  22  
  23      @Test
  24      void printsTheSameStatementAsToday() {
- 25          Approvals.verify(statement().print(&quot;J. Smith, current account&quot;, MONTH),
+<mark> 25          Approvals.verify(statement().print(&quot;J. Smith, current account&quot;, MONTH),</mark>
  26                  new Options().withReporter(new QuietReporter()));
  27      }
  28  
@@ -215,8 +215,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  33      }</pre></figure></main><aside class="notes">Now, the characterisation test. It prints a month that reaches every rule, and approves the whole statement.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/8c741a58a7196bd7.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests pass, and the approved statement</h1><div class="rule"></div><p class="scene-text">We run the tests. The statement matches the approved file. Look at the approved statement. After the rent, the balance is exactly zero, and an overdraft fee is charged. That is a quirk nobody remembered, now pinned down.</p><p class="callout">After the rent the balance is exactly 0, and a fee is charged: a quirk, now pinned down.</p></section><figure class="code" style="--code-size: 19px"><figcaption>the approved statement</figcaption><pre>  1  Statement for J. Smith, current account
   2  01 Mar  Salary                     1200  balance   1200
-  3  02 Mar  Rent                      -1200  balance      0
-  4  02 Mar  Overdraft fee               -25  balance    -25
+<mark>  3  02 Mar  Rent                      -1200  balance      0</mark>
+<mark>  4  02 Mar  Overdraft fee               -25  balance    -25</mark>
   5  09 Mar  Groceries                   -80  balance   -105
   6  09 Mar  Overdraft fee               -25  balance   -130
   7  15 Mar  Bonus                      2500  balance   2370

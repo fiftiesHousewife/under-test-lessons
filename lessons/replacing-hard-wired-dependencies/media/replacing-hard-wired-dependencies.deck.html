@@ -160,13 +160,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add Mockito to the version catalogue.</p></section><figure class="code" style="--code-size: 21px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-  7  mockito = &quot;5.24.0&quot;
+<mark>  7  mockito = &quot;5.24.0&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  51  mockito-core = { module = &quot;org.mockito:mockito-core&quot;, version.ref = &quot;mockito&quot; }</pre></figure></main><aside class="notes">Step one. Add Mockito to the version catalogue.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/7e7510525234b019.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. One setting tells Mockito to make its stand-ins as plain subclasses, so it never needs special access to the test's Java process.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
-  9      testImplementation(libs.mockito.core)
+<mark>  9      testImplementation(libs.mockito.core)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. One setting tells Mockito to make its stand-ins as plain subclasses, so it never needs special access to the test's Java process.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/52d2289ed821e156.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's invoice. It adds up the lines in pence, and converts the total to euros. It gets the exchange rate from a hard-wired singleton, the live rates, which call the bank over the network.</p></section><figure class="code" style="--code-size: 14px"><figcaption>today's invoice</figcaption><pre>  9  /** TODAY: the rate comes from a hard-wired singleton, so this code always calls the live service, even in a test. */
  10  public final class TodaysInvoice implements PricedInvoice {
@@ -174,7 +174,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  12      @Override
  13      public int totalInEuroCents(final List&lt;Integer&gt; linesInPence) {
  14          final int pence = linesInPence.stream().mapToInt(Integer::intValue).sum();
- 15          final BigDecimal rate = LiveExchangeRates.INSTANCE.eurosPerPound();
+<mark> 15          final BigDecimal rate = LiveExchangeRates.INSTANCE.eurosPerPound();</mark>
  16          return BigDecimal.valueOf(pence).multiply(rate).setScale(0, RoundingMode.HALF_UP).intValueExact();
  17      }</pre></figure></main><aside class="notes">Here is the code under test, today's invoice. It adds up the lines in pence, and converts the total to euros. It gets the exchange rate from a hard-wired singleton, the live rates, which call the bank over the network.</aside><audio class="voice" preload="none" src="replacing-hard-wired-dependencies.deck-voice/193112b0ee7f493d.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test</h1><div class="rule"></div><p class="scene-text">Now, the test. Mockito makes a stand-in for the exchange rates, which always says one euro seventeen to the pound. The test checks the rounding, and that an empty invoice costs nothing.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the test</figcaption><pre> 13  /** One test for both invoices. It hands over stand-in rates, made by Mockito, fixed at 1.17 euros to the pound. */
@@ -184,7 +184,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  17  
  18      @BeforeEach
  19      void ratesAreFixed() {
- 20          when(rates.eurosPerPound()).thenReturn(new BigDecimal(&quot;1.17&quot;));
+<mark> 20          when(rates.eurosPerPound()).thenReturn(new BigDecimal(&quot;1.17&quot;));</mark>
  21      }
  22  
  23      @Test
@@ -224,9 +224,9 @@ BUILD FAILED in 3s</pre></figure></main><aside class="notes">We run the test aga
  11  
  12      private final ExchangeRates rates;
  13  
- 14      public Invoice(final ExchangeRates rates) {
- 15          this.rates = rates;
- 16      }
+<mark> 14      public Invoice(final ExchangeRates rates) {</mark>
+<mark> 15          this.rates = rates;</mark>
+<mark> 16      }</mark>
  17  
  18      @Override
  19      public int totalInEuroCents(final List&lt;Integer&gt; linesInPence) {

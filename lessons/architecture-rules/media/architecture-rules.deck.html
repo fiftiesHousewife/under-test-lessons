@@ -160,13 +160,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add ArchUnit to the version catalogue.</p></section><figure class="code" style="--code-size: 20px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-  6  archunit = &quot;1.5.1&quot;
+<mark>  6  archunit = &quot;1.5.1&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
  50  archunit = { module = &quot;com.tngtech.archunit:archunit&quot;, version.ref = &quot;archunit&quot; }</pre></figure></main><aside class="notes">Step one. Add ArchUnit to the version catalogue.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/5b323edc2110019a.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. There is nothing to configure: ArchUnit is an ordinary library, used from ordinary tests.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
-  9      testImplementation(libs.archunit)
+<mark>  9      testImplementation(libs.archunit)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. There is nothing to configure: ArchUnit is an ordinary library, used from ordinary tests.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/95b518330e6820d9.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, the shop's admin page as it is today. It shows how many orders there are. To get the number, it goes straight to the storage layer, skipping the service layer and the shop's rules.</p></section><figure class="code" style="--code-size: 15px"><figcaption>web layer: the admin page today</figcaption><pre>  6  /** TODAY: the admin page reads storage directly, skipping the service and its rules. The answer is still right. */
   7  public final class TodaysSummaryPage implements OrderSummary {
@@ -179,7 +179,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  14  
  15      @Override
  16      public String summary() {
- 17          return &quot;Orders: &quot; + store.count();
+<mark> 17          return &quot;Orders: &quot; + store.count();</mark>
  18      }
  19  }</pre></figure></main><aside class="notes">Here is the code under test, the shop's admin page as it is today. It shows how many orders there are. To get the number, it goes straight to the storage layer, skipping the service layer and the shop's rules.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/cd3ac415830c7289.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The unit tests</h1><div class="rule"></div><p class="scene-text">These are ordinary unit tests. They check that both versions of the page give the right answer. They do, so the tests pass, whichever way the page gets its number.</p></section><figure class="code" style="--code-size: 15px"><figcaption>unit tests</figcaption><pre> 14   * BEFORE: ordinary unit tests. Both versions of the admin page give the right answer, so these pass for both: they
@@ -195,8 +195,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  24          service.placeOrder(&quot;A-2&quot;, 899);
  25  
  26          assertAll(
- 27                  () -&gt; assertThat(new TodaysSummaryPage(store).summary()).isEqualTo(&quot;Orders: 2&quot;),
- 28                  () -&gt; assertThat(new SummaryPage(service).summary()).isEqualTo(&quot;Orders: 2&quot;),
+<mark> 27                  () -&gt; assertThat(new TodaysSummaryPage(store).summary()).isEqualTo(&quot;Orders: 2&quot;),</mark>
+<mark> 28                  () -&gt; assertThat(new SummaryPage(service).summary()).isEqualTo(&quot;Orders: 2&quot;),</mark>
  29                  () -&gt; assertThatIllegalArgumentException().isThrownBy(() -&gt; service.placeOrder(&quot;A-3&quot;, 0)));
  30      }</pre></figure></main><aside class="notes">These are ordinary unit tests. They check that both versions of the page give the right answer. They do, so the tests pass, whichever way the page gets its number.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/9027c58a8dca61fd.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The architecture rule</h1><div class="rule"></div><p class="scene-text">Now, the architecture rule. It names three layers: web, service and storage. The web layer may use the service. The service may use storage. And nothing else may reach storage.</p></section><figure class="code" style="--code-size: 18px"><figcaption>architecture rule</figcaption><pre> 23      @Test
@@ -206,8 +206,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  27                  .layer(&quot;Service&quot;).definedBy(BASE + &quot;.service..&quot;)
  28                  .layer(&quot;Storage&quot;).definedBy(BASE + &quot;.storage..&quot;)
  29                  .whereLayer(&quot;Web&quot;).mayNotBeAccessedByAnyLayer()
- 30                  .whereLayer(&quot;Service&quot;).mayOnlyBeAccessedByLayers(&quot;Web&quot;)
- 31                  .whereLayer(&quot;Storage&quot;).mayOnlyBeAccessedByLayers(&quot;Service&quot;);
+<mark> 30                  .whereLayer(&quot;Service&quot;).mayOnlyBeAccessedByLayers(&quot;Web&quot;)</mark>
+<mark> 31                  .whereLayer(&quot;Storage&quot;).mayOnlyBeAccessedByLayers(&quot;Service&quot;);</mark>
  32          check(layers.evaluate(classes));
  33      }</pre></figure></main><aside class="notes">Now, the architecture rule. It names three layers: web, service and storage. The web layer may use the service. The service may use storage. And nothing else may reach storage.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/9215c2d111e2f482.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The rule finds the shortcut</h1><div class="rule"></div><p class="scene-text">We run the tests against the page as it is today. The unit tests pass. The rule fails, and names every place the web layer reaches into storage: the constructor, the field, and the method call.</p><p class="callout">The unit tests pass. The rule names every place the web layer reaches into storage.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:architecture-rules:test -Pcode=today</pre><pre class="output">LayerRulesTest &gt; onlyTheServiceLayerUsesStorage() FAILED
@@ -243,7 +243,7 @@ BUILD FAILED in 5s</pre></figure></main><aside class="notes">We run the tests ag
  14  
  15      @Override
  16      public String summary() {
- 17          return &quot;Orders: &quot; + orders.orderCount();
+<mark> 17          return &quot;Orders: &quot; + orders.orderCount();</mark>
  18      }
  19  }</pre><pre class="command">$ ./gradlew :lessons:architecture-rules:test</pre><pre class="output">LayerRulesTest &gt; onlyTheServiceLayerUsesStorage() PASSED
 

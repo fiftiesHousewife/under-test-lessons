@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Weld's JUnit support and the CDI API to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml --zoom 12-15`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: the CDI API to compile against (the server provides it), and Weld for the tests."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/embedded-jakarta-ee-tests/example/build.gradle.kts "/^dependencies/" "lesson build file"`
+Type@1ms `show lessons/embedded-jakarta-ee-tests/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-12`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "Two tax rates: the *standard* rate, marked @Standard, and a *reduced* rate added later, with no mark."`
 Enter
 Sleep 300ms
-Type@1ms `show StandardRate 5 13 "the standard rate"`
+Type@1ms `show StandardRate 5 13 "the standard rate" --zoom 7`
 Enter
 Sleep 300ms
 Type@1ms `show ReducedRate 5 12 "the reduced rate"`
@@ -75,7 +75,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's checkout. It asks the container for *a* tax rate."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysCheckout 9 22 "today's checkout"`
+Type@1ms `show TodaysCheckout 9 22 "today's checkout" --zoom 14-15`
 Enter
 Sleep 300ms
 Show
@@ -89,7 +89,7 @@ Sleep 300ms
 Type@1ms `note "A unit test builds the checkout *by hand*, and hands it the standard rate itself."`
 Enter
 Sleep 300ms
-Type@1ms `show CheckoutByHandTest 10 13 "the test by hand"`
+Type@1ms `show CheckoutByHandTest 10 13 "the test by hand" --zoom 12`
 Enter
 Sleep 300ms
 Show
@@ -103,7 +103,7 @@ Sleep 300ms
 Type@1ms `note "A test in a *container*: Weld starts inside the test, and wires the beans as the server would."`
 Enter
 Sleep 300ms
-Type@1ms `show CheckoutInContainerTest 15 24 "the test in a container"`
+Type@1ms `show CheckoutInContainerTest 15 24 "the test in a container" --zoom 18-19`
 Enter
 Sleep 300ms
 Show
@@ -138,7 +138,7 @@ Sleep 300ms
 Type@1ms `note "The checkout that asks for the standard rate by name:"`
 Enter
 Sleep 300ms
-Type@1ms `show StandardCheckout 15 18 "the fixed checkout"`
+Type@1ms `show StandardCheckout 15 18 "the fixed checkout" --zoom 16`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:embedded-jakarta-ee-tests:test"`

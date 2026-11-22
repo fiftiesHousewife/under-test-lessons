@@ -162,25 +162,25 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
   6   */
   7  public interface MessageQueue {
   8  
-  9      void send(String topic, String message);
- 10  
- 11      /** Delivers every message sent since the last commit. */
- 12      void commit();
+<mark>  9      void send(String topic, String message);</mark>
+<mark> 10  </mark>
+<mark> 11      /** Delivers every message sent since the last commit. */</mark>
+<mark> 12      void commit();</mark>
  13  }</pre></figure></main><aside class="notes">The shop talks to its message queue through an interface of its own. Send a message, and commit. Messages sent are held until the commit, then delivered together, just as the real queue does it.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/0c4f5e4e42d898f7.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's order placement. It tells the warehouse about every order, and sends big orders for a fraud check. Look at where it commits: before the fraud check message is sent.</p></section><figure class="code" style="--code-size: 22px"><figcaption>today's order placement</figcaption><pre> 16      public void place(final String orderId, final int pence) {
  17          queue.send(&quot;orders&quot;, orderId + &quot; &quot; + pence);
- 18          queue.commit();
- 19          if (pence &gt;= FRAUD_CHECK_PENCE) {
- 20              queue.send(&quot;fraud-checks&quot;, orderId + &quot; &quot; + pence);
+<mark> 18          queue.commit();</mark>
+<mark> 19          if (pence &gt;= FRAUD_CHECK_PENCE) {</mark>
+<mark> 20              queue.send(&quot;fraud-checks&quot;, orderId + &quot; &quot; + pence);</mark>
  21          }
  22      }</pre></figure></main><aside class="notes">Here is the code under test, today's order placement. It tells the warehouse about every order, and sends big orders for a fraud check. Look at where it commits: before the fraud check message is sent.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/1611b55dfbd7ce69.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The mock test</h1><div class="rule"></div><p class="scene-text">This is a test with a mock queue. It checks that each call was made: both messages, and the commit.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the mock test</figcaption><pre> 16      @Test
  17      void bigOrderSendsBothMessagesAndCommits() {
  18          Placements.using(queue).place(&quot;A-1&quot;, 15_000);
  19  
- 20          verify(queue).send(&quot;orders&quot;, &quot;A-1 15000&quot;);
- 21          verify(queue).send(&quot;fraud-checks&quot;, &quot;A-1 15000&quot;);
- 22          verify(queue).commit();
+<mark> 20          verify(queue).send(&quot;orders&quot;, &quot;A-1 15000&quot;);</mark>
+<mark> 21          verify(queue).send(&quot;fraud-checks&quot;, &quot;A-1 15000&quot;);</mark>
+<mark> 22          verify(queue).commit();</mark>
  23      }</pre></figure></main><aside class="notes">This is a test with a mock queue. It checks that each call was made: both messages, and the commit.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/4c9ca6a982040806.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fake</h1><div class="rule"></div><p class="scene-text">Now, a fake queue. It holds messages until the commit, then delivers them, like the real queue. It is a few lines of ordinary code.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the fake queue</figcaption><pre> 14      @Override
  15      public void send(final String topic, final String message) {
@@ -188,9 +188,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  17      }
  18  
  19      @Override
- 20      public void commit() {
- 21          pending.forEach((topic, messages) -&gt; arrived.computeIfAbsent(topic, t -&gt; new ArrayList&lt;&gt;()).addAll(messages));
- 22          pending.clear();
+<mark> 20      public void commit() {</mark>
+<mark> 21          pending.forEach((topic, messages) -&gt; arrived.computeIfAbsent(topic, t -&gt; new ArrayList&lt;&gt;()).addAll(messages));</mark>
+<mark> 22          pending.clear();</mark>
  23      }
  24  
  25      /** The messages delivered on a topic so far. */
@@ -202,8 +202,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  15          Placements.using(queue).place(&quot;A-1&quot;, 15_000);
  16  
  17          assertAll(
- 18                  () -&gt; assertThat(queue.delivered(&quot;orders&quot;)).as(&quot;orders&quot;).containsExactly(&quot;A-1 15000&quot;),
- 19                  () -&gt; assertThat(queue.delivered(&quot;fraud-checks&quot;)).as(&quot;fraud checks&quot;).containsExactly(&quot;A-1 15000&quot;));
+<mark> 18                  () -&gt; assertThat(queue.delivered(&quot;orders&quot;)).as(&quot;orders&quot;).containsExactly(&quot;A-1 15000&quot;),</mark>
+<mark> 19                  () -&gt; assertThat(queue.delivered(&quot;fraud-checks&quot;)).as(&quot;fraud checks&quot;).containsExactly(&quot;A-1 15000&quot;));</mark>
  20      }</pre></figure></main><aside class="notes">And a test with the fake. It places a big order, and checks what was delivered: one message to the warehouse, and one to the fraud check.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/181510bbf0a78135.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fake finds the bug</h1><div class="rule"></div><p class="scene-text">We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails: the fraud check message never arrives, because it was sent after the commit.</p><p class="callout">The mock test passes. The fake shows the fraud check never arrives: it was sent after the commit.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:fake-behind-an-interface:test -Pcode=today</pre><pre class="output">FakeQueueTest &gt; bigOrderReachesTheWarehouseAndTheFraudCheck() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
@@ -239,7 +239,7 @@ BUILD FAILED in 3s</pre></figure></main><aside class="notes">We run the tests ag
  18          if (pence &gt;= FRAUD_CHECK_PENCE) {
  19              queue.send(&quot;fraud-checks&quot;, orderId + &quot; &quot; + pence);
  20          }
- 21          queue.commit();
+<mark> 21          queue.commit();</mark>
  22      }</pre><pre class="command">$ ./gradlew :lessons:fake-behind-an-interface:test</pre><pre class="output">FakeQueueTest &gt; bigOrderReachesTheWarehouseAndTheFraudCheck() PASSED
 
 FakeQueueTest &gt; smallOrderSkipsTheFraudCheck() PASSED

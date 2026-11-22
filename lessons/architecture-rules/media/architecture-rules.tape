@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add ArchUnit to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/archunit/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/archunit/" gradle/libs.versions.toml --zoom 6`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson. There is nothing to configure."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/architecture-rules/example/build.gradle.kts "/libs.archunit/" "lesson build file"`
+Type@1ms `show lessons/architecture-rules/example/build.gradle.kts "/libs.archunit/" "lesson build file" --zoom 9`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: the admin page of a shop, as it is today. It reads *storage* directly."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysSummaryPage 6 19 "web layer: the admin page today"`
+Type@1ms `show TodaysSummaryPage 6 19 "web layer: the admin page today" --zoom 17`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "Ordinary *unit tests*: they check the page gives the right answer."`
 Enter
 Sleep 300ms
-Type@1ms `show OrderSummaryPageTest 14 30 "unit tests"`
+Type@1ms `show OrderSummaryPageTest 14 30 "unit tests" --zoom 27-28`
 Enter
 Sleep 300ms
 Show
@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "The *architecture rule*: which layer may use which."`
 Enter
 Sleep 300ms
-Type@1ms `show LayerRulesTest 23 33 "architecture rule"`
+Type@1ms `show LayerRulesTest 23 33 "architecture rule" --zoom 30-31`
 Enter
 Sleep 300ms
 Show
@@ -121,7 +121,7 @@ Sleep 300ms
 Type@1ms `note "The admin page that asks the service layer instead:"`
 Enter
 Sleep 300ms
-Type@1ms `show SummaryPage 6 19 "web layer: the admin page, fixed"`
+Type@1ms `show SummaryPage 6 19 "web layer: the admin page, fixed" --zoom 17`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:architecture-rules:test"`

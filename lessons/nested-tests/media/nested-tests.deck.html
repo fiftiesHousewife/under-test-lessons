@@ -158,7 +158,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">In JUnit, you mark an inner class as nested. You give classes and tests sentence names, with display name. And an inner class's set-up runs after the outer one's, so each level builds up its situation.</aside><audio class="voice" preload="none" src="nested-tests.deck-voice/2b18151420b75b48.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</p></section><figure class="code" style="--code-size: 20px"><figcaption>today's loan</figcaption><pre> 23      @Override
  24      public void repay() {
- 25          if (current == State.REPAID) {
+<mark> 25          if (current == State.REPAID) {</mark>
  26              throw new IllegalStateException(&quot;only an approved loan can be repaid&quot;);
  27          }
  28          current = State.REPAID;
@@ -196,9 +196,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  14  
  15      private final Loan loan = Loans.newLoan();
  16  
- 17      @Nested
- 18      @DisplayName(&quot;when requested&quot;)
- 19      class WhenRequested {
+<mark> 17      @Nested</mark>
+<mark> 18      @DisplayName(&quot;when requested&quot;)</mark>
+<mark> 19      class WhenRequested {</mark>
  20  
  21          @Test
  22          @DisplayName(&quot;can be approved&quot;)
@@ -217,10 +217,10 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  36      @DisplayName(&quot;when approved&quot;)
  37      class WhenApproved {
  38  
- 39          @BeforeEach
- 40          void approve() {
- 41              loan.approve();
- 42          }
+<mark> 39          @BeforeEach</mark>
+<mark> 40          void approve() {</mark>
+<mark> 41              loan.approve();</mark>
+<mark> 42          }</mark>
  43  
  44          @Test
  45          @DisplayName(&quot;can be repaid&quot;)
@@ -282,7 +282,7 @@ BUILD FAILED in 2s</pre></figure></main><aside class="notes">We run the tests ag
  23      }
  24  
  25      private void move(final State from, final State to, final String refusal) {
- 26          if (current != from) {
+<mark> 26          if (current != from) {</mark>
  27              throw new IllegalStateException(refusal);
  28          }
  29          current = to;

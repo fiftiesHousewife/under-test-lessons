@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's name formatter. It capitalises the first letter of each word."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysNameFormatter 11 16 "today's formatter"`
+Type@1ms `show TodaysNameFormatter 11 16 "today's formatter" --zoom 14`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "*One test* loops over every example."`
 Enter
 Sleep 300ms
-Type@1ms `show AllExamplesInOneTest 12 18 "one test for every example"`
+Type@1ms `show AllExamplesInOneTest 12 18 "one test for every example" --zoom 14-16`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "A *test factory* makes one test for each example file, named after the file."`
 Enter
 Sleep 300ms
-Type@1ms `show EachExampleTest 13 20 "one test for each example"`
+Type@1ms `show EachExampleTest 13 20 "one test for each example" --zoom 15-16`
 Enter
 Sleep 300ms
 Show
@@ -107,7 +107,7 @@ Sleep 300ms
 Type@1ms `note "The formatter that starts a word after a space, hyphen or apostrophe:"`
 Enter
 Sleep 300ms
-Type@1ms `show LetterNameFormatter 14 22 "the fixed formatter"`
+Type@1ms `show LetterNameFormatter 14 22 "the fixed formatter" --zoom 19`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:dynamic-tests:test"`

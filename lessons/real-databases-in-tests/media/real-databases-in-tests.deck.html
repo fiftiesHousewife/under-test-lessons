@@ -160,9 +160,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add Testcontainers, the PostgreSQL driver, and the H2 database, to the version catalogue.</p></section><figure class="code" style="--code-size: 13px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
- 16  testcontainers = &quot;2.0.5&quot;
- 17  postgresql = &quot;42.7.14&quot;
- 18  h2 = &quot;2.5.252&quot;
+<mark> 16  testcontainers = &quot;2.0.5&quot;</mark>
+<mark> 17  postgresql = &quot;42.7.14&quot;</mark>
+<mark> 18  h2 = &quot;2.5.252&quot;</mark>
    ⋮
  47  [libraries]
    ⋮
@@ -178,7 +178,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  13                  implementation(libs.h2)
  14              }
  15          }
- 16          register&lt;JvmTestSuite&gt;(&quot;integrationTest&quot;) {
+<mark> 16          register&lt;JvmTestSuite&gt;(&quot;integrationTest&quot;) {</mark>
  17              dependencies {
  18                  implementation(project())
  19                  implementation(platform(libs.junit.bom))
@@ -193,11 +193,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  28      }
  29  }</pre></figure></main><aside class="notes">Step two. Tests that need a container get a suite of their own, called integration test. Ordinary tests stay quick, and machines with no container runtime skip only the container tests.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/741796d5b9a15fc7.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's query. It decides who the sales team should call first: customers who never ordered, then those who ordered longest ago. It simply sorts by the date of the last order.</p></section><figure class="code" style="--code-size: 15px"><figcaption>today's query</figcaption><pre> 15      /** TODAY: oldest order first. On some databases, customers who never ordered come first; on others, last. */
- 16      public static final String TODAYS_QUERY = &quot;SELECT name FROM customers ORDER BY last_order&quot;;</pre></figure></main><aside class="notes">Here is the code under test, today's query. It decides who the sales team should call first: customers who never ordered, then those who ordered longest ago. It simply sorts by the date of the last order.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/df5ac46777ca9764.m4a"></audio></section>
+<mark> 16      public static final String TODAYS_QUERY = &quot;SELECT name FROM customers ORDER BY last_order&quot;;</mark></pre></figure></main><aside class="notes">Here is the code under test, today's query. It decides who the sales team should call first: customers who never ordered, then those who ordered longest ago. It simply sorts by the date of the last order.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/df5ac46777ca9764.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The test on an in-memory database</h1><div class="rule"></div><p class="scene-text">This is a test on H2, a database held in memory. It's quick, and needs nothing installed. But it isn't the database production uses.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the test on H2</figcaption><pre> 13      @Test
  14      void customersWhoNeverOrderedComeFirst() throws SQLException {
- 15          final JdbcDataSource h2 = new JdbcDataSource();
- 16          h2.setURL(&quot;jdbc:h2:mem:customers;DB_CLOSE_DELAY=-1&quot;);
+<mark> 15          final JdbcDataSource h2 = new JdbcDataSource();</mark>
+<mark> 16          h2.setURL(&quot;jdbc:h2:mem:customers;DB_CLOSE_DELAY=-1&quot;);</mark>
  17          final CustomerRepository customers = new CustomerRepository(h2::getConnection, Queries.fixed());
  18          customers.createTable();
  19          customers.add(&quot;Ada&quot;, LocalDate.of(2024, 3, 1));
@@ -210,10 +210,10 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  18  @Testcontainers(disabledWithoutDocker = true)
  19  class RealPostgresTest {
  20  
- 21      @Container
- 22      // The image: postgresImage in gradle.properties, such as a company's own approved build of PostgreSQL.
- 23      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName
- 24              .parse(System.getProperty(&quot;postgres.image&quot;, &quot;postgres:17-alpine&quot;)).asCompatibleSubstituteFor(&quot;postgres&quot;));
+<mark> 21      @Container</mark>
+<mark> 22      // The image: postgresImage in gradle.properties, such as a company's own approved build of PostgreSQL.</mark>
+<mark> 23      static final PostgreSQLContainer POSTGRES = new PostgreSQLContainer(DockerImageName</mark>
+<mark> 24              .parse(System.getProperty(&quot;postgres.image&quot;, &quot;postgres:17-alpine&quot;)).asCompatibleSubstituteFor(&quot;postgres&quot;));</mark>
  25  
  26      @Test
  27      void customersWhoNeverOrderedComeFirst() throws SQLException {
@@ -250,7 +250,7 @@ Execution failed for task ':lessons:real-databases-in-tests:integrationTestFailu
 
 BUILD FAILED in 6s</pre></figure></main><aside class="notes">We run both suites against today's query. On H2, it passes. On PostgreSQL, it fails. H2 puts customers who never ordered first. PostgreSQL puts them last. So the sales team would never call them.</aside><audio class="voice" preload="none" src="real-databases-in-tests.deck-voice/1975c9f57fde4de1.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed query</h1><div class="rule"></div><p class="scene-text">Now the query that says where customers who never ordered belong: first. We run both suites again. Both databases agree.</p><p class="callout">Both databases agree, because the query no longer leaves it to the database.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the fixed query</figcaption><pre> 18      /** FIXED: customers who never ordered come first, on every database. */
- 19      public static final String FIXED_QUERY = &quot;SELECT name FROM customers ORDER BY last_order NULLS FIRST&quot;;</pre><pre class="command">$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest</pre><pre class="output">InMemoryDatabaseTest &gt; customersWhoNeverOrderedComeFirst() PASSED
+<mark> 19      public static final String FIXED_QUERY = &quot;SELECT name FROM customers ORDER BY last_order NULLS FIRST&quot;;</mark></pre><pre class="command">$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest</pre><pre class="output">InMemoryDatabaseTest &gt; customersWhoNeverOrderedComeFirst() PASSED
 All 1 tests passed.
 
 RealPostgresTest &gt; customersWhoNeverOrderedComeFirst() PASSED

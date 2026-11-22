@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add REST Assured to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/rest-assured/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/rest-assured/" gradle/libs.versions.toml --zoom 10`
 Enter
 Sleep 300ms
 Show
@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/outside-in-http-tests/example/build.gradle.kts "/^dependencies/" "lesson build file"`
+Type@1ms `show lessons/outside-in-http-tests/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's booking service. It always answers *200 OK*, even when it refuses a booking."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysBookingHandler 13 21 "today's booking service"`
+Type@1ms `show TodaysBookingHandler 13 21 "today's booking service" --zoom 17-19`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "Tests from *inside*: they call the service's classes directly."`
 Enter
 Sleep 300ms
-Type@1ms `show BookingRulesTest 9 19 "tests from inside"`
+Type@1ms `show BookingRulesTest 9 19 "tests from inside" --zoom 15-17`
 Enter
 Sleep 300ms
 Show
@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "Tests from *outside*: REST Assured sends real HTTP requests to the running service, as a caller would."`
 Enter
 Sleep 300ms
-Type@1ms `show BookingApiTest 20 35 "tests from outside"`
+Type@1ms `show BookingApiTest 20 35 "tests from outside" --zoom 24-26`
 Enter
 Sleep 300ms
 Show
@@ -121,7 +121,7 @@ Sleep 300ms
 Type@1ms `note "The service that answers 201 Created, or 400 Bad Request:"`
 Enter
 Sleep 300ms
-Type@1ms `show BookingHandler 16 26 "the fixed service"`
+Type@1ms `show BookingHandler 16 26 "the fixed service" --zoom 22-24`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:outside-in-http-tests:test"`
