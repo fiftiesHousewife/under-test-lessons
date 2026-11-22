@@ -176,7 +176,8 @@ back on purpose are listed, with the reason, as `quality.holdBack` in [`gradle.p
 | `build-logic/`, `config/quality/` | Convention plugins that every module of this build applies, and the quality-check rules (copied from the toolkit) |
 | [`.github/skills/`](.github/skills/) | AI assistant skills for writing lessons and making their videos |
 | `tools/` | Helpers for working on the repo |
-| [`docs/`](docs/next-steps.md) | Next steps, and research behind the lesson plan |
+| [`docs/`](docs/decisions/README.md) | This repo's decisions, next steps, and research behind the lesson plan |
+| [`GLOSSARY.md`](GLOSSARY.md) | The words lessons use, on top of the toolkit's word list |
 
 ## Licence
 

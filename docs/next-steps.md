@@ -63,7 +63,7 @@ zoom, `fade` in and out). Items 4 and 5 belong in `lessons/_shared/callout.sh`.
   [the technology and gap review](research/technology-gap-review.md) and the catalogue.
 - Planned in the catalogue but not built: checking outgoing requests (MockServer), Mockito well used, AI-written tests
   that pass the acceptance check, contract tests, stand-in commands, server-rendered pages (Playwright with the
-  installed Chrome only), and the wave 3 lessons.
+  installed Chrome only), and the lessons marked "last" in the catalogue.
 - Old command-line programs (System Stubs) waits on an agreed exception to the forbidden-API check, since its "before"
   needs `System.out` and `System.exit`; System Stubs' exit and environment features may also not work on Java 25.
 

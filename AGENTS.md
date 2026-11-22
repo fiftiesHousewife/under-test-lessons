@@ -7,16 +7,34 @@ each with a runnable example and a short narrated video. The toolkit itself (dec
 lives in that repo; link to it by full URL.
 
 ## Words and references
-- Follow the toolkit's [GLOSSARY.md](https://github.com/fiftiesHousewife/under-test/blob/main/GLOSSARY.md): plain
-  English, industry terms explained on first use.
+- Follow [GLOSSARY.md](GLOSSARY.md), which adds the lessons' own words to the toolkit's word list: plain English, no
+  ordinary words given special meanings, industry terms explained on first use.
 - Refer to anything by its **name, as a link**, never by a code or number. No dates in titles or text.
+- No account names, personal paths or package names on slides, in videos or in decks; repository addresses are the
+  `lessonsRepoUrl` and `toolkitRepoUrl` settings.
+
+## Where things are
+| Path | What |
+|---|---|
+| [`lessons/`](lessons/README.md) | One folder per lesson; [the catalogue](lessons/CATALOGUE.md) is the plan |
+| `lessons/_shared/` | Video set-up and helpers, slide styles, themes and pictures, and `video-tools` |
+| [`docs/decisions/`](docs/decisions/README.md) | This repo's decisions, in MADR form |
+| [`docs/next-steps.md`](docs/next-steps.md) | Work in hand |
+| [`docs/research/`](docs/research/technology-gap-review.md) | Research behind the lesson plan |
+| `build-logic/`, `config/quality/` | Convention plugins every module applies, and the quality-check rules |
+| `tools/` | Helpers, such as running PMD and Checkstyle without Gradle worker processes |
 
 ## Skills
 | Skill | Use it to |
 |---|---|
 | [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
 | [write-lesson-slides-and-narration](.github/skills/write-lesson-slides-and-narration/SKILL.md) | Write a lesson video's story: slides, captions and narration |
-| [make-a-lesson-video](.github/skills/make-a-lesson-video/SKILL.md) | Script, check and make a lesson's short narrated video |
+| [make-a-lesson-video](.github/skills/make-a-lesson-video/SKILL.md) | Script, check and make a lesson's short narrated video, its slides and deck |
+| grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
+| architecture-decision-records (installed by APM) | The mechanics of writing a MADR record in [`docs/decisions/`](docs/decisions/README.md) |
+
+External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with `apm install` (APM, the Agent Package
+Manager). Run it once after cloning.
 
 ## Code standards (enforced by `./gradlew check`)
 | Standard | Enforced by |
@@ -39,4 +57,6 @@ lives in that repo; link to it by full URL.
 Tests that need a container go in the `integrationTest` source set, and skip themselves where there's no container runtime.
 
 ## Before you finish
-Run `./gradlew check`. It must pass.
+Run `./gradlew check`. It must pass. Where Gradle's worker processes can't run, as in some sandboxes, run PMD and
+Checkstyle with `./gradlew --init-script tools/quality-cli.init.gradle --no-configuration-cache pmdCli checkstyleCli`.
+Rebuild the decks (`./gradlew :lessons:video-tools:buildLessonSlides`) when slides, narration or a lesson's code change.
