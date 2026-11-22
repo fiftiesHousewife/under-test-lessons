@@ -66,7 +66,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #86 | [Lessons run on Windows](https://github.com/fiftiesHousewife/under-test-lessons/issues/86) | deliverable | Lessons Owner | ai | – |
 | #50 | [Automatic rebranding of each release's videos](https://github.com/fiftiesHousewife/under-test-lessons/issues/50) | deliverable | Lessons Owner | tool | – |
 | #70 | [CI proves the inside copy builds with only a company's Maven repository](https://github.com/fiftiesHousewife/under-test-lessons/issues/70) | deliverable | Lessons Owner | ai | – |
 | #71 | [The Gradle wrapper's download address is a setting](https://github.com/fiftiesHousewife/under-test-lessons/issues/71) | deliverable | Lessons Owner | ai | – |
@@ -81,6 +80,5 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
-| #65 | [main builds green on GitHub again](https://github.com/fiftiesHousewife/under-test-lessons/issues/65) | deliverable | Lessons Owner | tool | – |
 | #94 | [The README's lesson count comes from the catalogue](https://github.com/fiftiesHousewife/under-test-lessons/issues/94) | deliverable | Lessons Owner | tool | – |
 | #95 | [The readiness review is marked as a snapshot](https://github.com/fiftiesHousewife/under-test-lessons/issues/95) | deliverable | Lessons Owner | ai | – |
