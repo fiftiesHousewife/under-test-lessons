@@ -50,11 +50,11 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |---|---|---|---|---|---|
 | #89 | [Mutation testing: money in pence, its history, and changed-code routes](https://github.com/fiftiesHousewife/under-test-lessons/issues/89) | deliverable | Lessons Owner | ai | – |
 | #90 | [Corrected history facts](https://github.com/fiftiesHousewife/under-test-lessons/issues/90) | deliverable | Lessons Owner | ai | – |
-| #92 | [Captured data is cleaned thoroughly](https://github.com/fiftiesHousewife/under-test-lessons/issues/92) | deliverable | Lessons Owner | ai | – |
 | #63 | [Differential testing also replays saved requests offline against two running builds](https://github.com/fiftiesHousewife/under-test-lessons/issues/63) | deliverable | Lessons Owner | ai | – |
 | #64 | [Comparing structured output shows keyed substitutes need no ignore rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/64) | deliverable | Lessons Owner | ai | – |
 | #41 | [The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI](https://github.com/fiftiesHousewife/under-test-lessons/issues/41) | deliverable | Lessons Owner | ai | – |
 | #88 | [Every lesson switches with -Pcode=today](https://github.com/fiftiesHousewife/under-test-lessons/issues/88) | deliverable | Lessons Owner | ai | – |
+| #102 | [The cleaning lesson says what the EDPS v SRB ruling does and doesn't change](https://github.com/fiftiesHousewife/under-test-lessons/issues/102) | deliverable | Lessons Owner | person | – |
 | #93 | [Notes the review asked for in lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/93) | deliverable | Lessons Owner | ai | – |
 | #98 | [Each README says what to use on older Java](https://github.com/fiftiesHousewife/under-test-lessons/issues/98) | deliverable | Lessons Owner | ai | – |
 | #42 | [Lessons for the tools the toolkit names that none uses yet](https://github.com/fiftiesHousewife/under-test-lessons/issues/42) | deliverable | Lessons Owner | ai | – |
