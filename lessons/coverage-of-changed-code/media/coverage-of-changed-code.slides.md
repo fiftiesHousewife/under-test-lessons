@@ -12,53 +12,44 @@ view from Google", IEEE Transactions on Software Engineering, 2021 (mutation tes
 changed code during code review, rather than the entire code base"); JaCoCo's Gradle report and coverage check, as set
 up in this repository's build conventions.
 
-## intro: What is coverage of changed code?
-- Old code has low coverage, and nobody can raise it all at once
-- So check only what each change touches
-- The changed lines must run in the tests, and their planted bugs must be caught
-Picture: coverage
-Say: Old code usually has low test coverage, and nobody can raise it all at once. So check only what each change
-  touches. The lines a change adds must run in the tests. And the small bugs that mutation testing plants in them
-  must be caught.
+## intro: Old code fails every gate, so nothing checks the new code
+- A shop's old pricing module has no tests: an 80% coverage gate can never pass, so it's off
+- A change adds a bulk discount, and its own test runs all 8 new lines
+- Yet 5 of 11 small bugs planted in those lines go unnoticed
+Picture: bug
+Say: Here is the problem. A shop's old pricing module has no tests. A rule that the module needs 80 percent line
+  coverage can never pass, so the team turned it off. Now a change adds a bulk discount, and its own test runs all 8
+  of the new lines. But when we plant 11 small bugs in those lines, one at a time, the test misses 5 of them. And
+  nothing in the build stops the change.
 
 ## intro: Our example: a shop's old pricing module
 - Delivery charges, VAT and order totals, written long ago, with no tests
-- A change adds a bulk discount on one line of an order
+- The change: a bulk discount on one line of an order
 - 10 or more of an item get 5% off, 50 or more get 10% off
 Picture: basket
 Say: Our example is an online shop's old pricing module. It works out delivery charges, VAT and order totals. It was
-  written long ago, and it has no tests. A change adds a bulk discount on one line of an order. 10 or more of an item
-  get 5 percent off that line. 50 or more get 10 percent off.
+  written long ago, and it has no tests. The change adds a bulk discount on one line of an order. 10 or more of an
+  item get 5 percent off that line. 50 or more get 10 percent off.
 
-## intro: What we'll compare
-- The code under test: the new bulk discount, the one class the change touched
-- Weak test: the change's own test, which runs every new line and checks nothing exact
-- Strong test: both sides of each boundary, and exact prices
-Picture: scales
-Say: Here is what we will compare. The code under test is the new bulk discount, the one class the change touched.
-  [pause 300ms] The weak test is the change's own test. It runs every new line, but checks nothing exact.
-  [pause 300ms] The strong test checks both sides of each boundary, and exact prices.
+## intro: The fix: check only what the change touched
+- Git lists the classes the change touched: here, just the bulk discount
+- Every line of them must run in the tests
+- Every bug planted in them must be caught: that's mutation testing
+Picture: magnifier
+Say: The fix is to check only what the change touched. Git lists the classes a branch changed. Here, that's just the
+  bulk discount. Every line of those classes must run in the tests. And every small bug planted in them must make a
+  test fail. Planting bugs to test the tests is called mutation testing. It's a gate every change can meet, however
+  old the code around it.
 
-## intro: Why only the changed code?
-- A whole-module gate, such as 80% line coverage, can't pass on old code, so it gets turned off
-- Then nothing checks the new code either
-- Mutation testing a whole old module is slow, and reports hundreds of old weaknesses
-- A gate on the change is one every change can meet
-Picture: boundary
-Say: Why only the changed code? [pause 1600ms] A gate for the whole module, such as 80 percent line coverage, can't
-  pass on old code, so teams turn it off. Then nothing checks the new code either. Mutation testing a whole old module
-  is slow, and reports hundreds of old weaknesses nobody will fix this week. But a gate on the change is one every
-  change can meet.
-
-## intro: How it works
-- Git lists the files a branch changed, compared with the main branch
-- PIT, the mutation testing tool, plants bugs only in those classes
-- JaCoCo's coverage check counts only those classes
-- A gate fails the build if any planted bug in them survives
+## intro: How the build is told
+- A list of the changed classes, written from git: BulkDiscount
+- PIT plants bugs only there: targetClasses = changedClasses
+- A gate after PIT: "5 of 11 planted bugs in the changed classes survived"
 Picture: robot
-Say: Here is how it works. Git lists the files a branch changed, compared with the main branch. PIT, the mutation
-  testing tool, plants small bugs only in those classes, so it stays quick. JaCoCo's coverage check counts only those
-  classes. And a gate fails the build if any planted bug in them survives.
+Say: How is the build told? A short file lists the changed classes, and on the build machine git writes it. PIT, the
+  mutation testing tool, is set to plant bugs only in the classes on that list, so it stays quick. JaCoCo's coverage
+  check counts only those classes too. And a gate after PIT fails the build. Today it says 5 of 11 planted bugs in
+  the changed classes survived.
 
 Include: how-we-build
 

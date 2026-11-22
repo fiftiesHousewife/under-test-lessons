@@ -3,48 +3,41 @@
 Sources: github.com/lukas-krecan/JsonUnit (Apache 2.0 licence, by Lukáš Křečan; AssertJ, Hamcrest and JUnit support in
 its README); xmlunit.org (XMLUnit, for Java and .NET).
 
-## intro: What is a structured comparison?
-- Compare output as data, not as text: fields, values, lists
-- Field order and spacing don't matter
-- Say exactly which parts may vary, such as an id or a time
-Picture: braces
-Say: A structured comparison checks output as data, rather than as text: its fields, its values, and its lists. The
-  order of the fields and the spacing don't matter. And you say exactly which parts may vary, such as an id, or the
-  time something was made.
+## intro: The total is wrong, and the test passes
+- 4 teas at £2.50 and 1 packet of biscuits at £1.20 should come to £11.20
+- Today's summary says £3.70: it forgets how many of each were bought
+- The test only checks that some words appear, so it passes
+Picture: bug
+Say: Here is the problem. An order has 4 teas at 2 pounds 50, and 1 packet of biscuits at 1 pound 20. That should
+  come to 11 pounds 20. Today's order summary says 3 pounds 70, because it forgets how many of each were bought. And
+  its test passes. It only checks that a few words appear, whatever the numbers are.
 
 ## intro: Our example: an order summary
-- An order goes to the warehouse as JSON
+- An order goes to the warehouse as JSON, a common text format for data
 - It lists each item, its price, and how many
 - It has a total, a new id, and the time it was made
 Picture: basket
-Say: Our example is an order summary, sent to the warehouse as JSON. It lists each item, its price, and how many were
-  bought. And it has a total, a new id, and the time it was made.
+Say: Our example is an order summary, sent to the warehouse as JSON, a common text format for data. It lists each
+  item, its price, and how many were bought. And it has a total, a new id, and the time it was made. The id and the
+  time are different on every run. That's why the test was loosened. Comparing the whole text failed every time.
 
-## intro: What we'll compare
-- The code under test: today's total, which forgets the quantities
-- A loosened test: checks only that some words appear
-- A structured comparison: every field and value, ignoring only what must vary
-Picture: scales
-Say: Here is what we will compare. The code under test is today's total, which forgets the quantities. [pause 300ms]
-  A loosened test checks only that some words appear. [pause 300ms] And a structured comparison checks every field
-  and every value, and ignores only what must vary.
+## intro: The fix: compare the output as data
+- Check every field and value: the items, the quantities, the total
+- Field order and spacing don't matter
+- Only the id and the time may vary: a placeholder accepts any text there
+Picture: braces
+Say: The fix is to compare the summary as data, not as text. This is called a structured comparison. It checks every
+  field and every value: the items, the quantities and the total. The order of the fields and the spacing don't
+  matter. And only the parts that must vary, the id and the time, get a placeholder that accepts any text.
 
-## intro: Why text comparisons get loosened
-- An id or a time makes the output different on every run
-- A whole-text comparison fails every time, so someone loosens it
-- A loosened test passes whatever the numbers are
-Picture: magnifier
-Say: Why does this happen? [pause 1600ms] An id, or a time, makes the output different on every run. A comparison of the
-  whole text fails every time, so someone loosens it, to check only a few words. And then it passes, whatever the
-  numbers are.
-
-## intro: How JSONUnit works
-- Give it the actual JSON and the JSON you expect
-- Placeholders such as any-string accept any value of that kind
-- A difference names the field, the value expected and the value found
+## intro: How JSONUnit looks
+- assertThatJson(summary).isEqualTo(the expected JSON)
+- For the id: "${json-unit.any-string}"
+- A difference names the field: totalPence, expected 1120 but was 370
 Picture: robot
-Say: JSONUnit takes the actual JSON, and the JSON you expect. In the expected JSON, a placeholder such as any string
-  accepts any value of that kind. When they differ, it names the field, the value it expected, and the value it found.
+Say: JSONUnit is a library for this. The test hands it the summary, and the JSON it expects. In the expected JSON, the
+  id and the time are placeholders that accept any string. When the two differ, it names the field and both values.
+  For the shop's order, it says the total in pence should be 1120, but was 370.
 
 Include: how-we-build
 

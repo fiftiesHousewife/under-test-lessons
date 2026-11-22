@@ -8,63 +8,47 @@ datafaker.net and github.com/datafaker-net/datafaker (Apache 2.0 licence; a mode
 data providers; a seed, as in new Faker(new Random(0)), gives repeatable results; Java 17 or later); RFC 2104 (HMAC, a
 keyed hash, February 1997); Java Security Standard Algorithm Names (HmacSHA256).
 
-## intro: What is a file-in, file-out test?
-- Run the whole batch job on a known input file
-- Read its output file back as records, and compare them field by field
-- Do it in a fresh temporary folder, so runs never interfere
-Picture: files
-Say: A file-in, file-out test runs a whole batch job on a known input file. It reads the output file back as records,
-  and compares them with the ones you expect, field by field. It works in a fresh temporary folder, so one run never
-  interferes with the next.
+## intro: The bank's file has no closing line
+- A day of 6 payments, £427.14 in all, goes to the bank as a settlement file
+- The bank expects a closing line with the count and total: 6, and 427.14
+- Today's job leaves it out, and the tests of each piece all pass
+Picture: bug
+Say: Here is the problem. A day of 6 payments, 427 pounds 14 in all, goes to the bank as a settlement file. The bank
+  checks the file's layout, including a closing line with the number of payments and their total. Today's nightly
+  job leaves that closing line out. Yet its tests pass. They check one line read, and one line written, and never
+  look at the whole file.
 
 ## intro: Our example: a nightly settlement file
 - Each night, a Spring Batch job reads the day's payments
-- It writes a settlement file for the bank
-- The bank checks the file's layout, including a closing line with the count and total
+- It writes a settlement file: a header, a line per payment, and the closing line
+- The bank reads the whole file, and rejects one it can't check
 Picture: statement
-Say: Our example is a nightly job, written with Spring Batch, a framework for jobs that work through files and records
-  in bulk. It reads the day's payments, and writes a settlement file for the bank to collect. The bank checks the
-  file's layout carefully, including a closing line with the number of payments and their total.
+Say: Our example is that nightly job, written with Spring Batch, a framework for jobs that work through files and
+  records in bulk. It reads the day's payments, and writes a settlement file for the bank to collect. The file has a
+  header, a line for each payment, and the closing line. The bank reads all of it, and rejects a file it can't check.
 
-## intro: What we'll compare
-- The code under test: today's nightly job
-- Tests of the pieces: one line read, one line written
-- A test of the whole job: made-up payments in, settlement records out
-- And a captured day's files, cleaned before they are kept
-Picture: scales
-Say: Here is what we will compare. The code under test is today's nightly job. [pause 300ms] Tests of the pieces
-  check one line read, and one line written. [pause 300ms] A test of the whole job runs it on made-up payments, and
-  compares the settlement file's records. And a second test runs it on a captured day's files, cleaned before they
-  were kept with the tests.
+## intro: The fix: test the whole file
+- Run the whole job on a known input file, in a fresh folder
+- Read the output back as records, and compare them field by field
+- Input: made-up payments, or a captured day's files, cleaned first
+Picture: files
+Say: The fix is to test the whole file. This is called a file-in, file-out test. Run the whole job on a known input
+  file, in a fresh folder, so one run never interferes with the next. Read the output back as records, and compare
+  them with the ones you expect, field by field. Then a failure names the field that's wrong, and shows both values.
+  The input is made-up payments, or a captured day's real files, cleaned before they are kept with the tests.
 
-## intro: Why test the whole file
-- The system that reads the file sees all of it: header, order, closing line, line endings
-- Tests of the pieces miss what lies between them
-- Records, not text: a failure names the field, and both values
-Picture: magnifier
-Say: Why test the whole file? [pause 1600ms] The system that reads the file sees all of it: the header, the order of
-  lines, the closing line, even the line endings. Tests of the pieces miss what lies between them. And reading the
-  file back as records means a failure names the field that is wrong, and shows both values, instead of two walls of
-  text.
-
-## intro: How the tools work
-- Spring Batch's test library starts the real job, with the files as its parameters
-- Datafaker makes up realistic payments, the same ones every run from a fixed seed
-- JUnit's @TempDir gives each test a fresh folder, deleted afterwards
+## intro: How the tools look
+- @SpringBatchTest, then batch.startJob(parameters): the real job, end to end
+- new Faker(new Random(SEED)): the same made-up payments every run
+- @TempDir: a fresh folder for each test, deleted afterwards
+- HmacSHA256: each real account number becomes a keyed substitute
 Picture: robot
-Say: Spring Batch's test library starts the real job, end to end, with the input and output files as its parameters.
-  Datafaker makes up realistic test data, such as account numbers and amounts. Given a fixed seed, it makes the same
-  data on every run. And JUnit's temporary folder gives each test a fresh folder, and deletes it afterwards.
-
-## intro: Real files, cleaned with keyed substitutes
-- A captured day's files show what really arrives, but hold real account numbers
-- Replace each account number with a keyed substitute before the files are kept
-- The same number always gets the same substitute, so payments still match their lines
-Picture: twins
-Say: A captured day's files show what really arrives, odd cases and all. But they hold real account numbers. So
-  clean them before they are kept with the tests. Replace each account number with a keyed substitute, made from the
-  number and a key, with a standard keyed hash that comes with Java. The same number always gets the same substitute,
-  so each payment still matches its line in the settlement file. Nobody without the key can work back to the account.
+Say: Here is how the tools look. Spring Batch's test library starts the real job, end to end, with the input and
+  output files as its settings. Datafaker makes up realistic payments, and given a fixed seed, a starting number for
+  its random choices, it makes the same ones every run. JUnit's temporary folder gives each test a fresh folder, and
+  deletes it afterwards. And a captured day's files are cleaned with a standard keyed hash that comes with Java. Each
+  account number becomes a substitute made from the number and a key. The same number always gets the same
+  substitute, so each payment still matches its line in the settlement file.
 
 Include: how-we-build
 

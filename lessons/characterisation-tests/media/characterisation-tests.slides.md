@@ -4,50 +4,42 @@ Sources: approvaltests.com and the ApprovalTests Java repository (how approvals 
 approved file and a received file); Michael Feathers, Working Effectively with Legacy Code (2004), which named
 characterisation tests.
 
-## intro: What is a characterisation test?
-- A test that records what the code does today, bugs and quirks included
-- It answers "what does it do?", not "what should it do?"
-- Any later change in behaviour shows up straight away
-Picture: camera
-Say: A characterisation test records what code does today, bugs and quirks included. It doesn't ask what the code
-  should do. It asks what it actually does. Once that is pinned down, any change in behaviour shows up straight away.
+## intro: A tidy rewrite quietly changes the statements
+- A bank's statement printer has run for years, with one test: did something print?
+- A tidier rewrite drops a £25 fee nobody knew about
+- The closing balance moves from £2,030 to £2,055, and the test still passes
+Picture: bug
+Say: Here is the problem. A bank's statement printer has run for years, and its only test checks that something was
+  printed. Someone rewrites it to make it tidier. The rewrite quietly drops a 25 pound overdraft fee that the old
+  printer charged, and that nobody remembered. On a test month, the closing balance moves from 2030 pounds to 2055.
+  And the test still passes.
 
 ## intro: Our example: a bank statement printer
 - Prints a month of transactions with a running balance
-- Charges a £25 overdraft fee when the balance goes too low
+- Charges a £25 overdraft fee when the balance goes too low, even at exactly zero
 - Adds interest when the closing balance is over £1,000
 Picture: statement
-Say: Our example is a bank's statement printer, which has run for years without tests. It prints a month of
-  transactions with a running balance. It charges a 25 pound overdraft fee when the balance goes too low, and adds
-  interest when the balance ends the month over 1000 pounds. Nobody remembers every rule it follows.
+Say: Our example is that statement printer. It prints a month of transactions with a running balance. It charges a
+  25 pound overdraft fee when the balance goes too low, and it turns out that includes a balance of exactly zero. And
+  it adds interest when the balance ends the month over 1000 pounds. Nobody remembers every rule it follows.
 
-## intro: What we'll compare
-- The code under test: the statement printer, with no real tests
-- A weak test: checks only that a statement came back
-- A characterisation test: checks the whole statement, line for line
-Picture: scales
-Say: Here is what we will compare. The code under test is the statement printer. [pause 300ms] It has one weak test,
-  which checks only that a statement came back, so it would pass whatever the amounts were. [pause 300ms] We'll add a
-  characterisation test, which checks the whole statement, line for line, against an approved copy. Then we'll see
-  which one notices when someone changes the code.
+## intro: The fix: record what it does today
+- Before changing it, save a whole statement it prints today
+- Every later run must print exactly the same, bugs and quirks included
+- This is a characterisation test: it asks what the code does, not what it should do
+Picture: camera
+Say: The fix is to record what the printer does today, before anyone changes it. Save a whole statement it prints,
+  for a month that reaches every rule. Every later run must print exactly the same, bugs and quirks included. This is
+  called a characterisation test. It doesn't ask what the code should do. It asks what it actually does.
 
-## intro: Why legacy code needs them first
-- Old code often has no tests, and nobody remembers every rule
-- Changing it without tests is guessing
-- Tests that only check "something came back" don't protect you
-Picture: magnifier
-Say: Why start here? [pause 1600ms] Old code often has no tests, and nobody remembers every rule it follows. Changing it
-  without tests is guessing. And the tests it does have often check only that something came back, which protects
-  nothing.
-
-## intro: How ApprovalTests works
-- Run the code and save its whole output as an approved file, next to the test
-- Every later run compares what it receives with what was approved
-- If they differ, the test fails and keeps the received file to compare
+## intro: How ApprovalTests looks
+- One line in the test: Approvals.verify(statement)
+- The first run's output, once checked, is saved as an approved file beside the test
+- A different output fails, and the build shows each line that changed
 Picture: checklist
-Say: ApprovalTests makes this easy. It runs the code and saves the whole output as an approved file, next to the test.
-  Every later run compares what it receives with what was approved. If they differ, the test fails, and keeps the
-  received file, so you can see exactly what changed.
+Say: ApprovalTests is a library that does this. The test hands it the whole statement in one line. The output of the
+  first run, once a person has checked it, is saved as an approved file beside the test. If a later run receives
+  anything different, the test fails, and the build shows each line that changed, approved and received side by side.
 
 Include: how-we-build
 

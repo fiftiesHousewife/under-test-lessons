@@ -4,48 +4,40 @@ Sources: William M. McKeeman, "Differential Testing for Software", Digital Techn
 1998; the toolkit's differential-testing technique (replaying recorded traffic with Keploy, or WireMock recordings
 with ApprovalTests; not Diffy, which is archived and whose only fork has a non-commercial licence).
 
-## intro: What is differential testing?
-- Run two versions of the code on the same inputs
-- Compare every answer; any difference is worth a look
-- The old version is the reference, so there are no expected values to write
-Picture: twins
-Say: Differential testing runs two versions of the code on the same inputs, and compares every answer. Any difference
-  is worth a look. The old version is the reference, so there are no expected values to write by hand.
+## intro: The rewrite overcharges, and its tests pass
+- A postage calculator is rewritten, and one row of its price list is mistyped
+- Parcels from 451 g to 500 g now cost £3.15, not £1.95
+- The rewrite's 5 tests try one typical weight per row, and all pass
+Picture: bug
+Say: Here is the problem. A postage calculator is rewritten, and one row of its new price list is mistyped. Parcels
+  weighing from 451 grams to 500 grams now cost 3 pounds 15, instead of 1 pound 95. The rewrite has 5 tests, one
+  typical weight for each row of prices. None of them weighs between 451 and 500 grams, so they all pass.
 
 ## intro: Our example: postage prices
 - The price of posting a parcel, by weight, up to 5 kg
 - An old calculator: a chain of ifs, in use for years
 - A rewrite: the same prices, read from a price list
 Picture: statement
-Say: Our example prices parcels by weight, up to five kilograms. There's an old calculator: a chain of ifs, in use for
-  years. And there's a rewrite, which reads the same prices from a price list.
+Say: Our example prices parcels by weight, up to 5 kilograms. There's an old calculator, a long chain of if
+  statements, in use for years. And there's a rewrite, which reads the same prices from a price list.
 
-## intro: What we'll compare
-- The code under test: the rewrite, as it is today
-- The rewrite's own tests: one typical weight per row
-- A differential test: every weight, old against new
-Picture: scales
-Say: Here is what we will compare. The code under test is the rewrite, as it is today. [pause 300ms] The rewrite's
-  own tests check one typical weight per row. [pause 300ms] And a differential test checks every weight, old against
-  new.
+## intro: The fix: ask the old calculator
+- Run the old calculator and the rewrite on the same weights: every gram from 1 g to 5 kg
+- Compare every answer: any difference is worth a look
+- The old version is the reference, so there are no expected prices to write
+Picture: twins
+Say: The fix is to ask the old calculator. It already knows every answer customers rely on, including the odd ones.
+  Run it and the rewrite on the same weights, every gram from 1 gram to 5 kilograms, and compare every answer. This
+  is called differential testing. The old version is the reference, so there are no expected prices to write by hand.
 
-## intro: Why compare with the old version
-- A rewrite must keep every answer customers rely on, including the odd ones
-- Tests written for the rewrite only check the cases someone thought of
-- The old code already knows every answer: ask it
-Picture: magnifier
-Say: Why compare with the old version? [pause 1600ms] A rewrite must keep every answer customers rely on, including the
-  odd ones. Tests written for the rewrite only check the cases someone thought of. But the old code already knows every
-  answer. So ask it.
-
-## intro: How a differential test works
-- Choose the inputs: every value in a range, recorded real inputs, or generated ones
-- Run both versions on each, and collect the differences
-- Report differences in groups, so a hundred failures read as one cause
+## intro: How the test looks
+- A loop over every weight: legacy.pence(grams) != rewrite.pence(grams)
+- Differences grouped into runs, so 50 wrong weights read as one
+- The result: "451 g to 500 g: old 195p, new 315p"
 Picture: robot
-Say: First, choose the inputs: every value in a range, real inputs recorded from production, or generated ones. Run
-  both versions on each, and collect the differences. Then report them in groups, so a hundred differences read as
-  one cause.
+Say: It needs no library, just a loop. For every weight, the test asks both versions for the price, and notes where
+  they differ. It groups the differences into runs, so 50 wrong weights read as one cause. Today it reports a single
+  run: from 451 to 500 grams, the old price is 195 pence, and the new one is 315.
 
 ## closing: When to use differential testing
 - Whenever old code is rewritten, moved to a new platform, or upgraded

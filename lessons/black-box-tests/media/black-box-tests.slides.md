@@ -8,15 +8,15 @@ with Legacy Code (2004), which named characterisation tests; RFC 9110, HTTP Sema
 Location); the JDBC documentation for Connection.setAutoCommit and commit (with automatic commits off, changes are
 kept only when commit is called).
 
-## intro: What is a black-box test of a whole application?
-- Start the application as it ships, from its own entry point and settings
-- Drive it only through what it receives: web requests, messages, files
-- Stand in for everything it calls, and check what comes out: answers, calls, rows
-Picture: door
-Say: A black-box test of a whole application starts it the way it ships, from its own entry point and its own kind of
-  settings. It drives it only through what the application receives from outside: web requests, messages, or files.
-  Everything the application calls is replaced by a stand-in. And the test checks only what comes out: the answers,
-  the calls it makes, and the rows it writes.
+## intro: The order is confirmed, then lost
+- A customer orders 3 pens: the warehouse puts them aside, and the shop answers "created"
+- But the order never reaches the database: it is written, and never committed
+- The unit tests pass: a list stands in for the database
+Picture: bug
+Say: Here is the problem. A customer orders 3 pens from a shop. The warehouse puts the pens aside, and the shop
+  answers that the order is created. But the order is never kept. The service writes it to the database, and never
+  commits it, the step that makes a change permanent. So the database throws it away. The unit tests all pass,
+  because a simple list stands in for the database.
 
 ## intro: Our example: a shop's order service
 - A customer orders a quantity of one product
@@ -24,48 +24,30 @@ Say: A black-box test of a whole application starts it the way it ships, from it
 - It keeps the order in its database, as 2 rows: the order and its line
 - It answers 201 Created, or 409 Conflict when stock is short
 Picture: basket
-Say: Our example is a shop's order service. A customer orders a quantity of one product. The service asks the
+Say: Our example is that shop's order service. A customer orders a quantity of one product. The service asks the
   warehouse's web service to put that stock aside. Then it keeps the order in its own database, as 2 rows: the order,
   and its line. It answers 201 Created, with the order's id. Or, when the warehouse is short of stock, 409 Conflict.
 
-## intro: What we'll compare
-- The code under test: today's order service
-- The unit tests: the order rules, with stand-ins for the warehouse and the database
-- The black-box test: the service started as it ships, checked only from outside
-Picture: scales
-Say: Here is what we will compare. The code under test is today's order service. [pause 300ms] The unit tests check
-  the order rules, with stand-ins for the warehouse and the database. [pause 300ms] The black-box test starts the
-  whole service as it ships, and checks it only from outside.
+## intro: The fix: test the whole application, from outside
+- Start it as it ships, from its own entry point and a settings file
+- Send it only what it receives in real life: here, web requests
+- Stand in for what it calls, the warehouse, and check what comes out: the answer, the calls, the rows
+Picture: door
+Say: The fix is to test the whole application from outside. This is called a black-box test, because it knows
+  nothing about the classes inside. Start the service the way it ships, from its own entry point and a settings file.
+  Send it only what it receives in real life, here web requests. Stand in for the warehouse it calls. Then check what
+  comes out: the answer, the calls it made, and the rows it wrote. The requests can be examples the people who run it
+  know well, or real ones captured and cleaned of personal data.
 
-## intro: Why test the whole application
-- Unit tests replace the edges, and the edges are where old code breaks
-- Wiring, settings, SQL, web addresses and transactions only run in the whole thing
-- Often the first tests an untested application gets: they need no change inside
-Picture: magnifier
-Say: Why test the whole application? [pause 1600ms] Unit tests replace the edges with stand-ins, and the edges are
-  where old code breaks. The wiring, the settings, the SQL, the web addresses and the transactions only run when the
-  whole application runs. And because a black-box test needs no change inside, it is often the first test an untested
-  application gets.
-
-## intro: How the tools work
-- WireMock: a web server that answers as the warehouse would, and keeps every request it receives
-- An embedded database: the service creates its own, in a temporary folder
-- REST Assured: sends the requests, and checks the answers
-- Plain JDBC reads the rows written, straight from the database
+## intro: How the tools look
+- WireMock as the warehouse: stubFor(post(urlEqualTo("/reservations")))
+- REST Assured posts the order: .post("/orders").then().statusCode(201)
+- Plain JDBC reads the rows: expected ["O-1001 C-42 W-881 PEN-01 3"] but was []
 Picture: server
-Say: WireMock is a small web server that answers as the warehouse would, and keeps every request it receives, so the
-  test can check them. The service uses H2, a database that runs inside it, and creates its own tables, here in a
-  temporary folder. REST Assured sends the test's requests, and checks the answers. And plain database code reads the
-  rows the service wrote. Elsewhere, the database could be a real one in a container.
-
-## intro: Where the inputs come from
-- Examples the people who run the application know well
-- Captured from real traffic, then cleaned of personal data
-- Each one kept as a test, with the answer, calls and rows it produced
-Picture: camera
-Say: Where do the inputs come from? [pause 1600ms] Start with the examples the people who run the application know
-  well. Better still, capture real requests and messages as they arrive, and clean them of personal data before they
-  are kept. Each one becomes a test, with the answer, the calls and the rows it produced.
+Say: Here is how the tools look. WireMock is a small web server that answers as the warehouse would, and keeps every
+  request it receives, so the test can check them. REST Assured posts the order, and checks the answer. The service
+  uses H2, a database that runs inside it, here in a temporary folder. And plain database code reads the rows the
+  service wrote. Today it expected the order's row, and found none.
 
 Include: how-we-build
 

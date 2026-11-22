@@ -9,15 +9,15 @@ Help for the Practicing Programmer", IEEE Computer, 1978; Y. Jia and M. Harman, 
 Development of Mutation Testing", IEEE Transactions on Software Engineering, 2011 (the idea traced to Richard Lipton's
 1971 student paper).
 
-## intro: What is mutation testing?
-- It tests your tests, not your code
-- Plant one small bug in the code: a mutation
-- Run the tests: if one fails, the bug is caught; if all pass, it survived
-Picture: bug
-Say: Mutation testing tests your tests, not your code. It plants one small bug at a time. For example, it takes a
-  comparison that says greater than or equal to, [pause 300ms] and makes it just greater than. Then it runs your
-  tests. If a test fails, the bug is caught. If every test still passes, the bug survived: a real mistake of the same
-  kind would slip through too.
+## intro: Every line runs, and most bugs slip through
+- A shop's tests run all 13 lines of its discount rules: 100% line coverage
+- Plant 13 small bugs in those lines, one at a time: the tests catch 5
+- The other 8 pass unnoticed: an order of exactly £50 could lose its discount
+Picture: coverage
+Say: Here is the problem. A shop's tests run every one of the 13 lines in its discount rules, so line coverage is
+  100 percent. Line coverage only counts the lines the tests ran. So we plant 13 small bugs in those lines, one at a
+  time, and run the tests against each. They catch 5. The other 8 slip through. One of them means an order of
+  exactly 50 pounds loses its discount, and every test still passes.
 
 ## intro: Our example: a shop's discount rules
 - Orders of £50 or more get 5% off
@@ -26,47 +26,27 @@ Say: Mutation testing tests your tests, not your code. It plants one small bug a
 Picture: basket
 Say: Our example is a small piece of code from an online shop. It works out the discount on an order. Orders of 50
   pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
-  more on top. We'll look at two sets of tests for it: one weak, one strong.
+  more on top.
 
-## intro: Boundaries: where bugs hide
-- A boundary is where a rule changes: £50 gets 5% off, £49.99 gets nothing
-- Bugs collect there: "at least £50" written as "more than £50", one character out
-- A good test checks both sides: exactly £50, and one penny less
+## intro: The fix: plant bugs, and count the ones caught
+- Change one small thing, a mutation: "£50 or more" becomes "more than £50"
+- A test fails: the bug is caught. Every test passes: it survived
+- Bugs hide at a boundary, where a rule changes: test exactly £50, and £49.99
 Picture: boundary
-Say: First, an idea we will need: the boundary. [pause 500ms] A boundary is the point where a rule changes. Orders of
-  fifty pounds or more get five percent off; an order of forty nine ninety nine gets nothing. Bugs collect at
-  boundaries. "At least fifty pounds" written as "more than fifty pounds" is one character out, and only an order of
-  exactly fifty pounds shows the difference. So a good test checks both sides of every boundary: exactly fifty pounds,
-  and one penny less. PIT plants exactly this kind of bug, as we will see.
+Say: The fix is to test the tests. Mutation testing changes one small thing in the code at a time. The change is
+  called a mutation. For example, 50 pounds or more becomes more than 50 pounds. If a test fails, the bug is caught.
+  If every test still passes, the bug survived. Many of these bugs sit at a boundary, the point where a rule changes.
+  So a strong test checks both sides: an order of exactly 50 pounds, and one of 49 pounds 99.
 
-## intro: What we'll compare
-- The code under test: the shop's discount rules
-- Weak tests: run every line, but hardly check the answers
-- Strong tests: run the same lines, and check the exact answer at every boundary
-Picture: scales
-Say: Here is what we will compare. The code under test is the shop's discount rules. We have two sets of tests for it.
-  [pause 300ms] The weak tests run every line, so coverage is 100 percent. But they hardly check the answers. One only
-  checks that the discount is more than zero. One uses an order far from any boundary. One checks nothing at all.
-  [pause 300ms] The strong tests run exactly the same lines. The difference is what they check: the exact answer, on
-  both sides of every boundary. So when the code gives a wrong answer, a strong test fails.
-
-## intro: Why full coverage does not mean you are safe
-- Line coverage counts the lines your tests ran
-- It does not check that any test looked at the result
-- A test with no assertions can still give 100% line coverage
-Picture: coverage
-Say: So, why do we even need mutation testing? [pause 1600ms] Line coverage counts the lines your tests ran. It does not check
-  that any test looked at the result. A test can call the discount calculator, ignore the answer, and still give that
-  line full coverage. If the calculator gave 50 percent off instead of 5, that test would still pass.
-
-## intro: How PIT works
-- Changes the compiled bytecode in memory, one mutation at a time
-- Measures line coverage first, then runs only the tests that reach each changed line
-- Reports every planted bug as caught or survived
+## intro: How PIT runs
+- The PIT plugin in the build: id("info.solidsoft.pitest")
+- One task plants the bugs and runs the tests: pitest
+- The result: "the tests caught 5 of 13 planted bugs (38%)"
 Picture: robot
-Say: PIT is the mutation testing tool for Java. It changes your compiled code in memory, one mutation at a time. It
-  measures line coverage first, so for each change it runs only the tests that reach that line. That is what makes it
-  fast enough for whole code bases. Then it reports every planted bug as caught or survived.
+Say: PIT is the mutation testing tool for Java, and it comes as a plugin for the build. One task, called pit test,
+  changes the compiled code in memory, one mutation at a time. For each change it runs only the tests that reach
+  that line, which keeps it fast. Then it reports every planted bug as caught or survived. For the shop's tests
+  today, it says 5 of 13 were caught.
 
 Include: how-we-build
 

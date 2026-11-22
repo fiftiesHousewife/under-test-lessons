@@ -3,48 +3,43 @@
 Sources: rest-assured.io and github.com/rest-assured/rest-assured (Apache 2.0 licence; created by Johan Haleby; earliest
 versions on Maven Central, as com.jayway.restassured, published December 2010); RFC 9110, HTTP Semantics (201 Created, 400 Bad Request, Location).
 
-## intro: What is an outside-in test?
-- It tests a running service from outside, through its API (the interface it offers other systems) only
-- It sends real requests and checks real answers: status, headers, body
-- It knows nothing about the classes inside
-Picture: door
-Say: An outside-in test checks a running service from the outside, through its API only: the interface it offers to other systems. It sends real requests, and
-  checks the real answers: the status code, the headers, and the body. It knows nothing about the classes inside.
+## intro: The service says yes, even when it refuses
+- Book a hotel room for no nights: the service answers 200 OK, meaning "done"
+- The refusal is hidden in the body, so a caller thinks the room is booked
+- Its tests call the price rules directly, and all pass
+Picture: bug
+Say: Here is the problem. A hotel's booking service is asked to book a room for no nights. It refuses, but it answers
+  with the status code 200 OK, which tells the caller all is well. The refusal is hidden in the body of the answer, so
+  a caller may think the room is booked. And the service's tests pass, because they call its price rules directly
+  and never see the answer a caller gets.
 
 ## intro: Our example: a hotel booking service
-- Callers book a room for some nights; a night costs £90
+- Callers book a room for some nights: a night costs £90, so 2 nights cost £180
 - A booking for no nights must be refused
-- The answer's status code tells the caller what happened
+- The answer's status code tells the caller what happened: 201 for booked, 400 for refused
 Picture: statement
-Say: Our example is a hotel booking service. Callers book a room for a number of nights, and a night costs ninety
-  pounds. A booking for no nights must be refused. And the status code of the answer tells the caller what happened.
+Say: Our example is that hotel booking service. Callers book a room for a number of nights, and a night costs 90
+  pounds, so 2 nights cost 180. A booking for no nights must be refused. The status code of the answer tells the
+  caller what happened. 201 means created, so the room is booked. 400 means the request was refused.
 
-## intro: What we'll compare
-- The code under test: today's service, which always answers 200 OK
-- Tests from inside: call the service's classes directly
-- Tests from outside: real HTTP requests to the running service, with REST Assured
-Picture: scales
-Say: Here is what we will compare. The code under test is today's service, which always answers 200 OK.
-  [pause 300ms] Tests from inside call the service's classes directly. [pause 300ms] And tests from outside send real
-  web requests to the running service, with REST Assured.
+## intro: The fix: test from outside, as a caller does
+- Start the service and send it real requests, over the web
+- Check what a caller sees: the status code, the headers, the body
+- An outside-in test knows nothing about the classes inside
+Picture: door
+Say: The fix is to test the service from outside, as a caller does. Start it, and send it real requests over the
+  web. Then check what a caller sees: the status code, the headers, and the body. This is called an outside-in test.
+  It goes through the service's API only, the interface it offers other systems. And because it knows nothing about
+  the classes inside, it keeps working while an old service is rewritten underneath it.
 
-## intro: Why test from outside
-- Callers only ever see status codes, headers and bodies
-- Inside tests miss the wiring: routes, status codes, headers, JSON
-- Outside tests survive rewrites, so they protect old services while they change
-Picture: magnifier
-Say: Why test from outside? [pause 1600ms] A service's callers only ever see status codes, headers and bodies. Tests from
-  inside miss the wiring in between. And because outside tests don't depend on the classes inside, they keep working
-  while an old service is rewritten underneath them.
-
-## intro: How REST Assured works
-- given: the request, its port, headers and body
-- when: the method and path, such as post /bookings
-- then: what the answer must be, with a clear message when it isn't
+## intro: How REST Assured reads
+- given().port(service.port()).body(...): room 101, "nights": 0
+- .when().post("/bookings")
+- .then().statusCode(400): "Expected status code 400 but was 200"
 Picture: robot
-Say: REST Assured reads like a sentence. Given the request, with its port, headers and body. When you post it to a
-  path. Then the answer must have this status code, these headers, and this body. When it doesn't, the message says
-  exactly what came back instead.
+Say: REST Assured is a library for this, and a test reads like a sentence. Given a request for room 101, for no
+  nights. When it is posted to the bookings address. Then the status code must be 400. Today the message says
+  exactly what came back instead: it expected 400, but was 200.
 
 Include: how-we-build
 

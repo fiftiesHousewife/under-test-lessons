@@ -9,53 +9,46 @@ environment variables); openjdk.org/jeps/486 (JEP 486, Permanently Disable the S
 one at run time throws UnsupportedOperationException); the lesson's own runs on Java 25 (System Stubs' environment
 variables, standard input and output work; its SystemExit fails with UnsupportedOperationException).
 
-## intro: What is an old command-line program?
-- A program run by a script or a scheduler, not by a person
-- It reads environment variables and standard input, and prints to standard output
-- It ends with System.exit, and the exit code tells the script what happened
-Picture: terminal
-Say: Old systems are full of command-line programs, run every night by a script or a scheduler. They read settings
-  from environment variables, and their data from standard input. They print their results to standard output. And
-  they end by calling System exit, with an exit code that tells the script what happened.
+## intro: The nightly program is never tested whole
+- A script runs a payments import nightly: exit code 0 means done, 1 means look
+- Its 3 tests check pieces, such as reading one line, never the program
+- Run the program in a test, and its call to System.exit ends the whole test run
+Picture: bug
+Say: Here is the problem. Every night, a script runs a payments import, and reads the code the program ends with,
+  its exit code. 0 means done. 1 means a person must look. The program has 3 tests, but they check pieces, such as
+  reading one line. None runs the whole program, so nothing checks what it prints, or how it ends. And when a test
+  does run it, the program's call to end itself ends the whole test run, and the tests after it never run.
 
 ## intro: Our example: a nightly payments import
-- Payments arrive one per line: an account and an amount in pence
+- Payments arrive on standard input, one per line: an account and an amount in pence
 - The largest payment allowed comes from an environment variable
-- At the first payment over the limit it stops, with exit code 1
+- It prints each payment accepted, and stops with exit code 1 at one over the limit
 Picture: statement
-Say: Our example is a nightly payments import. Payments arrive on standard input, one per line: an account, and an
-  amount in pence. The largest payment allowed comes from an environment variable. The program prints each payment it
-  accepts, and a total. At the first payment over the limit, it stops, with exit code 1, so the script knows a person
-  must look.
+Say: Our example is that nightly payments import. Payments arrive on standard input, the stream a program reads its
+  data from, one per line: an account, and an amount in pence. The largest payment allowed comes from an environment
+  variable, a setting the script passes in. The program prints each payment it accepts, and a total. At the first
+  payment over the limit, it stops, with exit code 1.
 
-## intro: What we'll compare
-- Weak tests: the pieces, such as reading one line, but never the program
-- Strong tests: the whole program, its environment, input and output stubbed by System Stubs
-- Today's program, unchanged, then after one small change: its exit passed in
-Picture: scales
-Say: Here is what we will compare. The weak tests check the pieces, such as reading one line, but never run the
-  program. [pause 300ms] The strong tests run the whole program, with its environment variable, its input and its
-  output stubbed by System Stubs. [pause 300ms] And we run them against today's program, unchanged, and then after one
-  small change: its exit is passed in.
+## intro: The fix: run the whole program, with its system stubbed
+- Give the program its environment variable and its input, in the test
+- Catch everything it prints, and check it line by line
+- Pass in how it ends, so the test records the exit code instead of stopping
+Picture: terminal
+Say: The fix is to run the whole program in the test, with what it takes from the system swapped for stand-ins. A
+  stand-in like this is called a stub. The test gives the program its environment variable and its input. It catches
+  everything the program prints, and checks it line by line. And the program is given how to end, so in a test it
+  only records the exit code. That one small change is needed because the old way to catch an exit, Java's security
+  manager, was permanently disabled in Java 24.
 
-## intro: Why it matters
-- What a script relies on is the program's output and its exit code
-- Tests of the pieces check neither
-- System.exit in a test ends the test process, and every test after it
-Picture: magnifier
-Say: Why does it even matter? [pause 1600ms] The script that runs the program relies on two things: what it prints,
-  and its exit code. Tests of the pieces check neither. And a program that calls System exit inside a test ends the
-  whole test process, taking every test after it with it.
-
-## intro: How System Stubs works
-- It swaps what System gives a program: environment variables, standard input and output, properties
-- In JUnit tests, mark each stub with @SystemStub; the real one is put back after every test
-- System.exit used Java's security manager, which Java 24 permanently disabled, so pass the exit in instead
+## intro: How System Stubs looks
+- @SystemStub EnvironmentVariables("PAYMENT_LIMIT_PENCE", "50000")
+- @SystemStub SystemIn and SystemOut: the input given, the lines printed
+- exitCode::set in the test, System::exit in production
 Picture: plug
-Say: System Stubs swaps what Java's System class gives a program: its environment variables, its standard input and
-  output, and its properties. In JUnit tests, you mark each stub with the System Stub annotation, and the library puts the
-  real one back after every test. It used to catch System exit too, with Java's security manager. Java 24 permanently
-  disabled the security manager, so on today's Java, pass the exit in instead.
+Say: System Stubs is a library for this. Each stub is a field in the test, marked with the System Stub annotation,
+  and the real one is put back after every test. One sets the payment limit to 500 pounds. One gives the program its
+  input, and one catches the lines it prints. And where production passes Java's own exit, the test passes one that
+  only records the code.
 
 Include: how-we-build
 
