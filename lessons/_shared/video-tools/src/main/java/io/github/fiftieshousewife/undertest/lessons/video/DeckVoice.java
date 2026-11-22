@@ -59,24 +59,25 @@ final class DeckVoice {
                 .toList();
     }
 
-    /** Reads aloud each slide without a clip, removes clips no slide uses (leaving other files); counts those read. */
+    /**
+     * Gives each slide without a clip its clip, from the lesson's one store of spoken clips ({@link VoiceClips}), read
+     * aloud only if the video hasn't already; removes clips no slide uses (leaving other files); counts those made.
+     */
     static int speak(final Media media, final List<String> command) {
         final Path folder = media.file(FOLDER);
-        final Path work = media.file(".voice").resolve("deck");
-        createFolders(folder, work);
+        createFolders(folder);
         final List<String> texts = spokenTexts(media);
         int read = 0;
         for (final String text : texts) {
             final Path clip = folder.resolve(clipName(text));
             if (!Files.isRegularFile(clip)) {
-                final Path wav = work.resolve(clipName(text).replace(".m4a", ""));
-                LessonVideo.speak(command, text, wav);
-                compress(wav.resolveSibling(wav.getFileName() + ".wav"), clip);
+                VoiceClips.wav(media, command, text);
+                compress(VoiceClips.file(media, text), clip);
                 read++;
             }
         }
         removeUnused(folder, texts.stream().map(DeckVoice::clipName).collect(Collectors.toSet()));
-        log.info("{}: deck voice has {} clips, {} read aloud now", media.safeLesson(), texts.size(), read);
+        log.info("{}: deck voice has {} clips, {} made now", media.safeLesson(), texts.size(), read);
         return read;
     }
 

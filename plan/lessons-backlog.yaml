@@ -1009,6 +1009,18 @@ items:
     blocked_by:
       - "clips-named-by-the-written-narration"
     decision_record: "docs/decisions/0027-inside-a-company-a-person-records-the-voice.md"
+  - key: "video-and-deck-share-one-store-of-clips"
+    type: "deliverable"
+    title: "The video and the deck share one store of spoken clips"
+    parent: "every-lesson-has-a-finished-video"
+    phase: "videos"
+    horizon: "now"
+    owner_role: "Lessons Owner"
+    done_by: "ai"
+    done_when:
+      - "Each piece of narration is read aloud once, whether the deck or the video is voiced first"
+      - "On a fresh clone the video decodes the deck's committed clips instead of reading them again"
+    status: "done"
   - key: "voice-pipeline-fixes"
     type: "deliverable"
     title: "Voice pipeline fixes from the review"
@@ -1019,7 +1031,6 @@ items:
     done_by: "ai"
     done_when:
       - "One voice process reads a list of clips instead of one process per clip, with single-file mode kept"
-      - "Video and deck clips share one store named by hash"
       - "lessonVoiceCommand accepts arguments with spaces"
       - "Voiceover checks every clip has the first clip's format"
       - "lessonVoicePython falls back to python3 with a clear message"

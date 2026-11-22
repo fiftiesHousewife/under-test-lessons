@@ -88,8 +88,8 @@ public final class LessonVideo {
         final Path clipsFolder = media.file(".voice");
         createFolder(clipsFolder);
         final List<WavFile> clips = new ArrayList<>();
-        for (int i = 0; i < narration.size(); i++) {
-            clips.add(speak(command, narration.get(i), clipsFolder.resolve(String.format("%02d", i + 1))));
+        for (final String scene : narration) {
+            clips.add(VoiceClips.wav(media, command, scene));
         }
         final List<String> misfits = Voiceover.misfits(scenes, clips);
         if (!misfits.isEmpty()) {
@@ -97,9 +97,9 @@ public final class LessonVideo {
         }
         Voiceover.track(scenes, clips).write(media.file(".narration.wav"));
         final Slides slides = media.slides();
-        final Voice voice = new Voice(command, pronunciation);
-        speakSlides(voice, slides.intro(), clipsFolder.resolve("intro"));
-        speakSlides(voice, slides.closing(), clipsFolder.resolve("closing"));
+        final Voice voice = new Voice(media, command, pronunciation);
+        speakSlides(voice, slides.intro(), "intro");
+        speakSlides(voice, slides.closing(), "closing");
         log.info("{}: narration for {} scenes and {} slides written", media.safeLesson(), clips.size(),
                 slides.intro().size() + slides.closing().size());
     }
@@ -151,14 +151,15 @@ public final class LessonVideo {
         return segments;
     }
 
-    /** The voice command and how it should say awkward words. */
-    private record Voice(List<String> command, Pronunciation pronunciation) {
+    /** The lesson, the voice command and how it should say awkward words. */
+    private record Voice(Media media, List<String> command, Pronunciation pronunciation) {
     }
 
-    private static void speakSlides(final Voice voice, final List<Slide> slides, final Path prefix) {
+    /** Each slide's clip, from the lesson's store of spoken clips, kept as {@code <kind>-<n>.wav} for the splicer. */
+    private static void speakSlides(final Voice voice, final List<Slide> slides, final String kind) {
         for (int i = 0; i < slides.size(); i++) {
-            speak(voice.command(), voice.pronunciation().forSpeech(slides.get(i).narration()),
-                    prefix.resolveSibling(prefix.getFileName() + "-" + (i + 1)));
+            VoiceClips.wav(voice.media(), voice.command(), voice.pronunciation().forSpeech(slides.get(i).narration()))
+                    .write(voice.media().file(".voice").resolve(kind + "-" + (i + 1) + ".wav"));
         }
     }
 

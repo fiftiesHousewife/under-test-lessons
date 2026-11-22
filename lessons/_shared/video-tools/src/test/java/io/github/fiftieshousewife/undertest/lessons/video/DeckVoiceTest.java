@@ -115,4 +115,54 @@ class DeckVoiceTest {
                 () -> assertThatIllegalArgumentException()
                         .isThrownBy(() -> LessonVideo.main("deckvoice", root.toString(), "demo")));
     }
+
+    @Test
+    void theVideoTakesTheClipsTheDeckHasAlreadyReadAloud() throws IOException {
+        final Media demo = new Media(root, "demo");
+        DeckVoice.speak(demo, List.of(voice.toString()));
+        final long partsAfterDeck = spokenParts();
+
+        DeckVoice.spokenTexts(demo).forEach(text -> VoiceClips.wav(demo, List.of(voice.toString()), text));
+
+        assertThat(spokenParts()).isEqualTo(partsAfterDeck);
+    }
+
+    @Test
+    void theDeckTakesTheClipsTheVideoHasAlreadyReadAloud() throws IOException {
+        final Media demo = new Media(root, "demo");
+        DeckVoice.spokenTexts(demo).forEach(text -> VoiceClips.wav(demo, List.of(voice.toString()), text));
+        final long partsAfterVideo = spokenParts();
+
+        final int made = DeckVoice.speak(demo, List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(made).isEqualTo(3),
+                () -> assertThat(spokenParts()).isEqualTo(partsAfterVideo),
+                () -> assertThat(media.resolve("demo.deck-voice").resolve(DeckVoice.clipName("Goodbye."))).exists());
+    }
+
+    @Test
+    void theVideoAndTheDeckSayTheSameSceneNarration() {
+        final Media demo = new Media(root, "demo");
+        final Pronunciation pronunciation = DeckVoice.pronunciation(demo);
+        final List<String> video = Narration.paragraphs(demo.file(".narration.md")).stream()
+                .map(pronunciation::forSpeech).toList();
+
+        assertThat(DeckVoice.spokenTexts(demo)).containsSubsequence(video);
+    }
+
+    @Test
+    void onAFreshCloneTheDecksClipIsDecodedRatherThanReadAloudAgain() throws IOException {
+        final Media demo = new Media(root, "demo");
+        final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
+        Files.writeString(folder.resolve(DeckVoice.clipName("Goodbye.")), "sound");
+        System.setProperty("video.ffmpeg",
+                standIn("decoder", "for last; do :; done; cp " + root.resolve("clip.wav") + " \"$last\"").toString());
+
+        final WavFile clip = VoiceClips.wav(demo, List.of(voice.toString()), "Goodbye.");
+
+        assertAll(
+                () -> assertThat(spokenParts()).isZero(),
+                () -> assertThat(clip.seconds()).isEqualTo(1.0));
+    }
 }
