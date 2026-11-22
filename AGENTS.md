@@ -22,8 +22,16 @@ lives in that repo; link to it by full URL.
 | [`docs/next-steps.md`](docs/next-steps.md) | Work in hand |
 | [`docs/using-inside-a-company.md`](docs/using-inside-a-company.md) | Repository manager, own container images, proxies, licences |
 | [`docs/research/`](docs/research/technology-gap-review.md) | Research behind the lesson plan |
+| [`GLOSSARY.md`](GLOSSARY.md) | The words lessons use, on top of the toolkit's word list |
 | `build-logic/`, `config/quality/` | Convention plugins every module applies, and the quality-check rules |
-| `tools/` | Helpers, such as running PMD and Checkstyle without Gradle worker processes |
+| `tools/` | Helpers: the video-script generator, and PMD and Checkstyle without Gradle worker processes |
+| [`.github/skills/`](.github/skills/) | This repo's own skills, listed below |
+
+## Adding a lesson
+Follow [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md): design the lesson as one row of the
+catalogue, build today's code and the fix behind `-Pcode=today`, write the README, then the slides, narration and
+video script (generated with `tools/new-video-script.py`), and rebuild the deck. The plan of lessons to add is in
+[the catalogue](lessons/CATALOGUE.md); work in hand is in [next steps](docs/next-steps.md).
 
 ## Skills
 | Skill | Use it to |

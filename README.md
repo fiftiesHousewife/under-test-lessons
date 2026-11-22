@@ -153,22 +153,8 @@ and the links on slides.
 
 ## Working on this repo
 
-- Add a lesson with [the write-a-technique-lesson skill](.github/skills/write-a-technique-lesson/SKILL.md); write its
-  story with [write-lesson-slides-and-narration](.github/skills/write-lesson-slides-and-narration/SKILL.md).
-- `./gradlew check` must pass before every push. Where Gradle's worker processes can't run (some sandboxes), run PMD
-  and Checkstyle as plain programs instead:
-  `./gradlew --init-script tools/quality-cli.init.gradle --no-configuration-cache pmdCli checkstyleCli`.
-- Rebuild the decks (`buildLessonSlides`) whenever slides, narration or a lesson's code changes, and commit them.
-
-| Folder | What you'll find |
-|---|---|
-| [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, video script, narration, slides and deck |
-| `lessons/_shared/` | Shared video set-up, slide styles, themes and pictures, pronunciation list, and `video-tools` |
-| `build-logic/`, `config/quality/` | Convention plugins that every module of this build applies, and the quality-check rules (copied from the toolkit) |
-| [`.github/skills/`](.github/skills/) | AI assistant skills for writing lessons and making their videos |
-| `tools/` | Helpers for working on the repo |
-| [`docs/`](docs/decisions/README.md) | This repo's decisions, using the lessons inside a company, next steps, and research |
-| [`GLOSSARY.md`](GLOSSARY.md) | The words lessons use, on top of the toolkit's word list |
+How to add a lesson, the code standards, the checks to run and where everything lives are in [AGENTS.md](AGENTS.md),
+for people and AI assistants alike.
 
 ## Licence
 
