@@ -48,7 +48,7 @@ Type@1ms `show lessons/characterisation-tests/example/build.gradle.kts "/libs.ap
 Enter
 Sleep 300ms
 Show
-Sleep 8s
+Sleep 10s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show LegacyStatement 14 31`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 19s
 
 # ---- Scene 4: the weak test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show StatementWeakTest 16 24`
 Enter
 Sleep 300ms
 Show
-Sleep 10s
+Sleep 15s
 
 # ---- Scene 5: the characterisation test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show StatementCharacterisationTest 16 33`
 Enter
 Sleep 300ms
 Show
-Sleep 10s
+Sleep 11s
 
 # ---- Scene 6: the tests pass, and the approved statement ----
 Hide
@@ -106,7 +106,7 @@ Show
 Wait+Screen@300s /Approvals: every output matches/
 Sleep 3s
 Hide
-Type@1ms `show StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt 1 20 "the approved statement"`
+Type@1ms `show StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt 1 10 "the approved statement"`
 Enter
 Sleep 300ms
 Type@1ms `callout "After the rent the balance is exactly 0, and a fee is charged: a quirk, now pinned down."`

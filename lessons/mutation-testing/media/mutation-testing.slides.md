@@ -1,9 +1,11 @@
 # Slides: mutation testing
 
 Intro slides play before the terminal recording, closing slides after it. Each slide: a heading (intro: or closing:),
-points shown on screen (a URL is drawn as a link and never spoken), and a Say: line, spoken and captioned. Facts on these
-slides come from pitest.org (its home page, FAQ and basic concepts pages) and the 1978 paper by DeMillo, Lipton and
-Sayward.
+points shown on screen (a URL is drawn as a link and never spoken), and a Say: line, spoken and captioned.
+
+Sources: pitest.org (its home page, FAQ and basic concepts pages, for how PIT works, its first release in 2011, its
+original name and Henry Coles's part); R. A. DeMillo, R. J. Lipton and F. G. Sayward, "Hints on Test Data Selection:
+Help for the Practicing Programmer", IEEE Computer, 1978.
 
 ## intro: What is mutation testing?
 - It tests your tests, not your code

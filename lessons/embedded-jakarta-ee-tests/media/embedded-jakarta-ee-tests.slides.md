@@ -69,6 +69,7 @@ Say: CDI arrived with Java E E six, in 2009, and lives on in Jakarta E E. Weld i
 - https://weld.cdi-spec.org — Weld
 - https://github.com/weld/weld-testing — Weld's JUnit support
 - {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, start with the Weld site, and its testing project. The links on screen also take you to this
   lesson's code.

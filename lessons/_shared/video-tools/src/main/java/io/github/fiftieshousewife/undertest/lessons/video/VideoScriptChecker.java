@@ -42,6 +42,12 @@ public final class VideoScriptChecker {
             if (Files.isRegularFile(narration)) {
                 problems.addAll(checkNarration(narration));
                 checkSceneCount(tape, narration).ifPresent(problems::add);
+                problems.addAll(LessonChecks.sceneTimes(tape, narration));
+            }
+            problems.addAll(LessonChecks.shows(root, tape));
+            final Path slides = tape.resolveSibling(String.valueOf(tape.getFileName()).replace(".tape", ".slides.md"));
+            if (Files.isRegularFile(slides)) {
+                problems.addAll(LessonChecks.slides(slides));
             }
         }
         return problems;
@@ -154,7 +160,7 @@ public final class VideoScriptChecker {
         }
         try (Stream<Path> paths = Files.walk(dir)) {
             return paths.filter(path -> path.toString().endsWith(".tape"))
-                    .filter(path -> !path.toString().contains("/build/"))
+                    .filter(path -> !insideBuildFolder(dir.relativize(path)))
                     .sorted()
                     .toList();
         } catch (IOException e) {
@@ -175,5 +181,15 @@ public final class VideoScriptChecker {
         Problem problem(final String message) {
             return new Problem(tape, "line " + number + ": " + message);
         }
+    }
+
+    /** True for generated files: anything under a folder named build, inside the folder searched. */
+    private static boolean insideBuildFolder(final Path relative) {
+        for (final Path part : relative) {
+            if ("build".equals(part.toString())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

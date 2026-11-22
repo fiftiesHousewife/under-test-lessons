@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "The shop talks to its message queue through an *interface*. Messages are delivered on commit."`
 Enter
 Sleep 300ms
-Type@1ms `show MessageQueue 3 14 "the shop's interface to the queue"`
+Type@1ms `show MessageQueue 3 13 "the shop's interface to the queue"`
 Enter
 Sleep 300ms
 Show

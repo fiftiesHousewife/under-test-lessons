@@ -67,6 +67,7 @@ Say: JUnit has made temporary folders for tests since version five point four, i
 - https://junit.org — JUnit, with its user guide on temporary folders
 - https://docs.spring.io/spring-batch/reference/testing.html — testing Spring Batch jobs
 - {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, read the JUnit user guide on temporary folders, and the Spring Batch guide to testing jobs. The
   links on screen also take you to this lesson's code.
