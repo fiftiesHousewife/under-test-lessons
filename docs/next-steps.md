@@ -69,6 +69,21 @@ zoom, `fade` in and out). Items 4 and 5 belong in `lessons/_shared/callout.sh`.
   `#cross-hatch` and `#dots` patterns from `pictures/defs.svg`); until then the colour picture is used.
 - The pizza still needs a better drawing in both sets.
 
+## Before adding more lessons
+
+From [the readiness review](research/lessons-readiness-review.md). Done: lessons now show their own files when two
+lessons share a file name; the video skill's timing rule; the catalogue's statuses, claims and design rows; short
+scenes lengthened; boundaries in the mutation lesson; testing terms in the glossary. Still to do, in order:
+
+1. Extend the video script checks: each `show` resolves to one file in its own lesson, within its length; each scene's
+   pause meets the timing rule; slides have a `Sources:` line and the repository placeholders.
+2. Bring `lessons/README.md` and the mutation testing README up to the current layout; remove leftover wording
+   (`exercise/`, "render script", "Script ready").
+3. Record that the four oldest lessons keep their own switch names, or convert them to `-Pcode=today`.
+4. Add `{toolkit-repo}` to the five closing slides without it, and document both placeholders in the slides skill.
+5. Narration: add the spoken years to `pronunciations.txt`; explain CDI, API, SDK, JVM, CI and EJB on first use.
+6. Update make-a-lesson-video for the ink look, and draw the remaining ink pictures.
+
 ## Lessons
 
 - **First, the overview lesson** ([its design](overview-lesson-design.md)): it needs a slides-only mode in the video
