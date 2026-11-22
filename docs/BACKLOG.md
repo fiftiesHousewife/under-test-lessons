@@ -4,83 +4,83 @@ Open work on the lessons and their tools, generated from the issue tracker by [t
 
 Ordered by horizon (now, next, later), then items that are ready before items waiting on others.
 
-## Every lesson has a finished video, made from its script and published
+## [Every lesson has a finished video, made from its script and published](https://github.com/fiftiesHousewife/under-test-lessons/issues/1)
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-|  | Review every lesson's slides and deck before videos are rendered | deliverable | Lessons Owner | person | – |
-|  | Zoom in on the key code while the narration explains it | deliverable | Lessons Owner | ai | – |
-|  | Slides build up one point at a time through the narration | deliverable | Lessons Owner | ai | – |
-|  | A slow zoom over each slide, and fades in and out | deliverable | Lessons Owner | ai | – |
-|  | Code rolls in line by line, and callouts slide in | deliverable | Lessons Owner | ai | – |
-|  | Captions burned into the picture by default | deliverable | Lessons Owner | ai | – |
-|  | Large hand-drawn objects on the slides about the subject | deliverable | Lessons Owner | ai | – |
-|  | Different people on the slides in different lessons | deliverable | Lessons Owner | ai | – |
-|  | Fail a script whose video would run over ten minutes | deliverable | Lessons Owner | tool | – |
-|  | Render every lesson's video in the black-and-white look | deliverable | Lessons Owner | ai | Review every lesson's slides and deck before videos are rendered, Zoom in on the key code while the narration explains it, Slides build up one point at a time through the narration, A slow zoom over each slide, and fades in and out, Code rolls in line by line, and callouts slide in, Captions burned into the picture by default, Large hand-drawn objects on the slides about the subject, Different people on the slides in different lessons |
-|  | Render videos in CI and publish them with each release | deliverable | Lessons Owner | tool | – |
+| #2 | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) | deliverable | Lessons Owner | person | – |
+| #4 | [Zoom in on the key code while the narration explains it](https://github.com/fiftiesHousewife/under-test-lessons/issues/4) | deliverable | Lessons Owner | ai | – |
+| #5 | [Slides build up one point at a time through the narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/5) | deliverable | Lessons Owner | ai | – |
+| #6 | [A slow zoom over each slide, and fades in and out](https://github.com/fiftiesHousewife/under-test-lessons/issues/6) | deliverable | Lessons Owner | ai | – |
+| #7 | [Code rolls in line by line, and callouts slide in](https://github.com/fiftiesHousewife/under-test-lessons/issues/7) | deliverable | Lessons Owner | ai | – |
+| #8 | [Captions burned into the picture by default](https://github.com/fiftiesHousewife/under-test-lessons/issues/8) | deliverable | Lessons Owner | ai | – |
+| #9 | [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9) | deliverable | Lessons Owner | ai | – |
+| #10 | [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) | deliverable | Lessons Owner | ai | – |
+| #11 | [Fail a script whose video would run over ten minutes](https://github.com/fiftiesHousewife/under-test-lessons/issues/11) | deliverable | Lessons Owner | tool | – |
+| #3 | [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3) | deliverable | Lessons Owner | ai | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2), [Zoom in on the key code while the narration explains it](https://github.com/fiftiesHousewife/under-test-lessons/issues/4), [Slides build up one point at a time through the narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/5), [A slow zoom over each slide, and fades in and out](https://github.com/fiftiesHousewife/under-test-lessons/issues/6), [Code rolls in line by line, and callouts slide in](https://github.com/fiftiesHousewife/under-test-lessons/issues/7), [Captions burned into the picture by default](https://github.com/fiftiesHousewife/under-test-lessons/issues/8), [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9), [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) |
+| #12 | [Render videos in CI and publish them with each release](https://github.com/fiftiesHousewife/under-test-lessons/issues/12) | deliverable | Lessons Owner | tool | – |
 
-## The planned lessons are built, in the catalogue's order
-
-| | Item | Type | Owner | Done by | Waiting on |
-|---|---|---|---|---|---|
-|  | Decide the forbidden-API exception for the old command-line programs lesson | decision | Lessons Owner | person | – |
-|  | The overview's deck, voiced: a map of testing old Java code | deliverable | Lessons Owner | ai | – |
-|  | Slides-only videos: a lesson whose video is its slides and their narration | deliverable | Lessons Owner | ai | – |
-|  | Lesson: behaviour written down as examples | deliverable | Lessons Owner | ai | – |
-|  | Lesson: black-box tests of a whole application | deliverable | Lessons Owner | ai | – |
-|  | Lesson: checking the requests your code sends | deliverable | Lessons Owner | ai | – |
-|  | Lesson: finding flaky tests | deliverable | Lessons Owner | ai | – |
-|  | Lesson: message consumers | deliverable | Lessons Owner | ai | – |
-|  | Lesson: responses checked against the OpenAPI document | deliverable | Lessons Owner | ai | – |
-|  | Lesson: slow and failing dependencies | deliverable | Lessons Owner | ai | – |
-|  | Lesson: coverage of changed code | deliverable | Lessons Owner | ai | – |
-|  | Lesson: more JUnit, one idea per lesson | deliverable | Lessons Owner | ai | – |
-|  | Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson) | deliverable | Lessons Owner | ai | – |
-|  | Lesson: the overview's video, from its slides | deliverable | Lessons Owner | ai | Slides-only videos: a lesson whose video is its slides and their narration, The overview's deck, voiced: a map of testing old Java code |
-|  | Lesson: Mockito well used | deliverable | Lessons Owner | ai | Set Mockito's agent in build-logic for JDK 25 |
-|  | Lesson: Spring tests in slices | deliverable | Lessons Owner | ai | Check WireMock 3 against Spring Boot 4 before a Spring lesson |
-|  | Lesson: old command-line programs | deliverable | Lessons Owner | ai | Decide the forbidden-API exception for the old command-line programs lesson |
-|  | Lesson: contract tests between teams | deliverable | Lessons Owner | ai | – |
-|  | Lesson: AI-written tests that pass the acceptance check | deliverable | Lessons Owner | ai | – |
-|  | Lesson: stand-in commands for shell scripts | deliverable | Lessons Owner | ai | – |
-|  | Lesson: checking what batch scripts write | deliverable | Lessons Owner | ai | – |
-|  | Lesson: running script tests in CI | deliverable | Lessons Owner | ai | – |
-|  | Lesson: server-rendered pages checked through the browser | deliverable | Lessons Owner | ai | – |
-
-## The lessons follow the toolkit's rules and use the tools it names
+## [The planned lessons are built, in the catalogue's order](https://github.com/fiftiesHousewife/under-test-lessons/issues/13)
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-|  | The fake lesson gets its promised ArchUnit rule | deliverable | Lessons Owner | ai | – |
-|  | The recorded-responses lesson shows recording and removing personal data | deliverable | Lessons Owner | ai | – |
-|  | The batch lesson uses spring-batch-test and Datafaker, and compares records | deliverable | Lessons Owner | ai | – |
-|  | The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI | deliverable | Lessons Owner | ai | – |
-|  | Lessons for the tools the toolkit names that none uses yet | deliverable | Lessons Owner | ai | – |
-|  | Lesson examples get the toolkit's assessment files and connection lists | deliverable | Lessons Owner | ai | – |
+| #30 | [Decide the forbidden-API exception for the old command-line programs lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/30) | decision | Lessons Owner | person | – |
+| #14 | [The overview's deck, voiced: a map of testing old Java code](https://github.com/fiftiesHousewife/under-test-lessons/issues/14) | deliverable | Lessons Owner | ai | – |
+| #16 | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) | deliverable | Lessons Owner | ai | – |
+| #17 | [Lesson: behaviour written down as examples](https://github.com/fiftiesHousewife/under-test-lessons/issues/17) | deliverable | Lessons Owner | ai | – |
+| #18 | [Lesson: black-box tests of a whole application](https://github.com/fiftiesHousewife/under-test-lessons/issues/18) | deliverable | Lessons Owner | ai | – |
+| #20 | [Lesson: checking the requests your code sends](https://github.com/fiftiesHousewife/under-test-lessons/issues/20) | deliverable | Lessons Owner | ai | – |
+| #22 | [Lesson: finding flaky tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/22) | deliverable | Lessons Owner | ai | – |
+| #23 | [Lesson: message consumers](https://github.com/fiftiesHousewife/under-test-lessons/issues/23) | deliverable | Lessons Owner | ai | – |
+| #24 | [Lesson: responses checked against the OpenAPI document](https://github.com/fiftiesHousewife/under-test-lessons/issues/24) | deliverable | Lessons Owner | ai | – |
+| #25 | [Lesson: slow and failing dependencies](https://github.com/fiftiesHousewife/under-test-lessons/issues/25) | deliverable | Lessons Owner | ai | – |
+| #26 | [Lesson: coverage of changed code](https://github.com/fiftiesHousewife/under-test-lessons/issues/26) | deliverable | Lessons Owner | ai | – |
+| #27 | [Lesson: more JUnit, one idea per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/27) | deliverable | Lessons Owner | ai | – |
+| #28 | [Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)](https://github.com/fiftiesHousewife/under-test-lessons/issues/28) | deliverable | Lessons Owner | ai | – |
+| #15 | [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15) | deliverable | Lessons Owner | ai | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16), [The overview's deck, voiced: a map of testing old Java code](https://github.com/fiftiesHousewife/under-test-lessons/issues/14) |
+| #19 | [Lesson: Mockito well used](https://github.com/fiftiesHousewife/under-test-lessons/issues/19) | deliverable | Lessons Owner | ai | [Set Mockito's agent in build-logic for JDK 25](https://github.com/fiftiesHousewife/under-test-lessons/issues/52) |
+| #21 | [Lesson: Spring tests in slices](https://github.com/fiftiesHousewife/under-test-lessons/issues/21) | deliverable | Lessons Owner | ai | [Check WireMock 3 against Spring Boot 4 before a Spring lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/53) |
+| #29 | [Lesson: old command-line programs](https://github.com/fiftiesHousewife/under-test-lessons/issues/29) | deliverable | Lessons Owner | ai | [Decide the forbidden-API exception for the old command-line programs lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/30) |
+| #31 | [Lesson: contract tests between teams](https://github.com/fiftiesHousewife/under-test-lessons/issues/31) | deliverable | Lessons Owner | ai | – |
+| #32 | [Lesson: AI-written tests that pass the acceptance check](https://github.com/fiftiesHousewife/under-test-lessons/issues/32) | deliverable | Lessons Owner | ai | – |
+| #33 | [Lesson: stand-in commands for shell scripts](https://github.com/fiftiesHousewife/under-test-lessons/issues/33) | deliverable | Lessons Owner | ai | – |
+| #34 | [Lesson: checking what batch scripts write](https://github.com/fiftiesHousewife/under-test-lessons/issues/34) | deliverable | Lessons Owner | ai | – |
+| #35 | [Lesson: running script tests in CI](https://github.com/fiftiesHousewife/under-test-lessons/issues/35) | deliverable | Lessons Owner | ai | – |
+| #36 | [Lesson: server-rendered pages checked through the browser](https://github.com/fiftiesHousewife/under-test-lessons/issues/36) | deliverable | Lessons Owner | ai | – |
 
-## People find the lesson they need, and know what to do next
+## [The lessons follow the toolkit's rules and use the tools it names](https://github.com/fiftiesHousewife/under-test-lessons/issues/37)
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-|  | Decide whether each lesson has an exercise with an answer | decision | Lessons Owner | person | – |
-|  | A Pages index to work through every lesson in order, with voice | deliverable | Lessons Owner | ai | – |
-|  | A search that helps people find the right technique | deliverable | Lessons Owner | ai | – |
-|  | Learning paths by role | deliverable | Lessons Owner | ai | – |
+| #38 | [The fake lesson gets its promised ArchUnit rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/38) | deliverable | Lessons Owner | ai | – |
+| #39 | [The recorded-responses lesson shows recording and removing personal data](https://github.com/fiftiesHousewife/under-test-lessons/issues/39) | deliverable | Lessons Owner | ai | – |
+| #40 | [The batch lesson uses spring-batch-test and Datafaker, and compares records](https://github.com/fiftiesHousewife/under-test-lessons/issues/40) | deliverable | Lessons Owner | ai | – |
+| #41 | [The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI](https://github.com/fiftiesHousewife/under-test-lessons/issues/41) | deliverable | Lessons Owner | ai | – |
+| #42 | [Lessons for the tools the toolkit names that none uses yet](https://github.com/fiftiesHousewife/under-test-lessons/issues/42) | deliverable | Lessons Owner | ai | – |
+| #43 | [Lesson examples get the toolkit's assessment files and connection lists](https://github.com/fiftiesHousewife/under-test-lessons/issues/43) | deliverable | Lessons Owner | ai | – |
 
-## Companies make the lessons their own without recording anything
-
-| | Item | Type | Owner | Done by | Waiting on |
-|---|---|---|---|---|---|
-|  | Automatic rebranding of each release's videos | deliverable | Lessons Owner | tool | – |
-
-## This repo keeps itself in order: its checks, sync, CI and tools
+## [People find the lesson they need, and know what to do next](https://github.com/fiftiesHousewife/under-test-lessons/issues/44)
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-|  | Set Mockito's agent in build-logic for JDK 25 | deliverable | Lessons Owner | tool | – |
-|  | Pin the voice's Python packages | deliverable | Lessons Owner | tool | – |
-|  | A check that runs every command a lesson's README shows and confirms its result | deliverable | Lessons Owner | tool | – |
-|  | PMD and Checkstyle run in sandboxed AI sessions | deliverable | Lessons Owner | tool | – |
-|  | Commit apm.lock.yaml | deliverable | Lessons Owner | tool | – |
-|  | Check WireMock 3 against Spring Boot 4 before a Spring lesson | deliverable | Lessons Owner | ai | – |
+| #48 | [Decide whether each lesson has an exercise with an answer](https://github.com/fiftiesHousewife/under-test-lessons/issues/48) | decision | Lessons Owner | person | – |
+| #46 | [A Pages index to work through every lesson in order, with voice](https://github.com/fiftiesHousewife/under-test-lessons/issues/46) | deliverable | Lessons Owner | ai | – |
+| #45 | [A search that helps people find the right technique](https://github.com/fiftiesHousewife/under-test-lessons/issues/45) | deliverable | Lessons Owner | ai | – |
+| #47 | [Learning paths by role](https://github.com/fiftiesHousewife/under-test-lessons/issues/47) | deliverable | Lessons Owner | ai | – |
+
+## [Companies make the lessons their own without recording anything](https://github.com/fiftiesHousewife/under-test-lessons/issues/49)
+
+| | Item | Type | Owner | Done by | Waiting on |
+|---|---|---|---|---|---|
+| #50 | [Automatic rebranding of each release's videos](https://github.com/fiftiesHousewife/under-test-lessons/issues/50) | deliverable | Lessons Owner | tool | – |
+
+## [This repo keeps itself in order: its checks, sync, CI and tools](https://github.com/fiftiesHousewife/under-test-lessons/issues/51)
+
+| | Item | Type | Owner | Done by | Waiting on |
+|---|---|---|---|---|---|
+| #52 | [Set Mockito's agent in build-logic for JDK 25](https://github.com/fiftiesHousewife/under-test-lessons/issues/52) | deliverable | Lessons Owner | tool | – |
+| #54 | [Pin the voice's Python packages](https://github.com/fiftiesHousewife/under-test-lessons/issues/54) | deliverable | Lessons Owner | tool | – |
+| #55 | [A check that runs every command a lesson's README shows and confirms its result](https://github.com/fiftiesHousewife/under-test-lessons/issues/55) | deliverable | Lessons Owner | tool | – |
+| #56 | [PMD and Checkstyle run in sandboxed AI sessions](https://github.com/fiftiesHousewife/under-test-lessons/issues/56) | deliverable | Lessons Owner | tool | – |
+| #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
+| #53 | [Check WireMock 3 against Spring Boot 4 before a Spring lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/53) | deliverable | Lessons Owner | ai | – |
