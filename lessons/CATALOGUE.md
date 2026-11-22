@@ -49,6 +49,12 @@ and see what its existing tests really check.
 | Recording current behaviour from real traffic: [Keploy](https://keploy.io/) records a small Spring Boot service's API calls and its MySQL and HTTP calls, then replays them as tests with its own stand-ins | Keploy (native, no admin rights), WireMock to compare | Keploy binary | later: after the toolkit's Keploy trial |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | last: needs other tools |
 
+## Agree what the code should do
+
+| Lesson | Tools | Needs | Status |
+|---|---|---|---|
+| [Behaviour written down as examples](behaviour-as-examples/README.md): the rules as named examples the experts wrote, run against today's code | JUnit parameterised tests (`@CsvFileSource`); Cucumber only when business people write the examples | Java only | built |
+
 ## Stand in for real systems
 
 | Lesson | Tools | Needs | Status |
@@ -57,8 +63,8 @@ and see what its existing tests really check.
 | [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | An in-memory fake, and an ArchUnit rule that keeps the queue's client inside the connection code | Java only | built |
 | [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | built |
 | [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
-| Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | next |
-| Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | next |
+| [Checking the requests your code sends](checking-outgoing-requests/README.md): method, headers and body, not just the answers it gets | WireMock's verify | Java only | built |
+| [Mockito well used](mockito-well-used/README.md): stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | built |
 | Contract tests between teams: consumer and provider check one agreement, shared as versioned artifacts through the company's package repository, without a broker | Pact JVM (4.5 for JDK 8) | Java only | later |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
 | Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
@@ -69,7 +75,7 @@ and see what its existing tests really check.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | built |
-| Old command-line programs: environment variables, `System.exit` and standard input | System Stubs | Java only | next |
+| [Old command-line programs](old-command-line-programs/README.md): environment variables, `System.exit` and standard input | System Stubs | Java only | built |
 
 ## Write better tests
 
@@ -98,10 +104,10 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md) | built |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
-| refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | built |
+| refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
-| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | built |
-| business-rule-tests | Behaviour written down as examples (planned); [Outside-in HTTP tests](outside-in-http-tests/README.md) covers part of it | next |
+| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md) | built |
+| business-rule-tests | [Behaviour written down as examples](behaviour-as-examples/README.md), [Outside-in HTTP tests](outside-in-http-tests/README.md) | built |
 | fake-behind-an-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
 | differential-testing | [Differential testing](differential-testing/README.md) | built |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | later |
@@ -140,6 +146,10 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Differential testing (`differential-testing`) | Postage by weight, old and rewritten | The rewrite's own examples | Old against new on every weight finds a mistyped price | `-Pcode=today` |
 | Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
 | Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
+| Checking the requests your code sends (`checking-outgoing-requests`) | Refunds posted to a payment provider | A WireMock stand-in answers 201 Created and the test checks only the refund id, so an amount in pounds and a missing Idempotency-Key header pass | WireMock's verify checks the method, address, headers and JSON body the client really sent | `-Pcode=today` |
+| Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
+| Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
+| Behaviour written down as examples (`behaviour-as-examples`) | A shop's refund rules | Tests written from the code, far from the 30-day boundary | The returns team's named examples, as a table, find the 30th-day refund that the code gets wrong | `-Pcode=today` |
 | Batch file-in, file-out (`batch-file-in-file-out`) | A nightly settlement file | Tests of the pieces | The whole Spring Batch job, file in and file out, on Datafaker input and a cleaned captured day, compared record by record | `-Pcode=today` |
 | Embedded Jakarta EE tests (`embedded-jakarta-ee-tests`) | VAT at a checkout, with two tax-rate beans | A unit test that wires the checkout by hand | Weld wires it as the server would, and it gets the wrong rate | `-Pcode=today` |
 | Real databases in tests (`real-databases-in-tests`) | Who sales should call first | The query on in-memory H2 | The same query on real PostgreSQL in a container | `-Pcode=today` |
@@ -166,25 +176,20 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
    customer's email; the after filters them at source and keeps the examples as approval tests.
 6. **Cleaning captured data so tests still work:** fixed text breaks the tests, keyed substitutes keep joins and repeated
    values working, and a detector check fails on a field the cleaning missed.
-7. **Behaviour written down as examples** (the toolkit's business-rule-tests technique): rules an expert writes down as
-   named examples, checked against today's code; JUnit tables first, Cucumber only where business people read or
-   write the examples themselves. Takes over business-rule-tests from the outside-in HTTP lesson.
-8. **Black-box tests of a whole application:** start the application as it ships, drive it only through its external
+7. **Black-box tests of a whole application:** start the application as it ships, drive it only through its external
    interfaces (HTTP, messages, files), stand in for everything it calls (WireMock for services, a container database),
    and check what comes out: responses, outgoing calls, rows written. The approach that joins outside-in HTTP tests,
    batch file-in file-out and characterisation tests, and the first tests an untested application usually gets.
-9. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+8. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
-10. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
-   up for JDK 25.
-11. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-12. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
-13. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-14. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-15. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
-16. **Coverage of changed code,** with PIT run only on what changed.
-17. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+9. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+10. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
+11. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+12. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+13. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
+14. **Coverage of changed code,** with PIT run only on what changed.
+15. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

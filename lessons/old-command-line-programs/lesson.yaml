@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: old-command-line-programs
+title: Old command-line programs
+techniques: [refactoring-for-testability]

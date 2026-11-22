@@ -1,0 +1,29 @@
+$ ./gradlew :lessons:behaviour-as-examples:test -Pcode=today
+RefundPolicyTest > refundsDependOnDaysAndReceipt() PASSED
+
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned the next day with a receipt PASSED
+
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 30th day with a receipt FAILED
+    org.opentest4j.AssertionFailedError: [returned on the 30th day with a receipt]
+    expected: "refund to card"
+     but was: "store credit"
+
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 31st day with a receipt PASSED
+
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt PASSED
+
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt PASSED
+
+6 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:behaviour-as-examples:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 6 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.

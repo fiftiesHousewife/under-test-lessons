@@ -68,7 +68,7 @@ behaviour is disputed, before changing business rules, and where other teams dep
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
-| *Behaviour written down as examples* | [JUnit](https://junit.org/), [Cucumber](https://cucumber.io/) where business people use the examples | *coming* |
+| [Behaviour written down as examples](lessons/behaviour-as-examples/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) | [JUnit](https://junit.org/), [Cucumber](https://cucumber.io/) where business people use the examples | The returns team's named examples find the 30th-day refund the code gets wrong |
 | *Responses checked against the OpenAPI document* | [swagger-request-validator](https://bitbucket.org/atlassian/swagger-request-validator) | *coming* |
 
 ### 4. Stand in for the systems around it
@@ -82,6 +82,7 @@ stand-in by how much of the real system's behaviour the test depends on.
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Recorded HTTP responses](lessons/recorded-http-responses/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/recorded-http-responses.html) | [WireMock](https://wiremock.org/) | WireMock replays a supplier's errors, finding two bugs the real service never shows on demand |
+| [Checking the requests your code sends](lessons/checking-outgoing-requests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/checking-outgoing-requests.html) | [WireMock](https://wiremock.org/)'s verify | An amount in pounds and a missing header pass a test that checks only the answer; WireMock's verify finds both |
 | [Fake behind an interface](lessons/fake-behind-an-interface/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/fake-behind-an-interface.html) | Plain Java; [Mockito](https://site.mockito.org/) for the comparison | A mock test passes while a message is lost; an in-memory fake queue finds it |
 | [Real databases in tests](lessons/real-databases-in-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) | [Testcontainers](https://testcontainers.com/), [PostgreSQL](https://www.postgresql.org/), [H2](https://www.h2database.com/) | A query passes on H2 and fails on real PostgreSQL, started by Testcontainers |
 | [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) | [Liquibase](https://www.liquibase.com/), [Testcontainers](https://testcontainers.com/) | A change that works on the developers' database fails on real PostgreSQL, before production does |
@@ -100,8 +101,9 @@ whenever a change is too large to make in one go.
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Replacing hard-wired dependencies](lessons/replacing-hard-wired-dependencies/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) | [Mockito](https://site.mockito.org/) | An invoice that can't be tested until its exchange rates are passed in; then Mockito does the rest |
+| [Old command-line programs](lessons/old-command-line-programs/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/old-command-line-programs.html) | [System Stubs](https://github.com/webcompere/system-stubs) | A nightly import's `System.exit` ends the whole test run; given how to print and how to end, it's tested end to end |
 | [Feature flags](lessons/feature-flags/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/feature-flags.html) | [OpenFeature](https://openfeature.dev/) | New code behind an OpenFeature flag, tested both ways, before anyone switches it on |
-| *Mockito well used* | [Mockito](https://site.mockito.org/) | *coming* |
+| [Mockito well used](lessons/mockito-well-used/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/mockito-well-used.html) | [Mockito](https://site.mockito.org/) | A test that mocks everything passes while the card gets the whole order back; an argument captor catches it |
 
 ### 6. Write better tests from now on
 

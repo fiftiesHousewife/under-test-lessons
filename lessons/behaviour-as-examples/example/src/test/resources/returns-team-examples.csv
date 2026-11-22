@@ -1,0 +1,6 @@
+example,                                   bought,     returned,   receipt, refund
+returned the next day with a receipt,      2027-03-01, 2027-03-02, yes,     refund to card
+returned on the 30th day with a receipt,   2027-03-01, 2027-03-31, yes,     refund to card
+returned on the 31st day with a receipt,   2027-03-01, 2027-04-01, yes,     store credit
+returned within 30 days without a receipt, 2027-03-01, 2027-03-10, no,      store credit
+returned after 30 days without a receipt,  2027-03-01, 2027-04-15, no,      nothing

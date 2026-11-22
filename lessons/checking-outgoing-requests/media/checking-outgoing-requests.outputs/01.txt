@@ -1,0 +1,47 @@
+$ ./gradlew :lessons:checking-outgoing-requests:test -Pcode=today
+RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
+    com.github.tomakehurst.wiremock.client.VerificationException: No requests exactly matched. Most similar request was:  expected:<
+    POST
+    /refunds
+
+    Authorization: Bearer test-key
+    Content-Type: application/json
+    Idempotency-Key: refund-A-1001
+
+    [equalToJson]
+    {
+      "orderId" : "A-1001",
+      "amount" : 1250,
+      "currency" : "GBP"
+    }> but was:<
+    POST
+    /refunds
+
+    Authorization: Bearer test-key
+    Content-Type: application/json
+
+
+
+    {
+      "orderId" : "A-1001",
+      "amount" : 12.5,
+      "currency" : "GBP"
+    }>
+
+RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
+
+RefundAnswerTest > acceptedRefundGivesItsId() PASSED
+
+3 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:checking-outgoing-requests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 3 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.

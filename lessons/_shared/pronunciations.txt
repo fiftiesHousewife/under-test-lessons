@@ -43,3 +43,7 @@ pull request = pullrequest
 201 Created = two oh one, created
 400 Bad Request = four hundred, bad request
 503 = five oh three
+2002 = two thousand and two
+Idempotency-Key = idem potency key
+Idempotency = idem potency
+idempotency = idem potency

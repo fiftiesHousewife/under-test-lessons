@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: behaviour-as-examples
+title: Behaviour written down as examples
+techniques: [business-rule-tests]

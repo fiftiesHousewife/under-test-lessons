@@ -51,6 +51,9 @@ datafaker = "2.7.0"
 # The old command-line programs lesson.
 system-stubs = "2.1.8"
 
+# The finding flaky tests lesson.
+awaitility = "4.3.0"
+
 [libraries]
 jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
 approvaltests = { module = "com.approvaltests:approvaltests", version.ref = "approvaltests" }
@@ -94,3 +97,6 @@ gradle-versions-plugin = { module = "io.github.ben-manes:gradle-versions-plugin"
 
 # The old command-line programs lesson
 system-stubs-jupiter = { module = "uk.org.webcompere:system-stubs-jupiter", version.ref = "system-stubs" }
+
+# The finding flaky tests lesson
+awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }

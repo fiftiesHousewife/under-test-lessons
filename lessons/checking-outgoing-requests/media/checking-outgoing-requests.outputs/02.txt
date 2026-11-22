@@ -1,0 +1,7 @@
+$ ./gradlew :lessons:checking-outgoing-requests:test
+RefundRequestTest > sendsTheRefundTheProviderExpects() PASSED
+
+RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
+
+RefundAnswerTest > acceptedRefundGivesItsId() PASSED
+All 3 tests passed.

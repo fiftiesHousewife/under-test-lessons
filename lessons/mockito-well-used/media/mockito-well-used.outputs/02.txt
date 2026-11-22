@@ -1,0 +1,5 @@
+$ ./gradlew :lessons:mockito-well-used:test
+CapturedRefundTest > refundsOnlyTheReturnedMug() PASSED
+
+MockEverythingTest > refundsTheReturnedMug() PASSED
+All 2 tests passed.

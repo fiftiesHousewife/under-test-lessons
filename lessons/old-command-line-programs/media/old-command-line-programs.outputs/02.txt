@@ -1,0 +1,11 @@
+$ ./gradlew :lessons:old-command-line-programs:test
+PaymentImportTest > acceptsPaymentsUpToTheLimitAndEndsWithZero() PASSED
+
+PaymentImportTest > stopsAtThePaymentOverTheLimitAndEndsWithOne() PASSED
+
+PaymentLineTest > refusesALineWithoutAnAmount() PASSED
+
+PaymentLineTest > readsTheAccountAndTheAmount() PASSED
+
+PaymentLineTest > allowsAPaymentOfExactlyTheLimit() PASSED
+All 5 tests passed.
