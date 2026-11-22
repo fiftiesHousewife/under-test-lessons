@@ -5,11 +5,11 @@ import io.github.fiftieshousewife.undertest.techniques.nested.Loan;
 /** FIXED: each step is allowed only from the state before it. */
 public final class FixedLoan implements Loan {
 
-    private State state = State.REQUESTED;
+    private State current = State.REQUESTED;
 
     @Override
     public State state() {
-        return state;
+        return current;
     }
 
     @Override
@@ -23,9 +23,9 @@ public final class FixedLoan implements Loan {
     }
 
     private void move(final State from, final State to, final String refusal) {
-        if (state != from) {
+        if (current != from) {
             throw new IllegalStateException(refusal);
         }
-        state = to;
+        current = to;
     }
 }

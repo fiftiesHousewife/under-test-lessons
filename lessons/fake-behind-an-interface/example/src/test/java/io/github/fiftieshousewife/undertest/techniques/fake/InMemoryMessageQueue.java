@@ -9,7 +9,7 @@ import java.util.Map;
 final class InMemoryMessageQueue implements MessageQueue {
 
     private final Map<String, List<String>> pending = new LinkedHashMap<>();
-    private final Map<String, List<String>> delivered = new LinkedHashMap<>();
+    private final Map<String, List<String>> arrived = new LinkedHashMap<>();
 
     @Override
     public void send(final String topic, final String message) {
@@ -18,12 +18,12 @@ final class InMemoryMessageQueue implements MessageQueue {
 
     @Override
     public void commit() {
-        pending.forEach((topic, messages) -> delivered.computeIfAbsent(topic, t -> new ArrayList<>()).addAll(messages));
+        pending.forEach((topic, messages) -> arrived.computeIfAbsent(topic, t -> new ArrayList<>()).addAll(messages));
         pending.clear();
     }
 
     /** The messages delivered on a topic so far. */
     List<String> delivered(final String topic) {
-        return List.copyOf(delivered.getOrDefault(topic, List.of()));
+        return List.copyOf(arrived.getOrDefault(topic, List.of()));
     }
 }

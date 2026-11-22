@@ -20,7 +20,7 @@ final class SlideHtml {
     private SlideHtml() {
     }
 
-    /** The page for a slide, styled by the given stylesheets in order, with pictures from the first folder that has each. */
+    /** The page for a slide, styled by the given stylesheets in order, each picture from the first folder with it. */
     static String page(final Slide slide, final List<Path> stylesheets, final List<Path> pictures) {
         return "<!doctype html><html><head><meta charset=\"utf-8\"><style>\n" + styles(stylesheets)
                 + "</style></head><body>" + definitions(pictures) + body(slide, pictures, "") + "</body></html>\n";

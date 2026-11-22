@@ -27,20 +27,20 @@ final class SceneContent {
     private static final Pattern TYPED = Pattern.compile("^Type(?:@\\S+)?\\s+([\"`])(.*)\\1\\s*$");
     private static final Pattern WORD = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 
-    private final List<Panel> panels = new ArrayList<>();
-    private final List<String> commands = new ArrayList<>();
-    private final List<String> callouts = new ArrayList<>();
+    private final List<Panel> shownPanels = new ArrayList<>();
+    private final List<String> liveCommands = new ArrayList<>();
+    private final List<String> calloutTexts = new ArrayList<>();
 
     List<Panel> panels() {
-        return List.copyOf(panels);
+        return List.copyOf(shownPanels);
     }
 
     List<String> commands() {
-        return List.copyOf(commands);
+        return List.copyOf(liveCommands);
     }
 
     List<String> callouts() {
-        return List.copyOf(callouts);
+        return List.copyOf(calloutTexts);
     }
 
     /** Reads every scene of a script, in order; paths in {@code show} lines are relative to the repository root. */
@@ -65,9 +65,9 @@ final class SceneContent {
         }
         final List<String> words = words(typed.group(2));
         switch (words.getFirst()) {
-            case "show" -> panels.add(panel(root, words.subList(1, words.size())));
-            case "run_live", "run_with_notes" -> commands.add(words.get(1));
-            case "callout" -> callouts.add(words.get(1));
+            case "show" -> shownPanels.add(panel(root, words.subList(1, words.size())));
+            case "run_live", "run_with_notes" -> liveCommands.add(words.get(1));
+            case "callout" -> calloutTexts.add(words.get(1));
             default -> {
                 // notes become the slide's narration; other commands are set-up
             }
@@ -88,7 +88,7 @@ final class SceneContent {
         final Path file = find(root, args.getFirst());
         final List<String> all = lines(file);
         final String name = String.valueOf(file.getFileName());
-        if (args.size() > 1 && args.get(1).length() > 1 && args.get(1).startsWith("/") && args.get(1).endsWith("/")) {
+        if (args.size() > 1 && isPattern(args.get(1))) {
             // awk reads the pattern as a string first, so a doubled backslash in a script means a single one
             final String pattern = args.get(1).substring(1, args.get(1).length() - 1).replace("\\\\", "\\");
             final String label = args.size() > 2 ? args.get(2) : name;
@@ -98,6 +98,10 @@ final class SceneContent {
         final int from = args.size() > 1 ? Integer.parseInt(args.get(1)) : 1;
         final int to = args.size() > 2 ? Integer.parseInt(args.get(2)) : all.size();
         return new Panel(args.size() > 3 ? args.get(3) : name, SourceLines.range(all, from, to));
+    }
+
+    private static boolean isPattern(final String arg) {
+        return arg.length() > 1 && arg.startsWith("/") && arg.endsWith("/");
     }
 
     /** The file a {@code show} line names: a path, an exact file name, or part of a name, as the helper finds it. */

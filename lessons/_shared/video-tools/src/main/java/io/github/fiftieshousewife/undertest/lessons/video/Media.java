@@ -37,7 +37,7 @@ record Media(Path root, String lesson) {
         return Slides.read(file(".slides.md"), sharedSlides());
     }
 
-    /** Where pictures come from: the folder named by {@code video.pictures} (-PlessonPictures) first, then the shared ones. */
+    /** Where pictures come from: the folder in {@code video.pictures} (-PlessonPictures), then the shared ones. */
     List<Path> pictureFolders() {
         final Path shared = sharedSlides().resolve("pictures");
         final String chosen = System.getProperty("video.pictures", "");

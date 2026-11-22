@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 final class SlideDeck {
 
     private static final Pattern SCENE = Pattern.compile("^#\\s*-+\\s*Scene\\s+\\d+:\\s*(.*?)\\s*-+\\s*$");
-    private static final Pattern TITLE = Pattern.compile("^#\\s+(.+)$");
+    private static final Pattern HEADING = Pattern.compile("^#\\s+(.+)$");
 
     private SlideDeck() {
     }
@@ -139,7 +139,7 @@ final class SlideDeck {
     /** The lesson's name, from the first heading of its README. */
     static String title(final Media media) {
         final Path readme = media.file(".tape").resolveSibling("../README.md").normalize();
-        final List<String> headings = Files.isRegularFile(readme) ? matches(readme, TITLE) : List.of();
+        final List<String> headings = Files.isRegularFile(readme) ? matches(readme, HEADING) : List.of();
         return headings.isEmpty() ? media.safeLesson() : headings.getFirst();
     }
 
