@@ -32,8 +32,10 @@ viewer already has. Each slide: a title, at most three points, one picture, and 
 
 6. **Can we trust the tests we have?** Coverage only says which lines ran. Mutation testing plants small bugs and
    counts how many the tests catch. → Mutation testing.
-7. **What does the code do today?** Record it at its edges before touching it. → Characterisation tests, comparing
-   structured output, outside-in HTTP tests, batch file-in file-out.
+7. **What does the code do today?** Treat the application as a black box: start it as it ships, drive it through its
+   edges (API, messages, files), and record what comes out, before touching anything inside. → Black-box tests of a
+   whole application (to be built), outside-in HTTP tests, batch file-in file-out, characterisation tests, comparing
+   structured output.
 8. **Does the rewrite still give the same answers?** Run old and new on the same inputs. → Differential testing.
 9. **What should it do?** Write the rules down as examples, with the people who know them, and check the code against
    them. → Behaviour written down as examples (to be built).

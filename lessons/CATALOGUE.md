@@ -117,18 +117,22 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
 2. **Behaviour written down as examples** (the toolkit's business-rule-tests technique): rules an expert writes down as
    named examples, checked against today's code; JUnit tables first, Cucumber only where business people read or
    write the examples themselves. Takes over business-rule-tests from the outside-in HTTP lesson.
-3. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+3. **Black-box tests of a whole application:** start the application as it ships, drive it only through its external
+   interfaces (HTTP, messages, files), stand in for everything it calls (WireMock for services, a container database),
+   and check what comes out: responses, outgoing calls, rows written. The approach that joins outside-in HTTP tests,
+   batch file-in file-out and characterisation tests, and the first tests an untested application usually gets.
+4. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
-4. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
+5. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
    up for JDK 25.
-5. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-6. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
-7. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-8. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-9. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
-10. **Coverage of changed code,** with PIT run only on what changed.
-11. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+6. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+7. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
+8. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+9. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+10. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
+11. **Coverage of changed code,** with PIT run only on what changed.
+12. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 
