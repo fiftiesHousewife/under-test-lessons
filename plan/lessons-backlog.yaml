@@ -1148,6 +1148,7 @@ items:
       - "Payments: recording ignores a message already recorded, with a test that delivers it twice"
       - "Mockito: returned items match order lines one for one, and an item not on the order is refused"
       - "VAT rounding is one rule across lessons, and negative amounts print with a sign"
+    status: "done"
   - key: "captured-data-is-cleaned-thoroughly"
     type: "deliverable"
     title: "Captured data is cleaned thoroughly"
