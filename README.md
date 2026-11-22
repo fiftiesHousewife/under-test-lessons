@@ -4,24 +4,40 @@
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](LICENSE)
 ![Java 25](https://img.shields.io/badge/Java-25-blue)
 
-**Lessons on testing techniques, each with a runnable before-and-after example and a short narrated video.**
+**Short, practical lessons on testing old code: each one a runnable before-and-after example, a narrated video and a
+slide deck.**
 
 These lessons go with [under-test](https://github.com/fiftiesHousewife/under-test), a toolkit for getting old code
-properly tested. The toolkit holds the rules for when to use each technique; this repo teaches the techniques.
+properly tested across many repositories. The toolkit decides *which* technique a repository needs; these lessons
+teach *how* each technique works, in a few minutes, on code small enough to read in one sitting.
 
-Every lesson works the same way: the code as it is today, a weak test that passes anyway, a strong test that finds the
-problem, then the fix. One Gradle switch (`-Pcode=today`, or the lesson's own) shows the "before"; without it, every
-test passes. The full plan, with every toolkit technique and its lesson, is in [the catalogue](lessons/CATALOGUE.md).
+Every lesson tells the same story. Here is the code as it is today. Here is a test that looks reasonable and passes
+anyway. Here is a stronger test that finds the problem. Here is the fix. One Gradle switch (`-Pcode=today`, or the
+lesson's own) shows the "before"; without it, every test passes, so the whole repository builds green.
 
-## Lessons
+## The lessons, and when you need them
 
-**Measure how far tests can be trusted**
+The lessons follow the order work usually happens on an old codebase: find out how far the tests can be trusted,
+record what the code does before touching it, cut it loose from the systems around it, make the changes safely, and
+then raise the standard of every test written from then on. The full plan, with every toolkit technique, its lesson
+and what is still to come, is in [the catalogue](lessons/CATALOGUE.md).
+
+### 1. Find out how far the tests can be trusted
+
+Old code often comes with tests, and a coverage figure that looks fine. Coverage only says which lines ran, not
+whether any test would notice them going wrong. Before relying on existing tests, during discovery, measure what they
+actually catch; later, use the same measure to decide when new tests are strong enough.
 
 | Lesson | What you'll see |
 |---|---|
 | [Mutation testing](lessons/mutation-testing/README.md) | Two test suites with the same 100% line coverage: PIT shows one catches 5 of 13 planted bugs, the other all 13 |
 
-**Record what the code does today**
+### 2. Record what the code does today
+
+You can't safely change code whose behaviour nobody has written down. These techniques pin down today's behaviour from
+the outside, where it shows: whole outputs, API responses, files, or the old version itself. Use them before a
+refactor, a rewrite or an upgrade, and on any code whose rules live only in the code. They record what the code *does*,
+which is not always what it *should* do; differences found later are questions for the people who know the business.
 
 | Lesson | What you'll see |
 |---|---|
@@ -31,7 +47,13 @@ test passes. The full plan, with every toolkit technique and its lesson, is in [
 | [Batch file-in, file-out](lessons/batch-file-in-file-out/README.md) | A nightly settlement file compared line by line finds a missing closing line |
 | [Differential testing](lessons/differential-testing/README.md) | An old calculator and its rewrite compared on all 5,000 weights find a mistyped price |
 
-**Stand in for real systems**
+### 3. Stand in for the systems around it
+
+Old code talks to databases, queues, other teams' services and application servers. Tests that need the real thing
+are slow, need accounts, fail when someone else's system is down, and can't make it fail on demand. These techniques
+put a stand-in in its place: recorded answers, an in-memory fake, a real database in a throwaway container, or just
+the container the server would provide. Use them as soon as a test needs anything outside its own process; pick the
+stand-in by how much of the real system's behaviour the test depends on.
 
 | Lesson | What you'll see |
 |---|---|
@@ -41,21 +63,31 @@ test passes. The full plan, with every toolkit technique and its lesson, is in [
 | [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) | A change that works on the developers' database fails on real PostgreSQL, before production does |
 | [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
 
-**Make old code testable**
+### 4. Make old code testable, and change it safely
+
+Some code can't be tested as it stands: it reaches for a singleton, the clock or the network itself. The first change
+is usually the smallest one that lets a test hand over a stand-in. Once tests are in place, big changes still go in
+small steps, with the new code switched off until it has proved itself. Use these when a class resists testing, and
+whenever a change is too large to make in one go.
 
 | Lesson | What you'll see |
 |---|---|
 | [Replacing hard-wired dependencies](lessons/replacing-hard-wired-dependencies/README.md) | An invoice that can't be tested until its exchange rates are passed in; then Mockito does the rest |
 | [Feature flags](lessons/feature-flags/README.md) | New code behind an OpenFeature flag, tested both ways, before anyone switches it on |
 
-**Write better tests**
+### 5. Write better tests from now on
+
+Getting old code under test produces a lot of new tests, many of them drafted with AI assistance. These lessons are
+about making each one count: cover the cases that matter rather than the easy ones, let a tool hunt for the inputs you
+didn't think of, make the report readable as a specification, and let the build guard the code's structure. Use them
+in every new test, and when reviewing tests written by people or by AI.
 
 | Lesson | What you'll see |
 |---|---|
 | [Parameterised tests](lessons/parameterised-tests/README.md) | A table of VAT cases finds a rounding bug that copy-pasted tests miss |
 | [Property-based testing](lessons/property-based-testing/README.md) | jetCheck finds the bill split that loses a penny |
 | [Nested tests](lessons/nested-tests/README.md) | Tests grouped by a loan's state show the one question nobody asked |
-| [Dynamic tests](lessons/dynamic-tests/README.md) | A folder of example files becomes one named test each |
+| [Dynamic tests](lessons/dynamic-tests/README.md) | A folder of example files, such as an old regression pack, becomes one named test each |
 | [Architecture rules](lessons/architecture-rules/README.md) | ArchUnit finds a web page reaching straight into storage |
 
 ## Try it
@@ -63,64 +95,52 @@ test passes. The full plan, with every toolkit technique and its lesson, is in [
 You need JDK 25. The Gradle wrapper fetches everything else.
 
 ```bash
-./gradlew check                                                      # every lesson's tests, plus the quality checks
-./gradlew :lessons:mutation-testing:pitest -Psuite=weak              # 5 of 13 planted bugs caught
-./gradlew :lessons:architecture-rules:test -Pcode=today              # any lesson's "before"
+./gradlew check                                             # every lesson's tests, plus the quality checks
+./gradlew :lessons:architecture-rules:test -Pcode=today     # any lesson's "before"
+./gradlew :lessons:mutation-testing:pitest -Psuite=weak     # PIT on the weak tests: 5 of 13 planted bugs caught
 ```
 
-Lessons with container tests (real databases) keep them in an `integrationTest` suite, which skips itself where there
-is no container runtime such as Docker Desktop, Colima or Podman.
+Each lesson's README says what to run and what you'll see. Lessons with container tests (the two database lessons)
+keep them in an `integrationTest` suite, which skips itself where there is no container runtime such as Docker
+Desktop, Colima or Podman, so everything else still runs everywhere.
 
-## Videos and slides
+## Watch it, present it, rebrand it
 
-Each lesson's video is made from a script with one command:
+Every lesson comes three ways, all generated from the same few text files in its `media/` folder, so a change to the
+narration or the code shows up everywhere:
+
+- **A narrated video**, about three minutes: slides, then the example running in a terminal, then closing slides,
+  with captions. Made with `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id>`, using
+  [VHS](https://github.com/charmbracelet/vhs) to record the terminal and an offline voice (Kokoro).
+- **A slide deck**, `media/<id>.deck.html`: one self-contained page with the intro slides, a slide for each step of the
+  example showing its code and commands, and the closing slides. Arrow keys move between slides, N shows the speaker
+  notes, and printing gives one slide per page.
+- **The runnable example** itself, for anyone who would rather read and run the code.
+
+Slides, decks and videos share one look, set by CSS. To rebrand, edit a stylesheet or a picture and run one command,
+which always rebuilds every deck and slide image:
 
 ```bash
-./gradlew :lessons:video-tools:renderLessonVideo -Plesson=mutation-testing
-./gradlew :lessons:video-tools:renderLessonVideo -Plesson=mutation-testing -PslidesOnly=true   # just the slides
+./gradlew :lessons:video-tools:buildLessonSlides
 ```
 
-It records the terminal with [VHS](https://github.com/charmbracelet/vhs), builds captions, reads the narration with an
-offline voice (Kokoro), and assembles the finished video, keeping each layer separate so organisations can rebrand,
-trim or revoice it. Slides are HTML pages styled by
-[`lessons/_shared/slides/slides.css`](lessons/_shared/slides/slides.css); add your own stylesheet with
-`-PlessonSlideCss=<path>` to rebrand every slide and picture. See
-[the make-a-lesson-video skill](.github/skills/make-a-lesson-video/SKILL.md).
-
-Every lesson is also a **slide deck**: one self-contained HTML file, `lessons/<id>/media/<id>.deck.html`, with the
-intro slides, a slide for each step of the example (its narration as the text), and the closing slides. Open it in a
-browser: arrow keys move between slides, N shows the speaker notes, and printing gives one slide per page.
-
-```bash
-./gradlew :lessons:video-tools:buildLessonDecks                              # every lesson's deck
-./gradlew :lessons:video-tools:buildLessonDecks -Plesson=nested-tests -PlessonDeckPdf=true   # one deck, plus a PDF
-./gradlew :lessons:video-tools:buildLessonDecks -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css
-```
-
-**Rebrand and rebuild in one command.** Edit a stylesheet or a picture, then run:
-
-```bash
-./gradlew :lessons:video-tools:buildLessonSlides      # every deck and slide image, from the current CSS and pictures
-```
-
-It always reruns. Point it at your own files with `-PlessonSlideCss=<file>` and `-PlessonPictures=<folder>` (pictures
-are found by name there first, then in the shared set), or put both in `gradle.properties` so a plain rerun uses them:
+Point it at your own files with `-PlessonSlideCss=<file>` and `-PlessonPictures=<folder>`, or set them once in
+`gradle.properties`. Two looks come with the lessons: the default, in colour, and a newspaper style in black ink on
+newsprint with cartoons drawn in line and hatching:
 
 ```properties
 lessonSlideCss=lessons/_shared/slides/themes/newspaper.css
 lessonPictures=lessons/_shared/slides/pictures/ink
 ```
 
-Decks, slides and videos share one look. [`themes/newspaper.css`](lessons/_shared/slides/themes/newspaper.css) turns
-it into black ink on newsprint, and [`pictures/ink/`](lessons/_shared/slides/pictures/ink) holds cartoons drawn for
-black and white, in line and cross-hatching; start your own theme from them. Scene slides in a deck show the code
-panels, commands and callouts from the video, as text.
+How the videos are made, and the rules that keep them short and reliable, are in
+[the make-a-lesson-video skill](.github/skills/make-a-lesson-video/SKILL.md).
 
 ## Using these lessons inside a company
 
-Corporate machines usually fetch nothing from the internet: everything comes through the company's repository
-manager (such as Artifactory or Nexus), and browsers are installed centrally. Every download these lessons make, and
-how to route it:
+Corporate machines usually fetch nothing from the internet: everything comes through the company's repository manager
+(such as Artifactory or Nexus), and browsers are installed centrally. Every download these lessons make, and how to
+route it:
 
 | What | Fetched from by default | Inside a company |
 |---|---|---|
@@ -128,24 +148,32 @@ how to route it:
 | Libraries and Gradle plugins | Maven Central and the Gradle Plugin Portal (`settings.gradle.kts`) | A Gradle init script that replaces both with the repository manager |
 | JDK 25 | Only if none is installed: the Foojay resolver in `settings.gradle.kts` | Install the approved JDK and set `org.gradle.java.installations.auto-download=false` |
 | Container images (`postgres:17-alpine`) | Docker Hub, through Testcontainers | Set `hub.image.name.prefix` in `~/.testcontainers.properties` to the company registry |
-| Browser for slides | Nothing: uses the installed Google Chrome | Name another approved browser with `-PlessonBrowser=<program>` |
-| Browser for browser tests (Playwright, planned) | Playwright downloads its own browsers on first use | Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` and launch the installed Chrome (`setChannel("chrome")`); the Playwright library itself comes from the repository manager |
+| Browser for slides and decks | Nothing: uses the installed Google Chrome | Name another approved browser with `-PlessonBrowser=<program>` |
+| Browser for browser tests (Playwright, planned) | Playwright downloads its own browsers on first use | Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` and launch the installed Chrome (`setChannel("chrome")`) |
 | Voice model (video making only) | GitHub releases | Mirror the model files and pass `-PlessonVoiceModelsUrl=<mirror>`, or your own voice with `-PlessonVoiceCommand` |
 | Voice's Python packages (video making only) | PyPI, through pip | pip's own settings (`pip.conf`) pointing at the repository manager |
 | VHS (video making only) | Homebrew or GitHub releases | Not usually available; record videos outside the company network |
 
-Liquibase 5 is under the Functional Source License (FSL-1.1-ALv2), which becomes Apache 2.0 after two years; check
-your company accepts it. Dependencies held back on purpose are listed, with the reason, as
-`quality.holdBack` in [`gradle.properties`](gradle.properties), so the out-of-date check accepts them.
+Licences: everything is under the Apache, MIT, BSD or Eclipse licences except Liquibase 5, which uses the Functional
+Source License (FSL-1.1-ALv2, becoming Apache 2.0 after two years); check your company accepts it. Dependencies held
+back on purpose are listed, with the reason, as `quality.holdBack` in [`gradle.properties`](gradle.properties).
 
-## What's here
+## Working on this repo
+
+- Add a lesson with [the write-a-technique-lesson skill](.github/skills/write-a-technique-lesson/SKILL.md); write its
+  story with [write-lesson-slides-and-narration](.github/skills/write-lesson-slides-and-narration/SKILL.md).
+- `./gradlew check` must pass before every push. Where Gradle's worker processes can't run (some sandboxes), run PMD
+  and Checkstyle as plain programs instead:
+  `./gradlew --init-script tools/quality-cli.init.gradle --no-configuration-cache pmdCli checkstyleCli`.
+- Rebuild the decks (`buildLessonSlides`) whenever slides, narration or a lesson's code changes, and commit them.
 
 | Folder | What you'll find |
 |---|---|
-| [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, video script, narration and slides |
-| `lessons/_shared/` | Shared video set-up, slide styles and pictures, pronunciation list, and `video-tools` |
+| [`lessons/`](lessons/README.md) | One folder per lesson: explanation, runnable example, video script, narration, slides and deck |
+| `lessons/_shared/` | Shared video set-up, slide styles, themes and pictures, pronunciation list, and `video-tools` |
 | `build-logic/`, `config/quality/` | Convention plugins that every module of this build applies, and the quality-check rules (copied from the toolkit) |
 | [`.github/skills/`](.github/skills/) | AI assistant skills for writing lessons and making their videos |
+| `tools/` | Helpers for working on the repo |
 
 ## Licence
 
