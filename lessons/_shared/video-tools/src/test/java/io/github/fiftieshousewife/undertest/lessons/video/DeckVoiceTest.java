@@ -52,6 +52,14 @@ class DeckVoiceTest {
         return script;
     }
 
+    private static String clip(final String written) {
+        return new Spoken(written, written).clipName();
+    }
+
+    private List<String> deckSays() {
+        return DeckVoice.spoken(new Media(root, "demo")).stream().map(Spoken::said).toList();
+    }
+
     private long spokenParts() throws IOException {
         final Path log = root.resolve("spoken.log");
         return Files.isRegularFile(log) ? Files.readAllLines(log).size() : 0;
@@ -59,50 +67,107 @@ class DeckVoiceTest {
 
     @Test
     void speaksEachDeckSlideInOrderAsTheVoiceShouldSayIt() {
-        assertThat(DeckVoice.spokenTexts(new Media(root, "demo")))
-                .containsExactly("Hello there.", "Run pit now.", "Goodbye.");
+        assertThat(deckSays()).containsExactly("Hello there.", "Run pit now.", "Goodbye.");
     }
 
     @Test
-    void namesEachClipByWhatItSays() {
+    void namesEachClipByItsWrittenWordsAlone() {
         assertAll(
-                () -> assertThat(DeckVoice.clipName("Hello there.")).isEqualTo(DeckVoice.clipName("Hello there."))
-                        .matches("[0-9a-f]{16}\\.m4a"),
-                () -> assertThat(DeckVoice.clipName("Hello there.")).isNotEqualTo(DeckVoice.clipName("Hello.")));
+                () -> assertThat(clip("Hello there.")).isEqualTo(clip("Hello there.")).matches("[0-9a-f]{16}\\.m4a"),
+                () -> assertThat(clip("Hello there.")).isNotEqualTo(clip("Hello.")),
+                () -> assertThat(new Spoken("Run PIT now.", "Run pit now.").clipName()).isEqualTo(clip("Run PIT now.")),
+                () -> assertThat(clip("Hello [pause 1s] there.")).isEqualTo(clip("Hello\n  there.")));
     }
 
     @Test
-    void readsOnlySlidesWithoutAClipAndRemovesClipsNoSlideUses() throws IOException {
+    void readsOnlySlidesWithoutAClipAndRemovesClipsTheVoiceMadeThatNoSlideUses() throws IOException {
         final Media demo = new Media(root, "demo");
         final Path folder = media.resolve("demo.deck-voice");
         final int first = DeckVoice.speak(demo, List.of(voice.toString()));
         final long partsAfterFirst = spokenParts();
-        Files.writeString(folder.resolve("0000000000000000.m4a"), "old");
         Files.writeString(folder.resolve("notes.txt"), "not a clip");
 
         final int second = DeckVoice.speak(demo, List.of(voice.toString()));
+        Files.writeString(media.resolve("demo.slides.md"), "## intro: Hello\n- A point\nSay: Hello there.\n");
+        DeckVoice.speak(demo, List.of(voice.toString()));
 
         assertAll(
                 () -> assertThat(first).isEqualTo(3),
                 () -> assertThat(second).isZero(),
                 () -> assertThat(spokenParts()).isEqualTo(partsAfterFirst),
-                () -> assertThat(folder.resolve(DeckVoice.clipName("Goodbye."))).exists(),
-                () -> assertThat(folder.resolve("0000000000000000.m4a")).doesNotExist(),
+                () -> assertThat(folder.resolve(clip("Goodbye."))).doesNotExist(),
+                () -> assertThat(folder.resolve(clip("Hello there."))).exists(),
                 () -> assertThat(folder.resolve("notes.txt")).exists());
+    }
+
+    @Test
+    void aPronunciationFixReadsTheClipAgainUnderTheSameName() throws IOException {
+        final Media demo = new Media(root, "demo");
+        DeckVoice.speak(demo, List.of(voice.toString()));
+        Files.writeString(root.resolve("lessons/_shared/pronunciations.txt"), "PIT = pitt\n");
+
+        final int made = DeckVoice.speak(demo, List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(made).isEqualTo(1),
+                () -> assertThat(media.resolve("demo.deck-voice").resolve(clip("Run PIT now."))).exists());
+    }
+
+    @Test
+    void aClipAPersonRecordedIsNeverReadAgainNorRemoved() throws IOException {
+        final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
+        Files.writeString(folder.resolve(clip("Hello there.")), "a person's recording");
+        Files.writeString(folder.resolve("0000000000000000.m4a"), "another recording, of a slide since removed");
+
+        final int made = DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(made).isEqualTo(2),
+                () -> assertThat(folder.resolve(clip("Hello there."))).hasContent("a person's recording"),
+                () -> assertThat(folder.resolve("0000000000000000.m4a")).exists());
+    }
+
+    @Test
+    void aClipUnderItsEarlierNameIsRenamedNotReadAgain() throws IOException {
+        final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
+        final Spoken run = new Spoken("Run PIT now.", "Run pit now.");
+        Files.writeString(folder.resolve(run.earlierClipName()), "read before");
+
+        DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(folder.resolve(run.clipName())).hasContent("read before"),
+                () -> assertThat(folder.resolve(run.earlierClipName())).doesNotExist(),
+                () -> assertThat(spokenParts()).isEqualTo(2));
+    }
+
+    @Test
+    void clipsMadeBeforeLedgersAreTheVoicesSoAPronunciationFixStillReadsThemAgain() throws IOException {
+        final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
+        Files.writeString(folder.resolve(clip("Goodbye.")), "read before ledgers");
+        DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+        final long partsBeforeTheFix = spokenParts();
+        Files.writeString(root.resolve("lessons/_shared/pronunciations.txt"), "PIT = pit\nGoodbye = good bye\n");
+
+        final int made = DeckVoice.speak(new Media(root, "demo"), List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(partsBeforeTheFix).as("read before the fix: the two slides with no clip").isEqualTo(2),
+                () -> assertThat(made).as("read again after the fix: the clip made before ledgers").isEqualTo(1));
     }
 
     @Test
     void theDeckPlaysTheClipsItHasAndSaysNothingWhereItHasNone() throws IOException {
         final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
-        Files.writeString(folder.resolve(DeckVoice.clipName("Hello there.")), "sound");
+        Files.writeString(folder.resolve(clip("Hello there.")), "sound");
 
         final String deck = SlideDeck.html(new Media(root, "demo"));
 
         assertAll(
                 () -> assertThat(deck).containsOnlyOnce("<audio class=\"voice\"")
-                        .contains("src=\"demo.deck-voice/" + DeckVoice.clipName("Hello there.") + "\""),
+                        .contains("src=\"demo.deck-voice/" + clip("Hello there.") + "\""),
                 () -> assertThat(DeckVoice.sources(new Media(root, "demo")))
-                        .containsExactly("demo.deck-voice/" + DeckVoice.clipName("Hello there."), "", ""),
+                        .containsExactly("demo.deck-voice/" + clip("Hello there."), "", ""),
                 () -> assertThat(SlideDeck.withVoice("<section>x</section>", "")).isEqualTo("<section>x</section>"));
     }
 
@@ -122,7 +187,7 @@ class DeckVoiceTest {
         DeckVoice.speak(demo, List.of(voice.toString()));
         final long partsAfterDeck = spokenParts();
 
-        DeckVoice.spokenTexts(demo).forEach(text -> VoiceClips.wav(demo, List.of(voice.toString()), text));
+        DeckVoice.spoken(demo).forEach(slide -> VoiceClips.wav(demo, List.of(voice.toString()), slide));
 
         assertThat(spokenParts()).isEqualTo(partsAfterDeck);
     }
@@ -130,7 +195,7 @@ class DeckVoiceTest {
     @Test
     void theDeckTakesTheClipsTheVideoHasAlreadyReadAloud() throws IOException {
         final Media demo = new Media(root, "demo");
-        DeckVoice.spokenTexts(demo).forEach(text -> VoiceClips.wav(demo, List.of(voice.toString()), text));
+        DeckVoice.spoken(demo).forEach(slide -> VoiceClips.wav(demo, List.of(voice.toString()), slide));
         final long partsAfterVideo = spokenParts();
 
         final int made = DeckVoice.speak(demo, List.of(voice.toString()));
@@ -138,7 +203,7 @@ class DeckVoiceTest {
         assertAll(
                 () -> assertThat(made).isEqualTo(3),
                 () -> assertThat(spokenParts()).isEqualTo(partsAfterVideo),
-                () -> assertThat(media.resolve("demo.deck-voice").resolve(DeckVoice.clipName("Goodbye."))).exists());
+                () -> assertThat(media.resolve("demo.deck-voice").resolve(clip("Goodbye."))).exists());
     }
 
     @Test
@@ -148,21 +213,30 @@ class DeckVoiceTest {
         final List<String> video = Narration.paragraphs(demo.file(".narration.md")).stream()
                 .map(pronunciation::forSpeech).toList();
 
-        assertThat(DeckVoice.spokenTexts(demo)).containsSubsequence(video);
+        assertThat(deckSays()).containsSubsequence(video);
     }
 
     @Test
     void onAFreshCloneTheDecksClipIsDecodedRatherThanReadAloudAgain() throws IOException {
         final Media demo = new Media(root, "demo");
-        final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
-        Files.writeString(folder.resolve(DeckVoice.clipName("Goodbye.")), "sound");
+        DeckVoice.speak(demo, List.of(voice.toString()));
+        final long partsAfterDeck = spokenParts();
+        deleteStore();
         System.setProperty("video.ffmpeg",
                 standIn("decoder", "for last; do :; done; cp " + root.resolve("clip.wav") + " \"$last\"").toString());
 
-        final WavFile clip = VoiceClips.wav(demo, List.of(voice.toString()), "Goodbye.");
+        final WavFile clip = VoiceClips.wav(demo, List.of(voice.toString()), new Spoken("Goodbye.", "Goodbye."));
 
         assertAll(
-                () -> assertThat(spokenParts()).isZero(),
+                () -> assertThat(spokenParts()).isEqualTo(partsAfterDeck),
                 () -> assertThat(clip.seconds()).isEqualTo(1.0));
+    }
+
+    private void deleteStore() throws IOException {
+        try (var files = Files.walk(media.resolve("demo.voice"))) {
+            for (final Path file : files.sorted(java.util.Comparator.reverseOrder()).toList()) {
+                Files.delete(file);
+            }
+        }
     }
 }

@@ -83,12 +83,12 @@ public final class LessonVideo {
         }
         final List<Scene> scenes = media.scenes();
         final Pronunciation pronunciation = DeckVoice.pronunciation(media);
-        final List<String> narration = Narration.paragraphs(media.file(".narration.md")).stream()
-                .map(pronunciation::forSpeech).toList();
+        final List<Spoken> narration = Narration.paragraphs(media.file(".narration.md")).stream()
+                .map(paragraph -> Spoken.of(paragraph, pronunciation)).toList();
         final Path clipsFolder = media.file(".voice");
         createFolder(clipsFolder);
         final List<WavFile> clips = new ArrayList<>();
-        for (final String scene : narration) {
+        for (final Spoken scene : narration) {
             clips.add(VoiceClips.wav(media, command, scene));
         }
         final List<String> misfits = Voiceover.misfits(scenes, clips);
@@ -158,7 +158,7 @@ public final class LessonVideo {
     /** Each slide's clip, from the lesson's store of spoken clips, kept as {@code <kind>-<n>.wav} for the splicer. */
     private static void speakSlides(final Voice voice, final List<Slide> slides, final String kind) {
         for (int i = 0; i < slides.size(); i++) {
-            VoiceClips.wav(voice.media(), voice.command(), voice.pronunciation().forSpeech(slides.get(i).narration()))
+            VoiceClips.wav(voice.media(), voice.command(), Spoken.of(slides.get(i).narration(), voice.pronunciation()))
                     .write(voice.media().file(".voice").resolve(kind + "-" + (i + 1) + ".wav"));
         }
     }

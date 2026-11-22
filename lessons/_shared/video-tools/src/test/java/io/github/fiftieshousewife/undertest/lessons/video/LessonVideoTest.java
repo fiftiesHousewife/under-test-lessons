@@ -60,7 +60,8 @@ class LessonVideoTest {
 
         assertAll(
                 () -> assertThat(WavFile.read(media.resolve("demo.narration.wav")).seconds()).isEqualTo(12),
-                () -> assertThat(VoiceClips.file(new Media(root, "demo"), "Second scene.")).exists());
+                () -> assertThat(VoiceClips.file(new Media(root, "demo"), new Spoken("Second scene.", "Second scene.")))
+                        .exists());
     }
 
     @Test

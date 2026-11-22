@@ -324,7 +324,7 @@ items:
     title: "Lesson: Spring tests in slices"
     parent: "the-planned-lessons-are-built"
     phase: "lessons"
-    horizon: "next"
+    horizon: "now"
     owner_role: "Lessons Owner"
     done_by: "ai"
     done_when:
@@ -408,7 +408,7 @@ items:
     title: "Lesson: more JUnit, one idea per lesson"
     parent: "the-planned-lessons-are-built"
     phase: "lessons"
-    horizon: "next"
+    horizon: "now"
     owner_role: "Lessons Owner"
     done_by: "ai"
     done_when:
@@ -428,7 +428,7 @@ items:
       - "It follows the write-a-technique-lesson checklist"
       - "The before and the after both run in ./gradlew check, with the agent attached"
       - "The video shows the report"
-    notes: "It ends by turning the report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules. Before: running the service's tests reaches db.prod.example.com, because application.yml says so (in the lesson, a name that can't resolve). After: under the airgap agent the tests fail as they would offline; the report names each refused host, its test, its caller and the setting with its file and line, and application-test.yml overrides each with a stand-in (WireMock, an in-memory or container database) until the report is clean. Waits on the agent's first release, the release-with-a-bill-of-materials item in the backlog of github.com/fiftiesHousewife/under-test-airgap. Background: the toolkit's decision guide on running old code only where production can't be reached. Replaces the planned lesson on running old code safely."
+    notes: "It ends by turning the report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules. Before: running the service's tests reaches db.prod.example.com, because application.yml says so (in the lesson, a name that can't resolve). After: under the airgap agent the tests fail as they would offline; the report names each refused host, its test, its caller and the setting with its file and line, and application-test.yml overrides each with a stand-in (WireMock, an in-memory or container database) until the report is clean. The agent's first release, 0.1.0, is out: io.github.fiftieshousewife.airgap:airgap-agent, airgap-junit and airgap-gradle-plugin on Maven Central, plugin id io.github.fiftieshousewife.airgap; each task's report is build/airgap/<task>/calls.jsonl. Background: the toolkit's decision guide on running old code only where production can't be reached. Replaces the planned lesson on running old code safely."
   - key: "lesson-old-command-line-programs"
     type: "deliverable"
     title: "Lesson: old command-line programs"
@@ -475,7 +475,7 @@ items:
     title: "Lesson: contract tests between teams"
     parent: "the-planned-lessons-are-built"
     phase: "lessons"
-    horizon: "later"
+    horizon: "now"
     owner_role: "Lessons Owner"
     done_by: "ai"
     done_when:
@@ -936,6 +936,7 @@ items:
       - "A pronunciation fix or a reflowed paragraph keeps every clip"
       - "A one-time migration renamed the committed clips, with a test"
     decision_record: "docs/decisions/0027-inside-a-company-a-person-records-the-voice.md"
+    status: "done"
   - key: "a-recording-script-for-a-person"
     type: "deliverable"
     title: "A recording script for a person to voice a lesson's clips"
@@ -1007,8 +1008,8 @@ items:
     owner_role: "Lessons Owner"
     done_by: "ai"
     done_when:
-      - "Each <id>.deck-voice/ has voice.json with each clip's engine fingerprint, or recorded: <name>"
-      - "A clip is read again only when its fingerprint differs, and a recorded clip is never replaced unless asked"
+      - "Each <id>.deck-voice/voices.txt also records the voice engine's fingerprint (command, voice, speed, model checksums, package versions), and a person's name for a recorded clip"
+      - "A clip is read again when the engine's fingerprint differs, as it already is when what the voice is given changes"
       - "CI reports each deck's mix of voices"
     blocked_by:
       - "clips-named-by-the-written-narration"
