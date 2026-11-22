@@ -39,8 +39,16 @@ The videos are accurate but static. Planned, keeping every segment the same leng
 4. **Code that arrives:** `show` rolls code in line by line on camera, with an option to highlight the line the
    narration is about (for example `show File 10 20 --mark 14`).
 5. **Callouts that pop:** callouts slide in rather than appearing.
+6. **Zoom in on key code:** after a code panel appears, the camera eases in on the lines that matter (for example
+   `show File 10 20 --zoom 14-16`), holds while the narration explains them, and eases back out. In the terminal
+   recording this is a crop-and-scale over the scene's time span (ffmpeg `zoompan` or `crop` with `eval=frame`),
+   driven by markers the script leaves; in decks, the same lines are highlighted.
+7. **Captions burned into the picture:** captions are already made (`<id>.srt`, `<id>.vtt`, and a captions track in
+   the MP4), but players such as QuickTime hide that track until it is switched on. Burn them into the picture by
+   default (ffmpeg `subtitles` filter, styled by the look: font, size, a band behind the text), keeping the separate
+   track and files for platforms that show their own.
 
-Items 1 to 3 belong in `Splicer.slide` (ffmpeg: looped stills joined, `scale` with `eval=frame` then `crop` for the
+Items 1 to 3 belong in `Splicer.slide`; item 7 in the final assembly step (ffmpeg: looped stills joined, `scale` with `eval=frame` then `crop` for the
 zoom, `fade` in and out). Items 4 and 5 belong in `lessons/_shared/callout.sh`.
 
 ## Pictures
