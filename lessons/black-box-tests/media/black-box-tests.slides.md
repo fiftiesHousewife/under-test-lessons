@@ -1,7 +1,7 @@
 # Slides: black-box tests of a whole application
 
 Sources: wiremock.org and github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst; earliest versions
-on Maven Central published in 2012; the request journal and verify, from its documentation on verifying);
+on Maven Central published in 2012, its GitHub repository begun on 9 October 2011; the request journal and verify, from its documentation on verifying);
 rest-assured.io and github.com/rest-assured/rest-assured (Apache 2.0 licence; created by Johan Haleby);
 h2database.com (embedded and server modes, disk-based or in-memory databases); Michael Feathers, Working Effectively
 with Legacy Code (2004), which named characterisation tests; RFC 9110, HTTP Semantics (201 Created, 409 Conflict,

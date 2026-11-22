@@ -18,7 +18,7 @@ spoken.
    it ends.
 6. Now the strong test. It runs the whole program. System Stubs sets the environment variable to 50000 pence, gives
    the program its standard input, and catches what it prints. The exit code needs something else. System Stubs used
-   to catch System exit with Java's security manager, which Java 24 removed. So the test keeps its own exit code,
+   to catch System exit with Java's security manager, which Java 24 permanently disabled. So the test keeps its own exit code,
    which only records the number.
 7. Here is one test. It lowers the limit to 2000 pence, and gives the program three payments. It expects the first to
    be accepted, the second to stop the program, and the exit code to be 1.

@@ -50,12 +50,12 @@ Say: Why does it even matter? [pause 1600ms] The script that runs the program re
 ## intro: How System Stubs works
 - It swaps what System gives a program: environment variables, standard input and output, properties
 - In JUnit tests, mark each stub with @SystemStub; the real one is put back after every test
-- System.exit used Java's security manager, which Java 24 removed, so pass the exit in instead
+- System.exit used Java's security manager, which Java 24 permanently disabled, so pass the exit in instead
 Picture: plug
 Say: System Stubs swaps what Java's System class gives a program: its environment variables, its standard input and
   output, and its properties. In JUnit tests, you mark each stub with the System Stub annotation, and the library puts the
-  real one back after every test. It used to catch System exit too, with Java's security manager. Java 24 removed
-  the security manager, so on today's Java, pass the exit in instead.
+  real one back after every test. It used to catch System exit too, with Java's security manager. Java 24 permanently
+  disabled the security manager, so on today's Java, pass the exit in instead.
 
 Include: how-we-build
 
@@ -79,7 +79,7 @@ Say: System Stubs grew from Stefan Birkner's System Rules, a set of JUnit 4 rule
 
 ## closing: Find out more
 - https://github.com/webcompere/system-stubs — System Stubs, with its guide
-- https://openjdk.org/jeps/486 — why the security manager is gone from Java 24
+- https://openjdk.org/jeps/486 — why Java 24 permanently disabled the security manager
 - {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
 Say: To find out more, start with the System Stubs guide. The links on screen also explain why the security manager

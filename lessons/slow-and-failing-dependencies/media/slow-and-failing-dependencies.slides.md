@@ -5,7 +5,7 @@ milliseconds; random delays and chunked dribble delays; the faults EMPTY_RESPONS
 MALFORMED_RESPONSE_CHUNK, an OK status, then garbage, then the connection closed; RANDOM_DATA_THEN_CLOSE; and
 CONNECTION_RESET_BY_PEER, the connection closed so the client sees "connection reset by peer", working properly only on
 Unix-like systems); github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst); Maven Central
-(com.github.tomakehurst:wiremock, earliest versions published in 2012); the Java documentation for
+(com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); the Java documentation for
 java.net.http.HttpRequest.Builder (timeout: without one, a request blocks forever; with one, an HttpTimeoutException);
 github.com/Shopify/toxiproxy ("a TCP proxy to simulate network and system conditions for chaos and resiliency
 testing", MIT licence, used in Shopify's development and test environments since 2014; latency, timeout, reset_peer
@@ -79,12 +79,12 @@ Say: When should you test slow and failing dependencies? [pause 1600ms] For ever
 
 ## closing: Where it came from, and what comes next
 - Timeouts and circuit breakers: stability patterns from Michael Nygard's book Release It!
-- WireMock: created by Tom Akehurst, free under the Apache licence, published since 2012
+- WireMock: created by Tom Akehurst, free under the Apache licence, public since 2011
 - Next, Toxiproxy: a proxy between real services that adds delay or cuts connections
 - From Shopify, MIT licence, and it runs in a container, through Testcontainers
 Picture: book
 Say: Timeouts, and circuit breakers that stop calling a failing service for a while, are stability patterns from
-  Michael Nygard's book, Release It! WireMock was created by Tom Akehurst, and has been published since 2012. The next
+  Michael Nygard's book, Release It! WireMock was created by Tom Akehurst, and has been public since 2011. The next
   step is Toxiproxy, from Shopify. It sits between real services, such as your code and a real database, and adds
   delay, or cuts the connection. It runs in a container, so those tests go with the container tests.
 

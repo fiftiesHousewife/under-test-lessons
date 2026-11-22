@@ -57,12 +57,13 @@ Say: When should you use them? [pause 1600ms] Whenever the same check runs on se
   one idea per test.
 
 ## closing: Where they came from
-- JUnit is the programmer-friendly testing framework for Java and the Java virtual machine (JVM)
-- Parameterised tests have been part of JUnit since JUnit 5, in 2017
+- JUnit 4 ran a test once for each row of a table, with its Parameterized runner
+- JUnit 5, in 2017, made it one annotation, @ParameterizedTest, with sources such as @CsvSource
 - JUnit 6 is the current generation
 Picture: book
-Say: JUnit describes itself as the programmer-friendly testing framework for Java. Parameterised tests have been built
-  into JUnit since JUnit 5, released in 2017, and JUnit 6 is the current generation.
+Say: JUnit 4 could already run a test once for each row of a table, with its Parameterized runner. JUnit 5, released
+  in 2017, made it a single annotation, ParameterizedTest, with sources such as a CSV source for the rows. JUnit 6 is
+  the current generation.
 
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide

@@ -2,7 +2,7 @@
 
 Sources: wiremock.org and github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst; recording and
 playback described in its documentation, including recording from a target and capturing request headers);
-Maven Central (com.github.tomakehurst:wiremock, earliest versions published in 2012); RFC 2104 (HMAC, a keyed hash
+Maven Central (com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); RFC 2104 (HMAC, a keyed hash
 for signing data); Java Security Standard Algorithm Names (HmacSHA256, which every Java must provide).
 
 ## intro: What are recorded HTTP responses?
@@ -77,10 +77,10 @@ Say: When should you use them? [pause 1600ms] Whenever code calls a service you 
 
 ## closing: Where WireMock came from
 - Created by Tom Akehurst, free under the Apache licence
-- Published since 2012, and used widely across Java
+- Public since 2011, and used widely across Java
 - It also runs on its own, outside Java, for other languages
 Picture: book
-Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been published since 2012,
+Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been public since 2011,
   and is used widely across Java. It also runs on its own, outside Java, so other languages can use it too.
 
 ## closing: Find out more

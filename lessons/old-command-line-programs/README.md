@@ -8,7 +8,7 @@ environment variables and data from standard input, print their results, and end
 tells the script what happened. Tests of the pieces never check any of that. [System Stubs](https://github.com/webcompere/system-stubs)
 lets a test set environment variables, give the program its standard input and catch what it prints, without changing
 the program. One thing it can no longer do: catch `System.exit`. It did that with Java's security manager, which
-[Java 24 removed](https://openjdk.org/jeps/486), so on this build's Java 25 the one change the program needs is to be
+[Java 24 permanently disabled](https://openjdk.org/jeps/486), so on this build's Java 25 the one change the program needs is to be
 given its exit.
 
 ## Run the example

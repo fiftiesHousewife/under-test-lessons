@@ -5,7 +5,7 @@ receives; verify uses the same request matching as stubs; a failed verify throws
 shows the expected request beside the closest one received; verify with a count, such as 3) and on request matching
 (equalToJson is a semantic match, based on JsonUnit; by default a different array order or an extra field fails);
 github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst); Maven Central
-(com.github.tomakehurst:wiremock, earliest versions published in 2012); the IETF's Internet-Draft "The Idempotency-Key
+(com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); the IETF's Internet-Draft "The Idempotency-Key
 HTTP Header Field" (a request header that makes a POST safe to repeat).
 
 ## intro: What is checking outgoing requests?
@@ -72,10 +72,10 @@ Say: When should you check outgoing requests? [pause 1600ms] Whenever a request 
 
 ## closing: Where WireMock came from
 - Created by Tom Akehurst, free under the Apache licence
-- Published since 2012, and used widely across Java
+- Public since 2011, and used widely across Java
 - Its JSON matching is built on JsonUnit
 Picture: book
-Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been published since 2012,
+Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been public since 2011,
   and is used widely across Java. Its JSON matching is built on another library, JsonUnit.
 
 ## closing: Find out more
