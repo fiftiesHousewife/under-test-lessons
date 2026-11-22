@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: coverage-of-changed-code
+title: Coverage of changed code
+techniques: [mutation-testing]

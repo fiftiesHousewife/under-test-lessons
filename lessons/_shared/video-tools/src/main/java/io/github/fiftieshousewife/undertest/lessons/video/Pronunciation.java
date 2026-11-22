@@ -4,22 +4,31 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * How the voice should say words it would otherwise get wrong, such as "PIT" read as letters. Applied only to the
  * spoken narration; captions keep the written form. The file has one {@code word = how to say it} per line, and lines
- * starting with {@code #} are comments.
+ * starting with {@code #} are comments. A word may be a phrase, and may start or end with a sign, as in C++. All the
+ * words are replaced in one pass, the longest first where two could match at the same place, so a phrase wins over a
+ * word inside it, and what one rule puts in is never changed by another.
  */
 final class Pronunciation {
 
     private final Map<String, String> spoken;
+    private final Pattern words;
 
     private Pronunciation(final Map<String, String> spoken) {
         this.spoken = spoken;
+        this.words = spoken.isEmpty() ? null : Pattern.compile("(?<![\\w])(?:" + spoken.keySet().stream()
+                .sorted(Comparator.comparingInt(String::length).reversed())
+                .map(Pattern::quote)
+                .collect(Collectors.joining("|")) + ")(?![\\w])");
     }
 
     /** Reads the pronunciation file, or returns one that changes nothing if there is no file. */
@@ -38,12 +47,10 @@ final class Pronunciation {
 
     /** The text with each listed word (whole words only, matching case) replaced by how to say it. */
     String forSpeech(final String text) {
-        String result = text;
-        for (final Map.Entry<String, String> word : spoken.entrySet()) {
-            result = Pattern.compile("\\b" + Pattern.quote(word.getKey()) + "\\b").matcher(result)
-                    .replaceAll(Matcher.quoteReplacement(word.getValue()));
+        if (words == null) {
+            return text;
         }
-        return result;
+        return words.matcher(text).replaceAll(found -> Matcher.quoteReplacement(spoken.get(found.group())));
     }
 
     private static java.util.List<String> lines(final Path file) {

@@ -85,3 +85,5 @@ Outside-in = /ˈaʊtsaɪd ˈɪn/
 outside-in = /ˈaʊtsaɪd ˈɪn/
 # Stressed on what the service does, not on the service.
 old service receives and sends = /əʊld sɜːvɪs ɹɪsˈiːvz ən sˈɛndz/
+2005 = two thousand and five
+2021 = twenty twenty-one

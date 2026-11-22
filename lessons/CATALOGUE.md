@@ -31,6 +31,7 @@ and see what its existing tests really check.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Mutation testing](mutation-testing/README.md) | PIT | Java only | built |
+| [Coverage of changed code](coverage-of-changed-code/README.md): the coverage and PIT gates applied only to the classes a change touched | PIT, JaCoCo | Java only | built |
 | The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix; may become part of the overview) | none | slides only | planned |
 
 ## Record what the code does today (outside in, black box)
@@ -63,6 +64,7 @@ and see what its existing tests really check.
 |---|---|---|---|
 | [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, recorded from a stand-in, cleaned of personal data before saving, and replayed | WireMock | Java only | built |
 | [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | An in-memory fake, and an ArchUnit rule that keeps the queue's client inside the connection code | Java only | built |
+| [When an in-memory database is enough](in-memory-databases/README.md): each test gets a fresh H2 database with the real schema, where the code uses plain SQL; a check keeps vendor-only SQL out | H2 | Java only | built |
 | [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | built |
 | [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | [Checking the requests your code sends](checking-outgoing-requests/README.md): method, headers and body, not just the answers it gets | WireMock's verify | Java only | built |
@@ -106,7 +108,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 
 | Technique | Lesson | When |
 |---|---|---|
-| mutation-testing | [Mutation testing](mutation-testing/README.md) | built |
+| mutation-testing | [Mutation testing](mutation-testing/README.md), [Coverage of changed code](coverage-of-changed-code/README.md) | built |
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md), [Cleaning captured data so tests still work](cleaning-captured-data/README.md), [Capturing what an old service receives and sends](capturing-with-logbook/README.md) | built |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
@@ -154,9 +156,11 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
 | Checking the requests your code sends (`checking-outgoing-requests`) | Refunds posted to a payment provider | A WireMock stand-in answers 201 Created and the test checks only the refund id, so an amount in pounds and a missing Idempotency-Key header pass | WireMock's verify checks the method, address, headers and JSON body the client really sent | `-Pcode=today` |
 | Capturing what an old service receives and sends (`capturing-with-logbook`) | An old customer service that asks a loyalty provider for points by email | A test checks each request and answer was recorded; one header filter replaced Logbook's default, so both tokens and the email are written | No secret may be in the capture, and the whole capture matches its approved file; Logbook's Authorization and JSON email filters clean it at source | `-Pcode=today` |
+| Coverage of changed code (`coverage-of-changed-code`) | A bulk discount added to a shop's old, untested pricing module | The change's test runs every new line but checks nothing exact; 5 of 11 planted bugs survive | Both sides of each boundary and exact prices; PIT on the changed class only catches all 11 | `-Pcode=today` |
 | Cleaning captured data so tests still work (`cleaning-captured-data`) | A shop's captured day: orders and payments joined by account | Fixed-text cleaning; a test checks the named fields changed | The reports give the same answers before and after cleaning, and a detector scans every field, finding the missed note | `-Pcode=today` |
 | Finding flaky tests (`finding-flaky-tests`) | Order confirmations sent on a background thread | Sleeps a fixed 200 ms, then checks; passes on a quiet machine | Awaitility waits for the confirmation, at most 2 s; both run 5 times | `-Pcode=today` |
 | JUnit extensions (`junit-extensions`) | A shop's shared settings: prices with VAT or not | Settings set by hand once and never put back; a leak makes an innocent receipt test fail | An extension sets, restores and checks the settings around each test, failing the trade invoice test that left one changed | `-Pcode=today` |
+| When an in-memory database is enough (`in-memory-databases`) | A shop's invoice numbers | Tests share one long-lived test database full of leftover rows, so the first invoice being number 0 is never seen | Each test gets a fresh in-memory H2 database with the real schema, and checks exact numbers | `-Pcode=today` |
 | Message consumers (`message-consumers`) | A shop's card payments taken from a queue | A unit test with a hand-built message passes while the consumer acknowledges before recording, so a failed payment is lost | Example messages sent to an embedded Artemis broker; a payment is recorded even when the book is busy once, and an unreadable message ends in the dead-letter queue | `-Pcode=today` |
 | Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
 | Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
@@ -173,25 +177,18 @@ adding its row first. The four oldest lessons use their own switch names, from b
 
 The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
-1. **The overview: testing old Java code, a map.** One slides-only video and deck before all the others: what each
-   kind of test and each technique is for, as answers to the questions a team asks, with every lesson linked. Its
-   sequence is designed in [the overview lesson design](../docs/overview-lesson-design.md).
-2. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
+1. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
    secret or cause harm, and each finding is listed with where it is.
-3. **Running old code unplugged,** once the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)'s first
+2. **Running old code unplugged,** once the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)'s first
    release exists: an old Spring service's tests reach a production database because `application.yml` says so; under
    the agent each outbound call is refused as on an unplugged machine and reported (the test, the calling code, and the
    setting with its file and line), and `application-test.yml` replaces each with a stand-in until the report is clean.
    The report becomes the service's connection list. It ends by turning the
    report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules.
-4. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
+3. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
    check and listed.
-5. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
-   responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
-   Datafaker input, and compares records rather than plain text.
-6. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-7. **Coverage of changed code,** with PIT run only on what changed.
-8. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+4. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+5. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

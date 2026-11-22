@@ -38,7 +38,7 @@ actually catch; later, use the same measure to decide when new tests are strong 
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Mutation testing](lessons/mutation-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/mutation-testing.html) | [PIT](https://pitest.org/) | Two test suites with the same 100% line coverage: PIT shows one catches 5 of 13 planted bugs, the other all 13 |
-| *Coverage of changed code* | [JaCoCo](https://www.jacoco.org/), [PIT](https://pitest.org/) | *coming* |
+| [Coverage of changed code](lessons/coverage-of-changed-code/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/coverage-of-changed-code.html) | [PIT](https://pitest.org/), [JaCoCo](https://www.jacoco.org/) | PIT mutates only the class a change touched: the weak test lets 5 of 11 planted bugs through, the strong one catches all 11 |
 | *AI-written tests that pass the acceptance check* | [PIT](https://pitest.org/), the toolkit's acceptance check | *coming* |
 
 ### 2. Record what the code does today
@@ -86,6 +86,7 @@ stand-in by how much of the real system's behaviour the test depends on.
 | [Recorded HTTP responses](lessons/recorded-http-responses/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/recorded-http-responses.html) | [WireMock](https://wiremock.org/) | WireMock replays a supplier's errors, finding two bugs the real service never shows on demand |
 | [Checking the requests your code sends](lessons/checking-outgoing-requests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/checking-outgoing-requests.html) | [WireMock](https://wiremock.org/)'s verify | An amount in pounds and a missing header pass a test that checks only the answer; WireMock's verify finds both |
 | [Fake behind an interface](lessons/fake-behind-an-interface/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/fake-behind-an-interface.html) | Plain Java; [Mockito](https://site.mockito.org/) for the comparison | A mock test passes while a message is lost; an in-memory fake queue finds it |
+| [When an in-memory database is enough](lessons/in-memory-databases/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/in-memory-databases.html) | [H2](https://h2database.com) | Each test's fresh in-memory database finds the first invoice numbered 0, which a shared test database hid |
 | [Real databases in tests](lessons/real-databases-in-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) | [Testcontainers](https://testcontainers.com/), [PostgreSQL](https://www.postgresql.org/), [H2](https://www.h2database.com/) | A query passes on H2 and fails on real PostgreSQL, started by Testcontainers |
 | [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) | [Liquibase](https://www.liquibase.com/), [Testcontainers](https://testcontainers.com/) | A change that works on the developers' database fails on real PostgreSQL, before production does |
 | [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) | [Weld](https://weld.cdi-spec.org/), [weld-testing](https://github.com/weld/weld-testing) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
@@ -131,7 +132,7 @@ The lessons in italics above, in the order they will be made, from [the catalogu
 
 1. **Before you change anything:** the safety inventory, running old code unplugged (once the airgap agent's first
    release exists) and anti-patterns in existing tests.
-2. **Spring tests in slices,** **message consumers on Kafka,** **coverage of changed code,** and **AI-written tests
+2. **Spring tests in slices,** **message consumers on Kafka,** **contract tests between teams,** and **AI-written tests
    that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).

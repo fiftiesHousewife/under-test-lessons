@@ -25,4 +25,20 @@ class PronunciationTest {
                         .isEqualTo("Run pit, then jay unit. SPIT stays."),
                 () -> assertThat(Pronunciation.read(folder.resolve("missing.txt")).forSpeech("PIT")).isEqualTo("PIT"));
     }
+
+    @Test
+    void matchesWordsThatStartOrEndWithASign() throws IOException {
+        final Path file = Files.writeString(folder.resolve("pronunciations.txt"),
+                "C++ = see plus plus\n.NET = dot net\n");
+        assertThat(Pronunciation.read(file).forSpeech("Old C++ and .NET code."))
+                .isEqualTo("Old see plus plus and dot net code.");
+    }
+
+    @Test
+    void appliesEveryRuleInOnePassLongestFirst() throws IOException {
+        final Path file = Files.writeString(folder.resolve("pronunciations.txt"),
+                "record = /ɹɪkˈɔːd/\neach record = each /ɹˈɛkɔːd/\nAPI = A P I\nA P I = never\n");
+        assertThat(Pronunciation.read(file).forSpeech("Record each record, then record the API."))
+                .isEqualTo("Record each /ɹˈɛkɔːd/, then /ɹɪkˈɔːd/ the A P I.");
+    }
 }

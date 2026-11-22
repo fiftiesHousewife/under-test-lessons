@@ -1,0 +1,32 @@
+$ ./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=today
+Line coverage: 8 of 8 lines run by the tests (100%)
+Planted bugs:  11, caught 6, missed 5
+
+Caught - a test failed, as it should:
+  line 15  return 10;                               result replaced with 0 failed: largeBulkLineIsCheaper
+  line 17  if (quantity >= SMALL_BULK) {            condition reversed     failed: bulkLineIsCheaper
+  line 18  return 5;                                result replaced with 0 failed: bulkLineIsCheaper
+  line 26  return fullPrice - fullPrice * percentOf * became /             failed: smallLinePaysSomething
+  line 26  return fullPrice - fullPrice * percentOf - became +             failed: bulkLineIsCheaper and 1 more
+  line 26  return fullPrice - fullPrice * percentOf result replaced with 0 failed: smallLinePaysSomething
+
+Missed - every test that ran still passed:
+  line 14  if (quantity >= LARGE_BULK) {            boundary moved by one  passed: smallLinePaysSomething and 2 more
+  line 14  if (quantity >= LARGE_BULK) {            condition reversed     passed: smallLinePaysSomething and 2 more
+  line 17  if (quantity >= SMALL_BULK) {            boundary moved by one  passed: smallLinePaysSomething and 1 more
+  line 25  final int fullPrice = unitPrice * quanti * became /             passed: smallLinePaysSomething and 2 more
+  line 26  return fullPrice - fullPrice * percentOf / became *             passed: smallLinePaysSomething and 2 more
+
+Result: the tests caught 6 of 11 planted bugs (54%).
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:coverage-of-changed-code:changedCodeGate' (registered in build file 'lessons/coverage-of-changed-code/example/build.gradle.kts').
+> 5 of 11 planted bugs in the changed classes survived
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
