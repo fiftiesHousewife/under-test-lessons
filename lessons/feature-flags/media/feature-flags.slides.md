@@ -68,7 +68,7 @@ Say: Paul Hammant named branch by abstraction in 2007. Pete Hodgson's article on
   Computing Foundation, so code isn't tied to one flag service.
 
 ## closing: Find out more
-- https://openfeature.dev — OpenFeature, with its Java SDK
+- https://openfeature.dev — OpenFeature, with its Java software development kit (SDK)
 - https://martinfowler.com/articles/feature-toggles.html — Feature Toggles, by Pete Hodgson
 - {lessons-repo} — this lesson, to run yourself
 - {toolkit-repo} — the toolkit these lessons belong to

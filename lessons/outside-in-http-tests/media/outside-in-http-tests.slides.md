@@ -4,11 +4,11 @@ Sources: rest-assured.io and github.com/rest-assured/rest-assured (Apache 2.0 li
 versions on Maven Central, as com.jayway.restassured, published December 2010); RFC 9110, HTTP Semantics (201 Created, 400 Bad Request, Location).
 
 ## intro: What is an outside-in test?
-- It tests a running service from outside, through its API only
+- It tests a running service from outside, through its API (the interface it offers other systems) only
 - It sends real requests and checks real answers: status, headers, body
 - It knows nothing about the classes inside
 Picture: door
-Say: An outside-in test checks a running service from the outside, through its API only. It sends real requests, and
+Say: An outside-in test checks a running service from the outside, through its API only: the interface it offers to other systems. It sends real requests, and
   checks the real answers: the status code, the headers, and the body. It knows nothing about the classes inside.
 
 ## intro: Our example: a hotel booking service

@@ -52,7 +52,7 @@ Include: how-we-build
 ## closing: When to use a real database
 - For every query, stored procedure and schema change production depends on
 - Keep quick in-memory or fake tests for logic that doesn't depend on the database
-- Machines without containers still run every other test; CI runs the container tests
+- Machines without containers still run every other test; the build server (CI, continuous integration) runs the container tests
 Picture: map
 Say: When should you use a real database? [pause 1600ms] For every query, stored procedure and schema change that
   production depends on. Keep quick tests, with fakes, for logic that doesn't depend on the database. And machines

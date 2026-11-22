@@ -57,7 +57,7 @@ Say: When should you use them? [pause 1600ms] Whenever the same check runs on se
   one idea per test.
 
 ## closing: Where they came from
-- JUnit is the programmer-friendly testing framework for Java and the JVM
+- JUnit is the programmer-friendly testing framework for Java and the Java virtual machine (JVM)
 - Parameterised tests have been part of JUnit since JUnit 5, in 2017
 - JUnit 6 is the current generation
 Picture: book

@@ -24,3 +24,11 @@ A lesson has to make one technique's value obvious in a few minutes, to people w
 ## Decision Outcome
 
 Chosen: one technique per lesson, shown as today and fixed with one switch. The deliberately weak "today" code is left out of the coverage figure, since a lesson's point is that it can't be properly tested.
+
+### Exception
+
+The four oldest lessons, written before the convention, keep their own switch names: mutation testing
+(`-Psuite=weak`, where the code stays the same and the tests change), characterisation tests
+(`-Pstatement=refactored`), property-based testing (`-Psplitter=current`) and parameterised tests (`-Pvat=current`).
+Each lesson's README and the catalogue's design table name its switch. New lessons use `-Pcode=today`.
+

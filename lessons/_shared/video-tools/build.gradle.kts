@@ -4,9 +4,13 @@ plugins {
     id("io.github.fiftieshousewife.java-conventions")
 }
 
-// Tools for lesson videos: checks, captions and (to come) rendering. Kept inside lessons/ so it moves with the lessons when they get their own repo.
-//   checkVideoScripts: catches video-script mistakes that otherwise only show up as a recording that hangs.
-//   testVideoHelpers:  tests the shell helpers and render script against a stand-in for VHS (needs bash).
+// Tools for lesson videos, slides and decks. The main tasks:
+//   checkVideoScripts:  catches script mistakes before recording: waits that hang, scene and narration counts, code
+//                       panels that would show the wrong file or lines, scenes too short for their narration, slides
+//                       without sources or repository links.
+//   testVideoHelpers:   tests the in-terminal helpers against a stand-in for VHS (needs bash).
+//   renderLessonVideo:  makes a lesson's video (-Plesson=<id>; -PslidesOnly=true for just its slides).
+//   buildLessonSlides:  rebuilds every deck and slide image from the current stylesheets and pictures.
 
 dependencies {
     compileOnly(libs.spotbugs.annotations)

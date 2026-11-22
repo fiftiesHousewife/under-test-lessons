@@ -9,12 +9,30 @@ JUnit = jay unit
 reruns = re-runs
 rerun = re-run
 Maven = mayven
+# Abbreviations said as letters
+CDI = C D I
+API = A P I
+SDK = S D K
+JVM = J V M
+EJB = E J B
+JSON = jay-son
 # Years, said the way people say them
 1978 = nineteen seventy-eight
+1998 = nineteen ninety-eight
 2000 = two thousand
 2004 = two thousand and four
+2006 = two thousand and six
+2007 = two thousand and seven
+2008 = two thousand and eight
+2009 = two thousand and nine
+2010 = twenty ten
 2011 = twenty eleven
+2012 = twenty twelve
+2015 = twenty fifteen
 2017 = twenty seventeen
+2019 = twenty nineteen
+2020 = twenty twenty
+2022 = twenty twenty-two
 # Phrases the voice should say as one term, stressed on the first word (written as one word, the voice stresses it
 # like "PULL request"; with a hyphen or a space it stresses the second word)
 pull requests = pullrequests

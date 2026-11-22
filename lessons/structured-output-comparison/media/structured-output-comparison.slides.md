@@ -49,7 +49,7 @@ Say: JSONUnit takes the actual JSON, and the JSON you expect. In the expected JS
 Include: how-we-build
 
 ## closing: When to compare structure
-- Whenever a test checks JSON or XML: API responses, messages, files for other systems
+- Whenever a test checks JSON or XML: answers from web services (API responses), messages, files for other systems
 - Ignore only fields that must vary, and check they are present
 - For XML, XMLUnit does the same job
 Picture: map

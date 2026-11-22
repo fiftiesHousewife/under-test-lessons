@@ -5,7 +5,7 @@ servers); github.com/weld/weld-testing (weld-junit5); jakarta.ee (CDI, first rel
 
 ## intro: What is an embedded Jakarta EE test?
 - Old enterprise Java runs inside an application server, which wires its parts together
-- An embedded test starts just the piece it needs, such as the CDI container, inside the test
+- An embedded test starts just the piece it needs, such as the CDI (Contexts and Dependency Injection) container, inside the test
 - The parts are wired exactly as in production, without deploying anything
 Picture: server
 Say: Old enterprise Java runs inside an application server, which wires its parts together. An embedded test starts

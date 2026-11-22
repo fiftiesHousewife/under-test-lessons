@@ -1,42 +1,44 @@
 # Lessons
 
-One folder per lesson, for anyone learning a testing technique. Each lesson has:
+One folder per lesson, each teaching one testing technique on old Java code. The repository's
+[README](../README.md) groups them by when you need them; [the catalogue](CATALOGUE.md) is the plan, with the lessons
+still to come.
+
+## What a lesson contains
 
 | Part | What it is |
 |---|---|
-| `README.md` | The lesson: what the technique catches, a walk-through, how it fits the programme, common mistakes |
-| `example/` | A small runnable Gradle project (`:lessons:<id>`) with a before and an after |
-| `exercise/` | An exercise starting from the "before" state, with the "after" state as the answer (to come) |
-| `media/` | The video script (`.tape`) and narration text; videos, captions and audio are generated from them and published with releases |
+| `README.md` | The lesson: what the technique is for, the commands to run and what each shows, when to use it |
+| `example/` | A small runnable Gradle project (`:lessons:<id>`): today's code and the fix, switched by `-Pcode=today` (the four oldest lessons have their own switch), with a weak test and a strong one |
+| `media/` | The video script (`.tape`), narration, slides, and the generated slide deck (`.deck.html`); videos, captions and audio are generated from them, never edited by hand |
 
-Shared video tools are in `_shared/`: the hidden set-up, callout and narration helpers, the render script, and
-[video checks](_shared/video-tools/build.gradle.kts) that run in `./gradlew check`. They stay inside `lessons/` so
-they move with the lessons when the lessons get their own repo.
-
-The rules a planning tool applies for each technique are kept separately, in [`techniques/`](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/README.md).
+Shared pieces live in [`_shared/`](_shared/): the video tools and their checks (which run in `./gradlew check`), the
+in-terminal helpers, the slide styles, themes, pictures and figures, the shared "how we build" slide, and the
+pronunciation list for the voice.
 
 To add a lesson, follow [the write-a-technique-lesson skill](../.github/skills/write-a-technique-lesson/SKILL.md).
-Words follow [GLOSSARY.md](https://github.com/fiftiesHousewife/under-test/blob/main/GLOSSARY.md).
+Words follow [GLOSSARY.md](../GLOSSARY.md). The rules for when each technique applies belong to the toolkit, in its
+[`techniques/`](https://github.com/fiftiesHousewife/under-test/tree/main/techniques) folder.
 
-The full list of planned lessons, and the order they'll be made in, is in [CATALOGUE.md](CATALOGUE.md).
+## All lessons
 
-| Lesson | Technique rules | Video |
+| Lesson | The toolkit's technique | Slide deck |
 |---|---|---|
-| [Mutation testing](mutation-testing/README.md) | [mutation-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/mutation-testing/technique.yaml) | Script ready |
-| [Characterisation tests](characterisation-tests/README.md) | [characterisation-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml) | Script ready |
-| [Property-based testing](property-based-testing/README.md) | [property-based-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/property-based-testing/technique.yaml) | Script ready |
-| [Parameterised tests](parameterised-tests/README.md) | – | Script ready |
-| [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | [refactoring-for-testability](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/refactoring-for-testability/technique.yaml) | Script ready |
-| [Comparing structured output](structured-output-comparison/README.md) | [snapshot-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/snapshot-testing/technique.yaml) | Script ready |
-| [Recorded HTTP responses](recorded-http-responses/README.md) | [recorded-http-responses](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/recorded-http-responses/technique.yaml) | Script ready |
-| [Outside-in HTTP tests](outside-in-http-tests/README.md) | [business-rule-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/business-rule-tests/technique.yaml) | Script ready |
-| [Fake behind an interface](fake-behind-an-interface/README.md) | [fake-behind-interface](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/fake-behind-interface/technique.yaml) | Script ready |
-| [Nested tests](nested-tests/README.md) | – | Script ready |
-| [Differential testing](differential-testing/README.md) | [differential-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml) | Script ready |
-| [Feature flags](feature-flags/README.md) | [feature-flags](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/feature-flags/technique.yaml) | Script ready |
-| [Dynamic tests](dynamic-tests/README.md) | – | Script ready |
-| [Batch file-in, file-out](batch-file-in-file-out/README.md) | [batch-file-in-file-out-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out-tests/technique.yaml) | Script ready |
-| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | [embedded-jakarta-ee-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/embedded-jakarta-ee-tests/technique.yaml) | Script ready |
-| [Real databases in tests](real-databases-in-tests/README.md) | [testcontainers](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/testcontainers/technique.yaml) | Script ready |
-| [Database changes with Liquibase](database-changes-with-liquibase/README.md) | [testcontainers](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/testcontainers/technique.yaml) | Script ready |
-| [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | Script ready |
+| [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) |
+| [Batch file-in, file-out](batch-file-in-file-out/README.md) | [batch-file-in-file-out-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out-tests/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) |
+| [Characterisation tests](characterisation-tests/README.md) | [characterisation-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/characterisation-tests.html) |
+| [Database changes with Liquibase](database-changes-with-liquibase/README.md) | [testcontainers](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/testcontainers/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) |
+| [Differential testing](differential-testing/README.md) | [differential-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) |
+| [Dynamic tests](dynamic-tests/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/dynamic-tests.html) |
+| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | [embedded-jakarta-ee-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/embedded-jakarta-ee-tests/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) |
+| [Fake behind an interface](fake-behind-an-interface/README.md) | [fake-behind-interface](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/fake-behind-interface/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/fake-behind-an-interface.html) |
+| [Feature flags](feature-flags/README.md) | [feature-flags](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/feature-flags/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/feature-flags.html) |
+| [Mutation testing](mutation-testing/README.md) | [mutation-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/mutation-testing/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/mutation-testing.html) |
+| [Nested tests](nested-tests/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) |
+| [Outside-in HTTP tests](outside-in-http-tests/README.md) | [business-rule-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/business-rule-tests/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/outside-in-http-tests.html) |
+| [Parameterised tests](parameterised-tests/README.md) | – | [deck](https://fiftieshousewife.github.io/under-test-lessons/parameterised-tests.html) |
+| [Property-based testing](property-based-testing/README.md) | [property-based-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/property-based-testing/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) |
+| [Real databases in tests](real-databases-in-tests/README.md) | [testcontainers](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/testcontainers/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) |
+| [Recorded HTTP responses](recorded-http-responses/README.md) | [recorded-http-responses](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/recorded-http-responses/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/recorded-http-responses.html) |
+| [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | [refactoring-for-testability](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/refactoring-for-testability/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) |
+| [Comparing structured output](structured-output-comparison/README.md) | [snapshot-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/snapshot-testing/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) |

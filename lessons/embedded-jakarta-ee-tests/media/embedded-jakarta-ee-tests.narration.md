@@ -4,7 +4,7 @@ One item per scene of [embedded-jakarta-ee-tests.tape](embedded-jakarta-ee-tests
 have their own narration, in [embedded-jakarta-ee-tests.slides.md](embedded-jakarta-ee-tests.slides.md). Written to be
 spoken.
 
-1. Step one. Add Weld's JUnit support, and the CDI programming interface, to the version catalogue.
+1. Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.
 2. Step two. The lesson compiles against the CDI interface, which the application server provides in production. And
    its tests use Weld.
 3. Here are two tax rates. The standard rate, twenty percent, is marked standard. A reduced rate, five percent, was
