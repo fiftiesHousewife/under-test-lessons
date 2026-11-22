@@ -31,8 +31,8 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #59 | [Lesson: the safety inventory](https://github.com/fiftiesHousewife/under-test-lessons/issues/59) | deliverable | Lessons Owner | ai | – |
 | #60 | [Lesson: anti-patterns in existing tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/60) | deliverable | Lessons Owner | ai | – |
 | #28 | [Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)](https://github.com/fiftiesHousewife/under-test-lessons/issues/28) | deliverable | Lessons Owner | ai | – |
+| #97 | [Every lesson has an exercise whose answer the build checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/97) | deliverable | Lessons Owner | ai | – |
 | #15 | [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15) | deliverable | Lessons Owner | ai | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) |
-| #97 | [Every lesson has an exercise whose answer the build checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/97) | deliverable | Lessons Owner | ai | [Every lesson switches with -Pcode=today](https://github.com/fiftiesHousewife/under-test-lessons/issues/88) |
 | #58 | [Lesson: recording current behaviour from real traffic, with Keploy](https://github.com/fiftiesHousewife/under-test-lessons/issues/58) | deliverable | Lessons Owner | ai | – |
 | #32 | [Lesson: AI-written tests that pass the acceptance check](https://github.com/fiftiesHousewife/under-test-lessons/issues/32) | deliverable | Lessons Owner | ai | – |
 | #33 | [Lesson: stand-in commands for shell scripts](https://github.com/fiftiesHousewife/under-test-lessons/issues/33) | deliverable | Lessons Owner | ai | – |
@@ -47,7 +47,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #63 | [Differential testing also replays saved requests offline against two running builds](https://github.com/fiftiesHousewife/under-test-lessons/issues/63) | deliverable | Lessons Owner | ai | – |
 | #64 | [Comparing structured output shows keyed substitutes need no ignore rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/64) | deliverable | Lessons Owner | ai | – |
 | #41 | [The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI](https://github.com/fiftiesHousewife/under-test-lessons/issues/41) | deliverable | Lessons Owner | ai | – |
-| #88 | [Every lesson switches with -Pcode=today](https://github.com/fiftiesHousewife/under-test-lessons/issues/88) | deliverable | Lessons Owner | ai | – |
 | #102 | [The cleaning lesson says what the EDPS v SRB ruling does and doesn't change](https://github.com/fiftiesHousewife/under-test-lessons/issues/102) | deliverable | Lessons Owner | person | – |
 | #93 | [Notes the review asked for in lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/93) | deliverable | Lessons Owner | ai | – |
 | #98 | [Each README says what to use on older Java](https://github.com/fiftiesHousewife/under-test-lessons/issues/98) | deliverable | Lessons Owner | ai | – |
