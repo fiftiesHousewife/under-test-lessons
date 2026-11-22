@@ -22,7 +22,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | in progress |
 | [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | in progress |
 | [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | in progress |
-| Batch file-in, file-out: a job run on synthetic input, output compared row by row | spring-batch-test, Datafaker | Java only | wave 2 |
+| [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders; spring-batch-test for Spring jobs | Java only | in progress |
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | in progress |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | in progress |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright | Browser | wave 3 |
@@ -77,7 +77,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | 2 |
 | feature-flags | [Feature flags](feature-flags/README.md) | 1 |
 | embedded-jakarta-ee-tests | Old Jakarta EE code tested without an application server | 2 |
-| batch-file-in-file-out-tests | Batch file-in, file-out | 2 |
+| batch-file-in-file-out-tests | [Batch file-in, file-out](batch-file-in-file-out/README.md) | 1 |
 | testcontainers | Real databases in tests | 2 |
 | contract-testing | Contract tests between teams | 2 |
 | database-unit-tests | Stored procedures tested inside the database | 2 |
