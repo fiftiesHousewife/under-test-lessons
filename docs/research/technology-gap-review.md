@@ -32,7 +32,7 @@ Two facts frame everything below (both verified):
 |---|---|---|---|---|
 | mutation-testing | pitest, strykerjs | Built: Mutation testing (ready) | PIT (via build-logic) | **StrykerJS has no lesson**, though the lesson's header line names it (verified) |
 | snapshot-testing | approvaltests-java, xmlunit, jsonunit, datacompy | Built: Comparing structured output | JSONUnit only | **XMLUnit: the README says "JSON and XML" but the example has no XML at all and no XMLUnit dependency** (verified). ApprovalTests is taught only in the characterisation lesson. datacompy (a Python library) has no lesson |
-| characterisation-tests | approvaltests-java, mockito, system-stubs, logcaptor | Built: Characterisation tests | ApprovalTests | System Stubs: planned (wave 1, blocked on a forbidden-API exception). **LogCaptor: no lesson.** Mockito is not used in this lesson |
+| characterisation-tests | approvaltests-java, mockito, system-stubs, logcaptor | Built: Characterisation tests | ApprovalTests | System Stubs: planned (next, blocked on a forbidden-API exception). **LogCaptor: no lesson.** Mockito is not used in this lesson |
 | property-based-testing | jetcheck, fast-check | Built | jetCheck | **fast-check has no lesson**; the backlog item promises both |
 | architecture-rules | archunit | Built | ArchUnit | None |
 | refactoring-for-testability | openrewrite | Built: Replacing hard-wired dependencies | Mockito | **Tool differs: no OpenRewrite.** The backlog item says "OpenRewrite passes in a Clock"; the lesson refactors a singleton by hand and only *mentions* `Clock` (verified) |
@@ -40,19 +40,19 @@ Two facts frame everything below (both verified):
 | business-rule-tests | junit5, assertj | Built, mapped to Outside-in HTTP tests | REST Assured, Jackson | **Mismatch of intent:** the technique is "specification tests for journeys" with an expert; the backlog asks for "an expert's examples as a table-driven test". The mapped lesson is about testing through the API. The Gherkin-versus-Allium pilot in the backlog has no lesson either |
 | fake-behind-interface | archunit | Built | Mockito (the "before") | **The ArchUnit rule the catalogue and backlog promise ("and an ArchUnit rule to keep it that way") is not in the lesson** (no ArchUnit dependency, no mention in README; verified) |
 | differential-testing | keploy, wiremock, approvaltests | Built | none (a loop over inputs) | **Tool differs, and contradicts the technique:** the technique says "Not Diffy" (archived; only fork non-commercial), but the lesson README, slides and deck recommend Diffy and link `opendiffy/diffy` (verified, `differential-testing/README.md` lines 39 and 44, slides lines 4, 60, 68). The backlog item "replay recorded requests against old and new versions" is not what the lesson does |
-| automatic-test-generation | randoop | Planned (wave 2) | – | Randoop is not on Maven Central (stated in the technique); Java 25 support unverified |
+| automatic-test-generation | randoop | Planned (later) | – | Randoop is not on Maven Central (stated in the technique); Java 25 support unverified |
 | feature-flags | openfeature | Built | OpenFeature SDK | The constraint "flags past their removal date fail the build" is only advice in the README ("remove the flag"); no check is shown |
 | embedded-jakarta-ee-tests | arquillian, openejb-core, weld-junit5, artemis-junit-5, simple-jndi | Built | Weld, weld-junit5 | **Only CDI is covered.** JMS (Artemis), JNDI (Simple-JNDI), EJB (OpenEJB) and Arquillian have no lesson; the backlog item is "an EJB with a JMS queue and a JNDI data source" |
 | batch-file-in-file-out-tests | spring-batch-test, datafaker, datacompy, bats-file | Built | none (JUnit temporary folders) | **None of the four named tools is used.** The lesson compares "line by line"; the technique's constraint says "not a plain text diff". spring-batch-test, Datafaker and the injected-clock scheduler constraint are untaught |
 | testcontainers | testcontainers | Built: Real databases in tests; Database changes with Liquibase | Testcontainers 2.0.5, PostgreSQL | Good. The database-unit-tests constraint "Liquibase update-testing-rollback" is not shown in the Liquibase lesson (no rollback anywhere; verified). Flyway, also named, has no lesson |
-| contract-testing | pact-jvm, pact-js, pact-broker, pact-broker-cli | Planned (wave 2) | – | No Pact in `libs.versions.toml` yet |
-| database-unit-tests | utplsql, tsqlt, pgtap, testcontainers | Planned (wave 2) | – | – |
-| ai-written-tests | ai-assistant, acceptance-check | Planned (wave 2) | – | The `acceptanceCheck` task the lesson needs does not exist yet |
-| stand-in-commands | bats-core, shellcheck, kcov | Planned (wave 3) | – | Catalogue lists bats-mock, which the technique does not name |
-| server-rendered-ui-tests | playwright, htmlunit | Planned (wave 3) | – | – |
-| traffic-record-and-replay | keploy | Planned (wave 3) | – | Lesson-only by design |
-| machine-state-checks | goss | Planned (wave 3) | – | – |
-| post-release-checks | harness | Planned (wave 3) | – | "harness" reads as a commercial product name; the toolkit should name a product only as an option (`AGENTS.md`) |
+| contract-testing | pact-jvm, pact-js, pact-broker, pact-broker-cli | Planned (later) | – | No Pact in `libs.versions.toml` yet |
+| database-unit-tests | utplsql, tsqlt, pgtap, testcontainers | Planned (later) | – | – |
+| ai-written-tests | ai-assistant, acceptance-check | Planned (later) | – | The `acceptanceCheck` task the lesson needs does not exist yet |
+| stand-in-commands | bats-core, shellcheck, kcov | Planned (last) | – | Catalogue lists bats-mock, which the technique does not name |
+| server-rendered-ui-tests | playwright, htmlunit | Planned (last) | – | – |
+| traffic-record-and-replay | keploy | Planned (last) | – | Lesson-only by design |
+| machine-state-checks | goss | Planned (last) | – | – |
+| post-release-checks | harness | Planned (last) | – | "harness" reads as a commercial product name; the toolkit should name a product only as an option (`AGENTS.md`) |
 
 Summary of the coverage gap:
 
@@ -76,7 +76,7 @@ Summary of the coverage gap:
   lesson exists.
 - `CATALOGUE.md` contradicts itself: the "Every toolkit technique" table marks characterisation-tests and
   property-based-testing "ready", while the section tables mark them "in progress". It puts batch, embedded Jakarta EE
-  and feature flags in wave 1; the backlog puts batch and embedded Jakarta EE at horizon "later".
+  and feature flags in the next lessons; the backlog puts batch and embedded Jakarta EE at horizon "later".
 - Backlog lesson items missing from the catalogue: "The testing pyramid", "Running old code safely on your own machine",
   "Checking what batch jobs write (bats-file)", "Running script tests in CI". Catalogue lessons missing from the backlog:
   Database changes with Liquibase, Checking the requests your code sends (MockServer), Mockito well used, Old
@@ -337,7 +337,7 @@ And extend the Liquibase lesson with **rollback tested on the real engine**.
 
 ### 2.14 Stored-procedure tests (utPLSQL, tSQLt, pgTAP)
 
-Planned (wave 2). Notes for when it is built:
+Planned (later). Notes for when it is built:
 
 - pgTAP (PostgreSQL licence) on the existing `postgres:17-alpine` pattern is the only one that can be taught on an
   openly licensed engine; it needs pgTAP installed in the image (a custom image or an init script that builds it).
@@ -369,7 +369,7 @@ property test that every record is exactly the record length.
 
 ### 2.16 Spring Boot test slices (and old Spring)
 
-**Why:** the catalogue has "Spring tests" in wave 2 with Docker. Most of it does not need Docker. Legacy estates span
+**Why:** the catalogue has "Spring tests" in later lessons with Docker. Most of it does not need Docker. Legacy estates span
 Spring 3 XML configuration to Spring Boot 4; full `@SpringBootTest` everywhere is the main cause of slow suites.
 
 Tools: Spring Boot test (Apache-2.0): `@WebMvcTest`, `@DataJpaTest`, `@JsonTest`, `@RestClientTest`, `MockMvcTester`;
@@ -397,7 +397,7 @@ in the build, and drop MockServer from the plan unless the check says otherwise.
 
 ### 2.18 Mockito usage
 
-Planned ("Mockito well used", wave 1). Points it must cover for this estate:
+Planned ("Mockito well used", the next lessons). Points it must cover for this estate:
 
 - Mockito 5's inline mock maker is the replacement for PowerMock/JMockit (`mockStatic`, `mockConstruction`), as the
   characterisation technique says, and should be shown, with the warning that it is a stepping stone to injection.
@@ -495,10 +495,10 @@ Planned ("Mockito well used", wave 1). Points it must cover for this estate:
    Diffy; Comparing structured output has no XML; Fake behind an interface lacks its ArchUnit rule; Recorded HTTP
    responses lacks recording and personal-data removal). Cheapest work, and today they teach the opposite of the rules
    in two places.
-2. **Mockito well used** (already wave 1): every legacy repo needs it first, it replaces PowerMock, and doing it forces
+2. **Mockito well used** (already the next lessons): every legacy repo needs it first, it replaces PowerMock, and doing it forces
    the `-javaagent` fix into build-logic for Java 25.
 3. **Spring tests in slices, Java-only part first**: the largest share of the estate is Spring, `@SpringBootTest`
-   everywhere is the main cause of slow suites, and most of it needs no Docker (split it from wave 2).
+   everywhere is the main cause of slow suites, and most of it needs no Docker (split it from later lessons).
 4. **Finding flaky tests and their causes, with Awaitility**: decision guides 0043/0044 make five clean runs a gate for
    mutation testing and AI-written tests; nothing teaches it.
 5. **Testing a message consumer on a real broker (embedded Artemis, then Kafka)**: messaging is a named application type
