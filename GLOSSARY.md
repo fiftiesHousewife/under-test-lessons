@@ -22,6 +22,8 @@ the words the lessons themselves use.
 | **code panel** | A piece of a file shown in a video or deck, with its line numbers and a label saying what it is. | snippet |
 | **callout** | A short boxed sentence after a result, saying what it means. | caption (captions are the subtitles) |
 | **captions** | The subtitles made from the narration. | subtitles (in prose) |
+| **voice clip** | One short sound file of narration read aloud: one per slide of a deck, and one per scene for the video. Each is named by what it says, so a clip is made once and kept until its words change. | audio file, sound bite |
+| **kept output** | What a live run printed, saved as text in `media/<id>.outputs/` so the deck can show it and the checks can hold the README to it. | log, snapshot |
 | **live run** | A command run on camera, whose real output the video shows. | demo |
 | **look** | The stylesheet and picture set that slides, decks and videos share. | theme (except for the files in `themes/`), skin |
 | **picture set** | A folder of SVG pictures, found by name; the ink set is drawn for black and white. | icon set |

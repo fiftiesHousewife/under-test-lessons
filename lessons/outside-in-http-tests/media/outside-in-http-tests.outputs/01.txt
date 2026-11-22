@@ -2,25 +2,11 @@ $ ./gradlew :lessons:outside-in-http-tests:test -Pcode=today
 BookingApiTest > bookingTwoNightsCreatesABooking() FAILED
     java.lang.AssertionError: 1 expectation failed.
     Expected status code <201> but was <200>.
-
 BookingApiTest > bookingNoNightsIsRefused() FAILED
     java.lang.AssertionError: 1 expectation failed.
     Expected status code <400> but was <200>.
-
 BookingRulesTest > twoNightsCostTwiceTheNightlyRate() PASSED
-
 3 tests completed, 2 failed
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:outside-in-http-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 2 of 3 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 2s

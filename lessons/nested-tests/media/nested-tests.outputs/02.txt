@@ -1,21 +1,12 @@
 $ ./gradlew :lessons:nested-tests:test
 A loan > when requested > can be approved PASSED
-
 A loan > when requested > cannot be repaid PASSED
-
 A loan > when repaid > cannot be repaid again PASSED
-
 A loan > when repaid > cannot be approved PASSED
-
 A loan > when approved > cannot be approved again PASSED
-
 A loan > when approved > can be repaid PASSED
-
 FlatLoanTest > approvingRequestedLoanApprovesIt() PASSED
-
 FlatLoanTest > repayingRepaidLoanIsRefused() PASSED
-
 FlatLoanTest > newLoanIsRequested() PASSED
-
 FlatLoanTest > repayingApprovedLoanRepaysIt() PASSED
 All 10 tests passed.

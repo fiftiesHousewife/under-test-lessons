@@ -130,8 +130,8 @@ in every new test, and when reviewing tests written by people or by AI.
 
 The lessons in italics above, in the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
-1. **Before you change anything:** the safety inventory, running old code unplugged (once the airgap agent's first
-   release exists) and anti-patterns in existing tests.
+1. **Before you change anything:** the safety inventory, running old code unplugged with the airgap agent, and
+   anti-patterns in existing tests.
 2. **Spring tests in slices,** **message consumers on Kafka,** **contract tests between teams,** and **AI-written tests
    that pass the acceptance check.**
 

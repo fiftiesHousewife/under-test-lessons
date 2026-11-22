@@ -1,7 +1,5 @@
 $ ./gradlew :lessons:embedded-jakarta-ee-tests:test
 CheckoutInContainerTest > theReducedRateIsStillThereForThingsThatNeedIt() PASSED
-
 CheckoutInContainerTest > addsVatAtTheStandardRate() PASSED
-
 CheckoutByHandTest > addsVatAtTheStandardRate() PASSED
 All 3 tests passed.

@@ -1,17 +1,10 @@
 $ ./gradlew :lessons:recorded-http-responses:test
 CredentialsTest > noRecordingKeptWithTheTestsHoldsACredential() PASSED
-
 CredentialsTest > theCleanerDropsEveryCredentialInBothDirections() PASSED
-
 RecordedSupplierTest > unknownPostcodeGivesNoTown() PASSED
-
 RecordedSupplierTest > outageSaysTheSupplierIsUnavailable() PASSED
-
 RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
-
 RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
-
 RecordingTest > cleanedFirstTheFilesHoldSubstitutes() PASSED
-
 RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
 All 8 tests that ran passed; 1 skipped.

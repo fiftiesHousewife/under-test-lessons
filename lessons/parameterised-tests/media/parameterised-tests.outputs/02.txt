@@ -1,25 +1,14 @@
 $ ./gradlew :lessons:parameterised-tests:test
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 0 pence net gives 0 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 1 pence net gives 0 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 2 pence net gives 0 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 3 pence net gives 1 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 4 pence net gives 1 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 5 pence net gives 1 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 998 pence net gives 200 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 1000 pence net gives 200 pence VAT PASSED
-
 RoundingDownVatTest > roundsDownWhereItShouldRoundUp() PASSED
-
 VatCopyPasteTest > vatOnTenPounds() PASSED
-
 VatCopyPasteTest > vatOnOnePound() PASSED
-
 VatCopyPasteTest > noVatOnNothing() PASSED
 All 12 tests passed.

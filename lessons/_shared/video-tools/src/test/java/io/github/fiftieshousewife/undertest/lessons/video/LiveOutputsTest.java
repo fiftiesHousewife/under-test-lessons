@@ -70,6 +70,22 @@ class LiveOutputsTest {
     }
 
     @Test
+    void failsKeptOutputTallerThanOneScreen() throws IOException {
+        final Path outputs = Files.createDirectories(media.resolve("demo.outputs"));
+        Files.writeString(outputs.resolve("01.txt"), "$ echo line 24 failed\n" + "a test passed\n".repeat(36));
+
+        assertThat(LiveOutputs.problems(new Media(root, "demo"))).extracting(Problem::message)
+                .anyMatch(message -> message.contains("prints 37 rows") && message.contains("one screen holds 36"));
+    }
+
+    @Test
+    void countsTheRowsAnOutputTakesOnScreen() {
+        assertAll(
+                () -> assertThat(LiveOutputs.rowsOnScreen(List.of("one", "two"))).isEqualTo(3),
+                () -> assertThat(LiveOutputs.rowsOnScreen(List.of("x".repeat(151), ""))).isEqualTo(4));
+    }
+
+    @Test
     void failsALiveCommandWithoutItsOutput() {
         final List<Problem> problems = LiveOutputs.problems(new Media(root, "demo"));
 

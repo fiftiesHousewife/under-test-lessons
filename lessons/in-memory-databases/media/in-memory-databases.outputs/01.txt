@@ -3,32 +3,16 @@ FreshDatabaseTest > invoicesAreNumberedOneTwoThree() FAILED
     org.opentest4j.AssertionFailedError: [invoice numbers]
     expected: [1, 2, 3]
      but was: [0, 1, 2]
-
 FreshDatabaseTest > eachTestStartsWithNoInvoices() PASSED
-
 FreshDatabaseTest > theShopsFirstInvoiceIsNumberOne() FAILED
     org.opentest4j.AssertionFailedError: [the first invoice's number]
     expected: 1
      but was: 0
-
 PortableSqlTest > theCheckFindsSqlThatDependsOnTheDatabase() PASSED
-
 PortableSqlTest > theCodeTestedOnH2UsesOnlyPortableSql() PASSED
-
 SharedDatabaseTest > newInvoicesAreNumberedInTurn() PASSED
-
 SharedDatabaseTest > anIssuedInvoiceIsKept() PASSED
-
 7 tests completed, 2 failed
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:in-memory-databases:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 2 of 7 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.

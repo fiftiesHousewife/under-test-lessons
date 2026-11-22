@@ -1,49 +1,26 @@
 $ ./gradlew :lessons:parameterised-tests:test -Pvat=current
 RoundingDownVatTest > roundsDownWhereItShouldRoundUp() PASSED
-
 VatCopyPasteTest > vatOnTenPounds() PASSED
-
 VatCopyPasteTest > vatOnOnePound() PASSED
-
 VatCopyPasteTest > noVatOnNothing() PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 0 pence net gives 0 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 1 pence net gives 0 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 2 pence net gives 0 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 3 pence net gives 1 pence VAT FAILED
     org.opentest4j.AssertionFailedError:
     expected: 1
      but was: 0
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 4 pence net gives 1 pence VAT FAILED
     org.opentest4j.AssertionFailedError:
     expected: 1
      but was: 0
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 5 pence net gives 1 pence VAT PASSED
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 998 pence net gives 200 pence VAT FAILED
     org.opentest4j.AssertionFailedError:
     expected: 200
      but was: 199
-
 VatParameterisedTest > roundsVatToTheNearestPenny(int, int) > 1000 pence net gives 200 pence VAT PASSED
-
 12 tests completed, 3 failed
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:parameterised-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 3 of 12 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 3s

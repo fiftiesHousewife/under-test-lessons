@@ -81,5 +81,6 @@ catalogue (both tables, status "built") and the README's group table.
 - [ ] Today's code fails only the strong test, with a one-line message naming the problem; the fix passes everything.
 - [ ] `./gradlew check` passes (PMD and Checkstyle included); every README command was run.
 - [ ] Narration fits: each scene's pause covers (words / 2.6) * 1.35 + 1.5 seconds.
+- [ ] Each live run's output fits one screen, 36 rows with its command (`checkVideoScripts` checks it).
 - [ ] Deck rebuilt and committed; lesson listed in `lessons/README.md`, the catalogue and the README.
 - [ ] No account names, personal paths or package names on screen; checked against the glossary.

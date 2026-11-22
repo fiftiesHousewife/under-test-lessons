@@ -1,5 +1,4 @@
 $ ./gradlew :lessons:architecture-rules:test
 LayerRulesTest > onlyTheServiceLayerUsesStorage() PASSED
-
 OrderSummaryPageTest > bothPagesCountTheOrders() PASSED
 All 2 tests passed.

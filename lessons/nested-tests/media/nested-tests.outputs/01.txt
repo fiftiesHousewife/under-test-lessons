@@ -1,38 +1,17 @@
 $ ./gradlew :lessons:nested-tests:test -Pcode=today
 FlatLoanTest > approvingRequestedLoanApprovesIt() PASSED
-
 FlatLoanTest > repayingRepaidLoanIsRefused() PASSED
-
 FlatLoanTest > newLoanIsRequested() PASSED
-
 FlatLoanTest > repayingApprovedLoanRepaysIt() PASSED
-
 A loan > when requested > can be approved PASSED
-
 A loan > when requested > cannot be repaid FAILED
     java.lang.AssertionError:
     Expecting code to raise a throwable.
-
 A loan > when repaid > cannot be repaid again PASSED
-
 A loan > when repaid > cannot be approved PASSED
-
 A loan > when approved > cannot be approved again PASSED
-
 A loan > when approved > can be repaid PASSED
-
 10 tests completed, 1 failed
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:nested-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 1 of 10 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 2s

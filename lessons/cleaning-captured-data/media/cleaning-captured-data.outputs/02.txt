@@ -1,17 +1,10 @@
 $ ./gradlew :lessons:cleaning-captured-data:test
 NothingPersonalLeftTest > cleanedCaptureHasNothingThatLooksPersonal() PASSED
-
 ReportsStillWorkTest > ordersAreStillGroupedByCustomer() PASSED
-
 ReportsStillWorkTest > ordersStillMatchPaymentsByAccount() PASSED
-
 CleanedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
-
 DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeCleaning() PASSED
-
 DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
-
 DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
-
 SyntheticCleaningTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
 All 8 tests passed.

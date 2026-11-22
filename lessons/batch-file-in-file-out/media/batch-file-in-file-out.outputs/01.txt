@@ -1,30 +1,19 @@
 $ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today
+KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
+PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
 WholeJobTest > aCleanedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=6, total=427.14]
      but was: null
-
 WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=12, total=17148.88]
      but was: null
-
-KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
-
-PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
-
-4 tests completed, 2 failed
-
-FAILURE: Build failed with an exception.
-
+SettlementTotalsTest > aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
+SettlementTotalsTest > aFreshStepStartsFromNothing() PASSED
+6 tests completed, 2 failed
 * What went wrong:
 Execution failed for task ':lessons:batch-file-in-file-out:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 2 of 4 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.
+> 2 of 6 tests failed. Report: build/reports/tests/test/index.html

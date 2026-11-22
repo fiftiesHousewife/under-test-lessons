@@ -179,8 +179,8 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
 
 1. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
    secret or cause harm, and each finding is listed with where it is.
-2. **Running old code unplugged,** once the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)'s first
-   release exists: an old Spring service's tests reach a production database because `application.yml` says so; under
+2. **Running old code unplugged,** with the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)
+   (released, 0.1.0): an old Spring service's tests reach a production database because `application.yml` says so; under
    the agent each outbound call is refused as on an unplugged machine and reported (the test, the calling code, and the
    setting with its file and line), and `application-test.yml` replaces each with a stand-in until the report is clean.
    The report becomes the service's connection list. It ends by turning the

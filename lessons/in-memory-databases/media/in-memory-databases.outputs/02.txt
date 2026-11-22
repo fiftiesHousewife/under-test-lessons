@@ -1,15 +1,9 @@
 $ ./gradlew :lessons:in-memory-databases:test
 FreshDatabaseTest > invoicesAreNumberedOneTwoThree() PASSED
-
 FreshDatabaseTest > eachTestStartsWithNoInvoices() PASSED
-
 FreshDatabaseTest > theShopsFirstInvoiceIsNumberOne() PASSED
-
 PortableSqlTest > theCheckFindsSqlThatDependsOnTheDatabase() PASSED
-
 PortableSqlTest > theCodeTestedOnH2UsesOnlyPortableSql() PASSED
-
 SharedDatabaseTest > newInvoicesAreNumberedInTurn() PASSED
-
 SharedDatabaseTest > anIssuedInvoiceIsKept() PASSED
 All 7 tests passed.

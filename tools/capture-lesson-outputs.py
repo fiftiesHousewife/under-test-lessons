@@ -6,7 +6,7 @@
 
 Each live command (run_live or run_with_notes in lessons/<id>/media/<id>.tape) runs from the repository root, as a
 recording runs it, and its output is kept in lessons/<id>/media/<id>.outputs/01.txt, 02.txt and so on, the command on
-the first line. Colour codes, notices the JVM or a sandbox adds, and Gradle's closing time line are left out. A run
+the first line. It goes through lessons/_shared/screen-output.pl, as the video's run_live does. Colour codes, notices the JVM or a sandbox adds, and Gradle's closing time line are left out. A run
 that couldn't start, or whose output still shows a personal path after paths are made machine-independent, isn't kept:
 the script stops and says why.
 
@@ -19,6 +19,7 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SCREEN_FILTER = os.path.join(ROOT, "lessons", "_shared", "screen-output.pl")
 LIVE = re.compile(r"^Type(?:@\S+)?\s+[`\"](?:run_live|run_with_notes)\s+\"([^\"]+)\"")
 ESCAPE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 NOISE = ("Picked up JAVA_TOOL_OPTIONS", "Caught exception: Could not", "BUILD SUCCESSFUL in ", "BUILD FAILED in ")
@@ -34,6 +35,11 @@ def commands(lesson):
     tape = os.path.join(ROOT, "lessons", lesson, "media", lesson + ".tape")
     with open(tape, encoding="utf-8") as f:
         return [m.group(1) for m in (LIVE.match(line.strip()) for line in f) if m]
+
+
+def on_screen(output):
+    """The output as the video's run_live shows it: through lessons/_shared/screen-output.pl, the same filter."""
+    return subprocess.run(["perl", SCREEN_FILTER], input=output, stdout=subprocess.PIPE, text=True, check=True).stdout
 
 
 def clean(output):
@@ -62,7 +68,7 @@ def capture(lesson):
     for index, command in enumerate(commands(lesson), 1):
         run = subprocess.run(["bash", "-c", command], cwd=ROOT, env=environment, stdin=subprocess.DEVNULL,
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, check=False)
-        output = clean(run.stdout)
+        output = clean(on_screen(run.stdout))
         reason = problem(output)
         if reason:
             message = f"`{command}` didn't run properly, so its output isn't kept: {reason}"

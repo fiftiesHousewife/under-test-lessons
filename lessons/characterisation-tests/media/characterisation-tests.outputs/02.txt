@@ -1,13 +1,9 @@
 $ ./gradlew :lessons:characterisation-tests:test -Pstatement=refactored
 RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
-
 RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
-
 StatementCharacterisationTest > printsTheSameStatementAsToday() FAILED
     java.lang.Error at StatementCharacterisationTest.java:25
-
 StatementWeakTest > printsSomething() PASSED
-
 4 tests completed, 1 failed
 Approvals: the output differs from its approved file (- approved, + received):
   - 02 Mar  Overdraft fee               -25  balance    -25
@@ -21,15 +17,6 @@ Approvals: the output differs from its approved file (- approved, + received):
   + 20 Mar  Car insurance              -340  balance   2055
   - Closing balance: 2030
   + Closing balance: 2055
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:characterisation-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 1 of 4 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.

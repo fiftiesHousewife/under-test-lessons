@@ -1,9 +1,6 @@
 $ ./gradlew :lessons:black-box-tests:test
 OrderServiceTest > anOrderWithoutStockIsRefusedAndNothingIsWritten() PASSED
-
 OrderServiceTest > anOrderIsReservedAnsweredAndKept() PASSED
-
 OrderTakingTest > anOrderWithStockIsPlacedAndKept() PASSED
-
 OrderTakingTest > anOrderWithoutStockIsRefusedAndNotKept() PASSED
 All 4 tests passed.

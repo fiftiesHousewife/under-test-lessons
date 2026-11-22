@@ -1,9 +1,6 @@
 $ ./gradlew :lessons:property-based-testing:test
 SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() PASSED
-
 FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() PASSED
-
 SplitterExampleTest > givesTheOddPennyToSomeone() PASSED
-
 SplitterExampleTest > splitsEvenly() PASSED
 All 4 tests passed.

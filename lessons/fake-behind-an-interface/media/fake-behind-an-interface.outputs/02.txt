@@ -1,9 +1,6 @@
 $ ./gradlew :lessons:fake-behind-an-interface:test
 FakeQueueTest > bigOrderReachesTheWarehouseAndTheFraudCheck() PASSED
-
 FakeQueueTest > smallOrderSkipsTheFraudCheck() PASSED
-
 MockedQueueTest > bigOrderSendsBothMessagesAndCommits() PASSED
-
 QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() PASSED
 All 4 tests passed.

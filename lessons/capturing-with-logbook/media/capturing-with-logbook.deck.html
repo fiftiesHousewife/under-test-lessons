@@ -168,14 +168,14 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  62  jetty = &quot;12.1.15&quot;
  63  httpclient5 = &quot;5.6.5&quot;
    ⋮
- 76  [libraries]
+ 69  [libraries]
    ⋮
-127  logbook-core = { module = &quot;org.zalando:logbook-core&quot;, version.ref = &quot;logbook&quot; }
-128  logbook-json = { module = &quot;org.zalando:logbook-json&quot;, version.ref = &quot;logbook&quot; }
-129  logbook-servlet = { module = &quot;org.zalando:logbook-servlet&quot;, version.ref = &quot;logbook&quot; }
-130  logbook-httpclient5 = { module = &quot;org.zalando:logbook-httpclient5&quot;, version.ref = &quot;logbook&quot; }
-131  jetty-ee11-servlet = { module = &quot;org.eclipse.jetty.ee11:jetty-ee11-servlet&quot;, version.ref = &quot;jetty&quot; }
-132  httpclient5 = { module = &quot;org.apache.httpcomponents.client5:httpclient5&quot;, version.ref = &quot;httpclient5&quot; }</pre></figure></main><aside class="notes">Step one. Add Logbook to the version catalogue, with one version for its 4 modules. The old service runs on Jetty 12, and calls the loyalty provider with Apache's HTTP client, so those are added too.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/42834aa8c812cd85.m4a"></audio></section>
+120  logbook-core = { module = &quot;org.zalando:logbook-core&quot;, version.ref = &quot;logbook&quot; }
+121  logbook-json = { module = &quot;org.zalando:logbook-json&quot;, version.ref = &quot;logbook&quot; }
+122  logbook-servlet = { module = &quot;org.zalando:logbook-servlet&quot;, version.ref = &quot;logbook&quot; }
+123  logbook-httpclient5 = { module = &quot;org.zalando:logbook-httpclient5&quot;, version.ref = &quot;logbook&quot; }
+124  jetty-ee11-servlet = { module = &quot;org.eclipse.jetty.ee11:jetty-ee11-servlet&quot;, version.ref = &quot;jetty&quot; }
+125  httpclient5 = { module = &quot;org.apache.httpcomponents.client5:httpclient5&quot;, version.ref = &quot;httpclient5&quot; }</pre></figure></main><aside class="notes">Step one. Add Logbook to the version catalogue, with one version for its 4 modules. The old service runs on Jetty 12, and calls the loyalty provider with Apache's HTTP client, so those are added too.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/42834aa8c812cd85.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><p class="scene-text">Step two. Add the modules the lesson needs: Logbook's core, its JSON filters, its servlet filter, and its hook for Apache's HTTP client 5.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      implementation(libs.logbook.core)</mark>
 <mark> 11      implementation(libs.logbook.json)</mark>
@@ -249,13 +249,10 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  39      }</pre></figure></main><aside class="notes">Now, the strong tests. The first lists every secret the capture holds: the caller's token, the loyalty provider's key, and the customer's email. The list must be empty. The second compares the whole capture with its approved file, line for line.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/138c87106e2f80f1.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The capture holds the secrets</h1><div class="rule"></div><p class="scene-text">We run the tests against today's capture. The weak test passes. Both strong tests fail. The capture holds all 3 secrets, and the approval summary shows where. Both Authorization headers carry the real tokens, and both bodies carry the customer's real email address.</p><p class="callout">Everything was recorded, so the weak test passed. So were both tokens and the customer's email, as they are.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:capturing-with-logbook:test -Pcode=today</pre><pre class="output">ApprovedCaptureTest &gt; matchesTheApprovedCapture() FAILED
     java.lang.AssertionError: the capture differs from its approved file
-
 ApprovedCaptureTest &gt; writesNoSecrets() FAILED
     java.lang.AssertionError: [secrets in the capture]
     Expecting empty but was: [&quot;the caller's token&quot;, &quot;the customer's email&quot;, &quot;the loyalty provider's key&quot;]
-
 CaptureRecordsTest &gt; recordsWhatTheServiceReceivesAndSends() PASSED
-
 3 tests completed, 2 failed
 Approvals: the output differs from its approved file (- approved, + received):
   - Authorization: XXX
@@ -266,18 +263,9 @@ Approvals: the output differs from its approved file (- approved, + received):
   + {&quot;email&quot;:&quot;jo.bloggs@example.com&quot;}
   - {&quot;id&quot;:&quot;C-1001&quot;,&quot;email&quot;:&quot;customer@example.invalid&quot;,&quot;tier&quot;:&quot;gold&quot;,&quot;points&quot;:120}
   + {&quot;id&quot;:&quot;C-1001&quot;,&quot;email&quot;:&quot;jo.bloggs@example.com&quot;,&quot;tier&quot;:&quot;gold&quot;,&quot;points&quot;:120}
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:capturing-with-logbook:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-&gt; 2 of 3 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-&gt; Run with --stacktrace option to get the stack trace.
-&gt; Run with --info or --debug option to get more log output.
-&gt; Run with --scan to get full insights from a Build Scan (powered by Develocity).
-&gt; Get more help at https://help.gradle.org.</pre></figure></main><aside class="notes">We run the tests against today's capture. The weak test passes. Both strong tests fail. The capture holds all 3 secrets, and the approval summary shows where. Both Authorization headers carry the real tokens, and both bodies carry the customer's real email address.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/b34957e2655dcfc2.m4a"></audio></section>
+&gt; 2 of 3 tests failed. Report: build/reports/tests/test/index.html</pre></figure></main><aside class="notes">We run the tests against today's capture. The weak test passes. Both strong tests fail. The capture holds all 3 secrets, and the approval summary shows where. Both Authorization headers carry the real tokens, and both bodies carry the customer's real email address.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/b34957e2655dcfc2.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The filtered capture</h1><div class="rule"></div><p class="scene-text">Now the filtered capture. It keeps Logbook's Authorization filter beside its own, and a JSON body filter replaces every email field with an address that can't be anyone's. We run the same tests. Every test passes.</p><p class="callout">Logbook's filters clean each message before it is written, and the capture matches its approved file.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the filtered capture</figcaption><pre> 19      public Logbook logbook(final HttpLogWriter writer) {
  20          return Logbook.builder()
  21                  .headerFilter(HeaderFilters.removeHeaders(&quot;Date&quot;, &quot;Host&quot;, &quot;User-Agent&quot;, &quot;Content-Length&quot;))
@@ -286,9 +274,7 @@ Execution failed for task ':lessons:capturing-with-logbook:testFailures' (regist
  24                  .sink(new DefaultSink(new CaptureFormat(), writer))
  25                  .build();
  26      }</pre><pre class="command">$ ./gradlew :lessons:capturing-with-logbook:test</pre><pre class="output">ApprovedCaptureTest &gt; matchesTheApprovedCapture() PASSED
-
 ApprovedCaptureTest &gt; writesNoSecrets() PASSED
-
 CaptureRecordsTest &gt; recordsWhatTheServiceReceivesAndSends() PASSED
 All 3 tests passed.
 Approvals: every output matches its approved file.</pre></figure></main><aside class="notes">Now the filtered capture. It keeps Logbook's Authorization filter beside its own, and a JSON body filter replaces every email field with an address that can't be anyone's. We run the same tests. Every test passes.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/0bf54625a3c49b77.m4a"></audio></section>

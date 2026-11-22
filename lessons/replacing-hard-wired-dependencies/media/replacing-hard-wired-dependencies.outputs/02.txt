@@ -1,5 +1,4 @@
 $ ./gradlew :lessons:replacing-hard-wired-dependencies:test
 InvoiceTest > anEmptyInvoiceCostsNothing() PASSED
-
 InvoiceTest > convertsTheTotalRoundingToTheNearestCent() PASSED
 All 2 tests passed.

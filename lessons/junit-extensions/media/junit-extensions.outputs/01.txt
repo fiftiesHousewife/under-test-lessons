@@ -1,30 +1,15 @@
 $ ./gradlew :lessons:junit-extensions:test -Pcode=today
 GuardedSettingsTest > tradeInvoiceShowsPriceWithoutVat() FAILED
     java.lang.AssertionError: The test left a shop setting changed: prices.include.vat was true, now false
-
 GuardedSettingsTest > shopReceiptShowsPriceWithVat() PASSED
-
 HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() PASSED
-
 HandSetUpTest > shopReceiptShowsPriceWithVat() FAILED
     org.opentest4j.AssertionFailedError:
     expected: "Car seat  £120.00"
      but was: "Car seat  £100.00 + VAT"
-
 PricesTest > aCreditIsWrittenWithItsSignInFront() PASSED
-
 PricesTest > vatIsRoundedToTheNearestPenny() PASSED
-
 6 tests completed, 2 failed
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:junit-extensions:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 2 of 6 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.

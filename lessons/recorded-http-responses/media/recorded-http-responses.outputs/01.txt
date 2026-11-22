@@ -1,6 +1,5 @@
 $ ./gradlew :lessons:recorded-http-responses:test -Pcode=today
 CredentialsTest > noRecordingKeptWithTheTestsHoldsACredential() PASSED
-
 CredentialsTest > theCleanerDropsEveryCredentialInBothDirections() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
     	java.lang.AssertionError: [credentials left in the recording]
@@ -10,20 +9,15 @@ CredentialsTest > theCleanerDropsEveryCredentialInBothDirections() FAILED
         ""Cookie"",
         ""X-Api-Key"",
         ""Set-Cookie""]
-
 RecordedSupplierTest > unknownPostcodeGivesNoTown() FAILED
     java.lang.AssertionError:
     Expecting an empty Optional but was containing value: ""
-
 RecordedSupplierTest > outageSaysTheSupplierIsUnavailable() FAILED
     org.opentest4j.AssertionFailedError:
     expected: "SupplierUnavailableException: the postcode supplier answered 503"
      but was: "StreamReadException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')"
-
 RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
-
 RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
-
 RecordingTest > cleanedFirstTheFilesHoldSubstitutes() FAILED
     org.gradle.internal.exceptions.DefaultMultiCauseException: Multiple Failures (2 failures)
     	java.lang.AssertionError: [personal data in the saved recordings]
@@ -31,19 +25,8 @@ RecordingTest > cleanedFirstTheFilesHoldSubstitutes() FAILED
     	org.opentest4j.AssertionFailedError: [names in the saved recordings]
     expected: ["person-ea08c4400378ace1", "person-ea08c4400378ace1"]
      but was: ["Ada Lovelace", "Ada Lovelace"]
-
 RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
-
 9 tests completed, 4 failed, 1 skipped
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:recorded-http-responses:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 4 of 9 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.

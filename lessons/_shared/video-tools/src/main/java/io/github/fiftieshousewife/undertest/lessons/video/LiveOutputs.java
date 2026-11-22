@@ -22,6 +22,9 @@ import java.util.regex.Pattern;
 final class LiveOutputs {
 
     static final String FOLDER = ".outputs";
+    /** What the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar. */
+    static final int SCREEN_ROWS = 36;
+    static final int SCREEN_COLUMNS = 150;
     /** A home folder in a path: a person's name or account, which must never be shown. */
     private static final Pattern PERSONAL_PATH = Pattern.compile("/Users/[^/\\s]+|/home/[^/\\s]+|[A-Z]:\\\\Users\\\\");
     private static final Pattern LINE_NAMED = Pattern.compile("(?i)\\blines?\\s+(\\d+)\\b");
@@ -73,7 +76,16 @@ final class LiveOutputs {
         return problems;
     }
 
-    /** Each live command has its output kept, and no kept output shows a personal path. */
+    /**
+     * The rows a kept output takes in the video's terminal: its command's line, then each line, a long one wrapping
+     * onto more rows.
+     */
+    static int rowsOnScreen(final List<String> output) {
+        return 1 + output.stream().mapToInt(line -> Math.max(1, (line.length() + SCREEN_COLUMNS - 1) / SCREEN_COLUMNS))
+                .sum();
+    }
+
+    /** Each live command has its output kept, fitting one screen, and no kept output shows a personal path. */
     private static List<Problem> keptOutputs(final Media media, final List<String> commands) {
         final Path tape = media.file(".tape");
         final List<Problem> problems = new ArrayList<>();
@@ -86,6 +98,12 @@ final class LiveOutputs {
             if (output.isEmpty()) {
                 problems.add(new Problem(tape, "live command " + (i + 1) + " (" + commands.get(i) + ") has no kept"
                         + " output for decks; run python3 tools/capture-lesson-outputs.py " + media.safeLesson()));
+            }
+            final int rows = rowsOnScreen(output);
+            if (rows > SCREEN_ROWS) {
+                problems.add(new Problem(tape, "live command " + (i + 1) + " (" + commands.get(i) + ") prints " + rows
+                        + " rows, counting its command and lines that wrap, but one screen holds " + SCREEN_ROWS
+                        + "; make it print less: fewer tests in the run, or shorter failure messages"));
             }
         }
         return problems;

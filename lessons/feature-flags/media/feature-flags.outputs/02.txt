@@ -1,7 +1,5 @@
 $ ./gradlew :lessons:feature-flags:test
 BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new shipping rules switched on: false PASSED
-
 BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new shipping rules switched on: true PASSED
-
 DefaultFlagsTest > smallBasketPaysForDeliveryAndBigBasketDoesNot() PASSED
 All 3 tests passed.

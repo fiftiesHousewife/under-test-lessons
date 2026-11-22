@@ -1,25 +1,12 @@
 $ ./gradlew :lessons:black-box-tests:test -Pcode=today
 OrderServiceTest > anOrderWithoutStockIsRefusedAndNothingIsWritten() PASSED
-
 OrderServiceTest > anOrderIsReservedAnsweredAndKept() FAILED
     org.opentest4j.AssertionFailedError: [rows written]
     expected: ["O-1001 C-42 W-881 PEN-01 3"]
      but was: []
-
 OrderTakingTest > anOrderWithStockIsPlacedAndKept() PASSED
-
 OrderTakingTest > anOrderWithoutStockIsRefusedAndNotKept() PASSED
-
 4 tests completed, 1 failed
-
-FAILURE: Build failed with an exception.
-
 * What went wrong:
 Execution failed for task ':lessons:black-box-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
 > 1 of 4 tests failed. Report: build/reports/tests/test/index.html
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights from a Build Scan (powered by Develocity).
-> Get more help at https://help.gradle.org.

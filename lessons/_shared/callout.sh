@@ -83,7 +83,7 @@ note() {
 
 #   run_with_notes "<command>" "<note>" "<note>" ...
 # Shows the command as if typed, runs it, and prints each note (dimmed) a few seconds apart while it works, so viewers
-# know what is happening during a slow step. Then prints the command's output.
+# know what is happening during a slow step. Then prints the command's output, through screen-output.pl as run_live does.
 # The command runs with no terminal input (</dev/null): a background job that reads the terminal is stopped by the
 # shell and never finishes. The work happens in a subshell, which has no job control, so no "[1] 1234" messages appear.
 run_with_notes() {
@@ -104,7 +104,7 @@ run_with_notes() {
       printf '\033[2;37m%s\033[0m\n' "$note"
     done
     wait "$job"
-    cat "$output"
+    perl "$_VIDEO_SHARED/screen-output.pl" <"$output"
     rm -f "$output"
   )
 }
@@ -231,16 +231,18 @@ _show_pattern() {
 }
 
 #   run_live "<command>"
-# Shows the command as typed and runs it live, on camera, with its own progress output. It records how long the run
+# Shows the command as typed and runs it live, on camera, with its own progress output, through screen-output.pl, which
+# takes out Gradle's padding so a run fits one screen. It records how long the run
 # took (one line per run, in seconds) in the file named by VIDEO_TIMINGS, so captions and voice can be timed to the
 # real recording. Call it off-camera and Show straight after its Enter.
+_VIDEO_SHARED="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 run_live() {
   _erase_typed run_live "$@"
   _gap_before live
   printf '$ %s\n' "$1"
   local start end
   start=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
-  bash -c "$1" </dev/null
+  bash -c "$1" </dev/null 2>&1 | perl "$_VIDEO_SHARED/screen-output.pl"
   end=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
   [ -n "${VIDEO_TIMINGS:-}" ] && perl -e "printf \"%.3f\\n\", $end - $start" >>"$VIDEO_TIMINGS"
   _VIDEO_LAST=live

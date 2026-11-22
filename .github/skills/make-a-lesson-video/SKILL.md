@@ -48,7 +48,11 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
 - **Space separates kinds of text:** one blank line between blocks of different kinds (captions, code panels, commands,
   callouts) and none between consecutive caption lines. The helpers do this themselves; start each scene with `scene`
   (not `clear`) so the first block has no blank line above it, and use `gap` if you need one by hand.
-- **Each scene fits on one screen** (about 36 rows by 150 columns at this size). Keep build output to lines that fit.
+- **Each scene fits on one screen** (36 rows by 150 columns at this size). A live run's output must fit too, and
+  `checkVideoScripts` fails one that doesn't, counting its command and the lines that wrap. `run_live` shows output
+  through `lessons/_shared/screen-output.pl`, which takes out Gradle's blank lines and general advice; if a run is
+  still too tall, make it print less: fewer tests in the run, or failure messages that name the difference in a line
+  or two (an `isEqualTo` on a list, rather than a long matcher's report).
 - **Two looks:** slides and decks follow the look set in `gradle.properties` (by default the newspaper theme, black ink
   on newsprint, with the hand-drawn figures); the terminal recording keeps its own colours above, which carry meaning.
   A matching black-and-white terminal theme is still to come.

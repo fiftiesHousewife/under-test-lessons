@@ -1,13 +1,8 @@
 $ ./gradlew :lessons:slow-and-failing-dependencies:test
 SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [1] fault = CONNECTION_RESET_BY_PEER PASSED
-
 SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [2] fault = EMPTY_RESPONSE PASSED
-
 SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [3] fault = MALFORMED_RESPONSE_CHUNK PASSED
-
 SupplierFaultTest > slowSupplierCostsTheShopOneTimeout() PASSED
-
 StockAnswerTest > supplierWithStockGivesTheUnits() PASSED
-
 StockAnswerTest > supplierOutageSaysTheSupplierIsUnavailable() PASSED
 All 6 tests passed.
