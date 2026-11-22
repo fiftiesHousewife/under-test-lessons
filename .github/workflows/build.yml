@@ -29,9 +29,9 @@ jobs:
         run: python3 tools/capture-lesson-outputs.py
       - name: Run all checks
         shell: bash
-        run: ./gradlew check -PtoolkitDir=.toolkit 2>&1 | tee check.log; exit "${PIPESTATUS[0]}"
+        run: ./gradlew check --continue -PtoolkitDir=.toolkit 2>&1 | tee check.log; exit "${PIPESTATUS[0]}"
       # Gradle's "What went wrong" sections as annotations, readable on the run's page and through the API without
       # downloading the log.
       - name: Say why the checks failed
         if: failure()
-        run: python3 tools/build-failure-annotations.py check.log
+        run: python3 tools/build-failure-annotations.py check.log lessons
