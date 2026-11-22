@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@v5
       - name: Gather the decks and an index page
         run: python3 tools/publish-decks.py _site
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
       - id: deployment
