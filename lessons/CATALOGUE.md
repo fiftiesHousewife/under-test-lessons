@@ -9,6 +9,17 @@ toolkit, [under-test](https://github.com/fiftiesHousewife/under-test/tree/main/t
 **Needs** says what recording a lesson's video takes beyond Java and Gradle: lessons marked *Java only* can be made
 anywhere; the rest wait for that tool to be available where videos are recorded.
 
+## Before you change anything
+
+The first steps the toolkit takes with any old repo: find what could do harm, run it where it can't reach production,
+and see what its existing tests really check.
+
+| Lesson | Tools | Needs | Status |
+|---|---|---|---|
+| The safety inventory: an old repo searched, before anything runs, for what could reach production, leak a secret or cause harm (addresses in settings, credentials, scheduled jobs, calls that send money or messages), each listed with where it is | the toolkit's safety inventory | Java only | planned |
+| Running old code unplugged: an old Spring service run under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), every outbound call refused and reported, then a test profile written until the report is clean (asked for by the toolkit's guide to running old code only where production can't be reached) | the airgap agent, Spring Boot test profiles | Java only | planned: once the agent's first release exists |
+| Anti-patterns in existing tests: an old repo's tests read for what makes them untrustworthy (tests that check nothing, sleep, depend on order or on the network, or are switched off), each found by a check and listed | the toolkit's anti-pattern checks | Java only | planned |
+
 ## Measure how far tests can be trusted
 
 | Lesson | Tools | Needs | Status |
@@ -27,6 +38,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
 | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
+| Capturing what an old service receives and sends: [Logbook](https://github.com/zalando/logbook)'s servlet filter and client interceptor record real requests and responses, with the `Authorization` header and customers' emails filtered out at source, and the examples kept as approval tests | Logbook (MIT), ApprovalTests | Java 17 or later | planned |
+| Cleaning captured data so tests still work: one capture cleaned three ways (fixed text, keyed substitutes, seeded synthetic values); keyed substitutes keep joins and repeated values working, and a detector check fails on a field the cleaning missed; includes what counts as anonymous, and why recordings stay in internal repositories | the JDK's HMAC, Datafaker | Java only | planned |
 | Recording current behaviour from real traffic: [Keploy](https://keploy.io/) records a small Spring Boot service's API calls and its MySQL and HTTP calls, then replays them as tests with its own stand-ins | Keploy (native, no admin rights), WireMock to compare | Keploy binary | later: after the toolkit's Keploy trial |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | last: needs other tools |
 
@@ -51,7 +64,6 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 |---|---|---|---|
 | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | built |
 | Old command-line programs: environment variables, `System.exit` and standard input | System Stubs | Java only | next |
-| Running old code unplugged: an old Spring service run under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), every outbound call refused and reported, then a test profile written until the report is clean (asked for by the toolkit's guide to running old code only where production can't be reached) | the airgap agent, Spring Boot test profiles | Java only | planned: early, once the agent's first release exists |
 
 ## Write better tests
 
@@ -134,30 +146,39 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
 1. **The overview: testing old Java code, a map.** One slides-only video and deck before all the others: what each
    kind of test and each technique is for, as answers to the questions a team asks, with every lesson linked. Its
    sequence is designed in [the overview lesson design](../docs/overview-lesson-design.md).
-2. **Running old code unplugged,** once the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)'s first
+2. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
+   secret or cause harm, and each finding is listed with where it is.
+3. **Running old code unplugged,** once the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)'s first
    release exists: an old Spring service's tests reach a production database because `application.yml` says so; under
    the agent each outbound call is refused as on an unplugged machine and reported (the test, the calling code, and the
    setting with its file and line), and `application-test.yml` replaces each with a stand-in until the report is clean.
-   The report becomes the service's connection list.
-3. **Behaviour written down as examples** (the toolkit's business-rule-tests technique): rules an expert writes down as
+   The report becomes the service's connection list. It ends by turning the
+   report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules.
+4. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
+   check and listed.
+5. **Capturing what an old service receives and sends,** with Logbook: the before logs an `Authorization` header and a
+   customer's email; the after filters them at source and keeps the examples as approval tests.
+6. **Cleaning captured data so tests still work:** fixed text breaks the tests, keyed substitutes keep joins and repeated
+   values working, and a detector check fails on a field the cleaning missed.
+7. **Behaviour written down as examples** (the toolkit's business-rule-tests technique): rules an expert writes down as
    named examples, checked against today's code; JUnit tables first, Cucumber only where business people read or
    write the examples themselves. Takes over business-rule-tests from the outside-in HTTP lesson.
-4. **Black-box tests of a whole application:** start the application as it ships, drive it only through its external
+8. **Black-box tests of a whole application:** start the application as it ships, drive it only through its external
    interfaces (HTTP, messages, files), stand in for everything it calls (WireMock for services, a container database),
    and check what comes out: responses, outgoing calls, rows written. The approach that joins outside-in HTTP tests,
    batch file-in file-out and characterisation tests, and the first tests an untested application usually gets.
-5. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+9. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
-6. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
+10. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
    up for JDK 25.
-7. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-8. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
-9. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-10. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-11. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
-12. **Coverage of changed code,** with PIT run only on what changed.
-13. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+11. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+12. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
+13. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+14. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+15. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
+16. **Coverage of changed code,** with PIT run only on what changed.
+17. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 
