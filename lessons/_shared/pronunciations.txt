@@ -1,5 +1,8 @@
 # How the lesson voice should say words it would otherwise get wrong: word = how to say it.
-# Applied to the spoken narration only; captions keep the written form. Whole words, matching case.
+# One list for every lesson: applied to all spoken narration, in scenes and on slides; captions keep the written form.
+# Whole words, matching case. To check a fix before rendering, see how the voice will stress it:
+#   build/voice/venv/bin/python -c "from kokoro_onnx.tokenizer import Tokenizer; print(Tokenizer().phonemize('open a pullrequest', 'en-gb'))"
+# The main stress is marked ˈ before its syllable.
 PIT = pit
 JaCoCo = jacoco
 JUnit = jay unit
@@ -12,6 +15,7 @@ Maven = mayven
 2004 = two thousand and four
 2011 = twenty eleven
 2017 = twenty seventeen
-# Phrases the voice should say as one term
-pull requests = pull-requests
-pull request = pull-request
+# Phrases the voice should say as one term, stressed on the first word (written as one word, the voice stresses it
+# like "PULL request"; with a hyphen or a space it stresses the second word)
+pull requests = pullrequests
+pull request = pullrequest
