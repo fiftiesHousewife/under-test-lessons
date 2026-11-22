@@ -18,7 +18,7 @@ public final class PersonalDataDetector {
 
     private static final Pattern EMAIL = Pattern.compile("[\\w.+-]+@([\\w.-]+)");
     private static final String TEST_DOMAIN = "example.invalid";
-    private static final Map<String, Pattern> SHAPES = shapes();
+    private static final Map<String, Pattern> SHAPES = personalNumbers();
 
     private final List<Pattern> knownNames;
 
@@ -27,13 +27,17 @@ public final class PersonalDataDetector {
         this.knownNames = knownNames.stream().distinct().map(PersonalDataDetector::anyCase).toList();
     }
 
-    /** Each kind of personal number, and its shape. Digits next to letters count: an IBAN's digits follow its bank code. */
-    private static Map<String, Pattern> shapes() {
+    /**
+     * Each kind of personal number and its shape. Digits next to letters count, as an IBAN's follow its bank code, but
+     * a number marked {@code TEST}, as made-up account numbers are, is allowed, as the test email domain is.
+     */
+    private static Map<String, Pattern> personalNumbers() {
         final Map<String, Pattern> shapes = new LinkedHashMap<>();
-        shapes.put("a card or account number", Pattern.compile("(?<!\\d)\\d{8,19}(?!\\d)"));
+        shapes.put("a card or account number", Pattern.compile("(?<!\\d)(?<!TEST)\\d{8,19}(?!\\d)"));
         shapes.put("an IBAN", Pattern.compile("\\b[A-Z]{2}\\d{2}[A-Z0-9]{11,30}\\b"));
         shapes.put("a sort code", Pattern.compile("(?<!\\d)\\d{2}-\\d{2}-\\d{2}(?![\\d-])"));
-        shapes.put("a phone number", Pattern.compile("(?<![\\w+])(?:\\+44 ?|0)\\d{2,4}[ -]?\\d{3,4}[ -]?\\d{3,4}(?!\\d)"));
+        shapes.put("a phone number",
+                Pattern.compile("(?<![\\w+])(?:\\+44 ?|0)\\d{2,4}[ -]?\\d{3,4}[ -]?\\d{3,4}(?!\\d)"));
         shapes.put("a postcode", Pattern.compile("\\b[A-Z]{1,2}\\d[A-Z\\d]? ?\\d[A-Z]{2}\\b"));
         shapes.put("a National Insurance number",
                 Pattern.compile("\\b[A-CEGHJ-PR-TW-Z]{2} ?\\d{2} ?\\d{2} ?\\d{2} ?[A-D]\\b"));

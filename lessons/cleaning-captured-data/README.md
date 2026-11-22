@@ -38,7 +38,9 @@ each customer's orders and list the accounts not yet settled.
   is the "after": the reports give the same answers on the capture before and after cleaning.
 - [`NothingPersonalLeftTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/cleaning/NothingPersonalLeftTest.java)
   is the detector check: [`PersonalDataDetector`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/cleaning/PersonalDataDetector.java)
-  looks in every field for an email address outside `example.com`, a run of 8 or more digits, or a customer's name.
+  looks in every field for an email address outside `example.invalid`, a card or account number, an IBAN, a sort
+  code, a UK phone number, a postcode, a National Insurance number, or a customer's name. It finds known shapes only:
+  a capture it passes still needs its cleaning rules reviewed, and is still treated as personal data.
   [`DetectorFindsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/cleaning/DetectorFindsTest.java)
   first shows it finds each kind in the capture before cleaning: a detector that finds nothing proves nothing.
 
@@ -48,7 +50,7 @@ One order, cleaned each way:
 |---|---|---|---|---|
 | Captured | Grace Okafor | grace.okafor@inbox.test | 40335512 | Please email grace.okafor@inbox.test if late |
 | Today's cleaning | REMOVED | REMOVED | REMOVED | Please email grace.okafor@inbox.test if late |
-| Keyed substitutes | Customer JBMFDCAAIF | fpnfioblcp@example.com | ACCT-KJDALGOPAI | REMOVED |
+| Keyed substitutes | Customer JBMFDCAAIFKPFLLJ | fpnfioblcpcdgacg@example.invalid | ACCT-KJDALGOPAIOLIOKG | REMOVED |
 
 ## What counts as anonymous
 
@@ -86,6 +88,6 @@ why it can live in a public repository with a key written into its tests.
   and [anonymisation](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/anonymisation/)
 - [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC, the keyed hash behind the substitutes
 - [Datafaker](https://www.datafaker.net), and its guide to repeatable results with a seed
-- [RFC 2606](https://www.rfc-editor.org/rfc/rfc2606), which reserves `example.com` and `.test` for examples and tests
+- [RFC 2606](https://www.rfc-editor.org/rfc/rfc2606), which reserves `.invalid` and `.test` for names that must never reach anyone, and for tests
 - The toolkit's [characterisation-tests technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml),
   whose captured inputs and approved outputs this cleaning keeps safe

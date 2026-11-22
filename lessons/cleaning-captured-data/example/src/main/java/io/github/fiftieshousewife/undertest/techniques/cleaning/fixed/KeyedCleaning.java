@@ -23,7 +23,7 @@ public final class KeyedCleaning implements Cleaning {
         return new Capture(
                 capture.orders().cleaned(Map.of(
                         "customer", name -> "Customer " + substitute.of(name),
-                        "email", email -> substitute.of(email).toLowerCase(Locale.ROOT) + "@example.com",
+                        "email", email -> substitute.of(email).toLowerCase(Locale.ROOT) + "@example.invalid",
                         "account", account -> "ACCT-" + substitute.of(account),
                         "note", REMOVE)),
                 capture.payments().cleaned(Map.of(

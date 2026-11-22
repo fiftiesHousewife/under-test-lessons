@@ -38,7 +38,7 @@ public final class SyntheticCleaning implements Cleaning {
 
     private static String emailFor(final Faker faker) {
         final String name = faker.name().firstName() + "." + faker.name().lastName();
-        return name.toLowerCase(Locale.ROOT).replaceAll("[^a-z.]", "") + "@example.com";
+        return name.toLowerCase(Locale.ROOT).replaceAll("[^a-z.]", "") + "@example.invalid";
     }
 
     private static UnaryOperator<String> remembered(final Supplier<String> madeUp) {

@@ -9,5 +9,9 @@ CleanedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
 
 DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeCleaning() PASSED
 
+DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
+
+DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
+
 SyntheticCleaningTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
-All 6 tests passed.
+All 8 tests passed.

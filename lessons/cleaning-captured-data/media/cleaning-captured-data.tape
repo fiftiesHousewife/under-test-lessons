@@ -134,7 +134,7 @@ Sleep 300ms
 Type@1ms `show NothingPersonalLeftTest 11 16 "the detector check"`
 Enter
 Sleep 300ms
-Type@1ms `show PersonalDataDetector 45 57 "what looks personal" --zoom 47-55`
+Type@1ms `show PersonalDataDetector 65 79 "what looks personal" --zoom 67-77`
 Enter
 Sleep 300ms
 Show

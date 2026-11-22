@@ -21,14 +21,14 @@ their own narration, in [cleaning-captured-data.slides.md](cleaning-captured-dat
    expects the same answers. If cleaning merges two customers, or breaks the join between the files, the answers
    differ.
 8. The second strong test is a detector. It scans every field of the cleaned capture, including fields nobody wrote a
-   rule for. It looks for an email address, a long run of digits such as a card or account number, and the name of
-   any customer in the capture.
+   rule for. It looks for email addresses, the shapes of bank, card, phone, postcode and National Insurance numbers,
+   and any customer's name.
 9. We run the tests against today's cleaning. The weak test passes. But with every customer called removed,
    the report sees one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence,
    instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the
    notes.
 10. The fix uses keyed substitutes. HMAC, a keyed hash, mixes each value with a secret key. We turn the start
-   of the result into 10 letters. The same value and key always give the same letters, so a customer keeps one
+   of the result into 16 letters. The same value and key always give the same letters, so a customer keeps one
    substitute everywhere, in both files.
 11. Here is the fixed cleaning: keyed substitutes for every field that identifies someone, and the word
    removed for the card number and the note. We run the same tests. [pause 1s] The reports agree before and after

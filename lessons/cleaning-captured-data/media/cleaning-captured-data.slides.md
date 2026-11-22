@@ -5,7 +5,7 @@ pseudonymisation ("Pseudonymised data is personal data in the hands of someone w
 UK GDPR Recital 26; additional information such as a secret key is stored separately); RFC 2104 (HMAC: Keyed-Hashing
 for Message Authentication, February 1997); Java Security Standard Algorithm Names (HmacSHA256, with javax.crypto.Mac);
 datafaker.net and github.com/datafaker-net/datafaker (Apache 2.0 licence; a fork of Java Faker; a seed, as in
-new Faker(new Random(seed)), gives repeatable results); RFC 2606 (example.com is reserved for examples, and the .test
+new Faker(new Random(seed)), gives repeatable results); RFC 2606 (.invalid is reserved for names that must never resolve, and the .test
 domain for testing).
 
 ## intro: What is cleaning captured data?
