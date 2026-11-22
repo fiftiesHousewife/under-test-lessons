@@ -110,7 +110,7 @@ Sleep 300ms
 Type@1ms `note "Run PIT against the *weak* tests. For every planted bug it shows which tests ran, and whether one failed."`
 Enter
 Sleep 300ms
-Type@1ms `run_live "./gradlew :lessons:mutation-testing:pitest -Psuite=weak"`
+Type@1ms `run_live "./gradlew :lessons:mutation-testing:pitest -Pcode=today"`
 Enter
 Show
 Wait+Screen@300s /Result: the tests caught \d+ of \d+/

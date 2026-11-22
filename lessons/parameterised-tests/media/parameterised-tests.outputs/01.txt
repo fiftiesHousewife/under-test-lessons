@@ -1,4 +1,4 @@
-$ ./gradlew :lessons:parameterised-tests:test -Pvat=current
+$ ./gradlew :lessons:parameterised-tests:test -Pcode=today
 RoundingDownVatTest > roundsDownWhereItShouldRoundUp() PASSED
 VatCopyPasteTest > vatOnTenPounds() PASSED
 VatCopyPasteTest > vatOnOnePound() PASSED

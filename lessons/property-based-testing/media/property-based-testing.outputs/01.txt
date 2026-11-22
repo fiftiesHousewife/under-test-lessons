@@ -1,4 +1,4 @@
-$ ./gradlew :lessons:property-based-testing:test -Psplitter=current
+$ ./gradlew :lessons:property-based-testing:test -Pcode=today
 FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() PASSED
 SplitterExampleTest > givesTheOddPennyToSomeone() PASSED
 SplitterExampleTest > splitsEvenly() PASSED

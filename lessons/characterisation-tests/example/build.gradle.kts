@@ -3,13 +3,14 @@ plugins {
 }
 
 // A characterisation test pins down what untested code does today, so it can be changed safely:
-//   ./gradlew :lessons:characterisation-tests:test                        the legacy printer: matches its approved file
-//   ./gradlew :lessons:characterisation-tests:test -Pstatement=refactored a tidier rewrite: shows what changed
+//   ./gradlew :lessons:characterisation-tests:test                 the legacy printer: matches its approved file
+//   ./gradlew :lessons:characterisation-tests:test -Pcode=today    today's tidier rewrite: shows what changed
 dependencies {
     testImplementation(libs.approvaltests)
 }
 
-val statement = providers.gradleProperty("statement").getOrElse("legacy")
+// Today's change is a rewrite of the printer, so -Pcode=today chooses the rewrite; without it, the legacy printer runs.
+val statement = if (providers.gradleProperty("code").getOrElse("fixed") == "today") "refactored" else "legacy"
 val testSources = layout.projectDirectory.dir("src/test/java").asFile
 
 val approvalSummary = tasks.register("approvalSummary") {

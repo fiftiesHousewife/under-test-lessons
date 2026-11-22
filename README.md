@@ -145,7 +145,7 @@ You need JDK 25. The Gradle wrapper fetches everything else.
 ```bash
 ./gradlew check                                             # every lesson's tests, plus the quality checks
 ./gradlew :lessons:architecture-rules:test -Pcode=today     # any lesson's "before"
-./gradlew :lessons:mutation-testing:pitest -Psuite=weak     # PIT on the weak tests: 5 of 13 planted bugs caught
+./gradlew :lessons:mutation-testing:pitest -Pcode=today     # PIT on today's weak tests: 5 of 13 planted bugs caught
 ```
 
 Each lesson's README says what to run and what you'll see. Lessons with container tests (the two database lessons)

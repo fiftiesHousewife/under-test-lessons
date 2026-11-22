@@ -123,7 +123,7 @@ Sleep 300ms
 Type@1ms `note "Now run the same test against a tidier rewrite of the printer:"`
 Enter
 Sleep 300ms
-Type@1ms `run_live "./gradlew :lessons:characterisation-tests:test -Pstatement=refactored"`
+Type@1ms `run_live "./gradlew :lessons:characterisation-tests:test -Pcode=today"`
 Enter
 Show
 Wait+Screen@300s /tests failed\. Report/

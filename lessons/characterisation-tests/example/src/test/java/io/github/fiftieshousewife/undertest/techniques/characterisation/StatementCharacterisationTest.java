@@ -26,7 +26,7 @@ class StatementCharacterisationTest {
                 new Options().withReporter(new QuietReporter()));
     }
 
-    /** The legacy printer, or the refactored one with -Pstatement=refactored. */
+    /** The legacy printer, or today's rewrite with -Pcode=today. */
     private static Statement statement() {
         return "refactored".equals(System.getProperty("statement.version"))
                 ? new RefactoredStatement() : new LegacyStatement();

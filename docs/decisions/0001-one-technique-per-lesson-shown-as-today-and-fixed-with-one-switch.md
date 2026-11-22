@@ -31,14 +31,15 @@ Chosen: one technique per lesson, shown as today and fixed with one switch, beca
 finding what the weak test misses, in one command. Without the switch every test passes. The deliberately weak "today"
 code is left out of the coverage figure, since a lesson's point is that it can't be properly tested.
 
-### Exception
+### Exception, now closed
 
-The four oldest lessons, written before the convention, keep their own switch names: mutation testing
-(`-Psuite=weak`, where the code stays the same and the tests change), characterisation tests
-(`-Pstatement=refactored`), property-based testing (`-Psplitter=current`) and parameterised tests (`-Pvat=current`).
-They weren't moved over only because that meant recording their videos again. Each moves to `-Pcode=today` when its
-video is next made (mutation testing excepted, since there the tests change, not the code). Each lesson's README and
-the catalogue's design table name its switch.
+The four oldest lessons, written before the convention, first kept their own switch names: mutation testing
+(`-Psuite=weak`), characterisation tests (`-Pstatement=refactored`), property-based testing (`-Psplitter=current`) and
+parameterised tests (`-Pvat=current`). Before any video was made, all four moved to `-Pcode=today`, so every lesson now
+switches the same way. In mutation testing the code stays the same and the tests change, so there `-Pcode=today`
+chooses today's tests, the weak ones; in characterisation tests it chooses today's rewrite of the printer. A third
+value, `-Pcode=answer`, runs a lesson's exercise answer
+([Every lesson has an exercise whose answer the build checks](0029-every-lesson-has-a-checked-exercise.md)).
 
 ### Consequences
 

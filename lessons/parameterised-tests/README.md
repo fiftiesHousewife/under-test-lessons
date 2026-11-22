@@ -9,8 +9,8 @@ way a calculation can round. JUnit's parameterised tests (`@ParameterizedTest`) 
 ## Run the example
 
 ```bash
-./gradlew :lessons:parameterised-tests:test -Pvat=current   # the calculator in use today: the table finds a bug
-./gradlew :lessons:parameterised-tests:test                 # the nearest-penny calculator: every case passes
+./gradlew :lessons:parameterised-tests:test -Pcode=today   # the calculator in use today: the table finds a bug
+./gradlew :lessons:parameterised-tests:test                # the nearest-penny calculator: every case passes
 ```
 
 The example works out VAT at 20% in pence, rounded to the nearest penny.

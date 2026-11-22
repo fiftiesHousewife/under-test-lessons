@@ -103,7 +103,7 @@ Sleep 300ms
 Type@1ms `note "Run the tests against the splitter in use today:"`
 Enter
 Sleep 300ms
-Type@1ms `run_live "./gradlew :lessons:property-based-testing:test -Psplitter=current"`
+Type@1ms `run_live "./gradlew :lessons:property-based-testing:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show

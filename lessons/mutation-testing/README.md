@@ -16,7 +16,7 @@ shows exactly that.
 ## Run the example
 
 ```bash
-./gradlew :lessons:mutation-testing:pitest -Psuite=weak   # the weak tests: 5 of 13 planted bugs caught
+./gradlew :lessons:mutation-testing:pitest -Pcode=today   # today's tests, the weak ones: 5 of 13 planted bugs caught
 ./gradlew :lessons:mutation-testing:pitest                # the strong tests: all 13 caught
 ```
 
@@ -52,8 +52,7 @@ planted bug, and hovering over the number beside a line lists each one.
 
 Try it: delete one assertion from the strong tests, run PIT again, and find the planted bug that now survives.
 
-The four oldest lessons, this one included, use their own switch (`-Psuite=weak`) rather than `-Pcode=today`: here the
-code stays the same and the tests change.
+Here the code stays the same and the tests change, so `-Pcode=today` chooses today's tests, the weak ones.
 
 ## Watch it, or present it
 

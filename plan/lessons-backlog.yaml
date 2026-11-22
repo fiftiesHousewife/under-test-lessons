@@ -1115,6 +1115,7 @@ items:
     done_by: "ai"
     done_when:
       - "Mutation testing, characterisation tests, parameterised tests and property-based testing use -Pcode=today, or the decision allows a lesson's own switch with a reason"
+    status: "done"
   - key: "mutation-testing-lesson-corrections"
     type: "deliverable"
     title: "Mutation testing: money in pence, its history, and changed-code routes"

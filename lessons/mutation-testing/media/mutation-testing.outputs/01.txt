@@ -1,4 +1,4 @@
-$ ./gradlew :lessons:mutation-testing:pitest -Psuite=weak
+$ ./gradlew :lessons:mutation-testing:pitest -Pcode=today
 Line coverage: 13 of 13 lines run by the tests (100%)
 Planted bugs:  13, caught 5, missed 8
 Caught - a test failed, as it should:

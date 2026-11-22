@@ -179,7 +179,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  91  
  92      spotbugsPlugins(library(&quot;findsecbugs&quot;))
  93  }</pre><figcaption>lesson build file</figcaption><pre> 10  tasks.test {
- 11      systemProperty(&quot;vat&quot;, providers.gradleProperty(&quot;vat&quot;).getOrElse(&quot;nearest&quot;))
+ 11      systemProperty(&quot;code&quot;, providers.gradleProperty(&quot;code&quot;).getOrElse(&quot;fixed&quot;))
  12      outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching calculators never shows a stale result
  13  }</pre></figure></main><aside class="notes">JUnit comes with the shared build logic, and parameterised tests come with JUnit, so there is nothing to add. The lesson's build file adds one switch, to choose the calculator in use today or the fixed one, and always reruns the tests.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/7db980eb6fcc2fd9.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test. It works out VAT at 20 percent. Twenty percent is a fifth, so it divides by five.</p></section><figure class="code" style="--code-size: 22px"><figcaption>RoundingDownVat.java</figcaption><pre>  9      @Override
@@ -222,7 +222,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  28      void roundsVatToTheNearestPenny(final int netPence, final int expectedVat) {
  29          assertThat(vat.vatPence(netPence)).isEqualTo(expectedVat);
  30      }</pre></figure></main><aside class="notes">Now, the parameterised test. The cases are a table, one row per case, including every way a fifth of a penny can round.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/cdc22900c7283b5f.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The table finds a bug</h1><div class="rule"></div><p class="scene-text">We run the tests against the calculator in use today. The copy-pasted tests pass. Three rows of the table fail, and each one is named. Three pence net should give one penny of VAT, and gives none.</p><p class="callout">3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:parameterised-tests:test -Pvat=current</pre><pre class="output">RoundingDownVatTest &gt; roundsDownWhereItShouldRoundUp() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The table finds a bug</h1><div class="rule"></div><p class="scene-text">We run the tests against the calculator in use today. The copy-pasted tests pass. Three rows of the table fail, and each one is named. Three pence net should give one penny of VAT, and gives none.</p><p class="callout">3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:parameterised-tests:test -Pcode=today</pre><pre class="output">RoundingDownVatTest &gt; roundsDownWhereItShouldRoundUp() PASSED
 VatCopyPasteTest &gt; vatOnTenPounds() PASSED
 VatCopyPasteTest &gt; vatOnOnePound() PASSED
 VatCopyPasteTest &gt; noVatOnNothing() PASSED

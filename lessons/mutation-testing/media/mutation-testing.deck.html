@@ -171,9 +171,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  42  gradle-pitest-plugin = &quot;1.19.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
-105  gradle-pitest-plugin = { module = &quot;info.solidsoft.gradle.pitest:gradle-pitest-plugin&quot;, version.ref = &quot;gradle-pitest-plugin&quot; }</pre></figure></main><aside class="notes">Step one. Add PIT's versions to the version catalogue, with the PIT Gradle plugin, so the build logic can use it.</aside><audio class="voice" preload="none" src="mutation-testing.deck-voice/81015a786f556f45.m4a"></audio></section>
+110  gradle-pitest-plugin = { module = &quot;info.solidsoft.gradle.pitest:gradle-pitest-plugin&quot;, version.ref = &quot;gradle-pitest-plugin&quot; }</pre></figure></main><aside class="notes">Step one. Add PIT's versions to the version catalogue, with the PIT Gradle plugin, so the build logic can use it.</aside><audio class="voice" preload="none" src="mutation-testing.deck-voice/81015a786f556f45.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, add the plugin</h1><div class="rule"></div><p class="scene-text">Step two. Add the plugin to the shared build logic, and apply it in the convention plugin.</p></section><figure class="code" style="--code-size: 22px"><figcaption>build-logic/build.gradle.kts: the plugins the build logic uses</figcaption><pre>  5  dependencies {
   6      implementation(libs.gradle.pitest.plugin)
   7      implementation(libs.gradle.spotbugs.plugin)
@@ -197,16 +197,16 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 362      timestampedReports = false
 363      fullMutationMatrix = true // records every test that ran against each planted bug, for the summary
 364      verbosity = &quot;QUIET&quot; // the mutationSummary task below prints a short, plain-English result instead
-365  }</pre><figcaption>lesson build file</figcaption><pre><mark> 10  val suite = providers.gradleProperty(&quot;suite&quot;).getOrElse(&quot;strong&quot;)</mark>
-<mark> 11  </mark>
-<mark> 12  pitest {</mark>
-<mark> 13      excludedTestClasses = listOf(if (suite == &quot;weak&quot;) &quot;*StrongTest&quot; else &quot;*WeakTest&quot;)</mark>
- 14  }
- 15  
- 16  // A lesson always reruns PIT, so switching suites never shows a stale result.
- 17  tasks.named(&quot;pitest&quot;) {
- 18      outputs.upToDateWhen { false }
- 19  }</pre></figure></main><aside class="notes">Step three. Configure PIT once, in the convention plugin. This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests.</aside><audio class="voice" preload="none" src="mutation-testing.deck-voice/2fd4fc0373992e7a.m4a"></audio></section>
+365  }</pre><figcaption>lesson build file</figcaption><pre><mark> 10  // Here the code under test stays the same and the tests change, so &quot;today&quot; chooses today's tests.</mark>
+<mark> 11  val today = providers.gradleProperty(&quot;code&quot;).getOrElse(&quot;fixed&quot;) == &quot;today&quot;</mark>
+<mark> 12  </mark>
+<mark> 13  pitest {</mark>
+ 14      excludedTestClasses = listOf(if (today) &quot;*StrongTest&quot; else &quot;*WeakTest&quot;)
+ 15  }
+ 16  
+ 17  // A lesson always reruns PIT, so switching between the two never shows a stale result.
+ 18  tasks.named(&quot;pitest&quot;) {
+ 19      outputs.upToDateWhen { false }</pre></figure></main><aside class="notes">Step three. Configure PIT once, in the convention plugin. This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests.</aside><audio class="voice" preload="none" src="mutation-testing.deck-voice/2fd4fc0373992e7a.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test. The discount percent method takes an order total, and whether the customer is loyal. A negative total is rejected. From 100 pounds, the discount is 10 percent. From 50 pounds, it is 5 percent. Otherwise, there is none. Loyal customers get 2 percent added. The final price method takes the discount off the total.</p></section><figure class="code" style="--code-size: 15px"><figcaption>DiscountCalculator.java</figcaption><pre> 18      public int discountPercent(int total, boolean loyalCustomer) {
  19          if (total &lt; 0) {
  20              throw new IllegalArgumentException(&quot;total must not be negative&quot;);
@@ -274,7 +274,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  37      public int finalPrice(int total, boolean loyalCustomer) {
  38          final int percent = discountPercent(total, loyalCustomer);
 <mark> 39          return total - (total * percent / 100);</mark>
- 40      }</pre><pre class="command">$ ./gradlew :lessons:mutation-testing:pitest -Psuite=weak</pre><pre class="output">Line coverage: 13 of 13 lines run by the tests (100%)
+ 40      }</pre><pre class="command">$ ./gradlew :lessons:mutation-testing:pitest -Pcode=today</pre><pre class="output">Line coverage: 13 of 13 lines run by the tests (100%)
 Planted bugs:  13, caught 5, missed 8
 Caught - a test failed, as it should:
 <mark>  line 19  if (total &lt; 0) {                         condition reversed     failed: mediumOrder, bigOrderGetsDiscount and 4 more</mark>

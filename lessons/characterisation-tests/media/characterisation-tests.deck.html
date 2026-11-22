@@ -166,9 +166,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
   5  approvaltests = &quot;32.1.0&quot;
    ⋮
- 69  [libraries]
+ 74  [libraries]
    ⋮
- 71  approvaltests = { module = &quot;com.approvaltests:approvaltests&quot;, version.ref = &quot;approvaltests&quot; }</pre></figure></main><aside class="notes">Step one. Add ApprovalTests to the version catalogue.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/fe9e974d61549d88.m4a"></audio></section>
+ 76  approvaltests = { module = &quot;com.approvaltests:approvaltests&quot;, version.ref = &quot;approvaltests&quot; }</pre></figure></main><aside class="notes">Step one. Add ApprovalTests to the version catalogue.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/fe9e974d61549d88.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. There is nothing to configure.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.approvaltests)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. There is nothing to configure.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/493a7b6c23b7d0f7.m4a"></audio></section>
@@ -199,7 +199,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 22                  () -&gt; assertNotNull(statement),</mark>
 <mark> 23                  () -&gt; assertTrue(statement.contains(&quot;Closing balance&quot;)));</mark>
  24      }</pre></figure></main><aside class="notes">Now, a weak test, the kind legacy code often has. It checks that something came back, so it would pass whatever the amounts were.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/771e668324b64cff.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The characterisation test</h1><div class="rule"></div><p class="scene-text">Now, the characterisation test. It prints a month that reaches every rule, and approves the whole statement.</p></section><figure class="code" style="--code-size: 20px"><figcaption>StatementCharacterisationTest.java</figcaption><pre> 16      private static final List&lt;Transaction&gt; MONTH = List.of(
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The characterisation test</h1><div class="rule"></div><p class="scene-text">Now, the characterisation test. It prints a month that reaches every rule, and approves the whole statement.</p></section><figure class="code" style="--code-size: 21px"><figcaption>StatementCharacterisationTest.java</figcaption><pre> 16      private static final List&lt;Transaction&gt; MONTH = List.of(
  17              new Transaction(&quot;01 Mar&quot;, &quot;Salary&quot;, 1200),
  18              new Transaction(&quot;02 Mar&quot;, &quot;Rent&quot;, -1200),
  19              new Transaction(&quot;09 Mar&quot;, &quot;Groceries&quot;, -80),
@@ -212,7 +212,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  26                  new Options().withReporter(new QuietReporter()));
  27      }
  28  
- 29      /** The legacy printer, or the refactored one with -Pstatement=refactored. */
+ 29      /** The legacy printer, or today's rewrite with -Pcode=today. */
  30      private static Statement statement() {
  31          return &quot;refactored&quot;.equals(System.getProperty(&quot;statement.version&quot;))
  32                  ? new RefactoredStatement() : new LegacyStatement();
@@ -232,7 +232,7 @@ StatementCharacterisationTest &gt; printsTheSameStatementAsToday() PASSED
 StatementWeakTest &gt; printsSomething() PASSED
 All 4 tests passed.
 Approvals: every output matches its approved file.</pre></figure></main><aside class="notes">We run the tests. The statement matches the approved file. Look at the approved statement. After the rent, the balance is exactly zero, and an overdraft fee is charged. That is a quirk nobody remembered, now pinned down.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/198e3c42d6123b51.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The refactored printer</h1><div class="rule"></div><p class="scene-text">Now someone tidies the printer up. The rewrite reads better, and the old tests would still pass. We run the characterisation test against the rewrite. It fails, and shows exactly what changed. The fee at zero has gone, and every balance after it moved. Is that a fix or a bug? That is a question for the application owner.</p><p class="callout">The fee at zero has gone. Fix or bug? A question for the Application Owner.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:characterisation-tests:test -Pstatement=refactored</pre><pre class="output">RefactoredStatementTest &gt; chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The refactored printer</h1><div class="rule"></div><p class="scene-text">Now someone tidies the printer up. The rewrite reads better, and the old tests would still pass. We run the characterisation test against the rewrite. It fails, and shows exactly what changed. The fee at zero has gone, and every balance after it moved. Is that a fix or a bug? That is a question for the application owner.</p><p class="callout">The fee at zero has gone. Fix or bug? A question for the Application Owner.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:characterisation-tests:test -Pcode=today</pre><pre class="output">RefactoredStatementTest &gt; chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
 RefactoredStatementTest &gt; stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
 StatementCharacterisationTest &gt; printsTheSameStatementAsToday() FAILED
     java.lang.Error at StatementCharacterisationTest.java:25

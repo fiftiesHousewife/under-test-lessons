@@ -10,8 +10,8 @@ explanation of the bug. Here we use [jetCheck](https://github.com/JetBrains/jetC
 ## Run the example
 
 ```bash
-./gradlew :lessons:property-based-testing:test -Psplitter=current   # the splitter in use today: the property finds a bug
-./gradlew :lessons:property-based-testing:test                      # the fair splitter: every property holds
+./gradlew :lessons:property-based-testing:test -Pcode=today   # the splitter in use today: the property finds a bug
+./gradlew :lessons:property-based-testing:test                # the fair splitter: every property holds
 ```
 
 The example shares a bill, in pence, between several people.

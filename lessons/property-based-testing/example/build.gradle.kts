@@ -3,13 +3,13 @@ plugins {
 }
 
 // Property-based testing: state rules that must hold for every input, and let jetCheck try many.
-//   ./gradlew :lessons:property-based-testing:test -Psplitter=current   the splitter in use today: the property finds a bug
-//   ./gradlew :lessons:property-based-testing:test                      the fair splitter: every property holds
+//   ./gradlew :lessons:property-based-testing:test -Pcode=today   the splitter in use today: the property finds a bug
+//   ./gradlew :lessons:property-based-testing:test                the fair splitter: every property holds
 dependencies {
     testImplementation(libs.jetcheck)
 }
 
 tasks.test {
-    systemProperty("splitter", providers.gradleProperty("splitter").getOrElse("fair"))
+    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching splitters never shows a stale result
 }

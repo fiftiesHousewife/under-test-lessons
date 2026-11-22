@@ -1,4 +1,4 @@
-$ ./gradlew :lessons:characterisation-tests:test -Pstatement=refactored
+$ ./gradlew :lessons:characterisation-tests:test -Pcode=today
 RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
 RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
 StatementCharacterisationTest > printsTheSameStatementAsToday() FAILED

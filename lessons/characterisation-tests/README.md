@@ -10,8 +10,8 @@ which saves a whole output as an *approved* file and fails the test if a later r
 ## Run the example
 
 ```bash
-./gradlew :lessons:characterisation-tests:test                          # the legacy printer: matches its approved file
-./gradlew :lessons:characterisation-tests:test -Pstatement=refactored   # a tidier rewrite: shows exactly what changed
+./gradlew :lessons:characterisation-tests:test                # the legacy printer: matches its approved file
+./gradlew :lessons:characterisation-tests:test -Pcode=today   # today's tidier rewrite: shows exactly what changed
 ```
 
 The example is a bank statement printer that has run for years without tests
@@ -23,7 +23,7 @@ It has a quirk nobody remembered: the overdraft fee is charged when the balance 
 - [`StatementCharacterisationTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/StatementCharacterisationTest.java)
   approves the whole statement for a month that reaches every rule. The approved file sits next to the test.
 - [`RefactoredStatement`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/characterisation/RefactoredStatement.java)
-  is a cleaner rewrite that quietly changes the fee rule. With `-Pstatement=refactored` the characterisation test fails,
+  is a cleaner rewrite that quietly changes the fee rule. With `-Pcode=today` the characterisation test fails,
   and the build prints which statement lines changed.
 
 ## Watch it, or present it

@@ -92,7 +92,7 @@ Sleep 300ms
 Type@1ms `note "Run the tests against the calculator in use today:"`
 Enter
 Sleep 300ms
-Type@1ms `run_live "./gradlew :lessons:parameterised-tests:test -Pvat=current"`
+Type@1ms `run_live "./gradlew :lessons:parameterised-tests:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
