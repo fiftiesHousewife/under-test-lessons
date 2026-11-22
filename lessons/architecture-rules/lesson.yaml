@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: architecture-rules
+title: Architecture rules
+techniques: [architecture-rules]

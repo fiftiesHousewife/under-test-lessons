@@ -103,6 +103,39 @@ spoken years are in the pronunciation list.
 - Old command-line programs (System Stubs) waits on an agreed exception to the forbidden-API check, since its "before"
   needs `System.out` and `System.exit`; System Stubs' exit and environment features may also not work on Java 25.
 
+## Taken over from the toolkit
+
+The toolkit's backlog used to plan lesson work too. What this repo didn't already plan was moved here (see
+[Lesson work and decisions moved over from the toolkit are planned here](decisions/0008-lesson-work-and-decisions-moved-over-from-the-toolkit-are-planned-here.md));
+the lessons themselves are rows in [the catalogue](../lessons/CATALOGUE.md).
+
+- **A check that runs every command a lesson's README shows** and confirms the result it states (for example "5 of 13
+  planted bugs caught"), so a README can't drift from its example. The live runs in videos cover this only when a
+  video is re-recorded.
+- **Video length as a check:** fail a script whose estimated on-camera length is over ten minutes. The
+  make-a-lesson-video skill states the limit, but nothing checks it.
+- **Render videos in CI, and publish them with each release:** the lessons bundle (each video's layers, captions and
+  script) as `io.github.fiftieshousewife.undertest:undertest-lessons` on Maven Central, at the toolkit's version.
+  Publish only finished, reviewed videos, since nothing on Maven Central can be deleted; keep the bundle small
+  (compressed MP4s, one audio track per lesson) and check Central's size limits first.
+- **Automatic rebranding of videos:** a branding file in an organisation's own repo (intro clip, outro clip, voice,
+  caption style), with a schema, and a step needing only Java and ffmpeg that adds the intro and outro and combines
+  the layers. Slides and decks are already rebranded by CSS; this is the same for the finished videos.
+- **Learning paths by role:** engineer, subject-matter expert, architect, Application Owner, Test Quality Lead; each
+  lists lessons in order, with what the reader will be able to do afterwards.
+- **An exercise with an answer for each lesson.** The readiness review dropped `exercise/` from the lesson layout
+  because no lesson had one; decide whether to bring it back.
+- **Lesson examples get the toolkit's assessment files and connection lists,** once the toolkit has schemas for them,
+  so the lessons show a repo going through the toolkit's journey.
+- **What the toolkit's decision guides expect of lessons:** the real-databases lesson shows container tests on both a
+  Docker-based and a Kubernetes-based CI; the recorded-responses lesson removes personal data from recordings (also in
+  the fixes above); the contract tests lesson names the Pact Broker and its limits; the feature flags lesson uses
+  OpenFeature with an in-memory provider (done).
+- **Tools the toolkit names that no lesson uses yet:** OpenRewrite for replacing hard-wired dependencies (the lesson
+  uses Mockito and a passed-in `Clock`), spring-batch-test and Datafaker (in the fixes above), Randoop, pgTAP or
+  utPLSQL, goss, bats-core and bats-file. **bats-file** is CC0 and available only as source: never install it from
+  npm, where the name is a placeholder left after a malicious package was removed.
+
 ## Working in a sandboxed AI session
 
 - Gradle's worker processes (Checkstyle, PMD, tests in some set-ups) can't connect back to Gradle where the sandbox

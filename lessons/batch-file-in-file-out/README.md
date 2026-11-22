@@ -43,4 +43,4 @@ into [a settlement file for the bank](example/src/test/resources/settlement/expe
 
 - [JUnit](https://junit.org/) and its user guide on temporary folders
 - [Characterisation tests](../characterisation-tests/README.md), to approve a whole output you haven't written down yet
-- The toolkit's [batch-file-in-file-out-tests technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out-tests/technique.yaml)
+- The toolkit's [batch-file-in-file-out technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out/technique.yaml)

@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: recorded-http-responses
+title: Recorded HTTP responses
+techniques: [recorded-http-responses]

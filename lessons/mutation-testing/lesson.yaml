@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: mutation-testing
+title: Mutation testing
+techniques: [mutation-testing]

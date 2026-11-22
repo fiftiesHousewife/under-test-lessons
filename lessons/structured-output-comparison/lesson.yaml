@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: structured-output-comparison
+title: Comparing structured output
+techniques: [structured-output-comparison]

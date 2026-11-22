@@ -10,6 +10,8 @@ below in step when adding a record.
 | Decision | Status |
 |---|---|
 | [One technique per lesson, shown as today and fixed with one switch](0001-one-technique-per-lesson-shown-as-today-and-fixed-with-one-switch.md) | accepted |
+| [Each lesson names the toolkit techniques it teaches, and the build checks both repos agree](0007-each-lesson-names-the-toolkit-techniques-it-teaches-and-the-build-checks-both-repos-agree.md) | accepted |
+| [Lesson work and decisions moved over from the toolkit are planned here](0008-lesson-work-and-decisions-moved-over-from-the-toolkit-are-planned-here.md) | accepted |
 
 ## Videos and slides
 

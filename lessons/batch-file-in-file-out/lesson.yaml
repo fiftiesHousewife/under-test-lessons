@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: batch-file-in-file-out
+title: Batch file-in, file-out
+techniques: [batch-file-in-file-out]

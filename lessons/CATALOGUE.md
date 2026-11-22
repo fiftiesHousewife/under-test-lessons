@@ -14,6 +14,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Mutation testing](mutation-testing/README.md) | PIT | Java only | built |
+| The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix; may become part of the overview) | none | slides only | planned |
 
 ## Record what the code does today (outside in, black box)
 
@@ -40,6 +41,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | next |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | later: needs containers or more set-up |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
+| Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
+| Running script tests in CI: JUnit reports, tags and filters, parallel runs, time limits and retries | bats-core | bats | last: needs other tools |
 
 ## Make old code testable
 
@@ -47,6 +50,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 |---|---|---|---|
 | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | built |
 | Old command-line programs: environment variables, `System.exit` and standard input | System Stubs | Java only | next |
+| Running old code safely on your own machine: dummy secrets by default, and a configured production address stops the test (asked for by the toolkit's guide to test profiles) | Spring's `ApplicationContextRunner` | Java only | planned |
 
 ## Write better tests
 
@@ -64,7 +68,10 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 ## Every toolkit technique, and its lesson
 
 Each technique in the toolkit's [`techniques/`](https://github.com/fiftiesHousewife/under-test/tree/main/techniques)
-gets at least one lesson. Techniques that only make sense on real infrastructure wait until later.
+gets at least one lesson. Techniques that only make sense on real infrastructure wait until later. Each lesson names
+the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if this table, the
+[lessons index](README.md) or those files disagree, or if the toolkit has a technique this table leaves out (see
+[Each lesson names the toolkit techniques it teaches, and the build checks both repos agree](../docs/decisions/0007-each-lesson-names-the-toolkit-techniques-it-teaches-and-the-build-checks-both-repos-agree.md)).
 
 | Technique | Lesson | When |
 |---|---|---|
@@ -73,16 +80,16 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | built |
-| snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | built |
+| structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
 | recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | built |
-| business-rule-tests | Behaviour written down as examples (planned; the outside-in HTTP lesson covers part of it) | next |
-| fake-behind-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
+| business-rule-tests | Behaviour written down as examples (planned); [Outside-in HTTP tests](outside-in-http-tests/README.md) covers part of it | next |
+| fake-behind-an-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
 | differential-testing | [Differential testing](differential-testing/README.md) | built |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | later |
 | feature-flags | [Feature flags](feature-flags/README.md) | built |
 | embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | built |
-| batch-file-in-file-out-tests | [Batch file-in, file-out](batch-file-in-file-out/README.md) | built |
-| testcontainers | [Real databases in tests](real-databases-in-tests/README.md) | built |
+| batch-file-in-file-out | [Batch file-in, file-out](batch-file-in-file-out/README.md) | built |
+| testcontainers | [Real databases in tests](real-databases-in-tests/README.md), [Database changes with Liquibase](database-changes-with-liquibase/README.md) | built |
 | contract-testing | Contract tests between teams | later |
 | database-unit-tests | Stored procedures tested inside the database | later |
 | ai-written-tests | AI-written tests that pass an acceptance check | later |

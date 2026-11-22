@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: feature-flags
+title: Feature flags
+techniques: [feature-flags]

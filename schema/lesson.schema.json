@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftieshousewife/under-test-lessons/schema/lesson.schema.json",
+  "title": "A lesson (lessons/<id>/lesson.yaml)",
+  "description": "Which of the toolkit's techniques a lesson teaches. The toolkit (under-test) holds each technique's rules, in techniques/<id>/technique.yaml; this repo says which lessons teach each one, and its checks keep the catalogue, the lessons index and every link into the toolkit in step with these files. Words follow GLOSSARY.md.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "techniques"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "The lesson's folder name, under lessons/."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The lesson's name, as its README and the lessons index give it."
+    },
+    "techniques": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "description": "Ids of the toolkit techniques this lesson teaches: folder names under the toolkit's techniques/. Empty for a lesson on writing better tests that no toolkit technique covers."
+    }
+  }
+}

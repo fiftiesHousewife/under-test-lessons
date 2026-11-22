@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: replacing-hard-wired-dependencies
+title: Replacing hard-wired dependencies
+techniques: [refactoring-for-testability]

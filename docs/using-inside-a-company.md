@@ -18,7 +18,7 @@ everything they fetch, and the settings that route it. See also the decision
 | Browser for browser tests (Playwright, planned) | Playwright downloads its own browsers on first use | Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` and launch the installed Chrome (`setChannel("chrome")`) |
 | Voice model (making videos only) | GitHub releases | Mirror the model files and set `lessonVoiceModelsUrl=<mirror>`, or use an approved voice with `lessonVoiceCommand` |
 | Voice's Python packages (making videos only) | PyPI, through pip | pip's own settings (`pip.conf`), pointing at the repository manager |
-| VHS (making videos only) | Homebrew or GitHub releases | Not usually available; make videos outside the company network, and share the results |
+| VHS (making videos only) | Homebrew or GitHub releases | Not usually available; make videos outside the company network and share the results, or see [Making the videos your own](#making-the-videos-your-own) |
 
 Learners only need the first five rows. The last three matter only to whoever makes the videos.
 
@@ -74,6 +74,46 @@ Functional Source License (FSL-1.1-ALv2), becoming Apache 2.0 after two years; c
 [Liquibase 5 is used under the Functional Source License](decisions/0006-liquibase-5-is-used-under-the-functional-source-license.md).
 Dependencies held back on purpose are listed, with the reason, as `quality.holdBack` in
 [`gradle.properties`](../gradle.properties).
+
+## Making the videos your own
+
+Each video is made as **separate layers**, so a company can rebrand, trim or revoice it without re-recording anything.
+Slides and decks are rebranded by CSS (see the README); these layers are for the finished videos:
+
+| Layer | File | Use it to |
+|---|---|---|
+| Finished video | `<lesson>.mp4` | Use as it is |
+| Silent screen recording | `<lesson>.silent.mp4` | Put your own voice or music under it |
+| Narration audio | `<lesson>.narration.m4a`, and one clip per scene | Re-time or replace parts of the voice |
+| Narration script | `media/<lesson>.narration.md`, one paragraph per scene | Change the wording to your terms, translate it, or have a person read it |
+| Captions | `<lesson>.vtt`, `<lesson>.srt` | Subtitles in any player or editor; regenerated from the script |
+| Source | `media/<lesson>.tape` | Re-record the screen recording |
+| Quick-look animation | `<lesson>.gif` (silent) | Embed in wiki pages |
+
+Three ways to customise:
+
+1. **In a video editor you already use** (for example Camtasia, Premiere Pro or Clipchamp): import the silent
+   recording, narration audio and captions as separate tracks, then add your intro and outro, trim, or replace the
+   voice. No new tools are needed.
+2. **Revoice:** have a person record the narration script, or run it through your approved text-to-speech service
+   (`-PlessonVoiceCommand`). Captions come from the same script, so regenerate them if you change its wording.
+3. **Rebrand automatically at every release** (planned; see [next steps](next-steps.md#taken-over-from-the-toolkit)):
+   a branding file in your own repo names your intro clip, outro clip, voice and caption style, and a step built on
+   ffmpeg applies it to each new release's videos.
+
+Your branding and edited videos live in your own repo or media library, never in this one.
+
+**Recording videos yourself** needs VHS (a Go program, not on Maven Central) with ttyd, ffmpeg and a browser. Most
+companies won't need to. If you do, the routes, easiest to get approved first, are:
+
+| Route | What to mirror |
+|---|---|
+| Container image | VHS's official image, `ghcr.io/charmbracelet/vhs` (MIT licence), through your container registry; it includes ttyd, ffmpeg and a browser. Run it as a CI job's image: on Kubernetes-based CI no Docker daemon is needed |
+| Generic remote for release files | VHS and ttyd release binaries from GitHub; ffmpeg from your own operating system packages |
+| Linux package repository | Charm's apt or yum repository (`repo.charm.sh`), through a proxy |
+| Go module proxy | `go install github.com/charmbracelet/vhs@<version>` through a Go remote; ttyd and ffmpeg installed separately |
+
+Without the container image, check that VHS's browser library won't try to download Chromium on its first run.
 
 ## Links on slides
 

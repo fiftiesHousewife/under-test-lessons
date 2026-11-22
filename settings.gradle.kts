@@ -30,3 +30,5 @@ rootDir.resolve("lessons").listFiles()?.sorted()?.forEach { dir ->
 // Tools for lesson videos: checks, recording, captions, voice and assembly.
 include(":lessons:video-tools")
 project(":lessons:video-tools").projectDir = rootDir.resolve("lessons/_shared/video-tools")
+// Checks that lesson.yaml files, the catalogue, the lessons index and the toolkit's techniques agree.
+include(":tools:lesson-checks")

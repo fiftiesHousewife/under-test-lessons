@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: embedded-jakarta-ee-tests
+title: Embedded Jakarta EE tests
+techniques: [embedded-jakarta-ee-tests]

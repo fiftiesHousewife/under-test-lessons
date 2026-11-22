@@ -14,10 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      # The toolkit, for checking each lesson.yaml, the catalogue and links against its techniques (tools/lesson-checks).
+      - uses: actions/checkout@v5
+        with:
+          repository: fiftiesHousewife/under-test
+          path: .toolkit
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: "25"
       - uses: gradle/actions/setup-gradle@v5
       - name: Run all checks
-        run: ./gradlew check
+        run: ./gradlew check -PtoolkitDir=.toolkit

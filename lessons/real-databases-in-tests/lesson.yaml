@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: real-databases-in-tests
+title: Real databases in tests
+techniques: [testcontainers]

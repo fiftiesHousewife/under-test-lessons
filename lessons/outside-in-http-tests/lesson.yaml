@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: outside-in-http-tests
+title: Outside-in HTTP tests
+techniques: [business-rule-tests]

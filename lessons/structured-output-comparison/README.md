@@ -42,4 +42,4 @@ forgets the quantities.
 
 - [JSONUnit](https://github.com/lukas-krecan/JsonUnit) and [XMLUnit](https://www.xmlunit.org)
 - [Characterisation tests](../characterisation-tests/README.md), which approve whole outputs
-- The toolkit's [snapshot-testing technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/snapshot-testing/technique.yaml)
+- The toolkit's [structured-output-comparison technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/structured-output-comparison/technique.yaml)

@@ -45,4 +45,4 @@ interface. Messages are delivered on commit.
 ## Find out more
 
 - [Mocks Aren't Stubs](https://martinfowler.com/articles/mocksArentStubs.html), by Martin Fowler
-- The toolkit's [fake-behind-interface technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/fake-behind-interface/technique.yaml)
+- The toolkit's [fake-behind-an-interface technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/fake-behind-an-interface/technique.yaml)

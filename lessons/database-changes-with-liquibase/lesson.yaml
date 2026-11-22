@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: database-changes-with-liquibase
+title: Database changes with Liquibase
+techniques: [testcontainers]

@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: fake-behind-an-interface
+title: Fake behind an interface
+techniques: [fake-behind-an-interface]

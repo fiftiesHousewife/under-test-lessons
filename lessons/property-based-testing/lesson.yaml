@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: property-based-testing
+title: Property-based testing
+techniques: [property-based-testing]

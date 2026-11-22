@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: characterisation-tests
+title: Characterisation tests
+techniques: [characterisation-tests]

@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: dynamic-tests
+title: Dynamic tests
+techniques: []
