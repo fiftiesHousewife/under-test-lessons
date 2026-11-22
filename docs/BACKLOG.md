@@ -65,7 +65,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #67 | [The company guide says companies use the finished videos and record changed slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/67) | deliverable | Lessons Owner | ai | – |
 | #86 | [Lessons run on Windows](https://github.com/fiftiesHousewife/under-test-lessons/issues/86) | deliverable | Lessons Owner | ai | – |
 | #50 | [Automatic rebranding of each release's videos](https://github.com/fiftiesHousewife/under-test-lessons/issues/50) | deliverable | Lessons Owner | tool | – |
 | #69 | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) | deliverable | Lessons Owner | ai | – |
@@ -73,7 +72,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #72 | [The lesson checks skip, with a message, when the toolkit isn't checked out](https://github.com/fiftiesHousewife/under-test-lessons/issues/72) | deliverable | Lessons Owner | ai | – |
 | #76 | [A recording script for a person to voice a lesson's clips](https://github.com/fiftiesHousewife/under-test-lessons/issues/76) | deliverable | Lessons Owner | ai | – |
 | #77 | [Decks play recorded clips as .m4a, .wav or .mp3](https://github.com/fiftiesHousewife/under-test-lessons/issues/77) | deliverable | Lessons Owner | ai | – |
-| #79 | [Recording guidance for companies](https://github.com/fiftiesHousewife/under-test-lessons/issues/79) | deliverable | Lessons Owner | ai | – |
 | #70 | [CI proves the inside copy builds with only a company's Maven repository](https://github.com/fiftiesHousewife/under-test-lessons/issues/70) | deliverable | Lessons Owner | ai | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) |
 | #73 | [AGENTS.md and the video skills say which group each step is in](https://github.com/fiftiesHousewife/under-test-lessons/issues/73) | deliverable | Lessons Owner | ai | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) |
 
