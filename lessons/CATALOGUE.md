@@ -34,7 +34,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 |---|---|---|---|
 | [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | in progress |
 | [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | in progress |
-| Real databases in tests: a fake locally, real PostgreSQL in container tests | Testcontainers | Docker | wave 2 |
+| [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | in progress |
+| Database changes with Liquibase: every change applied to real PostgreSQL in a test, before production | Liquibase, Testcontainers | Docker | wave 2 |
 | Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | wave 1 |
 | Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | wave 1 |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | wave 2 |
@@ -81,7 +82,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | feature-flags | [Feature flags](feature-flags/README.md) | 1 |
 | embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | 1 |
 | batch-file-in-file-out-tests | [Batch file-in, file-out](batch-file-in-file-out/README.md) | 1 |
-| testcontainers | Real databases in tests | 2 |
+| testcontainers | [Real databases in tests](real-databases-in-tests/README.md) | 2 |
 | contract-testing | Contract tests between teams | 2 |
 | database-unit-tests | Stored procedures tested inside the database | 2 |
 | ai-written-tests | AI-written tests that pass an acceptance check | 2 |
