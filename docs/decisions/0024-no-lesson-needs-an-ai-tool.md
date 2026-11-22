@@ -61,9 +61,9 @@ company approves.
 * Good, because a company with no approved AI tool can still use every lesson as it is.
 * Good, because it is clear that only the maintainers use the voice, and a person's recording can stand in for it
   without changing a lesson.
-* Bad, because a company that forbids content made with AI has to turn the voice off, or record a person's voice,
-  until the open question in [Inside a company, a person records the voice](0027-inside-a-company-a-person-records-the-voice.md)
-  is settled. Until then, the published decks and videos keep the Kokoro voice.
+* Bad, because the published decks and videos keep the Kokoro voice
+  ([Inside a company, a person records the voice](0027-inside-a-company-a-person-records-the-voice.md)), so a company
+  that forbids content made with AI has to turn the voice off or record a person's voice.
 
 ### Confirmation
 

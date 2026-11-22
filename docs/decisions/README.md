@@ -18,6 +18,8 @@ below in step when adding a record.
 | [The lessons cover Java, for now](0019-the-lessons-cover-java-for-now.md) | accepted |
 | [Lesson work is tracked in GitHub issues, loaded from a backlog file](0022-lesson-work-is-tracked-in-github-issues-loaded-from-a-backlog-file.md) | accepted |
 | [The old command-line programs lesson may use forbidden APIs in its today code](0023-the-old-command-line-programs-lesson-may-use-forbidden-apis-in-its-today-code.md) | accepted |
+| [Examples build on current Java, and each README says what to use on older Java](0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md) | accepted |
+| [Every lesson has an exercise whose answer the build checks](0029-every-lesson-has-a-checked-exercise.md) | accepted |
 
 ## Videos and slides
 
@@ -32,6 +34,9 @@ below in step when adding a record.
 | [Pictures are hand-drawn figures from Open Peeps](0015-pictures-are-hand-drawn-figures-from-open-peeps.md) | accepted |
 | [Spoken words are fixed through a pronunciation list](0018-spoken-words-are-fixed-through-a-pronunciation-list.md) | accepted |
 | [Recordings use their own Gradle daemon and show no personal paths](0020-recordings-use-their-own-gradle-daemon-and-show-no-personal-paths.md) | accepted |
+| [Slides about a thing show it drawn in the speech bubble, and more people come from Open Doodles](0030-slides-about-a-thing-show-it-drawn-in-the-speech-bubble.md) | accepted |
+| [Diagrams are drawn in Excalidraw and exported in the build](0031-diagrams-are-drawn-in-excalidraw.md) | accepted |
+| [Decks show their place in the series; lessons are not numbered](0032-decks-show-their-place-in-the-series-and-lessons-are-not-numbered.md) | accepted |
 
 ## Using the lessons in a company
 
@@ -42,7 +47,7 @@ below in step when adding a record.
 | [Every lesson works inside a company](0021-every-lesson-works-inside-a-company.md) | accepted; its voice parts replaced by [0025](0025-companies-receive-finished-videos-and-never-run-the-voice.md) |
 | [No lesson needs an AI tool](0024-no-lesson-needs-an-ai-tool.md) | accepted |
 | [Companies receive finished videos and never run the voice](0025-companies-receive-finished-videos-and-never-run-the-voice.md) | accepted |
-| [What runs inside a company is kept apart from what makes videos](0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md) | accepted; packaging to decide |
+| [What runs inside a company is kept apart from what makes videos](0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md) | accepted |
 | [Inside a company, a person records the voice](0027-inside-a-company-a-person-records-the-voice.md) | accepted |
 
 ## Tools

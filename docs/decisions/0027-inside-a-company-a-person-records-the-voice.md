@@ -88,5 +88,6 @@ Windows' desktop voices (System.Speech), eSpeak NG, Flite, Festival and MaryTTS 
 * Good, because nothing is needed.
 * Bad, because a changed lesson's deck goes quiet exactly where it changed.
 
-**Still to decide:** whether the published videos and decks also move from Kokoro to a recorded voice. If they do,
-Kokoro is removed altogether, along with its set-up and its supply-chain concerns.
+**The published videos and decks keep the Kokoro voice,** made here. A person's recorded voice for the whole series
+was considered. It would remove Kokoro and its set-up, but it would mean recording about 600 clips now, and again for
+every change while the lessons are still changing. It can be revisited once the lessons settle.

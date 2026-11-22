@@ -6,7 +6,7 @@ group: Using the lessons in a company
 
 # What runs inside a company is kept apart from what makes videos
 
-**Decided by:** Lessons maintainers · **Status:** accepted, with the packaging still to decide
+**Decided by:** Lessons maintainers · **Status:** accepted
 
 ## Context and Problem Statement
 
@@ -58,17 +58,19 @@ Chrome counts as inside, because it is already installed and allowed on company 
   company.
 * **AGENTS.md and the video skills say which group each step belongs to.**
 
-**Still to decide: packaging.** The choices are a split repo, a bundle, or a generated `corporate` branch. The lean
-is the branch, because companies change lessons and a bundle keeps no history to merge with. If the branch is
-chosen, it is only ever added to: each release is a new commit made from `main` with only the inside paths kept,
-never rewritten or force-pushed. Paths stay the same as on `main`, so a company's change can come back as an ordinary
-pull request. Its README says what a company can change and rebuild itself (code, README, slides, narration, the
-deck and its voice), and what only comes back through this repo (the videos).
+**Companies take the whole repository.** No corporate branch, bundle or second repository is made. The modules and
+the ArchUnit rule keep the two sides apart. Inside a company the production module is never built, because
+`settings.gradle.kts` includes it only when asked. The inside-copy CI job proves that what a company builds needs
+only its own Maven repository. A split repository, a release bundle and a generated `corporate` branch were all
+considered. Each means keeping a second copy in step, and the bundle loses the history a company needs to merge its
+changes with each release.
 
 ### Consequences
 
 * Good, because a company knows exactly what it may run, and CI proves that set builds inside a company.
 * Bad, because `video-tools` has to be split, which touches most of its classes and every task that names it.
+* Bad, because a company whose rules forbid tools like Python scripts or VHS tapes on its network, even unused, has
+  to remove `production/` and `maintainer/` from its own copy.
 
 ### Confirmation
 
