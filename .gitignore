@@ -78,3 +78,6 @@ __pycache__/
 
 # Slide deck PDFs are made on demand; the HTML decks are committed.
 *.deck.pdf
+
+# Reviews left in the root for the maintainer to read: kept out of the repository.
+/voiceover-review.md
