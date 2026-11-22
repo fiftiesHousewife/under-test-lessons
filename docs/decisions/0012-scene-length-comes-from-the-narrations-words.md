@@ -36,7 +36,7 @@ question asked before its answer pauses 1.6 seconds (`[pause 1.6s]`).
 
 * Good, because a script that won't fit fails early, with the scene and the seconds to add.
 * Bad, because it is an estimate, so some scenes run a little long.
-* Bad, because recording still needs a quiet machine; [next steps](../next-steps.md) says so.
+* Bad, because recording still needs a quiet machine; the [make-a-lesson-video](../../.github/skills/make-a-lesson-video/SKILL.md) skill says so.
 
 ### Confirmation
 

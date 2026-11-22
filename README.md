@@ -134,7 +134,7 @@ The lessons in italics above, in the order they will be made, from [the catalogu
    Kafka), **responses checked against the OpenAPI document,** **slow and failing dependencies,** **coverage of changed
    code,** and **AI-written tests that pass the acceptance check.**
 
-Some built lessons also have fixes to come; they are listed in [next steps](docs/next-steps.md).
+Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 
 ## Try it
 

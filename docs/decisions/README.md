@@ -16,6 +16,7 @@ below in step when adding a record.
 | [Lesson code meets the toolkit's full quality checks](0010-lesson-code-meets-the-toolkits-full-quality-checks.md) | accepted |
 | [Container tests skip without a container runtime, and must run in CI](0016-container-tests-skip-without-a-container-runtime-and-must-run-in-ci.md) | accepted |
 | [The lessons cover Java, for now](0019-the-lessons-cover-java-for-now.md) | accepted |
+| [Lesson work is tracked in GitHub issues, loaded from a backlog file](0022-lesson-work-is-tracked-in-github-issues-loaded-from-a-backlog-file.md) | accepted |
 
 ## Videos and slides
 

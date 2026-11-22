@@ -95,7 +95,7 @@ Three ways to customise:
    voice. No new tools are needed.
 2. **Revoice:** have a person record the narration script, or run it through your approved text-to-speech service
    (`-PlessonVoiceCommand`). Captions come from the same script, so regenerate them if you change its wording.
-3. **Rebrand automatically at every release** (planned; see [next steps](next-steps.md#taken-over-from-the-toolkit)):
+3. **Rebrand automatically at every release** (planned; see [the backlog](BACKLOG.md)):
    a branding file in your own repo names your intro clip, outro clip, voice and caption style, and a step built on
    ffmpeg applies it to each new release's videos.
 

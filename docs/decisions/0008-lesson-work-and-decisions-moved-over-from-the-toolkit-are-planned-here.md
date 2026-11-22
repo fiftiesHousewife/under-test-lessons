@@ -29,8 +29,8 @@ Chosen: carry over, then remove. What came over, and where it now lives:
 | From the toolkit | Now |
 |---|---|
 | A lesson for each technique, with its tools | [The catalogue](../../lessons/CATALOGUE.md), which already had most of them; new planned rows for the test mix, running old code safely, checking what batch scripts write, and running script tests in CI |
-| Video tools, voice, captions, layers, zoom | Already built or planned in [next steps](../next-steps.md) |
-| A check that runs each lesson's commands; a video length check; rendering in CI and publishing to Maven Central; automatic rebranding from a branding file; learning paths by role; exercises; assessment files for lesson examples; what the toolkit's decision guides expect of lessons; tools the toolkit names that no lesson uses | [Next steps: taken over from the toolkit](../next-steps.md#taken-over-from-the-toolkit) |
+| Video tools, voice, captions, layers, zoom | Already built, or planned in [the backlog](../BACKLOG.md) |
+| A check that runs each lesson's commands; a video length check; rendering in CI and publishing to Maven Central; automatic rebranding from a branding file; learning paths by role; exercises; assessment files for lesson examples; what the toolkit's decision guides expect of lessons; tools the toolkit names that no lesson uses | [The backlog](../BACKLOG.md) (kept in [plan/lessons-backlog.yaml](../../plan/lessons-backlog.yaml), since [Lesson work is tracked in GitHub issues, loaded from a backlog file](0022-lesson-work-is-tracked-in-github-issues-loaded-from-a-backlog-file.md)) |
 | The guide to video layers and customising them, and routes for recording videos inside a company | [Using the lessons inside a company](../using-inside-a-company.md#making-the-videos-your-own) |
 | The toolkit's decisions on runnable lessons with generated videos, and on editable video layers | [Videos and decks are generated from text files, never edited by hand](0002-videos-and-decks-are-generated-from-text-files-never-edited-by-hand.md), with the items above |
 | TypeScript lessons | Not carried over: the series is Java only |

@@ -36,7 +36,7 @@ soft (the default), none, or circle. [NOTICE](../../NOTICE) credits them. The co
 ### Consequences
 
 * Good, because the slides look finished, and the pictures cost nothing and need no permission.
-* Bad, because the same few figures appear in every lesson; [next steps](../next-steps.md) plans different people in
+* Bad, because the same few figures appear in every lesson; [the backlog](../BACKLOG.md) plans different people in
   different lessons, and objects on the slides about the subject.
 
 ### Confirmation

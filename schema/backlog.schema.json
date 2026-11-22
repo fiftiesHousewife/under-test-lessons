@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/fiftieshousewife/under-test-lessons/schema/backlog.schema.json",
+  "title": "Backlog",
+  "description": "The lessons backlog, plan/lessons-backlog.yaml, imported into this repo's GitHub issues by tools/backlog-import (copied from the toolkit's backlog-seed schema). Items refer to each other by key, a descriptive kebab-case name, never a code.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "items"
+  ],
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "type",
+          "title",
+          "phase",
+          "owner_role",
+          "done_by",
+          "done_when"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "description": "Stable descriptive name; the importer uses it to update rather than duplicate."
+          },
+          "type": {
+            "enum": [
+              "outcome",
+              "deliverable",
+              "task",
+              "decision"
+            ],
+            "description": "outcome: a result the lessons owner agrees. deliverable: part of an outcome. task: part of a deliverable. decision: a question for the lessons owner, resolved by a decision record."
+          },
+          "title": {
+            "type": "string"
+          },
+          "parent": {
+            "type": "string",
+            "description": "Key of the parent item."
+          },
+          "phase": {
+            "enum": [
+              "videos",
+              "lessons",
+              "fixes",
+              "finding-lessons",
+              "companies",
+              "upkeep"
+            ],
+            "description": "The kind of work: videos and slides, new lessons, fixes to lessons, helping people find lessons, companies making them their own, or upkeep of this repo."
+          },
+          "horizon": {
+            "enum": [
+              "now",
+              "next",
+              "later"
+            ]
+          },
+          "owner_role": {
+            "enum": [
+              "Lessons Owner"
+            ]
+          },
+          "done_by": {
+            "enum": [
+              "tool",
+              "ai",
+              "person"
+            ],
+            "description": "tool: an automated, repeatable tool. ai: a person with AI coding assistance; the AI drafts, the person reviews, an automated check must pass. person: a human decision or activity."
+          },
+          "done_when": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "blocked_by": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Keys of items that must be finished first."
+          },
+          "decision_record": {
+            "type": "string",
+            "description": "For decision items: path of the decision record that resolves it."
+          },
+          "notes": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "done"
+            ],
+            "description": "done: the work is finished; importers close the item as completed. Omitted means open."
+          }
+        }
+      }
+    }
+  }
+}

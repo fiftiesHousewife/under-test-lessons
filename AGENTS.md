@@ -19,7 +19,7 @@ lives in that repo; link to it by full URL.
 | [`lessons/`](lessons/README.md) | One folder per lesson; [the catalogue](lessons/CATALOGUE.md) is the plan |
 | `lessons/_shared/` | Video set-up and helpers, slide styles, themes and pictures, and `video-tools` |
 | [`docs/decisions/`](docs/decisions/README.md) | This repo's decisions, in MADR form |
-| [`docs/next-steps.md`](docs/next-steps.md) | Work in hand |
+| [`plan/lessons-backlog.yaml`](plan/lessons-backlog.yaml), [`docs/BACKLOG.md`](docs/BACKLOG.md) | Work in hand: the backlog file, loaded into GitHub issues, and the page generated from them |
 | [`docs/using-inside-a-company.md`](docs/using-inside-a-company.md) | Repository manager, own container images, proxies, licences |
 | [`docs/research/`](docs/research/technology-gap-review.md) | Research behind the lesson plan |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words lessons use, on top of the toolkit's word list |
@@ -31,7 +31,8 @@ lives in that repo; link to it by full URL.
 Follow [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md): design the lesson as one row of the
 catalogue, build today's code and the fix behind `-Pcode=today`, write the README, then the slides, narration and
 video script (generated with `tools/new-video-script.py`), and rebuild the deck. The plan of lessons to add is in
-[the catalogue](lessons/CATALOGUE.md); work in hand is in [next steps](docs/next-steps.md).
+[the catalogue](lessons/CATALOGUE.md); work in hand is in [the backlog](docs/BACKLOG.md), worked with
+[work-on-an-item](.github/skills/work-on-an-item/SKILL.md).
 
 ## Skills
 | Skill | Use it to |
@@ -39,6 +40,7 @@ video script (generated with `tools/new-video-script.py`), and rebuild the deck.
 | [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md) | Write a technique lesson and example |
 | [write-lesson-slides-and-narration](.github/skills/write-lesson-slides-and-narration/SKILL.md) | Write a lesson video's story: slides, captions and narration |
 | [make-a-lesson-video](.github/skills/make-a-lesson-video/SKILL.md) | Script, check and make a lesson's short narrated video, its slides and deck |
+| [work-on-an-item](.github/skills/work-on-an-item/SKILL.md) | Pick up an item from the backlog and finish it |
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record in [`docs/decisions/`](docs/decisions/README.md) |
 
@@ -71,3 +73,6 @@ Tests that need a container go in the `integrationTest` source set, and skip the
 Run `./gradlew check`. It must pass. Where Gradle's worker processes can't run, as in some sandboxes, run PMD and
 Checkstyle with `./gradlew --init-script tools/quality-cli.init.gradle --no-configuration-cache pmdCli checkstyleCli`.
 Rebuild the decks (`./gradlew :lessons:video-tools:buildLessonSlides`) when slides, narration or a lesson's code change.
+Push only with `maintainer-tools/sync/sync.sh "What changed"`, which checks the build, syncs the backlog into the
+GitHub issues and refreshes the backlog page before pushing (it needs a token that can write issues, in
+`UNDERTEST_GITHUB_TOKEN`). Where it can't run, as in a sandbox without the token, say so and leave the sync to a person.
