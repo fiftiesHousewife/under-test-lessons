@@ -1,0 +1,15 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M40 300 H360" stroke-width="7"/>
+<g stroke-width="4"><path d="M60 300 V285 M100 300 V285 M140 300 V285 M180 300 V285 M260 300 V285 M300 300 V285 M340 300 V285"/></g>
+<path d="M220 60 V330" stroke-width="9" stroke-dasharray="18 12"/>
+<rect x="40" y="200" width="170" height="70" fill="url(#hatch)" stroke-width="5"/>
+<rect x="230" y="200" width="130" height="70" fill="#fff" stroke-width="5"/>
+<g font-family="Georgia, serif" font-size="26" fill="#111" stroke="none" text-anchor="middle"><text x="125" y="244">£49.99</text><text x="295" y="244">£50.00</text>
+<text x="125" y="345" font-style="italic">no discount</text><text x="295" y="345" font-style="italic">5% off</text></g>
+<ellipse cx="220" cy="128" rx="26" ry="30" fill="url(#cross-hatch)" stroke-width="5"/>
+<circle cx="220" cy="94" r="15" fill="#fff" stroke-width="4"/>
+<circle cx="214" cy="92" r="3.5" fill="#111" stroke="none"/><circle cx="226" cy="92" r="3.5" fill="#111" stroke="none"/>
+<path d="M196 118 L176 106 M244 118 L264 106 M196 140 L174 150 M244 140 L266 150 M206 82 L198 66 M234 82 L242 66" stroke-width="4"/>
+<path d="M268 60 Q300 36 336 50 Q352 66 338 84 Q318 98 292 88 L274 98 L282 78 Q262 70 268 60 Z" fill="#fff" stroke-width="4"/>
+<text x="306" y="78" font-family="Georgia, serif" font-weight="bold" font-size="24" fill="#111" stroke="none" text-anchor="middle">&gt; or &gt;=?</text>
+</svg>

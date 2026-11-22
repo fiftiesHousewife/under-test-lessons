@@ -51,7 +51,7 @@ Type@1ms `show lessons/property-based-testing/example/build.gradle.kts "/^tasks.
 Enter
 Sleep 300ms
 Show
-Sleep 10s
+Sleep 15s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -65,7 +65,7 @@ Type@1ms `show FirstPayerSplitter 14 19`
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 16s
 
 # ---- Scene 4: the example tests ----
 Hide
@@ -79,7 +79,7 @@ Type@1ms `show SplitterExampleTest 12 26`
 Enter
 Sleep 300ms
 Show
-Sleep 9s
+Sleep 10s
 
 # ---- Scene 5: the property test ----
 Hide
@@ -93,7 +93,7 @@ Type@1ms `show SplitterPropertyTest 30 47`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 20s
 
 # ---- Scene 6: the property finds a bug ----
 Hide

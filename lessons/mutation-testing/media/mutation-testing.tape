@@ -35,7 +35,7 @@ Sleep 300ms
 Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml"`
 Enter
 Show
-Sleep 10s
+Sleep 13s
 
 # ---- Scene 2: step 2, add the plugin ----
 Hide
@@ -51,7 +51,7 @@ Sleep 300ms
 Type@1ms `show java-conventions "/info.solidsoft.pitest/" "build conventions: plugins"`
 Enter
 Show
-Sleep 9s
+Sleep 11s
 
 # ---- Scene 3: step 3, configure the plugin ----
 Hide
@@ -70,7 +70,7 @@ Sleep 300ms
 Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 10 19 "lesson build file"`
 Enter
 Show
-Sleep 14s
+Sleep 15s
 
 # ---- Scene 4: the code under test ----
 Hide
@@ -83,7 +83,7 @@ Sleep 300ms
 Type@1ms `show DiscountCalculator 17 39`
 Enter
 Show
-Sleep 25s
+Sleep 33s
 
 # ---- Scene 5: the weak tests ----
 Hide
@@ -99,7 +99,7 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorWeakTest 18 39`
 Enter
 Show
-Sleep 24s
+Sleep 35s
 
 # ---- Scene 6: PIT on the weak tests ----
 # PIT runs live, on camera; run_live measures how long it took, so captions and voice stay in time.
@@ -132,7 +132,7 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorStrongTest 18 40`
 Enter
 Show
-Sleep 21s
+Sleep 26s
 
 # ---- Scene 8: PIT on the strong tests ----
 Hide

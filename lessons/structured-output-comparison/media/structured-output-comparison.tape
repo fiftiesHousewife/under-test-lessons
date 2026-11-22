@@ -48,7 +48,7 @@ Type@1ms `show lessons/structured-output-comparison/example/build.gradle.kts "/^
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 13s
 
 # ---- Scene 3: the output ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show SummaryJson 21 28 "writing the summary"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 18s
 
 # ---- Scene 4: the code under test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show TodaysOrderSummary 18 21 "today's total"`
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 12s
 
 # ---- Scene 5: the loosened test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show ContainsTextTest 7 17 "the loosened test"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 20s
 
 # ---- Scene 6: the structured comparison ----
 Hide
@@ -104,7 +104,7 @@ Type@1ms `show CompareJsonTest 13 27 "the structured comparison"`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 17s
 
 # ---- Scene 7: the comparison finds the bug ----
 Hide

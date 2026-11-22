@@ -9,7 +9,8 @@ The mechanics: the script, the terminal helpers, the look, recording, captions a
 what order, is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
 
 A lesson video shows one technique working, in the terminal, from a script. It is regenerated from the script, never
-edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.tape`.
+edited by hand. Good models: `lessons/recorded-http-responses/media/` and `lessons/nested-tests/media/`; generate new
+scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill).
 
 ## Keep it short
 
@@ -19,8 +20,9 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
   README and exercise teach everything around it.
 - **Shape:** the problem (one or two narration lines), the weak or "before" state, the result, the fix or "after"
   state, the result, and one closing callout that states the lesson. Nothing else.
-- **Every second earns its place.** Pauses after a narration line: 2 to 4 seconds. After a result: about 1.5 seconds,
-  then a callout held for 4 to 5 seconds. No pause longer than 5 seconds on camera.
+- **Narration decides each scene's length.** A scene without a live run shows for its narration's spoken length plus
+  room: (words / 2.6) × 1.35 + 1.5 seconds. After a live run, hold the result 8 to 15 seconds while the narration
+  explains it, then a callout for 5 or 6.
 - **Hide everything that isn't the idea:** set-up, downloads, compiling and warm-up run off-camera (`Hide` ... `Show`).
 - **Only code, build files and real results on screen.** No `grep`, `sed` or other plumbing. If a tool's output is
   too long to read, make the build print a short, meaningful summary instead (as `mutationSummary` does for PIT), so
@@ -50,7 +52,7 @@ edited by hand. The model is `lessons/mutation-testing/media/mutation-testing.ta
 
 ## Write the script
 
-1. Copy the model script and keep its house style: `Require` lines, the `Set` block, `Env LESSON "<id>"`, then
+1. Generate the script, or copy a model one, and keep its house style: `Require` lines, the `Set` block, `Env LESSON "<id>"`, then
    `Source lessons/_shared/setup.tape`.
 2. Narration appears as `note` lines drawn off-camera; keep each under one terminal row.
 3. Code panels: `show <file or part of its name> <first line> <last line> [label]` for a range, or
@@ -128,9 +130,9 @@ What goes on the slides is in [write-lesson-slides-and-narration](../write-lesso
    (`setUpLessonVoice`). Changing only the narration? Run `assembleLessonVideo` instead: no new recording needed.
 2. In a sandboxed AI session, run it with `--no-daemon`, so it never joins a Gradle process started inside the sandbox.
 3. If a scene's narration doesn't fit, the build says which scene and how many seconds to add to its pauses. Narration
-   decides each scene's length: aim for the narration plus a second, and keep the whole video short.
-   VHS recordings come out a few percent shorter than their pauses add up to. The tools stretch the timings to the
-   real length, but leave about 10% spare in each scene so the narration still fits.
+   decides each scene's length, by the rule above. VHS recordings come out shorter than their pauses add up to, by a
+   few percent on a quiet machine and by up to a third on a busy one, so record one video at a time and run nothing
+   heavy alongside.
 4. Any other voice can replace Kokoro: pass `-PlessonVoiceCommand="<program and arguments>"`, a command that turns a
    text file into a WAV file. Organisations use their own approved speech service this way.
 

@@ -20,9 +20,9 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | built |
-| [Comparing structured output](structured-output-comparison/README.md): JSON and XML results that differ only in timestamps or order | JSONUnit, XMLUnit | Java only | built |
+| [Comparing structured output](structured-output-comparison/README.md): JSON results that differ only in timestamps or order (XML works the same way, with XMLUnit) | JSONUnit, XMLUnit | Java only | built |
 | [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | built |
-| [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders; spring-batch-test for Spring jobs | Java only | built |
+| [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders (spring-batch-test and Datafaker to come) | Java only | built |
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
 | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
@@ -33,7 +33,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | built |
-| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | built |
+| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | An in-memory fake (an ArchUnit rule to keep it that way is to come) | Java only | built |
 | [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | built |
 | [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | next |
@@ -71,18 +71,18 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | mutation-testing | [Mutation testing](mutation-testing/README.md) | built |
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md) | built |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
-| architecture-rules | [Architecture rules](architecture-rules/README.md) | next |
-| refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | next |
-| snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | next |
-| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | next |
+| architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
+| refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | built |
+| snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | built |
+| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | built |
 | business-rule-tests | Behaviour written down as examples (planned; the outside-in HTTP lesson covers part of it) | next |
-| fake-behind-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | next |
-| differential-testing | [Differential testing](differential-testing/README.md) | next |
+| fake-behind-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
+| differential-testing | [Differential testing](differential-testing/README.md) | built |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | later |
-| feature-flags | [Feature flags](feature-flags/README.md) | next |
-| embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | next |
-| batch-file-in-file-out-tests | [Batch file-in, file-out](batch-file-in-file-out/README.md) | next |
-| testcontainers | [Real databases in tests](real-databases-in-tests/README.md) | later |
+| feature-flags | [Feature flags](feature-flags/README.md) | built |
+| embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | built |
+| batch-file-in-file-out-tests | [Batch file-in, file-out](batch-file-in-file-out/README.md) | built |
+| testcontainers | [Real databases in tests](real-databases-in-tests/README.md) | built |
 | contract-testing | Contract tests between teams | later |
 | database-unit-tests | Stored procedures tested inside the database | later |
 | ai-written-tests | AI-written tests that pass an acceptance check | later |
@@ -92,20 +92,32 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | machine-state-checks | Checking a machine after an install script | last |
 | post-release-checks | Checks that run against production after a release | last |
 
-## Designs of the lessons built first
+## Lesson designs
 
 Each lesson compares a weak "before" with a strong "after", switched by one Gradle property so the same command shows
-both. The default is the "after", so `./gradlew check` passes.
+both. The default is the "after", so `./gradlew check` passes. Every lesson has a row here; design a new lesson by
+adding its row first. The four oldest lessons use their own switch names, from before the convention.
 
 | Lesson (folder) | Example | Before | After | Switch |
 |---|---|---|---|---|
 | Architecture rules (`architecture-rules`) | An orders app in three layers: web, service, storage | Unit tests pass while a web class reads storage directly | An ArchUnit rule names the forbidden call | `-Pcode=today` |
 | Replacing hard-wired dependencies (`replacing-hard-wired-dependencies`) | An invoice in euros, priced with a live exchange-rate service | The rates come from a hard-wired singleton, so the test can't run without the service | The rates come through the constructor; the test uses a Mockito stand-in | `-Pcode=today` |
-| Comparing structured output (`structured-output-comparison`) | An order summary as JSON, with a timestamp and an id | A string comparison breaks on every run, so someone loosens it to "contains" | JSONUnit compares the structure, ignoring only the timestamp and id | `-Pcheck=strings` |
+| Comparing structured output (`structured-output-comparison`) | An order summary as JSON, with a timestamp and an id | A string comparison breaks on every run, so someone loosens it to "contains" | JSONUnit compares the structure, ignoring only the timestamp and id | `-Pcode=today` |
 | Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock replays recorded answers, including an unknown postcode and an outage | `-Pcode=today` |
 | Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pcode=today` |
 | Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | A mock test checks each call, and misses a commit made too early | An in-memory fake queue; tests check what was delivered | `-Pcode=today` |
 | Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat list of tests misses a case | `@Nested` classes, one per state, asking the same questions, so the gap shows | `-Pcode=today` |
+| Mutation testing (`mutation-testing`) | A shop's discount rules | Weak tests: every line runs, answers barely checked | Strong tests check the exact answer at every boundary; PIT counts planted bugs caught | `-Psuite=weak` |
+| Characterisation tests (`characterisation-tests`) | A bank statement printer | A test that checks something came back | The whole statement approved as it is, so a tidy-up that changes an amount is caught | `-Pstatement=refactored` |
+| Property-based testing (`property-based-testing`) | Splitting a bill in pence | Example tests the author thought of | A rule checked on many generated bills finds the split that loses a penny | `-Psplitter=current` |
+| Parameterised tests (`parameterised-tests`) | VAT at 20% in pence | Copy-pasted tests on round numbers | A table of cases, each named, finds the rounding bug | `-Pvat=current` |
+| Differential testing (`differential-testing`) | Postage by weight, old and rewritten | The rewrite's own examples | Old against new on every weight finds a mistyped price | `-Pcode=today` |
+| Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
+| Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
+| Batch file-in, file-out (`batch-file-in-file-out`) | A nightly settlement file | Tests of the pieces | The whole job, file in and file out, compared line by line | `-Pcode=today` |
+| Embedded Jakarta EE tests (`embedded-jakarta-ee-tests`) | VAT at a checkout, with two tax-rate beans | A unit test that wires the checkout by hand | Weld wires it as the server would, and it gets the wrong rate | `-Pcode=today` |
+| Real databases in tests (`real-databases-in-tests`) | Who sales should call first | The query on in-memory H2 | The same query on real PostgreSQL in a container | `-Pcode=today` |
+| Database changes with Liquibase (`database-changes-with-liquibase`) | Adding a loyalty level to customers | Every change applied to H2 | Every change applied to real PostgreSQL, which refuses one | `-Pcode=today` |
 
 ## Next lessons
 

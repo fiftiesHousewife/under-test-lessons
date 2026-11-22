@@ -23,6 +23,17 @@ Say: Our example is a small piece of code from an online shop. It works out the 
   pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
   more on top. We'll look at two sets of tests for it: one weak, one strong.
 
+## intro: Boundaries: where bugs hide
+- A boundary is where a rule changes: £50 gets 5% off, £49.99 gets nothing
+- Bugs collect there: "at least £50" written as "more than £50", one character out
+- A good test checks both sides: exactly £50, and one penny less
+Picture: boundary
+Say: First, an idea we will need: the boundary. [pause 500ms] A boundary is the point where a rule changes. Orders of
+  fifty pounds or more get five percent off; an order of forty nine ninety nine gets nothing. Bugs collect at
+  boundaries. "At least fifty pounds" written as "more than fifty pounds" is one character out, and only an order of
+  exactly fifty pounds shows the difference. So a good test checks both sides of every boundary: exactly fifty pounds,
+  and one penny less. PIT plants exactly this kind of bug, as we will see.
+
 ## intro: What we'll compare
 - The code under test: the shop's discount rules
 - Weak tests: run every line, but hardly check the answers

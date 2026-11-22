@@ -48,7 +48,7 @@ Type@1ms `show lessons/replacing-hard-wired-dependencies/example/build.gradle.kt
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 19s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show TodaysInvoice 9 17 "today's invoice"`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 23s
 
 # ---- Scene 4: the test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show InvoiceTest 13 33 "the test"`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 19s
 
 # ---- Scene 5: today's invoice can't be tested ----
 Hide

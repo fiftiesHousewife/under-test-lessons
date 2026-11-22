@@ -40,7 +40,7 @@ Type@1ms `show lessons/parameterised-tests/example/build.gradle.kts "/^tasks.tes
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 18s
 
 # ---- Scene 2: the code under test ----
 Hide
@@ -54,7 +54,7 @@ Type@1ms `show RoundingDownVat 9 12`
 Enter
 Sleep 300ms
 Show
-Sleep 9s
+Sleep 14s
 
 # ---- Scene 3: the copy-pasted tests ----
 Hide
@@ -68,7 +68,7 @@ Type@1ms `show VatCopyPasteTest 11 28`
 Enter
 Sleep 300ms
 Show
-Sleep 8s
+Sleep 10s
 
 # ---- Scene 4: the parameterised test ----
 Hide
@@ -82,7 +82,7 @@ Type@1ms `show VatParameterisedTest 13 30`
 Enter
 Sleep 300ms
 Show
-Sleep 10s
+Sleep 14s
 
 # ---- Scene 5: the table finds a bug ----
 Hide
