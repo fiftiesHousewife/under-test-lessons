@@ -43,7 +43,7 @@ Type@1ms `show libs.versions.toml "/liquibase/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 19s
 
 # ---- Scene 2: step 2, the dependency ----
 Hide
@@ -71,7 +71,7 @@ Type@1ms `show lessons/database-changes-with-liquibase/example/src/main/resource
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 22s
 
 # ---- Scene 4: the test on an in-memory database ----
 Hide
@@ -85,7 +85,7 @@ Type@1ms `show InMemoryChangesTest 13 21 "the test on H2"`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 14s
 
 # ---- Scene 5: the test on real PostgreSQL ----
 Hide

@@ -34,7 +34,7 @@ Type@1ms `show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 8s
+Sleep 10s
 
 # ---- Scene 2: step 2, the dependencies ----
 Hide
@@ -93,7 +93,7 @@ Type@1ms `show CheckoutByHandTest 10 13 "the test by hand"`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 16s
 
 # ---- Scene 6: the test in a container ----
 Hide

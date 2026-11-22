@@ -34,7 +34,7 @@ Type@1ms `show lessons/dynamic-tests/example/src/test/resources/examples/apostro
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 20s
 
 # ---- Scene 2: the code under test ----
 Hide
@@ -48,7 +48,7 @@ Type@1ms `show TodaysNameFormatter 11 16 "today's formatter"`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 14s
 
 # ---- Scene 3: one test for all ----
 Hide

@@ -43,7 +43,7 @@ Type@1ms `show libs.versions.toml "/testcontainers|postgresql|h2/" gradle/libs.v
 Enter
 Sleep 300ms
 Show
-Sleep 9s
+Sleep 10s
 
 # ---- Scene 2: step 2, a suite for container tests ----
 Hide
@@ -57,7 +57,7 @@ Type@1ms `show lessons/real-databases-in-tests/example/build.gradle.kts "/^testi
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 18s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -71,7 +71,7 @@ Type@1ms `show CustomerRepository 15 16 "today's query"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 21s
 
 # ---- Scene 4: the test on an in-memory database ----
 Hide
@@ -85,7 +85,7 @@ Type@1ms `show InMemoryDatabaseTest 13 24 "the test on H2"`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 15s
 
 # ---- Scene 5: the test on real PostgreSQL ----
 Hide

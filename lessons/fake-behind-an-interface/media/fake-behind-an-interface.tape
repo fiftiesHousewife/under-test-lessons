@@ -34,7 +34,7 @@ Type@1ms `show MessageQueue 3 14 "the shop's interface to the queue"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 20s
 
 # ---- Scene 2: the code under test ----
 Hide
@@ -48,7 +48,7 @@ Type@1ms `show TodaysOrderPlacement 16 22 "today's order placement"`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 21s
 
 # ---- Scene 3: the mock test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show FakeQueueTest 13 20 "the fake test"`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 16s
 
 # ---- Scene 6: the fake finds the bug ----
 Hide

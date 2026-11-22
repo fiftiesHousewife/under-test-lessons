@@ -62,7 +62,7 @@ Type@1ms `show TodaysBookingHandler 13 21 "today's booking service"`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 19s
 
 # ---- Scene 4: the tests from inside ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show BookingRulesTest 9 19 "tests from inside"`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 16s
 
 # ---- Scene 5: the tests from outside ----
 Hide

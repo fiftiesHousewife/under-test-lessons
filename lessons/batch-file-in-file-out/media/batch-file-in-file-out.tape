@@ -37,7 +37,7 @@ Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlem
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 23s
 
 # ---- Scene 2: the code under test ----
 Hide
@@ -79,7 +79,7 @@ Type@1ms `show WholeJobTest 17 28 "test of the whole job"`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 20s
 
 # ---- Scene 5: the file comparison finds the gap ----
 Hide

@@ -48,7 +48,7 @@ Type@1ms `show lessons/feature-flags/example/build.gradle.kts "/^dependencies/" 
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 14s
 
 # ---- Scene 3: the checkout and its flag ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show Checkout 18 21 "the checkout"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 17s
 
 # ---- Scene 4: the code under test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show TodaysNewShipping 8 14 "today's new rules"`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 14s
 
 # ---- Scene 5: tests with the default flag ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show DefaultFlagsTest 11 18 "tests with the default flag"`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 14s
 
 # ---- Scene 6: tests both ways ----
 Hide

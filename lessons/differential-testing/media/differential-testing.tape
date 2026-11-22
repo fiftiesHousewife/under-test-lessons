@@ -34,7 +34,7 @@ Type@1ms `show LegacyPostage 8 23 "the old calculator"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 16s
 
 # ---- Scene 2: the rewrite ----
 Hide
@@ -48,7 +48,7 @@ Type@1ms `show RewrittenPostage 17 29 "the rewrite"`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 18s
 
 # ---- Scene 3: the rewrite's own tests ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show OldAndNewAgreeTest 14 34 "the differential test"`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 23s
 
 # ---- Scene 5: the comparison finds a gap ----
 Hide

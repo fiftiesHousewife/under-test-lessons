@@ -48,7 +48,7 @@ Type@1ms `show lessons/architecture-rules/example/build.gradle.kts "/libs.archun
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 15s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show TodaysSummaryPage 6 19 "web layer: the admin page today"`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 23s
 
 # ---- Scene 4: the unit tests ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show OrderSummaryPageTest 14 30 "unit tests"`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 18s
 
 # ---- Scene 5: the architecture rule ----
 Hide

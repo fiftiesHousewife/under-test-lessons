@@ -62,7 +62,7 @@ Type@1ms `show TodaysPostcodeClient 16 19 "today's postcode client"`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 17s
 
 # ---- Scene 4: the test against the real service ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show RealSupplierTest 14 18 "the test against the real service"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 16s
 
 # ---- Scene 5: a recorded answer ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show lessons/recorded-http-responses/example/src/test/resources/suppli
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 19s
 
 # ---- Scene 6: the tests with recordings ----
 Hide

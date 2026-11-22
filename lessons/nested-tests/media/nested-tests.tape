@@ -34,7 +34,7 @@ Type@1ms `show TodaysLoan 23 29 "today's loan"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 18s
 
 # ---- Scene 2: the flat tests ----
 Hide
@@ -48,7 +48,7 @@ Type@1ms `show FlatLoanTest 10 37 "flat tests"`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 17s
 
 # ---- Scene 3: the nested tests ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show LoanTest 35 56 "nested tests: when approved"`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 14s
 
 # ---- Scene 5: the gap shows ----
 Hide
