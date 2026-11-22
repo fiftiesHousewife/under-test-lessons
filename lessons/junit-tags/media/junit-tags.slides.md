@@ -5,50 +5,41 @@ Sources: the JUnit user guide (tagging and filtering with @Tag; meta-annotations
 in 2017; JUnit 6 is the current generation), and Gradle's user guide on testing in Java projects (test grouping with
 includeTags and excludeTags in useJUnitPlatform; a test task of your own, given the test classes and class path).
 
-## intro: What is a tag?
-- A label on a test, or on a whole test class
-- The build chooses which tests to run by their labels
-- Quick tests run on every change, slow ones apart
-Picture: tag
-Say: A tag is a label on a test, or on a whole test class. The build can then choose which tests to run, by their
-  labels. So the quick tests run on every change, and the slow ones run apart.
+## intro: Every change waits for the slow tests
+- A shop's build has 4 quick tests, and 2 slow ones
+- The slow ones start the warehouse's test system, which takes 2 seconds
+- Every run waits for them, so people stop running the tests
+Picture: bug
+Say: Here is the problem. A shop's build has 4 quick tests, and 2 slow ones. The slow ones start the warehouse's test
+  system first, which takes 2 seconds. Every run waits for them, even after the smallest change. And when every run
+  is slow, people stop running the tests.
 
 ## intro: Our example: a shop's stock check
 - Before promising an order, the shop asks the warehouse: is there enough?
-- Quick tests use a warehouse kept in memory, which answers at once
-- Slow tests start the warehouse's own test system, which takes 2 seconds
+- The quick tests use a warehouse kept in memory, which answers at once
+- The slow tests use the warehouse's own test system: worth keeping, because it's the real thing
 Picture: basket
-Say: Our example is a shop's stock check. Before it promises an order, the shop asks the warehouse whether there is
-  enough of the item. Quick tests use a warehouse kept in memory, which answers at once. Slow tests start the
-  warehouse's own test system first, which takes 2 seconds.
+Say: Our example is that shop's stock check. Before it promises an order, the shop asks the warehouse whether there
+  is enough of the item. The quick tests use a warehouse kept in memory, which answers at once. The slow tests use
+  the warehouse's own test system. They're worth keeping, because they check the real thing.
 
-## intro: What we'll compare
-- Today's build: one test task that runs every test, quick and slow
-- With tags: the slow tests marked slow
-- A quick task that leaves them out, and a slow task, for the build machine, that runs only them
-Picture: scales
-Say: Here is what we will compare. Today's build has one test task, which runs every test, quick and slow.
-  [pause 300ms] With tags, the slow tests are marked slow. A quick task leaves them out, and a slow task, for the
-  build machine, runs only them.
+## intro: The fix: label the slow tests
+- Put a label, a tag, on each slow test: @Tag("slow")
+- Every change runs only the quick tests: a moment, not 2 seconds
+- The build machine runs the slow ones too, so nothing goes untested
+Picture: tag
+Say: The fix is to label the slow tests. JUnit calls the label a tag: you write tag, slow, on each slow test, or on
+  its whole class. Then every change runs only the quick tests, which take a moment. And the build machine runs the
+  slow ones as well, so nothing goes untested.
 
-## intro: Why it matters
-- A slow run after every small change, and people stop running the tests
-- Slow tests are often worth keeping: they check the real thing
-- Keep them, but run them apart, so the quick feedback stays quick
-Picture: bug
-Say: Why does this even matter? [pause 1600ms] When every run after every small change is slow, people stop running
-  the tests. But slow tests are often worth keeping, because they check the real thing. So keep them, and run them
-  apart, so the quick feedback stays quick.
-
-## intro: How tags work
-- @Tag("slow") on a test or a class; or your own annotation that carries it
-- Gradle's test task filters on tags: excludeTags, includeTags
-- A second test task runs the same test classes with a different filter
+## intro: How the build uses the label
+- The quick task leaves the slow tests out: excludeTags("slow")
+- A second task, slowTest, runs only them: includeTags("slow")
+- The build machine's check runs both
 Picture: robot
-Say: How do tags work? You put the tag annotation, with a name such as slow, on a test or on a test class. Or you make
-  your own annotation that carries the tag, so the name is written once. Gradle's test task can then leave out tests
-  with a tag, or run only the tests with a tag. And a second test task can run the same test classes, with a
-  different filter.
+Say: How does the build use the label? The usual test task is told to leave out the tests tagged slow. A second task,
+  called slow test, runs only those. And the build machine's check runs both, so the slow tests still run on every
+  change that's pushed.
 
 Include: how-we-build
 
