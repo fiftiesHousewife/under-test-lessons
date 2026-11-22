@@ -5,8 +5,8 @@ public interface Checkout {
 
     int totalPence(int netPence);
 
-    /** The net price plus VAT at the given rate. */
+    /** The net price plus VAT at the given rate, the VAT rounded to the nearest penny, halves up. */
     static int withVat(final int netPence, final TaxRate rate) {
-        return netPence + netPence * rate.percent() / 100;
+        return netPence + Math.floorDiv(netPence * rate.percent() + 50, 100);
     }
 }

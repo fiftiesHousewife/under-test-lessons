@@ -6,4 +6,8 @@ GuardedSettingsTest > shopReceiptShowsPriceWithVat() PASSED
 HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() PASSED
 
 HandSetUpTest > shopReceiptShowsPriceWithVat() PASSED
-All 4 tests passed.
+
+PricesTest > aCreditIsWrittenWithItsSignInFront() PASSED
+
+PricesTest > vatIsRoundedToTheNearestPenny() PASSED
+All 6 tests passed.

@@ -11,7 +11,7 @@ puts it back after, and fails the test that left it changed. Extensions come wit
 ## Run the example
 
 ```bash
-./gradlew :lessons:junit-extensions:test -Pcode=today   # today's trade invoice: 2 of 4 fail, the receipt test set up by hand and the trade invoice test with the extension
+./gradlew :lessons:junit-extensions:test -Pcode=today   # today's trade invoice: 2 of 6 fail, the receipt test set up by hand and the trade invoice test with the extension
 ./gradlew :lessons:junit-extensions:test                # the fixed trade invoice: every test passes
 ```
 
