@@ -40,7 +40,7 @@ Type@1ms `show lessons/parameterised-tests/example/build.gradle.kts "/^tasks.tes
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 24s
 
 # ---- Scene 2: the code under test ----
 Hide
