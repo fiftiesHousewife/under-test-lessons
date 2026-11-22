@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add the OpenFeature SDK to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/openfeature/" gradle/libs.versions.toml --zoom 11`
+Type@1ms `show libs.versions.toml "/openfeature/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show

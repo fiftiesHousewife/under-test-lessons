@@ -35,14 +35,18 @@ class LiveOutputsTest {
         Files.writeString(media.resolve("demo.narration.md"), "1. Line 2 says two.\n2. The run names line 24.\n");
     }
 
-    @Test
-    void keepsWhatALiveCommandPrintedAsTheVideoShowsIt() {
-        final Media demo = new Media(root, "demo");
+    /** Keeps an output for the lesson's first live command, as tools/capture-lesson-outputs.py does. */
+    private void keep(final String command, final String output) throws IOException {
+        final Path outputs = Files.createDirectories(media.resolve("demo.outputs"));
+        Files.writeString(outputs.resolve("01.txt"), "$ " + command + "\n" + output + "\n");
+    }
 
-        final int kept = LiveOutputs.capture(demo);
+    @Test
+    void readsWhatALiveCommandPrintedForThatCommandOnly() throws IOException {
+        final Media demo = new Media(root, "demo");
+        keep("echo line 24 failed", "line 24 failed");
 
         assertAll(
-                () -> assertThat(kept).isEqualTo(1),
                 () -> assertThat(LiveOutputs.read(demo, 0, "echo line 24 failed")).containsExactly("line 24 failed"),
                 () -> assertThat(LiveOutputs.read(demo, 0, "echo something else")).isEmpty(),
                 () -> assertThat(LiveOutputs.problems(demo)).isEmpty());
@@ -57,11 +61,12 @@ class LiveOutputsTest {
     }
 
     @Test
-    void dropsColourCodesNoticesAndBlankEnds() {
-        final String printed = "\nPicked up JAVA_TOOL_OPTIONS: -Dx\n\u001B[1mBold\u001B[0m  \n"
-                + "Caught exception: Could not start\nend\n\n";
+    void failsKeptOutputThatShowsAPersonalPath() throws IOException {
+        final Path outputs = Files.createDirectories(media.resolve("demo.outputs"));
+        Files.writeString(outputs.resolve("01.txt"), "$ echo line 24 failed\nsee /Users/someone/repo/build\n");
 
-        assertThat(LiveOutputs.clean(printed)).isEqualTo("Bold\nend");
+        assertThat(LiveOutputs.problems(new Media(root, "demo"))).extracting(Problem::message)
+                .anyMatch(message -> message.contains("personal path"));
     }
 
     @Test
@@ -71,7 +76,7 @@ class LiveOutputsTest {
         assertAll(
                 () -> assertThat(problems).hasSize(1),
                 () -> assertThat(problems.getFirst().message()).contains("live command 1 (echo line 24 failed)")
-                        .contains("captureLessonOutputs -Plesson=demo"));
+                        .contains("capture-lesson-outputs.py demo"));
     }
 
     @Test
@@ -84,7 +89,7 @@ class LiveOutputsTest {
                 Type@1ms `callout "Look at line 24."`
                 """);
         final Media demo = new Media(root, "demo");
-        LiveOutputs.capture(demo);
+        keep("echo line 7 failed", "line 7 failed");
 
         final List<String> problems = LiveOutputs.problems(demo).stream().map(Problem::message).toList();
 
@@ -101,7 +106,7 @@ class LiveOutputsTest {
         Files.writeString(shared.resolveSibling("slides.css"), "body { }");
         Files.writeString(shared.resolveSibling("deck.css"), ".deck { }");
         Files.writeString(shared.resolveSibling("deck.js"), "// controls");
-        LiveOutputs.capture(new Media(root, "demo"));
+        keep("echo line 24 failed", "line 24 failed");
 
         final String deck = SlideDeck.html(new Media(root, "demo"));
 

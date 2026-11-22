@@ -72,6 +72,8 @@ def voice_of(lesson):
 def publish_deck(lesson, following, out):
     with open(deck_of(lesson), encoding="utf-8") as f:
         page = f.read()
+    # Links to other lessons point at their deck files in the repository; published, each deck is <id>.html.
+    page = re.sub(r'href="\.\./\.\./([a-z0-9-]+)/media/\1\.deck\.html', r'href="\1.html', page)
     tag = f'<script src="series.js" data-next="{html.escape(following or "")}"></script>'
     page = page.replace("</body>", tag + "</body>", 1)
     with open(os.path.join(out, lesson + ".html"), "w", encoding="utf-8") as f:

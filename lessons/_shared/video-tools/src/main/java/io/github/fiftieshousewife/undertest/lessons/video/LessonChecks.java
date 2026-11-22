@@ -20,6 +20,7 @@ final class LessonChecks {
     static final double ROOM = 1.35;
     static final double EXTRA_SECONDS = 1.5;
 
+    private static final Pattern LESSON_LINK = Pattern.compile("(?m)^- lesson:.*\\(([a-z0-9-]+)\\)\\s*$");
     private static final Pattern SCENE = Pattern.compile("^#\\s*-+\\s*Scene\\s+\\d+:.*");
     private static final Pattern TYPED = Pattern.compile("^Type(?:@\\S+)?\\s+([\"`])(.*)\\1\\s*$");
     private static final Pattern SHOWN_FOR = Pattern.compile("^Show\\s*$");
@@ -122,6 +123,14 @@ final class LessonChecks {
         }
         if (!text.contains("{lessons-repo}")) {
             problems.add(new Problem(slidesFile, "no {lessons-repo} link on the closing slides"));
+        }
+        final Path lessons = slidesFile.toAbsolutePath().resolveSibling("../..").normalize();
+        final Matcher link = LESSON_LINK.matcher(text);
+        while (link.find()) {
+            if (!Files.isRegularFile(lessons.resolve(link.group(1)).resolve("README.md"))) {
+                problems.add(new Problem(slidesFile, "a slide links lesson " + link.group(1)
+                        + ", which doesn't exist"));
+            }
         }
         return problems;
     }

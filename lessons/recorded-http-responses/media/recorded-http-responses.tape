@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add WireMock to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/wiremock/" gradle/libs.versions.toml --zoom 9`
+Type@1ms `show libs.versions.toml "/wiremock/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
@@ -92,7 +92,35 @@ Sleep 300ms
 Show
 Sleep 19s
 
-# ---- Scene 6: the tests with recordings ----
+# ---- Scene 6: making recordings from a stand-in ----
+Hide
+Type@1ms "scene"
+Enter
+Sleep 300ms
+Type@1ms `note "Making recordings: WireMock passes each question to a *stand-in* supplier on this machine, and keeps the answer."`
+Enter
+Sleep 300ms
+Type@1ms `show RecordingTest 81 94 "making recordings" --zoom 83-84`
+Enter
+Sleep 300ms
+Show
+Sleep 28s
+
+# ---- Scene 7: the tests for recordings ----
+Hide
+Type@1ms "scene"
+Enter
+Sleep 300ms
+Type@1ms `note "Recordings copy real answers, so they can hold *personal data*. Today they are saved as recorded."`
+Enter
+Sleep 300ms
+Type@1ms `show RecordingTest 65 79 "tests for the saved recordings" --zoom 76`
+Enter
+Sleep 300ms
+Show
+Sleep 29s
+
+# ---- Scene 8: the tests with recordings ----
 Hide
 Type@1ms "scene"
 Enter
@@ -106,12 +134,12 @@ Sleep 300ms
 Show
 Sleep 16s
 
-# ---- Scene 7: the recordings find two bugs ----
+# ---- Scene 9: the recordings find two bugs, and personal data ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Run the tests against today's client:"`
+Type@1ms `note "Run the tests against today's code:"`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:recorded-http-responses:test -Pcode=today"`
@@ -119,20 +147,34 @@ Enter
 Sleep 300ms
 Show
 Wait+Screen@300s /tests failed\. Report/
-Sleep 15s
+Sleep 18s
 Hide
-Type@1ms `callout "The real-service test is skipped. The recordings show two bugs: an unknown postcode, and an outage."`
+Type@1ms `callout "The recordings show two bugs in the client, and the saved files hold a name, an email address and a token."`
 Enter
 Sleep 300ms
 Show
 Sleep 6s
 
-# ---- Scene 8: the fixed client ----
+# ---- Scene 10: the cleaner ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The client that checks what the supplier said first:"`
+Type@1ms `note "The cleaner: drop the token, and swap each name and email address for a *keyed* substitute."`
+Enter
+Sleep 300ms
+Type@1ms `show KeyedRecordingCleaner 30 52 "the cleaner" --zoom 47`
+Enter
+Sleep 300ms
+Show
+Sleep 35s
+
+# ---- Scene 11: the fix ----
+Hide
+Type@1ms "scene"
+Enter
+Sleep 300ms
+Type@1ms `note "The client that checks what the supplier said first, and the cleaner:"`
 Enter
 Sleep 300ms
 Type@1ms `show PostcodeClient 18 26 "the fixed client" --zoom 21-24`
@@ -143,9 +185,9 @@ Enter
 Sleep 300ms
 Show
 Wait+Screen@300s /tests that ran passed/
-Sleep 8s
+Sleep 9s
 Hide
-Type@1ms `callout "Every recorded answer is handled, in seconds, with no network and no account."`
+Type@1ms `callout "Every recorded answer is handled, and no personal data is saved, with no network and no account."`
 Enter
 Sleep 300ms
 Show

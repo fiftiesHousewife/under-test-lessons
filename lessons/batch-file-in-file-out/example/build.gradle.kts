@@ -2,9 +2,16 @@ plugins {
     id("io.github.fiftieshousewife.java-conventions")
 }
 
-// Batch file-in, file-out: run the whole job on a known input file, and compare its output file line by line.
-//   ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today   today's job: only the file comparison fails
-//   ./gradlew :lessons:batch-file-in-file-out:test                the fixed job: its file matches, line for line
+// Batch file-in, file-out: run the whole Spring Batch job on a known input file, and compare its output file's records.
+//   ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today   today's job: only the whole-job tests fail
+//   ./gradlew :lessons:batch-file-in-file-out:test                the fixed job: every record matches
+dependencies {
+    implementation(libs.spring.batch.core)
+    testImplementation(libs.spring.batch.test)
+    testImplementation(libs.datafaker)
+    testCompileOnly(libs.spotbugs.annotations)
+}
+
 tasks.test {
     systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result

@@ -51,6 +51,10 @@ li.link::before { content: "→"; position: absolute; left: 0; color: var(--acce
 .picture .line { fill: none; stroke: var(--ink); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
 .picture .light-line { fill: none; stroke: var(--paper); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
 .picture .thin { stroke-width: 6; }
+/* Slides in videos build up one point at a time: points still to come keep their places, hidden, and the picture
+   arrives with the first point. */
+.later { visibility: hidden; }
+.before-picture .picture { visibility: hidden; }
 
 /* Slide decks: the slides of slides.css, one at a time, scaled to fit the window; one slide per page when printed.
    A user stylesheet (-PlessonSlideCss) comes after this one, so it can restyle decks too. */
@@ -160,16 +164,16 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</p></section><figure class="code" style="--code-size: 19px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-<mark> 12  weld-junit = &quot;5.0.3.Final&quot;</mark>
-<mark> 13  # Weld 7 implements CDI 5; weld-junit 5.0.3 brings Weld 6, so the Weld BOM lifts it to 7.</mark>
-<mark> 14  weld = &quot;7.0.0.Final&quot;</mark>
-<mark> 15  jakarta-cdi = &quot;5.0.0&quot;</mark>
+ 12  weld-junit = &quot;5.0.3.Final&quot;
+ 13  # Weld 7 implements CDI 5; weld-junit 5.0.3 brings Weld 6, so the Weld BOM lifts it to 7.
+ 14  weld = &quot;7.0.0.Final&quot;
+ 15  jakarta-cdi = &quot;5.0.0&quot;
    ⋮
- 47  [libraries]
+ 54  [libraries]
    ⋮
- 54  weld-junit5 = { module = &quot;org.jboss.weld:weld-junit5&quot;, version.ref = &quot;weld-junit&quot; }
- 55  weld-core-bom = { module = &quot;org.jboss.weld:weld-core-bom&quot;, version.ref = &quot;weld&quot; }
- 56  jakarta-cdi-api = { module = &quot;jakarta.cdi:jakarta.cdi-api&quot;, version.ref = &quot;jakarta-cdi&quot; }</pre></figure></main><aside class="notes">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/770310369e72fa1e.m4a"></audio></section>
+ 61  weld-junit5 = { module = &quot;org.jboss.weld:weld-junit5&quot;, version.ref = &quot;weld-junit&quot; }
+ 62  weld-core-bom = { module = &quot;org.jboss.weld:weld-core-bom&quot;, version.ref = &quot;weld&quot; }
+ 63  jakarta-cdi-api = { module = &quot;jakarta.cdi:jakarta.cdi-api&quot;, version.ref = &quot;jakarta-cdi&quot; }</pre></figure></main><aside class="notes">Step one. Add Weld's JUnit support, and the programming interface for CDI, short for Contexts and Dependency Injection: the part of Jakarta E E that wires objects together, to the version catalogue.</aside><audio class="voice" preload="none" src="embedded-jakarta-ee-tests.deck-voice/770310369e72fa1e.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><p class="scene-text">Step two. The lesson compiles against the CDI interface, which the application server provides in production. And its tests use Weld.</p></section><figure class="code" style="--code-size: 19px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      compileOnly(libs.jakarta.cdi.api) // the application server provides it in production</mark>
 <mark> 11      testImplementation(platform(libs.weld.core.bom)) // Weld 7, the CDI 5 container</mark>

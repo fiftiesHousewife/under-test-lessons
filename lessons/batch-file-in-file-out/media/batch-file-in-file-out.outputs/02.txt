@@ -1,5 +1,9 @@
 $ ./gradlew :lessons:batch-file-in-file-out:test
-WholeJobTest > knownPaymentsGiveTheExpectedSettlementFile() PASSED
+WholeJobTest > aCleanedCaptureGivesTheSettlementFileTheBankAccepted() PASSED
+
+WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() PASSED
+
+KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
 
 PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
-All 2 tests passed.
+All 4 tests passed.

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: tests of the pieces: one line read, one line written. They pass, and never see the file the bank gets. */
+/** BEFORE: tests of the pieces: one line read, one line processed and written. They pass, and never see the file. */
 class PaymentLineTest {
 
     @Test
@@ -14,7 +14,7 @@ class PaymentLineTest {
 
         assertAll(
                 () -> assertThat(payment).isEqualTo(new Payment("12345678", 1250)),
-                () -> assertThat(payment.settlementLine()).isEqualTo("PAY,12345678,12.50"),
-                () -> assertThat(new Payment("1", 899).settlementLine()).isEqualTo("PAY,1,8.99"));
+                () -> assertThat(SettlementLine.of(payment).text()).isEqualTo("PAY,12345678,12.50"),
+                () -> assertThat(SettlementLine.of(new Payment("1", 899)).text()).isEqualTo("PAY,1,8.99"));
     }
 }

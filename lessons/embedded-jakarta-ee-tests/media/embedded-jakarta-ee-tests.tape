@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Weld's JUnit support and the CDI API to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml --zoom 12-15`
+Type@1ms `show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show

@@ -35,6 +35,7 @@ public final class VideoScriptChecker {
     /** Checks every {@code .tape} file under {@code lessons/}; paths in scripts are relative to {@code root}. */
     public List<Problem> check(final Path root) {
         final List<Problem> problems = new ArrayList<>();
+        problems.addAll(slidesOnlyLessons(root));
         for (final Path tape : tapes(root.resolve("lessons"))) {
             problems.addAll(checkTape(root, tape));
             final Path narration = tape.resolveSibling(String.valueOf(tape.getFileName()).replace(".tape",
@@ -48,10 +49,31 @@ public final class VideoScriptChecker {
             problems.addAll(LiveOutputs.problems(new Media(root, lessonId(tape))));
             problems.addAll(ZoomChecks.problems(root, tape));
             problems.addAll(VideoLength.problems(new Media(root, lessonId(tape))));
+            problems.addAll(ReadmeCommands.problems(new Media(root, lessonId(tape))));
             final Path slides = tape.resolveSibling(String.valueOf(tape.getFileName()).replace(".tape", ".slides.md"));
             if (Files.isRegularFile(slides)) {
                 problems.addAll(LessonChecks.slides(slides));
             }
+        }
+        return problems;
+    }
+
+    /** Lessons made of slides alone (no video script) still have their slides checked. */
+    private static List<Problem> slidesOnlyLessons(final Path root) {
+        final List<Problem> problems = new ArrayList<>();
+        if (!Files.isDirectory(root.resolve("lessons"))) {
+            return problems;
+        }
+        try (Stream<Path> folders = Files.list(root.resolve("lessons"))) {
+            for (final Path folder : folders.toList()) {
+                final String id = String.valueOf(folder.getFileName());
+                final Path slides = folder.resolve("media").resolve(id + ".slides.md");
+                if (Files.isRegularFile(slides) && !Files.isRegularFile(slides.resolveSibling(id + ".tape"))) {
+                    problems.addAll(LessonChecks.slides(slides));
+                }
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
         return problems;
     }

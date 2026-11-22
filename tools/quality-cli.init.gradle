@@ -1,5 +1,6 @@
 // Runs PMD and Checkstyle through their own command-line programs (no Gradle worker processes), so they work where
-// worker processes cannot connect back to Gradle, such as a sandbox. Same rule files as the build.
+// worker processes cannot connect back to Gradle, such as a sandbox. Same rule files as the build. Either fails the
+// build on any violation, as the build's own tasks do.
 allprojects {
     plugins.withId("pmd") {
         tasks.register("pmdCli", JavaExec) {
@@ -9,7 +10,6 @@ allprojects {
                 project.dependencies.create("net.sourceforge.pmd:pmd-cli:${project.pmd.toolVersion}"),
                 project.dependencies.create("net.sourceforge.pmd:pmd-java:${project.pmd.toolVersion}"))
             mainClass = "net.sourceforge.pmd.cli.PmdCli"
-            ignoreExitValue = true
             args "check", "--no-cache", "--no-progress", "-f", "text", "-R", rootProject.file("config/quality/pmd/ruleset.xml").path,
                  "-d", sources.collect { it.path }.join(",")
         }
@@ -21,7 +21,6 @@ allprojects {
             classpath = project.configurations.detachedConfiguration(
                 project.dependencies.create("com.puppycrawl.tools:checkstyle:${project.checkstyle.toolVersion}"))
             mainClass = "com.puppycrawl.tools.checkstyle.Main"
-            ignoreExitValue = true
             args(["-c", rootProject.file("config/quality/checkstyle/checkstyle.xml").path] + sources.collect { it.path })
         }
     }

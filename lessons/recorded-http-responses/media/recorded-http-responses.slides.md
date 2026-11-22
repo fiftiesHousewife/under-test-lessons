@@ -1,7 +1,9 @@
 # Slides: recorded HTTP responses
 
 Sources: wiremock.org and github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst; recording and
-playback described in its documentation); Maven Central (com.github.tomakehurst:wiremock, earliest versions published in 2012).
+playback described in its documentation, including recording from a target and capturing request headers);
+Maven Central (com.github.tomakehurst:wiremock, earliest versions published in 2012); RFC 2104 (HMAC, a keyed hash
+for signing data); Java Security Standard Algorithm Names (HmacSHA256, which every Java must provide).
 
 ## intro: What are recorded HTTP responses?
 - Answers from a web service you don't own, saved as files
@@ -24,10 +26,12 @@ Say: Our example looks up postcodes, using a supplier's web service, which turns
 - The code under test: today's client, written against the happy answer
 - A test against the real service: needs the network and an account
 - Tests with WireMock: replay recorded answers, including the rare ones
+- Recordings saved as recorded, and recordings cleaned before they are saved
 Picture: scales
 Say: Here is what we will compare. The code under test is today's client, written against the happy answer.
   [pause 300ms] A test against the real service needs the network and an account. [pause 300ms] And tests with
-  WireMock replay recorded answers, including the rare ones.
+  WireMock replay recorded answers, including the rare ones. We will also make the recordings, and compare saving
+  them as recorded with cleaning them first.
 
 ## intro: Why real services make poor test partners
 - They are slow, and down when you need them
@@ -46,16 +50,30 @@ Picture: robot
 Say: WireMock runs a small web server inside the test, on a free port. Each recording pairs a request with the answer
   to send back. You can record the answers from the real service, or write them by hand, including the errors.
 
+## intro: Recordings can hold personal data
+- A recording is a copy of a real answer, and of the question's headers
+- Names, email addresses and password tokens end up in files everyone can read
+- Clean each recording before it is saved: drop tokens, swap personal data for keyed substitutes
+- A keyed substitute is made with a secret key: the same value always gets the same one
+Picture: tag
+Say: Recordings bring a risk of their own. A recording is a copy of a real answer, and of the question's headers.
+  So names, email addresses and password tokens end up in files that everyone can read. The answer is to clean each
+  recording before it is saved. Drop the tokens, and swap personal data for keyed substitutes. A keyed substitute is
+  made from the value and a secret key, with a standard method called H-MAC. The same value always gets the same
+  substitute, so recordings still match each other. But nobody without the key can work back to the person.
+
 Include: how-we-build
 
 ## closing: When to use recorded responses
 - Whenever code calls a service you don't own
 - Record the real answers once, then add the rare ones by hand: errors, timeouts, odd data
+- Clean every recording before it is saved: no names, emails or passwords
 - Check recordings against the real service now and then; contract tests do this between teams
 Picture: map
 Say: When should you use them? [pause 1600ms] Whenever code calls a service you don't own. Record the real answers once,
-  then add the rare ones by hand: errors, slow answers, and odd data. And check the recordings against the real service
-  now and then. Between teams, contract tests do that job.
+  then add the rare ones by hand: errors, slow answers, and odd data. Clean every recording before it is saved, so no
+  names, email addresses or passwords reach the files. And check the recordings against the real service now and then.
+  Between teams, contract tests do that job.
 
 ## closing: Where WireMock came from
 - Created by Tom Akehurst, free under the Apache licence

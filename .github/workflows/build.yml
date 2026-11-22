@@ -24,5 +24,8 @@ jobs:
           distribution: temurin
           java-version: "25"
       - uses: gradle/actions/setup-gradle@v5
+      # Every lesson's live commands, run afresh, so the checks hold each README and deck to what the code prints today.
+      - name: Run each lesson's live commands
+        run: python3 tools/capture-lesson-outputs.py
       - name: Run all checks
         run: ./gradlew check -PtoolkitDir=.toolkit

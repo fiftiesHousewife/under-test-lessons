@@ -8,8 +8,7 @@ plugins {
 dependencies {
     testImplementation(libs.mockito.core)
 }
-// Mockito makes stand-ins for interfaces as plain subclasses (see src/test/resources/mockito-extensions), so it never
-// needs to attach an agent to the test JVM.
+// Mockito's agent is given to the test JVM by the build conventions, so it never attaches itself.
 
 tasks.test {
     systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))

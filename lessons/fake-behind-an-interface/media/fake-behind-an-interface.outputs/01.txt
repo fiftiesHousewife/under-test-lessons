@@ -13,18 +13,18 @@ FakeQueueTest > smallOrderSkipsTheFraudCheck() PASSED
 
 MockedQueueTest > bigOrderSendsBothMessagesAndCommits() PASSED
 
-3 tests completed, 1 failed
+QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() PASSED
+
+4 tests completed, 1 failed
 
 FAILURE: Build failed with an exception.
 
 * What went wrong:
 Execution failed for task ':lessons:fake-behind-an-interface:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 3 tests failed. Report: build/reports/tests/test/index.html
+> 1 of 4 tests failed. Report: build/reports/tests/test/index.html
 
 * Try:
 > Run with --stacktrace option to get the stack trace.
 > Run with --info or --debug option to get more log output.
 > Run with --scan to get full insights from a Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
-
-BUILD FAILED in 3s

@@ -158,6 +158,22 @@ tasks.withType<Test>().matching { it.name == "integrationTest" }.configureEach {
     finalizedBy("integrationTestFailures")
 }
 
+// Mockito's inline mock maker needs its agent. JDK 21 and later warn when a library attaches an agent to a running
+// JVM, and a later JDK will refuse, so every test JVM is given Mockito's agent when it starts instead.
+val mockitoAgent = configurations.create("mockitoAgent") { isTransitive = false }
+dependencies {
+    mockitoAgent(library("mockito-core"))
+}
+tasks.withType<Test>().configureEach {
+    val agent: FileCollection = mockitoAgent
+    inputs.files(agent).withPropertyName("mockitoAgent").withNormalizer(ClasspathNormalizer::class.java)
+    // With an agent on the class path the JVM can only share its own classes, and says so on every run; tests don't
+    // need class sharing, so it is off, and their output stays clean.
+    jvmArgumentProviders.add(CommandLineArgumentProvider {
+        listOf("-javaagent:" + agent.singleFile.absolutePath, "-Xshare:off")
+    })
+}
+
 tasks.test {
     useJUnitPlatform()
     ignoreFailures = true

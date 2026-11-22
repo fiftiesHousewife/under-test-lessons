@@ -20,9 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  *   picture unless {@code video.burnCaptions} is false, and as a captions track) into {@code <id>.mp4},
  *   and writes the narration as {@code <id>.narration.m4a} too;</li>
  *   <li>{@code deckvoice <root> <id|all> <command...>}: reads each deck slide's narration aloud into
- *   {@code <id>.deck-voice/}, then rewrites the deck so it can play them ({@link DeckVoice});</li>
- *   <li>{@code outputs <root> <id|all>}: runs each live command and keeps what it printed, for decks
- *   ({@link LiveOutputs}).</li>
+ *   {@code <id>.deck-voice/}, then rewrites the deck so it can play them ({@link DeckVoice}).</li>
  * </ul>
  * Scene times come from the script and are stretched to the recorded video's real length.
  */
@@ -33,12 +31,11 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        final List<String> commands = List.of("record", "voice", "assemble", "slides", "deck", "deckvoice", "outputs");
+        final List<String> commands = List.of("record", "voice", "assemble", "slides", "deck", "deckvoice");
         if (args.length < 3 || !commands.contains(args[0])) {
             throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
                     + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | slides <root> <lesson>"
-                    + " | deck <root> <lesson|all> [pdf] | deckvoice <root> <lesson|all> <command...>"
-                    + " | outputs <root> <lesson|all>");
+                    + " | deck <root> <lesson|all> [pdf] | deckvoice <root> <lesson|all> <command...>");
         }
         if (forDecks(args)) {
             return;
@@ -58,7 +55,6 @@ public final class LessonVideo {
     private static boolean forDecks(final String... args) {
         final Path root = Path.of(args[1]);
         switch (args[0]) {
-            case "outputs" -> SlideDeck.lessons(root, args[2]).forEach(LiveOutputs::capture);
             case "deckvoice" -> deckVoice(root, args[2], List.of(Arrays.copyOfRange(args, 3, args.length)));
             case "deck" -> {
                 final boolean pdf = args.length > 3 && "pdf".equals(args[3]);

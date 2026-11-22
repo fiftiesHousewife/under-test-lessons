@@ -9,6 +9,12 @@ toolkit, [under-test](https://github.com/fiftiesHousewife/under-test/tree/main/t
 **Needs** says what recording a lesson's video takes beyond Java and Gradle: lessons marked *Java only* can be made
 anywhere; the rest wait for that tool to be available where videos are recorded.
 
+## Start here
+
+| Lesson | Tools | Needs | Status |
+|---|---|---|---|
+| [Testing old Java code: a map](testing-old-java-code/README.md): every kind of test and technique as the answer to a team's question, with every lesson linked | none | slides only | built |
+
 ## Before you change anything
 
 The first steps the toolkit takes with any old repo: find what could do harm, run it where it can't reach production,
@@ -34,7 +40,7 @@ and see what its existing tests really check.
 | [Characterisation tests](characterisation-tests/README.md): pin down untested code before changing it | ApprovalTests | Java only | built |
 | [Comparing structured output](structured-output-comparison/README.md): JSON results that differ only in timestamps or order (XML works the same way, with XMLUnit) | JSONUnit, XMLUnit | Java only | built |
 | [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | built |
-| [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders (spring-batch-test and Datafaker to come) | Java only | built |
+| [Batch file-in, file-out](batch-file-in-file-out/README.md): a Spring Batch job run on synthetic input and a cleaned captured day, its output compared record by record | spring-batch-test, Datafaker, JUnit temporary folders | Java only | built |
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
 | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
@@ -47,8 +53,8 @@ and see what its existing tests really check.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | built |
-| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | An in-memory fake (an ArchUnit rule to keep it that way is to come) | Java only | built |
+| [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, recorded from a stand-in, cleaned of personal data before saving, and replayed | WireMock | Java only | built |
+| [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | An in-memory fake, and an ArchUnit rule that keeps the queue's client inside the connection code | Java only | built |
 | [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | built |
 | [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | next |
@@ -123,7 +129,7 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Architecture rules (`architecture-rules`) | An orders app in three layers: web, service, storage | Unit tests pass while a web class reads storage directly | An ArchUnit rule names the forbidden call | `-Pcode=today` |
 | Replacing hard-wired dependencies (`replacing-hard-wired-dependencies`) | An invoice in euros, priced with a live exchange-rate service | The rates come from a hard-wired singleton, so the test can't run without the service | The rates come through the constructor; the test uses a Mockito stand-in | `-Pcode=today` |
 | Comparing structured output (`structured-output-comparison`) | An order summary as JSON, with a timestamp and an id | A string comparison breaks on every run, so someone loosens it to "contains" | JSONUnit compares the structure, ignoring only the timestamp and id | `-Pcode=today` |
-| Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock replays recorded answers, including an unknown postcode and an outage | `-Pcode=today` |
+| Recorded HTTP responses (`recorded-http-responses`) | Postcode lookup through a supplier's web service | A test against the real service, skipped where it can't be reached | WireMock records from a stand-in, cleans each recording (token dropped, names and emails keyed), and replays the answers, including an unknown postcode and an outage | `-Pcode=today` |
 | Outside-in HTTP tests (`outside-in-http-tests`) | A small booking service, run on the JDK's own HTTP server | Tests call the classes directly and miss the HTTP status | REST Assured tests the running service through its API only | `-Pcode=today` |
 | Fake behind an interface (`fake-behind-an-interface`) | Order events sent to a message queue | A mock test checks each call, and misses a commit made too early | An in-memory fake queue; tests check what was delivered | `-Pcode=today` |
 | Nested tests (`nested-tests`) | A loan's states: requested, approved, repaid | One flat list of tests misses a case | `@Nested` classes, one per state, asking the same questions, so the gap shows | `-Pcode=today` |
@@ -134,7 +140,7 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Differential testing (`differential-testing`) | Postage by weight, old and rewritten | The rewrite's own examples | Old against new on every weight finds a mistyped price | `-Pcode=today` |
 | Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
 | Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
-| Batch file-in, file-out (`batch-file-in-file-out`) | A nightly settlement file | Tests of the pieces | The whole job, file in and file out, compared line by line | `-Pcode=today` |
+| Batch file-in, file-out (`batch-file-in-file-out`) | A nightly settlement file | Tests of the pieces | The whole Spring Batch job, file in and file out, on Datafaker input and a cleaned captured day, compared record by record | `-Pcode=today` |
 | Embedded Jakarta EE tests (`embedded-jakarta-ee-tests`) | VAT at a checkout, with two tax-rate beans | A unit test that wires the checkout by hand | Weld wires it as the server would, and it gets the wrong rate | `-Pcode=today` |
 | Real databases in tests (`real-databases-in-tests`) | Who sales should call first | The query on in-memory H2 | The same query on real PostgreSQL in a container | `-Pcode=today` |
 | Database changes with Liquibase (`database-changes-with-liquibase`) | Adding a loyalty level to customers | Every change applied to H2 | Every change applied to real PostgreSQL, which refuses one | `-Pcode=today` |

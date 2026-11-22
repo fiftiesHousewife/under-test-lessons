@@ -146,7 +146,7 @@ terminal recording and the closing slides after it, with their own captions.
   it): intro slides, one slide per scene with its narration, code panels (marked lines highlighted), commands and
   their output, and callouts (read from the script's `show`, `run_live` and `callout` lines), and closing slides.
   Rebuild decks whenever slides or narration change; `-PlessonDeckPdf=true` adds a PDF.
-- **What live commands print:** `./gradlew :lessons:video-tools:captureLessonOutputs -Plesson=<id>` runs each live
+- **What live commands print:** `python3 tools/capture-lesson-outputs.py <id>` runs each live
   command as a recording would and keeps its output in `media/<id>.outputs/` (commit it), so the deck shows what the
   video shows. Run it again after changing the lesson's code or its live commands; `./gradlew check` fails a live
   command without its output. The database lessons need a container runtime for a true capture.

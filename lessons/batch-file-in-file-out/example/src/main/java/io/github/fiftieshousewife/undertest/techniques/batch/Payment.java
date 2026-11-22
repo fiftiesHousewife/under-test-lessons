@@ -8,9 +8,4 @@ public record Payment(String account, int pence) {
         final String[] fields = line.split(",");
         return new Payment(fields[0].strip(), Integer.parseInt(fields[1].strip()));
     }
-
-    /** The payment as a line of the settlement file: {@code PAY,12345678,12.50}. */
-    public String settlementLine() {
-        return "PAY,%s,%d.%02d".formatted(account, pence / 100, pence % 100);
-    }
 }

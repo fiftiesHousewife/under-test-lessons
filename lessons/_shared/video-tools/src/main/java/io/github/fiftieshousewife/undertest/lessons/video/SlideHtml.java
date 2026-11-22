@@ -16,7 +16,11 @@ final class SlideHtml {
 
     static final int WIDTH = 1920;
     static final int HEIGHT = 1080;
-    private static final java.util.regex.Pattern POINT = java.util.regex.Pattern.compile("<li class=\"(point|link)\">");
+    /** A point that links a lesson's deck: {@code lesson: Its name (its-id)}, with no address, so none is assumed. */
+    private static final java.util.regex.Pattern LESSON_LINK =
+            java.util.regex.Pattern.compile("^lesson:\\s*(.+?)\\s*\\(([a-z0-9-]+)\\)$");
+    private static final java.util.regex.Pattern POINT =
+            java.util.regex.Pattern.compile("<li class=\"(point|link|link lesson)\">");
 
     private SlideHtml() {
     }
@@ -60,6 +64,13 @@ final class SlideHtml {
         final StringBuilder html = new StringBuilder("<main class=\"slide\"><section class=\"text\"><h1>")
                 .append(escape(slide.title())).append("</h1><div class=\"rule\"></div><ul>");
         for (final String point : slide.points()) {
+            final java.util.regex.Matcher lesson = LESSON_LINK.matcher(point);
+            if (lesson.matches()) {
+                html.append("<li class=\"link lesson\"><a href=\"../../").append(lesson.group(2)).append("/media/")
+                        .append(lesson.group(2)).append(".deck.html#1\">").append(escape(lesson.group(1)))
+                        .append("</a></li>");
+                continue;
+            }
             final boolean link = point.startsWith("https://") || point.startsWith("http://");
             html.append("<li class=\"").append(link ? "link" : "point").append("\">").append(escape(point))
                     .append("</li>");
@@ -70,6 +81,12 @@ final class SlideHtml {
                     .append(read(picture(pictures, slide.heading().picture()))).append("</figure>");
         }
         return html.append("</main>").toString();
+    }
+
+    /** The ids of the lessons a slide links to. */
+    static List<String> lessonLinks(final Slide slide) {
+        return slide.points().stream().map(LESSON_LINK::matcher).filter(java.util.regex.Matcher::matches)
+                .map(link -> link.group(2)).toList();
     }
 
     /**

@@ -11,9 +11,20 @@ their own narration, in [recorded-http-responses.slides.md](recorded-http-respon
    available, so almost everywhere, it is skipped.
 5. This is [pause 300ms] a recorded answer. It holds the request, and what the supplier sent back. This one is an
    outage: a 503 error, with a web page instead of JSON.
-6. Now, [pause 300ms] the tests with WireMock. It replays every recording on a local port: a known postcode, an unknown
+6. Where do the recordings come from? [pause 1600ms] We make them from a stand-in for the supplier, running on this
+   machine. WireMock passes each question on, and keeps the answer, and the question's password token. Each recording
+   is then cleaned, and saved to a file.
+7. Recordings copy real answers, so they can hold personal data. The first test saves them as recorded, and finds a
+   person's name, email address and token in the files. The second cleans them first. It expects none of these, and
+   one substitute for the name, in both files.
+8. Now, [pause 300ms] the tests with WireMock. It replays every recording on a local port: a known postcode, an unknown
    one, and an outage.
-7. We run the tests against today's client. The real service test is skipped. The recordings show two bugs. An unknown
-   postcode gives an empty town instead of none. And an outage gives a confusing error about JSON.
-8. Now the client that checks what the supplier said first. We run the same tests. [pause 1s] Every recorded answer is
-   handled.
+9. We run the tests against today's code. The real service test is skipped. The recordings show two bugs in the
+   client. An unknown postcode gives an empty town instead of none. And an outage gives a confusing error about JSON.
+   And the saved recordings still hold the name, the email address and the token.
+10. Here is the cleaner. It drops the token, and swaps each name and email address for a keyed substitute: a short
+    code made from the value and a secret test key, with H-MAC, a standard method that comes with Java. The same value
+    always gives the same substitute, so repeated names still match. Without the key, nobody can work back to the
+    person.
+11. Now the fixed code: the client that checks what the supplier said first, and the cleaner. We run the same tests.
+    [pause 1s] Every recorded answer is handled, and the saved recordings hold no personal data.

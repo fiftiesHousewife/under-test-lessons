@@ -17,6 +17,7 @@ below in step when adding a record.
 | [Container tests skip without a container runtime, and must run in CI](0016-container-tests-skip-without-a-container-runtime-and-must-run-in-ci.md) | accepted |
 | [The lessons cover Java, for now](0019-the-lessons-cover-java-for-now.md) | accepted |
 | [Lesson work is tracked in GitHub issues, loaded from a backlog file](0022-lesson-work-is-tracked-in-github-issues-loaded-from-a-backlog-file.md) | accepted |
+| [The old command-line programs lesson may use forbidden APIs in its today code](0023-the-old-command-line-programs-lesson-may-use-forbidden-apis-in-its-today-code.md) | accepted |
 
 ## Videos and slides
 

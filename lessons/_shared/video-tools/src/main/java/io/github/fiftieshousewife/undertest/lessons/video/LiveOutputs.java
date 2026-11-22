@@ -1,9 +1,7 @@
 package io.github.fiftieshousewife.undertest.lessons.video;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -13,27 +11,21 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * What each live command in a lesson's video script printed, kept in {@code <id>.outputs/01.txt}, {@code 02.txt} and
  * so on (one per live command, in script order; the first line is the command), so decks can show the output the
- * video shows. {@code captureLessonOutputs} runs the commands as a recording does and writes the files. The checks
+ * video shows. tools/capture-lesson-outputs.py runs the commands as a recording does and writes the files. The checks
  * here fail a live command without its output, and a scene that names a line (in its narration, a callout or a live
  * command's output) without showing that line of code marked ({@code show ... --mark N}).
  */
-@Slf4j
 final class LiveOutputs {
 
     static final String FOLDER = ".outputs";
-    /** Lines a sandbox or the JVM adds, which a viewer never sees in the recording. */
-    private static final List<String> NOISE = List.of("Picked up JAVA_TOOL_OPTIONS", "Caught exception: Could not");
-    private static final Pattern ESCAPE = Pattern.compile("\u001B\\[[0-9;?]*[A-Za-z]");
+    /** A home folder in a path: a person's name or account, which must never be shown. */
+    private static final Pattern PERSONAL_PATH = Pattern.compile("/Users/[^/\\s]+|/home/[^/\\s]+|[A-Z]:\\\\Users\\\\");
     private static final Pattern LINE_NAMED = Pattern.compile("(?i)\\blines?\\s+(\\d+)\\b");
     private static final Pattern NUMBERED = Pattern.compile("\\s*(\\d+)\\s");
-    /** Settings a recording makes off camera (lessons/_shared/setup.tape), so the output matches the video's. */
-    private static final String QUIET = " -Dorg.gradle.warning.mode=none -Dorg.gradle.configuration-cache=false"
-            + " -Dorg.gradle.logging.level=quiet";
 
     private LiveOutputs() {
     }
@@ -57,26 +49,6 @@ final class LiveOutputs {
         return !lines.isEmpty() && lines.getFirst().equals("$ " + command) ? lines.subList(1, lines.size()) : List.of();
     }
 
-    /** Runs each live command from the repository root, as a recording would, and keeps what it printed. */
-    static int capture(final Media media) {
-        final List<String> commands = commands(SceneContent.read(media.root(), media.file(".tape")));
-        final Path folder = media.file(FOLDER);
-        createFolder(folder);
-        for (int i = 0; i < commands.size(); i++) {
-            final String output = clean(run(media.root(), commands.get(i)));
-            write(folder.resolve(fileName(i)), "$ " + commands.get(i) + "\n" + output + "\n");
-        }
-        log.info("{}: output of {} live commands kept", media.safeLesson(), commands.size());
-        return commands.size();
-    }
-
-    /** The output as a viewer sees it: no colour codes, no sandbox or JVM notices, no blank lines at either end. */
-    static String clean(final String output) {
-        final List<String> kept = ESCAPE.matcher(output).replaceAll("").lines()
-                .filter(line -> NOISE.stream().noneMatch(line::startsWith)).map(String::stripTrailing).toList();
-        return String.join("\n", kept).strip();
-    }
-
     /** Problems in a lesson: live commands without kept output, and lines the narration names that aren't shown. */
     static List<Problem> problems(final Media media) {
         final Path tape = media.file(".tape");
@@ -89,15 +61,7 @@ final class LiveOutputs {
         } catch (IllegalArgumentException e) {
             return List.of(); // a show line that finds no file, which LessonChecks.shows reports
         }
-        final List<Problem> problems = new ArrayList<>();
-        final List<String> commands = commands(scenes);
-        for (int i = 0; i < commands.size(); i++) {
-            if (read(media, i, commands.get(i)).isEmpty()) {
-                problems.add(new Problem(tape, "live command " + (i + 1) + " (" + commands.get(i) + ") has no kept"
-                        + " output for decks; run ./gradlew :lessons:video-tools:captureLessonOutputs -Plesson="
-                        + media.safeLesson()));
-            }
-        }
+        final List<Problem> problems = new ArrayList<>(keptOutputs(media, commands(scenes)));
         final Path narration = media.file(".narration.md");
         final List<String> paragraphs = Files.isRegularFile(narration) ? Narration.paragraphs(narration) : List.of();
         for (int i = 0; i < scenes.size(); i++) {
@@ -105,6 +69,24 @@ final class LiveOutputs {
             final String said = (i < paragraphs.size() ? paragraphs.get(i) : "") + " "
                     + String.join(" ", scenes.get(i).callouts()) + " " + String.join(" ", printed);
             problems.addAll(unshownLines(tape, new Said(i + 1, said), scenes.get(i)));
+        }
+        return problems;
+    }
+
+    /** Each live command has its output kept, and no kept output shows a personal path. */
+    private static List<Problem> keptOutputs(final Media media, final List<String> commands) {
+        final Path tape = media.file(".tape");
+        final List<Problem> problems = new ArrayList<>();
+        for (int i = 0; i < commands.size(); i++) {
+            final List<String> output = read(media, i, commands.get(i));
+            if (output.stream().anyMatch(line -> PERSONAL_PATH.matcher(line).find())) {
+                problems.add(new Problem(tape, "live command " + (i + 1) + "'s kept output shows a personal path;"
+                        + " capture it again with tools/capture-lesson-outputs.py"));
+            }
+            if (output.isEmpty()) {
+                problems.add(new Problem(tape, "live command " + (i + 1) + " (" + commands.get(i) + ") has no kept"
+                        + " output for decks; run python3 tools/capture-lesson-outputs.py " + media.safeLesson()));
+            }
         }
         return problems;
     }
@@ -158,45 +140,6 @@ final class LiveOutputs {
             }
         }
         return false;
-    }
-
-    @SuppressFBWarnings(value = "COMMAND_INJECTION",
-            justification = "Runs the commands of this repository's own video scripts, as their recordings do")
-    private static String run(final Path root, final String command) {
-        try {
-            final ProcessBuilder builder = new ProcessBuilder("bash", "-c", command).directory(root.toFile())
-                    .redirectErrorStream(true).redirectInput(ProcessBuilder.Redirect.from(nullDevice()));
-            builder.environment().merge("GRADLE_OPTS", QUIET, String::concat);
-            final Process process = builder.start();
-            final String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            process.waitFor();
-            return output;
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException("interrupted while running " + command, e);
-        }
-    }
-
-    private static java.io.File nullDevice() {
-        return new java.io.File(System.getProperty("os.name", "").startsWith("Windows") ? "NUL" : "/dev/null");
-    }
-
-    private static void write(final Path file, final String text) {
-        try {
-            Files.writeString(file, text);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    private static void createFolder(final Path folder) {
-        try {
-            Files.createDirectories(folder);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
     }
 
     private static List<String> lines(final Path file) {

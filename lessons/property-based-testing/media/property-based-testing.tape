@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add jetCheck to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/jetcheck/" "gradle/libs.versions.toml" --zoom 4`
+Type@1ms `show libs.versions.toml "/jetcheck/" "gradle/libs.versions.toml"`
 Enter
 Sleep 300ms
 Show

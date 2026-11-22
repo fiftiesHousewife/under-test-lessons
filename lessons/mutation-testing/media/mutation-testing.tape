@@ -32,7 +32,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add PIT's versions, and the PIT Gradle plugin, to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml" --zoom 36-37`
+Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml"`
 Enter
 Show
 Sleep 13s

@@ -44,6 +44,20 @@ class SlideHtmlTest {
     }
 
     @Test
+    void linksALessonPointToThatLessonsDeckWithoutAnyAddress() {
+        final Slide slide = new Slide(new Slide.Heading("Can we trust the tests?", ""),
+                List.of("lesson: Mutation testing (mutation-testing)", "Black-box tests (coming)"), "Say.");
+
+        final String body = SlideHtml.body(slide, List.of(), "");
+
+        assertAll(
+                () -> assertThat(body).contains("<li class=\"link lesson\"><a href=\"../../mutation-testing/media/"
+                        + "mutation-testing.deck.html#1\">Mutation testing</a></li>"),
+                () -> assertThat(body).contains("<li class=\"point\">Black-box tests (coming)</li>"),
+                () -> assertThat(SlideHtml.lessonLinks(slide)).containsExactly("mutation-testing"));
+    }
+
+    @Test
     void drawsSlidesWithTheBrowserAndAddsTheUserStylesheet() throws IOException {
         final Path shared = Files.createDirectories(root.resolve("lessons/_shared/slides/pictures"));
         Files.writeString(shared.resolveSibling("slides.css"), "body { }");

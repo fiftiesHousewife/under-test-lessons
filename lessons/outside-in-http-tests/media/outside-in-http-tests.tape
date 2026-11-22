@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add REST Assured to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/rest-assured/" gradle/libs.versions.toml --zoom 10`
+Type@1ms `show libs.versions.toml "/rest-assured/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show

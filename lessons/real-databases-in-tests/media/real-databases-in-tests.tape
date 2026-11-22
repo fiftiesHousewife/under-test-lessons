@@ -39,7 +39,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Testcontainers, the PostgreSQL driver, and H2 to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/testcontainers|postgresql|h2/" gradle/libs.versions.toml --zoom 16-18`
+Type@1ms `show libs.versions.toml "/testcontainers|postgresql|h2/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show

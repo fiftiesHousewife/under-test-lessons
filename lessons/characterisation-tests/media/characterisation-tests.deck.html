@@ -51,6 +51,10 @@ li.link::before { content: "→"; position: absolute; left: 0; color: var(--acce
 .picture .line { fill: none; stroke: var(--ink); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
 .picture .light-line { fill: none; stroke: var(--paper); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
 .picture .thin { stroke-width: 6; }
+/* Slides in videos build up one point at a time: points still to come keep their places, hidden, and the picture
+   arrives with the first point. */
+.later { visibility: hidden; }
+.before-picture .picture { visibility: hidden; }
 
 /* Slide decks: the slides of slides.css, one at a time, scaled to fit the window; one slide per page when printed.
    A user stylesheet (-PlessonSlideCss) comes after this one, so it can restyle decks too. */
@@ -160,11 +164,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Before we start a quick word on how we build these examples. We use Gradle rather than Maven, and write our build files in Kotlin. Every library version sits in a single file, the version catalogue, so upgrading a library is a one-line change. And the rules that every module of the build shares, such as code-quality checks and test settings, are written once, in build-logic, as convention plugins. Each module applies the plugin it needs, instead of one root build file reaching into every sub-project. That keeps each module's own build file short, and says plainly what it uses.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/394a81425ec3678c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><p class="scene-text">Step one. Add ApprovalTests to the version catalogue.</p></section><figure class="code" style="--code-size: 18px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
-<mark>  5  approvaltests = &quot;32.1.0&quot;</mark>
+  5  approvaltests = &quot;32.1.0&quot;
    ⋮
- 47  [libraries]
+ 54  [libraries]
    ⋮
- 49  approvaltests = { module = &quot;com.approvaltests:approvaltests&quot;, version.ref = &quot;approvaltests&quot; }</pre></figure></main><aside class="notes">Step one. Add ApprovalTests to the version catalogue.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/fe9e974d61549d88.m4a"></audio></section>
+ 56  approvaltests = { module = &quot;com.approvaltests:approvaltests&quot;, version.ref = &quot;approvaltests&quot; }</pre></figure></main><aside class="notes">Step one. Add ApprovalTests to the version catalogue.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/fe9e974d61549d88.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson. There is nothing to configure.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.approvaltests)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. There is nothing to configure.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/493a7b6c23b7d0f7.m4a"></audio></section>

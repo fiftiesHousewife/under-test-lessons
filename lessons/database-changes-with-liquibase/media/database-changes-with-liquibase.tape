@@ -39,7 +39,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Liquibase to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/liquibase/" gradle/libs.versions.toml --zoom 20`
+Type@1ms `show libs.versions.toml "/liquibase/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show

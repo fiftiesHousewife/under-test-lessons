@@ -43,8 +43,6 @@ items:
       - "gentle-motion-and-fades-on-slides"
       - "code-arrives-and-callouts-pop"
       - "captions-burned-into-the-picture"
-      - "objects-on-the-subject-slides"
-      - "different-people-in-different-lessons"
     notes: "Seven were made with the colour slides; eleven are still to make. Mutation testing gained a boundaries slide and marked code in the PIT scenes. Make each with ./gradlew --no-daemon :lessons:video-tools:renderLessonVideo -Plesson=<id>, one at a time, on a quiet machine that stays awake. The two database lessons need a container runtime."
   - key: "zoom-in-on-the-key-code"
     type: "deliverable"
@@ -117,7 +115,7 @@ items:
     title: "Large hand-drawn objects on the slides about the subject"
     parent: "every-lesson-has-a-finished-video"
     phase: "videos"
-    horizon: "now"
+    horizon: "later"
     owner_role: "Lessons Owner"
     done_by: "ai"
     done_when:
@@ -128,7 +126,7 @@ items:
     title: "Different people on the slides in different lessons"
     parent: "every-lesson-has-a-finished-video"
     phase: "videos"
-    horizon: "now"
+    horizon: "later"
     owner_role: "Lessons Owner"
     done_by: "ai"
     done_when:
@@ -444,6 +442,8 @@ items:
     done_by: "person"
     done_when:
       - "A decision record says whether, and how narrowly, its today code may use System.out and System.exit"
+    decision_record: "docs/decisions/0023-the-old-command-line-programs-lesson-may-use-forbidden-apis-in-its-today-code.md"
+    status: "done"
   - key: "lesson-recording-current-behaviour-from-real-traffic"
     type: "deliverable"
     title: "Lesson: recording current behaviour from real traffic, with Keploy"
@@ -552,6 +552,7 @@ items:
     done_by: "ai"
     done_when:
       - "Fake behind an interface checks with ArchUnit that only the adapter uses the real queue"
+    status: "done"
   - key: "recorded-responses-lesson-shows-recording-and-removing-personal-data"
     type: "deliverable"
     title: "The recorded-responses lesson shows recording and removing personal data"
@@ -563,6 +564,7 @@ items:
     done_when:
       - "Recorded HTTP responses records from a stand-in service and removes personal data before saving"
     notes: "Record from a small stand-in supplier service: the before saves a name, an email and a bearer token in the stubs; the after cleans while recording, with keyed substitutes and the token dropped."
+    status: "done"
   - key: "batch-lesson-uses-spring-batch-test-and-datafaker"
     type: "deliverable"
     title: "The batch lesson uses spring-batch-test and Datafaker, and compares records"
@@ -574,6 +576,7 @@ items:
     done_when:
       - "Batch file-in, file-out uses spring-batch-test, synthetic Datafaker input, and compares records rather than plain text"
     notes: "Use a captured settlement file cleaned with keyed substitutes, so account numbers still match between input and output."
+    status: "done"
   - key: "differential-testing-replays-saved-requests-offline"
     type: "deliverable"
     title: "Differential testing also replays saved requests offline against two running builds"
@@ -722,6 +725,7 @@ items:
     done_by: "tool"
     done_when:
       - "Tests that use Mockito run on JDK 25 without the self-attach warning"
+    status: "done"
   - key: "wiremock-against-spring-boot-4"
     type: "deliverable"
     title: "Check WireMock 3 against Spring Boot 4 before a Spring lesson"
@@ -742,6 +746,7 @@ items:
     done_by: "tool"
     done_when:
       - "setUpLessonVoice installs exact versions of kokoro-onnx and soundfile"
+    status: "done"
   - key: "check-every-readme-command-and-its-result"
     type: "deliverable"
     title: "A check that runs every command a lesson's README shows and confirms its result"
@@ -753,6 +758,7 @@ items:
     done_when:
       - "./gradlew check runs each README command and fails if its stated result (for example 5 of 13 planted bugs caught) doesn't match"
     notes: "Kept live outputs cover the video's commands; README commands can still drift."
+    status: "done"
   - key: "pmd-and-checkstyle-run-in-sandboxed-ai-sessions"
     type: "deliverable"
     title: "PMD and Checkstyle run in sandboxed AI sessions"
@@ -764,6 +770,7 @@ items:
     done_when:
       - "./gradlew check passes in a sandboxed AI session, or the documented route fails on any violation"
     notes: "The sandbox lets Java reach 127.0.0.1 only over IPv4 (JAVA_TOOL_OPTIONS=-Djava.net.preferIPv4Stack=true); Gradle's PMD and Checkstyle worker processes don't get that setting, so they can't connect back. tools/quality-cli.init.gradle runs both as plain programs but ignores their exit codes."
+    status: "done"
   - key: "commit-the-apm-lock-file"
     type: "deliverable"
     title: "Commit apm.lock.yaml"

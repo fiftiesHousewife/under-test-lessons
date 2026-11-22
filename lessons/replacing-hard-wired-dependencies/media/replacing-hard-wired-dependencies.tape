@@ -30,7 +30,7 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Mockito to the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/mockito/" gradle/libs.versions.toml --zoom 7`
+Type@1ms `show libs.versions.toml "/mockito/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show

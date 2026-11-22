@@ -70,12 +70,19 @@ val createVoiceEnvironment = tasks.register<Exec>("createVoiceEnvironment") {
     commandLine(voicePython.get(), "-m", "venv", dir.resolve("venv").absolutePath)
 }
 
+// The voice's packages, at exact versions, so the voice sounds the same on every machine. Changing a version here
+// installs it again on the next run.
+val voicePackages = listOf("kokoro-onnx==0.6.1", "soundfile==0.14.0")
 val installVoicePackages = tasks.register<Exec>("installVoicePackages") {
     val dir = voiceDir
+    val packages = voicePackages
     dependsOn(createVoiceEnvironment)
-    onlyIf { !dir.resolve("venv/.packages-installed").isFile }
-    commandLine(dir.resolve("venv/bin/pip").absolutePath, "install", "-q", "kokoro-onnx", "soundfile")
-    doLast { dir.resolve("venv/.packages-installed").writeText("kokoro-onnx soundfile\n") }
+    onlyIf {
+        val installed = dir.resolve("venv/.packages-installed")
+        !installed.isFile || installed.readText().trim() != packages.joinToString(" ")
+    }
+    commandLine(listOf(dir.resolve("venv/bin/pip").absolutePath, "install", "-q") + packages)
+    doLast { dir.resolve("venv/.packages-installed").writeText(packages.joinToString(" ") + "\n") }
 }
 
 val setUpLessonVoice = tasks.register("setUpLessonVoice") {
@@ -196,19 +203,6 @@ tasks.register<JavaExec>("checkVideoInRecording") {
     workingDir = rootDir
     val root = repoRoot
     argumentProviders.add(CommandLineArgumentProvider { listOf(root) })
-}
-
-// What each live command in a lesson's video script prints, kept in <id>.outputs/ for its deck to show. Rerun after
-// changing a lesson's code or script; the video checks fail a live command without its output. -Plesson=<id>, or all.
-tasks.register<JavaExec>("captureLessonOutputs") {
-    group = "documentation"
-    description = "Runs each live command in a lesson's video script and keeps its output for the deck (-Plesson=<id>)."
-    classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
-    workingDir = rootDir
-    val root = repoRoot
-    val lessonId = lesson
-    argumentProviders.add(CommandLineArgumentProvider { listOf("outputs", root, lessonId.getOrElse("all")) })
 }
 
 // A deck's voice: each slide's narration read aloud with the lesson voice into <id>.deck-voice/ beside the deck, which
