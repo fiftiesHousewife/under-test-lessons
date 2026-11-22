@@ -5,7 +5,7 @@
 # It waits for a marker printed when the set-up finishes. The marker is computed ($((1+1)) prints 2), so the typed
 # command, which also appears on screen, can't match it early.
 Hide
-Type "export PS1='$ ' GREP_COLORS='mt=01;33' VIDEO_TIMINGS=lessons/${LESSON}/media/${LESSON}.timings && source lessons/_shared/callout.sh && : > $VIDEO_TIMINGS"
+Type "export PS1='$ ' GREP_COLORS='mt=01;33' VIDEO_TIMINGS=lessons/${LESSON}/media/${LESSON}.timings VIDEO_ZOOMS=lessons/${LESSON}/media/${LESSON}.zooms && source lessons/_shared/callout.sh && : > $VIDEO_TIMINGS && : > $VIDEO_ZOOMS"
 Enter
 Sleep 300ms
 # Quiet Gradle on camera without changing the commands people see: quiet logging (test results and build summaries

@@ -60,6 +60,8 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
   the machine awake: a recording waiting on a live run fails if the machine sleeps.
 - **Container lessons** fetch their image off camera first; the shared set-up points Testcontainers at Colima by itself
   where Colima is running.
+- **Before the first recording on a machine,** run `./gradlew :lessons:video-tools:checkZoomInRecording`: a few
+  seconds of VHS that checks the zoom works in its terminal, leaving `build/zoom-check/zoom-check.zoomed.mp4` to watch.
 - **`./gradlew :lessons:video-tools:checkVideoScripts` before recording** catches waits that would hang, scene and
   narration counts that differ, code panels that would show the wrong file or lines, scenes too short for their
   narration, slides without sources or repository links, live commands without their kept output, and lines a scene
@@ -79,6 +81,11 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
    scene**: a line its narration or a callout names ("line 24"), and every line its live command's output names, such
    as each line in PIT's report. A run that reports lines is followed, off camera, by `clear` and the code with those
    lines marked, so the scene still fits on one screen.
+   **Zoom in on the key lines:** `show <file> <first> <last> --zoom 22-24` marks those lines and, while the scene is
+   on screen, the video eases in on them a second after the code appears, holds, and eases back out a second before
+   the scene ends. One zoom a scene; its lines must be among the lines the panel shows, and the scene must leave it
+   4.6 seconds (the checks fail the script otherwise). Decks highlight the same lines. The helper reports where the
+   lines landed on screen (`<id>.zooms`); a zoom whose rows it couldn't find is left out, with a message.
 4. Draw callouts off-camera: `Hide`, ``Type@1ms `callout "..."` ``, `Enter`, `Show`.
 5. Mark each scene with a comment line `# ---- Scene N: title ----`, and write the narration file
    (`media/<id>.narration.md`) as a numbered list with **one item per scene**. Captions and voiceover come from it.

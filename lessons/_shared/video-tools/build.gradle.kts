@@ -178,6 +178,18 @@ tasks.register<JavaExec>("buildLessonDecks") {
     })
 }
 
+// A few seconds of VHS recording that checks the zoom on key code works in VHS's terminal, before any lesson is
+// recorded: the helper must report real rows for the zoomed lines. Leaves build/zoom-check/zoom-check.zoomed.mp4.
+tasks.register<JavaExec>("checkZoomInRecording") {
+    group = "verification"
+    description = "Records a few seconds of one zoomed code panel and checks the zoom works in VHS's terminal."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.ZoomCheck"
+    workingDir = rootDir
+    val root = repoRoot
+    argumentProviders.add(CommandLineArgumentProvider { listOf(root) })
+}
+
 // What each live command in a lesson's video script prints, kept in <id>.outputs/ for its deck to show. Rerun after
 // changing a lesson's code or script; the video checks fail a live command without its output. -Plesson=<id>, or all.
 tasks.register<JavaExec>("captureLessonOutputs") {

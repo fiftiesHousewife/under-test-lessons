@@ -46,6 +46,7 @@ public final class VideoScriptChecker {
             }
             problems.addAll(LessonChecks.shows(root, tape));
             problems.addAll(LiveOutputs.problems(new Media(root, lessonId(tape))));
+            problems.addAll(ZoomChecks.problems(root, tape));
             final Path slides = tape.resolveSibling(String.valueOf(tape.getFileName()).replace(".tape", ".slides.md"));
             if (Files.isRegularFile(slides)) {
                 problems.addAll(LessonChecks.slides(slides));

@@ -103,11 +103,40 @@ _SHOW_AWK='
     else printf "\033[2;37m%3d\033[0m  %s\n", number, text
   }'
 
+# The terminal row the cursor is on (from 1), asked of the terminal itself; fails where there is no terminal to ask.
+_cursor_row() {
+  local reply
+  [ -t 0 ] || return 1
+  IFS= read -rsd R -t 2 -p $'\e[6n' reply || return 1
+  reply="${reply#*[}"
+  echo "${reply%%;*}"
+}
+
+# After show --zoom has printed its lines: writes the screen rows of the first and last zoomed line, and the rows on
+# screen, to $VIDEO_ZOOMS, one line per zoom, for the video's zoom. If the rows can't be found it writes "unknown",
+# so zooms still pair up with the script's in order.
+_report_zoom() { # _report_zoom "<printed lines>" "<first>-<last>"
+  [ -n "${VIDEO_ZOOMS:-}" ] || return 0
+  local printed="$1" first="${2%%-*}" last="${2##*-}" row screen
+  screen="${LINES:-$(tput lines 2>/dev/null || echo 0)}"
+  if ! row="$(_cursor_row)" || [ "$screen" -le 0 ]; then echo unknown >> "$VIDEO_ZOOMS"; return 0; fi
+  # The cursor sits on the row after the last printed line, so the k-th of n lines is on row - 1 - (n - k).
+  printf '%s\n' "$printed" | sed -E $'s/\x1b\\[[0-9;]*[A-Za-z]//g' | awk -v f="$first" -v l="$last" -v r="$row" -v s="$screen" '
+    { n++; if (match($0, /^ *[0-9]+/)) { number = substr($0, RSTART, RLENGTH) + 0
+        if (number >= f && !a) a = n
+        if (number <= l) b = n } }
+    END { if (a && b) print r - 1 - (n - a), r - 1 - (n - b), s; else print "unknown" }' >> "$VIDEO_ZOOMS"
+}
+
 show() {
   _erase_typed show "$@"
-  local marks="" args=()
+  local marks="" zoom="" args=()
   while [ $# -gt 0 ]; do
-    if [ "$1" = "--mark" ]; then marks="$2"; shift 2; else args+=("$1"); shift; fi
+    case "$1" in
+      --mark) marks="$2"; shift 2 ;;
+      --zoom) zoom="$2"; marks="${marks:+$marks,}$2"; shift 2 ;;
+      *) args+=("$1"); shift ;;
+    esac
   done
   set -- "${args[@]}"
   local target="$1" file
@@ -123,14 +152,17 @@ show() {
       | grep -v '/build/' | head -1)
   fi
   [ -n "$file" ] || { echo "show: nothing found for $target" >&2; return 1; }
+  local printed
   if [[ "${2:-}" == /*/ ]]; then
     _show_header "${3:-${file##*/}}"
-    _show_pattern "$file" "${2:1:${#2}-2}" "$marks"
+    printed="$(_show_pattern "$file" "${2:1:${#2}-2}" "$marks")"
   else
     _show_header "${4:-${file##*/}}"
-    awk -v f="${2:-1}" -v t="${3:-0}" -v m="$marks" "$_SHOW_AWK"'
-      NR >= f && (t == 0 || NR <= t) { out(NR, $0) }' "$file"
+    printed="$(awk -v f="${2:-1}" -v t="${3:-0}" -v m="$marks" "$_SHOW_AWK"'
+      NR >= f && (t == 0 || NR <= t) { out(NR, $0) }' "$file")"
   fi
+  printf '%s\n' "$printed"
+  [ -z "$zoom" ] || _report_zoom "$printed" "$zoom"
 }
 
 _show_header() {

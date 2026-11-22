@@ -109,8 +109,9 @@ public final class LessonVideo {
 
     static void assemble(final Media media) {
         final Path folder = media.folder();
+        final String recording = String.valueOf(Zoom.zoomed(media).getFileName());
         ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error",
-                "-i", media.name(".silent.mp4"), "-i", media.name(".narration.wav"),
+                "-i", recording, "-i", media.name(".narration.wav"),
                 "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", media.name(".main.mp4")),
                 folder);
         final Slides slides = media.slides();

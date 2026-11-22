@@ -102,6 +102,28 @@ class LessonVideoTest {
     }
 
     @Test
+    void zoomsTheRecordingWhereTheScriptAsksAndLeavesItAloneWhenTheRowsDontPairUp() throws IOException {
+        final Path log = root.resolve("ffmpeg.log");
+        System.setProperty("video.ffmpeg", standIn("ffmpeg", "echo \"$@\" >> " + log + "; for last; do :; done;"
+                + " touch \"$last\"").toString());
+        Files.writeString(media.resolve("demo.tape"), "Set Width 1920\nSet Height 1080\nSet Padding 24\n"
+                + "# ---- Scene 1: one ----\nHide\nType@1ms `show Code.java 1 30 --zoom 5-7`\nEnter\nShow\nSleep 8s\n");
+        Files.writeString(media.resolve("demo.silent.mp4"), "video");
+        Files.writeString(media.resolve("demo.zooms"), "10 12 40\n");
+        final Media demo = new Media(root, "demo");
+
+        final Path zoomed = Zoom.zoomed(demo);
+        Files.writeString(media.resolve("demo.zooms"), "10 12 40\n10 12 40\n");
+        final Path unpaired = Zoom.zoomed(demo);
+
+        assertAll(
+                () -> assertThat(zoomed).isEqualTo(media.resolve("demo.zoomed.mp4")),
+                () -> assertThat(Files.readString(log)).contains("-vf scale=w=").contains("demo.zoomed.mp4"),
+                () -> assertThat(unpaired).isEqualTo(media.resolve("demo.silent.mp4")),
+                () -> assertThat(Files.readAllLines(log)).hasSize(1));
+    }
+
+    @Test
     void explainsHowToUseIt() throws IOException {
         final Path failing = standIn("failing", "echo broken; exit 3");
 

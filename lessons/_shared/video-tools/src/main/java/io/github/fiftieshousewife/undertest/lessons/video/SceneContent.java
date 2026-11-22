@@ -108,17 +108,26 @@ final class SceneContent {
 
     /**
      * The lines {@code show <file> <from> <to> [label]} or {@code show <file> /pattern/ [label]} prints, with any
-     * {@code --mark 22,24} (or {@code 22-24}) lines marked.
+     * {@code --mark 22,24} (or {@code 22-24}) lines marked; {@code --zoom 22-24} marks its lines too.
      */
     static Panel panel(final Path root, final List<Path> places, final List<String> words) {
-        final int mark = words.indexOf("--mark");
-        final Set<Integer> marked = mark >= 0 && mark + 1 < words.size() ? marks(words.get(mark + 1)) : Set.of();
-        final List<String> args = new ArrayList<>(words);
-        if (mark >= 0) {
-            args.subList(mark, Math.min(mark + 2, args.size())).clear();
+        final Set<Integer> marked = new TreeSet<>();
+        final List<String> args = new ArrayList<>();
+        for (int i = 0; i < words.size(); i++) {
+            if (("--mark".equals(words.get(i)) || "--zoom".equals(words.get(i))) && i + 1 < words.size()) {
+                marked.addAll(marks(words.get(++i)));
+            } else {
+                args.add(words.get(i));
+            }
         }
         final Panel plain = unmarked(root, places, args);
         return new Panel(plain.label(), plain.lines(), marked);
+    }
+
+    /** The lines a {@code show} line zooms in on ({@code --zoom 22-24}), or none. */
+    static Set<Integer> zoomed(final List<String> words) {
+        final int zoom = words.indexOf("--zoom");
+        return zoom >= 0 && zoom + 1 < words.size() ? marks(words.get(zoom + 1)) : Set.of();
     }
 
     /** The line numbers in a list such as {@code 18,22-24}. */

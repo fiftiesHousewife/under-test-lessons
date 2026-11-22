@@ -27,6 +27,8 @@ public final class TapeTimeline {
     private final Path root;
     private final java.util.Deque<Double> measured;
     private final List<Scene> collected = new ArrayList<>();
+    private final List<Zoom.Span> zoomSpans = new ArrayList<>();
+    private final List<Double> zoomStarts = new ArrayList<>();
     private double time;
     private boolean hidden;
     private double typingSeconds = VHS_DEFAULT_TYPING_SECONDS;
@@ -41,6 +43,17 @@ public final class TapeTimeline {
     /** The scenes of a script, in order. Paths in {@code Source} lines are relative to {@code root}. */
     public static List<Scene> scenes(final Path root, final Path tape) {
         return scenes(root, tape, List.of());
+    }
+
+    /**
+     * When each zoom on key code ({@code show ... --zoom}) is on screen: from the moment its code appears to the end
+     * of its scene, in the order the script has them. Measured run times as for {@link #scenes(Path, Path, List)}.
+     */
+    public static List<Zoom.Span> zooms(final Path root, final Path tape, final List<Double> measured) {
+        final TapeTimeline timeline = new TapeTimeline(root, measured);
+        timeline.read(tape);
+        timeline.endScene();
+        return List.copyOf(timeline.zoomSpans);
     }
 
     /** As {@link #scenes(Path, Path)}, using measured run times, in seconds, for each {@code Wait} on camera. */
@@ -87,8 +100,13 @@ public final class TapeTimeline {
             read(root.resolve(source.group(1)));
         } else if (!hidden && sleep.matches()) {
             time += seconds(sleep.group(1), sleep.group(2));
-        } else if (!hidden && line.startsWith("Type")) {
-            time += typingTime(line);
+        } else if (line.startsWith("Type")) {
+            if (line.contains("show ") && line.contains("--zoom")) {
+                zoomStarts.add(time); // the code appears when the picture next shows, at this moment
+            }
+            if (!hidden) {
+                time += typingTime(line);
+            }
         }
     }
 
@@ -96,6 +114,8 @@ public final class TapeTimeline {
         if (title != null) {
             collected.add(new Scene(title, sceneStart, time));
         }
+        zoomStarts.forEach(start -> zoomSpans.add(new Zoom.Span(start, time)));
+        zoomStarts.clear();
     }
 
     /** Time to type a {@code Type} line's text: its length times its own speed ({@code Type@40ms}) or the default. */

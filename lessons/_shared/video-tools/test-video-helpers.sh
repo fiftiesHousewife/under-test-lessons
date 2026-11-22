@@ -42,6 +42,18 @@ expect "show prefers an exact file name to a partial match" "$(cd "$WORK/repo" &
 OUT="$(_VIDEO_LAST=""; show "$WORK/sample.txt" 1 3 --mark 2)"
 expect "show --mark draws the marked line black on yellow" "$OUT" $'\033[30;43m  2  two'
 refuse "show --mark leaves other lines as they are" "$OUT" $'\033[30;43m  1'
+# --zoom: a stand-in for the terminal's answer to "where is the cursor?"
+_cursor_row() { echo 30; }
+: > "$WORK/zooms"
+OUT="$(VIDEO_ZOOMS="$WORK/zooms" LINES=40 show "$WORK/sample.txt" 1 3 --zoom 2-3)"
+expect "show --zoom marks the zoomed lines too" "$OUT" $'\033[30;43m  3  three'
+expect "show --zoom reports the screen rows of its lines, and the rows on screen" "$(cat "$WORK/zooms")" "28 29 40"
+_cursor_row() { return 1; }
+VIDEO_ZOOMS="$WORK/zooms" LINES=40 show "$WORK/sample.txt" 1 3 --zoom 2 >/dev/null
+expect "show --zoom writes unknown when the terminal can't say, so zooms still pair up" "$(tail -1 "$WORK/zooms")" "unknown"
+expect "show --zoom writes nothing without VIDEO_ZOOMS" "$(show "$WORK/sample.txt" 1 3 --zoom 2 | plain)" "  2  two"
+unset -f _cursor_row
+source lessons/_shared/callout.sh
 expect "show uses a label when given one" "$(show "$WORK/sample.txt" 1 1 'Build settings' | plain)" "── Build settings ──"
 
 printf 'plugins {\n    java\n    id("x.y")\n}\n\ndependencies {\n    implementation(libs.a)\n    implementation(libs.b)\n}\n' >"$WORK/build.gradle.kts"

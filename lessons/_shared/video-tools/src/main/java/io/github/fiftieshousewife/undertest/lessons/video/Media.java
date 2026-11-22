@@ -55,8 +55,22 @@ record Media(Path root, String lesson) {
     /** Scenes from the script, stretched to the recorded silent video's real length when it exists. */
     List<Scene> scenes() {
         final List<Scene> planned = TapeTimeline.scenes(root, file(".tape"), measuredRuns());
-        final double plannedLength = planned.getLast().end();
-        final double factor = ExternalCommand.videoSeconds(file(".silent.mp4")).orElse(plannedLength) / plannedLength;
+        final double factor = stretch(planned.getLast().end());
         return planned.stream().map(s -> new Scene(s.title(), s.start() * factor, s.end() * factor)).toList();
+    }
+
+    /** The zooms on key code, stretched to the recorded video's real length as the scenes are. */
+    List<Zoom.Span> zooms() {
+        final List<Zoom.Span> planned = TapeTimeline.zooms(root, file(".tape"), measuredRuns());
+        if (planned.isEmpty()) {
+            return planned;
+        }
+        final double factor = stretch(TapeTimeline.scenes(root, file(".tape"), measuredRuns()).getLast().end());
+        return planned.stream().map(span -> span.scaled(factor)).toList();
+    }
+
+    /** How much longer (or shorter) the recording came out than the script planned. */
+    private double stretch(final double plannedLength) {
+        return ExternalCommand.videoSeconds(file(".silent.mp4")).orElse(plannedLength) / plannedLength;
     }
 }
