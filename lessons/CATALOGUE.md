@@ -50,7 +50,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 |---|---|---|---|
 | [Parameterised tests](parameterised-tests/README.md): one test, a table of cases, each reported by name | JUnit 6 | Java only | in progress |
 | [Nested tests](nested-tests/README.md): group tests by situation, so gaps stand out | JUnit 6 | Java only | in progress |
-| More JUnit, one idea per lesson: dynamic tests, extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
+| [Dynamic tests](dynamic-tests/README.md): one test per example file, each named | JUnit 6 | Java only | in progress |
+| More JUnit, one idea per lesson: extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | wave 1 |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | in progress |
 | [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | in progress |
 | Spring tests: slices, MockMvc, and full-application tests with real dependencies | Spring Boot test, Testcontainers | Docker | wave 2 |

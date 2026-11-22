@@ -34,4 +34,5 @@ The full list of planned lessons, and the order they'll be made in, is in [CATAL
 | [Nested tests](nested-tests/README.md) | – | Script ready |
 | [Differential testing](differential-testing/README.md) | [differential-testing](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml) | Script ready |
 | [Feature flags](feature-flags/README.md) | [feature-flags](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/feature-flags/technique.yaml) | Script ready |
+| [Dynamic tests](dynamic-tests/README.md) | – | Script ready |
 | [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | Script ready |
