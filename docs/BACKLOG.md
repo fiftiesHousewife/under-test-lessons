@@ -9,7 +9,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #2 | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) | deliverable | Lessons Owner | person | – |
-| #4 | [Zoom in on the key code while the narration explains it](https://github.com/fiftiesHousewife/under-test-lessons/issues/4) | deliverable | Lessons Owner | ai | – |
 | #5 | [Slides build up one point at a time through the narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/5) | deliverable | Lessons Owner | ai | – |
 | #6 | [A slow zoom over each slide, and fades in and out](https://github.com/fiftiesHousewife/under-test-lessons/issues/6) | deliverable | Lessons Owner | ai | – |
 | #7 | [Code rolls in line by line, and callouts slide in](https://github.com/fiftiesHousewife/under-test-lessons/issues/7) | deliverable | Lessons Owner | ai | – |
@@ -17,7 +16,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #9 | [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9) | deliverable | Lessons Owner | ai | – |
 | #10 | [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) | deliverable | Lessons Owner | ai | – |
 | #11 | [Fail a script whose video would run over ten minutes](https://github.com/fiftiesHousewife/under-test-lessons/issues/11) | deliverable | Lessons Owner | tool | – |
-| #3 | [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3) | deliverable | Lessons Owner | ai | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2), [Zoom in on the key code while the narration explains it](https://github.com/fiftiesHousewife/under-test-lessons/issues/4), [Slides build up one point at a time through the narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/5), [A slow zoom over each slide, and fades in and out](https://github.com/fiftiesHousewife/under-test-lessons/issues/6), [Code rolls in line by line, and callouts slide in](https://github.com/fiftiesHousewife/under-test-lessons/issues/7), [Captions burned into the picture by default](https://github.com/fiftiesHousewife/under-test-lessons/issues/8), [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9), [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) |
+| #3 | [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3) | deliverable | Lessons Owner | ai | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2), [Slides build up one point at a time through the narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/5), [A slow zoom over each slide, and fades in and out](https://github.com/fiftiesHousewife/under-test-lessons/issues/6), [Code rolls in line by line, and callouts slide in](https://github.com/fiftiesHousewife/under-test-lessons/issues/7), [Captions burned into the picture by default](https://github.com/fiftiesHousewife/under-test-lessons/issues/8), [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9), [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) |
 | #12 | [Render videos in CI and publish them with each release](https://github.com/fiftiesHousewife/under-test-lessons/issues/12) | deliverable | Lessons Owner | tool | – |
 
 ## [The planned lessons are built, in the catalogue's order](https://github.com/fiftiesHousewife/under-test-lessons/issues/13)
@@ -65,7 +64,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #48 | [Decide whether each lesson has an exercise with an answer](https://github.com/fiftiesHousewife/under-test-lessons/issues/48) | decision | Lessons Owner | person | – |
-| #46 | [A Pages index to work through every lesson in order, with voice](https://github.com/fiftiesHousewife/under-test-lessons/issues/46) | deliverable | Lessons Owner | ai | – |
 | #45 | [A search that helps people find the right technique](https://github.com/fiftiesHousewife/under-test-lessons/issues/45) | deliverable | Lessons Owner | ai | – |
 | #47 | [Learning paths by role](https://github.com/fiftiesHousewife/under-test-lessons/issues/47) | deliverable | Lessons Owner | ai | – |
 
