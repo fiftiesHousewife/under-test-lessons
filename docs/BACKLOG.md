@@ -21,10 +21,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #16 | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) | deliverable | Lessons Owner | ai | – |
 | #59 | [Lesson: the safety inventory](https://github.com/fiftiesHousewife/under-test-lessons/issues/59) | deliverable | Lessons Owner | ai | – |
 | #60 | [Lesson: anti-patterns in existing tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/60) | deliverable | Lessons Owner | ai | – |
-| #61 | [Lesson: capturing what an old service receives and sends, with Logbook](https://github.com/fiftiesHousewife/under-test-lessons/issues/61) | deliverable | Lessons Owner | ai | – |
-| #62 | [Lesson: cleaning captured data so tests still work](https://github.com/fiftiesHousewife/under-test-lessons/issues/62) | deliverable | Lessons Owner | ai | – |
-| #23 | [Lesson: message consumers](https://github.com/fiftiesHousewife/under-test-lessons/issues/23) | deliverable | Lessons Owner | ai | – |
-| #24 | [Lesson: responses checked against the OpenAPI document](https://github.com/fiftiesHousewife/under-test-lessons/issues/24) | deliverable | Lessons Owner | ai | – |
 | #26 | [Lesson: coverage of changed code](https://github.com/fiftiesHousewife/under-test-lessons/issues/26) | deliverable | Lessons Owner | ai | – |
 | #27 | [Lesson: more JUnit, one idea per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/27) | deliverable | Lessons Owner | ai | – |
 | #28 | [Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)](https://github.com/fiftiesHousewife/under-test-lessons/issues/28) | deliverable | Lessons Owner | ai | – |
