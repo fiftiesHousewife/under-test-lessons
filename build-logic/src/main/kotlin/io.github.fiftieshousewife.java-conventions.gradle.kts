@@ -293,18 +293,8 @@ tasks.withType<CheckForbiddenApis>().configureEach {
 fun isPreRelease(version: String) =
     Regex("(?i).*[.-](alpha|beta|rc|cr|m|milestone|preview|snapshot|ea)[.\\d-]*").matches(version)
 
-// Dependencies held back on purpose, with the version they stay below, in gradle.properties, for example
-// quality.holdBack=org.liquibase:liquibase-core<5 (comma-separated). Say why next to the setting.
-val heldBack = providers.gradleProperty("quality.holdBack").getOrElse("").split(",").map { it.trim() }
-    .filter { it.contains("<") }.associate { it.substringBefore("<") to it.substringAfter("<") }
 tasks.withType<DependencyUpdatesTask>().configureEach {
-    val held = heldBack
-    rejectVersionIf {
-        (isPreRelease(candidate.version) && !isPreRelease(currentVersion)) ||
-            held["${candidate.group}:${candidate.module}"]?.let { below ->
-                (candidate.version.substringBefore(".").toIntOrNull() ?: 0) >= below.toInt()
-            } ?: false
-    }
+    rejectVersionIf { isPreRelease(candidate.version) && !isPreRelease(currentVersion) }
     outputFormatter = "json,plain"
     outputDir = layout.buildDirectory.dir("reports/dependencyUpdates").get().asFile.path
     reportfileName = "report"

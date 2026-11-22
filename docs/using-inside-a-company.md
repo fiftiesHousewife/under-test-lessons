@@ -72,8 +72,6 @@ These lessons have been built and tested behind an authenticating proxy. What ne
 Everything the lessons use is under the Apache, MIT, BSD or Eclipse licences, except Liquibase 5, which uses the
 Functional Source License (FSL-1.1-ALv2), becoming Apache 2.0 after two years; check your company accepts it. See
 [Liquibase 5 is used under the Functional Source License](decisions/0006-liquibase-5-is-used-under-the-functional-source-license.md).
-Dependencies held back on purpose are listed, with the reason, as `quality.holdBack` in
-[`gradle.properties`](../gradle.properties).
 
 ## Making the videos your own
 

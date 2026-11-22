@@ -10,7 +10,9 @@ wiremock = "3.13.2"
 rest-assured = "6.3.0"
 openfeature = "1.23.0"
 weld-junit = "5.0.3.Final"
-jakarta-cdi = "4.1.0"
+# Weld 7 implements CDI 5; weld-junit 5.0.3 brings Weld 6, so the Weld BOM lifts it to 7.
+weld = "7.0.0.Final"
+jakarta-cdi = "5.0.0"
 testcontainers = "2.0.5"
 postgresql = "42.7.14"
 h2 = "2.5.252"
@@ -50,7 +52,8 @@ mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 json-unit-assertj = { module = "net.javacrumbs.json-unit:json-unit-assertj", version.ref = "json-unit" }
 wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 weld-junit5 = { module = "org.jboss.weld:weld-junit5", version.ref = "weld-junit" }
-jakarta-cdi-api = { module = "jakarta.enterprise:jakarta.enterprise.cdi-api", version.ref = "jakarta-cdi" }
+weld-core-bom = { module = "org.jboss.weld:weld-core-bom", version.ref = "weld" }
+jakarta-cdi-api = { module = "jakarta.cdi:jakarta.cdi-api", version.ref = "jakarta-cdi" }
 testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql", version.ref = "testcontainers" }
 testcontainers-junit-jupiter = { module = "org.testcontainers:testcontainers-junit-jupiter", version.ref = "testcontainers" }
 postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }

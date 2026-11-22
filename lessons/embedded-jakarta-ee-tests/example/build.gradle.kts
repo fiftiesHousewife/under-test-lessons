@@ -8,6 +8,7 @@ plugins {
 //   ./gradlew :lessons:embedded-jakarta-ee-tests:test                the fixed checkout: wired as intended
 dependencies {
     compileOnly(libs.jakarta.cdi.api) // the application server provides it in production
+    testImplementation(platform(libs.weld.core.bom)) // Weld 7, the CDI 5 container
     testImplementation(libs.weld.junit5)
 }
 
