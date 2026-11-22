@@ -22,7 +22,7 @@ their own narration, in [recorded-http-responses.slides.md](recorded-http-respon
 9. We run the tests against today's code. The real service test is skipped. The recordings show two bugs in the
    client. An unknown postcode gives an empty town instead of none. And an outage gives a confusing error about JSON.
    And the saved recordings still hold the name, the email address and the token.
-10. Here is the cleaner. It drops the token, and swaps each name and email address for a keyed substitute: a short
+10. Here is the cleaner. It drops the token, and any cookie or key, and swaps each name and email address for a keyed substitute: a short
     code made from the value and a secret test key, with H-MAC, a standard method that comes with Java. The same value
     always gives the same substitute, so repeated names still match. Without the key, nobody can work back to the
     person.

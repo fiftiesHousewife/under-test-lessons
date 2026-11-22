@@ -75,7 +75,7 @@ class RecordingTest {
         assertAll(
                 () -> assertThat(personalDataIn(files)).as("personal data in the saved recordings").isEmpty(),
                 () -> assertThat(namesIn(files)).as("names in the saved recordings")
-                        .isEqualTo(List.of("person-ea08c440", "person-ea08c440")));
+                        .isEqualTo(List.of("person-ea08c4400378ace1", "person-ea08c4400378ace1")));
     }
 
     /** Records two questions to the stand-in, then cleans each recording and saves it to a file. */

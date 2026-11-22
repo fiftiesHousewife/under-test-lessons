@@ -163,11 +163,11 @@ Sleep 300ms
 Type@1ms `note "The cleaner: drop the token, and swap each name and email address for a *keyed* substitute."`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedRecordingCleaner 30 52 "the cleaner" --zoom 47`
+Type@1ms `show KeyedRecordingCleaner 41 64 "the cleaner" --zoom 58`
 Enter
 Sleep 300ms
 Show
-Sleep 35s
+Sleep 37s
 
 # ---- Scene 11: the fix ----
 Hide

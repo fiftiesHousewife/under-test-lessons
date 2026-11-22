@@ -30,8 +30,12 @@ The example looks up a town for a postcode, using a supplier's web service.
   every question and a person's name and email address in every answer. Saved as recorded, the files hold all three.
   [`TodaysRecordingCleaner`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/recorded/today/TodaysRecordingCleaner.java)
   saves them that way. [`KeyedRecordingCleaner`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/recorded/fixed/KeyedRecordingCleaner.java)
-  drops the token and swaps each name and email address for a keyed substitute, made with the JDK's HMAC-SHA256 and a
-  fixed test key, before anything is saved. The same name always gets the same substitute, so recordings still match.
+  drops every credential, in both directions (password tokens, cookies, API keys and tokens in the address), and swaps
+  each name and email address for a keyed substitute, made with the JDK's HMAC-SHA256 and a fixed test key, before
+  anything is saved. Substitutes are 64 bits, so two people almost never share one. The same name always gets the
+  same substitute, so recordings still match.
+  [`CredentialsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/recorded/CredentialsTest.java)
+  cleans a recording holding every kind of credential, and scans every recording kept with the tests for any left.
 
 ## Watch it, or present it
 
@@ -45,7 +49,7 @@ The example looks up a town for a postcode, using a supplier's web service.
 
 - **Whenever code calls a service you don't own.**
 - **Record once, then add the rare answers by hand:** errors, slow answers (WireMock's `fixedDelayMilliseconds`), odd data.
-- **Clean recordings before they are saved:** drop password tokens, and swap names and email addresses for keyed
+- **Clean recordings before they are saved:** drop every credential, both ways, and swap names and email addresses for keyed
   substitutes, so recordings never put personal data in the repository.
 - **Keep recordings honest:** check them against the real service now and then. Between teams, use
   [contract tests](../CATALOGUE.md) instead.
