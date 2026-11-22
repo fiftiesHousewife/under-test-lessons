@@ -65,6 +65,9 @@ httpclient5 = "5.6.5"
 # The message consumers lesson. Artemis moved to its own Apache project, so its groupId is org.apache.artemis.
 artemis = "2.57.0"
 jakarta-jms = "3.1.0"
+# The contract tests between teams lesson. Pact JVM 4.7 needs Java 17 or later; 4.5 runs on Java 11, and Java 8 code
+# bases need the 4.1 line, which Pact no longer supports actively.
+pact-jvm = "4.7.7"
 
 [libraries]
 jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
@@ -127,3 +130,6 @@ httpclient5 = { module = "org.apache.httpcomponents.client5:httpclient5", versio
 # The message consumers lesson
 artemis-jakarta-server = { module = "org.apache.artemis:artemis-jakarta-server", version.ref = "artemis" }
 jakarta-jms-api = { module = "jakarta.jms:jakarta.jms-api", version.ref = "jakarta-jms" }
+# The contract tests between teams lesson
+pact-consumer-junit5 = { module = "au.com.dius.pact.consumer:junit5", version.ref = "pact-jvm" }
+pact-provider-junit5 = { module = "au.com.dius.pact.provider:junit5", version.ref = "pact-jvm" }

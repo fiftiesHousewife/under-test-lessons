@@ -1,0 +1,7 @@
+$ ./gradlew :lessons:contract-tests-between-teams:test
+StockServicePactTest > meetsThePact(PactVerificationContext) > order-screen - a request for the kettle's stock PASSED
+StockClientPactTest > readsHowManyAreAvailable(MockServer) PASSED
+StockClientTest > readsHowManyAreAvailable() PASSED
+StockServiceTest > anItemNobodyStocks() PASSED
+StockServiceTest > anItemOnTheShelves() PASSED
+All 5 tests passed.

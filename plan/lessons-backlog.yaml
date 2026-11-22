@@ -484,6 +484,7 @@ items:
       - "Its README, slides, narration and script are written and its deck is voiced"
       - "Its facts are checked at their sources, named in its slides file"
     notes: "Pacts are shared as versioned artifacts through the company's package repository, without a broker: the consumer publishes its pact, and the provider's CI verifies the consumer versions it supports. A broker only where the platform team hosts one, since teams can't deploy shared services of their own (the platform generates Helm and Kubernetes files). Pact JVM 4.5 on JDK 8. Follows the toolkit's decision guide on sharing pacts as versioned artifacts."
+    status: "done"
   - key: "lesson-ai-written-tests-that-pass-the-acceptance-check"
     type: "deliverable"
     title: "Lesson: AI-written tests that pass the acceptance check"

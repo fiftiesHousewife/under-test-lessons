@@ -92,7 +92,7 @@ stand-in by how much of the real system's behaviour the test depends on.
 | [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) | [Weld](https://weld.cdi-spec.org/), [weld-testing](https://github.com/weld/weld-testing) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
 | [Message consumers](lessons/message-consumers/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/message-consumers.html) | [Apache Artemis](https://artemis.apache.org), embedded | A hand-built message passes while a payment is lost; a real broker in the test finds it, and the dead-letter queue keeps the bad message (Kafka next) |
 | [Slow and failing dependencies](lessons/slow-and-failing-dependencies/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) | [WireMock](https://wiremock.org/)'s delays and faults | A slow supplier hangs the shop and a reset connection crashes it; timeouts and a fallback answer "supplier unavailable" within a second |
-| *Contract tests between teams* | [Pact](https://pact.io/) | *coming* |
+| [Contract tests between teams](lessons/contract-tests-between-teams/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/contract-tests-between-teams.html) | [Pact JVM](https://github.com/pact-foundation/pact-jvm) | Both teams' own tests pass while a renamed field breaks the order screen; the pact, shared through the package repository, names the field |
 
 ### 5. Make old code testable, and change it safely
 
@@ -134,8 +134,8 @@ The lessons in italics above, in the order they will be made, from [the catalogu
 
 1. **Before you change anything:** the safety inventory, running old code unplugged with the airgap agent, and
    anti-patterns in existing tests.
-2. **Spring tests in slices,** **message consumers on Kafka,** **contract tests between teams,** and **AI-written tests
-   that pass the acceptance check.**
+2. **Spring tests in slices,** **message consumers on Kafka,** and **AI-written tests that pass the acceptance
+   check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

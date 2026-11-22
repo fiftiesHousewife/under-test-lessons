@@ -71,7 +71,7 @@ and see what its existing tests really check.
 | [Mockito well used](mockito-well-used/README.md): stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | built |
 | [Slow and failing dependencies](slow-and-failing-dependencies/README.md): a supplier made slow or broken on demand, and a client with timeouts and a clear fallback (Toxiproxy next, for network faults between real services) | WireMock's delays and faults | Java only | built |
 | [Message consumers](message-consumers/README.md): a JMS consumer on a real broker started in the test, with browsed and cleaned example messages; Kafka next | Apache Artemis, embedded | Java only | built |
-| Contract tests between teams: consumer and provider check one agreement, shared as versioned artifacts through the company's package repository, without a broker | Pact JVM (4.5 for JDK 8) | Java only | later |
+| [Contract tests between teams](contract-tests-between-teams/README.md): the order screen writes down what it relies on as a pact, and the stock service verifies it in its own build; the pact travels as a versioned artifact through the company's package repository, without a broker | Pact JVM | Java only | built |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
 | Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
 | Running script tests in CI: JUnit reports, tags and filters, parallel runs, time limits and retries | bats-core | bats | last: needs other tools |
@@ -124,7 +124,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md), [Message consumers](message-consumers/README.md) | built |
 | batch-file-in-file-out | [Batch file-in, file-out](batch-file-in-file-out/README.md) | built |
 | testcontainers | [Real databases in tests](real-databases-in-tests/README.md), [Database changes with Liquibase](database-changes-with-liquibase/README.md) | built |
-| contract-testing | Contract tests between teams | later |
+| contract-testing | [Contract tests between teams](contract-tests-between-teams/README.md) | built |
 | database-unit-tests | Stored procedures tested inside the database | later |
 | ai-written-tests | AI-written tests that pass an acceptance check | later |
 | stand-in-commands | Stand-in commands | last |
@@ -157,6 +157,7 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
 | Checking the requests your code sends (`checking-outgoing-requests`) | Refunds posted to a payment provider | A WireMock stand-in answers 201 Created and the test checks only the refund id, so an amount in pounds and a missing Idempotency-Key header pass | WireMock's verify checks the method, address, headers and JSON body the client really sent | `-Pcode=today` |
 | Capturing what an old service receives and sends (`capturing-with-logbook`) | An old customer service that asks a loyalty provider for points by email | A test checks each request and answer was recorded; one header filter replaced Logbook's default, so both tokens and the email are written | No secret may be in the capture, and the whole capture matches its approved file; Logbook's Authorization and JSON email filters clean it at source | `-Pcode=today` |
+| Contract tests between teams (`contract-tests-between-teams`) | An order screen asking a stock service how many are available | Each team's own tests pass: the order screen against a stand-in it wrote, while a tidy-up renamed available to quantityInStock | The order screen's pact test writes the pact; the stock service verifies the published version and names the missing field | `-Pcode=today` |
 | Coverage of changed code (`coverage-of-changed-code`) | A bulk discount added to a shop's old, untested pricing module | The change's test runs every new line but checks nothing exact; 5 of 11 planted bugs survive | Both sides of each boundary and exact prices; PIT on the changed class only catches all 11 | `-Pcode=today` |
 | Cleaning captured data so tests still work (`cleaning-captured-data`) | A shop's captured day: orders and payments joined by account | Fixed-text cleaning; a test checks the named fields changed | The reports give the same answers before and after cleaning, and a detector scans every field, finding the missed note | `-Pcode=today` |
 | Finding flaky tests (`finding-flaky-tests`) | Order confirmations sent on a background thread | Sleeps a fixed 200 ms, then checks; passes on a quiet machine | Awaitility waits for the confirmation, at most 2 s; both run 5 times | `-Pcode=today` |

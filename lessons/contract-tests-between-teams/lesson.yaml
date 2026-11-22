@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: contract-tests-between-teams
+title: Contract tests between teams
+techniques: [contract-testing]
