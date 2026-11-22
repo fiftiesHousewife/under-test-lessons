@@ -84,6 +84,9 @@ a link and never spoken.
   the word lets it land: `Now, [pause 300ms] the weak tests.` Never capitals: the voice may spell them out.
 - Pause where a listener needs a moment: after a question (`Why does it matter? [pause 1s]`), and before the closing
   sentence.
+- Name a line of code ("look at line 24") only if the scene shows it marked (`show ... --mark 24`, see
+  [make-a-lesson-video](../make-a-lesson-video/SKILL.md)); the same goes for every line a live run's output names.
+  Say what the line does as well as its number, since the deck and captions are read without the code beside them.
 
 ## Captions on screen
 

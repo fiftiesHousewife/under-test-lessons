@@ -17,7 +17,11 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>{@code voice <root> <id> <command...>}: reads each scene's narration aloud with the given command (which turns
  *   a text file into a WAV file), checks each clip fits its scene, and writes {@code <id>.narration.wav};</li>
  *   <li>{@code assemble <root> <id>}: combines the silent video, the narration and the captions into {@code <id>.mp4},
- *   and writes the narration as {@code <id>.narration.m4a} too.</li>
+ *   and writes the narration as {@code <id>.narration.m4a} too;</li>
+ *   <li>{@code deckvoice <root> <id|all> <command...>}: reads each deck slide's narration aloud into
+ *   {@code <id>.deck-voice/}, then rewrites the deck so it can play them ({@link DeckVoice});</li>
+ *   <li>{@code outputs <root> <id|all>}: runs each live command and keeps what it printed, for decks
+ *   ({@link LiveOutputs}).</li>
  * </ul>
  * Scene times come from the script and are stretched to the recorded video's real length.
  */
@@ -28,14 +32,14 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        if (args.length < 3 || !List.of("record", "voice", "assemble", "slides", "deck").contains(args[0])) {
+        final List<String> commands = List.of("record", "voice", "assemble", "slides", "deck", "deckvoice", "outputs");
+        if (args.length < 3 || !commands.contains(args[0])) {
             throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
                     + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | slides <root> <lesson>"
-                    + " | deck <root> <lesson|all> [pdf]");
+                    + " | deck <root> <lesson|all> [pdf] | deckvoice <root> <lesson|all> <command...>"
+                    + " | outputs <root> <lesson|all>");
         }
-        if ("deck".equals(args[0])) {
-            final boolean pdf = args.length > 3 && "pdf".equals(args[3]);
-            SlideDeck.lessons(Path.of(args[1]), args[2]).forEach(media -> SlideDeck.write(media, pdf));
+        if (forDecks(args)) {
             return;
         }
         final Media media = new Media(Path.of(args[1]), args[2]);
@@ -49,13 +53,39 @@ public final class LessonVideo {
         }
     }
 
+    /** The commands that work on decks, for one lesson or all: true if args named one of them, and it ran. */
+    private static boolean forDecks(final String... args) {
+        final Path root = Path.of(args[1]);
+        switch (args[0]) {
+            case "outputs" -> SlideDeck.lessons(root, args[2]).forEach(LiveOutputs::capture);
+            case "deckvoice" -> deckVoice(root, args[2], List.of(Arrays.copyOfRange(args, 3, args.length)));
+            case "deck" -> {
+                final boolean pdf = args.length > 3 && "pdf".equals(args[3]);
+                SlideDeck.lessons(root, args[2]).forEach(media -> SlideDeck.write(media, pdf));
+            }
+            default -> {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static void deckVoice(final Path root, final String lesson, final List<String> command) {
+        if (command.isEmpty()) {
+            throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
+        }
+        SlideDeck.lessons(root, lesson).forEach(media -> {
+            DeckVoice.speak(media, command);
+            SlideDeck.write(media, false);
+        });
+    }
+
     static void voice(final Media media, final List<String> command) {
         if (command.isEmpty()) {
             throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
         }
         final List<Scene> scenes = media.scenes();
-        final Pronunciation pronunciation =
-                Pronunciation.read(media.root().resolve("lessons/_shared/pronunciations.txt"));
+        final Pronunciation pronunciation = DeckVoice.pronunciation(media);
         final List<String> narration = Narration.paragraphs(media.file(".narration.md")).stream()
                 .map(pronunciation::forSpeech).toList();
         final Path clipsFolder = media.file(".voice");
@@ -131,7 +161,7 @@ public final class LessonVideo {
     }
 
     /** Speaks a scene's narration: each part between pause markers separately, joined with the pauses' silence. */
-    private static WavFile speak(final List<String> command, final String narration, final Path clip) {
+    static WavFile speak(final List<String> command, final String narration, final Path clip) {
         final List<Pauses.Part> parts = Pauses.parts(narration);
         if (parts.isEmpty()) {
             throw new IllegalArgumentException("a scene has no narration: " + clip);

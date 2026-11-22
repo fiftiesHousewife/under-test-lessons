@@ -1,0 +1,7 @@
+$ ./gradlew :lessons:outside-in-http-tests:test
+BookingApiTest > bookingTwoNightsCreatesABooking() PASSED
+
+BookingApiTest > bookingNoNightsIsRefused() PASSED
+
+BookingRulesTest > twoNightsCostTwiceTheNightlyRate() PASSED
+All 3 tests passed.

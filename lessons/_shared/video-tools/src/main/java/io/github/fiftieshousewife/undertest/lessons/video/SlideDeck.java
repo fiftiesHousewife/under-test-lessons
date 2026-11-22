@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -68,16 +69,31 @@ final class SlideDeck {
                 .append(SlideHtml.styles(sheets)).append("</style></head><body class=\"deck ")
                 .append(SlideHtml.frameClass()).append("\">")
                 .append(SlideHtml.definitions(pictures));
-        slides.intro().forEach(slide -> html.append(section(slide, pictures, "")));
+        final List<String> sections = new ArrayList<>();
+        slides.intro().forEach(slide -> sections.add(section(slide, pictures, "")));
         final List<Slide> scenes = scenes(media);
         final List<SceneContent> contents = Files.isRegularFile(media.file(".tape"))
                 ? SceneContent.read(media.root(), media.file(".tape")) : List.of();
         for (int i = 0; i < scenes.size(); i++) {
-            html.append(sceneSection(scenes.get(i), i < contents.size() ? contents.get(i) : new SceneContent()));
+            sections.add(sceneSection(scenes.get(i), i < contents.size() ? contents.get(i) : new SceneContent()));
         }
-        slides.closing().forEach(slide -> html.append(section(slide, pictures, "")));
+        slides.closing().forEach(slide -> sections.add(section(slide, pictures, "")));
+        final List<String> voice = DeckVoice.sources(media);
+        for (int i = 0; i < sections.size(); i++) {
+            html.append(withVoice(sections.get(i), i < voice.size() ? voice.get(i) : ""));
+        }
         return html.append("<script>\n").append(SlideHtml.read(media.sharedSlides().resolve("deck.js")))
                 .append("</script></body></html>\n").toString();
+    }
+
+    /** The slide's section with its spoken clip, if it has one, played by the deck's Listen control. */
+    static String withVoice(final String section, final String source) {
+        if (source.isEmpty()) {
+            return section;
+        }
+        final int end = section.lastIndexOf("</section>");
+        return section.substring(0, end) + "<audio class=\"voice\" preload=\"none\" src=\""
+                + SlideHtml.escape(source) + "\"></audio>" + section.substring(end);
     }
 
     /** A scene of the example: its narration and callouts beside the code panels and commands it shows. */
@@ -93,12 +109,28 @@ final class SlideDeck {
                 .append("px\">");
         for (final SceneContent.Panel panel : content.panels()) {
             html.append("<figcaption>").append(SlideHtml.escape(panel.label())).append("</figcaption><pre>")
-                    .append(SlideHtml.escape(String.join("\n", panel.lines()))).append("</pre>");
+                    .append(String.join("\n", panel.lines().stream()
+                            .map(line -> marked(line, panel.marked().contains(LiveOutputs.lineNumber(line))))
+                            .toList()))
+                    .append("</pre>");
         }
-        content.commands().forEach(command -> html.append("<pre class=\"command\">$ ")
-                .append(SlideHtml.escape(command)).append("</pre>"));
+        final List<List<String>> outputs = content.outputs();
+        for (int i = 0; i < content.commands().size(); i++) {
+            html.append("<pre class=\"command\">$ ").append(SlideHtml.escape(content.commands().get(i)))
+                    .append("</pre>");
+            if (i < outputs.size() && !outputs.get(i).isEmpty()) {
+                final Set<Integer> keyLines = LiveOutputs.marked(content);
+                html.append("<pre class=\"output\">").append(String.join("\n", outputs.get(i).stream()
+                        .map(line -> marked(line, LiveOutputs.namesAny(line, keyLines))).toList())).append("</pre>");
+            }
+        }
         return html.append("</figure></main><aside class=\"notes\">").append(SlideHtml.escape(scene.narration()))
                 .append("</aside></section>\n").toString();
+    }
+
+    /** One line of a panel or output, escaped, and highlighted when it is one the scene is about. */
+    static String marked(final String line, final boolean key) {
+        return key ? "<mark>" + SlideHtml.escape(line) + "</mark>" : SlideHtml.escape(line);
     }
 
     /** A font size, in pixels, that fits every panel's lines on the slide: at most 22, at least 12. */
@@ -106,6 +138,7 @@ final class SlideDeck {
         final List<String> lines = new ArrayList<>();
         content.panels().forEach(panel -> lines.addAll(panel.lines()));
         content.commands().forEach(command -> lines.add("$ " + command));
+        content.outputs().forEach(lines::addAll);
         final int rows = lines.size() + 2 * content.panels().size();
         final int widest = lines.stream().mapToInt(String::length).max().orElse(1);
         final double byHeight = 860.0 / Math.max(1, rows) / 1.35;
@@ -127,14 +160,25 @@ final class SlideDeck {
             return List.of();
         }
         final List<String> titles = matches(tape, SCENE);
-        final List<String> paragraphs = Narration.paragraphs(narration);
+        final List<String> paragraphs = sceneNarrations(media);
         final List<Slide> scenes = new ArrayList<>();
-        for (int i = 0; i < Math.min(titles.size(), paragraphs.size()); i++) {
+        for (int i = 0; i < paragraphs.size(); i++) {
             final String title = titles.get(i);
             scenes.add(new Slide(new Slide.Heading(Character.toUpperCase(title.charAt(0)) + title.substring(1),
                     ""), List.of(), Pauses.withoutMarkers(paragraphs.get(i))));
         }
         return scenes;
+    }
+
+    /** Each scene's narration as spoken, pause markers kept: one per scene that has both a title and narration. */
+    static List<String> sceneNarrations(final Media media) {
+        final Path tape = media.file(".tape");
+        final Path narration = media.file(".narration.md");
+        if (!Files.isRegularFile(tape) || !Files.isRegularFile(narration)) {
+            return List.of();
+        }
+        final List<String> paragraphs = Narration.paragraphs(narration);
+        return paragraphs.subList(0, Math.min(matches(tape, SCENE).size(), paragraphs.size()));
     }
 
     /** The lesson's name, from the first heading of its README. */

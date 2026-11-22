@@ -1,0 +1,29 @@
+$ ./gradlew :lessons:recorded-http-responses:test -Pcode=today
+RecordedSupplierTest > unknownPostcodeGivesNoTown() FAILED
+    java.lang.AssertionError:
+    Expecting an empty Optional but was containing value: ""
+
+RecordedSupplierTest > outageSaysTheSupplierIsUnavailable() FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "SupplierUnavailableException: the postcode supplier answered 503"
+     but was: "StreamReadException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')"
+
+RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
+
+RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
+
+5 tests completed, 2 failed, 1 skipped
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:recorded-http-responses:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 2 of 5 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 4s

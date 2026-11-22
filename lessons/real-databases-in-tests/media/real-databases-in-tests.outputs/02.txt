@@ -1,0 +1,6 @@
+$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest
+InMemoryDatabaseTest > customersWhoNeverOrderedComeFirst() PASSED
+All 1 tests passed.
+
+RealPostgresTest > customersWhoNeverOrderedComeFirst() PASSED
+All 1 tests passed.

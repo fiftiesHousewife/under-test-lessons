@@ -37,4 +37,6 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 :root { --code-background: #fff; --code-text: #111; }
 .code pre { border: 3px solid #111; border-radius: 0; box-shadow: 6px 6px 0 #111; }
 .code pre.command { color: #111; font-weight: bold; }
+/* A marked line: printed in reverse, so it stands out without colour. */
+.code mark { background: #111; color: #f3efe4; font-weight: bold; }
 .scene .callout { border-color: #111; color: #111; border-radius: 0; font-style: italic; }

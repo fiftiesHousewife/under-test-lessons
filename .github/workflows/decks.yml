@@ -5,7 +5,8 @@ name: Slide decks
 on:
   push:
     branches: [main]
-    paths: ["lessons/*/media/*.deck.html", "tools/publish-decks.py", ".github/workflows/decks.yml"]
+    paths: ["lessons/*/media/*.deck.html", "lessons/*/media/*.deck-voice/**", "tools/publish-decks.py",
+            ".github/workflows/decks.yml"]
   workflow_dispatch:
 
 permissions:

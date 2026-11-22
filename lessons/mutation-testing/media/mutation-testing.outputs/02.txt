@@ -1,0 +1,20 @@
+$ ./gradlew :lessons:mutation-testing:pitest
+Line coverage: 13 of 13 lines run by the tests (100%)
+Planted bugs:  13, caught 13, missed 0
+
+Caught - a test failed, as it should:
+  line 18  if (total < 0) {                         boundary moved by one  failed: discountChangesExactlyAtEachBoundary
+  line 18  if (total < 0) {                         condition reversed     failed: loyalCustomerGetsExactlyTwoPercentMore and 3 more
+  line 22  if (total >= 100) {                      boundary moved by one  failed: loyalCustomerGetsExactlyTwoPercentMore and 1 more
+  line 22  if (total >= 100) {                      condition reversed     failed: loyalCustomerGetsExactlyTwoPercentMore and 2 more
+  line 24  } else if (total >= 50) {                boundary moved by one  failed: discountChangesExactlyAtEachBoundary
+  line 24  } else if (total >= 50) {                condition reversed     failed: loyalCustomerGetsExactlyTwoPercentMore and 1 more
+  line 29  if (loyalCustomer) {                     condition reversed     failed: loyalCustomerGetsExactlyTwoPercentMore and 2 more
+  line 30  percent += 2;                            += 2 became -= 2       failed: loyalCustomerGetsExactlyTwoPercentMore and 1 more
+  line 32  return percent;                          result replaced with 0 failed: loyalCustomerGetsExactlyTwoPercentMore and 2 more
+  line 38  return total - (total * percent / 100);  * became /             failed: finalPriceAppliesTheDiscount
+  line 38  return total - (total * percent / 100);  / became *             failed: finalPriceAppliesTheDiscount
+  line 38  return total - (total * percent / 100);  - became +             failed: finalPriceAppliesTheDiscount
+  line 38  return total - (total * percent / 100);  result replaced with 0 failed: finalPriceAppliesTheDiscount
+
+Result: the tests caught 13 of 13 planted bugs (100%).

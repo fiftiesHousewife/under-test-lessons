@@ -178,6 +178,38 @@ tasks.register<JavaExec>("buildLessonDecks") {
     })
 }
 
+// What each live command in a lesson's video script prints, kept in <id>.outputs/ for its deck to show. Rerun after
+// changing a lesson's code or script; the video checks fail a live command without its output. -Plesson=<id>, or all.
+tasks.register<JavaExec>("captureLessonOutputs") {
+    group = "documentation"
+    description = "Runs each live command in a lesson's video script and keeps its output for the deck (-Plesson=<id>)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    workingDir = rootDir
+    val root = repoRoot
+    val lessonId = lesson
+    argumentProviders.add(CommandLineArgumentProvider { listOf("outputs", root, lessonId.getOrElse("all")) })
+}
+
+// A deck's voice: each slide's narration read aloud with the lesson voice into <id>.deck-voice/ beside the deck, which
+// is rewritten to play it (Listen, or V). Clips are named by what they say, so only changed slides are read again.
+// Commit the clips with the deck; they are published with it. -Plesson=<id>, or every lesson.
+tasks.register<JavaExec>("buildLessonDeckVoice") {
+    dependsOn(setUpLessonVoice)
+    group = "documentation"
+    description = "Reads each deck slide's narration aloud, so the deck can be heard without the video (-Plesson=<id>)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    workingDir = rootDir
+    environment("KOKORO_MODELS", "$repoRoot/build/voice")
+    val root = repoRoot
+    val lessonId = lesson
+    val voice = voiceCommand
+    argumentProviders.add(CommandLineArgumentProvider {
+        listOf("deckvoice", root, lessonId.getOrElse("all")) + voice.get()
+    })
+}
+
 // One command to pick up revised stylesheets and pictures: rebuilds every lesson's deck and slide images (or one
 // lesson's, with -Plesson=<id>). It always reruns, so edits are never missed.
 tasks.register("buildLessonSlides") {

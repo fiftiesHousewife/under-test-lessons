@@ -1,0 +1,113 @@
+package io.github.fiftieshousewife.undertest.lessons.video;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+/** Tests keeping live commands' output for decks, and the checks that decks show what the narration names. */
+class LiveOutputsTest {
+
+    @TempDir
+    Path root;
+
+    private Path media;
+
+    @BeforeEach
+    void lesson() throws IOException {
+        media = Files.createDirectories(root.resolve("lessons/demo/media"));
+        Files.createDirectories(root.resolve("lessons/demo/example"));
+        Files.writeString(root.resolve("lessons/demo/example/Code.java"), "code\n".repeat(30));
+        Files.writeString(media.resolve("demo.tape"), """
+                # ---- Scene 1: the code ----
+                Type@1ms `show Code.java 1 3 --mark 2`
+                # ---- Scene 2: the run ----
+                Type@1ms `run_live "echo line 24 failed"`
+                Type@1ms `callout "Look at line 24."`
+                Type@1ms `show Code.java 22 26 --mark 24`
+                """);
+        Files.writeString(media.resolve("demo.narration.md"), "1. Line 2 says two.\n2. The run names line 24.\n");
+    }
+
+    @Test
+    void keepsWhatALiveCommandPrintedAsTheVideoShowsIt() {
+        final Media demo = new Media(root, "demo");
+
+        final int kept = LiveOutputs.capture(demo);
+
+        assertAll(
+                () -> assertThat(kept).isEqualTo(1),
+                () -> assertThat(LiveOutputs.read(demo, 0, "echo line 24 failed")).containsExactly("line 24 failed"),
+                () -> assertThat(LiveOutputs.read(demo, 0, "echo something else")).isEmpty(),
+                () -> assertThat(LiveOutputs.problems(demo)).isEmpty());
+    }
+
+    @Test
+    void readsMarkedLinesAndRanges() {
+        assertAll(
+                () -> assertThat(SceneContent.marks("18,22-24")).containsExactly(18, 22, 23, 24),
+                () -> assertThat(LiveOutputs.lineNumber(" 24  code")).isEqualTo(24),
+                () -> assertThat(LiveOutputs.lineNumber("   \u22ee")).isEqualTo(-1));
+    }
+
+    @Test
+    void dropsColourCodesNoticesAndBlankEnds() {
+        final String printed = "\nPicked up JAVA_TOOL_OPTIONS: -Dx\n\u001B[1mBold\u001B[0m  \n"
+                + "Caught exception: Could not start\nend\n\n";
+
+        assertThat(LiveOutputs.clean(printed)).isEqualTo("Bold\nend");
+    }
+
+    @Test
+    void failsALiveCommandWithoutItsOutput() {
+        final List<Problem> problems = LiveOutputs.problems(new Media(root, "demo"));
+
+        assertAll(
+                () -> assertThat(problems).hasSize(1),
+                () -> assertThat(problems.getFirst().message()).contains("live command 1 (echo line 24 failed)")
+                        .contains("captureLessonOutputs -Plesson=demo"));
+    }
+
+    @Test
+    void failsALineNamedButNotShownMarkedWhereverItIsNamed() throws IOException {
+        Files.writeString(media.resolve("demo.tape"), """
+                # ---- Scene 1: the code ----
+                Type@1ms `show Code.java 1 3`
+                # ---- Scene 2: the run ----
+                Type@1ms `run_live "echo line 7 failed"`
+                Type@1ms `callout "Look at line 24."`
+                """);
+        final Media demo = new Media(root, "demo");
+        LiveOutputs.capture(demo);
+
+        final List<String> problems = LiveOutputs.problems(demo).stream().map(Problem::message).toList();
+
+        assertAll(
+                () -> assertThat(problems).anyMatch(problem -> problem.startsWith("scene 1 names line 2 "))
+                        .anyMatch(problem -> problem.startsWith("scene 2 names line 24 "))
+                        .anyMatch(problem -> problem.startsWith("scene 2 names line 7 ")),
+                () -> assertThat(problems).allMatch(problem -> problem.contains("--mark")));
+    }
+
+    @Test
+    void theDeckShowsEachCommandsOutputUnderItAndMarksTheLinesTheSceneIsAbout() throws IOException {
+        final Path shared = Files.createDirectories(root.resolve("lessons/_shared/slides/pictures"));
+        Files.writeString(shared.resolveSibling("slides.css"), "body { }");
+        Files.writeString(shared.resolveSibling("deck.css"), ".deck { }");
+        Files.writeString(shared.resolveSibling("deck.js"), "// controls");
+        LiveOutputs.capture(new Media(root, "demo"));
+
+        final String deck = SlideDeck.html(new Media(root, "demo"));
+
+        assertAll(
+                () -> assertThat(deck).contains("<pre class=\"command\">$ echo line 24 failed</pre>"
+                        + "<pre class=\"output\"><mark>line 24 failed</mark></pre>"),
+                () -> assertThat(deck).contains("<mark> 24  code</mark>").doesNotContain("<mark> 23"));
+    }
+}

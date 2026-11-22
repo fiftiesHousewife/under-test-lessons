@@ -62,7 +62,8 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
   where Colima is running.
 - **`./gradlew :lessons:video-tools:checkVideoScripts` before recording** catches waits that would hang, scene and
   narration counts that differ, code panels that would show the wrong file or lines, scenes too short for their
-  narration, and slides without sources or repository links.
+  narration, slides without sources or repository links, live commands without their kept output, and lines a scene
+  names that it doesn't show marked.
 
 ## Write the script
 
@@ -73,6 +74,11 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
    `show <file> /pattern/ [label]` for context: the whole `{ }` block around the match in a build file, or matching
    catalogue entries under their section headers. Prefer patterns for build files: they survive lines moving. Start
    code below the `package` line, and label files by what they are, so long package names stay off screen.
+   **Mark the lines that matter:** `show <file> <first> <last> --mark 22,24` (or `--mark 22-24`) draws those lines
+   black on yellow in the video and highlighted in the deck. **Every line a scene names must be shown, marked, in that
+   scene**: a line its narration or a callout names ("line 24"), and every line its live command's output names, such
+   as each line in PIT's report. A run that reports lines is followed, off camera, by `clear` and the code with those
+   lines marked, so the scene still fits on one screen.
 4. Draw callouts off-camera: `Hide`, ``Type@1ms `callout "..."` ``, `Enter`, `Show`.
 5. Mark each scene with a comment line `# ---- Scene N: title ----`, and write the narration file
    (`media/<id>.narration.md`) as a numbered list with **one item per scene**. Captions and voiceover come from it.
@@ -93,6 +99,7 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 | Slow commands go through `run_with_notes` | It runs them with no terminal input; a background job that reads the terminal is stopped by the shell |
 | The shared set-up gives recordings their own Gradle daemon registry (`build/video-daemons`); keep it | Otherwise a recording can join an idle Gradle background process started elsewhere, for example inside a sandbox, where test workers cannot connect |
 | Each scene fits on one screen; clear off-camera between scenes (`Hide`, `Type "clear"`, `Enter`, `Show`) | `Wait+Screen` can't see text printed after the screen has scrolled |
+| Every line a scene names (narration, callout or a live command's output) is shown in it with `show ... --mark N` | Otherwise viewers hear "look at line 24" and can't see it; `./gradlew check` fails the scene |
 | After each `Enter`, a `Sleep 300ms` (or a `Wait`) before typing the next command, even off-camera | VHS types the next command straight away; its echo mixes into the output of the one still running |
 | Paths in `Output` and `Screenshot` are relative | VHS rejects paths that start with `/` |
 | One narration item per scene line; never repeat a `# ---- Scene` line | Captions and voice pair them in order; a repeated line (easy to leave behind when copying a script) stops the video at the captions step. `./gradlew check` counts them |
@@ -128,9 +135,16 @@ terminal recording and the closing slides after it, with their own captions.
 - **Rebuild everything:** `./gradlew :lessons:video-tools:buildLessonSlides` rebuilds every deck and slide image from
   the current stylesheets and pictures; settings can live in `gradle.properties`.
 - **Decks:** `./gradlew :lessons:video-tools:buildLessonDecks` writes every lesson's `media/<id>.deck.html` (commit
-  it): intro slides, one slide per scene with its narration, code panels, commands and callouts (read from the script's
-  `show`, `run_live` and `callout` lines), and closing slides. Rebuild decks whenever slides or
-  narration change; `-PlessonDeckPdf=true` adds a PDF.
+  it): intro slides, one slide per scene with its narration, code panels (marked lines highlighted), commands and
+  their output, and callouts (read from the script's `show`, `run_live` and `callout` lines), and closing slides.
+  Rebuild decks whenever slides or narration change; `-PlessonDeckPdf=true` adds a PDF.
+- **What live commands print:** `./gradlew :lessons:video-tools:captureLessonOutputs -Plesson=<id>` runs each live
+  command as a recording would and keeps its output in `media/<id>.outputs/` (commit it), so the deck shows what the
+  video shows. Run it again after changing the lesson's code or its live commands; `./gradlew check` fails a live
+  command without its output. The database lessons need a container runtime for a true capture.
+- **The deck's voice:** `./gradlew :lessons:video-tools:buildLessonDeckVoice -Plesson=<id>` reads each slide's
+  narration aloud into `media/<id>.deck-voice/` (commit it) and rebuilds the deck, which then plays it (Listen, or V).
+  Only changed slides are read again. Run it after changing narration or slides; a slide without its clip is silent.
 - **A quick look:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
   slides (into `media/<id>.voice/`) in about a minute.
 

@@ -1,0 +1,9 @@
+$ ./gradlew :lessons:recorded-http-responses:test
+RecordedSupplierTest > unknownPostcodeGivesNoTown() PASSED
+
+RecordedSupplierTest > outageSaysTheSupplierIsUnavailable() PASSED
+
+RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
+
+RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
+All 4 tests that ran passed; 1 skipped.

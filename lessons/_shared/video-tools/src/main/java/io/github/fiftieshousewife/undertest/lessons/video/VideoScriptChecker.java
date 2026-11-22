@@ -45,12 +45,17 @@ public final class VideoScriptChecker {
                 problems.addAll(LessonChecks.sceneTimes(tape, narration));
             }
             problems.addAll(LessonChecks.shows(root, tape));
+            problems.addAll(LiveOutputs.problems(new Media(root, lessonId(tape))));
             final Path slides = tape.resolveSibling(String.valueOf(tape.getFileName()).replace(".tape", ".slides.md"));
             if (Files.isRegularFile(slides)) {
                 problems.addAll(LessonChecks.slides(slides));
             }
         }
         return problems;
+    }
+
+    private static String lessonId(final Path tape) {
+        return String.valueOf(tape.getFileName()).replace(".tape", "");
     }
 
     /** Captions and voice pair each scene with one narration item, so the counts must match. */

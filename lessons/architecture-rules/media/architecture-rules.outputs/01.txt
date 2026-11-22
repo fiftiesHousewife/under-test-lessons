@@ -1,0 +1,23 @@
+$ ./gradlew :lessons:architecture-rules:test -Pcode=today
+LayerRulesTest > onlyTheServiceLayerUsesStorage() FAILED
+    java.lang.AssertionError: Constructor <web.today.TodaysSummaryPage.<init>(storage.OrderStore)> has parameter of type <storage.OrderStore>
+    Field <web.today.TodaysSummaryPage.store> has type <storage.OrderStore>
+    Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>
+
+OrderSummaryPageTest > bothPagesCountTheOrders() PASSED
+
+2 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:architecture-rules:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 2 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 5s

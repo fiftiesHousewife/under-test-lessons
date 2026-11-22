@@ -1,0 +1,13 @@
+$ ./gradlew :lessons:differential-testing:test
+OldAndNewAgreeTest > rewriteAgreesWithTheOldCalculatorOnEveryWeight() PASSED
+
+RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 50 g costs 85 pence PASSED
+
+RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 200 g costs 155 pence PASSED
+
+RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 400 g costs 195 pence PASSED
+
+RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 800 g costs 315 pence PASSED
+
+RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 1500 g costs 435 pence PASSED
+All 6 tests passed.

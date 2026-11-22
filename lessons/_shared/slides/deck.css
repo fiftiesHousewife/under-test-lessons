@@ -16,12 +16,18 @@ html, body.deck { width: auto; height: auto; min-height: 100vh; overflow: hidden
 body.show-notes .current .notes { display: block; }
 .deck-counter { position: fixed; right: 16px; bottom: 12px; color: var(--grey); font: 14px var(--font); }
 body.show-notes .deck-counter { display: none; }
+.deck-listen {
+  position: fixed; right: 90px; bottom: 8px; padding: 4px 14px; font: 14px var(--font); color: var(--grey);
+  background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
+}
+.deck-listen[aria-pressed="true"] { color: inherit; border-color: currentColor; }
+body.show-notes .deck-listen { display: none; }
 @media print {
   @page { size: 1920px 1080px; margin: 0; }
   html, body.deck { overflow: visible; }
   .deck-slide { display: block; position: static; width: 1920px; height: 1080px; page-break-after: always; break-after: page; }
   .deck .slide { position: static; transform: none; }
-  .notes, .deck-counter { display: none !important; }
+  .notes, .deck-counter, .deck-listen { display: none !important; }
 }
 
 /* Scene slides: what the video shows at each step, as text: narration and callouts beside the code. */
@@ -39,3 +45,5 @@ body.show-notes .deck-counter { display: none; }
   white-space: pre; overflow: hidden;
 }
 .code pre.command { color: var(--green); }
+.code pre.output { opacity: 0.85; margin-top: 4px; }
+.code mark { display: inline-block; min-width: 100%; background: var(--yellow); color: #000; }

@@ -1,0 +1,22 @@
+$ ./gradlew :lessons:mutation-testing:pitest -Psuite=weak
+Line coverage: 13 of 13 lines run by the tests (100%)
+Planted bugs:  13, caught 5, missed 8
+
+Caught - a test failed, as it should:
+  line 18  if (total < 0) {                         condition reversed     failed: mediumOrder, bigOrderGetsDiscount and 4 more
+  line 22  if (total >= 100) {                      condition reversed     failed: mediumOrder, smallOrder
+  line 24  } else if (total >= 50) {                condition reversed     failed: mediumOrder, smallOrder
+  line 29  if (loyalCustomer) {                     condition reversed     failed: mediumOrder, smallOrder
+  line 32  return percent;                          result replaced with 0 failed: mediumOrder, bigOrderGetsDiscount
+
+Missed - every test that ran still passed:
+  line 18  if (total < 0) {                         boundary moved by one  passed: mediumOrder, bigOrderGetsDiscount and 4 more
+  line 22  if (total >= 100) {                      boundary moved by one  passed: mediumOrder, bigOrderGetsDiscount and 3 more
+  line 24  } else if (total >= 50) {                boundary moved by one  passed: mediumOrder, smallOrder, loyalCustomer
+  line 30  percent += 2;                            += 2 became -= 2       passed: loyalCustomer
+  line 38  return total - (total * percent / 100);  * became /             passed: finalPrice
+  line 38  return total - (total * percent / 100);  / became *             passed: finalPrice
+  line 38  return total - (total * percent / 100);  - became +             passed: finalPrice
+  line 38  return total - (total * percent / 100);  result replaced with 0 passed: finalPrice
+
+Result: the tests caught 5 of 13 planted bugs (38%).

@@ -1,0 +1,5 @@
+$ ./gradlew :lessons:batch-file-in-file-out:test
+WholeJobTest > knownPaymentsGiveTheExpectedSettlementFile() PASSED
+
+PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
+All 2 tests passed.

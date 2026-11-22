@@ -95,8 +95,21 @@ run_with_notes() {
 # under its [section] header, with a gap marker between; for other files, the whole { ... } block around the first
 # matching line. Searches lessons/, build-logic/ and gradle/ when given part of a name. Run it off-camera: it erases
 # its own command line, so viewers see only the code.
+# Prints one numbered line; lines named by --mark (a list such as 22,24 or 22-24) are drawn black on yellow.
+_SHOW_AWK='
+  BEGIN { n = split(m, parts, ","); for (i = 1; i <= n; i++) { if (split(parts[i], r, "-") == 2) { for (j = r[1]; j <= r[2]; j++) mark[j] = 1 } else if (parts[i] != "") mark[parts[i] + 0] = 1 } }
+  function out(number, text) {
+    if (number in mark) printf "\033[30;43m%3d  %s\033[0m\n", number, text
+    else printf "\033[2;37m%3d\033[0m  %s\n", number, text
+  }'
+
 show() {
   _erase_typed show "$@"
+  local marks="" args=()
+  while [ $# -gt 0 ]; do
+    if [ "$1" = "--mark" ]; then marks="$2"; shift 2; else args+=("$1"); shift; fi
+  done
+  set -- "${args[@]}"
   local target="$1" file
   if [ -f "$target" ]; then
     file="$target"
@@ -112,10 +125,11 @@ show() {
   [ -n "$file" ] || { echo "show: nothing found for $target" >&2; return 1; }
   if [[ "${2:-}" == /*/ ]]; then
     _show_header "${3:-${file##*/}}"
-    _show_pattern "$file" "${2:1:${#2}-2}"
+    _show_pattern "$file" "${2:1:${#2}-2}" "$marks"
   else
     _show_header "${4:-${file##*/}}"
-    awk -v f="${2:-1}" -v t="${3:-0}" 'NR >= f && (t == 0 || NR <= t) { printf "\033[2;37m%3d\033[0m  %s\n", NR, $0 }' "$file"
+    awk -v f="${2:-1}" -v t="${3:-0}" -v m="$marks" "$_SHOW_AWK"'
+      NR >= f && (t == 0 || NR <= t) { out(NR, $0) }' "$file"
   fi
 }
 
@@ -127,20 +141,20 @@ _show_header() {
 # The lines a pattern needs to make sense: in a .toml file, each match under its [section]; elsewhere, the whole
 # { ... } block around the first match.
 _show_pattern() {
-  local file="$1" pattern="$2"
+  local file="$1" pattern="$2" marks="${3:-}"
   if [[ "$file" == *.toml ]]; then
-    awk -v p="$pattern" '
+    awk -v p="$pattern" -v m="$marks" "$_SHOW_AWK"'
       /^\[/ { section = $0; sectionLine = NR }
       $0 ~ p {
         if (sectionLine != shownSection) {
           if (shownAny) print "\033[2;37m  ⋮\033[0m"
-          printf "\033[2;37m%3d\033[0m  %s\n", sectionLine, section; shownSection = sectionLine; last = sectionLine
+          out(sectionLine, section); shownSection = sectionLine; last = sectionLine
         }
         if (NR > last + 1) print "\033[2;37m  ⋮\033[0m"
-        printf "\033[2;37m%3d\033[0m  %s\n", NR, $0; last = NR; shownAny = 1
+        out(NR, $0); last = NR; shownAny = 1
       }' "$file"
   else
-    awk -v p="$pattern" '
+    awk -v p="$pattern" -v m="$marks" "$_SHOW_AWK"'
       { line[NR] = $0 }
       !hit && $0 ~ p { hit = NR }
       END {
@@ -158,7 +172,7 @@ _show_pattern() {
           i = match(line[end], /[^ ]/) - 1
           if (end > start && i == open && line[end] ~ /^[ \t]*\}/) break
         }
-        for (n = start; n <= end && n <= NR; n++) printf "\033[2;37m%3d\033[0m  %s\n", n, line[n]
+        for (n = start; n <= end && n <= NR; n++) out(n, line[n])
       }' "$file"
   fi
 }

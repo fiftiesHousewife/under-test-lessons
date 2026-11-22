@@ -116,6 +116,14 @@ Show
 Wait+Screen@300s /Result: the tests caught \d+ of \d+/
 Sleep 17s
 Hide
+Type "clear"
+Enter
+Sleep 300ms
+Type@1ms `show DiscountCalculator 17 39 --mark 18,22,24,29,30,32,38`
+Enter
+Show
+Sleep 6s
+Hide
 Type@1ms `callout "Line 24: if >= 50 became > 50, an order of exactly £50 would lose its discount, and no test checks an order of exactly £50."`
 Enter
 Show
@@ -147,6 +155,14 @@ Enter
 Show
 Wait+Screen@300s /Result: the tests caught 13 of 13/
 Sleep 10s
+Hide
+Type "clear"
+Enter
+Sleep 300ms
+Type@1ms `show DiscountCalculator 17 39 --mark 18,22,24,29,30,32,38`
+Enter
+Show
+Sleep 6s
 Hide
 Type@1ms `callout "Same 100% line coverage. Only mutation testing shows which tests catch bugs."`
 Enter

@@ -39,6 +39,9 @@ refuse "show stops at the last line asked for" "$OUT" "four"
 mkdir -p "$WORK/repo/lessons/x" "$WORK/repo/build-logic" "$WORK/repo/gradle"
 printf 'test\n' >"$WORK/repo/lessons/x/CalcStrongTest.java"; printf 'code\n' >"$WORK/repo/lessons/x/Calc.java"
 expect "show prefers an exact file name to a partial match" "$(cd "$WORK/repo" && show Calc | plain)" "── Calc.java ──"
+OUT="$(_VIDEO_LAST=""; show "$WORK/sample.txt" 1 3 --mark 2)"
+expect "show --mark draws the marked line black on yellow" "$OUT" $'\033[30;43m  2  two'
+refuse "show --mark leaves other lines as they are" "$OUT" $'\033[30;43m  1'
 expect "show uses a label when given one" "$(show "$WORK/sample.txt" 1 1 'Build settings' | plain)" "── Build settings ──"
 
 printf 'plugins {\n    java\n    id("x.y")\n}\n\ndependencies {\n    implementation(libs.a)\n    implementation(libs.b)\n}\n' >"$WORK/build.gradle.kts"
@@ -47,6 +50,7 @@ expect "show /pattern/ prints the whole block around a match" "$OUT" "  6  depen
 expect "show /pattern/ prints to the block's closing brace" "$OUT" "  9  }"
 refuse "show /pattern/ leaves out other blocks" "$OUT" "plugins"
 expect "show /pattern/ prints a block the matching line opens" "$(show "$WORK/build.gradle.kts" "/^plugins/" | plain)" "  4  }"
+expect "show --mark takes ranges, and works with a pattern" "$(show "$WORK/build.gradle.kts" "/libs.b/" --mark 6-7)" $'\033[30;43m  7'
 printf '[versions]\na = "1"\npit = "2"\nb = "3"\n\n[libraries]\npit = { module = "x" }\n' >"$WORK/libs.versions.toml"
 OUT="$(_VIDEO_LAST=""; show "$WORK/libs.versions.toml" "/^pit/" | plain)"
 expect "show /pattern/ in a catalogue shows each match under its section" "$OUT" $'  1  [versions]\n  ⋮\n  3  pit = "2"'

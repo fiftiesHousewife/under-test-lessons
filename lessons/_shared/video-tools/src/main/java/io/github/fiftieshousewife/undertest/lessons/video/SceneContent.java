@@ -6,23 +6,29 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 /**
  * What one scene of a video script puts on screen, read from the script itself: the code panels it shows (the same
- * lines {@code show} prints), the commands it runs live, and its callouts. Slide decks draw these as text.
+ * lines {@code show} prints), the commands it runs live with the output kept for each ({@link LiveOutputs}), and its
+ * callouts. Slide decks draw these as text.
  */
 final class SceneContent {
 
-    /** A panel of code: its label, and its lines, each with its line number. */
-    record Panel(String label, List<String> lines) {
+    /** A panel of code: its label, its lines (each with its line number), and the numbers of the lines marked. */
+    record Panel(String label, List<String> lines, Set<Integer> marked) {
 
         Panel {
             lines = List.copyOf(lines);
+            marked = Set.copyOf(marked);
         }
     }
+
+    private static final Pattern MARK_PART = Pattern.compile("(\\d+)(?:-(\\d+))?");
 
     private static final Pattern TYPED = Pattern.compile("^Type(?:@\\S+)?\\s+([\"`])(.*)\\1\\s*$");
     private static final Pattern WORD = Pattern.compile("\"([^\"]*)\"|(\\S+)");
@@ -30,6 +36,7 @@ final class SceneContent {
     private final List<Panel> shownPanels = new ArrayList<>();
     private final List<String> liveCommands = new ArrayList<>();
     private final List<String> calloutTexts = new ArrayList<>();
+    private final List<List<String>> liveOutputs = new ArrayList<>();
 
     List<Panel> panels() {
         return List.copyOf(shownPanels);
@@ -37,6 +44,11 @@ final class SceneContent {
 
     List<String> commands() {
         return List.copyOf(liveCommands);
+    }
+
+    /** For each live command, in the same order, the output kept for it (empty if none). */
+    List<List<String>> outputs() {
+        return List.copyOf(liveOutputs);
     }
 
     List<String> callouts() {
@@ -56,6 +68,14 @@ final class SceneContent {
                 scenes.add(current);
             } else if (current != null) {
                 current.take(root, places, line);
+            }
+        }
+        final String name = String.valueOf(tape.getFileName());
+        final Media media = new Media(root, name.endsWith(".tape") ? name.substring(0, name.length() - 5) : name);
+        int index = 0;
+        for (final SceneContent scene : scenes) {
+            for (final String command : scene.liveCommands) {
+                scene.liveOutputs.add(LiveOutputs.read(media, index++, command));
             }
         }
         return scenes;
@@ -86,8 +106,39 @@ final class SceneContent {
         return words;
     }
 
-    /** The lines {@code show <file> <from> <to> [label]} or {@code show <file> /pattern/ [label]} prints. */
-    static Panel panel(final Path root, final List<Path> places, final List<String> args) {
+    /**
+     * The lines {@code show <file> <from> <to> [label]} or {@code show <file> /pattern/ [label]} prints, with any
+     * {@code --mark 22,24} (or {@code 22-24}) lines marked.
+     */
+    static Panel panel(final Path root, final List<Path> places, final List<String> words) {
+        final int mark = words.indexOf("--mark");
+        final Set<Integer> marked = mark >= 0 && mark + 1 < words.size() ? marks(words.get(mark + 1)) : Set.of();
+        final List<String> args = new ArrayList<>(words);
+        if (mark >= 0) {
+            args.subList(mark, Math.min(mark + 2, args.size())).clear();
+        }
+        final Panel plain = unmarked(root, places, args);
+        return new Panel(plain.label(), plain.lines(), marked);
+    }
+
+    /** The line numbers in a list such as {@code 18,22-24}. */
+    static Set<Integer> marks(final String list) {
+        final Set<Integer> numbers = new TreeSet<>();
+        for (final String part : list.split(",")) {
+            final Matcher range = MARK_PART.matcher(part.strip());
+            if (!range.matches()) {
+                throw new IllegalArgumentException("show --mark: not a line number or range: " + part);
+            }
+            final int from = Integer.parseInt(range.group(1));
+            final int to = range.group(2) == null ? from : Integer.parseInt(range.group(2));
+            for (int n = from; n <= to; n++) {
+                numbers.add(n);
+            }
+        }
+        return numbers;
+    }
+
+    private static Panel unmarked(final Path root, final List<Path> places, final List<String> args) {
         final Path file = find(root, places, args.getFirst());
         final List<String> all = lines(file);
         final String name = String.valueOf(file.getFileName());
@@ -96,11 +147,11 @@ final class SceneContent {
             final String pattern = args.get(1).substring(1, args.get(1).length() - 1).replace("\\\\", "\\");
             final String label = args.size() > 2 ? args.get(2) : name;
             return new Panel(label, name.endsWith(".toml") ? SourceLines.tomlMatches(all, pattern)
-                    : SourceLines.blockAround(all, pattern));
+                    : SourceLines.blockAround(all, pattern), Set.of());
         }
         final int from = args.size() > 1 ? Integer.parseInt(args.get(1)) : 1;
         final int to = args.size() > 2 ? Integer.parseInt(args.get(2)) : all.size();
-        return new Panel(args.size() > 3 ? args.get(3) : name, SourceLines.range(all, from, to));
+        return new Panel(args.size() > 3 ? args.get(3) : name, SourceLines.range(all, from, to), Set.of());
     }
 
     private static boolean isPattern(final String arg) {

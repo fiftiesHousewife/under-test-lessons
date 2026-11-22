@@ -1,0 +1,30 @@
+$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest -Pcode=today
+InMemoryDatabaseTest > customersWhoNeverOrderedComeFirst() PASSED
+All 1 tests passed.
+
+RealPostgresTest > customersWhoNeverOrderedComeFirst() FAILED
+    org.opentest4j.AssertionFailedError:
+    Expecting actual:
+      ["Cy", "Ada", "Bob"]
+    to contain exactly (and in same order):
+      ["Bob", "Cy", "Ada"]
+    but there were differences at these indexes:
+      - element at index 0: expected "Bob" but was "Cy"
+      - element at index 1: expected "Cy" but was "Ada"
+      - element at index 2: expected "Ada" but was "Bob"
+
+1 test completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:real-databases-in-tests:integrationTestFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 1 tests failed. Report: build/reports/tests/integrationTest/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 6s

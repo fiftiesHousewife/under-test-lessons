@@ -1,0 +1,34 @@
+$ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today
+PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
+
+WholeJobTest > knownPaymentsGiveTheExpectedSettlementFile() FAILED
+    org.opentest4j.AssertionFailedError: [settlement file]
+    Expecting actual:
+      ["HEADER,SETTLEMENT",
+        "PAY,12345678,12.50",
+        "PAY,87654321,8.99",
+        "PAY,11112222,100.00"]
+    to contain exactly (and in same order):
+      ["HEADER,SETTLEMENT",
+        "PAY,12345678,12.50",
+        "PAY,87654321,8.99",
+        "PAY,11112222,100.00",
+        "TRAILER,3,121.49"]
+    but could not find the following elements:
+      ["TRAILER,3,121.49"]
+
+2 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:batch-file-in-file-out:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 2 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2s
