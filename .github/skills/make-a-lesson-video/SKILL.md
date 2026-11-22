@@ -108,8 +108,9 @@ terminal recording and the closing slides after it, with their own captions.
   pictures in line and hatching, using the shared hatching and wobble in `pictures/defs.svg`). Pass one as
   `-PlessonSlideCss`.
 - **Picture sets:** `-PlessonPictures=<folder>` uses pictures from that folder by name before the shared ones.
-  `pictures/ink/` is the black-and-white newspaper set (draw new ones there with explicit black strokes, white fills
-  and the shared `#hatch`, `#cross-hatch` and `#dots` patterns).
+  `pictures/ink/`, the default, is generated: each picture is a hand-drawn figure from `slides/figures/` (Open Peeps,
+  public domain) chosen by the kind of slide. Adding a picture name to the colour set? Map it to a figure in
+  `tools/compose-pictures.py` and rerun the script.
 - **Rebuild everything:** `./gradlew :lessons:video-tools:buildLessonSlides` rebuilds every deck and slide image from
   the current stylesheets and pictures; settings can live in `gradle.properties`.
 - **Decks:** `./gradlew :lessons:video-tools:buildLessonDecks` writes every lesson's `media/<id>.deck.html` (commit

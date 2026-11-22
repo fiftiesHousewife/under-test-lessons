@@ -7,7 +7,6 @@
 ![JUnit 6](https://img.shields.io/badge/JUnit-6-blue)
 [![Lessons: 18](https://img.shields.io/badge/lessons-18-brightgreen)](lessons/CATALOGUE.md)
 [![Slide decks: HTML](https://img.shields.io/badge/slide%20decks-HTML%20%2B%20CSS-lightgrey)](docs/decisions/0003-the-look-is-set-by-css-and-the-newspaper-style-is-the-default.md)
-[![Works behind a proxy](https://img.shields.io/badge/company%20networks-repository%20manager%20%2B%20proxy-lightgrey)](docs/using-inside-a-company.md)
 
 **Short, practical lessons on testing old code: each one a runnable before-and-after example, a narrated video and a
 slide deck.**
