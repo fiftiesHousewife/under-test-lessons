@@ -134,8 +134,8 @@ how to route it:
 | Voice's Python packages (video making only) | PyPI, through pip | pip's own settings (`pip.conf`) pointing at the repository manager |
 | VHS (video making only) | Homebrew or GitHub releases | Not usually available; record videos outside the company network |
 
-Liquibase is pinned to 4.33.0, its last release under the Apache licence; version 5 moved to the Functional Source
-License, which many companies must approve first. Dependencies held back on purpose are listed, with the reason, as
+Liquibase 5 is under the Functional Source License (FSL-1.1-ALv2), which becomes Apache 2.0 after two years; check
+your company accepts it. Dependencies held back on purpose are listed, with the reason, as
 `quality.holdBack` in [`gradle.properties`](gradle.properties), so the out-of-date check accepts them.
 
 ## What's here

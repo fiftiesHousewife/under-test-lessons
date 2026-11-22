@@ -36,7 +36,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 1: add Liquibase to the version catalogue. Version 4.33.0 is the last under the Apache licence."`
+Type@1ms `note "Step 1: add Liquibase to the version catalogue."`
 Enter
 Sleep 300ms
 Type@1ms `show libs.versions.toml "/liquibase/" gradle/libs.versions.toml`

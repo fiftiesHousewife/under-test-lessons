@@ -1,7 +1,7 @@
 # Slides: database changes with Liquibase
 
-Sources: liquibase.org and github.com/liquibase/liquibase (changelogs and changesets; Liquibase 4.33.0 published under
-the Apache 2.0 licence; Liquibase 5 published under FSL-1.1-ALv2, per the licence in its Maven Central POM); postgresql.org
+Sources: liquibase.org and github.com/liquibase/liquibase (changelogs and changesets; Liquibase 5 published under
+FSL-1.1-ALv2, which becomes Apache 2.0 after two years, per the licence in its Maven Central POM); postgresql.org
 data types (no TINYINT; SMALLINT is the smallest integer type).
 
 ## intro: What is a database changelog?
@@ -53,12 +53,12 @@ Include: how-we-build
 ## closing: When to test database changes
 - Every change, every time: apply the whole changelog to a fresh real database in the build
 - Prefer Liquibase changes to raw SQL; when raw SQL is needed, test it on every database you run
-- Check the licence: Liquibase 5 uses the Functional Source License, which companies may need to approve
+- Check the licence: Liquibase 5 uses the Functional Source License; Flyway is an alternative
 Picture: map
 Say: When should you test database changes? [pause 1s] Every change, every time: apply the whole changelog to a fresh,
   real database in the build. Prefer Liquibase changes to raw SQL, and when you need raw SQL, test it on every database
-  you run. And check the licence: Liquibase five uses the Functional Source License, which companies may need to
-  approve. Flyway is another choice, with the same idea.
+  you run. And check the licence: Liquibase five uses the Functional Source License, so confirm your company
+  accepts it. Flyway is another choice, with the same idea.
 
 ## closing: Where Liquibase came from
 - An open-source tool for database changes, first released in 2006

@@ -39,8 +39,8 @@ The example adds a loyalty level to each customer.
 
 - **Every change, every time:** apply the whole changelog to a fresh real database in the build.
 - **Prefer Liquibase changes to raw SQL;** test any raw SQL on every database you run.
-- **Check the licence:** this lesson pins Liquibase 4.33.0, the last release under the Apache licence. Liquibase 5 uses
-  the Functional Source License (FSL-1.1-ALv2), which many companies must approve first. Flyway works the same way.
+- **Check the licence:** Liquibase 5 uses the Functional Source License (FSL-1.1-ALv2), which becomes Apache 2.0 after
+  two years; confirm your company accepts it. Flyway works the same way.
 
 ## Find out more
 
