@@ -34,7 +34,7 @@ class LessonChecksTest {
         final Path narration = Files.writeString(media.resolve("demo.narration.md"),
                 "1. Here is the thing, which the narration describes at some length before moving on to the next.\n"
                         + "2. Short.\n");
-        final Path slides = Files.writeString(media.resolve("demo.slides.md"), "## closing: More\n- {lessons-repo}\n");
+        final Path slides = Files.writeString(media.resolve("demo.slides.md"), "## closing: More\n- https://x.org\n");
 
         assertAll(
                 () -> assertThat(new VideoScriptChecker().check(root)).extracting(Problem::message)
@@ -45,7 +45,7 @@ class LessonChecksTest {
                         .containsExactly("scene 1 shows for 2 s but its narration needs 11 s; lengthen its last Sleep"),
                 () -> assertThat(LessonChecks.slides(slides)).extracting(Problem::message).containsExactly(
                         "no Sources: line; name where each fact on the slides comes from",
-                        "no {toolkit-repo} link on the closing slides"),
+                        "no {lessons-repo} link on the closing slides"),
                 () -> assertThat(LessonChecks.needed("One two three [pause 1s]")).isBetween(4.4, 4.5));
     }
 }

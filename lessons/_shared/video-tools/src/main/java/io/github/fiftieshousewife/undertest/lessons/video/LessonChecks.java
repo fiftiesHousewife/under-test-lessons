@@ -113,17 +113,15 @@ final class LessonChecks {
         return shown;
     }
 
-    /** A slides file names its sources, and its closing slides link both repositories by placeholder. */
+    /** A slides file names its sources, and its closing slides link the lessons repository by placeholder. */
     static List<Problem> slides(final Path slidesFile) {
         final String text = String.join("\n", lines(slidesFile));
         final List<Problem> problems = new ArrayList<>();
         if (!text.contains("Sources:")) {
             problems.add(new Problem(slidesFile, "no Sources: line; name where each fact on the slides comes from"));
         }
-        for (final String placeholder : List.of("{lessons-repo}", "{toolkit-repo}")) {
-            if (!text.contains(placeholder)) {
-                problems.add(new Problem(slidesFile, "no " + placeholder + " link on the closing slides"));
-            }
+        if (!text.contains("{lessons-repo}")) {
+            problems.add(new Problem(slidesFile, "no {lessons-repo} link on the closing slides"));
         }
         return problems;
     }

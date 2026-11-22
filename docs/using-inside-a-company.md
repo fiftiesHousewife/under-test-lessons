@@ -118,5 +118,6 @@ Without the container image, check that VHS's browser library won't try to downl
 
 ## Links on slides
 
-Slides link to the lessons and the toolkit through the `lessonsRepoUrl` and `toolkitRepoUrl` settings. Point them at
-your own copies, for example on an internal Git server; unset, slides describe the repositories without an address.
+Each lesson's closing slide links to its test code and examples through the `lessonsRepoUrl` setting, and a slide that
+names a page of the toolkit links it through `toolkitRepoUrl`. Point them at your own copies, for example on an
+internal Git server; unset, slides describe the repositories without an address.

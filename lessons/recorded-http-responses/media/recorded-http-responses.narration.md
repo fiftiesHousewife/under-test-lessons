@@ -10,7 +10,7 @@ their own narration, in [recorded-http-responses.slides.md](recorded-http-respon
 4. This is [pause 300ms] a test against the supplier's real service. It runs only where the network and an account are
    available, so almost everywhere, it is skipped.
 5. This is [pause 300ms] a recorded answer. It holds the request, and what the supplier sent back. This one is an
-   outage: a five oh three error, with a web page instead of JSON.
+   outage: a 503 error, with a web page instead of JSON.
 6. Now, [pause 300ms] the tests with WireMock. It replays every recording on a local port: a known postcode, an unknown
    one, and an outage.
 7. We run the tests against today's client. The real service test is skipped. The recordings show two bugs. An unknown

@@ -68,8 +68,7 @@ Say: JSONUnit was written by Lukáš Křečan, and is free under the Apache lice
 ## closing: Find out more
 - https://github.com/lukas-krecan/JsonUnit — JSONUnit, with examples
 - https://www.xmlunit.org — XMLUnit, for XML
-- {lessons-repo} — this lesson, to run yourself
-- {toolkit-repo} — the toolkit these lessons belong to
+- {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
-Say: To find out more, JSONUnit's page has plenty of examples, and XMLUnit's site covers XML. The links on screen also
-  take you to this lesson's code.
+Say: To find out more, JSONUnit's page has plenty of examples, and XMLUnit's site covers XML. The links on screen
+  also take you to this lesson's test code and examples, to run yourself.

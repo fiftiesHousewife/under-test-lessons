@@ -11,20 +11,31 @@
     var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
     document.documentElement.style.setProperty('--scale', String(scale));
   }
+  // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
+  // click only once a click has started that same element, so a player per slide would fall silent after the first.
   var listening = false;
   var listen = null;
   var nextTimer = null;
-  function clip(index) { return slides[index] && slides[index].querySelector('audio.voice'); }
+  var player = null;
+  function clipSource(index) {
+    var clip = slides[index] && slides[index].querySelector('audio.voice');
+    return clip ? clip.getAttribute('src') : null;
+  }
   function stopVoice() {
     clearTimeout(nextTimer);
-    slides.forEach(function (slide, i) { var audio = clip(i); if (audio) { audio.pause(); } });
+    if (player) { player.pause(); }
+  }
+  function slideRead() {
+    if (!listening) { return; }
+    if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
+    nextTimer = setTimeout(function () { advance(); }, 1500);
   }
   function playVoice() {
-    var audio = clip(current);
-    if (!audio) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
-    audio.currentTime = 0;
-    audio.onended = function () { nextTimer = setTimeout(function () { advance(); }, 1500); };
-    audio.play().catch(function () { setListening(false); });
+    var source = clipSource(current);
+    if (!source) { nextTimer = setTimeout(function () { advance(); }, 3000); return; }
+    if (!player) { player = new Audio(); player.onended = slideRead; }
+    player.src = source;
+    player.play().catch(function () { setListening(false); });
   }
   function advance() {
     if (current < slides.length - 1) { show(current + 1); } else { setListening(false); }

@@ -71,8 +71,7 @@ Say: Liquibase is an open source tool for database changes, first released in 20
 ## closing: Find out more
 - https://docs.liquibase.com — Liquibase documentation
 - https://testcontainers.com — Testcontainers
-- {lessons-repo} — this lesson, to run yourself
-- {toolkit-repo} — the toolkit these lessons belong to
+- {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
-Say: To find out more, start with the Liquibase documentation, and the Testcontainers guides. The links on screen also
-  take you to this lesson's code.
+Say: To find out more, start with the Liquibase documentation, and the Testcontainers guides. The links on screen
+  also take you to this lesson's test code and examples, to run yourself.

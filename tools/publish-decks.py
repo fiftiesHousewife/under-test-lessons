@@ -24,15 +24,10 @@ SERIES_JS = """// Added to each published deck: links back to the index and on t
   nav.setAttribute('style', 'position:fixed;left:16px;bottom:10px;font:14px Helvetica,Arial,sans-serif;z-index:5');
   nav.innerHTML = '<a href="index.html">All lessons</a>' + (next ? ' · <a href="' + next + '.html#1">Next lesson</a>' : '');
   document.body.appendChild(nav);
-  var clips = document.querySelectorAll('audio.voice');
-  var last = clips[clips.length - 1];
   var listen = function () { return document.querySelector('.deck-listen'); };
-  if (last && next) {
-    last.addEventListener('ended', function () {
-      var button = listen();
-      if (button && button.getAttribute('aria-pressed') === 'true') {
-        setTimeout(function () { location.href = next + '.html?listen=1#1'; }, 1500);
-      }
+  if (next) {
+    document.addEventListener('deck-voice-finished', function () {
+      setTimeout(function () { location.href = next + '.html?listen=1#1'; }, 1500);
     });
   }
   if (/[?&]listen=1/.test(location.search) && listen()) {

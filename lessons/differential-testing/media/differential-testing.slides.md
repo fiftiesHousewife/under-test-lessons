@@ -67,8 +67,7 @@ Say: William McKeeman named differential testing in 1998, when comparing C compi
 
 ## closing: Find out more
 - {toolkit-repo} — the toolkit, with its differential testing technique
-- {lessons-repo} — this lesson, to run yourself
-- {toolkit-repo} — the toolkit these lessons belong to
+- {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
 Say: To find out more, the toolkit's technique says which tools to use for whole services. The links on screen also
-  take you to this lesson's code, and to the toolkit these lessons belong to.
+  take you to this lesson's test code and examples, to run yourself.

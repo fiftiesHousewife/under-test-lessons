@@ -24,7 +24,7 @@ Say: Our example is a hotel booking service. Callers book a room for a number of
 - Tests from inside: call the service's classes directly
 - Tests from outside: real HTTP requests to the running service, with REST Assured
 Picture: scales
-Say: Here is what we will compare. The code under test is today's service, which always answers two hundred, O K.
+Say: Here is what we will compare. The code under test is today's service, which always answers 200 OK.
   [pause 300ms] Tests from inside call the service's classes directly. [pause 300ms] And tests from outside send real
   web requests to the running service, with REST Assured.
 
@@ -67,8 +67,7 @@ Say: REST Assured was created by Johan Haleby, and is free under the Apache lice
 
 ## closing: Find out more
 - https://rest-assured.io — REST Assured, with its user guide
-- {lessons-repo} — this lesson, to run yourself
-- {toolkit-repo} — the toolkit these lessons belong to
+- {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
-Say: To find out more, start with the REST Assured user guide. The links on screen also take you to this lesson's code,
-  and to the toolkit these lessons belong to.
+Say: To find out more, start with the REST Assured user guide. The links on screen also take you to this lesson's
+  test code and examples, to run yourself.

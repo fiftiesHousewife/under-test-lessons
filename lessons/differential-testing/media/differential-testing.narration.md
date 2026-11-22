@@ -11,7 +11,7 @@ own narration, in [differential-testing.slides.md](differential-testing.slides.m
 4. Now, [pause 300ms] a differential test. It asks both calculators about every weight, from one gram to five
    kilograms, and lists each run of weights where they disagree. There are no expected prices to write: the old
    calculator is the reference.
-5. We run the tests against the rewrite as it is today. Every example passes. The comparison finds fifty weights,
-   from four hundred and fifty one grams to five hundred, where the rewrite charges more.
-6. Here is why: in today's price list, up to five hundred grams was typed as four hundred and fifty. With the price
+5. We run the tests against the rewrite as it is today. Every example passes. The comparison finds 50 weights,
+   from 451 grams to 500, where the rewrite charges more.
+6. Here is why: in today's price list, up to 500 grams was typed as 450. With the price
    list checked against the printed one, we run the same tests. [pause 1s] The rewrite agrees on every weight.

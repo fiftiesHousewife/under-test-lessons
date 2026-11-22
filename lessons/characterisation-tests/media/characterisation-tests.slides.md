@@ -72,8 +72,7 @@ Say: Michael Feathers named characterisation tests in his 2004 book, Working Eff
 ## closing: Find out more
 - https://approvaltests.com — ApprovalTests' website
 - https://github.com/approvals/ApprovalTests.Java — the Java library and its documentation
-- {lessons-repo} — this lesson, to run yourself
-- {toolkit-repo} — the toolkit these lessons belong to
+- {lessons-repo} — run this lesson yourself: its test code and examples
 Picture: globe
-Say: To find out more, start with the ApprovalTests website and its Java library. The links on screen also take you to
-  this lesson's code, so you can run it yourself, and to the toolkit these lessons belong to.
+Say: To find out more, start with the ApprovalTests website and its Java library. The links on screen also take you
+  to this lesson's test code and examples, so you can run them yourself.

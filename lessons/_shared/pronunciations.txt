@@ -37,3 +37,9 @@ JSON = jay-son
 # like "PULL request"; with a hyphen or a space it stresses the second word)
 pull requests = pullrequests
 pull request = pullrequest
+# HTTP status codes are written as numbers, so decks and captions show them as people write them, and said the way
+# developers say them. The phrases come first, so their words are said together.
+200 OK = two hundred, O K
+201 Created = two oh one, created
+400 Bad Request = four hundred, bad request
+503 = five oh three
