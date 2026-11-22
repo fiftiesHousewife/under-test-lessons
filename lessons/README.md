@@ -36,4 +36,5 @@ The full list of planned lessons, and the order they'll be made in, is in [CATAL
 | [Feature flags](feature-flags/README.md) | [feature-flags](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/feature-flags/technique.yaml) | Script ready |
 | [Dynamic tests](dynamic-tests/README.md) | – | Script ready |
 | [Batch file-in, file-out](batch-file-in-file-out/README.md) | [batch-file-in-file-out-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out-tests/technique.yaml) | Script ready |
+| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | [embedded-jakarta-ee-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/embedded-jakarta-ee-tests/technique.yaml) | Script ready |
 | [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | Script ready |

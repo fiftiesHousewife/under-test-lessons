@@ -25,6 +25,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Batch file-in, file-out](batch-file-in-file-out/README.md): a job run on synthetic input, output compared row by row | JUnit temporary folders; spring-batch-test for Spring jobs | Java only | in progress |
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | in progress |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | in progress |
+| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | in progress |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright | Browser | wave 3 |
 
 ## Stand in for real systems
@@ -34,6 +35,8 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Recorded HTTP responses](recorded-http-responses/README.md): a service you don't own, replayed from recordings | WireMock | Java only | in progress |
 | [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | ArchUnit to keep it that way | Java only | in progress |
 | Real databases in tests: a fake locally, real PostgreSQL in container tests | Testcontainers | Docker | wave 2 |
+| Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | wave 1 |
+| Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | wave 1 |
 | Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | wave 2 |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | wave 3 |
 
@@ -76,7 +79,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | differential-testing | [Differential testing](differential-testing/README.md) | 1 |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | 2 |
 | feature-flags | [Feature flags](feature-flags/README.md) | 1 |
-| embedded-jakarta-ee-tests | Old Jakarta EE code tested without an application server | 2 |
+| embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | 1 |
 | batch-file-in-file-out-tests | [Batch file-in, file-out](batch-file-in-file-out/README.md) | 1 |
 | testcontainers | Real databases in tests | 2 |
 | contract-testing | Contract tests between teams | 2 |
