@@ -1,0 +1,4 @@
+$ ./gradlew :lessons:junit-tags:slowTest
+WarehouseStockTest > refusesAnItemTheWarehouseDoesNotStock() PASSED
+WarehouseStockTest > sendsTheLastOneOnTheShelf() PASSED
+2 tests tagged slow ran, 0 failed.

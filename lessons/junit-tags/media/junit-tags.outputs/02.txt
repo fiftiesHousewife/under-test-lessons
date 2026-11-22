@@ -1,0 +1,6 @@
+$ ./gradlew :lessons:junit-tags:test
+DeliveryChargeTest > isFreeOnABasketOfExactlyFiftyPounds() PASSED
+DeliveryChargeTest > chargesOnABasketJustUnderFiftyPounds() PASSED
+StockCheckTest > refusesWhenThereIsNotEnoughStock() PASSED
+StockCheckTest > sendsWhenThereIsEnoughStock() PASSED
+All 4 tests passed.
