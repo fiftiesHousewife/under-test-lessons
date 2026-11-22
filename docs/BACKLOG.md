@@ -9,17 +9,16 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #2 | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) | deliverable | Lessons Owner | person | – |
-| #75 | [Deck clips are named by the written narration, not the text the voice is given](https://github.com/fiftiesHousewife/under-test-lessons/issues/75) | deliverable | Lessons Owner | ai | – |
 | #78 | [A check lists missing and unused deck clips, and decks out of date](https://github.com/fiftiesHousewife/under-test-lessons/issues/78) | deliverable | Lessons Owner | ai | – |
 | #83 | [Pronunciation rules match words like C++ and apply in one pass, longest first](https://github.com/fiftiesHousewife/under-test-lessons/issues/83) | deliverable | Lessons Owner | ai | – |
 | #84 | [Spoken text has no semicolons](https://github.com/fiftiesHousewife/under-test-lessons/issues/84) | deliverable | Lessons Owner | ai | – |
 | #66 | [Publish each lesson's video as a release asset, with a manifest](https://github.com/fiftiesHousewife/under-test-lessons/issues/66) | deliverable | Lessons Owner | ai | – |
 | #68 | [The voice is made the same way every time on the machine that renders](https://github.com/fiftiesHousewife/under-test-lessons/issues/68) | deliverable | Lessons Owner | ai | – |
+| #81 | [A manifest records who or what made each deck clip](https://github.com/fiftiesHousewife/under-test-lessons/issues/81) | deliverable | Lessons Owner | ai | – |
 | #82 | [Voice pipeline fixes from the review](https://github.com/fiftiesHousewife/under-test-lessons/issues/82) | deliverable | Lessons Owner | ai | – |
 | #99 | [Slides about a thing show it drawn in the speech bubble](https://github.com/fiftiesHousewife/under-test-lessons/issues/99) | deliverable | Lessons Owner | ai | – |
 | #100 | [Diagrams are drawn in Excalidraw and exported in the build](https://github.com/fiftiesHousewife/under-test-lessons/issues/100) | deliverable | Lessons Owner | ai | – |
 | #3 | [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3) | deliverable | Lessons Owner | ai | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) |
-| #81 | [A manifest records who or what made each deck clip](https://github.com/fiftiesHousewife/under-test-lessons/issues/81) | deliverable | Lessons Owner | ai | [Deck clips are named by the written narration, not the text the voice is given](https://github.com/fiftiesHousewife/under-test-lessons/issues/75) |
 | #9 | [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9) | deliverable | Lessons Owner | ai | – |
 | #10 | [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) | deliverable | Lessons Owner | ai | – |
 | #12 | [Render videos in CI and publish them with each release](https://github.com/fiftiesHousewife/under-test-lessons/issues/12) | deliverable | Lessons Owner | tool | – |
@@ -29,15 +28,15 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #16 | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) | deliverable | Lessons Owner | ai | – |
+| #27 | [Lesson: more JUnit, one idea per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/27) | deliverable | Lessons Owner | ai | – |
+| #31 | [Lesson: contract tests between teams](https://github.com/fiftiesHousewife/under-test-lessons/issues/31) | deliverable | Lessons Owner | ai | – |
+| #21 | [Lesson: Spring tests in slices](https://github.com/fiftiesHousewife/under-test-lessons/issues/21) | deliverable | Lessons Owner | ai | [Check WireMock 3 against Spring Boot 4 before a Spring lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/53) |
 | #59 | [Lesson: the safety inventory](https://github.com/fiftiesHousewife/under-test-lessons/issues/59) | deliverable | Lessons Owner | ai | – |
 | #60 | [Lesson: anti-patterns in existing tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/60) | deliverable | Lessons Owner | ai | – |
-| #27 | [Lesson: more JUnit, one idea per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/27) | deliverable | Lessons Owner | ai | – |
 | #28 | [Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)](https://github.com/fiftiesHousewife/under-test-lessons/issues/28) | deliverable | Lessons Owner | ai | – |
 | #15 | [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15) | deliverable | Lessons Owner | ai | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) |
-| #21 | [Lesson: Spring tests in slices](https://github.com/fiftiesHousewife/under-test-lessons/issues/21) | deliverable | Lessons Owner | ai | [Check WireMock 3 against Spring Boot 4 before a Spring lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/53) |
 | #97 | [Every lesson has an exercise whose answer the build checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/97) | deliverable | Lessons Owner | ai | [Every lesson switches with -Pcode=today](https://github.com/fiftiesHousewife/under-test-lessons/issues/88) |
 | #58 | [Lesson: recording current behaviour from real traffic, with Keploy](https://github.com/fiftiesHousewife/under-test-lessons/issues/58) | deliverable | Lessons Owner | ai | – |
-| #31 | [Lesson: contract tests between teams](https://github.com/fiftiesHousewife/under-test-lessons/issues/31) | deliverable | Lessons Owner | ai | – |
 | #32 | [Lesson: AI-written tests that pass the acceptance check](https://github.com/fiftiesHousewife/under-test-lessons/issues/32) | deliverable | Lessons Owner | ai | – |
 | #33 | [Lesson: stand-in commands for shell scripts](https://github.com/fiftiesHousewife/under-test-lessons/issues/33) | deliverable | Lessons Owner | ai | – |
 | #34 | [Lesson: checking what batch scripts write](https://github.com/fiftiesHousewife/under-test-lessons/issues/34) | deliverable | Lessons Owner | ai | – |
@@ -76,11 +75,11 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #69 | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) | deliverable | Lessons Owner | ai | – |
 | #71 | [The Gradle wrapper's download address is a setting](https://github.com/fiftiesHousewife/under-test-lessons/issues/71) | deliverable | Lessons Owner | ai | – |
 | #72 | [The lesson checks skip, with a message, when the toolkit isn't checked out](https://github.com/fiftiesHousewife/under-test-lessons/issues/72) | deliverable | Lessons Owner | ai | – |
+| #76 | [A recording script for a person to voice a lesson's clips](https://github.com/fiftiesHousewife/under-test-lessons/issues/76) | deliverable | Lessons Owner | ai | – |
 | #77 | [Decks play recorded clips as .m4a, .wav or .mp3](https://github.com/fiftiesHousewife/under-test-lessons/issues/77) | deliverable | Lessons Owner | ai | – |
 | #79 | [Recording guidance for companies](https://github.com/fiftiesHousewife/under-test-lessons/issues/79) | deliverable | Lessons Owner | ai | – |
 | #70 | [CI proves the inside copy builds with only a company's Maven repository](https://github.com/fiftiesHousewife/under-test-lessons/issues/70) | deliverable | Lessons Owner | ai | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) |
 | #73 | [AGENTS.md and the video skills say which group each step is in](https://github.com/fiftiesHousewife/under-test-lessons/issues/73) | deliverable | Lessons Owner | ai | [Split video-tools into an inside module and a production module](https://github.com/fiftiesHousewife/under-test-lessons/issues/69) |
-| #76 | [A recording script for a person to voice a lesson's clips](https://github.com/fiftiesHousewife/under-test-lessons/issues/76) | deliverable | Lessons Owner | ai | [Deck clips are named by the written narration, not the text the voice is given](https://github.com/fiftiesHousewife/under-test-lessons/issues/75) |
 
 ## [This repo keeps itself in order: its checks, sync, CI and tools](https://github.com/fiftiesHousewife/under-test-lessons/issues/51)
 
