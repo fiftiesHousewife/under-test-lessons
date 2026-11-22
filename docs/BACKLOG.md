@@ -28,7 +28,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #16 | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) | deliverable | Lessons Owner | ai | – |
-| #21 | [Lesson: Spring tests in slices](https://github.com/fiftiesHousewife/under-test-lessons/issues/21) | deliverable | Lessons Owner | ai | [Check WireMock 3 against Spring Boot 4 before a Spring lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/53) |
 | #59 | [Lesson: the safety inventory](https://github.com/fiftiesHousewife/under-test-lessons/issues/59) | deliverable | Lessons Owner | ai | – |
 | #60 | [Lesson: anti-patterns in existing tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/60) | deliverable | Lessons Owner | ai | – |
 | #28 | [Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)](https://github.com/fiftiesHousewife/under-test-lessons/issues/28) | deliverable | Lessons Owner | ai | – |
@@ -85,6 +84,5 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |---|---|---|---|---|---|
 | #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
 | #65 | [main builds green on GitHub again](https://github.com/fiftiesHousewife/under-test-lessons/issues/65) | deliverable | Lessons Owner | tool | – |
-| #53 | [Check WireMock 3 against Spring Boot 4 before a Spring lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/53) | deliverable | Lessons Owner | ai | – |
 | #94 | [The README's lesson count comes from the catalogue](https://github.com/fiftiesHousewife/under-test-lessons/issues/94) | deliverable | Lessons Owner | tool | – |
 | #95 | [The readiness review is marked as a snapshot](https://github.com/fiftiesHousewife/under-test-lessons/issues/95) | deliverable | Lessons Owner | ai | – |
