@@ -39,7 +39,9 @@ actually catch; later, use the same measure to decide when new tests are strong 
 ### 2. Record what the code does today
 
 You can't safely change code whose behaviour nobody has written down. These techniques pin down today's behaviour from
-the outside, where it shows: whole outputs, API responses, files, or the old version itself. Use them before a
+the outside, where it shows: whole outputs, API responses, files, or the old version itself. Most are black-box tests:
+they drive the code only through what goes in and what comes out, knowing nothing of the classes inside, so they keep
+working while the inside is rewritten. Use them before a
 refactor, a rewrite or an upgrade, and on any code whose rules live only in the code. They record what the code *does*,
 which is not always what it *should* do; differences found later are questions for the people who know the business.
 
@@ -93,6 +95,22 @@ in every new test, and when reviewing tests written by people or by AI.
 | [Nested tests](lessons/nested-tests/README.md) | Tests grouped by a loan's state show the one question nobody asked |
 | [Dynamic tests](lessons/dynamic-tests/README.md) | A folder of example files, such as an old regression pack, becomes one named test each |
 | [Architecture rules](lessons/architecture-rules/README.md) | ArchUnit finds a web page reaching straight into storage |
+
+## Coming next
+
+The next lessons, in order, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
+
+1. **Testing old Java code, a map:** an overview video and deck that comes before all the others, introducing each
+   kind of test and each technique as the answer to a question a team asks, with every lesson linked.
+2. **Behaviour written down as examples:** rules the people who know the business write down as named examples,
+   checked against the code, so tests say what the code *should* do, not only what it does.
+3. **Black-box tests of a whole application:** start the application as it ships, drive it only through its API,
+   messages and files, stand in for everything it calls, and check what comes out.
+4. **Mockito well used,** then **Spring tests in slices,** **finding flaky tests,** **message consumers** (JMS, then
+   Kafka), **responses checked against the OpenAPI document,** **slow and failing dependencies,** **coverage of changed
+   code,** and **AI-written tests that pass the acceptance check.**
+
+Some built lessons also have fixes to come; they are listed in [next steps](docs/next-steps.md).
 
 ## Try it
 
