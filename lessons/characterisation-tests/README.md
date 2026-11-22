@@ -26,6 +26,14 @@ It has a quirk nobody remembered: the overdraft fee is charged when the balance 
   is a cleaner rewrite that quietly changes the fee rule. With `-Pstatement=refactored` the characterisation test fails,
   and the build prints which statement lines changed.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/characterisation-tests.deck.html`](media/characterisation-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/characterisation-tests.tape), [the narration](media/characterisation-tests.narration.md) and
+  [the slides](media/characterisation-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=characterisation-tests`.
+
 ## When to use it
 
 - **Before changing code nobody can fully explain,** and when the right answer isn't written down anywhere.

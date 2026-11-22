@@ -26,6 +26,14 @@ added later, has no mark.
 - [`CheckoutInContainerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/CheckoutInContainerTest.java)
   is the "after": Weld wires the checkout as the server would.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/embedded-jakarta-ee-tests.deck.html`](media/embedded-jakarta-ee-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/embedded-jakarta-ee-tests.tape), [the narration](media/embedded-jakarta-ee-tests.narration.md) and
+  [the slides](media/embedded-jakarta-ee-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=embedded-jakarta-ee-tests`.
+
 ## When to use it
 
 - **For old Java EE and Jakarta EE code:** CDI beans, and EJBs with Weld's EJB support.

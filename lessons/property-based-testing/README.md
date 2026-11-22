@@ -26,6 +26,14 @@ gives everything left over to the first person: fine with a penny left over, unf
 - [`FairSplitter`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/properties/FairSplitter.java)
   shares the leftover pence one each, and passes.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/property-based-testing.deck.html`](media/property-based-testing.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/property-based-testing.tape), [the narration](media/property-based-testing.narration.md) and
+  [the slides](media/property-based-testing.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=property-based-testing`.
+
 ## When to use it
 
 - **Calculations, parsing and conversions,** where a rule is easier to state than every right answer: money that must

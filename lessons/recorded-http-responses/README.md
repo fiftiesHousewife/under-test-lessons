@@ -24,6 +24,14 @@ The example looks up a town for a postcode, using a supplier's web service.
   is the "after": WireMock replays [the recordings](example/src/test/resources/supplier/mappings): a known postcode,
   an unknown one, and an outage.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/recorded-http-responses.deck.html`](media/recorded-http-responses.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/recorded-http-responses.tape), [the narration](media/recorded-http-responses.narration.md) and
+  [the slides](media/recorded-http-responses.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=recorded-http-responses`.
+
 ## When to use it
 
 - **Whenever code calls a service you don't own.**

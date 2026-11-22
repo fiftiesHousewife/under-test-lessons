@@ -25,6 +25,14 @@ The example is a hotel booking service on the JDK's own web server
 - [`BookingApiTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outsidein/BookingApiTest.java)
   is the "after": REST Assured against the running service.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/outside-in-http-tests.deck.html`](media/outside-in-http-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/outside-in-http-tests.tape), [the narration](media/outside-in-http-tests.narration.md) and
+  [the slides](media/outside-in-http-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=outside-in-http-tests`.
+
 ## When to use it
 
 - **For every service other systems call,** before changing it.

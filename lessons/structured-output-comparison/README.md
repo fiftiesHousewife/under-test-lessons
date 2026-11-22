@@ -24,6 +24,14 @@ forgets the quantities.
 - [`CompareJsonTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/CompareJsonTest.java)
   is the "after": a structured comparison that names the wrong field and both values.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/structured-output-comparison.deck.html`](media/structured-output-comparison.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/structured-output-comparison.tape), [the narration](media/structured-output-comparison.narration.md) and
+  [the slides](media/structured-output-comparison.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=structured-output-comparison`.
+
 ## When to use it
 
 - **Whenever a test checks JSON or XML:** API responses, messages, files for other systems.

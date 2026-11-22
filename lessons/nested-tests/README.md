@@ -22,6 +22,14 @@ The example is a loan: requested, then approved, then repaid.
 - [`LoanTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/nested/LoanTest.java)
   is the "after": one nested class per state, each asking "can it be approved?" and "can it be repaid?".
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/nested-tests.deck.html`](media/nested-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/nested-tests.tape), [the narration](media/nested-tests.narration.md) and
+  [the slides](media/nested-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=nested-tests`.
+
 ## When to use it
 
 - **For anything with states or situations:** workflows, accounts, orders, permissions.

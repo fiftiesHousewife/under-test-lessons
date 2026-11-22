@@ -25,6 +25,14 @@ The example works out shipping: £3.99, free from £50.
 - [`BothWaysTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/BothWaysTest.java)
   is the "after": the same checks with the flag off and on, using OpenFeature's in-memory provider.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/feature-flags.deck.html`](media/feature-flags.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/feature-flags.tape), [the narration](media/feature-flags.narration.md) and
+  [the slides](media/feature-flags.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=feature-flags`.
+
 ## When to use it
 
 - **To change old code in small, safe steps:** put the new code behind a flag, next to the old.

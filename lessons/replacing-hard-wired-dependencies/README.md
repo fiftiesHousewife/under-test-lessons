@@ -27,6 +27,14 @@ stands in for that network call, failing as it would on a test machine.
 
 Today's invoice can't run in any test, so the build leaves it out of the coverage figure.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/replacing-hard-wired-dependencies.deck.html`](media/replacing-hard-wired-dependencies.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/replacing-hard-wired-dependencies.tape), [the narration](media/replacing-hard-wired-dependencies.narration.md) and
+  [the slides](media/replacing-hard-wired-dependencies.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=replacing-hard-wired-dependencies`.
+
 ## When to use it
 
 - **Before changing old code** that calls a service, a clock, the file system or a static helper.

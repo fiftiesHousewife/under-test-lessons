@@ -24,6 +24,14 @@ with one row mistyped.
 - [`OldAndNewAgreeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/OldAndNewAgreeTest.java)
   is the "after": every weight from 1 g to 5 kg, old against new, with differences grouped into runs.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/differential-testing.deck.html`](media/differential-testing.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/differential-testing.tape), [the narration](media/differential-testing.narration.md) and
+  [the slides](media/differential-testing.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=differential-testing`.
+
 ## When to use it
 
 - **Whenever old code is rewritten,** moved to a new platform, or upgraded.

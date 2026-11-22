@@ -23,6 +23,14 @@ divides by five, which rounds down: 3 pence net should give 1 penny VAT, and giv
   lists the cases as a table, including every way a fifth of a penny can round. Each row is reported by name, and
   three rows fail against the calculator in use today.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/parameterised-tests.deck.html`](media/parameterised-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/parameterised-tests.tape), [the narration](media/parameterised-tests.narration.md) and
+  [the slides](media/parameterised-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=parameterised-tests`.
+
 ## When to use it
 
 - **Whenever the same check runs on several inputs:** boundaries, rounding, conversions, validation rules.

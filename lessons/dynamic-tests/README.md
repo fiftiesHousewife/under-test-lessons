@@ -24,6 +24,14 @@ The example turns customer records such as `O'BRIEN,PATRICK,MR` into names for l
 - [`EachExampleTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dynamic/EachExampleTest.java)
   is the "after": a test factory, one named test per file.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/dynamic-tests.deck.html`](media/dynamic-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/dynamic-tests.tape), [the narration](media/dynamic-tests.narration.md) and
+  [the slides](media/dynamic-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=dynamic-tests`.
+
 ## When to use it
 
 - **When the cases live in files:** regression packs, sample messages, old bug reports.

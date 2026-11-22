@@ -52,6 +52,14 @@ shows the five most common weaknesses. Each one has a fix in
 
 Try it: delete one assertion from the strong suite, re-run PIT, and find the mutant that now survives.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/mutation-testing.deck.html`](media/mutation-testing.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/mutation-testing.tape), [the narration](media/mutation-testing.narration.md) and
+  [the slides](media/mutation-testing.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=mutation-testing`.
+
 ## When to use it, and when not
 
 The rules a planning tool applies are in [the technique rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/mutation-testing/technique.yaml). In short:

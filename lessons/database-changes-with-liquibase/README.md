@@ -27,6 +27,14 @@ The example adds a loyalty level to each customer.
 - [`RealPostgresChangesTest`](example/src/integrationTest/java/io/github/fiftieshousewife/undertest/techniques/liquibase/RealPostgresChangesTest.java)
   is the "after": PostgreSQL refuses today's change.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/database-changes-with-liquibase.deck.html`](media/database-changes-with-liquibase.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/database-changes-with-liquibase.tape), [the narration](media/database-changes-with-liquibase.narration.md) and
+  [the slides](media/database-changes-with-liquibase.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=database-changes-with-liquibase`.
+
 ## When to use it
 
 - **Every change, every time:** apply the whole changelog to a fresh real database in the build.

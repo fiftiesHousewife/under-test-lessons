@@ -24,6 +24,14 @@ The example is a shop in three layers: web, service and storage.
 - [`LayerRulesTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/architecture/LayerRulesTest.java)
   is the "after": a layered architecture rule that fails for today's page and names each break.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/architecture-rules.deck.html`](media/architecture-rules.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/architecture-rules.tape), [the narration](media/architecture-rules.narration.md) and
+  [the slides](media/architecture-rules.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=architecture-rules`.
+
 ## When to use it
 
 - **When a team agrees how code should be shaped:** layers, which packages may depend on which, naming rules.

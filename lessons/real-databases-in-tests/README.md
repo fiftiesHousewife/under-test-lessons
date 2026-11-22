@@ -25,6 +25,14 @@ holds today's query (`ORDER BY last_order`) and the fixed one (`ORDER BY last_or
 - [`RealPostgresTest`](example/src/integrationTest/java/io/github/fiftieshousewife/undertest/techniques/database/RealPostgresTest.java)
   is the "after": on PostgreSQL, nulls sort last, and the test fails.
 
+## Watch it, or present it
+
+- **Slide deck:** [`media/real-databases-in-tests.deck.html`](media/real-databases-in-tests.deck.html). Download it and open it in a browser: arrow keys move
+  between slides, N shows the speaker notes, and printing gives one slide per page.
+- **Video:** made from [the script](media/real-databases-in-tests.tape), [the narration](media/real-databases-in-tests.narration.md) and
+  [the slides](media/real-databases-in-tests.slides.md) with
+  `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=real-databases-in-tests`.
+
 ## When to use it
 
 - **For every query, stored procedure and schema change** production depends on.
