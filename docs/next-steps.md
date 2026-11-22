@@ -9,6 +9,8 @@ Videos are generated, not committed (`*.mp4` and `*.gif` are ignored); they are 
 `./gradlew --no-daemon :lessons:video-tools:renderLessonVideo -Plesson=<id>`, one at a time.
 
 - **All videos need re-rendering in the black-and-white look,** now the default; the ones below were made in colour.
+  Mutation testing also gained a slide on boundaries, so it needs re-rendering again; every lesson's shared "how we
+  build" narration changed too.
 - **Made with the colour slides:** mutation testing, characterisation tests, property-based testing, replacing
   hard-wired dependencies, comparing structured output, recorded HTTP responses, outside-in HTTP tests.
 - **Still to make:** parameterised tests and architecture rules (both failed once and have since been fixed), fake
@@ -26,6 +28,14 @@ Videos are generated, not committed (`*.mp4` and `*.gif` are ignored); they are 
 - **A sleeping machine fails a recording** that is waiting on a live run. Keep it awake.
 - **Scene length:** each non-live scene shows for its narration's spoken length (about 2.6 words a second) plus 35%
   and a second and a half. Scripts written that way have fitted so far.
+
+## First: zoom in on the key code
+
+Code panels now show whole methods and blocks, and viewers can't tell which lines matter. Before any other video work,
+add a zoom: the script marks the key lines (for example `show File 10 20 --zoom 14-16`), and while the narration
+explains them the picture eases in on those lines, holds, and eases back out. In the recording this is a crop and scale
+over the scene's time span (ffmpeg `zoompan`, or `crop` and `scale` with `eval=frame`), driven by markers the script
+leaves in the timings file; in decks, the same lines are highlighted. Then mark the key lines in every lesson's script.
 
 ## Movement in the videos
 
