@@ -53,6 +53,11 @@ zoom, `fade` in and out). Items 4 and 5 belong in `lessons/_shared/callout.sh`.
 
 ## Lessons
 
+- **First, the overview lesson** ([its design](overview-lesson-design.md)): it needs a slides-only mode in the video
+  tools (no `.tape`; the video is the slides and their narration), and deck links from each technique slide to its
+  lesson. Then the behaviour-as-examples lesson. Both are at the top of the catalogue's next lessons.
+- **Scope is Java only;** TypeScript and front-end testing are out of scope.
+
 - **Fixes from the review** (cheapest first): the fake lesson's ArchUnit rule, recording and personal-data removal in
   the recorded-responses lesson, spring-batch-test and Datafaker in the batch lesson. The Diffy recommendation and the
   XML claim are already fixed.

@@ -75,7 +75,7 @@ gets at least one lesson. Techniques that only make sense on real infrastructure
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | next |
 | snapshot-testing | [Comparing structured output](structured-output-comparison/README.md) | next |
 | recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md) | next |
-| business-rule-tests | [Outside-in HTTP tests](outside-in-http-tests/README.md) | next |
+| business-rule-tests | Behaviour written down as examples (planned; the outside-in HTTP lesson covers part of it) | next |
 | fake-behind-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | next |
 | differential-testing | [Differential testing](differential-testing/README.md) | next |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | later |
@@ -109,21 +109,26 @@ both. The default is the "after", so `./gradlew check` passes.
 
 ## Next lessons
 
-From [the technology and gap review](../docs/research/technology-gap-review.md), in order:
+The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
-1. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+1. **The overview: testing old Java code, a map.** One slides-only video and deck before all the others: what each
+   kind of test and each technique is for, as answers to the questions a team asks, with every lesson linked. Its
+   sequence is designed in [the overview lesson design](../docs/overview-lesson-design.md).
+2. **Behaviour written down as examples** (the toolkit's business-rule-tests technique): rules an expert writes down as
+   named examples, checked against today's code; JUnit tables first, Cucumber only where business people read or
+   write the examples themselves. Takes over business-rule-tests from the outside-in HTTP lesson.
+3. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
-2. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
+4. **Mockito well used:** stand-ins for what you own, argument captors, when a fake is better; and Mockito's agent set
    up for JDK 25.
-3. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-4. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
-5. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-6. **TypeScript tests that check something,** then StrykerJS on them.
-7. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-8. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
-9. **Coverage of changed code,** with PIT run only on what changed.
-10. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+5. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+6. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
+7. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+8. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+9. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
+10. **Coverage of changed code,** with PIT run only on what changed.
+11. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

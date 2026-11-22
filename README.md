@@ -13,7 +13,7 @@
 slide deck.**
 
 These lessons go with [under-test](https://github.com/fiftiesHousewife/under-test), a toolkit for getting old code
-properly tested across many repositories. The toolkit decides *which* technique a repository needs; these lessons
+properly tested across many repositories. The lessons are about Java. The toolkit decides *which* technique a repository needs; these lessons
 teach *how* each technique works, in a few minutes, on code small enough to read in one sitting.
 
 Every lesson tells the same story. Here is the code as it is today. Here is a test that looks reasonable and passes
