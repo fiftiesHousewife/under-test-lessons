@@ -1,4 +1,13 @@
 $ ./gradlew :lessons:checking-outgoing-requests:test -Pcode=today
+RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
+
+RefundAnswerTest > acceptedRefundGivesItsId() PASSED
+
+RefundKeyTest > eachRefundHasItsOwnKeyAndARetryRepeatsIt() FAILED
+    org.opentest4j.AssertionFailedError: [the Idempotency-Key of each refund sent]
+    expected: ["RF-5501", "RF-5502", "RF-5502"]
+     but was: ["no key", "no key", "no key"]
+
 RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
     com.github.tomakehurst.wiremock.client.VerificationException: No requests exactly matched. Most similar request was:  expected:<
     POST
@@ -6,7 +15,7 @@ RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
 
     Authorization: Bearer test-key
     Content-Type: application/json
-    Idempotency-Key: refund-A-1001
+    Idempotency-Key: RF-5501
 
     [equalToJson]
     {
@@ -28,17 +37,13 @@ RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
       "currency" : "GBP"
     }>
 
-RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
-
-RefundAnswerTest > acceptedRefundGivesItsId() PASSED
-
-3 tests completed, 1 failed
+4 tests completed, 2 failed
 
 FAILURE: Build failed with an exception.
 
 * What went wrong:
 Execution failed for task ':lessons:checking-outgoing-requests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
-> 1 of 3 tests failed. Report: build/reports/tests/test/index.html
+> 2 of 4 tests failed. Report: build/reports/tests/test/index.html
 
 * Try:
 > Run with --stacktrace option to get the stack trace.

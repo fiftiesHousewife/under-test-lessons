@@ -11,8 +11,8 @@ by field. When nothing matches, the failure shows the closest request beside the
 ## Run the example
 
 ```bash
-./gradlew :lessons:checking-outgoing-requests:test -Pcode=today   # today's code: only the strong test fails, showing the missing header and an amount of 12.5 instead of 1250
-./gradlew :lessons:checking-outgoing-requests:test                # the fix: all 3 tests pass
+./gradlew :lessons:checking-outgoing-requests:test -Pcode=today   # today's code: the 2 strong tests fail, showing the missing header and an amount of 12.5 instead of 1250
+./gradlew :lessons:checking-outgoing-requests:test                # the fix: all 4 tests pass
 ```
 
 The example sends a shop's refunds to a payment provider: a `POST` to `/refunds` with the order's number and the

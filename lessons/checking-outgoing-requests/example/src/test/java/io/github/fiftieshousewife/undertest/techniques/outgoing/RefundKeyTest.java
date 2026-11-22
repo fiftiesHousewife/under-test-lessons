@@ -1,14 +1,15 @@
 package io.github.fiftieshousewife.undertest.techniques.outgoing;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,10 +40,13 @@ class RefundKeyTest {
         refunds.send(new Refund("RF-5502", "A-1001", 750));
         refunds.send(new Refund("RF-5502", "A-1001", 750));
 
-        assertAll(
-                () -> provider.verify(1, postRequestedFor(urlEqualTo("/refunds"))
-                        .withHeader("Idempotency-Key", equalTo("RF-5501"))),
-                () -> provider.verify(2, postRequestedFor(urlEqualTo("/refunds"))
-                        .withHeader("Idempotency-Key", equalTo("RF-5502"))));
+        assertThat(provider.findAll(postRequestedFor(urlEqualTo("/refunds"))).stream()
+                .map(RefundKeyTest::key).toList())
+                .as("the Idempotency-Key of each refund sent")
+                .isEqualTo(List.of("RF-5501", "RF-5502", "RF-5502"));
+    }
+
+    private static String key(final LoggedRequest request) {
+        return request.containsHeader("Idempotency-Key") ? request.getHeader("Idempotency-Key") : "no key";
     }
 }
