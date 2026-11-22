@@ -185,13 +185,14 @@ tasks.register<JavaExec>("buildLessonDecks") {
     })
 }
 
-// A few seconds of VHS recording that checks the zoom on key code works in VHS's terminal, before any lesson is
-// recorded: the helper must report real rows for the zoomed lines. Leaves build/zoom-check/zoom-check.zoomed.mp4.
-tasks.register<JavaExec>("checkZoomInRecording") {
+// Half a minute that checks every step a lesson video goes through, with the real tools, before any lesson is recorded:
+// a few seconds of VHS (code rolling in, a zoom, a callout sliding in), a slide built up by the browser, the two joined
+// and a caption burned in. Leaves build/video-check/video-check.mp4 to watch.
+tasks.register<JavaExec>("checkVideoInRecording") {
     group = "verification"
-    description = "Records a few seconds of one zoomed code panel and checks the zoom works in VHS's terminal."
+    description = "Checks every video step with the real tools in half a minute, leaving a short video to watch."
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.ZoomCheck"
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.VideoCheck"
     workingDir = rootDir
     val root = repoRoot
     argumentProviders.add(CommandLineArgumentProvider { listOf(root) })

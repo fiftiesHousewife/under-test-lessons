@@ -93,6 +93,26 @@ class ZoomTest {
     }
 
     @Test
+    void endsTheZoomWhenTheSceneDrawsSomethingElseSoACalloutBelowIsSeen() throws IOException {
+        final Path tape = root.resolve("demo.tape");
+        Files.writeString(tape, """
+                # ---- Scene 1: code, then a callout ----
+                Hide
+                Type@1ms `show Code.java 1 30 --zoom 5-7`
+                Enter
+                Show
+                Sleep 6s
+                Hide
+                Type@1ms `callout "Look"`
+                Enter
+                Show
+                Sleep 5s
+                """);
+
+        assertThat(TapeTimeline.zooms(root, tape, List.of())).containsExactly(new Zoom.Span(0, 6));
+    }
+
+    @Test
     void writesOneFilterThatScalesAndCropsEveryFrameToTheSameSize() {
         final String filter = Zoom.filter(FRAME, List.of(new Zoom.Span(10, 20), new Zoom.Span(30, 40)),
                 List.of(Zoom.window(FRAME, new Zoom.Rows(20, 22, 40)), Zoom.window(FRAME, new Zoom.Rows(5, 6, 40))));

@@ -60,8 +60,9 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
   the machine awake: a recording waiting on a live run fails if the machine sleeps.
 - **Container lessons** fetch their image off camera first; the shared set-up points Testcontainers at Colima by itself
   where Colima is running.
-- **Before the first recording on a machine,** run `./gradlew :lessons:video-tools:checkZoomInRecording`: a few
-  seconds of VHS that checks the zoom works in its terminal, leaving `build/zoom-check/zoom-check.zoomed.mp4` to watch.
+- **Before the first recording on a machine,** run `./gradlew :lessons:video-tools:checkVideoInRecording`: half a
+  minute that runs every step a video goes through with the real tools (code rolling in, the zoom, a callout sliding in,
+  a slide building up, captions burned in), leaving `build/video-check/video-check.mp4` to watch.
 - **`./gradlew :lessons:video-tools:checkVideoScripts` before recording** catches waits that would hang, scene and
   narration counts that differ, code panels that would show the wrong file or lines, scenes too short for their
   narration, slides without sources or repository links, live commands without their kept output, and lines a scene

@@ -46,8 +46,9 @@ public final class TapeTimeline {
     }
 
     /**
-     * When each zoom on key code ({@code show ... --zoom}) is on screen: from the moment its code appears to the end
-     * of its scene, in the order the script has them. Measured run times as for {@link #scenes(Path, Path, List)}.
+     * When each zoom on key code ({@code show ... --zoom}) is on screen: from the moment its code appears until the
+     * scene draws anything else (a callout, a panel, a note, a run) or ends, in the order the script has them.
+     * Measured run times as for {@link #scenes(Path, Path, List)}.
      */
     public static List<Zoom.Span> zooms(final Path root, final Path tape, final List<Double> measured) {
         final TapeTimeline timeline = new TapeTimeline(root, measured);
@@ -101,6 +102,7 @@ public final class TapeTimeline {
         } else if (!hidden && sleep.matches()) {
             time += seconds(sleep.group(1), sleep.group(2));
         } else if (line.startsWith("Type")) {
+            endZooms(); // the scene draws something else, which a zoom would hide: the zoom has ended
             if (line.contains("show ") && line.contains("--zoom")) {
                 zoomStarts.add(time); // the code appears when the picture next shows, at this moment
             }
@@ -114,6 +116,10 @@ public final class TapeTimeline {
         if (title != null) {
             collected.add(new Scene(title, sceneStart, time));
         }
+        endZooms();
+    }
+
+    private void endZooms() {
         zoomStarts.forEach(start -> zoomSpans.add(new Zoom.Span(start, time)));
         zoomStarts.clear();
     }

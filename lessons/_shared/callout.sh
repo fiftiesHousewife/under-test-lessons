@@ -44,13 +44,34 @@ gap() {
   _VIDEO_LAST=""
 }
 
+# In recordings (VIDEO_ROLL=1, set by setup.tape), panels and callouts move as they arrive. They are drawn while the
+# recording is hidden, so each first waits ROLL_START seconds for the picture to show again.
+#   _reveal  prints its input a line at a time, ROLL_DELAY seconds apart: code that rolls in
+#   _slide_in  prints its lines, then redraws them further left until they are in place: a callout that slides in
+_reveal() {
+  if [ "${VIDEO_ROLL:-}" != 1 ]; then cat; return; fi
+  sleep "${ROLL_START:-0.4}"
+  local line
+  while IFS= read -r line; do printf '%s\n' "$line"; sleep "${ROLL_DELAY:-0.02}"; done
+}
+
+_slide_in() {
+  if [ "${VIDEO_ROLL:-}" != 1 ]; then printf '%s\n' "$@"; return; fi
+  sleep "${ROLL_START:-0.4}"
+  local pad line
+  for pad in 24 12 6 2 0; do
+    for line in "$@"; do printf '%*s%s\033[K\n' "$pad" '' "$line"; done
+    [ "$pad" -eq 0 ] || { printf '\033[%dA' "$#"; sleep "${ROLL_DELAY:-0.02}"; }
+  done
+}
+
 callout() {
   _erase_typed callout "$@"
   _gap_before callout
   local text=" $* "
   local line
   line=$(printf '%*s' "${#text}" '' | tr ' ' '─')
-  printf '\033[1;33m┌%s┐\n│%s│\n└%s┘\033[0m\n' "$line" "$text" "$line"
+  _slide_in $'\033[1;33m┌'"${line}"'┐' "│${text}│" "└${line}┘"$'\033[0m'
 }
 
 note() {
@@ -161,7 +182,7 @@ show() {
     printed="$(awk -v f="${2:-1}" -v t="${3:-0}" -v m="$marks" "$_SHOW_AWK"'
       NR >= f && (t == 0 || NR <= t) { out(NR, $0) }' "$file")"
   fi
-  printf '%s\n' "$printed"
+  printf '%s\n' "$printed" | _reveal
   [ -z "$zoom" ] || _report_zoom "$printed" "$zoom"
 }
 

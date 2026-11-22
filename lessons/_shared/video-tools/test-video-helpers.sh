@@ -88,6 +88,18 @@ run_live 'true' >/dev/null
 expect "run_live records one measured time per run" "$(wc -l <"$VIDEO_TIMINGS" | tr -d ' ')" "2"
 expect "run_live records how long the run took" "$(head -1 "$VIDEO_TIMINGS")" "1."
 
+# --- code that rolls in, callouts that slide in (recordings only: VIDEO_ROLL=1) -------------------------------------
+STILL="$(_VIDEO_LAST=""; show "$WORK/sample.txt" 1 3 | plain)"
+START=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+ROLLED="$(_VIDEO_LAST=""; VIDEO_ROLL=1 ROLL_START=0 ROLL_DELAY=0.1 show "$WORK/sample.txt" 1 3 | plain)"
+TOOK=$(perl -MTime::HiRes=time -e "printf '%d', (time - $START) * 1000")
+expect "rolled code prints the same lines as still code" "rolled $ROLLED" "rolled $STILL"
+expect "code rolls in a line at a time in recordings" "took $([ "$TOOK" -ge 300 ] && echo enough || echo "only ${TOOK}ms")" "took enough"
+SLID="$(VIDEO_ROLL=1 ROLL_START=0 ROLL_DELAY=0 callout 'boxed')"
+expect "a callout slides in: it is drawn more than once, moving up to redraw" "$SLID" $'\033[3A'
+expect "a sliding callout ends with its box in place" "$(printf '%s' "$SLID" | plain | tail -2 | head -1)" "│ boxed │"
+refuse "outside recordings a callout is drawn once" "$(callout 'boxed')" $'\033[3A'
+
 # --- erasing typed commands -------------------------------------------------------------------------------------------
 expect "a short typed command takes one row" "rows $(COLUMNS=80 _typed_rows callout 'short')" "rows 1"
 expect "a typed command wider than the terminal takes more rows" "rows $(COLUMNS=20 _typed_rows callout 'abcdefghij')" "rows 2"

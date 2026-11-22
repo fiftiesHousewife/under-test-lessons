@@ -53,7 +53,7 @@ and see what its existing tests really check.
 | [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | Checking the requests your code sends: method, headers and body, not just the answers it gets | MockServer, or WireMock's verify | Java only | next |
 | Mockito well used: stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | next |
-| Contract tests between teams: consumer and provider check one agreement | Pact, Pact Broker | Docker | later: needs containers or more set-up |
+| Contract tests between teams: consumer and provider check one agreement, shared as versioned artifacts through the company's package repository, without a broker | Pact JVM (4.5 for JDK 8) | Java only | later |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
 | Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
 | Running script tests in CI: JUnit reports, tags and filters, parallel runs, time limits and retries | bats-core | bats | last: needs other tools |
