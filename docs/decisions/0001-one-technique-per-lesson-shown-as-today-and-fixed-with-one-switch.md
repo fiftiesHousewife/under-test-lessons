@@ -10,25 +10,60 @@ group: How lessons are built
 
 ## Context and Problem Statement
 
-A lesson has to make one technique's value obvious in a few minutes, to people who may not write code every day, and its example has to keep building in `./gradlew check`.
+A lesson has to make one technique's value obvious in a few minutes, to people who may not write code every day, and
+its example has to keep building in `./gradlew check`.
+
+## Decision Drivers
+
+* The moment the technique pays off is seen, not described
+* The before and the after run from the same command
+* The build stays green, so the lesson can't rot unnoticed
 
 ## Considered Options
 
-* **One technique per lesson, with the code as it is today, a weak test, a strong test and the fix, switched by one Gradle property (`-Pcode=today`)**  
-  The before and after run from the same command; without the switch every test passes, so the build stays green
-* **A tutorial that builds the example up step by step**  
-  Longer, and the moment the technique pays off is buried
-* **Several techniques per lesson**  
-  Shorter catalogue, but each lesson teaches less clearly
+* One technique per lesson, with the code as it is today, a weak test, a strong test and the fix, switched by one Gradle property (`-Pcode=today`)
+* A tutorial that builds the example up step by step
+* Several techniques per lesson
 
 ## Decision Outcome
 
-Chosen: one technique per lesson, shown as today and fixed with one switch. The deliberately weak "today" code is left out of the coverage figure, since a lesson's point is that it can't be properly tested.
+Chosen: one technique per lesson, shown as today and fixed with one switch, because the switch shows the technique
+finding what the weak test misses, in one command. Without the switch every test passes. The deliberately weak "today"
+code is left out of the coverage figure, since a lesson's point is that it can't be properly tested.
 
 ### Exception
 
 The four oldest lessons, written before the convention, keep their own switch names: mutation testing
 (`-Psuite=weak`, where the code stays the same and the tests change), characterisation tests
 (`-Pstatement=refactored`), property-based testing (`-Psplitter=current`) and parameterised tests (`-Pvat=current`).
-Each lesson's README and the catalogue's design table name its switch. New lessons use `-Pcode=today`.
+They weren't moved over only because that meant recording their videos again. Each moves to `-Pcode=today` when its
+video is next made (mutation testing excepted, since there the tests change, not the code). Each lesson's README and
+the catalogue's design table name its switch.
 
+### Consequences
+
+* Good, because every lesson has the same shape, so a viewer knows what to expect.
+* Good, because `./gradlew check` keeps every example working.
+* Bad, because a technique that only pays off over several steps has to be cut down to one.
+* Bad, because the four old switches differ until their videos are remade.
+
+### Confirmation
+
+Each lesson's build file reads the switch, and its README names it; the "today" folder is left out of the coverage
+check in the lesson's build file.
+
+## Pros and Cons of the Options
+
+### A step-by-step tutorial
+
+* Good, because it explains how the example came to be.
+* Bad, because it is longer, and the moment the technique pays off is buried.
+
+### Several techniques per lesson
+
+* Good, because a shorter catalogue.
+* Bad, because each lesson teaches less clearly, and can't be picked on its own.
+
+## More Information
+
+* Which techniques each lesson teaches: [Each lesson names the toolkit techniques it teaches](0007-each-lesson-names-the-toolkit-techniques-it-teaches-and-the-build-checks-both-repos-agree.md)

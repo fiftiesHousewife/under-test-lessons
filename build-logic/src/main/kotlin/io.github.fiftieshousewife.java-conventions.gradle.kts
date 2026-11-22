@@ -105,10 +105,17 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 // ---------- Tests and coverage ----------
 // Failing tests end the build with a short message and a report path relative to the project, instead of Gradle's long
 // message with the full path, which shows a person's home folder in recordings and logs. The build still fails.
-/** Registers the short summary for one test task: "All N tests passed.", or "N of M tests failed. Report: ...". */
-fun registerFailureSummary(testTask: String) = tasks.register(if (testTask == "test") "testFailures" else "${testTask}Failures") {
+fun summaryName(testTask: String) = if (testTask == "test") "testFailures" else "${testTask}Failures"
+
+/**
+ * Registers the short summary for one test task: "All N tests passed.", or "N of M tests failed. Report: ...". With
+ * skipsFail, a skipped test fails the build too: container tests skip themselves on a machine without a container
+ * runtime, but CI must run them.
+ */
+fun registerFailureSummary(testTask: String, skipsFail: Provider<Boolean>) = tasks.register(summaryName(testTask)) {
     description = "Fails the build, briefly, if any test in $testTask failed."
     val results = layout.buildDirectory.dir("test-results/$testTask")
+    val failOnSkips = skipsFail
     doLast {
         val counts = Regex("<testsuite [^>]*?tests=\"(\\d+)\"[^>]*?skipped=\"(\\d+)\"[^>]*?failures=\"(\\d+)\"[^>]*?errors=\"(\\d+)\"")
         val suites = results.get().asFile.walkTopDown().filter { it.name.endsWith(".xml") }
@@ -118,6 +125,10 @@ fun registerFailureSummary(testTask: String) = tasks.register(if (testTask == "t
         val failed = suites.sumOf { it[2] + it[3] }
         if (failed > 0) {
             throw GradleException("$failed of $total tests failed. Report: build/reports/tests/$testTask/index.html")
+        }
+        if (skipped > 0 && failOnSkips.get()) {
+            throw GradleException("$skipped of $total tests in $testTask were skipped, and CI must run them all: " +
+                "give CI a container runtime")
         }
         val ran = total - skipped
         logger.quiet(
@@ -129,8 +140,8 @@ fun registerFailureSummary(testTask: String) = tasks.register(if (testTask == "t
         )
     }
 }
-val testFailures = registerFailureSummary("test")
-registerFailureSummary("integrationTest")
+val testFailures = registerFailureSummary("test", provider { false })
+registerFailureSummary("integrationTest", providers.environmentVariable("CI").map { true }.orElse(false))
 
 // The container tests' task, integrationTest, reports the same way, where a project has one.
 tasks.withType<Test>().matching { it.name == "integrationTest" }.configureEach {

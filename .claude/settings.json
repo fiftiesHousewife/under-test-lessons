@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/install-skills.py\" --if-missing",
+            "timeout": 120,
+            "statusMessage": "Installing the pinned skills from apm.yml"
+          }
+        ]
+      }
+    ]
+  }
+}

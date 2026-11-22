@@ -4,7 +4,7 @@ Corporate machines usually fetch nothing straight from the internet. Libraries c
 manager (such as Artifactory or Nexus), container images come from the company's own registry, browsers are installed
 centrally, and traffic out goes through a proxy server. The lessons are built to work that way: this page lists
 everything they fetch, and the settings that route it. See also the decision
-[Lessons download nothing at run time from outside a company's repository manager](decisions/0004-lessons-download-nothing-at-run-time-from-outside-a-companys-repository-manager.md).
+[Every lesson works inside a company](decisions/0021-every-lesson-works-inside-a-company.md).
 
 ## What the lessons fetch, and how to route it
 
@@ -98,6 +98,9 @@ Three ways to customise:
 3. **Rebrand automatically at every release** (planned; see [next steps](next-steps.md#taken-over-from-the-toolkit)):
    a branding file in your own repo names your intro clip, outro clip, voice and caption style, and a step built on
    ffmpeg applies it to each new release's videos.
+
+Where no video can be made or shown, each lesson's **voiced deck** is the lesson: its slides with the narration read
+aloud (Listen, or V), published with the decks and rebuilt with `buildLessonDeckVoice` after a rebrand or revoice.
 
 Your branding and edited videos live in your own repo or media library, never in this one.
 

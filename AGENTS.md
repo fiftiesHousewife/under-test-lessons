@@ -42,8 +42,10 @@ video script (generated with `tools/new-video-script.py`), and rebuild the deck.
 | grilling (installed by APM) | Interview a person about a decision. In Claude Code, ask one question at a time with the AskUserQuestion tool |
 | architecture-decision-records (installed by APM) | The mechanics of writing a MADR record in [`docs/decisions/`](docs/decisions/README.md) |
 
-External skills are declared in [`apm.yml`](apm.yml), pinned, and installed with `apm install` (APM, the Agent Package
-Manager). Run it once after cloning.
+External skills are declared in [`apm.yml`](apm.yml), pinned, and installed by `python3 tools/install-skills.py`: with
+APM (the Agent Package Manager) it runs `apm install`; without it, it fetches each pinned folder with git over HTTPS,
+from GitHub or from a company's mirror (`SKILLS_GIT_BASE`). Claude Code runs it at the start of a session when a skill
+is missing; with other assistants, run it once after cloning.
 
 ## Code standards (enforced by `./gradlew check`)
 | Standard | Enforced by |
