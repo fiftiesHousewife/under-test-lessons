@@ -31,7 +31,10 @@ class SlideDeckTest {
         Files.writeString(media.resolveSibling("README.md"), "# Demo lesson\n\nText.\n");
         Files.writeString(media.resolve("demo.slides.md"), "## intro: Hello\n- A point\nSay: Hi [pause 1s] there.\n"
                 + "## closing: Bye\nSay: Bye.\n");
-        Files.writeString(media.resolve("demo.tape"), "# ---- Scene 1: the code under test ----\nSleep 1s\n");
+        Files.writeString(media.resolveSibling("Thing.java"), "class Thing {\n    int size() { return 1; }\n}\n");
+        Files.writeString(media.resolve("demo.tape"), "# ---- Scene 1: the code under test ----\n"
+                + "Type@1ms `show Thing 1 2 \"the thing\"`\nType@1ms `run_live \"./gradlew test\"`\n"
+                + "Type@1ms `callout \"It passes.\"`\nSleep 1s\n");
         Files.writeString(media.resolve("demo.narration.md"), "1. Here is the code & its tests.\n");
         final Path browser = Files.writeString(root.resolve("browser"), "#!/bin/sh\nfor a; do case \"$a\" in"
                 + " --print-to-pdf=*) touch \"${a#--print-to-pdf=}\";; esac; done\n");
@@ -46,7 +49,9 @@ class SlideDeckTest {
                 () -> assertThat(deck.indexOf("<h1>Hello</h1>")).isLessThan(deck.indexOf("<h1>The code under test"))
                         .isLessThan(deck.indexOf("<h1>Bye</h1>")),
                 () -> assertThat(deck).contains("<p class=\"scene-text\">Here is the code &amp; its tests.</p>",
-                        "<svg id=\"terminal\"></svg>", "<aside class=\"notes\">Hi there.</aside>"),
+                        "<figcaption>the thing</figcaption><pre>  1  class Thing {\n  2      int size()",
+                        "<pre class=\"command\">$ ./gradlew test</pre>", "<p class=\"callout\">It passes.</p>",
+                        "<aside class=\"notes\">Hi there.</aside>"),
                 () -> assertThat(media.resolve("demo.deck.pdf")).exists(),
                 () -> assertThat(SlideDeck.lessons(root, "demo")).hasSize(1));
     }

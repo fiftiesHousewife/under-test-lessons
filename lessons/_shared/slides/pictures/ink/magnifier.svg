@@ -1,0 +1,17 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M50 60 H250 L280 90 V350 H50 Z" fill="#fff" stroke-width="6"/>
+<path d="M250 60 V90 H280" fill="url(#hatch)" stroke-width="5"/>
+<path d="M58 352 H284 V96" stroke-width="10" opacity="0.9"/>
+<g stroke-width="4"><path d="M75 100 H200 M75 125 H160 M95 150 H230 M95 175 H190 M75 200 H215 M95 225 H170 M95 250 H240 M75 275 H180 M75 300 H220"/></g>
+<circle cx="210" cy="215" r="88" fill="#fff" stroke="none"/>
+<g stroke-width="4" clip-path="circle(88px at 210px 215px)"><path d="M140 175 H240 M140 250 H250"/></g>
+<ellipse cx="212" cy="222" rx="30" ry="36" fill="url(#cross-hatch)" stroke-width="5"/>
+<circle cx="212" cy="182" r="18" fill="#fff" stroke-width="5"/>
+<circle cx="205" cy="180" r="4" fill="#111" stroke="none"/><circle cx="219" cy="180" r="4" fill="#111" stroke="none"/>
+<path d="M184 210 L164 198 M240 210 L260 198 M184 232 L162 240 M240 232 L262 240 M190 252 L174 270 M234 252 L250 270 M204 166 L196 150 M220 166 L228 150" stroke-width="4"/>
+<circle cx="210" cy="215" r="88" stroke-width="14"/>
+<circle cx="210" cy="215" r="98" stroke-width="3"/>
+<path d="M160 160 Q175 140 200 135" stroke-width="5"/>
+<path d="M280 285 L350 355" stroke-width="30"/><path d="M280 285 L350 355" stroke="#fff" stroke-width="18"/><path d="M296 301 L345 350" stroke="url(#hatch)" stroke-width="16"/>
+<path d="M272 277 L292 297" stroke-width="20"/>
+</svg>

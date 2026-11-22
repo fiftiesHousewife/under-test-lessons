@@ -130,7 +130,12 @@ val slideCss = providers.gradleProperty("lessonSlideCss")
 val macChrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 val slideBrowser = providers.gradleProperty("lessonBrowser")
     .orElse(if (File(macChrome).canExecute()) macChrome else "google-chrome")
+// Your own pictures, by name, used before the shared ones: -PlessonPictures=<folder> (for example the ink set,
+// lessons/_shared/slides/pictures/ink). Set it, and lessonSlideCss, in gradle.properties to use them on every run.
+val pictureFolder = providers.gradleProperty("lessonPictures")
+    .map { File(it).let { dir -> if (dir.isAbsolute) dir else repositoryDir.resolve(it) }.absolutePath }.orElse("")
 tasks.withType<JavaExec>().configureEach {
+    systemProperty("video.pictures", pictureFolder.get())
     systemProperty("video.slideCss", slideCss.get())
     systemProperty("video.browser", slideBrowser.get())
 }
@@ -142,7 +147,7 @@ val drawLessonSlides = tasks.register<JavaExec>("drawLessonSlides") {
     mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
     val root = repoRoot
     val lessonId = lesson
-    argumentProviders.add(CommandLineArgumentProvider { listOf("slides", root, lessonId.getOrElse("")) })
+    argumentProviders.add(CommandLineArgumentProvider { listOf("slides", root, lessonId.getOrElse("all")) })
 }
 
 // Slide decks: one HTML file per lesson, committed next to its video script (-Plesson=<id>, or every lesson).
@@ -158,6 +163,14 @@ tasks.register<JavaExec>("buildLessonDecks") {
     argumentProviders.add(CommandLineArgumentProvider {
         listOf("deck", root, lessonId.getOrElse("all")) + (if (pdf.get()) listOf("pdf") else emptyList())
     })
+}
+
+// One command to pick up revised stylesheets and pictures: rebuilds every lesson's deck and slide images (or one
+// lesson's, with -Plesson=<id>). It always reruns, so edits are never missed.
+tasks.register("buildLessonSlides") {
+    group = "documentation"
+    description = "Rebuilds slide decks and slide images from the current stylesheets and pictures."
+    dependsOn("buildLessonDecks", drawLessonSlides)
 }
 
 // -PslidesOnly=true draws only the slides, in about a minute, instead of making the whole video.

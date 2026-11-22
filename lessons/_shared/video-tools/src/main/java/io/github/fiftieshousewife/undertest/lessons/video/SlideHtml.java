@@ -20,16 +20,22 @@ final class SlideHtml {
     private SlideHtml() {
     }
 
-    /** The page for a slide, styled by the given stylesheets in order, with pictures from the given folder. */
-    static String page(final Slide slide, final List<Path> stylesheets, final Path pictures) {
+    /** The page for a slide, styled by the given stylesheets in order, with pictures from the first folder that has each. */
+    static String page(final Slide slide, final List<Path> stylesheets, final List<Path> pictures) {
         return "<!doctype html><html><head><meta charset=\"utf-8\"><style>\n" + styles(stylesheets)
                 + "</style></head><body>" + definitions(pictures) + body(slide, pictures, "") + "</body></html>\n";
     }
 
     /** Shared picture definitions (hatching, a hand-drawn wobble) that stylesheets can use, if the folder has them. */
-    static String definitions(final Path pictures) {
-        final Path defs = pictures.resolve("defs.svg");
-        return Files.isRegularFile(defs) ? read(defs) : "";
+    static String definitions(final List<Path> pictures) {
+        return pictures.stream().map(folder -> folder.resolve("defs.svg")).filter(Files::isRegularFile).findFirst()
+                .map(SlideHtml::read).orElse("");
+    }
+
+    /** A picture, from the first folder that has it. */
+    static Path picture(final List<Path> pictures, final String name) {
+        return pictures.stream().map(folder -> folder.resolve(name + ".svg")).filter(Files::isRegularFile)
+                .findFirst().orElseGet(() -> pictures.getLast().resolve(name + ".svg"));
     }
 
     /** The stylesheets, one after another, so later ones override earlier ones. */
@@ -42,7 +48,7 @@ final class SlideHtml {
     /** One slide: title, points (or the given paragraph, already escaped), and the picture beside them. */
     @SuppressFBWarnings(value = "POTENTIAL_XML_INJECTION",
             justification = "Pictures are this repo's own files, placed as is; slide text is escaped")
-    static String body(final Slide slide, final Path pictures, final String paragraph) {
+    static String body(final Slide slide, final List<Path> pictures, final String paragraph) {
         final StringBuilder html = new StringBuilder("<main class=\"slide\"><section class=\"text\"><h1>")
                 .append(escape(slide.title())).append("</h1><div class=\"rule\"></div><ul>");
         for (final String point : slide.points()) {
@@ -53,7 +59,7 @@ final class SlideHtml {
         html.append("</ul>").append(paragraph).append("</section>");
         if (!slide.heading().picture().isEmpty()) {
             html.append("<figure class=\"picture\">")
-                    .append(read(pictures.resolve(slide.heading().picture() + ".svg"))).append("</figure>");
+                    .append(read(picture(pictures, slide.heading().picture()))).append("</figure>");
         }
         return html.append("</main>").toString();
     }

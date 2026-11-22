@@ -97,8 +97,24 @@ browser: arrow keys move between slides, N shows the speaker notes, and printing
 ./gradlew :lessons:video-tools:buildLessonDecks -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css
 ```
 
+**Rebrand and rebuild in one command.** Edit a stylesheet or a picture, then run:
+
+```bash
+./gradlew :lessons:video-tools:buildLessonSlides      # every deck and slide image, from the current CSS and pictures
+```
+
+It always reruns. Point it at your own files with `-PlessonSlideCss=<file>` and `-PlessonPictures=<folder>` (pictures
+are found by name there first, then in the shared set), or put both in `gradle.properties` so a plain rerun uses them:
+
+```properties
+lessonSlideCss=lessons/_shared/slides/themes/newspaper.css
+lessonPictures=lessons/_shared/slides/pictures/ink
+```
+
 Decks, slides and videos share one look. [`themes/newspaper.css`](lessons/_shared/slides/themes/newspaper.css) turns
-it into black ink on newsprint, with the cartoons in line and hatching; start your own theme from it.
+it into black ink on newsprint, and [`pictures/ink/`](lessons/_shared/slides/pictures/ink) holds cartoons drawn for
+black and white, in line and cross-hatching; start your own theme from them. Scene slides in a deck show the code
+panels, commands and callouts from the video, as text.
 
 ## Using these lessons inside a company
 

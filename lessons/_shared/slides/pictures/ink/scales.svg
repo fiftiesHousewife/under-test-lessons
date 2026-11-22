@@ -1,0 +1,18 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M120 360 H280 L262 330 H138 Z" fill="url(#cross-hatch)" stroke-width="6"/>
+<path d="M192 330 V78 M208 330 V78" stroke-width="6"/><path d="M192 330 V78 H208 V330" fill="url(#hatch)" stroke="none"/>
+<circle cx="200" cy="66" r="15" fill="#fff" stroke-width="6"/>
+<path d="M60 122 L340 92" stroke-width="9"/>
+<circle cx="60" cy="122" r="6" fill="#111"/><circle cx="340" cy="92" r="6" fill="#111"/>
+<path d="M60 122 L22 205 M60 122 L98 205" stroke-width="3"/><path d="M340 92 L298 245 M340 92 L382 245" stroke-width="3"/>
+<path d="M12 205 H108 Q100 238 60 240 Q20 238 12 205 Z" fill="#fff" stroke-width="6"/>
+<path d="M288 245 H392 Q384 280 340 282 Q296 280 288 245 Z" fill="#fff" stroke-width="6"/>
+<path d="M36 196 Q52 140 92 120 Q76 160 50 192" fill="#fff" stroke-width="4"/>
+<path d="M44 186 Q64 160 86 128 M54 176 L66 170 M60 164 L74 160 M68 152 L80 148" stroke-width="2.5"/>
+<path d="M312 245 L322 196 H358 L368 245 Z" fill="url(#cross-hatch)" stroke-width="5"/>
+<path d="M330 196 Q340 180 350 196" stroke-width="5"/>
+<rect x="320" y="212" width="40" height="22" fill="#fff" stroke="none"/>
+<text x="340" y="230" font-family="Georgia, serif" font-weight="bold" font-size="20" fill="#111" stroke="none" text-anchor="middle">1 kg</text>
+<text x="60" y="270" font-family="Georgia, serif" font-style="italic" font-size="24" fill="#111" stroke="none" text-anchor="middle">weak</text>
+<text x="340" y="312" font-family="Georgia, serif" font-style="italic" font-size="24" fill="#111" stroke="none" text-anchor="middle">strong</text>
+</svg>

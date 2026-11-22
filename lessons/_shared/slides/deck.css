@@ -23,3 +23,19 @@ body.show-notes .deck-counter { display: none; }
   .deck .slide { position: static; transform: none; }
   .notes, .deck-counter { display: none !important; }
 }
+
+/* Scene slides: what the video shows at each step, as text: narration and callouts beside the code. */
+.deck .slide.scene { grid-template-columns: 600px 1fr; gap: 60px; padding: 0 90px; }
+.scene .scene-text { font-size: 30px; line-height: 1.45; }
+.scene .callout {
+  font-size: 26px; line-height: 1.4; margin: 28px 0 0; padding: 14px 18px; border: 3px solid var(--yellow);
+  border-radius: 10px; color: var(--yellow);
+}
+.code { margin: 0; align-self: center; max-height: 960px; overflow: hidden; }
+.code figcaption { color: var(--accent); font: bold 22px var(--font); margin: 0 0 8px; }
+.code pre {
+  font: var(--code-size, 22px)/1.35 "SF Mono", Menlo, Consolas, monospace; margin: 0 0 18px; padding: 16px 20px;
+  background: var(--code-background, #0d0d0d); color: var(--code-text, #e8e8e8); border-radius: 10px;
+  white-space: pre; overflow: hidden;
+}
+.code pre.command { color: var(--green); }

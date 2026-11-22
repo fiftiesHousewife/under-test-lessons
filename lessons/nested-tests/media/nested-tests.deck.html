@@ -74,6 +74,22 @@ body.show-notes .deck-counter { display: none; }
   .notes, .deck-counter { display: none !important; }
 }
 
+/* Scene slides: what the video shows at each step, as text: narration and callouts beside the code. */
+.deck .slide.scene { grid-template-columns: 600px 1fr; gap: 60px; padding: 0 90px; }
+.scene .scene-text { font-size: 30px; line-height: 1.45; }
+.scene .callout {
+  font-size: 26px; line-height: 1.4; margin: 28px 0 0; padding: 14px 18px; border: 3px solid var(--yellow);
+  border-radius: 10px; color: var(--yellow);
+}
+.code { margin: 0; align-self: center; max-height: 960px; overflow: hidden; }
+.code figcaption { color: var(--accent); font: bold 22px var(--font); margin: 0 0 8px; }
+.code pre {
+  font: var(--code-size, 22px)/1.35 "SF Mono", Menlo, Consolas, monospace; margin: 0 0 18px; padding: 16px 20px;
+  background: var(--code-background, #0d0d0d); color: var(--code-text, #e8e8e8); border-radius: 10px;
+  white-space: pre; overflow: hidden;
+}
+.code pre.command { color: var(--green); }
+
 </style></head><body class="deck"><svg class="picture-defs" width="0" height="0" style="position:absolute" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="2.5"/></pattern><pattern id="cross-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="2.5"/><line x1="0" y1="0" x2="10" y2="0" stroke="#111" stroke-width="2.5"/></pattern><pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="#fff"/><circle cx="4.5" cy="4.5" r="1.8" fill="#111"/></pattern><filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></defs></svg>
 <section class="deck-slide"><main class="slide"><section class="text"><h1>What are nested tests?</h1><div class="rule"></div><ul><li class="point">Tests grouped into classes inside a test class, one for each situation</li><li class="point">Each group sets up its situation once, before its tests</li><li class="point">The report shows the groups as a tree, with readable names</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="teal" d="M40 70 L130 70 L150 95 L360 95 L360 340 L40 340 Z"/><rect class="paper" x="70" y="125" width="270" height="56" rx="10"/><rect class="paper" x="100" y="196" width="240" height="56" rx="10"/><rect class="paper" x="100" y="267" width="240" height="56" rx="10"/><g class="line thin"><path d="M90 153 L240 153 M120 224 L250 224 M120 295 L230 295"/></g><circle class="green" cx="310" cy="224" r="14"/><circle class="green" cx="310" cy="153" r="14"/><circle class="red" cx="310" cy="295" r="14"/></svg>
 </figure></main><aside class="notes">Nested tests are tests grouped into classes inside a test class, one class for each situation. Each group sets up its situation once, before its tests. And the report shows the groups as a tree, with readable names.</aside></section>
@@ -85,18 +101,102 @@ body.show-notes .deck-counter { display: none; }
 </figure></main><aside class="notes">Why does the structure matter? In a flat list, a missing case is invisible. Grouped by situation, every situation gets the same questions, so a gap stands out. And the report becomes a specification that anyone can read, including people who don't write code.</aside></section>
 <section class="deck-slide"><main class="slide"><section class="text"><h1>How JUnit nests tests</h1><div class="rule"></div><ul><li class="point">Mark an inner class with @Nested</li><li class="point">Give classes and tests sentence names with @DisplayName</li><li class="point">An inner class's @BeforeEach runs after the outer one, building up the situation</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M200 70 L200 40"/><circle class="pink" cx="200" cy="34" r="14"/><rect class="teal" x="115" y="70" width="170" height="130" rx="34"/><circle class="paper" cx="165" cy="128" r="24"/><circle class="paper" cx="235" cy="128" r="24"/><circle class="ink" cx="170" cy="132" r="11"/><circle class="ink" cx="240" cy="132" r="11"/><path class="line thin" d="M170 172 Q200 188 230 172"/><rect class="grey" x="135" y="210" width="130" height="120" rx="24"/><rect class="yellow" x="170" y="240" width="60" height="16" rx="8"/><rect class="yellow" x="170" y="270" width="40" height="16" rx="8"/><path class="line" d="M135 240 L80 285 M265 240 L310 200"/><path class="line" d="M165 330 L160 372 M235 330 L240 372"/><ellipse class="red" cx="322" cy="180" rx="30" ry="34"/><circle class="ink" cx="322" cy="148" r="16"/><path class="line thin" d="M300 176 L282 166 M344 176 L362 166 M302 200 L286 210 M342 200 L358 210"/><rect class="paper" x="40" y="285" width="80" height="60" rx="10"/><path class="line thin" d="M54 305 L104 305 M54 325 L90 325"/></svg>
 </figure></main><aside class="notes">In JUnit, you mark an inner class as nested. You give classes and tests sentence names, with display name. And an inner class's set-up runs after the outer one's, so each level builds up its situation.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>The code under test</h1><div class="rule"></div><ul></ul><p class="scene-text">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
-</figure></main><aside class="notes">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>The flat tests</h1><div class="rule"></div><ul></ul><p class="scene-text">These are flat tests: one long list, where each name packs in a situation and a result. They all pass. Can you spot what's missing? It's hard to tell.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
-</figure></main><aside class="notes">These are flat tests: one long list, where each name packs in a situation and a result. They all pass. Can you spot what's missing? It's hard to tell.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>The nested tests</h1><div class="rule"></div><ul></ul><p class="scene-text">Now, nested tests: one class for each situation. First, a requested loan. Can it be approved? Yes. Can it be repaid? No.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
-</figure></main><aside class="notes">Now, nested tests: one class for each situation. First, a requested loan. Can it be approved? Yes. Can it be repaid? No.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>The next situation</h1><div class="rule"></div><ul></ul><p class="scene-text">The same two questions for an approved loan, and again for a repaid one. Each situation sets itself up once, before its tests.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
-</figure></main><aside class="notes">The same two questions for an approved loan, and again for a repaid one. Each situation sets itself up once, before its tests.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>The gap shows</h1><div class="rule"></div><ul></ul><p class="scene-text">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
-</figure></main><aside class="notes">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</aside></section>
-<section class="deck-slide"><main class="slide"><section class="text"><h1>The fixed loan</h1><div class="rule"></div><ul></ul><p class="scene-text">Now the loan that allows each step only from the state before it. We run the same tests. Every situation behaves.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
-</figure></main><aside class="notes">Now the loan that allows each step only from the state before it. We run the same tests. Every situation behaves.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The code under test</h1><div class="rule"></div><p class="scene-text">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</p></section><figure class="code" style="--code-size: 20px"><figcaption>today's loan</figcaption><pre> 23      @Override
+ 24      public void repay() {
+ 25          if (state == State.REPAID) {
+ 26              throw new IllegalStateException(&quot;only an approved loan can be repaid&quot;);
+ 27          }
+ 28          state = State.REPAID;
+ 29      }</pre></figure></main><aside class="notes">Here is the code under test, today's loan. A loan is requested, then approved, then repaid. Today's code refuses to repay a loan that is already repaid, and nothing else.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The flat tests</h1><div class="rule"></div><p class="scene-text">These are flat tests: one long list, where each name packs in a situation and a result. They all pass. Can you spot what's missing? It's hard to tell.</p></section><figure class="code" style="--code-size: 21px"><figcaption>flat tests</figcaption><pre> 10  
+ 11      @Test
+ 12      void newLoanIsRequested() {
+ 13          assertThat(Loans.newLoan().state()).isEqualTo(Loan.State.REQUESTED);
+ 14      }
+ 15  
+ 16      @Test
+ 17      void approvingRequestedLoanApprovesIt() {
+ 18          final Loan loan = Loans.newLoan();
+ 19          loan.approve();
+ 20          assertThat(loan.state()).isEqualTo(Loan.State.APPROVED);
+ 21      }
+ 22  
+ 23      @Test
+ 24      void repayingApprovedLoanRepaysIt() {
+ 25          final Loan loan = Loans.newLoan();
+ 26          loan.approve();
+ 27          loan.repay();
+ 28          assertThat(loan.state()).isEqualTo(Loan.State.REPAID);
+ 29      }
+ 30  
+ 31      @Test
+ 32      void repayingRepaidLoanIsRefused() {
+ 33          final Loan loan = Loans.newLoan();
+ 34          loan.approve();
+ 35          loan.repay();
+ 36          assertThatIllegalStateException().isThrownBy(loan::repay);
+ 37      }</pre></figure></main><aside class="notes">These are flat tests: one long list, where each name packs in a situation and a result. They all pass. Can you spot what's missing? It's hard to tell.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The nested tests</h1><div class="rule"></div><p class="scene-text">Now, nested tests: one class for each situation. First, a requested loan. Can it be approved? Yes. Can it be repaid? No.</p></section><figure class="code" style="--code-size: 22px"><figcaption>nested tests: when requested</figcaption><pre> 12  @DisplayName(&quot;A loan&quot;)
+ 13  class LoanTest {
+ 14  
+ 15      private final Loan loan = Loans.newLoan();
+ 16  
+ 17      @Nested
+ 18      @DisplayName(&quot;when requested&quot;)
+ 19      class WhenRequested {
+ 20  
+ 21          @Test
+ 22          @DisplayName(&quot;can be approved&quot;)
+ 23          void canBeApproved() {
+ 24              loan.approve();
+ 25              assertThat(loan.state()).isEqualTo(Loan.State.APPROVED);
+ 26          }
+ 27  
+ 28          @Test
+ 29          @DisplayName(&quot;cannot be repaid&quot;)
+ 30          void cannotBeRepaid() {
+ 31              assertThatIllegalStateException().isThrownBy(loan::repay);
+ 32          }
+ 33      }</pre></figure></main><aside class="notes">Now, nested tests: one class for each situation. First, a requested loan. Can it be approved? Yes. Can it be repaid? No.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The next situation</h1><div class="rule"></div><p class="scene-text">The same two questions for an approved loan, and again for a repaid one. Each situation sets itself up once, before its tests.</p></section><figure class="code" style="--code-size: 22px"><figcaption>nested tests: when approved</figcaption><pre> 35      @Nested
+ 36      @DisplayName(&quot;when approved&quot;)
+ 37      class WhenApproved {
+ 38  
+ 39          @BeforeEach
+ 40          void approve() {
+ 41              loan.approve();
+ 42          }
+ 43  
+ 44          @Test
+ 45          @DisplayName(&quot;can be repaid&quot;)
+ 46          void canBeRepaid() {
+ 47              loan.repay();
+ 48              assertThat(loan.state()).isEqualTo(Loan.State.REPAID);
+ 49          }
+ 50  
+ 51          @Test
+ 52          @DisplayName(&quot;cannot be approved again&quot;)
+ 53          void cannotBeApprovedAgain() {
+ 54              assertThatIllegalStateException().isThrownBy(loan::approve);
+ 55          }
+ 56      }</pre></figure></main><aside class="notes">The same two questions for an approved loan, and again for a repaid one. Each situation sets itself up once, before its tests.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The gap shows</h1><div class="rule"></div><p class="scene-text">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</p><p class="callout">The report reads like a specification. A requested loan can be repaid: money back that was never lent.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:nested-tests:test -Pcode=today</pre></figure></main><aside class="notes">We run the tests against today's loan. The report reads like a specification. And one line fails: a requested loan can be repaid. That's money paid back that was never lent. The flat tests never asked.</aside></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed loan</h1><div class="rule"></div><p class="scene-text">Now the loan that allows each step only from the state before it. We run the same tests. Every situation behaves.</p><p class="callout">Every situation, every question, answered. Nesting made the missing case easy to see.</p></section><figure class="code" style="--code-size: 19px"><figcaption>the fixed loan</figcaption><pre> 16      public void approve() {
+ 17          move(State.REQUESTED, State.APPROVED, &quot;only a requested loan can be approved&quot;);
+ 18      }
+ 19  
+ 20      @Override
+ 21      public void repay() {
+ 22          move(State.APPROVED, State.REPAID, &quot;only an approved loan can be repaid&quot;);
+ 23      }
+ 24  
+ 25      private void move(final State from, final State to, final String refusal) {
+ 26          if (state != from) {
+ 27              throw new IllegalStateException(refusal);
+ 28          }
+ 29          state = to;
+ 30      }
+ 31  }</pre><pre class="command">$ ./gradlew :lessons:nested-tests:test</pre></figure></main><aside class="notes">Now the loan that allows each step only from the state before it. We run the same tests. Every situation behaves.</aside></section>
 <section class="deck-slide"><main class="slide"><section class="text"><h1>When to nest tests</h1><div class="rule"></div><ul><li class="point">For anything with states or situations: workflows, accounts, orders, permissions</li><li class="point">Ask the same questions in every situation, so gaps show</li><li class="point">Keep nesting shallow: two or three levels at most</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M40 90 L140 60 L260 100 L360 70 L360 330 L260 360 L140 320 L40 350 Z"/><path class="line thin" d="M140 60 L140 320 M260 100 L260 360" style="stroke:var(--grey)"/><path class="line" d="M90 290 Q140 200 200 230 Q270 260 300 150" style="stroke-dasharray:4 22"/><g><path class="teal" d="M90 300 C60 260 60 230 90 230 C120 230 120 260 90 300 Z"/><text x="90" y="268" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">1</text><path class="pink" d="M200 245 C170 205 170 175 200 175 C230 175 230 205 200 245 Z"/><text x="200" y="213" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">2</text><path class="yellow" d="M300 165 C270 125 270 95 300 95 C330 95 330 125 300 165 Z"/><text x="300" y="133" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">3</text></g></svg>
 </figure></main><aside class="notes">When should you nest tests? For anything with states or situations: workflows, accounts, orders and permissions. Ask the same questions in every situation, so the gaps show. And keep the nesting shallow: two or three levels at most.</aside></section>
 <section class="deck-slide"><main class="slide"><section class="text"><h1>Where nested tests came from</h1><div class="rule"></div><ul><li class="point">Part of JUnit since JUnit 5, in 2017, along with display names</li><li class="point">The style comes from behaviour-driven tools such as RSpec, with describe and context</li><li class="point">JUnit 6 is the current generation</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M40 140 Q120 110 200 150 L200 340 Q120 300 40 330 Z"/><path class="paper" d="M360 140 Q280 110 200 150 L200 340 Q280 300 360 330 Z"/><path class="line" d="M200 150 L200 340"/><g class="line thin" style="stroke:var(--grey)"><path d="M70 180 Q120 165 170 185 M70 220 Q120 205 170 225 M70 260 Q120 245 170 265 M230 185 Q280 165 330 180 M230 225 Q280 205 330 220"/></g><circle class="yellow" cx="300" cy="100" r="70"/><circle class="paper" cx="300" cy="100" r="54"/><path class="line" d="M300 100 L300 66 M300 100 L326 114"/></svg>

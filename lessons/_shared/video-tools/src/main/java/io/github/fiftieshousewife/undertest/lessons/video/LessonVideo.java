@@ -42,8 +42,9 @@ public final class LessonVideo {
         switch (args[0]) {
             case "record" -> new Recorder(Clock.systemUTC()).record(media);
             case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
-            case "slides" -> log.info("{}: {} slides drawn, in the lesson's voice folder", media.safeLesson(),
-                    SlideDrawing.drawAll(media).size());
+            case "slides" -> SlideDeck.lessons(media.root(), args[2]).forEach(lesson -> log.info(
+                    "{}: {} slides drawn, in the lesson's voice folder", lesson.safeLesson(),
+                    SlideDrawing.drawAll(lesson).size()));
             default -> assemble(media);
         }
     }

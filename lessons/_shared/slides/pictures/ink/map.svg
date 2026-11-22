@@ -1,0 +1,11 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#111" stroke-linecap="round" stroke-linejoin="round">
+<path d="M30 90 L140 60 L260 95 L370 65 V320 L260 350 L140 315 L30 345 Z" fill="#fff" stroke-width="7"/>
+<path d="M140 60 V315 L260 350 V95 Z" fill="url(#hatch)" stroke="none" opacity="0.5"/>
+<path d="M140 60 V315 M260 95 V350" stroke-width="5"/>
+<path d="M60 150 Q80 130 100 150 T120 160 M175 250 Q195 230 220 250 M290 200 Q310 180 340 196" stroke-width="3"/>
+<path d="M70 290 Q120 230 175 245 Q240 262 255 205 Q270 150 320 130" stroke-width="5" stroke-dasharray="3 16"/>
+<g stroke-width="5"><circle cx="70" cy="290" r="18" fill="#fff"/><circle cx="175" cy="245" r="18" fill="#fff"/><circle cx="255" cy="200" r="18" fill="#fff"/></g>
+<g font-family="Georgia, serif" font-weight="bold" font-size="22" fill="#111" stroke="none" text-anchor="middle"><text x="70" y="298">1</text><text x="175" y="253">2</text><text x="255" y="208">3</text></g>
+<path d="M305 115 L335 145 M335 115 L305 145" stroke-width="9"/>
+<g transform="translate(78 118)"><circle r="30" fill="#fff" stroke-width="4"/><path d="M0 -38 L8 0 L0 38 L-8 0 Z" fill="url(#cross-hatch)" stroke-width="3"/><path d="M-38 0 L0 -6 L38 0 L0 6 Z" stroke-width="3"/><text y="-44" font-family="Georgia, serif" font-weight="bold" font-size="16" fill="#111" stroke="none" text-anchor="middle">N</text></g>
+</svg>

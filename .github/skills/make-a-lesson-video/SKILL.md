@@ -105,8 +105,14 @@ terminal recording and the closing slides after it, with their own captions.
 - **Themes:** `lessons/_shared/slides/themes/` holds whole looks, such as `newspaper.css` (black ink on newsprint,
   pictures in line and hatching, using the shared hatching and wobble in `pictures/defs.svg`). Pass one as
   `-PlessonSlideCss`.
+- **Picture sets:** `-PlessonPictures=<folder>` uses pictures from that folder by name before the shared ones.
+  `pictures/ink/` is the black-and-white newspaper set (draw new ones there with explicit black strokes, white fills
+  and the shared `#hatch`, `#cross-hatch` and `#dots` patterns).
+- **Rebuild everything:** `./gradlew :lessons:video-tools:buildLessonSlides` rebuilds every deck and slide image from
+  the current stylesheets and pictures; settings can live in `gradle.properties`.
 - **Decks:** `./gradlew :lessons:video-tools:buildLessonDecks` writes every lesson's `media/<id>.deck.html` (commit
-  it): intro slides, one slide per scene with its narration, and closing slides. Rebuild decks whenever slides or
+  it): intro slides, one slide per scene with its narration, code panels, commands and callouts (read from the script's
+  `show`, `run_live` and `callout` lines), and closing slides. Rebuild decks whenever slides or
   narration change; `-PlessonDeckPdf=true` adds a PDF.
 - **A quick look:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
   slides (into `media/<id>.voice/`) in about a minute.

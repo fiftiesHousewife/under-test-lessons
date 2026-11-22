@@ -31,3 +31,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 .picture text.paper, .picture text.ink { fill: #111; stroke: none; }
 .picture .line, .picture .light-line { stroke: #111 !important; }
 .picture .red + .light-line, .picture .ink + .light-line { stroke: #fff !important; }
+
+/* Decks: code set like a printed listing, callouts boxed in ink. */
+:root { --code-background: #fff; --code-text: #111; }
+.code pre { border: 3px solid #111; border-radius: 0; box-shadow: 6px 6px 0 #111; }
+.code pre.command { color: #111; font-weight: bold; }
+.scene .callout { border-color: #111; color: #111; border-radius: 0; font-style: italic; }

@@ -29,7 +29,7 @@ class SlideHtmlTest {
         final Path user = Files.writeString(root.resolve("user.css"), "h1 { color: navy; }");
         Files.writeString(root.resolve("bug.svg"), "<svg id=\"bug\"></svg>");
         final String page = SlideHtml.page(new Slide(new Slide.Heading("Tests & <bugs>", "bug"),
-                List.of("A point", "https://pitest.org"), "Say it."), List.of(base, user), root);
+                List.of("A point", "https://pitest.org"), "Say it."), List.of(base, user), List.of(root));
 
         assertAll(
                 () -> assertThat(page.indexOf("teal")).isLessThan(page.indexOf("navy")),
@@ -38,9 +38,9 @@ class SlideHtmlTest {
                 () -> assertThat(page).contains("<li class=\"link\">https://pitest.org</li>"),
                 () -> assertThat(page).contains("<figure class=\"picture\"><svg id=\"bug\"></svg></figure>"),
                 () -> assertThat(SlideHtml.page(new Slide(new Slide.Heading("No picture", ""), List.of(), "x"),
-                        List.of(base), root)).doesNotContain("figure"),
+                        List.of(base), List.of(root))).doesNotContain("figure"),
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> SlideHtml.page(new Slide(
-                        new Slide.Heading("x", "missing"), List.of(), "x"), List.of(base), root)));
+                        new Slide.Heading("x", "missing"), List.of(), "x"), List.of(base), List.of(root))));
     }
 
     @Test

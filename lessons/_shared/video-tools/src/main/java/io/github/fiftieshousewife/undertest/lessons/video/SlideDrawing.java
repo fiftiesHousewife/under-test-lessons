@@ -22,7 +22,7 @@ final class SlideDrawing {
         try {
             Files.createDirectories(folder);
             final Path page = folder.resolve(name + ".html");
-            final Path pictures = media.sharedSlides().resolve("pictures");
+            final List<Path> pictures = media.pictureFolders();
             Files.writeString(page, SlideHtml.page(slide, stylesheets(media), pictures));
             final Path png = folder.resolve(name + ".png");
             Browser.screenshot(page, png);
