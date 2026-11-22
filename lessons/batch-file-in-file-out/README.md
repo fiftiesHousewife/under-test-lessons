@@ -29,6 +29,12 @@ into a settlement line in pounds, and writes the line.
   is today's writer, which leaves out the closing line;
   [`BankSettlementJob`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/batch/fixed/BankSettlementJob.java)
   is the fix, whose writer counts and adds up the lines as it writes them.
+  [`SettlementTotals`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/batch/fixed/SettlementTotals.java)
+  keeps that count and total with each committed chunk, so a failed job that restarts from its last chunk still
+  writes a closing line covering the whole file; without it, the bank would reject a restarted job's file.
+  [`SettlementTotalsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/fixed/SettlementTotalsTest.java)
+  drives it the way Spring Batch does across a restart. This example's job keeps no history between runs, so it
+  can't restart; a real job's repository, in a database, does.
 - [`PaymentLineTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/PaymentLineTest.java)
   is the "before": tests of the pieces, which pass.
 - [`WholeJobTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/WholeJobTest.java)

@@ -14,7 +14,7 @@ import java.util.List;
  */
 final class VoiceClips {
 
-    private static final String FOLDER = "clips";
+    private static final String CLIPS = "clips";
 
     private VoiceClips() {
     }
@@ -25,20 +25,28 @@ final class VoiceClips {
         if (Files.isRegularFile(wav)) {
             return WavFile.read(wav);
         }
-        createFolder(wav.getParent());
+        createFolder(folder(media));
         final Path deckClip = media.file(DeckVoice.FOLDER).resolve(DeckVoice.clipName(spokenText));
         if (Files.isRegularFile(deckClip)) {
             ExternalCommand.run(List.of(ExternalCommand.ffmpeg(), "-y", "-loglevel", "error", "-i",
                     deckClip.toString(), "-c:a", "pcm_s16le", wav.toString()), Path.of("").toAbsolutePath());
             return WavFile.read(wav);
         }
-        final String stem = wav.getFileName().toString().replace(".wav", "");
-        return LessonVideo.speak(command, spokenText, wav.resolveSibling(stem));
+        return LessonVideo.speak(command, spokenText, folder(media).resolve(stem(spokenText)));
     }
 
     /** Where the store keeps the clip of what is said. */
     static Path file(final Media media, final String spokenText) {
-        return media.file(".voice").resolve(FOLDER).resolve(DeckVoice.clipName(spokenText).replace(".m4a", ".wav"));
+        return folder(media).resolve(stem(spokenText) + ".wav");
+    }
+
+    private static Path folder(final Media media) {
+        return media.file(".voice").resolve(CLIPS);
+    }
+
+    /** The clip's name without its ending: the same as the deck's clip of the same words. */
+    private static String stem(final String spokenText) {
+        return DeckVoice.clipName(spokenText).replace(".m4a", "");
     }
 
     private static void createFolder(final Path folder) {
