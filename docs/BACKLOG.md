@@ -50,7 +50,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |---|---|---|---|---|---|
 | #89 | [Mutation testing: money in pence, its history, and changed-code routes](https://github.com/fiftiesHousewife/under-test-lessons/issues/89) | deliverable | Lessons Owner | ai | – |
 | #90 | [Corrected history facts](https://github.com/fiftiesHousewife/under-test-lessons/issues/90) | deliverable | Lessons Owner | ai | – |
-| #91 | [The fixed code is right for payments and refunds](https://github.com/fiftiesHousewife/under-test-lessons/issues/91) | deliverable | Lessons Owner | ai | – |
 | #92 | [Captured data is cleaned thoroughly](https://github.com/fiftiesHousewife/under-test-lessons/issues/92) | deliverable | Lessons Owner | ai | – |
 | #63 | [Differential testing also replays saved requests offline against two running builds](https://github.com/fiftiesHousewife/under-test-lessons/issues/63) | deliverable | Lessons Owner | ai | – |
 | #64 | [Comparing structured output shows keyed substitutes need no ignore rule](https://github.com/fiftiesHousewife/under-test-lessons/issues/64) | deliverable | Lessons Owner | ai | – |
