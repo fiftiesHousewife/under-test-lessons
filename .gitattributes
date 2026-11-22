@@ -1,0 +1,13 @@
+# Line endings. Text is stored with LF line endings. The files a test compares output with (approved files) and the
+# shell scripts are LF on every machine, whatever a person's core.autocrlf setting, so a test gives the same answer
+# on Windows. Windows' own script keeps its CRLF line endings as they are.
+* text=auto
+*.approved.* text eol=lf
+*.received.* text eol=lf
+*.sh text eol=lf
+*.pl text eol=lf
+gradlew text eol=lf
+*.bat -text
+*.m4a binary
+*.png binary
+*.jpg binary

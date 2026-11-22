@@ -141,7 +141,10 @@ fun registerFailureSummary(testTask: String, skipsFail: Provider<Boolean>) = tas
     }
 }
 val testFailures = registerFailureSummary("test", provider { false })
-registerFailureSummary("integrationTest", providers.environmentVariable("CI").map { true }.orElse(false))
+// In CI a skipped container test fails the build, except where the job says containers can't run there
+// (-PcontainerTestsMaySkip=true, as on Windows runners, whose Docker runs only Windows containers).
+registerFailureSummary("integrationTest", providers.gradleProperty("containerTestsMaySkip").map { false }
+    .orElse(providers.environmentVariable("CI").map { true }).orElse(false))
 
 // The container tests' task, integrationTest, reports the same way, where a project has one.
 tasks.withType<Test>().matching { it.name == "integrationTest" }.configureEach {

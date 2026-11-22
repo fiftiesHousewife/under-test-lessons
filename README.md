@@ -148,6 +148,11 @@ You need JDK 25. The Gradle wrapper fetches everything else.
 ./gradlew :lessons:mutation-testing:pitest -Pcode=today     # PIT on today's weak tests: 5 of 13 planted bugs caught
 ```
 
+**On Windows,** every command works the same with the Windows wrapper: `gradlew.bat` in Command Prompt, or
+`.\gradlew.bat` in PowerShell, for example `.\gradlew.bat :lessons:architecture-rules:test -Pcode=today`. The
+lessons' READMEs show the `./gradlew` form, which Git Bash and WSL run as it is. Line endings are set by the
+repository's `.gitattributes`, so a lesson's saved files compare the same whatever your Git's `core.autocrlf` is.
+
 Each lesson's README says what to run and what you'll see. Lessons with container tests (the two database lessons)
 keep them in an `integrationTest` suite, which skips itself where there is no container runtime such as Docker
 Desktop, Colima or Podman, so everything else still runs everywhere.

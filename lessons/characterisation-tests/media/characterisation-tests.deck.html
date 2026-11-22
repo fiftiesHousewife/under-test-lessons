@@ -199,7 +199,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 22                  () -&gt; assertNotNull(statement),</mark>
 <mark> 23                  () -&gt; assertTrue(statement.contains(&quot;Closing balance&quot;)));</mark>
  24      }</pre></figure></main><aside class="notes">Now, a weak test, the kind legacy code often has. It checks that something came back, so it would pass whatever the amounts were.</aside><audio class="voice" preload="none" src="characterisation-tests.deck-voice/771e668324b64cff.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The characterisation test</h1><div class="rule"></div><p class="scene-text">Now, the characterisation test. It prints a month that reaches every rule, and approves the whole statement.</p></section><figure class="code" style="--code-size: 21px"><figcaption>StatementCharacterisationTest.java</figcaption><pre> 16      private static final List&lt;Transaction&gt; MONTH = List.of(
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The characterisation test</h1><div class="rule"></div><p class="scene-text">Now, the characterisation test. It prints a month that reaches every rule, and approves the whole statement.</p></section><figure class="code" style="--code-size: 15px"><figcaption>StatementCharacterisationTest.java</figcaption><pre> 16      private static final List&lt;Transaction&gt; MONTH = List.of(
  17              new Transaction(&quot;01 Mar&quot;, &quot;Salary&quot;, 1200),
  18              new Transaction(&quot;02 Mar&quot;, &quot;Rent&quot;, -1200),
  19              new Transaction(&quot;09 Mar&quot;, &quot;Groceries&quot;, -80),
@@ -209,7 +209,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  23      @Test
  24      void printsTheSameStatementAsToday() {
 <mark> 25          Approvals.verify(statement().print(&quot;J. Smith, current account&quot;, MONTH),</mark>
- 26                  new Options().withReporter(new QuietReporter()));
+ 26                  new Options().withReporter(new QuietReporter()).withScrubber(text -&gt; text.replace(&quot;\r\n&quot;, &quot;\n&quot;)));
  27      }
  28  
  29      /** The legacy printer, or today's rewrite with -Pcode=today. */

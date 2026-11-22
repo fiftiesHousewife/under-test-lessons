@@ -1094,6 +1094,7 @@ items:
       - ".gitattributes keeps approved files at LF"
       - "Output compared with a saved file uses \\n, not %n"
       - "READMEs say how to run the commands on Windows"
+    notes: "The windows-latest job runs check with gradlew.bat, not yet required (continue-on-error) until its first results are seen; the video tools' own tests run on Linux only. The characterisation test compares with LF line endings whatever the machine writes."
   - key: "decide-and-record-the-java-target"
     type: "decision"
     title: "Decide and record which Java the lessons target, and what to use on older Java"

@@ -35,3 +35,28 @@ jobs:
       - name: Say why the checks failed
         if: failure()
         run: python3 tools/build-failure-annotations.py check.log lessons
+
+  # The lessons on Windows, run the way a person there runs them: gradlew.bat, with Windows' own line endings in
+  # play. Container tests skip themselves (the runner's Docker runs only Windows containers), and the video tools'
+  # own tests, which use shell scripts as stand-ins, run on the Linux job only. Not yet required: it reports while
+  # the first Windows failures are found and fixed.
+  windows:
+    runs-on: windows-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/checkout@v5
+        with:
+          repository: fiftiesHousewife/under-test
+          path: .toolkit
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+      - uses: gradle/actions/setup-gradle@v5
+      - name: Run all checks
+        shell: pwsh
+        run: .\gradlew.bat check --continue "-PtoolkitDir=.toolkit" "-PcontainerTestsMaySkip=true" -x :lessons:video-tools:test 2>&1 | Tee-Object -FilePath check.log
+      - name: Say why the checks failed
+        if: failure()
+        run: python tools/build-failure-annotations.py check.log lessons

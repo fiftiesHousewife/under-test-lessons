@@ -23,7 +23,7 @@ class StatementCharacterisationTest {
     @Test
     void printsTheSameStatementAsToday() {
         Approvals.verify(statement().print("J. Smith, current account", MONTH),
-                new Options().withReporter(new QuietReporter()));
+                new Options().withReporter(new QuietReporter()).withScrubber(text -> text.replace("\r\n", "\n")));
     }
 
     /** The legacy printer, or today's rewrite with -Pcode=today. */
