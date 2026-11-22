@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: capturing-with-logbook
+title: Capturing what an old service receives and sends
+techniques: [characterisation-tests]

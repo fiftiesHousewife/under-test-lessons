@@ -58,6 +58,8 @@ which is not always what it *should* do; differences found later are questions f
 | [Batch file-in, file-out](lessons/batch-file-in-file-out/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) | [JUnit](https://junit.org/) temporary folders | A nightly settlement file compared line by line finds a missing closing line |
 | [Differential testing](lessons/differential-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) | [JUnit](https://junit.org/) (no extra library) | An old calculator and its rewrite compared on all 5,000 weights find a mistyped price |
 | [Black-box tests of a whole application](lessons/black-box-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/black-box-tests.html) | [WireMock](https://wiremock.org/), [REST Assured](https://rest-assured.io/), [H2](https://h2database.com) | The order service, started as it ships, answers and calls its warehouse correctly but never keeps the order; only checking the rows written finds it |
+| [Capturing what an old service receives and sends](lessons/capturing-with-logbook/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/capturing-with-logbook.html) | [Logbook](https://github.com/zalando/logbook), [ApprovalTests](https://approvaltests.com/) | One header filter silently drops Logbook's default, and a token and an email are captured; its filters clean them at source and the capture is approved |
+| [Cleaning captured data so tests still work](lessons/cleaning-captured-data/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/cleaning-captured-data.html) | the JDK's HMAC, [Datafaker](https://www.datafaker.net) | Fixed text merges every customer, so the reports go wrong; keyed substitutes keep them right, and a detector finds the email left in a note |
 
 ### 3. Agree what the code should do
 
@@ -69,7 +71,7 @@ behaviour is disputed, before changing business rules, and where other teams dep
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Behaviour written down as examples](lessons/behaviour-as-examples/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) | [JUnit](https://junit.org/), [Cucumber](https://cucumber.io/) where business people use the examples | The returns team's named examples find the 30th-day refund the code gets wrong |
-| *Responses checked against the OpenAPI document* | [swagger-request-validator](https://bitbucket.org/atlassian/swagger-request-validator) | *coming* |
+| [Responses checked against the OpenAPI document](lessons/openapi-response-checks/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) | [OpenAPI request validator](https://github.com/atlassian/openapi-request-validator) | A parcel service's tests pass while it sends the weight as text; checking against its OpenAPI document names the field and the rule |
 
 ### 4. Stand in for the systems around it
 
@@ -87,7 +89,7 @@ stand-in by how much of the real system's behaviour the test depends on.
 | [Real databases in tests](lessons/real-databases-in-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) | [Testcontainers](https://testcontainers.com/), [PostgreSQL](https://www.postgresql.org/), [H2](https://www.h2database.com/) | A query passes on H2 and fails on real PostgreSQL, started by Testcontainers |
 | [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) | [Liquibase](https://www.liquibase.com/), [Testcontainers](https://testcontainers.com/) | A change that works on the developers' database fails on real PostgreSQL, before production does |
 | [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) | [Weld](https://weld.cdi-spec.org/), [weld-testing](https://github.com/weld/weld-testing) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
-| *Message consumers* | [ActiveMQ Artemis](https://activemq.apache.org/components/artemis/), [Kafka](https://kafka.apache.org/), [Testcontainers](https://testcontainers.com/) | *coming* |
+| [Message consumers](lessons/message-consumers/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/message-consumers.html) | [Apache Artemis](https://artemis.apache.org), embedded | A hand-built message passes while a payment is lost; a real broker in the test finds it, and the dead-letter queue keeps the bad message (Kafka next) |
 | [Slow and failing dependencies](lessons/slow-and-failing-dependencies/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) | [WireMock](https://wiremock.org/)'s delays and faults | A slow supplier hangs the shop and a reset connection crashes it; timeouts and a fallback answer "supplier unavailable" within a second |
 | *Contract tests between teams* | [Pact](https://pact.io/) | *coming* |
 
@@ -129,9 +131,8 @@ The lessons in italics above, in the order they will be made, from [the catalogu
 
 1. **Before you change anything:** the safety inventory, running old code unplugged (once the airgap agent's first
    release exists) and anti-patterns in existing tests.
-2. **Capturing what an old service receives and sends,** and **cleaning captured data so tests still work.**
-3. **Spring tests in slices,** **message consumers** (JMS, then Kafka), **responses checked against the OpenAPI
-   document,** **coverage of changed code,** and **AI-written tests that pass the acceptance check.**
+2. **Spring tests in slices,** **message consumers on Kafka,** **coverage of changed code,** and **AI-written tests
+   that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

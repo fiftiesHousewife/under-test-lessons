@@ -1,0 +1,9 @@
+$ ./gradlew :lessons:message-consumers:test
+PaymentsOnABrokerTest > aMessageNoOneCanReadEndsInTheDeadLetterQueue() PASSED
+
+PaymentsOnABrokerTest > aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() PASSED
+
+BrowsingTest > browsingReadsEveryMessageWithoutTakingAny() PASSED
+
+PaymentByHandTest > recordsThePaymentInAMessage() PASSED
+All 4 tests passed.

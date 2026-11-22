@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  title: Parcel tracking
+  description: Where a parcel is now. Other teams build their screens and messages against this document.
+  version: "1.0"
+paths:
+  /parcels/{parcelId}:
+    get:
+      summary: Where a parcel is now
+      parameters:
+        - name: parcelId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The parcel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Parcel"
+        "404":
+          description: No parcel has this id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+components:
+  schemas:
+    Parcel:
+      type: object
+      required: [id, status, weightGrams]
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [COLLECTED, IN_TRANSIT, OUT_FOR_DELIVERY, DELIVERED]
+        weightGrams:
+          type: integer
+    Problem:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string

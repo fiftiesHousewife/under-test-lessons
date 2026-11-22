@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: message-consumers
+title: Message consumers
+techniques: [embedded-jakarta-ee-tests]

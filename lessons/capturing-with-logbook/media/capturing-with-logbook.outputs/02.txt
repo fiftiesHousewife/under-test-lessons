@@ -1,0 +1,8 @@
+$ ./gradlew :lessons:capturing-with-logbook:test
+ApprovedCaptureTest > matchesTheApprovedCapture() PASSED
+
+ApprovedCaptureTest > writesNoSecrets() PASSED
+
+CaptureRecordsTest > recordsWhatTheServiceReceivesAndSends() PASSED
+All 3 tests passed.
+Approvals: every output matches its approved file.

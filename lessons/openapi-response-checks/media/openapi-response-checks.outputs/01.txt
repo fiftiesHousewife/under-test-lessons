@@ -1,0 +1,25 @@
+$ ./gradlew :lessons:openapi-response-checks:test -Pcode=today
+ParcelDocumentTest > aParcelNobodySent() FAILED
+    java.lang.AssertionError: GET /parcels/P-0000 answered 404, body: required property 'error' not found
+    GET /parcels/P-0000 answered 404, body: property 'message' is not defined in the schema and the schema does not allow additional properties
+
+ParcelDocumentTest > aParcelOnItsWay() FAILED
+    java.lang.AssertionError: GET /parcels/P-1001 answered 200, field weightGrams: string found, integer expected
+
+ParcelFieldsTest > aParcelNobodySent() PASSED
+
+ParcelFieldsTest > aParcelOnItsWay() PASSED
+
+4 tests completed, 2 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:openapi-response-checks:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 2 of 4 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.

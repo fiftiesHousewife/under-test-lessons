@@ -45,8 +45,8 @@ and see what its existing tests really check.
 | [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
 | [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
 | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
-| Capturing what an old service receives and sends: [Logbook](https://github.com/zalando/logbook)'s servlet filter and client interceptor record real requests and responses, with the `Authorization` header and customers' emails filtered out at source, and the examples kept as approval tests | Logbook (MIT), ApprovalTests | Java 17 or later | planned |
-| Cleaning captured data so tests still work: one capture cleaned three ways (fixed text, keyed substitutes, seeded synthetic values); keyed substitutes keep joins and repeated values working, and a detector check fails on a field the cleaning missed; includes what counts as anonymous, and why recordings stay in internal repositories | the JDK's HMAC, Datafaker | Java only | planned |
+| [Capturing what an old service receives and sends](capturing-with-logbook/README.md): [Logbook](https://github.com/zalando/logbook)'s servlet filter and client interceptor record real requests and responses, with the `Authorization` header and customers' emails filtered out at source, and the examples kept as approval tests | Logbook (MIT), ApprovalTests | Java 17 or later | built |
+| [Cleaning captured data so tests still work](cleaning-captured-data/README.md): one capture cleaned three ways (fixed text, keyed substitutes, seeded synthetic values); keyed substitutes keep joins and repeated values working, and a detector check fails on a field the cleaning missed; includes what counts as anonymous | the JDK's HMAC, Datafaker | Java only | built |
 | Recording current behaviour from real traffic: [Keploy](https://keploy.io/) records a small Spring Boot service's API calls and its MySQL and HTTP calls, then replays them as tests with its own stand-ins | Keploy (native, no admin rights), WireMock to compare | Keploy binary | later: after the toolkit's Keploy trial |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | last: needs other tools |
 
@@ -55,6 +55,7 @@ and see what its existing tests really check.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Behaviour written down as examples](behaviour-as-examples/README.md): the rules as named examples the experts wrote, run against today's code | JUnit parameterised tests (`@CsvFileSource`); Cucumber only when business people write the examples | Java only | built |
+| [Responses checked against the OpenAPI document](openapi-response-checks/README.md): every answer the tests see checked against the published document | OpenAPI request validator (formerly swagger-request-validator), REST Assured, JDK HTTP server | Java only | built |
 
 ## Stand in for real systems
 
@@ -67,6 +68,7 @@ and see what its existing tests really check.
 | [Checking the requests your code sends](checking-outgoing-requests/README.md): method, headers and body, not just the answers it gets | WireMock's verify | Java only | built |
 | [Mockito well used](mockito-well-used/README.md): stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | built |
 | [Slow and failing dependencies](slow-and-failing-dependencies/README.md): a supplier made slow or broken on demand, and a client with timeouts and a clear fallback (Toxiproxy next, for network faults between real services) | WireMock's delays and faults | Java only | built |
+| [Message consumers](message-consumers/README.md): a JMS consumer on a real broker started in the test, with browsed and cleaned example messages; Kafka next | Apache Artemis, embedded | Java only | built |
 | Contract tests between teams: consumer and provider check one agreement, shared as versioned artifacts through the company's package repository, without a broker | Pact JVM (4.5 for JDK 8) | Java only | later |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
 | Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
@@ -105,7 +107,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | Technique | Lesson | When |
 |---|---|---|
 | mutation-testing | [Mutation testing](mutation-testing/README.md) | built |
-| characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md) | built |
+| characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md), [Cleaning captured data so tests still work](cleaning-captured-data/README.md), [Capturing what an old service receives and sends](capturing-with-logbook/README.md) | built |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
@@ -116,7 +118,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | differential-testing | [Differential testing](differential-testing/README.md) | built |
 | automatic-test-generation | Generated tests: Randoop writes tests that record what the code does | later |
 | feature-flags | [Feature flags](feature-flags/README.md) | built |
-| embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md) | built |
+| embedded-jakarta-ee-tests | [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md), [Message consumers](message-consumers/README.md) | built |
 | batch-file-in-file-out | [Batch file-in, file-out](batch-file-in-file-out/README.md) | built |
 | testcontainers | [Real databases in tests](real-databases-in-tests/README.md), [Database changes with Liquibase](database-changes-with-liquibase/README.md) | built |
 | contract-testing | Contract tests between teams | later |
@@ -151,10 +153,14 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
 | Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
 | Checking the requests your code sends (`checking-outgoing-requests`) | Refunds posted to a payment provider | A WireMock stand-in answers 201 Created and the test checks only the refund id, so an amount in pounds and a missing Idempotency-Key header pass | WireMock's verify checks the method, address, headers and JSON body the client really sent | `-Pcode=today` |
+| Capturing what an old service receives and sends (`capturing-with-logbook`) | An old customer service that asks a loyalty provider for points by email | A test checks each request and answer was recorded; one header filter replaced Logbook's default, so both tokens and the email are written | No secret may be in the capture, and the whole capture matches its approved file; Logbook's Authorization and JSON email filters clean it at source | `-Pcode=today` |
+| Cleaning captured data so tests still work (`cleaning-captured-data`) | A shop's captured day: orders and payments joined by account | Fixed-text cleaning; a test checks the named fields changed | The reports give the same answers before and after cleaning, and a detector scans every field, finding the missed note | `-Pcode=today` |
 | Finding flaky tests (`finding-flaky-tests`) | Order confirmations sent on a background thread | Sleeps a fixed 200 ms, then checks; passes on a quiet machine | Awaitility waits for the confirmation, at most 2 s; both run 5 times | `-Pcode=today` |
 | JUnit extensions (`junit-extensions`) | A shop's shared settings: prices with VAT or not | Settings set by hand once and never put back; a leak makes an innocent receipt test fail | An extension sets, restores and checks the settings around each test, failing the trade invoice test that left one changed | `-Pcode=today` |
+| Message consumers (`message-consumers`) | A shop's card payments taken from a queue | A unit test with a hand-built message passes while the consumer acknowledges before recording, so a failed payment is lost | Example messages sent to an embedded Artemis broker; a payment is recorded even when the book is busy once, and an unreadable message ends in the dead-letter queue | `-Pcode=today` |
 | Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
 | Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
+| Responses checked against the OpenAPI document (`openapi-response-checks`) | A parcel tracking service and its published openapi.yaml | REST Assured tests check the status and a few fields, and pass while the weight is sent as text and the error field is renamed | The same tests with a filter that checks every answer against the document, naming the request, field and rule | `-Pcode=today` |
 | Slow and failing dependencies (`slow-and-failing-dependencies`) | A shop checking a supplier's stock before promising delivery | A stand-in answers at once, with stock or 503, so a client with no timeout that throws on a dropped connection passes | WireMock answers 2 seconds late, resets the connection, answers empty or broken; each test allows 1 second and expects "supplier unavailable" | `-Pcode=today` |
 | Black-box tests of a whole application (`black-box-tests`) | A shop's order service: reserve stock at the warehouse, keep the order as 2 rows | Unit tests of the order rules with stand-ins pass while the order is never committed | The service started from its entry point and a settings file; WireMock as the warehouse; the answer, the warehouse call and the rows written are checked | `-Pcode=today` |
 | Behaviour written down as examples (`behaviour-as-examples`) | A shop's refund rules | Tests written from the code, far from the 30-day boundary | The returns team's named examples, as a table, find the 30th-day refund that the code gets wrong | `-Pcode=today` |
@@ -180,18 +186,12 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
    report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules.
 4. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
    check and listed.
-5. **Capturing what an old service receives and sends,** with Logbook: the before logs an `Authorization` header and a
-   customer's email; the after filters them at source and keeps the examples as approval tests.
-6. **Cleaning captured data so tests still work:** fixed text breaks the tests, keyed substitutes keep joins and repeated
-   values working, and a detector check fails on a field the cleaning missed.
-7. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
+5. **Fix what contradicts the rules:** fake behind an interface gains its promised ArchUnit rule; recorded HTTP
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
-8. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-9. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-10. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-11. **Coverage of changed code,** with PIT run only on what changed.
-12. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+6. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
+7. **Coverage of changed code,** with PIT run only on what changed.
+8. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

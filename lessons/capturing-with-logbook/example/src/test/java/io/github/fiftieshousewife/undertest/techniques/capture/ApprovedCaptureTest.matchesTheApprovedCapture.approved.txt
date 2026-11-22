@@ -1,0 +1,18 @@
+Request received: GET /customers/C-1001
+Authorization: XXX
+
+Request sent: POST /points
+Authorization: XXX
+Content-Type: application/json
+
+{"email":"customer@example.invalid"}
+
+Response received: 200
+Content-type: application/json
+
+{"points":120}
+
+Response sent: 200
+Content-Type: application/json
+
+{"id":"C-1001","email":"customer@example.invalid","tier":"gold","points":120}

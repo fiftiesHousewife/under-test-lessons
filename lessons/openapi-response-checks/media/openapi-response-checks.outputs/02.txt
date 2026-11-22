@@ -1,0 +1,9 @@
+$ ./gradlew :lessons:openapi-response-checks:test
+ParcelDocumentTest > aParcelNobodySent() PASSED
+
+ParcelDocumentTest > aParcelOnItsWay() PASSED
+
+ParcelFieldsTest > aParcelNobodySent() PASSED
+
+ParcelFieldsTest > aParcelOnItsWay() PASSED
+All 4 tests passed.

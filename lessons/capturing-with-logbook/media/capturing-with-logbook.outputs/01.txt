@@ -1,0 +1,32 @@
+$ ./gradlew :lessons:capturing-with-logbook:test -Pcode=today
+ApprovedCaptureTest > matchesTheApprovedCapture() FAILED
+    java.lang.AssertionError: the capture differs from its approved file
+
+ApprovedCaptureTest > writesNoSecrets() FAILED
+    java.lang.AssertionError: [secrets in the capture]
+    Expecting empty but was: ["the caller's token", "the customer's email", "the loyalty provider's key"]
+
+CaptureRecordsTest > recordsWhatTheServiceReceivesAndSends() PASSED
+
+3 tests completed, 2 failed
+Approvals: the output differs from its approved file (- approved, + received):
+  - Authorization: XXX
+  + Authorization: Bearer caller-7f3a9c
+  - Authorization: XXX
+  + Authorization: Bearer loyalty-51d2
+  - {"email":"customer@example.invalid"}
+  + {"email":"jo.bloggs@example.com"}
+  - {"id":"C-1001","email":"customer@example.invalid","tier":"gold","points":120}
+  + {"id":"C-1001","email":"jo.bloggs@example.com","tier":"gold","points":120}
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:capturing-with-logbook:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 2 of 3 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
