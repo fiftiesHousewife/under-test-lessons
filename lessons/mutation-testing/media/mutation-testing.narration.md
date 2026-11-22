@@ -16,7 +16,7 @@ commands read aloud. Captions use this text as written; the voice also applies
 5. Now, [pause 300ms] the weak tests. Every line of the calculator runs, so line coverage is 100 percent. But look at
    what they check. One only checks that the discount is more than zero. One uses 70 pounds, far from either boundary.
    One calls the code and checks nothing at all. And one checks that a number is not null, which a number never is.
-6. Now we run PIT against the weak tests. Line coverage is still 100 percent, but the tests catch only 5 of the 13 planted bugs. For every bug, the summary shows the line it changed, and which tests ran. Look at line 24. When greater than or equal to 50 becomes greater than 50, an order that comes to exactly 50 pounds would lose its discount. No test checks what happens when an order comes to exactly 50 pounds, so every test still passes.
+6. Now we run PIT against the weak tests. Line coverage is still 100 percent, but the tests catch only 5 of the 13 planted bugs. For every bug, the summary shows the line it changed, and which tests ran. Look at line 24. When the comparison greater than or equal to 50 [pause 300ms] becomes just greater than 50, an order that comes to exactly 50 pounds would lose its discount. No test checks what happens when an order comes to exactly 50 pounds, so every test still passes.
 7. Now, [pause 300ms] the strong tests. They check exact values, on both sides of every boundary: 49 and 50, 99 and
    100. They check the loyalty bonus exactly, and the final price exactly. A strong test fails when the code is wrong.
    A weak test passes anyway.

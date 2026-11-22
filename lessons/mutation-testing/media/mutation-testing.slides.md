@@ -10,9 +10,10 @@ Sayward.
 - Plant one small bug in the code: a mutation
 - Run the tests: if one fails, the bug is caught; if all pass, it survived
 Picture: bug
-Say: Mutation testing tests your tests, not your code. It plants one small bug at a time, for example changing
-  greater than or equal to into greater than. Then it runs your tests. If a test fails, the bug is caught. If every
-  test still passes, the bug survived, and your tests would miss a real bug just like it.
+Say: Mutation testing tests your tests, not your code. It plants one small bug at a time. For example, it takes a
+  comparison that says greater than or equal to, [pause 300ms] and makes it just greater than. Then it runs your
+  tests. If a test fails, the bug is caught. If every test still passes, the bug survived: a real mistake of the same
+  kind would slip through too.
 
 ## intro: Our example: a shop's discount rules
 - Orders of £50 or more get 5% off
