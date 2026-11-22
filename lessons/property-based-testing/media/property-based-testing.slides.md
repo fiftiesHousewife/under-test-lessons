@@ -69,8 +69,8 @@ Say: The idea comes from QuickCheck, by Koen Claessen and John Hughes, for the H
 
 ## closing: Find out more
 - https://github.com/JetBrains/jetCheck — jetCheck, its README and examples
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, start with jetCheck's README, which has more examples of properties. The links on screen also
   take you to this lesson's code, and to the toolkit these lessons belong to.

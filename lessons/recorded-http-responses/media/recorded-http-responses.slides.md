@@ -67,8 +67,8 @@ Say: WireMock was created by Tom Akehurst, and is free under the Apache licence.
 
 ## closing: Find out more
 - https://wiremock.org — WireMock, with its documentation
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, start with the WireMock documentation. The links on screen also take you to this lesson's code,
   and to the toolkit these lessons belong to.

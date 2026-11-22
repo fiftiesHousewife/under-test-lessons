@@ -91,7 +91,7 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
 
         void take(final String line) {
             if (line.startsWith("- ")) {
-                points.add(line.substring(2).strip());
+                points.add(RepoLinks.fill(line.substring(2).strip()));
                 saying = false;
             } else if (line.startsWith("Picture:")) {
                 picture = line.substring("Picture:".length()).strip();

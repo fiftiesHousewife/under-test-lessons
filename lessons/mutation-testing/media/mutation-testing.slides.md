@@ -78,8 +78,8 @@ Say: The idea of mutation testing goes back to a 1978 paper by DeMillo, Lipton a
 - https://pitest.org — PIT's website, quick start and FAQ
 - https://gradle-pitest-plugin.solidsoft.info — the PIT plugin for Gradle
 - https://doi.org/10.1109/C-M.1978.218136 — the 1978 paper that started it
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, start with PIT's website, and the PIT plugin for Gradle. The links on screen also take you to
   the paper that started it all, to this lesson's code, so you can run it yourself, and to the toolkit these lessons

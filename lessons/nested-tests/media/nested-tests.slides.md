@@ -64,8 +64,8 @@ Say: Nested tests and display names have been part of JUnit since JUnit 5, in 20
 
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide on nested tests
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on nested tests. The links on screen also take you to this
   lesson's code, and to the toolkit these lessons belong to.

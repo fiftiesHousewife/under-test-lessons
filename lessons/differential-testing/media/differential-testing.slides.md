@@ -66,9 +66,9 @@ Say: William McKeeman named differential testing in 1998, when comparing C compi
   loop.
 
 ## closing: Find out more
-- https://github.com/fiftiesHousewife/under-test/blob/main/techniques/differential-testing/technique.yaml — the technique
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {toolkit-repo} — the toolkit, with its differential testing technique
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, the toolkit's technique says which tools to use for whole services. The links on screen also
   take you to this lesson's code, and to the toolkit these lessons belong to.

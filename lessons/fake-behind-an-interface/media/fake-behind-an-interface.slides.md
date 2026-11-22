@@ -67,8 +67,8 @@ Say: Gerard Meszaros named fakes, among other kinds of test doubles, in his book
 
 ## closing: Find out more
 - https://martinfowler.com/articles/mocksArentStubs.html — Mocks Aren't Stubs
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, read Martin Fowler's article, Mocks Aren't Stubs. The links on screen also take you to this
   lesson's code, and to the toolkit these lessons belong to.

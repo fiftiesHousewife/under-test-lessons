@@ -66,8 +66,8 @@ Say: JUnit describes itself as the programmer-friendly testing framework for Jav
 
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, start with the JUnit user guide. The links on screen also take you to this lesson's code, and to
   the toolkit these lessons belong to.

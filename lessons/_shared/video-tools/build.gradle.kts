@@ -134,7 +134,13 @@ val slideBrowser = providers.gradleProperty("lessonBrowser")
 // lessons/_shared/slides/pictures/ink). Set it, and lessonSlideCss, in gradle.properties to use them on every run.
 val pictureFolder = providers.gradleProperty("lessonPictures").filter { it.isNotBlank() }
     .map { File(it).let { dir -> if (dir.isAbsolute) dir else repositoryDir.resolve(it) }.absolutePath }.orElse("")
+// Where the lessons and the toolkit live, for the links on slides: lessonsRepoUrl and toolkitRepoUrl in
+// gradle.properties. Unset, slides describe the repositories without an address.
+val lessonsRepoUrl = providers.gradleProperty("lessonsRepoUrl").orElse("")
+val toolkitRepoUrl = providers.gradleProperty("toolkitRepoUrl").orElse("")
 tasks.withType<JavaExec>().configureEach {
+    systemProperty("video.lessonsRepo", lessonsRepoUrl.get())
+    systemProperty("video.toolkitRepo", toolkitRepoUrl.get())
     systemProperty("video.pictures", pictureFolder.get())
     systemProperty("video.slideCss", slideCss.get())
     systemProperty("video.browser", slideBrowser.get())

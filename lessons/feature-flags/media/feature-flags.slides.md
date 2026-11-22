@@ -70,7 +70,7 @@ Say: Paul Hammant named branch by abstraction in 2007. Pete Hodgson's article on
 ## closing: Find out more
 - https://openfeature.dev — OpenFeature, with its Java SDK
 - https://martinfowler.com/articles/feature-toggles.html — Feature Toggles, by Pete Hodgson
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
+- {lessons-repo} — this lesson, to run yourself
 Picture: globe
 Say: To find out more, start with the OpenFeature site, and Pete Hodgson's article on feature toggles. The links on
   screen also take you to this lesson's code.

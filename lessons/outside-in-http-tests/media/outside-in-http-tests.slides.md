@@ -67,8 +67,8 @@ Say: REST Assured was created by Johan Haleby, and is free under the Apache lice
 
 ## closing: Find out more
 - https://rest-assured.io — REST Assured, with its user guide
-- https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself
-- https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to
+- {lessons-repo} — this lesson, to run yourself
+- {toolkit-repo} — the toolkit these lessons belong to
 Picture: globe
 Say: To find out more, start with the REST Assured user guide. The links on screen also take you to this lesson's code,
   and to the toolkit these lessons belong to.
