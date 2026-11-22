@@ -88,7 +88,7 @@ stand-in by how much of the real system's behaviour the test depends on.
 | [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) | [Liquibase](https://www.liquibase.com/), [Testcontainers](https://testcontainers.com/) | A change that works on the developers' database fails on real PostgreSQL, before production does |
 | [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) | [Weld](https://weld.cdi-spec.org/), [weld-testing](https://github.com/weld/weld-testing) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
 | *Message consumers* | [ActiveMQ Artemis](https://activemq.apache.org/components/artemis/), [Kafka](https://kafka.apache.org/), [Testcontainers](https://testcontainers.com/) | *coming* |
-| *Slow and failing dependencies* | [WireMock](https://wiremock.org/), [Toxiproxy](https://github.com/Shopify/toxiproxy) | *coming* |
+| [Slow and failing dependencies](lessons/slow-and-failing-dependencies/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) | [WireMock](https://wiremock.org/)'s delays and faults | A slow supplier hangs the shop and a reset connection crashes it; timeouts and a fallback answer "supplier unavailable" within a second |
 | *Contract tests between teams* | [Pact](https://pact.io/) | *coming* |
 
 ### 5. Make old code testable, and change it safely
@@ -118,23 +118,22 @@ in every new test, and when reviewing tests written by people or by AI.
 | [Property-based testing](lessons/property-based-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) | [jetCheck](https://github.com/JetBrains/jetCheck) | jetCheck finds the bill split that loses a penny |
 | [Nested tests](lessons/nested-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) | [JUnit](https://junit.org/) | Tests grouped by a loan's state show the one question nobody asked |
 | [Dynamic tests](lessons/dynamic-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/dynamic-tests.html) | [JUnit](https://junit.org/) | A folder of example files, such as an old regression pack, becomes one named test each |
+| [JUnit extensions](lessons/junit-extensions/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-extensions.html) | [JUnit](https://junit.org/) | Shared settings old tests set up by hand become one extension that puts them back and names the test that leaked |
 | [Architecture rules](lessons/architecture-rules/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) | [ArchUnit](https://www.archunit.org/) | ArchUnit finds a web page reaching straight into storage |
 | *Spring tests in slices* | [Spring Boot](https://spring.io/projects/spring-boot) | *coming* |
-| *Finding flaky tests* | [Awaitility](http://www.awaitility.org/) | *coming* |
+| [Finding flaky tests](lessons/finding-flaky-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/finding-flaky-tests.html) | [Awaitility](https://github.com/awaitility/awaitility) | A test that sleeps passes twice, then fails on its third of five runs with nothing changed; Awaitility waits and passes all five |
 
 ## Coming next
 
 The lessons in italics above, in the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
-1. **Testing old Java code, a map:** an overview video and deck that comes before all the others, introducing each
-   kind of test and each technique as the answer to a question a team asks, with every lesson linked.
-2. **Behaviour written down as examples:** rules the people who know the business write down as named examples,
-   checked against the code, so tests say what the code *should* do, not only what it does.
+1. **Before you change anything:** the safety inventory, running old code unplugged (once the airgap agent's first
+   release exists) and anti-patterns in existing tests.
+2. **Capturing what an old service receives and sends,** and **cleaning captured data so tests still work.**
 3. **Black-box tests of a whole application:** start the application as it ships, drive it only through its API,
    messages and files, stand in for everything it calls, and check what comes out.
-4. **Mockito well used,** then **Spring tests in slices,** **finding flaky tests,** **message consumers** (JMS, then
-   Kafka), **responses checked against the OpenAPI document,** **slow and failing dependencies,** **coverage of changed
-   code,** and **AI-written tests that pass the acceptance check.**
+4. **Spring tests in slices,** **message consumers** (JMS, then Kafka), **responses checked against the OpenAPI
+   document,** **coverage of changed code,** and **AI-written tests that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

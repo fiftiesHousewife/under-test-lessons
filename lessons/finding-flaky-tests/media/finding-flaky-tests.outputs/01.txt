@@ -1,0 +1,35 @@
+$ ./gradlew :lessons:finding-flaky-tests:test -Pcode=today
+SleepingTest > the confirmation is sent > run 1 of 5 PASSED
+
+SleepingTest > the confirmation is sent > run 2 of 5 PASSED
+
+SleepingTest > the confirmation is sent > run 3 of 5 FAILED
+    java.lang.AssertionError: no confirmation of order 3 after 200 ms
+
+SleepingTest > the confirmation is sent > run 4 of 5 PASSED
+
+SleepingTest > the confirmation is sent > run 5 of 5 PASSED
+
+WaitingTest > the confirmation is sent > run 1 of 5 PASSED
+
+WaitingTest > the confirmation is sent > run 2 of 5 PASSED
+
+WaitingTest > the confirmation is sent > run 3 of 5 PASSED
+
+WaitingTest > the confirmation is sent > run 4 of 5 PASSED
+
+WaitingTest > the confirmation is sent > run 5 of 5 PASSED
+
+10 tests completed, 1 failed
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':lessons:finding-flaky-tests:testFailures' (registered by plugin 'io.github.fiftieshousewife.java-conventions').
+> 1 of 10 tests failed. Report: build/reports/tests/test/index.html
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.

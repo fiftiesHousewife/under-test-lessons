@@ -47,3 +47,7 @@ pull request = pullrequest
 Idempotency-Key = idem potency key
 Idempotency = idem potency
 idempotency = idem potency
+2014 = twenty fourteen
+2018 = twenty eighteen
+2016 = twenty sixteen
+Awaitility = await ility

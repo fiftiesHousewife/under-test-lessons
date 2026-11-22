@@ -1,0 +1,9 @@
+$ ./gradlew :lessons:junit-extensions:test
+GuardedSettingsTest > tradeInvoiceShowsPriceWithoutVat() PASSED
+
+GuardedSettingsTest > shopReceiptShowsPriceWithVat() PASSED
+
+HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() PASSED
+
+HandSetUpTest > shopReceiptShowsPriceWithVat() PASSED
+All 4 tests passed.

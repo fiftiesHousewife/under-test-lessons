@@ -65,6 +65,7 @@ and see what its existing tests really check.
 | [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | [Checking the requests your code sends](checking-outgoing-requests/README.md): method, headers and body, not just the answers it gets | WireMock's verify | Java only | built |
 | [Mockito well used](mockito-well-used/README.md): stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | built |
+| [Slow and failing dependencies](slow-and-failing-dependencies/README.md): a supplier made slow or broken on demand, and a client with timeouts and a clear fallback (Toxiproxy next, for network faults between real services) | WireMock's delays and faults | Java only | built |
 | Contract tests between teams: consumer and provider check one agreement, shared as versioned artifacts through the company's package repository, without a broker | Pact JVM (4.5 for JDK 8) | Java only | later |
 | Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
 | Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
@@ -84,7 +85,9 @@ and see what its existing tests really check.
 | [Parameterised tests](parameterised-tests/README.md): one test, a table of cases, each reported by name | JUnit 6 | Java only | built |
 | [Nested tests](nested-tests/README.md): group tests by situation, so gaps stand out | JUnit 6 | Java only | built |
 | [Dynamic tests](dynamic-tests/README.md): one test per example file, each named | JUnit 6 | Java only | built |
-| More JUnit, one idea per lesson: extensions, temporary folders, tags | JUnit 6, AssertJ | Java only | next |
+| [JUnit extensions](junit-extensions/README.md): set up and clean up shared state once, and catch the test that leaves it changed | JUnit 6 | Java only | built |
+| [Finding flaky tests](finding-flaky-tests/README.md): wait with Awaitility instead of sleeping, and five clean runs as a gate | Awaitility, JUnit 6 | Java only | built |
+| More JUnit, one idea per lesson: temporary folders, tags | JUnit 6, AssertJ | Java only | next |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
 | [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
 | Spring tests: slices, MockMvc, and full-application tests with real dependencies | Spring Boot test, Testcontainers | Docker | later: needs containers or more set-up |
@@ -106,7 +109,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
-| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md) | built |
+| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md), [Slow and failing dependencies](slow-and-failing-dependencies/README.md) | built |
 | business-rule-tests | [Behaviour written down as examples](behaviour-as-examples/README.md), [Outside-in HTTP tests](outside-in-http-tests/README.md) | built |
 | fake-behind-an-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
 | differential-testing | [Differential testing](differential-testing/README.md) | built |
@@ -147,8 +150,11 @@ adding its row first. The four oldest lessons use their own switch names, from b
 | Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
 | Dynamic tests (`dynamic-tests`) | Names on letters, from a folder of example files | One test looping over the files | One named test per file | `-Pcode=today` |
 | Checking the requests your code sends (`checking-outgoing-requests`) | Refunds posted to a payment provider | A WireMock stand-in answers 201 Created and the test checks only the refund id, so an amount in pounds and a missing Idempotency-Key header pass | WireMock's verify checks the method, address, headers and JSON body the client really sent | `-Pcode=today` |
+| Finding flaky tests (`finding-flaky-tests`) | Order confirmations sent on a background thread | Sleeps a fixed 200 ms, then checks; passes on a quiet machine | Awaitility waits for the confirmation, at most 2 s; both run 5 times | `-Pcode=today` |
+| JUnit extensions (`junit-extensions`) | A shop's shared settings: prices with VAT or not | Settings set by hand once and never put back; a leak makes an innocent receipt test fail | An extension sets, restores and checks the settings around each test, failing the trade invoice test that left one changed | `-Pcode=today` |
 | Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
 | Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
+| Slow and failing dependencies (`slow-and-failing-dependencies`) | A shop checking a supplier's stock before promising delivery | A stand-in answers at once, with stock or 503, so a client with no timeout that throws on a dropped connection passes | WireMock answers 2 seconds late, resets the connection, answers empty or broken; each test allows 1 second and expects "supplier unavailable" | `-Pcode=today` |
 | Behaviour written down as examples (`behaviour-as-examples`) | A shop's refund rules | Tests written from the code, far from the 30-day boundary | The returns team's named examples, as a table, find the 30th-day refund that the code gets wrong | `-Pcode=today` |
 | Batch file-in, file-out (`batch-file-in-file-out`) | A nightly settlement file | Tests of the pieces | The whole Spring Batch job, file in and file out, on Datafaker input and a cleaned captured day, compared record by record | `-Pcode=today` |
 | Embedded Jakarta EE tests (`embedded-jakarta-ee-tests`) | VAT at a checkout, with two tax-rate beans | A unit test that wires the checkout by hand | Weld wires it as the server would, and it gets the wrong rate | `-Pcode=today` |
@@ -184,12 +190,10 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
    responses shows recording and removing personal data; batch file-in, file-out uses spring-batch-test and synthetic
    Datafaker input, and compares records rather than plain text.
 9. **Spring tests in slices:** web, data and JSON slices, then full-application tests only where needed.
-10. **Finding flaky tests:** waiting with Awaitility instead of sleeping, and five clean runs as a gate.
-11. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
-12. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
-13. **Slow and failing dependencies:** WireMock faults, then Toxiproxy.
-14. **Coverage of changed code,** with PIT run only on what changed.
-15. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+10. **Message consumers:** a JMS consumer on an embedded Artemis broker, then Kafka.
+11. **Responses checked against the OpenAPI document,** and messages against AsyncAPI, where Pact can't reach.
+12. **Coverage of changed code,** with PIT run only on what changed.
+13. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

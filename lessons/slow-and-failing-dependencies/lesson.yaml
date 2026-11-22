@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: slow-and-failing-dependencies
+title: Slow and failing dependencies
+techniques: [recorded-http-responses]

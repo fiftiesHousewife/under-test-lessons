@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: finding-flaky-tests
+title: Finding flaky tests
+techniques: []
