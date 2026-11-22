@@ -72,3 +72,6 @@ __pycache__/
 
 ### ApprovalTests: output from a failed approval, for comparing with the approved file ###
 *.received.txt
+
+# Slide deck PDFs are made on demand; the HTML decks are committed.
+*.deck.pdf

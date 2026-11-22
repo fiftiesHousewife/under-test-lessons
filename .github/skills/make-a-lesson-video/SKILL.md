@@ -102,6 +102,12 @@ terminal recording and the closing slides after it, with their own captions.
   `grey`, `line`), so they follow the stylesheet. Add a picture when no existing one fits; keep the same style.
 - **Shared slides:** `Include: <name>` brings in `lessons/_shared/slides/<name>.md`, written once for every lesson
   (for example `Include: how-we-build`).
+- **Themes:** `lessons/_shared/slides/themes/` holds whole looks, such as `newspaper.css` (black ink on newsprint,
+  pictures in line and hatching, using the shared hatching and wobble in `pictures/defs.svg`). Pass one as
+  `-PlessonSlideCss`.
+- **Decks:** `./gradlew :lessons:video-tools:buildLessonDecks` writes every lesson's `media/<id>.deck.html` (commit
+  it): intro slides, one slide per scene with its narration, and closing slides. Rebuild decks whenever slides or
+  narration change; `-PlessonDeckPdf=true` adds a PDF.
 - **A quick look:** `./gradlew :lessons:video-tools:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
   slides (into `media/<id>.voice/`) in about a minute.
 

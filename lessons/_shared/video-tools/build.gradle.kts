@@ -122,7 +122,10 @@ tasks.named("buildLessonCaptions") { mustRunAfter(recordLessonVideo) }
 buildLessonVoice.configure { mustRunAfter(recordLessonVideo) }
 
 // Slides are styled by lessons/_shared/slides/slides.css, then any user stylesheet: -PlessonSlideCss=<path>.
-val slideCss = providers.gradleProperty("lessonSlideCss").map { file(it).absolutePath }.orElse("")
+// A relative path is taken from the repository root, where the commands are run.
+val repositoryDir = rootDir
+val slideCss = providers.gradleProperty("lessonSlideCss")
+    .map { File(it).let { css -> if (css.isAbsolute) css else repositoryDir.resolve(it) }.absolutePath }.orElse("")
 // Slides are screenshotted by a headless browser: -PlessonBrowser=<program>, or Google Chrome where it usually is.
 val macChrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 val slideBrowser = providers.gradleProperty("lessonBrowser")
@@ -140,6 +143,21 @@ val drawLessonSlides = tasks.register<JavaExec>("drawLessonSlides") {
     val root = repoRoot
     val lessonId = lesson
     argumentProviders.add(CommandLineArgumentProvider { listOf("slides", root, lessonId.getOrElse("")) })
+}
+
+// Slide decks: one HTML file per lesson, committed next to its video script (-Plesson=<id>, or every lesson).
+// -PlessonDeckPdf=true also prints each deck to a PDF with the browser, one slide per page.
+tasks.register<JavaExec>("buildLessonDecks") {
+    group = "documentation"
+    description = "Writes each lesson's slide deck as HTML (and PDF with -PlessonDeckPdf=true)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    val root = repoRoot
+    val lessonId = lesson
+    val pdf = providers.gradleProperty("lessonDeckPdf").map { it.toBoolean() }.orElse(false)
+    argumentProviders.add(CommandLineArgumentProvider {
+        listOf("deck", root, lessonId.getOrElse("all")) + (if (pdf.get()) listOf("pdf") else emptyList())
+    })
 }
 
 // -PslidesOnly=true draws only the slides, in about a minute, instead of making the whole video.

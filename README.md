@@ -86,6 +86,19 @@ trim or revoice it. Slides are HTML pages styled by
 `-PlessonSlideCss=<path>` to rebrand every slide and picture. See
 [the make-a-lesson-video skill](.github/skills/make-a-lesson-video/SKILL.md).
 
+Every lesson is also a **slide deck**: one self-contained HTML file, `lessons/<id>/media/<id>.deck.html`, with the
+intro slides, a slide for each step of the example (its narration as the text), and the closing slides. Open it in a
+browser: arrow keys move between slides, N shows the speaker notes, and printing gives one slide per page.
+
+```bash
+./gradlew :lessons:video-tools:buildLessonDecks                              # every lesson's deck
+./gradlew :lessons:video-tools:buildLessonDecks -Plesson=nested-tests -PlessonDeckPdf=true   # one deck, plus a PDF
+./gradlew :lessons:video-tools:buildLessonDecks -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css
+```
+
+Decks, slides and videos share one look. [`themes/newspaper.css`](lessons/_shared/slides/themes/newspaper.css) turns
+it into black ink on newsprint, with the cartoons in line and hatching; start your own theme from it.
+
 ## Using these lessons inside a company
 
 Corporate machines usually fetch nothing from the internet: everything comes through the company's repository

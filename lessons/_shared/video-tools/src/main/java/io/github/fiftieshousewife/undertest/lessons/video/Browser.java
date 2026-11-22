@@ -32,4 +32,16 @@ final class Browser {
             throw new UncheckedIOException(e);
         }
     }
+
+    /** Prints the page to a PDF, one slide to a page, using a throwaway browser profile. */
+    static void printToPdf(final Path page, final Path pdf) {
+        try {
+            final Path profile = Files.createTempDirectory("deck-browser");
+            ExternalCommand.run(List.of(program(), "--headless=new", "--disable-gpu", "--no-first-run",
+                    "--no-pdf-header-footer", "--user-data-dir=" + profile, "--print-to-pdf=" + pdf.toAbsolutePath(),
+                    page.toUri().toString()), Path.of("").toAbsolutePath());
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
 }

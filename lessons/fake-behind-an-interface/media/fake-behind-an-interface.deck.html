@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fake behind an interface</title><style>
+/* Default look for lesson slides. Override any of it with a user stylesheet (-PlessonSlideCss=<path>): redefining the
+   colour variables below also recolours every picture, which use the classes at the end of this file. */
+:root {
+  --background: #141414;
+  --background-glow: #22303a;
+  --title: #5ce1e6;
+  --text: #f0f0f0;
+  --accent: #e06cd8;
+  --teal: #5ce1e6;
+  --pink: #e06cd8;
+  --yellow: #f5c84c;
+  --green: #6bd68a;
+  --red: #f06a6a;
+  --ink: #1c1c1c;
+  --paper: #fafafa;
+  --grey: #8a8f98;
+  --disc: #1f2a33;
+  --font: -apple-system, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+}
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+body {
+  background: radial-gradient(circle at 78% 40%, var(--background-glow), var(--background) 62%);
+  color: var(--text);
+  font-family: var(--font);
+}
+.slide { display: grid; grid-template-columns: 1fr 640px; gap: 80px; height: 100%; padding: 0 140px; box-sizing: border-box; align-items: center; }
+h1 { color: var(--title); font-size: 76px; line-height: 1.1; margin: 0; letter-spacing: -0.5px; }
+.rule { width: 140px; height: 10px; border-radius: 5px; background: var(--accent); margin: 34px 0 46px; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { font-size: 44px; line-height: 1.35; margin: 0 0 30px; padding-left: 60px; position: relative; }
+li.point::before { content: ""; position: absolute; left: 6px; top: 20px; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); }
+li.link { color: var(--accent); font-size: 36px; }
+li.link::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.picture { margin: 0; width: 640px; height: 640px; border-radius: 50%; background: var(--disc); display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45); }
+.picture svg { width: 480px; height: 480px; }
+
+/* Picture colours */
+.picture .teal { fill: var(--teal); }
+.picture .pink { fill: var(--pink); }
+.picture .yellow { fill: var(--yellow); }
+.picture .green { fill: var(--green); }
+.picture .red { fill: var(--red); }
+.picture .ink { fill: var(--ink); }
+.picture .paper { fill: var(--paper); }
+.picture .grey { fill: var(--grey); }
+.picture .line { fill: none; stroke: var(--ink); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+.picture .light-line { fill: none; stroke: var(--paper); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; }
+.picture .thin { stroke-width: 6; }
+
+/* Slide decks: the slides of slides.css, one at a time, scaled to fit the window; one slide per page when printed.
+   A user stylesheet (-PlessonSlideCss) comes after this one, so it can restyle decks too. */
+html, body.deck { width: auto; height: auto; min-height: 100vh; overflow: hidden; background: var(--background); }
+.deck-slide { display: none; position: fixed; inset: 0; }
+.deck-slide.current { display: block; }
+.deck .slide {
+  width: 1920px; height: 1080px; position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%) scale(var(--scale, 0.5)); transform-origin: center;
+  background: radial-gradient(circle at 78% 40%, var(--background-glow), var(--background) 62%);
+}
+.scene-text { font-size: 38px; line-height: 1.45; margin: 0; max-width: 1000px; }
+.notes {
+  display: none; position: fixed; left: 0; right: 0; bottom: 0; max-height: 35vh; overflow: auto; padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.85); color: var(--text); font: 18px/1.5 var(--font); border-top: 3px solid var(--accent);
+}
+body.show-notes .current .notes { display: block; }
+.deck-counter { position: fixed; right: 16px; bottom: 12px; color: var(--grey); font: 14px var(--font); }
+body.show-notes .deck-counter { display: none; }
+@media print {
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body.deck { overflow: visible; }
+  .deck-slide { display: block; position: static; width: 1920px; height: 1080px; page-break-after: always; break-after: page; }
+  .deck .slide { position: static; transform: none; }
+  .notes, .deck-counter { display: none !important; }
+}
+
+</style></head><body class="deck"><svg class="picture-defs" width="0" height="0" style="position:absolute" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="2.5"/></pattern><pattern id="cross-hatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#fff"/><line x1="0" y1="0" x2="0" y2="10" stroke="#111" stroke-width="2.5"/><line x1="0" y1="0" x2="10" y2="0" stroke="#111" stroke-width="2.5"/></pattern><pattern id="dots" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="#fff"/><circle cx="4.5" cy="4.5" r="1.8" fill="#111"/></pattern><filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></defs></svg>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>What is a fake?</h1><div class="rule"></div><ul><li class="point">A small, working stand-in for a real system, in memory</li><li class="point">It behaves like the real thing in the ways that matter, such as delivering on commit</li><li class="point">The code reaches the real system through an interface, so a test can hand over the fake</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="170" width="320" height="80" rx="40"/><rect class="paper" x="70" y="185" width="60" height="50" rx="8"/><rect class="paper" x="150" y="185" width="60" height="50" rx="8"/><rect class="yellow" x="230" y="185" width="60" height="50" rx="8"/><path class="line thin" d="M80 200 L120 200 M80 218 L110 218 M160 200 L200 200 M160 218 L190 218 M240 200 L280 200 M240 218 L270 218"/><path class="line" d="M300 210 L350 210 M330 190 L352 210 L330 230" style="stroke:var(--paper)"/><rect class="teal" x="120" y="60" width="160" height="80" rx="16"/><text x="200" y="112" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="34" class="ink">FAKE</text><path class="line thin" d="M200 140 L200 170" style="stroke:var(--teal)"/><circle class="green" cx="200" cy="310" r="34"/><path class="light-line" d="M184 310 L196 322 L218 298" style="stroke:var(--ink)"/></svg>
+</figure></main><aside class="notes">A fake is a small, working stand-in for a real system, held in memory. It behaves like the real thing in the ways that matter, such as delivering messages only when they are committed. The code reaches the real system through an interface, so a test can hand over the fake instead.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Our example: orders on a message queue</h1><div class="rule"></div><ul><li class="point">Every order is sent to the warehouse</li><li class="point">Orders of £100 or more are also sent for a fraud check</li><li class="point">The queue delivers messages only when they are committed</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M120 170 L170 80 M280 170 L230 80"/><path class="yellow" d="M60 170 L340 170 L310 330 Q305 350 285 350 L115 350 Q95 350 90 330 Z"/><g class="line thin"><path d="M140 200 L150 320 M200 200 L200 320 M260 200 L250 320"/></g><circle class="red" cx="160" cy="150" r="34"/><circle class="green" cx="230" cy="145" r="30"/><path class="pink" d="M250 40 L370 40 L370 120 L310 160 L250 120 Z"/><circle class="paper" cx="310" cy="62" r="10"/><text x="310" y="122" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="44" class="paper">%</text></svg>
+</figure></main><aside class="notes">Our example sends orders on a message queue. Every order goes to the warehouse. Orders of a hundred pounds or more also go for a fraud check. And the queue delivers messages only when they are committed.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>What we'll compare</h1><div class="rule"></div><ul><li class="point">The code under test: today's order placement, which commits too early</li><li class="point">A mock queue: checks each call was made</li><li class="point">A fake queue: checks what was delivered</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M200 70 L200 340 M130 350 L270 350"/><path class="line" d="M70 110 L330 150"/><circle class="yellow" cx="200" cy="65" r="18"/><path class="line thin" d="M70 110 L40 190 M70 110 L100 190 M330 150 L300 280 M330 150 L360 280"/><path class="teal" d="M30 190 L110 190 Q70 230 30 190 Z"/><path class="pink" d="M290 280 L370 280 Q330 320 290 280 Z"/><path class="paper" d="M60 175 Q75 130 95 120 Q85 155 60 175 Z"/><rect class="grey" x="305" y="230" width="50" height="50" rx="8"/><text x="330" y="265" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="22" class="paper">KG</text></svg>
+</figure></main><aside class="notes">Here is what we will compare. The code under test is today's order placement, which commits too early. A mock queue checks that each call was made. And a fake queue checks what was actually delivered.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Why mocks can mislead</h1><div class="rule"></div><ul><li class="point">A mock test lists the calls the code makes, so it repeats the code</li><li class="point">It can't see behaviour, such as what a commit does</li><li class="point">It breaks when the code is tidied, even when the results are the same</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="paper" x="40" y="60" width="250" height="290" rx="20"/><g class="line thin"><path d="M70 110 L250 110 M70 150 L210 150 M90 190 L240 190 M90 230 L190 230 M70 270 L230 270 M70 310 L170 310"/></g><circle class="teal" cx="245" cy="215" r="98" opacity="0.35"/><circle class="line" cx="245" cy="215" r="98" style="stroke-width:16"/><path class="line" d="M315 285 L370 340" style="stroke-width:30"/><ellipse class="red" cx="245" cy="225" rx="34" ry="40"/><circle class="ink" cx="245" cy="186" r="20"/><circle class="paper" cx="238" cy="182" r="6"/><circle class="paper" cx="252" cy="182" r="6"/><path class="line thin" d="M215 220 L198 210 M275 220 L292 210 M218 245 L200 255 M272 245 L290 255"/></svg>
+</figure></main><aside class="notes">Why not just use mocks? A mock test lists the calls the code makes, so it repeats the code, line by line. It can't see the system's behaviour, such as what a commit does. And it breaks whenever the code is tidied, even when the results are just the same.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>How a fake works</h1><div class="rule"></div><ul><li class="point">It implements the same interface as the real connection code</li><li class="point">It keeps state: here, messages waiting, and messages delivered</li><li class="point">Tests check that state: what arrived, not how</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="line" d="M200 70 L200 40"/><circle class="pink" cx="200" cy="34" r="14"/><rect class="teal" x="115" y="70" width="170" height="130" rx="34"/><circle class="paper" cx="165" cy="128" r="24"/><circle class="paper" cx="235" cy="128" r="24"/><circle class="ink" cx="170" cy="132" r="11"/><circle class="ink" cx="240" cy="132" r="11"/><path class="line thin" d="M170 172 Q200 188 230 172"/><rect class="grey" x="135" y="210" width="130" height="120" rx="24"/><rect class="yellow" x="170" y="240" width="60" height="16" rx="8"/><rect class="yellow" x="170" y="270" width="40" height="16" rx="8"/><path class="line" d="M135 240 L80 285 M265 240 L310 200"/><path class="line" d="M165 330 L160 372 M235 330 L240 372"/><ellipse class="red" cx="322" cy="180" rx="30" ry="34"/><circle class="ink" cx="322" cy="148" r="16"/><path class="line thin" d="M300 176 L282 166 M344 176 L362 166 M302 200 L286 210 M342 200 L358 210"/><rect class="paper" x="40" y="285" width="80" height="60" rx="10"/><path class="line thin" d="M54 305 L104 305 M54 325 L90 325"/></svg>
+</figure></main><aside class="notes">A fake implements the same interface as the real connection code. It keeps state: here, the messages waiting, and the messages delivered. And tests check that state: what arrived, not how it got there.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The interface</h1><div class="rule"></div><ul></ul><p class="scene-text">The shop talks to its message queue through an interface of its own. Send a message, and commit. Messages sent are held until the commit, then delivered together, just as the real queue does it.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">The shop talks to its message queue through an interface of its own. Send a message, and commit. Messages sent are held until the commit, then delivered together, just as the real queue does it.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The code under test</h1><div class="rule"></div><ul></ul><p class="scene-text">Here is the code under test, today's order placement. It tells the warehouse about every order, and sends big orders for a fraud check. Look at where it commits: before the fraud check message is sent.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">Here is the code under test, today's order placement. It tells the warehouse about every order, and sends big orders for a fraud check. Look at where it commits: before the fraud check message is sent.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The mock test</h1><div class="rule"></div><ul></ul><p class="scene-text">This is a test with a mock queue. It checks that each call was made: both messages, and the commit.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">This is a test with a mock queue. It checks that each call was made: both messages, and the commit.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The fake</h1><div class="rule"></div><ul></ul><p class="scene-text">Now, a fake queue. It holds messages until the commit, then delivers them, like the real queue. It is a few lines of ordinary code.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">Now, a fake queue. It holds messages until the commit, then delivers them, like the real queue. It is a few lines of ordinary code.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The fake test</h1><div class="rule"></div><ul></ul><p class="scene-text">And a test with the fake. It places a big order, and checks what was delivered: one message to the warehouse, and one to the fraud check.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">And a test with the fake. It places a big order, and checks what was delivered: one message to the warehouse, and one to the fraud check.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The fake finds the bug</h1><div class="rule"></div><ul></ul><p class="scene-text">We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails: the fraud check message never arrives, because it was sent after the commit.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails: the fraud check message never arrives, because it was sent after the commit.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>The fixed order placement</h1><div class="rule"></div><ul></ul><p class="scene-text">Now the order placement that commits once, at the end. We run the same tests. Both messages are delivered, and every test passes.</p></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><rect class="grey" x="40" y="70" width="320" height="250" rx="22"/><rect class="ink" x="58" y="110" width="284" height="192" rx="10"/><circle class="red" cx="72" cy="90" r="8"/><circle class="yellow" cx="98" cy="90" r="8"/><circle class="green" cx="124" cy="90" r="8"/><path class="line thin" d="M80 145 L100 160 L80 175" style="stroke:var(--green)"/><path class="line thin" d="M115 175 L200 175" style="stroke:var(--paper)"/><path class="line thin" d="M80 210 L250 210 M80 240 L210 240" style="stroke:var(--teal)"/><path class="line thin" d="M80 270 L160 270" style="stroke:var(--pink)"/><rect class="paper" x="170" y="258" width="14" height="24" rx="2"/></svg>
+</figure></main><aside class="notes">Now the order placement that commits once, at the end. We run the same tests. Both messages are delivered, and every test passes.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>When to use a fake</h1><div class="rule"></div><ul><li class="point">For systems the code talks to a lot: queues, stores, caches, file systems</li><li class="point">Keep the real connection code thin, behind the interface, and test it separately against the real system</li><li class="point">An architecture rule can stop other code reaching the real system directly</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M40 90 L140 60 L260 100 L360 70 L360 330 L260 360 L140 320 L40 350 Z"/><path class="line thin" d="M140 60 L140 320 M260 100 L260 360" style="stroke:var(--grey)"/><path class="line" d="M90 290 Q140 200 200 230 Q270 260 300 150" style="stroke-dasharray:4 22"/><g><path class="teal" d="M90 300 C60 260 60 230 90 230 C120 230 120 260 90 300 Z"/><text x="90" y="268" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">1</text><path class="pink" d="M200 245 C170 205 170 175 200 175 C230 175 230 205 200 245 Z"/><text x="200" y="213" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">2</text><path class="yellow" d="M300 165 C270 125 270 95 300 95 C330 95 330 125 300 165 Z"/><text x="300" y="133" text-anchor="middle" font-family="sans-serif" font-weight="bold" font-size="30" class="ink">3</text></g></svg>
+</figure></main><aside class="notes">When should you use a fake? For systems your code talks to a lot: queues, stores, caches and file systems. Keep the real connection code thin, behind the interface, and test that part separately, against the real system. And an architecture rule can stop other code from reaching the real system directly.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Where the idea came from</h1><div class="rule"></div><ul><li class="point">Gerard Meszaros named fakes among his test doubles, in xUnit Test Patterns, in 2007</li><li class="point">Martin Fowler's article, Mocks Aren't Stubs, explains the difference</li><li class="point">Fakes need no library: they are ordinary code</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><path class="paper" d="M40 140 Q120 110 200 150 L200 340 Q120 300 40 330 Z"/><path class="paper" d="M360 140 Q280 110 200 150 L200 340 Q280 300 360 330 Z"/><path class="line" d="M200 150 L200 340"/><g class="line thin" style="stroke:var(--grey)"><path d="M70 180 Q120 165 170 185 M70 220 Q120 205 170 225 M70 260 Q120 245 170 265 M230 185 Q280 165 330 180 M230 225 Q280 205 330 220"/></g><circle class="yellow" cx="300" cy="100" r="70"/><circle class="paper" cx="300" cy="100" r="54"/><path class="line" d="M300 100 L300 66 M300 100 L326 114"/></svg>
+</figure></main><aside class="notes">Gerard Meszaros named fakes, among other kinds of test doubles, in his book, x Unit Test Patterns, in 2007. Martin Fowler's article, Mocks Aren't Stubs, explains the difference well. And fakes need no library at all: they are ordinary code.</aside></section>
+<section class="deck-slide"><main class="slide"><section class="text"><h1>Find out more</h1><div class="rule"></div><ul><li class="link">https://martinfowler.com/articles/mocksArentStubs.html — Mocks Aren't Stubs</li><li class="link">https://github.com/fiftiesHousewife/under-test-lessons — this lesson, to run yourself</li><li class="link">https://github.com/fiftiesHousewife/under-test — the toolkit these lessons belong to</li></ul></section><figure class="picture"><svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"><circle class="teal" cx="180" cy="190" r="140"/><path class="green" d="M110 100 Q150 90 160 130 Q140 170 100 160 Q80 130 110 100 Z M200 190 Q250 170 270 210 Q260 270 210 280 Q180 240 200 190 Z M130 240 Q160 250 150 290 Q120 290 110 260 Z"/><g class="line thin"><circle cx="180" cy="190" r="140"/><ellipse cx="180" cy="190" rx="60" ry="140"/><path d="M40 190 L320 190 M60 120 L300 120 M60 260 L300 260"/></g><g class="line" style="stroke:var(--pink);stroke-width:16"><rect x="250" y="270" width="80" height="44" rx="22"/><rect x="300" y="300" width="80" height="44" rx="22"/></g></svg>
+</figure></main><aside class="notes">To find out more, read Martin Fowler's article, Mocks Aren't Stubs. The links on screen also take you to this lesson's code, and to the toolkit these lessons belong to.</aside></section>
+<script>
+// Slide deck controls: arrow keys, space or a click move between slides; N shows the speaker notes; the address
+// remembers the slide (#3), so a link can point at one.
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.deck-slide'));
+  var counter = document.createElement('div');
+  counter.className = 'deck-counter';
+  document.body.appendChild(counter);
+  var current = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
+  function fit() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.documentElement.style.setProperty('--scale', String(scale));
+  }
+  function show(index) {
+    current = Math.max(0, Math.min(slides.length - 1, index));
+    slides.forEach(function (slide, i) { slide.classList.toggle('current', i === current); });
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (current + 1));
+  }
+  document.addEventListener('keydown', function (event) {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].indexOf(event.key) >= 0) { show(current + 1); event.preventDefault(); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp'].indexOf(event.key) >= 0) { show(current - 1); event.preventDefault(); }
+    if (event.key === 'Home') { show(0); }
+    if (event.key === 'End') { show(slides.length - 1); }
+    if (event.key === 'n' || event.key === 'N') { document.body.classList.toggle('show-notes'); }
+  });
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('a, .notes')) { show(event.clientX < window.innerWidth / 3 ? current - 1 : current + 1); }
+  });
+  window.addEventListener('resize', fit);
+  fit();
+  show(current);
+}());
+</script></body></html>

@@ -1,0 +1,33 @@
+/* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
+   -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
+:root {
+  --background: #f3efe4;
+  --background-glow: #f3efe4;
+  --title: #111;
+  --text: #1a1a1a;
+  --accent: #111;
+  --grey: #555;
+  --disc: #fff;
+  --font: Georgia, "Times New Roman", serif;
+}
+h1 { font-family: "Helvetica Neue", Arial, sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+.rule { height: 6px; border-radius: 0; width: 100%; max-width: 600px; }
+li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
+.picture { border: 6px solid #111; box-shadow: 10px 10px 0 #111; }
+.picture svg { filter: url(#wobble); overflow: visible; }
+
+/* Every coloured shape becomes white or hatched, outlined in ink. */
+.picture .teal, .picture .pink, .picture .yellow, .picture .green, .picture .red, .picture .grey, .picture .paper {
+  stroke: #111; stroke-width: 5; stroke-linejoin: round;
+}
+.picture .paper, .picture .yellow { fill: #fff; }
+.picture .teal { fill: url(#hatch); }
+.picture .pink { fill: url(#dots); }
+.picture .grey { fill: url(#cross-hatch); }
+.picture .green { fill: #fff; }
+.picture .red { fill: url(#cross-hatch); }
+.picture .ink { fill: #111; stroke: none; }
+.picture text { fill: #111; stroke: none; font-family: Georgia, serif; }
+.picture text.paper, .picture text.ink { fill: #111; stroke: none; }
+.picture .line, .picture .light-line { stroke: #111 !important; }
+.picture .red + .light-line, .picture .ink + .light-line { stroke: #fff !important; }

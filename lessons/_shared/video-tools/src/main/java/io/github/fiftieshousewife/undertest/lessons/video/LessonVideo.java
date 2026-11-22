@@ -28,9 +28,15 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        if (args.length < 3 || !List.of("record", "voice", "assemble", "slides").contains(args[0])) {
+        if (args.length < 3 || !List.of("record", "voice", "assemble", "slides", "deck").contains(args[0])) {
             throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
-                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | slides <root> <lesson>");
+                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | slides <root> <lesson>"
+                    + " | deck <root> <lesson|all> [pdf]");
+        }
+        if ("deck".equals(args[0])) {
+            final boolean pdf = args.length > 3 && "pdf".equals(args[3]);
+            SlideDeck.lessons(Path.of(args[1]), args[2]).forEach(media -> SlideDeck.write(media, pdf));
+            return;
         }
         final Media media = new Media(Path.of(args[1]), args[2]);
         switch (args[0]) {
