@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: junit-temporary-folders
+title: Temporary folders
+techniques: []

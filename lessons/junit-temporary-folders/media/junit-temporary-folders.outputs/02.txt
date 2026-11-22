@@ -1,0 +1,6 @@
+$ ./gradlew :lessons:junit-temporary-folders:test
+TempDirTest > writesOneLinePerOrder(Path) PASSED
+TempDirTest > leavesOutCancelledOrders(Path) PASSED
+FixedFolderTest > writesOneLinePerOrder() PASSED
+FixedFolderTest > leavesOutCancelledOrders() PASSED
+All 4 tests passed.

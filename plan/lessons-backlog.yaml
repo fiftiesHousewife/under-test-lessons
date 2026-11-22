@@ -415,7 +415,7 @@ items:
       - "Its example builds in ./gradlew check, with today's code behind its switch"
       - "Its README, slides, narration and script are written and its deck is voiced"
       - "Its facts are checked at their sources, named in its slides file"
-    notes: "Extensions are built, as the JUnit extensions lesson; temporary folders and tags are still to come."
+    notes: "Extensions and temporary folders are built, as their own lessons; tags is still to come."
   - key: "lesson-running-old-code-unplugged"
     type: "deliverable"
     title: "Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)"
