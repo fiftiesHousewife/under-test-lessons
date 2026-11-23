@@ -27,8 +27,13 @@ configurations.configureEach {
     exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
 }
 
+// `-Pcode=answer` runs today's service with the exercise's answer (answer/*AnswerTest), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", if (code == "answer") "today" else code) // the application knows only today and fixed
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

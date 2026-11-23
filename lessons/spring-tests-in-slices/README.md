@@ -14,7 +14,7 @@ wiring between the layers. It all comes with Spring Boot's test starters.
 
 ```bash
 ./gradlew :lessons:spring-tests-in-slices:test -Pcode=today   # today's service: the whole-application tests pass, and only the JSON slice fails, naming the date written as 23/11/2026
-./gradlew :lessons:spring-tests-in-slices:test                # the fixed service: all 8 tests pass
+./gradlew :lessons:spring-tests-in-slices:test                # the fixed service: all 9 tests pass
 ```
 
 The example is a shop's delivery service, on Spring Boot 4:
@@ -49,6 +49,22 @@ Spring Boot 4's dependency list sets Jetty to version 12, and plain WireMock 3, 
 start. The example uses `wiremock-standalone` instead, which carries its own Jetty inside, and runs beside Spring
 Boot 4 in the same test. Where WireMock isn't wanted at all, Spring's own `MockRestServiceServer` stands in for a
 service a `RestClient` calls.
+
+## Exercise
+
+One layer has no test of its own: the courier's client. And no test reaches its `Not known` answer, given when the
+courier answers with nothing.
+
+1. Add a test class beside [`DeliveryWebSliceTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/slices/DeliveryWebSliceTest.java)
+   that makes a [`CourierClient`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/slices/CourierClient.java)
+   from a `RestClient.Builder` bound to Spring's `MockRestServiceServer`, so no application starts.
+2. Expect a request for `/tracking/D-1001`, answer it with an empty `200 OK`, and check the client says `Not known`.
+3. Compare with the answer, [`CourierClientAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/slices/answer/CourierClientAnswerTest.java),
+   which runs beside today's tests with:
+
+```bash
+./gradlew :lessons:spring-tests-in-slices:test -Pcode=answer   # today's service: 9 tests, only the JSON slice fails; the courier's client passes on its own
+```
 
 ## Watch it, or present it
 

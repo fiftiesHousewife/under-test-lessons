@@ -1,6 +1,7 @@
 $ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest
 FailedChangeTest > aRefusedChangeSaysWhy() PASSED
 InMemoryChangesTest > everyChangeApplies() PASSED
-All 2 tests passed.
+PostgresSqlAnswerTest > theLoyaltyLevelGetsATypePostgresHas(Path) PASSED
+All 3 tests passed.
 RealPostgresChangesTest > everyChangeApplies() SKIPPED
 No tests ran; 1 skipped.

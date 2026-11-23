@@ -74,6 +74,8 @@ Say: Spring Boot was first released in 2014. Its test slices arrived with Spring
 ## closing: Find out more
 - https://docs.spring.io/spring-boot/reference/testing/index.html — Spring Boot's guide to testing, and its slices
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: test the courier's client on its own; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Spring Boot's guide to testing. The links on screen also take you to this lesson's
-  test code and examples, to run yourself.
+  test code and examples, to run yourself. And try the exercise in the README: test the courier's client on its own,
+  with Spring's stand-in server, and check what it says when the courier answers with nothing.

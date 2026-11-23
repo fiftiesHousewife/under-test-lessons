@@ -27,6 +27,22 @@ stands in for that network call, failing as it would on a test machine.
 
 Today's invoice can't run in any test, so the build leaves it out of the coverage figure.
 
+## Exercise
+
+A stand-in can also play the service failing, which the real one can't be made to do on demand. When the bank's
+service times out, the invoice must pass the error on, not charge a wrong amount.
+
+1. Add a test class beside [`InvoiceTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dependencies/InvoiceTest.java)
+   with a Mockito stand-in whose `eurosPerPound()` throws an error saying `the bank's service timed out`.
+2. Price an invoice through [`Invoices`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dependencies/Invoices.java)
+   and expect that error, with that message.
+3. Compare with the answer, [`RatesTimeOutAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dependencies/answer/RatesTimeOutAnswerTest.java),
+   which runs against today's invoice with:
+
+```bash
+./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=answer   # today's invoice: 3 of 3 tests fail; the answer gets the live service's error, not the stand-in's
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) (its source is [`media/replacing-hard-wired-dependencies.deck.html`](media/replacing-hard-wired-dependencies.deck.html)). Arrow keys

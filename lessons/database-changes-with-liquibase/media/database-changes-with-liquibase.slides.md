@@ -68,6 +68,8 @@ Say: Liquibase is an open source tool for database changes, first released in 20
 - https://docs.liquibase.com — Liquibase documentation
 - https://testcontainers.com — Testcontainers
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check the SQL Liquibase would send PostgreSQL, with no container; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Liquibase documentation, and the Testcontainers guides. The links on screen
-  also take you to this lesson's test code and examples, to run yourself.
+  also take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: have
+  Liquibase write out the SQL it would send PostgreSQL, with no container, and check the type it gives the column.

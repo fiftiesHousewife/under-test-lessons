@@ -66,6 +66,8 @@ Say: Mockito was started by Szczepan Faber in 2008, building on an older library
 ## closing: Find out more
 - https://site.mockito.org — Mockito, with its documentation
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: make the stand-in play the bank's service timing out; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Mockito documentation. The links on screen also take you to this lesson's test
-  code and examples, to run yourself.
+  code and examples, to run yourself. And try the exercise in the README: make the stand-in play the bank's service
+  timing out, and check the invoice passes the error on.

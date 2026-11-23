@@ -7,4 +7,5 @@ DeliveriesWiringTest > answersWithEveryPartJoinedUp() PASSED
 DeliveryDataSliceTest > findsTheDeliveriesStillToComeEarliestFirst() PASSED
 DeliveryWebSliceTest > answersWithTheCustomersDeliveries() PASSED
 DeliveryWebSliceTest > answersNotFoundForAnAddressItDoesNotHave() PASSED
-All 8 tests passed.
+CourierClientAnswerTest > saysNotKnownWhenTheCourierAnswersWithNothing() PASSED
+All 9 tests passed.

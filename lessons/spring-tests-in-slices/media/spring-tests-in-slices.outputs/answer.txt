@@ -1,0 +1,14 @@
+$ ./gradlew :lessons:spring-tests-in-slices:test -Pcode=answer
+DeliveriesApplicationTest > showsWhatTheCourierSays() PASSED
+DeliveriesApplicationTest > listsTheCustomersDeliveries() PASSED
+DeliveriesApplicationTest > leavesOutWhatHasBeenDelivered() PASSED
+DeliveriesWiringTest > answersWithEveryPartJoinedUp() PASSED
+DeliveryDataSliceTest > findsTheDeliveriesStillToComeEarliestFirst() PASSED
+DeliveryJsonSliceTest > writesTheFieldsTheDescriptionPromises() FAILED
+    java.lang.AssertionError: JSON Comparison failure: dueOn
+    Expected: 2026-11-23
+         got: 23/11/2026
+DeliveryWebSliceTest > answersWithTheCustomersDeliveries() PASSED
+DeliveryWebSliceTest > answersNotFoundForAnAddressItDoesNotHave() PASSED
+CourierClientAnswerTest > saysNotKnownWhenTheCourierAnswersWithNothing() PASSED
+9 tests completed, 1 failed

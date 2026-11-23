@@ -1,0 +1,10 @@
+$ ./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=answer
+InvoiceTest > anEmptyInvoiceCostsNothing() FAILED
+    java.lang.IllegalStateException: cannot reach the bank's exchange-rate service
+InvoiceTest > convertsTheTotalRoundingToTheNearestCent() FAILED
+    java.lang.IllegalStateException: cannot reach the bank's exchange-rate service
+RatesTimeOutAnswerTest > anInvoiceIsNotChargedWhenTheRatesTimeOut() FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "the bank's service timed out"
+     but was: "cannot reach the bank's exchange-rate service"
+3 tests completed, 3 failed

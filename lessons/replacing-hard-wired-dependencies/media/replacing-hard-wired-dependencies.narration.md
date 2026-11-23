@@ -15,4 +15,4 @@ closing slides have their own narration, in
    calls the live service, which a test machine can't reach.
 6. Now the invoice after one small change. The rates are passed in, through the constructor. Production passes the
    live rates. A test passes the stand-in.
-7. We run the same test. [pause 1s] Both tests pass, in about a second, with no network and no account.
+7. We run the same test. [pause 1s] Every test passes, in about a second, with no network and no account.

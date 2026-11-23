@@ -11,4 +11,7 @@ RoundingDownVatTest > roundsDownWhereItShouldRoundUp() PASSED
 VatCopyPasteTest > vatOnTenPounds() PASSED
 VatCopyPasteTest > vatOnOnePound() PASSED
 VatCopyPasteTest > noVatOnNothing() PASSED
-All 12 tests passed.
+RefundsAnswerTest > refundsRoundToTheNearestPennyToo(int, int) > a refund: -3 pence net gives -1 pence VAT PASSED
+RefundsAnswerTest > refundsRoundToTheNearestPennyToo(int, int) > a refund: -5 pence net gives -1 pence VAT PASSED
+RefundsAnswerTest > refundsRoundToTheNearestPennyToo(int, int) > a refund: -998 pence net gives -200 pence VAT PASSED
+All 15 tests passed.

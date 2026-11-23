@@ -159,7 +159,7 @@ Show
 Wait+Screen@300s /All \d+ tests passed/
 Sleep 10s
 Hide
-Type@1ms `callout "All 8 tests pass: the slices check each layer, and one whole-application test checks the wiring."`
+Type@1ms `callout "All 9 tests pass: the slices check each layer, and one whole-application test checks the wiring."`
 Enter
 Sleep 300ms
 Show

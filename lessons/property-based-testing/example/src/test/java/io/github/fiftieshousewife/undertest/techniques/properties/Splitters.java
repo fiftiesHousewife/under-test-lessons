@@ -1,12 +1,18 @@
 package io.github.fiftieshousewife.undertest.techniques.properties;
 
-/** The splitter the tests run against: the fair one, or the one in use today with -Pcode=today. */
-final class Splitters {
+import java.util.Set;
+
+/**
+ * The splitter the tests run against: the fair one, or the one in use today with -Pcode=today, and with
+ * -Pcode=answer, which runs the exercise's answer beside today's tests.
+ */
+public final class Splitters {
 
     private Splitters() {
     }
 
-    static BillSplitter current() {
-        return "today".equals(System.getProperty("code")) ? new FirstPayerSplitter() : new FairSplitter();
+    public static BillSplitter current() {
+        final boolean today = Set.of("today", "answer").contains(System.getProperty("code"));
+        return today ? new FirstPayerSplitter() : new FairSplitter();
     }
 }

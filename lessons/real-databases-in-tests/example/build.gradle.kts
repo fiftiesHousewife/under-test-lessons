@@ -35,6 +35,14 @@ tasks.withType<Test>().configureEach {
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 
+// `-Pcode=answer` runs today's query with the exercise's answer (answer/*AnswerTest, on H2 told to sort nulls as
+// PostgreSQL does), which -Pcode=today leaves out.
+tasks.test {
+    if (providers.gradleProperty("code").orNull == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
+}
+
 tasks.check {
     dependsOn("integrationTest")
 }

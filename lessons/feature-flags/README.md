@@ -25,6 +25,22 @@ The example works out shipping: £3.99, free from £50.
 - [`BothWaysTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/BothWaysTest.java)
   is the "after": the same checks with the flag off and on, using OpenFeature's in-memory provider.
 
+## Exercise
+
+Two baskets check only two prices. While both rules exist, the new ones must charge what the old ones charge for every
+basket.
+
+1. Add a test class beside [`BothWaysTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/BothWaysTest.java)
+   that works out shipping for every basket from 0p to £100, once with the flag off and once with it on, using
+   [`Checkouts`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/Checkouts.java).
+2. Count the baskets where the two answers differ, and expect none.
+3. Compare with the answer, [`OldAndNewAgreeAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/answer/OldAndNewAgreeAnswerTest.java),
+   which runs against today's new rules with:
+
+```bash
+./gradlew :lessons:feature-flags:test -Pcode=answer   # today's new rules: the old and new rules disagree on 4950 baskets, the first at 50p
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/feature-flags.html) (its source is [`media/feature-flags.deck.html`](media/feature-flags.deck.html)). Arrow keys

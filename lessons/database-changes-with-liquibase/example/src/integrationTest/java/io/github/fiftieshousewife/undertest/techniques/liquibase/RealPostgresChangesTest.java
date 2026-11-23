@@ -22,7 +22,7 @@ class RealPostgresChangesTest {
 
     @Test
     void everyChangeApplies() throws SQLException {
-        final String changelog = "today".equals(System.getProperty("code"))
+        final String changelog = System.getProperty("code", "fixed").matches("today|answer")
                 ? "db/changelog-today.yaml" : "db/changelog.yaml";
         try (Connection connection = DriverManager.getConnection(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(),
                 POSTGRES.getPassword())) {

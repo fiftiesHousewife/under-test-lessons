@@ -26,6 +26,22 @@ holds today's query (`ORDER BY last_order`) and the fixed one (`ORDER BY last_or
 - [`RealPostgresTest`](example/src/integrationTest/java/io/github/fiftieshousewife/undertest/techniques/database/RealPostgresTest.java)
   is the "after": on PostgreSQL, nulls sort last, and the test fails.
 
+## Exercise
+
+Where no container runtime is to hand, H2 can be told to sort nulls as PostgreSQL does. That copies one difference
+you already know about; only the real database finds the ones you don't. This exercise runs without a container.
+
+1. Add a test class beside [`InMemoryDatabaseTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/database/InMemoryDatabaseTest.java)
+   whose H2 address ends `;DEFAULT_NULL_ORDERING=HIGH`, PostgreSQL's way: nulls last in ascending order.
+2. Add a customer who ordered and one who never did, and expect the one who never ordered to come first, with the
+   query [`Queries`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/database/Queries.java) picks.
+3. Compare with the answer, [`PostgresNullOrderingAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/database/answer/PostgresNullOrderingAnswerTest.java),
+   which runs against today's query with:
+
+```bash
+./gradlew :lessons:real-databases-in-tests:test -Pcode=answer   # today's query: 1 of 2 tests fails; H2 sorting nulls as PostgreSQL does puts Dee before Eve, who never ordered
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) (its source is [`media/real-databases-in-tests.deck.html`](media/real-databases-in-tests.deck.html)). Arrow keys

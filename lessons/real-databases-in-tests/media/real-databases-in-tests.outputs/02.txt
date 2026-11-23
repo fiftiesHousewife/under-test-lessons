@@ -1,5 +1,6 @@
 $ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest
 InMemoryDatabaseTest > customersWhoNeverOrderedComeFirst() PASSED
-All 1 tests passed.
+PostgresNullOrderingAnswerTest > customersWhoNeverOrderedComeFirstWhenNullsSortAsOnPostgres() PASSED
+All 2 tests passed.
 RealPostgresTest > customersWhoNeverOrderedComeFirst() SKIPPED
 No tests ran; 1 skipped.

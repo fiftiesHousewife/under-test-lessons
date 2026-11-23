@@ -1,0 +1,10 @@
+$ ./gradlew :lessons:database-changes-with-liquibase:test -Pcode=answer
+FailedChangeTest > aRefusedChangeSaysWhy() PASSED
+InMemoryChangesTest > everyChangeApplies() PASSED
+PostgresSqlAnswerTest > theLoyaltyLevelGetsATypePostgresHas(Path) FAILED
+    java.lang.AssertionError: [the SQL PostgreSQL would be sent]
+    Expecting actual:
+      "ALTER TABLE customers ADD COLUMN loyalty_level TINYINT;"
+    to contain:
+      "SMALLINT"
+3 tests completed, 1 failed

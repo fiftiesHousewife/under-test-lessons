@@ -28,6 +28,24 @@ The example adds a loyalty level to each customer.
 - [`RealPostgresChangesTest`](example/src/integrationTest/java/io/github/fiftieshousewife/undertest/techniques/liquibase/RealPostgresChangesTest.java)
   is the "after": PostgreSQL refuses today's change.
 
+## Exercise
+
+With no container runtime, Liquibase can still write out the SQL it would send PostgreSQL, from an offline connection
+that only names the database. This exercise runs without a container.
+
+1. Add a test class beside [`InMemoryChangesTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/liquibase/InMemoryChangesTest.java)
+   that opens Liquibase's `OfflineConnection` with the address `offline:postgresql`, and writes the update's SQL to a
+   `StringWriter` for the changelog [`Changelogs`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/liquibase/Changelogs.java) picks.
+2. Find the line that adds `loyalty_level`, and expect a type PostgreSQL has, `SMALLINT`.
+3. Compare with the answer, [`PostgresSqlAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/liquibase/answer/PostgresSqlAnswerTest.java),
+   which runs against today's changelog with:
+
+```bash
+./gradlew :lessons:database-changes-with-liquibase:test -Pcode=answer   # today's changelog: 1 of 3 tests fails; PostgreSQL would be sent TINYINT, as the raw SQL says
+```
+
+It writes out the SQL only: the real database is still the only way to know PostgreSQL takes it.
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) (its source is [`media/database-changes-with-liquibase.deck.html`](media/database-changes-with-liquibase.deck.html)). Arrow keys

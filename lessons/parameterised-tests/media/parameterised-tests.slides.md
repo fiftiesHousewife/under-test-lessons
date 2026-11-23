@@ -63,6 +63,8 @@ Say: JUnit 4 could already run a test once for each row of a table, with its Par
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: add a table of refunds, where the net amount is negative; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the JUnit user guide. The links on screen also take you to this lesson's test code
-  and examples, to run yourself.
+  and examples, to run yourself. And try the exercise in the README: add a table of refunds, where the net amount is
+  negative, and find 2 more rows the calculator in use today gets wrong.

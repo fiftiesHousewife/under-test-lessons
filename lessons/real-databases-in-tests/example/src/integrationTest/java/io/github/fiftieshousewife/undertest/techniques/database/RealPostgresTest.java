@@ -30,7 +30,7 @@ class RealPostgresTest {
         postgres.setUser(POSTGRES.getUsername());
         postgres.setPassword(POSTGRES.getPassword());
         final CustomerRepository customers = new CustomerRepository(postgres::getConnection,
-                !"today".equals(System.getProperty("code")));
+                !System.getProperty("code", "fixed").matches("today|answer"));
         customers.createTable();
         customers.add("Ada", LocalDate.of(2024, 3, 1));
         customers.add("Bob", null);

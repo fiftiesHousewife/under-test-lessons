@@ -1,12 +1,18 @@
 package io.github.fiftieshousewife.undertest.techniques.parameterised;
 
-/** The calculator the tests run against: the nearest-penny one, or the one in use today with -Pcode=today. */
-final class Calculators {
+import java.util.Set;
+
+/**
+ * The calculator the tests run against: the nearest-penny one, or the one in use today with -Pcode=today, and with
+ * -Pcode=answer, which runs the exercise's answer beside today's tests.
+ */
+public final class Calculators {
 
     private Calculators() {
     }
 
-    static VatCalculator current() {
-        return "today".equals(System.getProperty("code")) ? new RoundingDownVat() : new NearestPennyVat();
+    public static VatCalculator current() {
+        final boolean today = Set.of("today", "answer").contains(System.getProperty("code"));
+        return today ? new RoundingDownVat() : new NearestPennyVat();
     }
 }

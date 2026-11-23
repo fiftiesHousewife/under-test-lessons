@@ -3,4 +3,5 @@ SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() PASSED
 FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() PASSED
 SplitterExampleTest > givesTheOddPennyToSomeone() PASSED
 SplitterExampleTest > splitsEvenly() PASSED
-All 4 tests passed.
+OneMorePennyAnswerTest > oneMorePennyChangesOneShareByOnePenny() PASSED
+All 5 tests passed.

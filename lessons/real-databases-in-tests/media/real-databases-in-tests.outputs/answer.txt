@@ -1,0 +1,7 @@
+$ ./gradlew :lessons:real-databases-in-tests:test -Pcode=answer
+InMemoryDatabaseTest > customersWhoNeverOrderedComeFirst() PASSED
+PostgresNullOrderingAnswerTest > customersWhoNeverOrderedComeFirstWhenNullsSortAsOnPostgres() FAILED
+    org.opentest4j.AssertionFailedError: [who sales should call first check first element]
+    expected: "Eve"
+     but was: "Dee"
+2 tests completed, 1 failed

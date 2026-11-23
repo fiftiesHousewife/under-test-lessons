@@ -26,6 +26,22 @@ gives everything left over to the first person: fine with a penny left over, unf
 - [`FairSplitter`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/properties/FairSplitter.java)
   shares the leftover pence one each, and passes.
 
+## Exercise
+
+The three rules each look at one bill. A fourth rule can compare two: adding a penny to the bill must add a penny to
+exactly one share, and leave every other share as it was.
+
+1. Add a test class beside [`SplitterPropertyTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/SplitterPropertyTest.java),
+   with the splitter [`Splitters`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/Splitters.java) picks and a fixed seed.
+2. For each bill jetCheck makes, split it, then split it with one penny more, and check that exactly one share grew,
+   by one penny.
+3. Compare with the answer, [`OneMorePennyAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/answer/OneMorePennyAnswerTest.java),
+   which runs against the splitter in use today with:
+
+```bash
+./gradlew :lessons:property-based-testing:test -Pcode=answer   # the splitter in use today: 2 of 5 tests fail; one more penny on 10 pence between 11 people moves every share
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) (its source is [`media/property-based-testing.deck.html`](media/property-based-testing.deck.html)). Arrow keys

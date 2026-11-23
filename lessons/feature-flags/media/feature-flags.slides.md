@@ -68,6 +68,8 @@ Say: Paul Hammant named branch by abstraction in 2007. Pete Hodgson's article on
 - https://openfeature.dev — OpenFeature, with its Java software development kit (SDK)
 - https://martinfowler.com/articles/feature-toggles.html — Feature Toggles, by Pete Hodgson
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check the old and new rules agree on every basket up to £100; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the OpenFeature site, and Pete Hodgson's article on feature toggles. The links on
-  screen also take you to this lesson's test code and examples, to run yourself.
+  screen also take you to this lesson's test code and examples, to run yourself. And try the exercise in the README:
+  check that the old and new rules charge the same for every basket up to £100.

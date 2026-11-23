@@ -62,6 +62,8 @@ Say: The idea comes from QuickCheck, by Koen Claessen and John Hughes, for the H
 ## closing: Find out more
 - https://github.com/JetBrains/jetCheck — jetCheck, its README and examples
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: add a rule that a penny more changes only one share; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with jetCheck's README, which has more examples of properties. The links on screen also
-  take you to this lesson's test code and examples, to run yourself.
+  take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: one more
+  rule, that adding a penny to the bill adds a penny to just one share.

@@ -11,4 +11,4 @@ their own narration, in [spring-tests-in-slices.slides.md](spring-tests-in-slice
 6. The data slice starts only the repository, and an in-memory database, and rolls back each test's rows. It checks the query returns Ann's deliveries still to come, earliest first.
 7. And the JSON slice starts only Jackson, set up as the application sets it up. It checks the answer for one delivery, field by field, exactly as the description promises it.
 8. We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.
-9. Now the fixed answer. It writes the date as the description promises. We run the same tests. [pause 1s] All 8 tests pass. The slices check each layer, and one test of the whole application checks the wiring.
+9. Now the fixed answer. It writes the date as the description promises. We run the same tests. [pause 1s] All 9 tests pass. The slices check each layer, and one test of the whole application checks the wiring.

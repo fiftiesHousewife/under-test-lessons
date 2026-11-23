@@ -67,6 +67,8 @@ Say: Testcontainers was started by Richard North in 2015, and is free under the 
 ## closing: Find out more
 - https://testcontainers.com — Testcontainers, with guides for each language
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: tell H2 to sort nulls as PostgreSQL does, with no container; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Testcontainers guides. The links on screen also take you to this lesson's test
-  code and examples, to run yourself.
+  code and examples, to run yourself. And try the exercise in the README: tell H2 to sort nulls as PostgreSQL does,
+  and watch today's query fail with no container at all.
