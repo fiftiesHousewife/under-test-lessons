@@ -9,6 +9,7 @@ page written on a dry run too. Needs only Python 3 (standard library) and a toke
                                                     # dry run that also writes the page, without issue numbers
     python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply --page docs/BACKLOG.md
                                                     # creates and updates issues, then writes the page
+                                                    # add --relink to post every issue's links, not only changed ones
 
 Settings, from the environment:
     UNDERTEST_GITHUB_TOKEN (or GH_TOKEN, or GITHUB_TOKEN)   a token with permission to write issues in the repo
@@ -39,6 +40,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SEED = REPO_ROOT / "plan" / "lessons-backlog.yaml"
 KEY_MARKER = "<!-- backlog-key: {} -->"
+LINKS_MARKER = "<!-- backlog-links: parent={}; blocked-by={} -->"
 LABEL_COLOURS = {"type": "5319e7", "phase": "0e8a16", "owner": "1d76db", "done-by": "fbca04", "horizon": "d93f0b"}
 PAUSE_SECONDS = 1.5      # GitHub asks for at least a second between requests that create content
 RATE_LIMIT_WAIT = 90     # wait this long, then retry, if a rate limit is hit and GitHub gives no time
@@ -136,7 +138,16 @@ def body_for(item, web_base):
         lines += ["", f"**Decision record:** [{item['title']}]({web_base}/blob/main/{item['decision_record']})"]
     if "notes" in item:
         lines += ["", item["notes"]]
+    # Records the links, so a change to them changes the body and the issue is written again.
+    lines += ["", LINKS_MARKER.format(item.get("parent", ""), ",".join(item.get("blocked_by", [])))]
     return "\n".join(lines)
+
+
+def changed(issue, payload):
+    """Whether an issue's title, body or labels differ from what the seed says."""
+    body = (issue.get("body") or "").replace("\r\n", "\n")
+    labels = {label["name"] for label in issue.get("labels", [])}
+    return issue.get("title") != payload["title"] or body != payload["body"] or labels != set(payload["labels"])
 
 
 HORIZON_ORDER = {"now": 0, "next": 1, "later": 2}
@@ -206,15 +217,21 @@ def main():
         if m:
             by_key[m.group(1)] = issue
 
+    # Only issues that differ from the seed are written; each write waits out GitHub's pause between writes.
+    written = set()
     for item in items:
         payload = {"title": item["title"], "body": body_for(item, web_base), "labels": labels_for(item)}
         if item["key"] in by_key:
-            number = by_key[item["key"]]["number"]
-            print(f"  update #{number}: {item['title']}")
-            by_key[item["key"]], _ = github.request("PATCH", f"issues/{number}", payload, writes=True)
+            issue = by_key[item["key"]]
+            if not changed(issue, payload):
+                continue
+            print(f"  update #{issue['number']}: {item['title']}")
+            by_key[item["key"]], _ = github.request("PATCH", f"issues/{issue['number']}", payload, writes=True)
         else:
             print(f"  create: {item['title']}")
             by_key[item["key"]], _ = github.request("POST", "issues", payload, writes=True)
+        written.add(item["key"])
+    print(f"  {len(items) - len(written)} issue(s) unchanged")
 
     for item in items:
         issue = by_key[item["key"]]
@@ -230,15 +247,27 @@ def main():
             github.request("PATCH", f"issues/{issue['number']}", {"state": "closed", "state_reason": "not_planned"},
                            writes=True)
 
+    # Links are posted for issues written in this run, or for every issue with --relink. A link already there fails
+    # harmlessly; any other failure is named, since an unchanged issue's links aren't tried again without --relink.
+    failed = []
     for item in items:
+        if item["key"] not in written and "--relink" not in sys.argv:
+            continue
         issue = by_key[item["key"]]
         if "parent" in item:
             parent = by_key[item["parent"]]
-            github.request("POST", f"issues/{parent['number']}/sub_issues", {"sub_issue_id": issue["id"]},
-                           writes=True, allow_fail=True)
+            _, headers = github.request("POST", f"issues/{parent['number']}/sub_issues", {"sub_issue_id": issue["id"]},
+                                        writes=True, allow_fail=True)
+            if headers is None:
+                failed.append(f"#{issue['number']} as a sub-issue of #{parent['number']}")
         for blocker in item.get("blocked_by", []):
-            github.request("POST", f"issues/{issue['number']}/dependencies/blocked_by",
-                           {"issue_id": by_key[blocker]["id"]}, writes=True, allow_fail=True)
+            _, headers = github.request("POST", f"issues/{issue['number']}/dependencies/blocked_by",
+                                        {"issue_id": by_key[blocker]["id"]}, writes=True, allow_fail=True)
+            if headers is None:
+                failed.append(f"#{issue['number']} blocked by #{by_key[blocker]['number']}")
+    if failed:
+        print(f"  {len(failed)} link(s) not made (some may already exist): {', '.join(failed)}")
+        print("  run again with --relink to try every link")
     if "--page" in sys.argv:
         write_page(items, by_key, REPO_ROOT / sys.argv[sys.argv.index("--page") + 1])
     print("done")

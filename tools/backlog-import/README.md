@@ -15,5 +15,7 @@ python3 tools/backlog-import/import_to_github.py OWNER/REPO --apply --page docs/
 ```
 
 Re-running updates issues by key rather than duplicating them; an item removed from the file is closed as not planned,
-and one marked `status: "done"` is closed as completed. Maintainers push with
+and one marked `status: "done"` is closed as completed. Only issues that differ from the file are written, and only
+their sub-issue and blocked-by links are posted; a link that couldn't be made is named at the end, and `--relink`
+posts every issue's links again (one already there fails harmlessly). Maintainers push with
 [maintainer-tools/sync/sync.sh](../../maintainer-tools/sync/sync.sh), which runs this before pushing.
