@@ -1,0 +1,5 @@
+$ ./gradlew :lessons:running-old-code-unplugged:test -Pcode=answer
+CardPaymentsAnswerTest > sendsTheOrderAndTheAmountInPence() PASSED
+CardPaymentsAnswerTest > keepsTheGatewaysReference() PASSED
+The airgap agent refused nothing: no test tried to reach another machine.
+All 2 tests passed.

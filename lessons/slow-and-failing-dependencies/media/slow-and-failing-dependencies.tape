@@ -86,7 +86,7 @@ Sleep 300ms
 Type@1ms `note "The *strong* tests: WireMock makes the supplier slow, or breaks the connection."`
 Enter
 Sleep 300ms
-Type@1ms `show SupplierFaultTest 41 54 "the strong tests" --zoom 43-45`
+Type@1ms `show SupplierFaultTest 43 56 "the strong tests" --zoom 45-47`
 Enter
 Sleep 300ms
 Show

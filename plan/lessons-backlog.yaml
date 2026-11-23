@@ -431,6 +431,7 @@ items:
       - "The before and the after both run in ./gradlew check, with the agent attached"
       - "The video shows the report"
     notes: "It ends by turning the report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules. Before: running the service's tests reaches db.prod.example.com, because application.yml says so (in the lesson, a name that can't resolve). After: under the airgap agent the tests fail as they would offline; the report names each refused host, its test, its caller and the setting with its file and line, and application-test.yml overrides each with a stand-in (WireMock, an in-memory or container database) until the report is clean. The agent's first release, 0.1.0, is out: io.github.fiftieshousewife.airgap:airgap-agent, airgap-junit and airgap-gradle-plugin on Maven Central, plugin id io.github.fiftieshousewife.airgap; each task's report is build/airgap/<task>/calls.jsonl. Background: the toolkit's decision guide on running old code only where production can't be reached. Replaces the planned lesson on running old code safely."
+    status: "done"
   - key: "lesson-old-command-line-programs"
     type: "deliverable"
     title: "Lesson: old command-line programs"

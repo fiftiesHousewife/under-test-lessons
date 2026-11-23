@@ -165,11 +165,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
   9  wiremock = &quot;3.13.2&quot;
    ⋮
- 74  [libraries]
+ 76  [libraries]
    ⋮
- 80  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }
+ 82  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }
    ⋮
-147  wiremock-standalone = { module = &quot;org.wiremock:wiremock-standalone&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
+149  wiremock-standalone = { module = &quot;org.wiremock:wiremock-standalone&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><p class="scene-text">Step two. Add it as a test dependency of the lesson.</p></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
 <mark> 10      testImplementation(libs.wiremock)</mark>
@@ -198,20 +198,20 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 42          assertThat(Clients.outcome(Clients.at(supplier.baseUrl()), &quot;KETTLE-2&quot;))</mark>
 <mark> 43                  .isEqualTo(&quot;supplier unavailable: the supplier answered 503&quot;);</mark>
  44      }</pre></figure></main><aside class="notes">This is the weak test. A stand-in supplier, made with WireMock, answers at once. Once with 12 kettles in stock, and once with an outage, 503. Both are handled. But nothing tries a supplier that is slow, or one that drops the connection.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/4e2c75265dd1bc2b.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong tests</h1><div class="rule"></div><p class="scene-text">Now, the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The shop is allowed 3 seconds, and the test stops it there if it is still waiting. The second test runs 3 times, once for each fault: a connection reset, an empty response, and a broken answer. Every time, the shop must say, supplier unavailable.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the strong tests</figcaption><pre> 41      @Test
- 42      void slowSupplierCostsTheShopOneTimeout() {
-<mark> 43          supplier.stubFor(get(urlEqualTo(&quot;/stock/KETTLE-2&quot;)).willReturn(okJson(&quot;{\&quot;units\&quot;: 12}&quot;).withFixedDelay(5000)));</mark>
-<mark> 44          final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);</mark>
-<mark> 45          assertThat(outcome).isEqualTo(&quot;supplier unavailable: no answer within 500 ms&quot;);</mark>
- 46      }
- 47  
- 48      @ParameterizedTest
- 49      @EnumSource(value = Fault.class, names = {&quot;CONNECTION_RESET_BY_PEER&quot;, &quot;EMPTY_RESPONSE&quot;, &quot;MALFORMED_RESPONSE_CHUNK&quot;})
- 50      void brokenConnectionSaysTheSupplierIsUnavailable(final Fault fault) {
- 51          supplier.stubFor(get(urlEqualTo(&quot;/stock/KETTLE-2&quot;)).willReturn(aResponse().withFault(fault)));
- 52          final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);
- 53          assertThat(outcome).as(fault.name()).isEqualTo(&quot;supplier unavailable: the connection failed&quot;);
- 54      }</pre></figure></main><aside class="notes">Now, the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The shop is allowed 3 seconds, and the test stops it there if it is still waiting. The second test runs 3 times, once for each fault: a connection reset, an empty response, and a broken answer. Every time, the shop must say, supplier unavailable.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/69bece6ed695756f.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong tests</h1><div class="rule"></div><p class="scene-text">Now, the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The shop is allowed 3 seconds, and the test stops it there if it is still waiting. The second test runs 3 times, once for each fault: a connection reset, an empty response, and a broken answer. Every time, the shop must say, supplier unavailable.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the strong tests</figcaption><pre> 43      @Test
+ 44      void slowSupplierCostsTheShopOneTimeout() {
+<mark> 45          supplier.stubFor(get(urlEqualTo(&quot;/stock/KETTLE-2&quot;)).willReturn(okJson(&quot;{\&quot;units\&quot;: 12}&quot;).withFixedDelay(5000)));</mark>
+<mark> 46          final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);</mark>
+<mark> 47          assertThat(outcome).isEqualTo(&quot;supplier unavailable: no answer within 500 ms&quot;);</mark>
+ 48      }
+ 49  
+ 50      @ParameterizedTest
+ 51      @EnumSource(value = Fault.class, names = {&quot;CONNECTION_RESET_BY_PEER&quot;, &quot;EMPTY_RESPONSE&quot;, &quot;MALFORMED_RESPONSE_CHUNK&quot;})
+ 52      void brokenConnectionSaysTheSupplierIsUnavailable(final Fault fault) {
+ 53          supplier.stubFor(get(urlEqualTo(&quot;/stock/KETTLE-2&quot;)).willReturn(aResponse().withFault(fault)));
+ 54          final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);
+ 55          assertThat(outcome).as(fault.name()).isEqualTo(&quot;supplier unavailable: the connection failed&quot;);
+ 56      }</pre></figure></main><aside class="notes">Now, the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The shop is allowed 3 seconds, and the test stops it there if it is still waiting. The second test runs 3 times, once for each fault: a connection reset, an empty response, and a broken answer. Every time, the shop must say, supplier unavailable.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/69bece6ed695756f.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The supplier fails</h1><div class="rule"></div><p class="scene-text">We run the tests against today's code. The weak tests pass. The 4 strong tests fail. The slow supplier kept the shop waiting past its 3 seconds. And each broken connection came back as an exception, not as a clear answer.</p><p class="callout">A slow supplier kept the shop waiting, and a broken connection became an exception, not an answer.</p></section><figure class="code" style="--code-size: 13px"><pre class="command">$ ./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today</pre><pre class="output">StockAnswerTest &gt; supplierWithStockGivesTheUnits() PASSED
 StockAnswerTest &gt; supplierOutageSaysTheSupplierIsUnavailable() PASSED
 SupplierFaultTest &gt; brokenConnectionSaysTheSupplierIsUnavailable(Fault) &gt; [1] fault = CONNECTION_RESET_BY_PEER FAILED

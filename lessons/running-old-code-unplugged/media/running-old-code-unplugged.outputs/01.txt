@@ -1,0 +1,17 @@
+$ ./gradlew :lessons:running-old-code-unplugged:test -Pcode=today
+QuotesTest > knowsThePriceOfAKettle() FAILED
+    org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection
+QuotesTest > quotesAKettleDeliveredToCentralLondon() FAILED
+    org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection
+QuotesTest > chargesForDeliveryToCentralLondon() FAILED
+    org.springframework.web.client.ResourceAccessException: I/O error on GET request for "https://rates.prod.example.invalid/rates/SW1A": rates.prod.example.invalid:443: refused by the airgap agent
+3 tests completed, 3 failed
+The airgap agent refused 6 calls to 2 machines:
+  db.prod.example.invalid
+    tests:   QuotesTest.knowsThePriceOfAKettle, QuotesTest.quotesAKettleDeliveredToCentralLondon
+    code:    ProductPrices.pricePence(ProductPrices.java:19)
+    setting: spring.datasource.url (application.yml:6)
+  rates.prod.example.invalid
+    tests:   QuotesTest.chargesForDeliveryToCentralLondon
+    code:    DeliveryRates.chargePence(DeliveryRates.java:20)
+    setting: shop.rates.url (application.yml:10)

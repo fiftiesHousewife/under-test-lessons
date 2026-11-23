@@ -1,0 +1,15 @@
+# The quote service's settings, as it came to us. Every address in it is production's.
+spring:
+  application:
+    name: quotes
+  datasource:
+    url: jdbc:postgresql://db.prod.example.invalid:5432/shop
+    username: quotes
+shop:
+  rates:
+    url: https://rates.prod.example.invalid
+  payments:
+    url: https://payments.prod.example.invalid
+logging:
+  level:
+    root: warn

@@ -23,7 +23,7 @@ and see what its existing tests really check.
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | The safety inventory: an old repo searched, before anything runs, for what could reach production, leak a secret or cause harm (addresses in settings, credentials, scheduled jobs, calls that send money or messages), each listed with where it is | the toolkit's safety inventory | Java only | planned |
-| Running old code unplugged: an old Spring service run under the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), every outbound call refused and reported, then a test profile written until the report is clean (asked for by the toolkit's guide to running old code only where production can't be reached) | the airgap agent, Spring Boot test profiles | Java only | planned: once the agent's first release exists |
+| [Running old code unplugged](running-old-code-unplugged/README.md): an old Spring service's tests run under the airgap agent, every outside call refused and reported, then a test profile written until the report is clean | the airgap agent, Spring Boot test profiles, H2, WireMock | Java only | built |
 | Anti-patterns in existing tests: an old repo's tests read for what makes them untrustworthy (tests that check nothing, sleep, depend on order or on the network, or are switched off), each found by a check and listed | the toolkit's anti-pattern checks | Java only | planned |
 
 ## Measure how far tests can be trusted
@@ -115,7 +115,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
-| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md), [Slow and failing dependencies](slow-and-failing-dependencies/README.md) | built |
+| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md), [Slow and failing dependencies](slow-and-failing-dependencies/README.md), [Running old code unplugged](running-old-code-unplugged/README.md) | built |
 | business-rule-tests | [Behaviour written down as examples](behaviour-as-examples/README.md), [Outside-in HTTP tests](outside-in-http-tests/README.md) | built |
 | fake-behind-an-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
 | differential-testing | [Differential testing](differential-testing/README.md) | built |
@@ -177,6 +177,7 @@ adding its row first.
 | Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
 | Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
 | Responses checked against the OpenAPI document (`openapi-response-checks`) | A parcel tracking service and its published openapi.yaml | REST Assured tests check the status and a few fields, and pass while the weight is sent as text and the error field is renamed | The same tests with a filter that checks every answer against the document, naming the request, field and rule | `-Pcode=today` |
+| Running old code unplugged (`running-old-code-unplugged`) | A shop's old quote service: a price from the database plus delivery from the courier's rates service | The service's own tests, with application.yml naming production; the airgap agent refuses each call and its report names the host, test and line | application-test.yml gives each refused setting a stand-in (H2, WireMock); the report is clean | `-Pcode=today` |
 | Slow and failing dependencies (`slow-and-failing-dependencies`) | A shop checking a supplier's stock before promising delivery | A stand-in answers at once, with stock or 503, so a client with no timeout that throws on a dropped connection passes | WireMock answers 2 seconds late, resets the connection, answers empty or broken; each test allows 1 second and expects "supplier unavailable" | `-Pcode=today` |
 | Black-box tests of a whole application (`black-box-tests`) | A shop's order service: reserve stock at the warehouse, keep the order as 2 rows | Unit tests of the order rules with stand-ins pass while the order is never committed | The service started from its entry point and a settings file; WireMock as the warehouse; the answer, the warehouse call and the rows written are checked | `-Pcode=today` |
 | Behaviour written down as examples (`behaviour-as-examples`) | A shop's refund rules | Tests written from the code, far from the 30-day boundary | The returns team's named examples, as a table, find the 30th-day refund that the code gets wrong | `-Pcode=today` |
@@ -191,15 +192,9 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
 
 1. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
    secret or cause harm, and each finding is listed with where it is.
-2. **Running old code unplugged,** with the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap)
-   (released, 0.1.0): an old Spring service's tests reach a production database because `application.yml` says so; under
-   the agent each outbound call is refused as on an unplugged machine and reported (the test, the calling code, and the
-   setting with its file and line), and `application-test.yml` replaces each with a stand-in until the report is clean.
-   The report becomes the service's connection list. It ends by turning the
-   report's web addresses into a recording plan: WireMock proxy mappings and draft cleaning rules.
-3. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
+2. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
    check and listed.
-4. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+3. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

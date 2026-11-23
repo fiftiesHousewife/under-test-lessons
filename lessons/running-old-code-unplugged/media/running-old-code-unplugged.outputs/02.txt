@@ -1,0 +1,8 @@
+$ ./gradlew :lessons:running-old-code-unplugged:test
+QuotesTest > knowsThePriceOfAKettle() PASSED
+QuotesTest > quotesAKettleDeliveredToCentralLondon() PASSED
+QuotesTest > chargesForDeliveryToCentralLondon() PASSED
+CardPaymentsAnswerTest > sendsTheOrderAndTheAmountInPence() PASSED
+CardPaymentsAnswerTest > keepsTheGatewaysReference() PASSED
+The airgap agent refused nothing: no test tried to reach another machine.
+All 5 tests passed.

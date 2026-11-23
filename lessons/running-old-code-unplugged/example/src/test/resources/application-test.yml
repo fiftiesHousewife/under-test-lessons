@@ -1,0 +1,11 @@
+# The test profile: a stand-in for each address the airgap agent refused, so no test leaves this machine.
+spring:
+  datasource:
+    url: jdbc:h2:mem:shop # the shop's database: H2, in memory, made from the scripts below
+  sql:
+    init:
+      schema-locations: classpath:stand-ins/shop/schema.sql
+      data-locations: classpath:stand-ins/shop/products.sql
+shop:
+  rates:
+    url: ${stand-ins.rates.url} # the courier's rates: WireMock on this machine, started by StandIns

@@ -27,10 +27,12 @@ class SupplierFaultTest {
     private static final String WAITED_TOO_LONG = "the shop kept the customer waiting for the supplier";
 
     private final WireMockServer supplier = new WireMockServer(options().dynamicPort());
+    private StockCheck stock;
 
     @BeforeEach
     void start() {
         supplier.start();
+        stock = Clients.at(supplier.baseUrl()); // made and warmed up here, so only the shop's waiting is timed
     }
 
     @AfterEach
@@ -54,6 +56,6 @@ class SupplierFaultTest {
     }
 
     private String askForKettles() {
-        return Clients.outcome(Clients.at(supplier.baseUrl()), "KETTLE-2");
+        return Clients.outcome(stock, "KETTLE-2");
     }
 }

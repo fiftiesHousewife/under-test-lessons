@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: running-old-code-unplugged
+title: Running old code unplugged
+techniques: [recorded-http-responses]
