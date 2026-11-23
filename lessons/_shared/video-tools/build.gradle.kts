@@ -24,6 +24,8 @@ val checkVideoScripts = tasks.register<JavaExec>("checkVideoScripts") {
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = "io.github.fiftieshousewife.undertest.lessons.video.VideoChecks"
     args(repoRoot)
+    // Clips no slide uses are listed; -PremoveUnused=true removes them, a person's recordings too.
+    systemProperty("video.removeUnused", providers.gradleProperty("removeUnused").orElse("false").get())
 }
 
 tasks.register<JavaExec>("buildLessonCaptions") {

@@ -56,7 +56,7 @@ final class VideoLength {
     }
 
     /** Seconds the voice takes to say a narration: its words at the voice's speed, and its pauses. */
-    private static double spoken(final String narration) {
+    static double spoken(final String narration) {
         double pauses = 0;
         for (final Pauses.Part part : Pauses.parts(narration)) {
             pauses += part.pauseAfter();
