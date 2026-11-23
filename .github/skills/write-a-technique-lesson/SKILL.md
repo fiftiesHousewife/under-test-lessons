@@ -66,7 +66,9 @@ tasks.jacocoTestCoverageVerification {
 In this order: title; one bold line saying what the technique does; a paragraph on the problem it solves and the tool;
 **Run the example** (the two commands, each with what it shows; run them, don't predict); a short list linking today's
 code, the weak test and the strong test; **Exercise** (below); **Watch it, or present it** (deck and video sources); **When to use it**;
-**Find out more** (primary sources, and the toolkit's technique rule). Add the lesson to `lessons/README.md`, the
+**On older Java** (for each library that needs another version, the last one built for Java 8 and for Java 11, read
+from Maven Central, and where the `javax` names apply; [decision](../../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md),
+and `./gradlew check` requires the section); **Find out more** (primary sources, and the toolkit's technique rule). Add the lesson to `lessons/README.md`, the
 catalogue (both tables, status "built") and the README's group table.
 
 ## 3a. The exercise
@@ -107,6 +109,7 @@ Every lesson has one exercise whose answer the build checks
 - [ ] `./gradlew check` passes (PMD and Checkstyle included); every README command was run.
 - [ ] Narration fits: each scene's pause covers (words / 2.6) * 1.35 + 1.5 seconds.
 - [ ] Each live run's output fits one screen, 36 rows with its command (`checkVideoScripts` checks it).
+- [ ] The README's On older Java section names the last Java 8 and Java 11 versions of the lesson's libraries.
 - [ ] The exercise: an `answer` package run by `-Pcode=answer` and by `check`; the README's Exercise section, whose
   answer command's output is kept; one point and one sentence on the deck's last slide.
 - [ ] Deck rebuilt and committed; lesson listed in `lessons/README.md`, the catalogue and the README.
