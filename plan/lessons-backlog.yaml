@@ -987,6 +987,7 @@ items:
       - "Unused clips are removed only with -PremoveUnused=true"
       - "CI rebuilds the decks and fails if they differ from what is committed"
     decision_record: "docs/decisions/0027-inside-a-company-a-person-records-the-voice.md"
+    status: "done"
   - key: "recording-guidance-for-companies"
     type: "deliverable"
     title: "Recording guidance for companies"

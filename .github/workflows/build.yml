@@ -24,6 +24,14 @@ jobs:
           distribution: temurin
           java-version: "25"
       - uses: gradle/actions/setup-gradle@v5
+      # Each deck is built from its slides, styles, kept outputs and clips, so a committed deck that differs from a
+      # fresh build missed a rebuild. Before the live commands, which rewrite the kept outputs the decks show.
+      - name: Check every deck is rebuilt
+        shell: bash
+        run: |
+          ./gradlew :lessons:video-tools:buildLessonDecks
+          git diff --exit-code --stat -- 'lessons/*/media/*.deck.html' \
+            || { echo "::error::These decks differ from a fresh build: run ./gradlew :lessons:video-tools:buildLessonDecks and commit them"; exit 1; }
       # Every lesson's live commands, run afresh, so the checks hold each README and deck to what the code prints today.
       - name: Run each lesson's live commands
         run: python3 tools/capture-lesson-outputs.py
