@@ -907,6 +907,8 @@ items:
     done_when:
       - "./gradlew check passes in a copy with no toolkit beside it, and says the toolkit checks were skipped"
     decision_record: "docs/decisions/0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md"
+    notes: "Already so: with no toolkit checkout, checkLessonFiles warns that the toolkit checks were skipped and runs the rest; nothing else in check reads the toolkit. On CI a missing checkout still fails, by design."
+    status: "done"
   - key: "guides-say-which-group-each-step-is-in"
     type: "deliverable"
     title: "AGENTS.md and the video skills say which group each step is in"
