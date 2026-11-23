@@ -136,7 +136,8 @@ The service also takes card payments, through the payment gateway that `applicat
 - **The first time old code runs on a developer's machine,** and every time after: tests, application starts and the
   build itself. The toolkit's guide,
   [Old code runs first only where production cannot be reached](https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0008-old-code-runs-first-only-where-production-cannot-be-reached.md),
-  puts the very first run on build machines cut off from the network, and the agent on every machine after that.
+  puts the very first run in continuous integration (CI), on machines cut off from the network, and the agent on
+  every machine after that.
 - **In discovery,** to draft the list of everything the service depends on: each line of the report is one.
 - **Not against hostile code:** the agent runs inside the JVM it guards, so code written to get round it can. It
   guards against accidental calls from code whose settings point at production.

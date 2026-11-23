@@ -4,11 +4,12 @@
 
 A flaky test sometimes passes and sometimes fails with no change to the code or the test, usually because of time, the
 order tests run in, or state they share. The commonest cause is a test that sleeps for a fixed time and hopes the
-background work is done: it passes on a quiet laptop and fails, now and then, on a busy build machine. Every flaky
-failure teaches people to rerun the build and ignore what it says. [Awaitility](https://github.com/awaitility/awaitility)
-waits for a condition instead, checking it again and again until it is true or a time limit passes. JUnit's
-[repeated tests](https://docs.junit.org/current/writing-tests/repeated-tests.html) run a test several times,
-so a new test can be held to five clean runs before it goes in.
+background work is done: it passes on a quiet laptop and fails, now and then, in busy continuous integration (CI: the
+shared build that runs every test whenever someone pushes a change). Every flaky failure teaches people to rerun the
+build and ignore what it says. [Awaitility](https://github.com/awaitility/awaitility) waits for a condition instead,
+checking it again and again until it is true or a time limit passes. JUnit's [repeated
+tests](https://docs.junit.org/current/writing-tests/repeated-tests.html) run a test several times, so a new test can be
+held to five clean runs before it goes in.
 
 ## Run the example
 
@@ -22,7 +23,7 @@ The example is a shop's order desk.
 background thread. Both tests run 5 times each. The code is correct both ways: the switch only chooses how busy the
 machine is, and the fix is in the tests.
 
-- [`TodaysBusyMailServer`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/flaky/today/TodaysBusyMailServer.java) is the mail server on today's busy build machine:
+- [`TodaysBusyMailServer`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/flaky/today/TodaysBusyMailServer.java) is the mail server in today's busy continuous integration:
   every third message waits 600 ms in a queue. [`QuietMailServer`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/flaky/fixed/QuietMailServer.java) sends each at once.
 - [`SleepingTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flaky/SleepingTest.java) is the "before": it sleeps a fixed 200 ms, then checks. It passes twice,
   fails on its third run, and passes again.
@@ -57,8 +58,8 @@ that names what was missing if time runs out.
 
 ## When to use it
 
-- **Before a new or changed test is merged:** run it 5 times in a row on the build machine (`@RepeatedTest(5)`, or
-  rerun the build), and let it in only if every run passes.
+- **Before a new or changed test is merged:** run it 5 times in a row in continuous integration (`@RepeatedTest(5)`,
+  or rerun the build), and let it in only if every run passes.
 - **When a build fails and passes on a rerun:** find the test that failed, rather than just rerunning it.
 - **In tests of background work, messages or anything with a timeout:** wait for the result with Awaitility, never
   `Thread.sleep` for a guess. Better still, where the code allows it, inject the executor or `Clock` so the test

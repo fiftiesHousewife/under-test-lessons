@@ -10,6 +10,7 @@ the words the lessons themselves use.
 | Word or phrase | Meaning | Replaces (don't use) |
 |---|---|---|
 | **lesson** | One technique taught with a runnable example, a narrated video and a slide deck. | module, unit, course |
+| **continuous integration (CI)** | The shared build that runs every test whenever someone pushes a change. Said in full on a slide, and explained the first time a lesson or deck uses it. | build machine, build server, the pipeline |
 | **today's code** | The example code as it is before the lesson's fix, chosen with `-Pcode=today` (or the lesson's own switch). | legacy version, broken version |
 | **the fix** | The example code after the change the lesson teaches. The default, so the build passes. | fixed version, solution |
 | **weak test** | A test that looks reasonable and passes, but would miss the bug the lesson shows. | bad test |

@@ -1,28 +1,29 @@
 # Slides: finding flaky tests
 
-Sources: the Awaitility README and usage guide, github.com/awaitility/awaitility (Apache 2.0 licence; by Johan Haleby; first
-released in 2010, on Maven Central as com.jayway.awaitility 1.0 in July 2010, now org.awaitility; waits 10 seconds and
-checks every 100 milliseconds unless told otherwise); the JUnit user guide (repeated tests); Martin Fowler,
+Sources: the Awaitility README and usage guide, github.com/awaitility/awaitility (Apache 2.0 licence; by Johan Haleby;
+first released in 2010, on Maven Central as com.jayway.awaitility 1.0 in July 2010, now org.awaitility; waits 10 seconds
+and checks every 100 milliseconds unless told otherwise); the JUnit user guide (repeated tests); Martin Fowler,
 "Eradicating Non-Determinism in Tests", martinfowler.com, April 2011; John Micco, "Flaky Tests at Google and How We
 Mitigate Them", Google Testing Blog, May 2016.
 
 ## intro: It passes twice, fails once, then passes again
 - The test places an order, sleeps 200 milliseconds, then checks the email went
-- On a busy build machine, every third email waits 600 milliseconds
+- In busy continuous integration, every third email waits 600 milliseconds
 - Run 5 times, it fails on run 3 only: nothing changed, so people just rerun it
 Picture: bug
 Say: Here is the problem. The test places an order, sleeps for 200 milliseconds, and then checks that the
-  confirmation email went. On a busy build machine, every third email waits 600 milliseconds. So, run 5 times, the
+  confirmation email went. In continuous integration, the shared build that runs every test whenever someone pushes a
+  change, the machines are busy, and every third email waits 600 milliseconds. So, run 5 times, the
   test passes twice, fails on its third run, and passes again. Nothing changed. A test like this is called flaky, and
   every flaky failure teaches people to rerun the build, and then to ignore real failures too.
 
 ## intro: Our example: order confirmations
 - A shop's order desk takes an order and returns at once
 - The confirmation email goes a moment later, on a background thread
-- On a busy build machine, the mail server is sometimes slow
+- In busy continuous integration, the mail server is sometimes slow
 Picture: queue
 Say: Our example is a shop's order desk. It takes an order and returns at once. The confirmation email goes a moment
-  later, on a background thread, so the customer is never kept waiting. On a busy, shared build machine, the mail
+  later, on a background thread, so the customer is never kept waiting. In busy continuous integration, the mail
   server is sometimes slow.
 
 ## intro: The fix: wait for the email, not for a fixed time
@@ -48,12 +49,12 @@ Say: Here is how it looks. With a library called Awaitility, the test says what 
 Include: how-we-build
 
 ## closing: When to look for flaky tests
-- Before a new or changed test is merged: 5 clean runs in a row, on the build machine
+- Before a new or changed test is merged: 5 clean runs in a row, in continuous integration
 - When a build fails and passes on a rerun: find the test, don't just rerun it
 - In tests of background work, messages or anything with a timeout: wait for the result, never sleep
 Picture: map
 Say: When should you look for flaky tests? [pause 1600ms] Before a new or changed test is merged, run it 5 times in a
-  row, on the build machine, and let it in only if every run passes. When a build fails and then passes on a rerun,
+  row, in continuous integration, and let it in only if every run passes. When a build fails and then passes on a rerun,
   find the test that failed, rather than just rerunning it. And in tests of background work, messages, or anything
   with a timeout, wait for the result. Never sleep for a guess.
 
@@ -63,8 +64,8 @@ Say: When should you look for flaky tests? [pause 1600ms] Before a new or change
 - Google reported in 2016 that almost 16 percent of its tests were sometimes flaky
 Picture: book
 Say: Awaitility was written by Johan Haleby, and first released in 2010. Martin Fowler's article on non deterministic
-  tests, in 2011, warned that they spread like an infection, and advised waiting for a result instead of sleeping. And in
-  2016, Google reported that almost 16 percent of its tests were flaky some of the time.
+  tests, in 2011, warned that they spread like an infection, and advised waiting for a result instead of sleeping. And
+  in 2016, Google reported that almost 16 percent of its tests were flaky some of the time.
 
 ## closing: Find out more
 - https://github.com/awaitility/awaitility — Awaitility, with its getting-started and usage guides

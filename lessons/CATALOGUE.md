@@ -93,7 +93,7 @@ and see what its existing tests really check.
 | [JUnit extensions](junit-extensions/README.md): set up and clean up shared state once, and catch the test that leaves it changed | JUnit 6 | Java only | built |
 | [Finding flaky tests](finding-flaky-tests/README.md): wait with Awaitility instead of sleeping, and five clean runs as a gate | Awaitility, JUnit 6 | Java only | built |
 | [Temporary folders](junit-temporary-folders/README.md): each test gets its own empty folder, removed afterwards, so no test reads a file another left behind | JUnit 6 | Java only | built |
-| [Tags: fast tests first, slow tests apart](junit-tags/README.md): the slow tests labelled, the quick ones run on every change, the slow ones by the build machine | JUnit 6, Gradle | Java only | built |
+| [Tags: fast tests first, slow tests apart](junit-tags/README.md): the slow tests labelled, the quick ones run on every change, the slow ones by continuous integration | JUnit 6, Gradle | Java only | built |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
 | [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
 | [Spring tests in slices](spring-tests-in-slices/README.md): each layer of a Spring Boot 4 service tested on its own (web, data, JSON), and one test of the whole application kept for the wiring | Spring Boot test, H2, WireMock standalone | Java only | built |

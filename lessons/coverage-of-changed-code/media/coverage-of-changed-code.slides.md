@@ -46,7 +46,8 @@ Say: The fix is to check only what the change touched. Git lists the classes a b
 - PIT plants bugs only there: targetClasses = changedClasses
 - A gate after PIT: "5 of 11 planted bugs in the changed classes survived"
 Picture: robot
-Say: How is the build told? A short file lists the changed classes, and on the build machine git writes it. PIT, the
+Say: How is the build told? A short file lists the changed classes, and in continuous integration, the shared build that
+  runs on every push, git writes it. PIT, the
   mutation testing tool, is set to plant bugs only in the classes on that list, so it stays quick. JaCoCo's coverage
   check counts only those classes too. And a gate after PIT fails the build. Today it says 5 of 11 planted bugs in
   the changed classes survived.

@@ -1,25 +1,26 @@
 # Tags: fast tests first, slow tests apart
 
-**Label the slow tests, run the quick ones on every change, and leave the slow ones to the build machine.**
+**Label the slow tests, run the quick ones on every change, and leave the slow ones to continuous integration.**
 
 Old suites often mix quick unit tests with slow ones that start a database, a server or a whole application. Every
 run is then as slow as the slowest tests, so people stop running them. JUnit's `@Tag` labels a test or a test class;
 Gradle's test task can leave out tests with a tag (`excludeTags`) or run only those (`includeTags`). So one task runs
-the quick tests on every change, and a second task, which `check` depends on, runs the slow ones on the build machine.
-Tags come with JUnit, and the filters with Gradle.
+the quick tests on every change, and a second task, which `check` depends on, runs the slow ones in continuous
+integration (CI: the shared build that runs every test whenever someone pushes a change). Tags come with JUnit,
+and the filters with Gradle.
 
 ## Run the example
 
 ```bash
 ./gradlew :lessons:junit-tags:test -Pcode=today   # today's build, with no tags: the quick task runs all 6 tests, the slow warehouse tests too
 ./gradlew :lessons:junit-tags:test                # with tags: the quick task runs only the 4 quick tests
-./gradlew :lessons:junit-tags:slowTest            # the slow task, for the build machine: only the 2 tests tagged slow
+./gradlew :lessons:junit-tags:slowTest            # the slow task, for CI: only the 2 tests tagged 'slow'
 ```
 
-The example is a shop's
+The example is an online shop's
 [`StockCheck`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/tags/StockCheck.java), which asks
 the warehouse whether it can send an order. Here the switch chooses the build, not the code: the code and the tests
-are the same both ways, and `-Pcode=today` keeps today's build, whose test task has no tag filter.
+are the same both ways, and `-Pcode=today` runs today's build, whose test task has no tag filter.
 
 - [`StockCheckTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tags/StockCheckTest.java)
   and [`DeliveryChargeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tags/DeliveryChargeTest.java)
@@ -65,7 +66,7 @@ The three runs above leave the answer out; `check` runs both its tests with a ta
 
 - **When some tests take seconds and the rest take thousandths of a second.**
 - **Keep the tag names few and plain,** such as `slow`, each written once in an annotation of your own.
-- **Make sure something still runs the slow tests:** here `check` depends on `slowTest`, so the build machine runs
+- **Make sure something still runs the slow tests:** here `check` depends on `slowTest`, so continuous integration runs
   them. A tag that only leaves tests out is a way to lose them.
 - **Container tests** have their own suite in these lessons (`integrationTest`); tags suit slow tests that share the
   ordinary test sources.

@@ -93,21 +93,21 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *quick task* leaves out every test tagged slow."`
+Type@1ms `note "The *quick task* leaves out every test tagged 'slow'."`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/junit-tags/example/build.gradle.kts 10 20 "lesson build file" --zoom 14-18`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 19s
 
 # ---- Scene 6: the slow task ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *slow task* runs only the tests tagged slow, and check depends on it."`
+Type@1ms `note "The *slow task* runs only the tests tagged 'slow', and check depends on it."`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/junit-tags/example/build.gradle.kts 22 49 "lesson build file" --zoom 28-30 --mark 47-49`
@@ -137,12 +137,12 @@ Sleep 300ms
 Show
 Sleep 5s
 
-# ---- Scene 8: the slow task for the build machine ----
+# ---- Scene 8: the slow task for continuous integration ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "And the slow task, as the build machine runs it:"`
+Type@1ms `note "And the slow task, as continuous integration runs it:"`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:junit-tags:slowTest"`
@@ -152,7 +152,7 @@ Show
 Wait+Screen@300s /tests tagged slow ran/
 Sleep 10s
 Hide
-Type@1ms `callout "Only the 2 slow tests ran. Quick tests on every change, slow tests on the build machine."`
+Type@1ms `callout "Only the 2 slow tests ran. Quick tests on every change, slow tests in continuous integration."`
 Enter
 Sleep 300ms
 Show

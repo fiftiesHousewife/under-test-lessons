@@ -7,8 +7,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * TODAY: the mail server as it runs on today's busy, shared build machine. Most messages go at once, but every third
- * one waits 600 ms in a queue. Nothing is wrong with the code: some of the time, it is just slower.
+ * TODAY: the mail server as it runs in today's busy, shared continuous integration. Most messages go at once, but every
+ * third one waits 600 ms in a queue. Nothing is wrong with the code: some of the time, it is just slower.
  */
 public final class TodaysBusyMailServer implements MailServer {
 

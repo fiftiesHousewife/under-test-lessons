@@ -69,7 +69,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The mail server on today's *busy* build machine: every third message waits 600 ms."`
+Type@1ms `note "The mail server in today's *busy* continuous integration: every third message waits 600 ms."`
 Enter
 Sleep 300ms
 Type@1ms `show TodaysBusyMailServer 20 26 "today's busy mail server" --zoom 22-23`

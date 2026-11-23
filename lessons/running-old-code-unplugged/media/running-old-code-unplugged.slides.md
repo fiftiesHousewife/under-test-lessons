@@ -71,12 +71,13 @@ Say: The report's web addresses are also a recording plan. Each one becomes a Wi
 
 ## closing: When to run old code unplugged
 - The first time old code runs on a developer's machine, and every time after
-- The very first run on build machines cut off from the network
+- The very first run in continuous integration, on machines cut off from the network
 - In discovery: each line of the report is something the service depends on
 - A safety net against accidental calls, not against hostile code
 Picture: map
 Say: When should you run old code unplugged? [pause 1600ms] Every time it runs on a developer's
-  machine. The toolkit's guide puts the very first run on build machines cut off from the network. In discovery, each
+  machine. The toolkit's guide puts the very first run in continuous integration, on machines cut off
+  from the network. In discovery, each
   line of the report is something the service depends on. And the agent is a safety net against accidental calls,
   not against code written to get round it.
 

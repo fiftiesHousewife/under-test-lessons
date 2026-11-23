@@ -27,8 +27,8 @@ public final class Clients {
 
     /**
      * One untimed request to the stand-in's own admin page, before a test's clock starts. The first HTTP call in a
-     * fresh JVM loads the JDK's HTTP client and wakes the stand-in, which on a busy build machine can take most of
-     * the second a test allows; the tests time the shop's waiting, not that start-up.
+     * fresh JVM loads the JDK's HTTP client and wakes the stand-in, which in busy continuous integration can take most
+     * of the second a test allows; the tests time the shop's waiting, not that start-up.
      */
     private static void warmUp(final URI supplier) {
         final HttpRequest admin = HttpRequest.newBuilder(supplier.resolve("/__admin/mappings")).GET().build();

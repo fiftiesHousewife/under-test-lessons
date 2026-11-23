@@ -7,8 +7,9 @@ narration, in [finding-flaky-tests.slides.md](finding-flaky-tests.slides.md). Wr
 2. Step two. Add it to the lesson. Only the tests need to wait, so it is a test dependency.
 3. Here is the order desk. It takes an order and returns at once. The confirmation email goes a moment later, on a
    background thread, so the customer is never kept waiting for it.
-4. Here is the code under test, the mail server as it runs today, on a busy, shared build machine. Most messages go at
-   once. But every third one waits 600 milliseconds in a queue. The code is right. It is only slower, some of the time.
+4. Here is the code under test, the mail server as it runs today, in busy, shared continuous integration. Most messages
+   go at once. But every third one waits 600 milliseconds in a queue. The code is right. It is only slower, some of the
+   time.
 5. Now, [pause 300ms] the sleeping test. It places an order, sleeps for 200 milliseconds, and then checks that the
    confirmation has gone. The sleep is a guess at how long that takes. A repeated test runs it 5 times.
 6. We run the tests on today's busy machine. The sleeping test passes twice, fails on its third run, and then passes

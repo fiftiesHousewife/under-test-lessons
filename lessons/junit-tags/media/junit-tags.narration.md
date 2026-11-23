@@ -11,9 +11,9 @@ One item per scene of [junit-tags.tape](junit-tags.tape). The intro and closing 
    warehouse tests too. So every run, after every small change, waits for the warehouse.
 4. Now, [pause 300ms] a tag. This annotation, called slow, carries JUnit's tag named slow. Put it on the slow test
    class, and every test in it is tagged.
-5. In the build file, the quick task now leaves out every test tagged slow. The lesson keeps today's build behind its
-   switch, so you can compare the two.
-6. A second task runs the same test classes, but only the tests tagged slow. The check task depends on it, so the
-   build machine, which runs check, still runs every slow test.
+5. In the build file, the quick task now leaves out every test tagged 'slow'. Today's build, which runs every test,
+   is still in the file, so you can run both and compare them.
+6. A second task runs the same test classes, but only the tests tagged 'slow'. The check task depends on it, so the
+   continuous integration, which runs check, still runs every slow test.
 7. We run the quick task again. [pause 1s] Only the 4 quick tests run, and none of them waits.
-8. And now the slow task, as the build machine would run it. [pause 1s] Only the 2 tests tagged slow run.
+8. And now the slow task, as continuous integration would run it. [pause 1s] Only the 2 tests tagged 'slow' run.
