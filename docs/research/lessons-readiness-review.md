@@ -1,5 +1,10 @@
 # Readiness review: under-test-lessons, before more lessons are added
 
+> **A snapshot, not a to-do list.** This review describes the repository as it was on 2026-11-22, at commit
+> `060a474`. Much of it has been acted on since, and some of it no longer holds. What is still to do is in
+> [the backlog](../BACKLOG.md), generated from [plan/lessons-backlog.yaml](../../plan/lessons-backlog.yaml); change
+> that, not this page.
+
 Repository: `https://github.com/fiftiesHousewife/under-test/blob/main/build/split/under-test-lessons`. Only files were read; nothing was built or
 edited. The repository changed while the review ran: commits `348281a` (the rewritten write-a-technique-lesson skill
 and `tools/new-video-script.py`), `72e77e3`, `060a474` (catalogue, overview lesson design) and `c38c0e7` landed. The

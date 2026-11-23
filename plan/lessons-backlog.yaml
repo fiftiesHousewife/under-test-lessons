@@ -1235,6 +1235,7 @@ items:
     done_by: "ai"
     done_when:
       - "docs/research/lessons-readiness-review.md says it is a snapshot and points at the backlog"
+    status: "done"
   - key: "every-lesson-has-a-checked-exercise"
     type: "deliverable"
     title: "Every lesson has an exercise whose answer the build checks"
