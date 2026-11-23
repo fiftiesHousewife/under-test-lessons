@@ -19,8 +19,9 @@ import os
 import re
 import sys
 
-# Sounds given exactly: between slashes, with a stress mark, so an ordinary "and/or" is left alone.
-SOUNDS = re.compile(r"/([^/\s][^/]*[ˈˌ][^/]*)/")
+# Sounds given exactly: between slashes, with a stress mark anywhere, the first sound included, so an ordinary
+# "and/or" is left alone.
+SOUNDS = re.compile(r"/((?=[^/]*[ˈˌ])[^/\s][^/]*)/")
 
 
 def to_sounds(text, phonemize):

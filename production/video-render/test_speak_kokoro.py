@@ -27,6 +27,10 @@ class ToSoundsTest(unittest.TestCase):
         self.assertEqual("ɹɪkˈɔːd <what it does,> ɹɪkˈɔːd<, then.>",
                          SPEAK.to_sounds("/ɹɪkˈɔːd/ what it does, /ɹɪkˈɔːd/, then.", fake))
 
+    def test_sounds_stressed_on_their_first_sound_and_two_runs_in_one_sentence(self):
+        self.assertEqual("<In the> ˈadmɪn peɪdʒ<, then the> ˈɑːkɪtɛktʃə ɹuːlz<.>",
+                         SPEAK.to_sounds("In the /ˈadmɪn peɪdʒ/, then the /ˈɑːkɪtɛktʃə ɹuːlz/.", fake))
+
     def test_slashes_without_a_stress_mark_are_ordinary_text(self):
         self.assertEqual("<and/or the input/output>", SPEAK.to_sounds("and/or the input/output", fake))
 
