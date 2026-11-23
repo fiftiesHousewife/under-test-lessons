@@ -858,6 +858,7 @@ items:
       - "Both model files have a recorded SHA-256 that setUpLessonVoice checks"
       - "Only kokoro-onnx is used, never the kokoro package"
     decision_record: "docs/decisions/0025-companies-receive-finished-videos-and-never-run-the-voice.md"
+    status: "done"
   - key: "split-video-tools-into-inside-and-production"
     type: "deliverable"
     title: "Split video-tools into an inside module and a production module"

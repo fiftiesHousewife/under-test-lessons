@@ -1,4 +1,5 @@
 import java.net.URI
+import java.security.MessageDigest
 
 plugins {
     id("io.github.fiftieshousewife.java-conventions")
@@ -54,7 +55,11 @@ val voiceDir = rootDir.resolve("build/voice")
 val voicePython = providers.gradleProperty("lessonVoicePython").orElse("python3.13")
 val voiceModelsUrl = providers.gradleProperty("lessonVoiceModelsUrl")
     .orElse("https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0")
-val voiceModels = listOf("kokoro-v1.0.onnx", "voices-v1.0.bin")
+// The model files and the SHA-256 of the copies every lesson's voice was made with; the release publishes none of its
+// own. A file that doesn't match is refused, so the voice is never made from a different or damaged model.
+val voiceModels = mapOf(
+    "kokoro-v1.0.onnx" to "7d5df8ecf7d4b1878015a32686053fd0eebe2bc377234608764cc0ef3636a6c5",
+    "voices-v1.0.bin" to "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d")
 
 val createVoiceEnvironment = tasks.register<Exec>("createVoiceEnvironment") {
     val dir = voiceDir
@@ -73,19 +78,22 @@ val createVoiceEnvironment = tasks.register<Exec>("createVoiceEnvironment") {
     }
 }
 
-// The voice's packages, at exact versions, so the voice sounds the same on every machine. Changing a version here
-// installs it again on the next run.
-val voicePackages = listOf("kokoro-onnx==0.6.1", "soundfile==0.14.0")
+// The voice's packages: every one, kokoro-onnx's own included, at an exact version and with the SHA-256 of each file,
+// in voice-requirements.txt, so the voice is made from the same code on every machine. Only kokoro-onnx is used, never
+// the kokoro package. Changing the file installs it again on the next run.
+val voiceRequirements = layout.projectDirectory.file("voice-requirements.txt").asFile
 val installVoicePackages = tasks.register<Exec>("installVoicePackages") {
     val dir = voiceDir
-    val packages = voicePackages
+    val requirements = voiceRequirements
     dependsOn(createVoiceEnvironment)
+    inputs.file(requirements)
     onlyIf {
         val installed = dir.resolve("venv/.packages-installed")
-        !installed.isFile || installed.readText().trim() != packages.joinToString(" ")
+        !installed.isFile || installed.readText() != requirements.readText()
     }
-    commandLine(listOf(dir.resolve("venv/bin/pip").absolutePath, "install", "-q") + packages)
-    doLast { dir.resolve("venv/.packages-installed").writeText(packages.joinToString(" ") + "\n") }
+    commandLine(dir.resolve("venv/bin/pip").absolutePath, "install", "-q", "--require-hashes", "--no-deps", "-r",
+        requirements.absolutePath)
+    doLast { requirements.copyTo(dir.resolve("venv/.packages-installed"), overwrite = true) }
 }
 
 val setUpLessonVoice = tasks.register("setUpLessonVoice") {
@@ -95,13 +103,27 @@ val setUpLessonVoice = tasks.register("setUpLessonVoice") {
     val base = voiceModelsUrl
     val models = voiceModels
     dependsOn(installVoicePackages)
-    onlyIf { models.any { !dir.resolve(it).isFile } }
     doLast {
-        models.filterNot { dir.resolve(it).isFile }.forEach { name ->
+        val sha256 = { file: File ->
+            val digest = MessageDigest.getInstance("SHA-256")
+            file.inputStream().use { input ->
+                val buffer = ByteArray(1 shl 20)
+                generateSequence { input.read(buffer).takeIf { it >= 0 } }.forEach { digest.update(buffer, 0, it) }
+            }
+            digest.digest().joinToString("") { "%02x".format(it) }
+        }
+        models.keys.filterNot { dir.resolve(it).isFile }.forEach { name ->
             URI.create("${base.get()}/$name").toURL().openStream().use { input ->
                 dir.resolve("$name.part").outputStream().use { input.copyTo(it) }
             }
             dir.resolve("$name.part").renameTo(dir.resolve(name))
+        }
+        models.forEach { (name, expected) ->
+            val found = sha256(dir.resolve(name))
+            if (found != expected) {
+                throw GradleException("build/voice/$name has SHA-256 $found, not the $expected the lessons' voice was" +
+                    " made with: delete it to download it again, or check the mirror (-PlessonVoiceModelsUrl).")
+            }
         }
     }
 }
