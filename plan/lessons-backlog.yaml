@@ -617,6 +617,8 @@ items:
     done_by: "ai"
     done_when:
       - "The lesson shows a cleaned field with a keyed substitute comparing equal from run to run, while timestamps and generated ids still need ignoring"
+    notes: "Shown in the README, with the expected JSON; not added to the example's tests, since the video says both of its tests run."
+    status: "done"
   - key: "real-databases-lesson-on-docker-and-kubernetes-ci"
     type: "deliverable"
     title: "The real-databases lesson shows container tests on Docker-based and Kubernetes-based CI"

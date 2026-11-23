@@ -24,6 +24,26 @@ forgets the quantities.
 - [`CompareJsonTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/CompareJsonTest.java)
   is the "after": a structured comparison that names the wrong field and both values.
 
+### Cleaned captures need no placeholder for what was cleaned
+
+When the expected JSON comes from a captured real output, personal data in it is cleaned first, and how it is cleaned
+decides what the comparison must ignore. A keyed substitute, as in
+[Cleaning captured data so tests still work](../cleaning-captured-data/README.md), is the same every time for the
+same value: the customer's email becomes the same made-up text in every capture and every run. So it is compared
+exactly, like any other field. Only what really varies, the id and the time, keeps a placeholder:
+
+```json
+{
+  "id": "${json-unit.any-string}",
+  "generatedAt": "${json-unit.any-string}",
+  "customer": "customer-3f9a1c@example.invalid",
+  "totalPence": 2450
+}
+```
+
+Text that changes on every cleaning, such as a random replacement, would need a placeholder too, and the comparison
+would then pass whoever the customer was.
+
 ## Exercise
 
 `CompareJsonTest` lets `generatedAt` be any text at all, even "yesterday". But the time comes from a clock, so a test
