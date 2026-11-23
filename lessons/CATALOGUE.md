@@ -32,7 +32,7 @@ and see what its existing tests really check.
 |---|---|---|---|
 | [Mutation testing](mutation-testing/README.md) | PIT | Java only | built |
 | [Coverage of changed code](coverage-of-changed-code/README.md): the coverage and PIT gates applied only to the classes a change touched | PIT, JaCoCo | Java only | built |
-| The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix; may become part of the overview) | none | slides only | planned |
+| The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix): a slide of [Testing old Java code: a map](testing-old-java-code/README.md), "The mix for old code starts with large tests" | none | slides only | built, in the overview |
 
 ## Record what the code does today (outside in, black box)
 
