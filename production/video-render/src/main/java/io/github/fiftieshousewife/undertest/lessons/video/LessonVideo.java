@@ -153,7 +153,17 @@ public final class LessonVideo {
         }
     }
 
-    /** Speaks a scene's narration: each part between pause markers separately, joined with the pauses' silence. */
+    /**
+     * The longest gap the voice may leave between sentences, in seconds: it leaves up to a second, which drags. The
+     * pauses the narration asks for ({@code [pause 1600ms]}) are kept whole. Part of every clip's key
+     * ({@link Spoken#saidKey}), so changing it reads each clip again.
+     */
+    static final double LONGEST_GAP = 0.4;
+
+    /**
+     * Speaks a scene's narration: each part between pause markers separately, its gaps between sentences shortened,
+     * joined with the pauses' silence.
+     */
     static WavFile speak(final List<String> command, final String narration, final Path clip) {
         final List<Pauses.Part> parts = Pauses.parts(narration);
         if (parts.isEmpty()) {
@@ -185,7 +195,7 @@ public final class LessonVideo {
         full.add(textFile.toAbsolutePath().toString());
         full.add(wav.toAbsolutePath().toString());
         ExternalCommand.run(full, Path.of("").toAbsolutePath());
-        return WavFile.read(wav);
+        return WavFile.read(wav).withShorterGaps(LONGEST_GAP);
     }
 
     private static void createFolder(final Path folder) {

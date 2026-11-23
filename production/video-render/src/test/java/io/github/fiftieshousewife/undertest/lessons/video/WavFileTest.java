@@ -2,6 +2,7 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.io.IOException;
@@ -50,5 +51,31 @@ class WavFileTest {
                         .withMessageContaining("no sound data"),
                 () -> assertThatIllegalArgumentException().isThrownBy(() -> WavFile.read(floatWav))
                         .withMessageContaining("16-bit PCM"));
+    }
+
+    @Test
+    void cutsLongGapsBetweenSoundsAndLeavesTheEdgesAndShortGaps() {
+        final WavFile clip = sounds(0.3, -0.5, 1.0, -0.5, 0.2, -0.5, 0.3);
+
+        final WavFile shorter = clip.withShorterGaps(0.4);
+
+        assertAll(
+                () -> assertThat(clip.seconds()).isCloseTo(3.3, within(1e-9)),
+                () -> assertThat(shorter.seconds()).as("the 1 s gap cut to 0.4 s").isCloseTo(2.7, within(1e-9)),
+                () -> assertThat(sounds(-0.5, 1.0).withShorterGaps(0.4).seconds()).as("quiet at the end kept")
+                        .isCloseTo(1.5, within(1e-9)));
+    }
+
+    /** At 100 samples a second: a positive length is quiet for that long, a negative one sound. */
+    static WavFile sounds(final double... lengths) {
+        final java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        for (final double length : lengths) {
+            final byte loud = length < 0 ? (byte) 0x10 : 0;
+            for (int i = 0; i < Math.round(Math.abs(length) * 100); i++) {
+                out.write(0);
+                out.write(loud);
+            }
+        }
+        return new WavFile(100, 1, out.toByteArray());
     }
 }

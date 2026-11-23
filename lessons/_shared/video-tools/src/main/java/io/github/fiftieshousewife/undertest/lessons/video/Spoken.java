@@ -14,6 +14,11 @@ import java.util.HexFormat;
 record Spoken(String written, String said) {
 
     private static final int NAME_LENGTH = 16;
+    /**
+     * How the voice's sound is made into a clip: its gaps between sentences cut to 0.4 s (in video-render). Changing
+     * how clips are made changes this, so every clip the voice read is read again once.
+     */
+    private static final String MADE = "gaps 0.4\n";
 
     static Spoken of(final String written, final Pronunciation pronunciation) {
         return new Spoken(written, pronunciation.forSpeech(written));
@@ -24,9 +29,12 @@ record Spoken(String written, String said) {
         return hash(Pauses.withoutMarkers(written).replaceAll("\\s+", " ")) + ".m4a";
     }
 
-    /** What the voice was given, as a short hash: it changes with a pronunciation fix or a pause, the name doesn't. */
+    /**
+     * What the voice was given, and how its clip was made, as a short hash: it changes with a pronunciation fix or a
+     * pause, the name doesn't.
+     */
     String saidKey() {
-        return hash(said);
+        return hash(MADE + said);
     }
 
     /** The name clips had before they were named by their written words: the hash of what the voice was given. */

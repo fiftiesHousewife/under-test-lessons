@@ -3,6 +3,7 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.io.IOException;
@@ -62,6 +63,17 @@ class LessonVideoTest {
                 () -> assertThat(WavFile.read(media.resolve("demo.narration.wav")).seconds()).isEqualTo(12),
                 () -> assertThat(VoiceClips.file(new Media(root, "demo"), new Spoken("Second scene.", "Second scene.")))
                         .exists());
+    }
+
+    @Test
+    void shortensTheVoicesGapsButKeepsThePausesTheNarrationAsksFor() throws IOException {
+        WavFileTest.sounds(-0.5, 1.0, -0.5).write(root.resolve("gappy.wav"));
+        final Path voice = standIn("voice", "cp " + root.resolve("gappy.wav") + " \"$2\"");
+
+        final WavFile spoken = LessonVideo.speak(List.of(voice.toString()), "One. Two. [pause 1600ms] Three.",
+                Files.createDirectories(root.resolve("store")).resolve("key"));
+
+        assertThat(spoken.seconds()).as("1.4 s, the whole pause, 1.4 s").isCloseTo(4.4, within(1e-9));
     }
 
     @Test

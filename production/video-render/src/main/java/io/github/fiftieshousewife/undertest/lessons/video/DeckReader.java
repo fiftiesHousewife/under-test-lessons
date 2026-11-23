@@ -67,7 +67,11 @@ final class DeckReader {
         return false;
     }
 
-    /** Speech compresses well: one channel of AAC at 48 kbit/s, about 6 KB a second. */
+    /**
+     * Speech compresses well: one channel of AAC at 48 kbit/s, about 6 KB a second. The clip is the video's sound as
+     * it is, its gaps between sentences already shortened ({@link LessonVideo#LONGEST_GAP}), so a fresh clone's video
+     * decoded from it sounds the same.
+     */
     private static void compress(final Path wav, final Path clip) {
         ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i", wav.toString(),
                 "-ac", "1", "-c:a", "aac", "-b:a", "48k", clip.toString()), Path.of("").toAbsolutePath());
