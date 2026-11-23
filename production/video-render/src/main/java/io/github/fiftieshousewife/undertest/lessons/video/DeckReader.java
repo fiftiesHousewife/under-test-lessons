@@ -22,7 +22,8 @@ final class DeckReader {
     }
 
     /**
-     * Gives each slide its clip: a clip the voice read from what it would be given now, or a person's, is kept; one
+     * Gives each slide its clip: a clip the voice read from what it would be given now, with the same engine, or a
+     * person's, is kept; one
      * still under its earlier name is renamed; the rest are made from the lesson's store of spoken clips
      * ({@link VoiceClips}), read aloud only if the video hasn't already. Removes clips the voice made that no slide
      * uses, never a person's. Returns how many were made.
@@ -37,7 +38,7 @@ final class DeckReader {
         for (final Spoken slide : needed) {
             VoiceClips.wav(media, command, slide);
             compress(VoiceClips.file(media, slide), folder.resolve(slide.clipName()));
-            ledger.voiceRead(slide.clipName(), slide.saidKey());
+            ledger.voiceRead(slide.clipName(), slide.saidKey(), Speech.engine());
         }
         final int made = needed.size();
         removeUnused(folder, ledger, slides.stream().map(Spoken::clipName).collect(Collectors.toSet()));
@@ -53,17 +54,22 @@ final class DeckReader {
             return true; // a person's recording, as .wav or .mp3: the voice never makes one over it
         }
         if (Files.isRegularFile(clip) && ledger.first() && slide.clipName().equals(slide.earlierClipName())) {
-            ledger.voiceRead(slide.clipName(), slide.saidKey()); // made before ledgers, by the voice, from these words
+            // made before ledgers, by the voice, from these words
+            ledger.voiceRead(slide.clipName(), slide.saidKey(), Speech.engine());
             return true;
         }
         if (Files.isRegularFile(clip)) {
-            return !ledger.byTheVoice(slide.clipName()) || ledger.readFrom(slide.clipName(), slide.saidKey());
+            final boolean current = ledger.readFrom(slide.clipName(), slide.saidKey(), Speech.engine());
+            if (current) {
+                ledger.stampEngine(slide.clipName(), Speech.engine());
+            }
+            return current || !ledger.byTheVoice(slide.clipName());
         }
         final Path earlier = folder.resolve(slide.earlierClipName());
         if (Files.isRegularFile(earlier)) {
             move(earlier, clip);
             ledger.forget(slide.earlierClipName());
-            ledger.voiceRead(slide.clipName(), slide.saidKey());
+            ledger.voiceRead(slide.clipName(), slide.saidKey(), Speech.engine());
             return true;
         }
         return false;

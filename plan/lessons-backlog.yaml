@@ -1034,6 +1034,7 @@ items:
     blocked_by:
       - "clips-named-by-the-written-narration"
     decision_record: "docs/decisions/0027-inside-a-company-a-person-records-the-voice.md"
+    status: "done"
   - key: "video-and-deck-share-one-store-of-clips"
     type: "deliverable"
     title: "The video and the deck share one store of spoken clips"

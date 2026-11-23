@@ -83,6 +83,19 @@ final class DeckClips {
         return warnings;
     }
 
+    /**
+     * Who made the clips the deck plays, as one line: "15 by the voice kokoro-onnx-…", "2 by Jane Smith", "1 by a
+     * person". Empty where the deck has no clips.
+     */
+    static String voices(final Media media) {
+        final Path folder = media.file(DeckVoice.FOLDER);
+        final List<String> playing = DeckVoice.spoken(media).stream()
+                .flatMap(slide -> DeckVoice.clips(folder, slide).stream().limit(1))
+                .map(clip -> String.valueOf(clip.getFileName())).toList();
+        return ClipLedger.read(folder).mix(playing).entrySet().stream()
+                .map(by -> by.getValue() + " by " + by.getKey()).collect(Collectors.joining(", "));
+    }
+
     /** The first few words, to name a slide by. */
     private static String opening(final String written) {
         final String[] words = Pauses.withoutMarkers(written).strip().split("\\s+");

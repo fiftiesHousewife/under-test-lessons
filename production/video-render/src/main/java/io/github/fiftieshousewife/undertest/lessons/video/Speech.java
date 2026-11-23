@@ -25,6 +25,12 @@ final class Speech {
     /** Set to true when the voice command also takes {@code --list <file>}, one text file and WAV a line. */
     static final String READS_LISTS = "video.voiceReadsLists";
 
+    /**
+     * The voice engine, as the build names it: its program, voice, speed, model and packages, in one word. A clip the
+     * voice made with another engine is read again (see {@link ClipLedger}).
+     */
+    static final String ENGINE_PROPERTY = "video.voiceEngine";
+
     /** One part for the voice to read: the text file it reads, and the WAV it writes. */
     record Reading(Path text, Path wav) {
     }
@@ -37,6 +43,11 @@ final class Speech {
         this.parts = parts;
         this.readings = readings;
         this.clip = clip;
+    }
+
+    /** The voice engine this run uses, from {@link #ENGINE_PROPERTY}; "unnamed" where the build names none. */
+    static String engine() {
+        return System.getProperty(ENGINE_PROPERTY, "unnamed");
     }
 
     /** The narration's parts, their text written beside {@code clip}, ready for the voice to read. */

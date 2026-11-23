@@ -29,6 +29,10 @@ public final class VideoChecks {
             final DeckClips.Findings clips = DeckClips.check(media, missingFails, removeUnused);
             problems.addAll(clips.problems());
             clips.warnings().forEach(warning -> log.warn("{}", oneLine(warning)));
+            final String voices = DeckClips.voices(media);
+            if (!voices.isEmpty()) {
+                log.info("{}: deck voice: {}", media.safeLesson(), voices.replace('\r', ' ').replace('\n', ' '));
+            }
         }
         problems.forEach(problem -> log.error("{}", oneLine(problem)));
         if (!problems.isEmpty()) {

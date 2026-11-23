@@ -44,6 +44,7 @@ class DeckVoiceTest {
     void restore() {
         System.clearProperty("video.ffmpeg");
         System.clearProperty(Speech.READS_LISTS);
+        System.clearProperty(Speech.ENGINE_PROPERTY);
     }
 
     private Path standIn(final String name, final String body) throws IOException {
@@ -112,6 +113,23 @@ class DeckVoiceTest {
         assertAll(
                 () -> assertThat(made).isEqualTo(1),
                 () -> assertThat(media.resolve("demo.deck-voice").resolve(clip("Run PIT now."))).exists());
+    }
+
+    @Test
+    void aNewVoiceEngineReadsEveryClipAgainAndRecordsItself() throws IOException {
+        final Media demo = new Media(root, "demo");
+        System.setProperty(Speech.ENGINE_PROPERTY, "kokoro/one");
+        DeckReader.speak(demo, List.of(voice.toString()));
+        final int unchanged = DeckReader.speak(demo, List.of(voice.toString()));
+        System.setProperty(Speech.ENGINE_PROPERTY, "kokoro/two");
+
+        final int made = DeckReader.speak(demo, List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(unchanged).isZero(),
+                () -> assertThat(made).isEqualTo(3),
+                () -> assertThat(Files.readString(media.resolve("demo.deck-voice").resolve(ClipLedger.FILE)))
+                        .contains(clip("Goodbye.") + " voice").contains(" kokoro/two").doesNotContain("kokoro/one"));
     }
 
     @Test

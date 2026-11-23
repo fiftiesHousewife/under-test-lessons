@@ -128,6 +128,21 @@ val setUpLessonVoice = tasks.register("setUpLessonVoice") {
     }
 }
 
+// The voice engine in one word, recorded beside each clip the voice makes (voices.txt), so a clip made with another
+// program, voice, speed, model or package set is read again: kokoro-onnx-<version>/<voice>/<speed>/<model checksums>
+// /<package list checksum>, or command-<checksum> for another voice command. The models' checksums are the recorded
+// ones, which setUpLessonVoice holds the files to.
+fun shortSha256(text: String) = MessageDigest.getInstance("SHA-256").digest(text.toByteArray())
+    .joinToString("") { "%02x".format(it) }.take(8)
+val voiceEngine = customVoice.map { "command-" + shortSha256(it) }.orElse(provider {
+    val requirements = voiceRequirements.readText()
+    val version = Regex("""kokoro-onnx==(\S+)""").find(requirements)?.groupValues?.get(1) ?: "unknown"
+    val voice = System.getenv("KOKORO_VOICE") ?: "bf_emma"
+    val speed = System.getenv("KOKORO_SPEED") ?: "1.0"
+    "kokoro-onnx-$version/$voice/$speed/models-" + voiceModels.values.joinToString("-") { it.take(8) } +
+        "/packages-" + shortSha256(requirements)
+})
+
 val buildLessonVoice = tasks.register<JavaExec>("buildLessonVoice") {
     dependsOn(setUpLessonVoice)
     group = "documentation"
@@ -137,6 +152,7 @@ val buildLessonVoice = tasks.register<JavaExec>("buildLessonVoice") {
     workingDir = rootDir
     environment("KOKORO_MODELS", "$repoRoot/build/voice")
     systemProperty("video.voiceReadsLists", voiceReadsLists.get())
+    systemProperty("video.voiceEngine", voiceEngine.get())
     val root = repoRoot
     val lessonId = lesson
     val voice = voiceCommand
@@ -185,6 +201,7 @@ tasks.register<JavaExec>("buildLessonDeckVoice") {
     workingDir = rootDir
     environment("KOKORO_MODELS", "$repoRoot/build/voice")
     systemProperty("video.voiceReadsLists", voiceReadsLists.get())
+    systemProperty("video.voiceEngine", voiceEngine.get())
     val root = repoRoot
     val lessonId = lesson
     val voice = voiceCommand

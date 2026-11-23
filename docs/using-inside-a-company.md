@@ -127,7 +127,9 @@ No speech engine runs inside a company. When a company changes a slide's narrati
 - **Each slide's clip** lives in the lesson's `media/<lesson>.deck-voice/` folder, named by the slide's written words,
   so a clip is only needed again when the words change. The deck plays the clip that matches each slide, and stays
   silent on a slide with none. A clip that isn't listed in that folder's `voices.txt` counts as a person's recording,
-  and the build never reads it again or removes it.
+  and the build never reads it again or removes it. To say whose it is, add a line `<clip file> person <name>`;
+  `./gradlew check` then reports each deck's mix of voices by name. A recorded voice is personal data, so name people
+  only with their agreement.
 - **What to record:** `./gradlew :lessons:video-tools:recordingScript -Plesson=<lesson> -Pmissing=true` writes a
   printable script, `build/recording-scripts/<lesson>.html`, of the slides with no clip: the file name to save each
   as, the slide's title, its words with the pauses as directions, and hints from the pronunciation list. Leave out

@@ -1,21 +1,21 @@
-# Who or what made each voice clip: "voice <key>" is the machine voice, from what it was given; a clip not listed was recorded by a person.
-04f6b2222b272412.m4a voice fc99b50fcffb6da7
-072f67ad15fe3f81.m4a voice a34d3d25929f7adf
-09ad566d4c233d3d.m4a voice 1e5113169fd110cd
-1d99832c1ea11581.m4a voice 8f35448cd2137afa
-1fbba327be7de4d8.m4a voice 78926306adcf0bfa
-2dd3a24ed844f09a.m4a voice 08e4226e68243230
-4c074462e11c9140.m4a voice 1ac368b41666e255
-5d0786474d978e81.m4a voice 9baf87a24248a57f
-6666f796e82050cb.m4a voice 2735f8ad89375520
-6d6829985169886b.m4a voice a93f157fdb9ba049
-74212f0cfe956ba0.m4a voice 584b22f8af36eff8
-7695ad76f99f4b16.m4a voice c8af45d5df8e3dbb
-7f09d354c60154ac.m4a voice 7fce11d10717da0a
-85c979cc6fbdd0b0.m4a voice 3fe4a0cdaaebbb48
-8eb15ea7561fc212.m4a voice e470c553b6619f12
-8ed5b57d6527334e.m4a voice b88eabb55b35af7e
-952fbe1c22e6740a.m4a voice df668a792e6f49ea
-b16f0d36c7c33507.m4a voice 4c501650052913e9
-d88ce84195aea0ca.m4a voice 2dc4062a8cb0bd89
-f918976db07bc030.m4a voice b9163cf3c77fbd43
+# Who or what made each voice clip: "voice <key> <engine>" is the machine voice, from what it was given; "person <name>", or no line, a person's recording.
+04f6b2222b272412.m4a voice fc99b50fcffb6da7 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+072f67ad15fe3f81.m4a voice a34d3d25929f7adf kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+09ad566d4c233d3d.m4a voice 1e5113169fd110cd kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+1d99832c1ea11581.m4a voice 8f35448cd2137afa kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+1fbba327be7de4d8.m4a voice 78926306adcf0bfa kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+2dd3a24ed844f09a.m4a voice 08e4226e68243230 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+4c074462e11c9140.m4a voice 1ac368b41666e255 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+5d0786474d978e81.m4a voice 9baf87a24248a57f kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+6666f796e82050cb.m4a voice 2735f8ad89375520 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+6d6829985169886b.m4a voice a93f157fdb9ba049 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+74212f0cfe956ba0.m4a voice 584b22f8af36eff8 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+7695ad76f99f4b16.m4a voice c8af45d5df8e3dbb kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+7f09d354c60154ac.m4a voice 7fce11d10717da0a kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+85c979cc6fbdd0b0.m4a voice 3fe4a0cdaaebbb48 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+8eb15ea7561fc212.m4a voice e470c553b6619f12 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+8ed5b57d6527334e.m4a voice b88eabb55b35af7e kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+952fbe1c22e6740a.m4a voice df668a792e6f49ea kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+b16f0d36c7c33507.m4a voice 4c501650052913e9 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+d88ce84195aea0ca.m4a voice 2dc4062a8cb0bd89 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+f918976db07bc030.m4a voice b9163cf3c77fbd43 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47

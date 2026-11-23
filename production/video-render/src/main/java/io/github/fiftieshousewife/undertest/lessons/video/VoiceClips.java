@@ -37,7 +37,7 @@ final class VoiceClips {
                     wav.toString()), Path.of("").toAbsolutePath());
             return WavFile.read(wav);
         }
-        return LessonVideo.speak(command, spoken.said(), folder(media).resolve(spoken.saidKey()));
+        return LessonVideo.speak(command, spoken.said(), folder(media).resolve(key(spoken)));
     }
 
     /**
@@ -47,25 +47,33 @@ final class VoiceClips {
     static void readAhead(final Media media, final List<String> command, final List<Spoken> pieces) {
         final Map<String, Spoken> unread = new LinkedHashMap<>();
         pieces.stream().filter(piece -> !Files.isRegularFile(file(media, piece)) && !decodable(media, piece))
-                .forEach(piece -> unread.putIfAbsent(piece.saidKey(), piece));
+                .forEach(piece -> unread.putIfAbsent(key(piece), piece));
         if (unread.isEmpty()) {
             return;
         }
         createFolder(folder(media));
         Speech.readAll(command, unread.values().stream()
-                .map(piece -> Speech.of(piece.said(), folder(media).resolve(piece.saidKey()))).toList());
+                .map(piece -> Speech.of(piece.said(), folder(media).resolve(key(piece)))).toList());
     }
 
     /** Whether the deck has a clip the voice read from the same words, to decode rather than read again. */
     private static boolean decodable(final Media media, final Spoken spoken) {
         final Path deckClips = media.file(DeckVoice.FOLDER);
         return Files.isRegularFile(deckClips.resolve(spoken.clipName()))
-                && ClipLedger.read(deckClips).readFrom(spoken.clipName(), spoken.saidKey());
+                && ClipLedger.read(deckClips).readFrom(spoken.clipName(), spoken.saidKey(), Speech.engine());
     }
 
     /** Where the store keeps the clip of what is said. */
     static Path file(final Media media, final Spoken spoken) {
-        return folder(media).resolve(spoken.saidKey() + ".wav");
+        return folder(media).resolve(key(spoken) + ".wav");
+    }
+
+    /**
+     * The store's name for a clip: what the voice is given, and the engine that read it (see {@link Speech#engine}), so
+     * a new engine never takes an old engine's clip.
+     */
+    private static String key(final Spoken spoken) {
+        return spoken.saidKey() + "-" + Integer.toHexString(Speech.engine().hashCode());
     }
 
     private static Path folder(final Media media) {
