@@ -43,6 +43,7 @@ class DeckVoiceTest {
     @AfterEach
     void restore() {
         System.clearProperty("video.ffmpeg");
+        System.clearProperty(Speech.READS_LISTS);
     }
 
     private Path standIn(final String name, final String body) throws IOException {
@@ -179,6 +180,21 @@ class DeckVoiceTest {
                 () -> assertThat(Files.readString(media.resolve("demo.deck.html"))).contains("<audio class=\"voice\""),
                 () -> assertThatIllegalArgumentException()
                         .isThrownBy(() -> LessonVideo.main("deckvoice", root.toString(), "demo")));
+    }
+
+    @Test
+    void aVoiceThatReadsListsIsStartedOnceForTheWholeDeck() throws IOException {
+        final Path listVoice = standIn("list-voice", "echo started >> " + root.resolve("starts.log")
+                + "; [ \"$1\" = --list ] || exit 2; while IFS=\"$(printf '\\t')\" read -r text wav; do"
+                + " cp " + root.resolve("clip.wav") + " \"$wav\"; done < \"$2\"");
+        System.setProperty(Speech.READS_LISTS, "true");
+
+        final int made = DeckReader.speak(new Media(root, "demo"), List.of(listVoice.toString()));
+
+        assertAll(
+                () -> assertThat(made).isEqualTo(3),
+                () -> assertThat(Files.readAllLines(root.resolve("starts.log"))).hasSize(1),
+                () -> assertThat(media.resolve("demo.deck-voice").resolve(clip("Goodbye."))).exists());
     }
 
     @Test

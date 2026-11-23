@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * One store of spoken clips for a lesson's video and its deck, in {@code <id>.voice/clips/}, each named by what the
@@ -29,14 +31,36 @@ final class VoiceClips {
             return WavFile.read(wav);
         }
         createFolder(folder(media));
-        final Path deckClips = media.file(DeckVoice.FOLDER);
-        final Path deckClip = deckClips.resolve(spoken.clipName());
-        if (Files.isRegularFile(deckClip) && ClipLedger.read(deckClips).readFrom(spoken.clipName(), spoken.saidKey())) {
+        if (decodable(media, spoken)) {
             ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i",
-                    deckClip.toString(), "-c:a", "pcm_s16le", wav.toString()), Path.of("").toAbsolutePath());
+                    media.file(DeckVoice.FOLDER).resolve(spoken.clipName()).toString(), "-c:a", "pcm_s16le",
+                    wav.toString()), Path.of("").toAbsolutePath());
             return WavFile.read(wav);
         }
         return LessonVideo.speak(command, spoken.said(), folder(media).resolve(spoken.saidKey()));
+    }
+
+    /**
+     * Has the voice read, in one go, every piece the store has no clip of and the deck can't give: a voice that reads
+     * lists then loads its model once for the lesson, not once a clip. {@link #wav} then finds each in the store.
+     */
+    static void readAhead(final Media media, final List<String> command, final List<Spoken> pieces) {
+        final Map<String, Spoken> unread = new LinkedHashMap<>();
+        pieces.stream().filter(piece -> !Files.isRegularFile(file(media, piece)) && !decodable(media, piece))
+                .forEach(piece -> unread.putIfAbsent(piece.saidKey(), piece));
+        if (unread.isEmpty()) {
+            return;
+        }
+        createFolder(folder(media));
+        Speech.readAll(command, unread.values().stream()
+                .map(piece -> Speech.of(piece.said(), folder(media).resolve(piece.saidKey()))).toList());
+    }
+
+    /** Whether the deck has a clip the voice read from the same words, to decode rather than read again. */
+    private static boolean decodable(final Media media, final Spoken spoken) {
+        final Path deckClips = media.file(DeckVoice.FOLDER);
+        return Files.isRegularFile(deckClips.resolve(spoken.clipName()))
+                && ClipLedger.read(deckClips).readFrom(spoken.clipName(), spoken.saidKey());
     }
 
     /** Where the store keeps the clip of what is said. */

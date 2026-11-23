@@ -21,8 +21,15 @@ dependencies {
 val repoRoot = rootDir.absolutePath
 val lesson = providers.gradleProperty("lesson")
 // The voice: any command that turns a text file into a WAV file. Default: the offline Kokoro voice (see speak-kokoro.py).
-val voiceCommand = providers.gradleProperty("lessonVoiceCommand").map { it.split(" ") }.orElse(
-    listOf("$repoRoot/build/voice/venv/bin/python", "$repoRoot/production/video-render/speak-kokoro.py"))
+// Words are split at spaces; put one in double quotes to keep its spaces: -PlessonVoiceCommand='"/My Voice/say" --fast'.
+// A command that also reads a list (--list <file>, one text file and WAV a line, as speak-kokoro.py does) loads its
+// voice once a lesson rather than once a clip: say so with -PlessonVoiceReadsLists=true. The default voice does.
+val customVoice = providers.gradleProperty("lessonVoiceCommand")
+val voiceCommand = customVoice.map { command ->
+    Regex(""""([^"]*)"|(\S+)""").findAll(command).map { it.groupValues[1].ifEmpty { it.groupValues[2] } }.toList()
+}.orElse(listOf("$repoRoot/build/voice/venv/bin/python", "$repoRoot/production/video-render/speak-kokoro.py"))
+val voiceReadsLists = providers.gradleProperty("lessonVoiceReadsLists").orElse(customVoice.map { "false" })
+    .orElse("true")
 
 val testVideoHelpers = tasks.register<Exec>("testVideoHelpers") {
     group = "verification"
@@ -51,8 +58,19 @@ val voiceModels = listOf("kokoro-v1.0.onnx", "voices-v1.0.bin")
 
 val createVoiceEnvironment = tasks.register<Exec>("createVoiceEnvironment") {
     val dir = voiceDir
+    val asked = voicePython
     onlyIf { !dir.resolve("venv/bin/python").isFile }
-    commandLine(voicePython.get(), "-m", "venv", dir.resolve("venv").absolutePath)
+    doFirst {
+        val onPath = { program: String ->
+            File(program).isAbsolute && File(program).canExecute() ||
+                System.getenv("PATH").orEmpty().split(File.pathSeparator).any { File(it, program).canExecute() }
+        }
+        val python = asked.get().takeIf(onPath) ?: "python3".also {
+            logger.warn("${asked.get()} isn't installed, so the voice is set up with python3. If its packages won't" +
+                " install, install Python 3.13 or name another with -PlessonVoicePython=<program>.")
+        }
+        commandLine(python, "-m", "venv", dir.resolve("venv").absolutePath)
+    }
 }
 
 // The voice's packages, at exact versions, so the voice sounds the same on every machine. Changing a version here
@@ -96,6 +114,7 @@ val buildLessonVoice = tasks.register<JavaExec>("buildLessonVoice") {
     mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
     workingDir = rootDir
     environment("KOKORO_MODELS", "$repoRoot/build/voice")
+    systemProperty("video.voiceReadsLists", voiceReadsLists.get())
     val root = repoRoot
     val lessonId = lesson
     val voice = voiceCommand
@@ -143,6 +162,7 @@ tasks.register<JavaExec>("buildLessonDeckVoice") {
     mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
     workingDir = rootDir
     environment("KOKORO_MODELS", "$repoRoot/build/voice")
+    systemProperty("video.voiceReadsLists", voiceReadsLists.get())
     val root = repoRoot
     val lessonId = lesson
     val voice = voiceCommand

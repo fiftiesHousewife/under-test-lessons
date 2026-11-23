@@ -175,7 +175,11 @@ What goes on the slides is in [write-lesson-slides-and-narration](../write-lesso
    few percent on a quiet machine and by up to a third on a busy one, so record one video at a time and run nothing
    heavy alongside.
 4. Any other voice can replace Kokoro: pass `-PlessonVoiceCommand="<program and arguments>"`, a command that turns a
-   text file into a WAV file. Organisations use their own approved speech service this way.
+   text file into a WAV file. Organisations use their own approved speech service this way. Put a word in double
+   quotes to keep its spaces (`-PlessonVoiceCommand='"/My Voice/say" --fast'`). If the command also reads a list
+   (`--list <file>`, one text file and WAV a line, separated by a tab, as `speak-kokoro.py` does), add
+   `-PlessonVoiceReadsLists=true`: it is then started once a lesson rather than once a clip, which loads its voice
+   once. Kokoro reads lists, which saves about a second a clip.
 
 ## Check, render, look
 

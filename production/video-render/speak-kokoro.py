@@ -1,6 +1,10 @@
 """Reads a text file aloud with the Kokoro voice (offline; model Apache-2.0, kokoro-onnx MIT) and writes a WAV file.
 
     python speak-kokoro.py <text file> <output .wav>
+    python speak-kokoro.py --list <list file>
+
+The list file has one clip a line, its text file and its output .wav separated by a tab: the model is loaded once for
+all of them, which is most of the time a single clip takes.
 
 Needs the kokoro-onnx and soundfile packages, and the model files kokoro-v1.0.onnx and voices-v1.0.bin in the folder
 named by KOKORO_MODELS (default: build/voice). Voice and speed come from KOKORO_VOICE (default bf_emma, a British
@@ -34,27 +38,41 @@ def to_sounds(text, phonemize):
     return "".join(pieces)
 
 
-def main(text_file, out_file):
-    import soundfile  # here, so to_sounds can be tested without the voice installed
+def read_list(list_file):
+    """The (text file, output .wav) pairs of a list file: one a line, separated by a tab; blank lines are skipped."""
+    with open(list_file, encoding="utf-8") as f:
+        pairs = [line.rstrip("\n").split("\t") for line in f if line.strip()]
+    for pair in pairs:
+        if len(pair) != 2:
+            raise ValueError("each line needs a text file and a .wav, separated by a tab: " + "\t".join(pair))
+    return [tuple(pair) for pair in pairs]
+
+
+def main(pairs):
+    import soundfile  # here, so to_sounds and read_list can be tested without the voice installed
     from kokoro_onnx import Kokoro
     from kokoro_onnx.tokenizer import Tokenizer
 
     models = os.environ.get("KOKORO_MODELS", "build/voice")
     kokoro = Kokoro(os.path.join(models, "kokoro-v1.0.onnx"), os.path.join(models, "voices-v1.0.bin"))
-    with open(text_file, encoding="utf-8") as f:
-        text = f.read().strip()
+    tokenizer = Tokenizer()
     settings = dict(voice=os.environ.get("KOKORO_VOICE", "bf_emma"),
                     speed=float(os.environ.get("KOKORO_SPEED", "1.0")), lang="en-gb")
-    if SOUNDS.search(text):
-        tokenizer = Tokenizer()
-        sounds = to_sounds(text, lambda words: tokenizer.phonemize(words, "en-gb"))
-        samples, rate = kokoro.create(sounds, is_phonemes=True, **settings)
-    else:
-        samples, rate = kokoro.create(text, **settings)
-    soundfile.write(out_file, samples, rate)
+    for text_file, out_file in pairs:
+        with open(text_file, encoding="utf-8") as f:
+            text = f.read().strip()
+        if SOUNDS.search(text):
+            sounds = to_sounds(text, lambda words: tokenizer.phonemize(words, "en-gb"))
+            samples, rate = kokoro.create(sounds, is_phonemes=True, **settings)
+        else:
+            samples, rate = kokoro.create(text, **settings)
+        soundfile.write(out_file, samples, rate)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        sys.exit("usage: speak-kokoro.py <text file> <output .wav>")
-    main(sys.argv[1], sys.argv[2])
+    if len(sys.argv) == 3 and sys.argv[1] == "--list":
+        main(read_list(sys.argv[2]))
+    elif len(sys.argv) == 3:
+        main([(sys.argv[1], sys.argv[2])])
+    else:
+        sys.exit("usage: speak-kokoro.py <text file> <output .wav> | speak-kokoro.py --list <list file>")

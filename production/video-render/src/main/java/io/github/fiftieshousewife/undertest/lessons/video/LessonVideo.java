@@ -69,6 +69,11 @@ public final class LessonVideo {
                 .map(paragraph -> Spoken.of(paragraph, pronunciation)).toList();
         final Path clipsFolder = media.file(".voice");
         createFolder(clipsFolder);
+        final Slides slides = media.slides();
+        final List<Spoken> everything = new ArrayList<>(narration);
+        java.util.stream.Stream.concat(slides.intro().stream(), slides.closing().stream())
+                .forEach(slide -> everything.add(Spoken.of(slide.narration(), pronunciation)));
+        VoiceClips.readAhead(media, command, everything);
         final List<WavFile> clips = new ArrayList<>();
         for (final Spoken scene : narration) {
             clips.add(VoiceClips.wav(media, command, scene));
@@ -78,7 +83,6 @@ public final class LessonVideo {
             throw new IllegalStateException("The narration does not fit the video:\n  " + String.join("\n  ", misfits));
         }
         Voiceover.track(scenes, clips).write(media.file(".narration.wav"));
-        final Slides slides = media.slides();
         final Voice voice = new Voice(media, command, pronunciation);
         speakSlides(voice, slides.intro(), "intro");
         speakSlides(voice, slides.closing(), "closing");
@@ -153,49 +157,9 @@ public final class LessonVideo {
         }
     }
 
-    /**
-     * The longest gap the voice may leave between sentences, in seconds: it leaves up to a second, which drags. The
-     * pauses the narration asks for ({@code [pause 1600ms]}) are kept whole. Part of every clip's key
-     * ({@link Spoken#saidKey}), so changing it reads each clip again.
-     */
-    static final double LONGEST_GAP = 0.4;
-
-    /**
-     * Speaks a scene's narration: each part between pause markers separately, its gaps between sentences shortened,
-     * joined with the pauses' silence.
-     */
+    /** Speaks one piece of narration: each part between pause markers, joined with the pauses' silence. */
     static WavFile speak(final List<String> command, final String narration, final Path clip) {
-        final List<Pauses.Part> parts = Pauses.parts(narration);
-        if (parts.isEmpty()) {
-            throw new IllegalArgumentException("a scene has no narration: " + clip);
-        }
-        final java.io.ByteArrayOutputStream joined = new java.io.ByteArrayOutputStream();
-        final List<WavFile> spoken = new ArrayList<>();
-        for (int i = 0; i < parts.size(); i++) {
-            final Path partClip = clip.resolveSibling(clip.getFileName() + "-" + (i + 1));
-            spoken.add(speakPart(command, parts.get(i).text(), partClip));
-            joined.writeBytes(spoken.getLast().samples());
-            joined.writeBytes(spoken.getLast().silence(parts.get(i).pauseAfter()).samples());
-        }
-        final WavFile format = spoken.getFirst();
-        final WavFile whole = new WavFile(format.sampleRate(), format.channels(), joined.toByteArray());
-        whole.write(clip.resolveSibling(clip.getFileName() + ".wav"));
-        return whole;
-    }
-
-    private static WavFile speakPart(final List<String> command, final String text, final Path clip) {
-        final Path textFile = clip.resolveSibling(clip.getFileName() + ".txt");
-        final Path wav = clip.resolveSibling(clip.getFileName() + ".wav");
-        try {
-            Files.writeString(textFile, text);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-        final List<String> full = new ArrayList<>(command);
-        full.add(textFile.toAbsolutePath().toString());
-        full.add(wav.toAbsolutePath().toString());
-        ExternalCommand.run(full, Path.of("").toAbsolutePath());
-        return WavFile.read(wav).withShorterGaps(LONGEST_GAP);
+        return Speech.readAll(command, List.of(Speech.of(narration, clip))).getFirst();
     }
 
     private static void createFolder(final Path folder) {

@@ -31,5 +31,24 @@ class ToSoundsTest(unittest.TestCase):
         self.assertEqual("<and/or the input/output>", SPEAK.to_sounds("and/or the input/output", fake))
 
 
+class ReadListTest(unittest.TestCase):
+
+    def write(self, text):
+        import tempfile
+        f = tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False, encoding="utf-8")
+        f.write(text)
+        f.close()
+        self.addCleanup(os.unlink, f.name)
+        return f.name
+
+    def test_reads_a_text_file_and_a_wav_from_each_line_and_skips_blank_ones(self):
+        listed = self.write("a b/one.txt\ta b/one.wav\n\ntwo.txt\ttwo.wav\n")
+        self.assertEqual([("a b/one.txt", "a b/one.wav"), ("two.txt", "two.wav")], SPEAK.read_list(listed))
+
+    def test_refuses_a_line_without_both(self):
+        with self.assertRaises(ValueError):
+            SPEAK.read_list(self.write("one.txt\n"))
+
+
 if __name__ == "__main__":
     unittest.main()

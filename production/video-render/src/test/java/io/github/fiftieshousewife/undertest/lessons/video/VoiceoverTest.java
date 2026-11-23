@@ -1,6 +1,7 @@
 package io.github.fiftieshousewife.undertest.lessons.video;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.List;
@@ -30,5 +31,15 @@ class VoiceoverTest {
         assertAll(
                 () -> assertThat(track.seconds()).isEqualTo(6),
                 () -> assertThat(track.sampleRate()).isEqualTo(100));
+    }
+
+    @Test
+    void refusesAClipRecordedDifferentlyFromTheFirst() {
+        final List<Scene> scenes = List.of(new Scene("a", 0, 2), new Scene("b", 2, 6));
+        final WavFile faster = new WavFile(200, 1, new byte[400]);
+
+        assertThatIllegalStateException().isThrownBy(() -> Voiceover.track(scenes, List.of(ONE_SECOND, faster)))
+                .withMessage("scene 2's clip is 200 Hz with 1 channel(s), but scene 1's is 100 Hz with 1; record"
+                        + " every clip the same way");
     }
 }

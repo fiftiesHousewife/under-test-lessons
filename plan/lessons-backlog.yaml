@@ -1049,6 +1049,7 @@ items:
       - "lessonVoiceCommand accepts arguments with spaces"
       - "Voiceover checks every clip has the first clip's format"
       - "lessonVoicePython falls back to python3 with a clear message"
+    status: "done"
   - key: "pronunciation-rules-match-any-word-in-one-pass"
     type: "deliverable"
     title: "Pronunciation rules match words like C++ and apply in one pass, longest first"

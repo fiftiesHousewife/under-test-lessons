@@ -32,15 +32,14 @@ final class DeckReader {
         createFolder(folder);
         final ClipLedger ledger = ClipLedger.read(folder);
         final List<Spoken> slides = DeckVoice.spoken(media);
-        int made = 0;
-        for (final Spoken slide : slides) {
-            if (!kept(folder, ledger, slide)) {
-                VoiceClips.wav(media, command, slide);
-                compress(VoiceClips.file(media, slide), folder.resolve(slide.clipName()));
-                ledger.voiceRead(slide.clipName(), slide.saidKey());
-                made++;
-            }
+        final List<Spoken> needed = slides.stream().filter(slide -> !kept(folder, ledger, slide)).toList();
+        VoiceClips.readAhead(media, command, needed);
+        for (final Spoken slide : needed) {
+            VoiceClips.wav(media, command, slide);
+            compress(VoiceClips.file(media, slide), folder.resolve(slide.clipName()));
+            ledger.voiceRead(slide.clipName(), slide.saidKey());
         }
+        final int made = needed.size();
         removeUnused(folder, ledger, slides.stream().map(Spoken::clipName).collect(Collectors.toSet()));
         ledger.write();
         log.info("{}: deck voice has {} clips, {} made now", LogSafe.lesson(media), slides.size(), made);
@@ -69,7 +68,7 @@ final class DeckReader {
 
     /**
      * Speech compresses well: one channel of AAC at 48 kbit/s, about 6 KB a second. The clip is the video's sound as
-     * it is, its gaps between sentences already shortened ({@link LessonVideo#LONGEST_GAP}), so a fresh clone's video
+     * it is, its gaps between sentences already shortened ({@link Speech#LONGEST_GAP}), so a fresh clone's video
      * decoded from it sounds the same.
      */
     private static void compress(final Path wav, final Path clip) {
