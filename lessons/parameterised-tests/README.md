@@ -23,6 +23,12 @@ divides by five, which rounds down: 3 pence net should give 1 penny VAT, and giv
   lists the cases as a table, including every way a fifth of a penny can round. Each row is reported by name, and
   three rows fail against the calculator in use today.
 
+Which way to round is a business rule, not arithmetic. HMRC's
+[VAT Notice 700](https://www.gov.uk/guidance/vat-guide-notice-700), section 17.5, lets a business round the total VAT
+on an invoice down to a whole penny, where the VAT it charges and the VAT it pays HMRC are the same; section 17.6 bars
+a retailer that works out VAT per line or per invoice from rounding down. So the rounding a test expects belongs in
+its cases, agreed with whoever owns the rule.
+
 ## Exercise
 
 The table covers sales, but not refunds. A credit note's net amount is negative, and its VAT must round to the nearest

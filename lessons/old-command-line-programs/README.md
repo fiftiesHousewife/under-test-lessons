@@ -47,6 +47,10 @@ the tests after it never run. Today's code can't finish in any test, so the buil
   `System.getenv` returns; otherwise the process attaches the agent to itself, which newer JDKs warn about and some
   sandboxes refuse.
 
+The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
+field in quotes when it holds a comma or a line break, so read them with a CSV parser, such as
+[Apache Commons CSV](https://commons.apache.org/proper/commons-csv/), not by splitting.
+
 ## Exercise
 
 The strong tests pin the program's two normal endings, 0 and 1. A script that runs it every night meets a third: a

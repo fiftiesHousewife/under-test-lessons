@@ -59,7 +59,10 @@ that names what was missing if time runs out.
 ## When to use it
 
 - **Before a new or changed test is merged:** run it 5 times in a row in continuous integration (`@RepeatedTest(5)`,
-  or rerun the build), and let it in only if every run passes.
+  or rerun the build), and let it in only if every run passes. Five runs are a cheap first filter, not proof: a test
+  that fails one run in a hundred passes five in a row about 95 times in 100. Rare flakes show up only over many runs,
+  such as `@RepeatedTest(100)` left to run overnight, or in CI's history of tests that failed and then passed on a
+  rerun.
 - **When a build fails and passes on a rerun:** find the test that failed, rather than just rerunning it.
 - **In tests of background work, messages or anything with a timeout:** wait for the result with Awaitility, never
   `Thread.sleep` for a guess. Better still, where the code allows it, inject the executor or `Clock` so the test

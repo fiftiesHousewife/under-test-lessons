@@ -49,6 +49,10 @@ into a settlement line in pounds, and writes the line.
   HMAC-SHA256 (`javax.crypto.Mac`) and a fixed test key. The same number always gets the same substitute, so each
   payment still matches its settlement line. (The lesson's capture is made up, and cleaned the same way.)
 
+The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
+field in quotes when it holds a comma or a line break, so read them with a CSV parser, such as
+[Apache Commons CSV](https://commons.apache.org/proper/commons-csv/), not by splitting.
+
 ## Exercise
 
 The job writes in chunks of 100 payments, but the whole-job tests run only 6 and 12, one chunk each. A real day has

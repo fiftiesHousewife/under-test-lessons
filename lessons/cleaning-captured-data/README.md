@@ -63,6 +63,10 @@ Seeded synthetic values are the same while the table of choices is kept. Only da
 Datafaker's output with no real capture behind it, is safe to publish. This lesson's own capture is made up, which is
 why it can live in a public repository with a key written into its tests.
 
+The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
+field in quotes when it holds a comma or a line break, so read them with a CSV parser, such as
+[Apache Commons CSV](https://commons.apache.org/proper/commons-csv/), not by splitting.
+
 ## Exercise
 
 The detector check only sees what the captured day happens to hold. Tomorrow's capture may have a phone number in a

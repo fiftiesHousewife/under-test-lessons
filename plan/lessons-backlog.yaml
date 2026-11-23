@@ -1218,7 +1218,7 @@ items:
       - "Slow and failing dependencies tests an answer that trickles in"
       - "Lessons that split CSV by commas say real files need a CSV parser"
       - "Parameterised tests: HMRC allows rounding down the invoice total, so the rounding rule is a business rule"
-    notes: "Check the jqwik facts at the source before stating them."
+    notes: "Check the jqwik facts at the source before stating them. Done: flaky runs, jetCheck and the seed, rounding, CSV parsers. Still to do: the javax versions of Weld and weld-junit (not yet found at a source); Liquibase's CommandScope and a test of an answer that trickles in, which change lesson code and need its outputs captured again."
   - key: "readme-badge-counts-the-lessons"
     type: "deliverable"
     title: "The README's lesson count comes from the catalogue"

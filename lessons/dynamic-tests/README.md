@@ -24,6 +24,10 @@ The example turns customer records such as `O'BRIEN,PATRICK,MR` into names for l
 - [`EachExampleTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dynamic/EachExampleTest.java)
   is the "after": a test factory, one named test per file.
 
+The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
+field in quotes when it holds a comma or a line break, so read them with a CSV parser, such as
+[Apache Commons CSV](https://commons.apache.org/proper/commons-csv/), not by splitting.
+
 ## Exercise
 
 Records from the new web form arrive in lower case: `o'neill,sean,mr` must still become `Mr Sean O'Neill`.

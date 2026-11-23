@@ -26,6 +26,12 @@ gives everything left over to the first person: fine with a penny left over, unf
 - [`FairSplitter`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/properties/FairSplitter.java)
   shares the leftover pence one each, and passes.
 
+Why jetCheck: it runs inside ordinary JUnit tests, with nothing else to set up. jqwik, the better-known property-test
+engine for JUnit, says in [its README](https://github.com/jqwik-team/jqwik) that it is in pure maintenance mode, with
+no new features planned. The lesson's seed is fixed, so every run, and the video, finds the same failing bill.
+jetCheck discourages a fixed seed, because a real project finds more with a new seed on each run; in your own tests,
+leave it out.
+
 ## Exercise
 
 The three rules each look at one bill. A fourth rule can compare two: adding a penny to the bill must add a penny to
