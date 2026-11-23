@@ -5,7 +5,7 @@ closing slides have their own narration, in
 [database-changes-with-liquibase.slides.md](database-changes-with-liquibase.slides.md). Written to be spoken.
 
 1. Step one. Add Liquibase to the version catalogue. Version five is under the Functional Source License, which becomes
-   the Apache licence after two years; check your company accepts it.
+   the Apache licence after two years. Check your company accepts it.
 2. Step two. The application applies its own database changes when it starts, so Liquibase is an ordinary dependency.
 3. Here is the code under test, today's changelog: the database's history, one change at a time. The second change
    adds a loyalty level to each customer. It was written as raw SQL, and tried only on the developers' database.

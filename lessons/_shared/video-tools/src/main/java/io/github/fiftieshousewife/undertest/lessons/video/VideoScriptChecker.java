@@ -90,7 +90,10 @@ public final class VideoScriptChecker {
                 + " narration items; each scene needs exactly one item (look for a repeated scene line)"));
     }
 
-    /** Narration is spoken, so it must never contain a command: say what happens instead. */
+    /**
+     * Narration is spoken, so it must never contain a command (say what happens instead), nor a semicolon, which the
+     * voice reads as a run-on sentence (use a full stop).
+     */
     static List<Problem> checkNarration(final Path narration) {
         final List<String> paragraphs = Narration.rawParagraphs(narration);
         final List<Problem> problems = new ArrayList<>();
@@ -99,6 +102,9 @@ public final class VideoScriptChecker {
             if (text.contains("`") || text.contains("./") || text.contains("gradlew")) {
                 problems.add(new Problem(narration, "item " + (i + 1) + " contains a command, which the voice would"
                         + " read aloud; say what happens instead (for example, \"Now we run the strong tests\")"));
+            }
+            if (text.contains(";")) {
+                problems.add(new Problem(narration, "item " + (i + 1) + " " + LessonChecks.SEMICOLON));
             }
         }
         return problems;

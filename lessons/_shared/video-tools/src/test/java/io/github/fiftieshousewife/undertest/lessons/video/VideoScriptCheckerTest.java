@@ -88,6 +88,20 @@ class VideoScriptCheckerTest {
     }
 
     @Test
+    void reportsSpokenTextWithASemicolon() throws IOException {
+        final Path media = Files.createDirectories(root.resolve("lessons/example-lesson/media"));
+        Files.writeString(media.resolve("example-lesson.tape"), "# -- Scene 1: a --\nSleep 1s\n");
+        Files.writeString(media.resolve("example-lesson.narration.md"), "1. It passes; nobody notices.\n");
+        Files.writeString(media.resolve("example-lesson.slides.md"), "Sources: a; b\n\n## intro: One\n- A; B\n"
+                + "Say: Here is one.\n  It passes; nobody notices.\n\n## closing: More\n- {lessons-repo}\n"
+                + "Say: Goodbye.\n");
+
+        assertThat(new VideoScriptChecker().check(root)).extracting(Problem::message).containsExactly(
+                "item 1 has a semicolon, which the voice runs on through; use a full stop",
+                "line 6: what the slide says has a semicolon, which the voice runs on through; use a full stop");
+    }
+
+    @Test
     void reportsEscapedQuotesWhichVhsCannotRead() throws IOException {
         assertThat(problemsIn("Type \"export X=\\\"a b\\\"\"\nType `export X=\"a b\"`\n"))
                 .containsExactly("line 1: VHS strings have no escape characters, so \\\" ends the string early;"

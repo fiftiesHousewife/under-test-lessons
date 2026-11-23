@@ -114,10 +114,25 @@ final class LessonChecks {
         return shown;
     }
 
-    /** A slides file names its sources, and its closing slides link the lessons repository by placeholder. */
+    /** What is wrong with spoken text that has a semicolon. */
+    static final String SEMICOLON = "has a semicolon, which the voice runs on through; use a full stop";
+
+    /**
+     * A slides file names its sources, its closing slides link the lessons repository by placeholder, and what its
+     * slides say has no semicolon.
+     */
     static List<Problem> slides(final Path slidesFile) {
-        final String text = String.join("\n", lines(slidesFile));
+        final List<String> lines = lines(slidesFile);
+        final String text = String.join("\n", lines);
         final List<Problem> problems = new ArrayList<>();
+        boolean saying = false;
+        for (int i = 0; i < lines.size(); i++) {
+            final String line = lines.get(i);
+            saying = line.startsWith("Say:") || saying && line.startsWith(" ") && !line.isBlank();
+            if (saying && line.contains(";")) {
+                problems.add(new Problem(slidesFile, "line " + (i + 1) + ": what the slide says " + SEMICOLON));
+            }
+        }
         if (!text.contains("Sources:")) {
             problems.add(new Problem(slidesFile, "no Sources: line; name where each fact on the slides comes from"));
         }

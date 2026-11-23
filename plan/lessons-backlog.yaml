@@ -1061,6 +1061,7 @@ items:
       - "Keys starting or ending with a non-word character match"
       - "All rules apply in one pass, longest key first, so one rule's result is never matched again"
       - "Tests for both"
+    status: "done"
   - key: "no-semicolons-in-spoken-text"
     type: "deliverable"
     title: "Spoken text has no semicolons"
@@ -1072,6 +1073,7 @@ items:
     done_when:
       - "checkVideoScripts fails a Say: line or narration item with a semicolon"
       - "Every lesson's spoken text uses full stops instead"
+    status: "done"
   - key: "decide-the-picture-style-and-diagrams"
     type: "decision"
     title: "Decide the picture style (objects in the speech bubble) and Excalidraw for diagrams"
