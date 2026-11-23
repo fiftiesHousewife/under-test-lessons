@@ -49,6 +49,9 @@ final class DeckReader {
     /** Whether the slide already has the clip it needs, renaming one still under its earlier name. */
     private static boolean kept(final Path folder, final ClipLedger ledger, final Spoken slide) {
         final Path clip = folder.resolve(slide.clipName());
+        if (DeckVoice.clips(folder, slide).stream().anyMatch(found -> !found.equals(clip))) {
+            return true; // a person's recording, as .wav or .mp3: the voice never makes one over it
+        }
         if (Files.isRegularFile(clip) && ledger.first() && slide.clipName().equals(slide.earlierClipName())) {
             ledger.voiceRead(slide.clipName(), slide.saidKey()); // made before ledgers, by the voice, from these words
             return true;

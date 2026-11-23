@@ -29,11 +29,24 @@ final class DeckVoice {
         return written.stream().map(text -> Spoken.of(text, pronunciation)).toList();
     }
 
+    /**
+     * The formats a clip may have, in the order the deck looks for them: the voice makes {@code .m4a}; a person may
+     * record any of them (Windows' Sound Recorder saves {@code .m4a}).
+     */
+    static final List<String> FORMATS = List.of(".m4a", ".wav", ".mp3");
+
     /** For each slide, the clip's address relative to the deck, or empty when that slide has no clip yet. */
     static List<String> sources(final Media media) {
         final Path folder = media.file(FOLDER);
-        return spoken(media).stream().map(Spoken::clipName)
-                .map(name -> Files.isRegularFile(folder.resolve(name)) ? media.name(FOLDER) + "/" + name : "")
+        return spoken(media).stream()
+                .map(slide -> clips(folder, slide).stream().findFirst()
+                        .map(clip -> media.name(FOLDER) + "/" + clip.getFileName()).orElse(""))
+                .toList();
+    }
+
+    /** The slide's clips in the folder, in every format there is one, in {@link #FORMATS} order. */
+    static List<Path> clips(final Path folder, final Spoken slide) {
+        return FORMATS.stream().map(format -> folder.resolve(slide.clipStem() + format)).filter(Files::isRegularFile)
                 .toList();
     }
 

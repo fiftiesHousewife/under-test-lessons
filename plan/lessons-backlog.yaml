@@ -971,6 +971,7 @@ items:
     done_when:
       - "The deck plays whichever format is there under the clip's name"
     decision_record: "docs/decisions/0027-inside-a-company-a-person-records-the-voice.md"
+    status: "done"
   - key: "check-missing-and-unused-clips"
     type: "deliverable"
     title: "A check lists missing and unused deck clips, and decks out of date"

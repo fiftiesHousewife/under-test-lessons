@@ -198,6 +198,20 @@ class DeckVoiceTest {
     }
 
     @Test
+    void neverReadsASlideAPersonRecordedAsAWav() throws IOException {
+        final Path folder = Files.createDirectories(media.resolve("demo.deck-voice"));
+        final Path recorded = Files.writeString(folder.resolve(new Spoken("Goodbye.", "Goodbye.").clipStem() + ".wav"),
+                "a person's recording");
+
+        final int made = DeckReader.speak(new Media(root, "demo"), List.of(voice.toString()));
+
+        assertAll(
+                () -> assertThat(made).isEqualTo(2),
+                () -> assertThat(Files.readString(recorded)).isEqualTo("a person's recording"),
+                () -> assertThat(folder.resolve(clip("Goodbye."))).doesNotExist());
+    }
+
+    @Test
     void theVideoTakesTheClipsTheDeckHasAlreadyReadAloud() throws IOException {
         final Media demo = new Media(root, "demo");
         DeckReader.speak(demo, List.of(voice.toString()));

@@ -85,6 +85,43 @@ class DeckClipsTest {
         assertThat(DeckClips.Mp4Length.seconds(clip(BYE, 2.5))).isCloseTo(2.5, within(1e-9));
     }
 
+    @Test
+    void aPersonsRecordingMayBeAWavOrAnMp3AndTheDeckPlaysIt() throws IOException {
+        final Path wav = Files.write(clips.resolve(new Spoken(HELLO, HELLO).clipStem() + ".wav"), wav(3));
+        Files.write(clips.resolve(new Spoken(BYE, BYE).clipStem() + ".mp3"), new byte[] {1, 2, 3});
+
+        assertAll(
+                () -> assertThat(check(true, false).problems()).isEmpty(),
+                () -> assertThat(check(true, false).warnings()).isEmpty(),
+                () -> assertThat(DeckClips.WavLength.seconds(wav)).isCloseTo(3, within(1e-9)),
+                () -> assertThat(DeckVoice.sources(new Media(root, "demo"))).containsExactly(
+                        "demo.deck-voice/" + wav.getFileName(),
+                        "demo.deck-voice/" + new Spoken(BYE, BYE).clipStem() + ".mp3"));
+    }
+
+    @Test
+    void warnsOfASlideWithClipsInTwoFormats() throws IOException {
+        clip(HELLO, 3);
+        Files.write(clips.resolve(new Spoken(HELLO, HELLO).clipStem() + ".wav"), wav(3));
+        clip(BYE, 0.5);
+
+        assertThat(check(true, false).warnings()).extracting(Problem::message).containsExactly(
+                "slide 1 has 2 clips, " + new Spoken(HELLO, HELLO).clipName() + " and "
+                        + new Spoken(HELLO, HELLO).clipStem() + ".wav; the deck plays "
+                        + new Spoken(HELLO, HELLO).clipName() + ", so remove the other");
+    }
+
+    /** A silent WAV: 8000 one-channel 16-bit samples a second. */
+    private static byte[] wav(final double seconds) {
+        final int size = (int) Math.round(seconds * 16000);
+        final ByteBuffer out = ByteBuffer.allocate(44 + size).order(java.nio.ByteOrder.LITTLE_ENDIAN);
+        out.put("RIFF".getBytes(StandardCharsets.US_ASCII)).putInt(36 + size).put("WAVE".getBytes(StandardCharsets.US_ASCII))
+                .put("fmt ".getBytes(StandardCharsets.US_ASCII)).putInt(16).putShort((short) 1).putShort((short) 1)
+                .putInt(8000).putInt(16000).putShort((short) 2).putShort((short) 16)
+                .put("data".getBytes(StandardCharsets.US_ASCII)).putInt(size);
+        return out.array();
+    }
+
     /** The smallest MP4 the check reads: an ftyp box, then moov holding mvhd with a timescale of 1000. */
     private static byte[] mp4(final double seconds) {
         final ByteBuffer out = ByteBuffer.allocate(16 + 8 + 28);

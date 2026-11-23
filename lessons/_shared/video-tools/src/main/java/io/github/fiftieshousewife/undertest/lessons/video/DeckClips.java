@@ -41,23 +41,30 @@ final class DeckClips {
         final List<Problem> warnings = new ArrayList<>();
         for (int i = 0; i < slides.size(); i++) {
             final Spoken slide = slides.get(i);
-            final Path clip = folder.resolve(slide.clipName());
-            if (!Files.isRegularFile(clip)) {
+            final List<Path> found = DeckVoice.clips(folder, slide);
+            if (found.isEmpty()) {
                 (missingFails ? problems : warnings).add(new Problem(folder, "slide " + (i + 1) + " (\""
                         + opening(slide.written()) + "\") has no clip " + slide.clipName()
                         + "; voice the deck, or record it"));
                 continue;
             }
+            final Path clip = found.getFirst();
+            if (found.size() > 1) {
+                warnings.add(new Problem(clip, "slide " + (i + 1) + " has " + found.size() + " clips, "
+                        + found.stream().map(file -> String.valueOf(file.getFileName())).collect(Collectors.joining(
+                                " and ")) + "; the deck plays " + clip.getFileName() + ", so remove the other"));
+            }
             final double expected = VideoLength.spoken(slide.written());
-            final double seconds = Mp4Length.seconds(clip);
-            if (seconds < expected * TOO_SHORT || seconds > expected * TOO_LONG) {
+            final double seconds = seconds(clip);
+            if (seconds >= 0 && (seconds < expected * TOO_SHORT || seconds > expected * TOO_LONG)) {
                 warnings.add(new Problem(clip, String.format(Locale.ROOT, "slide %d (\"%s\") takes %.1f s, but its"
                         + " words take about %.1f s to say; check it says the slide's words, whole", i + 1,
                         opening(slide.written()), seconds, expected)));
             }
         }
-        final Set<String> used = slides.stream().map(Spoken::clipName).collect(Collectors.toSet());
-        final List<String> unused = clips(folder).stream().filter(name -> !used.contains(name)).toList();
+        final Set<String> used = slides.stream().map(Spoken::clipStem).collect(Collectors.toSet());
+        final List<String> unused = clips(folder).stream()
+                .filter(name -> !used.contains(name.substring(0, name.lastIndexOf('.')))).toList();
         if (removeUnused && !unused.isEmpty()) {
             remove(folder, unused);
         } else {
@@ -79,8 +86,8 @@ final class DeckClips {
             return List.of();
         }
         try (Stream<Path> files = Files.list(folder)) {
-            return files.map(file -> String.valueOf(file.getFileName())).filter(name -> name.endsWith(".m4a"))
-                    .sorted().toList();
+            return files.map(file -> String.valueOf(file.getFileName()))
+                    .filter(name -> DeckVoice.FORMATS.stream().anyMatch(name::endsWith)).sorted().toList();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -99,6 +106,53 @@ final class DeckClips {
         ledger.write();
     }
 
+    /** A clip's length in seconds, from its header; -1 for an MP3, which has no length in its header. */
+    private static double seconds(final Path clip) {
+        final String name = String.valueOf(clip.getFileName());
+        if (name.endsWith(".wav")) {
+            return WavLength.seconds(clip);
+        }
+        return name.endsWith(".m4a") ? Mp4Length.seconds(clip) : -1;
+    }
+
+    /** A WAV clip's length: its data's size over its bytes a second, both from its header. */
+    static final class WavLength {
+
+        private WavLength() {
+        }
+
+        static double seconds(final Path clip) {
+            final ByteBuffer data = ByteBuffer.wrap(bytes(clip)).order(java.nio.ByteOrder.LITTLE_ENDIAN);
+            int at = 12;
+            long bytesPerSecond = 0;
+            while (at + 8 <= data.limit()) {
+                final String id = fourLetters(data, at);
+                final long size = Integer.toUnsignedLong(data.getInt(at + 4));
+                if ("fmt ".equals(id)) {
+                    bytesPerSecond = Integer.toUnsignedLong(data.getInt(at + 16));
+                } else if ("data".equals(id) && bytesPerSecond > 0) {
+                    return (double) Math.min(size, data.limit() - at - 8) / bytesPerSecond;
+                }
+                at += (int) (8 + size + (size & 1));
+            }
+            throw new IllegalArgumentException(clip + " is not a WAV sound file: it has no fmt and data header");
+        }
+    }
+
+    private static byte[] bytes(final Path clip) {
+        try {
+            return Files.readAllBytes(clip);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    /** The four letters at {@code at}: a WAV chunk's name, or an MP4 box's type (four bytes after its start). */
+    private static String fourLetters(final ByteBuffer data, final int at) {
+        return new String(new byte[] {data.get(at), data.get(at + 1), data.get(at + 2), data.get(at + 3)},
+                java.nio.charset.StandardCharsets.US_ASCII);
+    }
+
     /** A clip's length, read from its MP4 header ({@code moov/mvhd}), so no player or ffmpeg is needed. */
     static final class Mp4Length {
 
@@ -106,12 +160,7 @@ final class DeckClips {
         }
 
         static double seconds(final Path clip) {
-            final ByteBuffer data;
-            try {
-                data = ByteBuffer.wrap(Files.readAllBytes(clip));
-            } catch (IOException e) {
-                throw new UncheckedIOException(e);
-            }
+            final ByteBuffer data = ByteBuffer.wrap(bytes(clip));
             final int moov = box(data, 0, data.limit(), "moov");
             final int mvhd = moov < 0 ? -1 : box(data, moov + 8, moov + (int) size(data, moov), "mvhd");
             if (mvhd < 0) {
@@ -129,8 +178,7 @@ final class DeckClips {
             int at = start;
             while (at + 8 <= end) {
                 final long size = size(data, at);
-                if (type.equals(new String(new byte[] {data.get(at + 4), data.get(at + 5), data.get(at + 6),
-                        data.get(at + 7)}, java.nio.charset.StandardCharsets.US_ASCII))) {
+                if (type.equals(fourLetters(data, at + 4))) {
                     return at;
                 }
                 if (size < 8) {

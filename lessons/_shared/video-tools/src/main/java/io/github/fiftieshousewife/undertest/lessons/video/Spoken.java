@@ -24,9 +24,17 @@ record Spoken(String written, String said) {
         return new Spoken(written, pronunciation.forSpeech(written));
     }
 
-    /** The clip's file name: the start of the SHA-256 of the written words, pause markers and spacing left out. */
+    /**
+     * The clip's file name as the voice makes it: the start of the SHA-256 of the written words, pause markers and
+     * spacing left out, as {@code .m4a}. A person's recording may have the same name as {@code .wav} or {@code .mp3}.
+     */
     String clipName() {
-        return hash(Pauses.withoutMarkers(written).replaceAll("\\s+", " ")) + ".m4a";
+        return clipStem() + ".m4a";
+    }
+
+    /** The clip's file name without its format. */
+    String clipStem() {
+        return hash(Pauses.withoutMarkers(written).replaceAll("\\s+", " "));
     }
 
     /**
