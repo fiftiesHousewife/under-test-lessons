@@ -31,7 +31,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | #59 | [Lesson: the safety inventory](https://github.com/fiftiesHousewife/under-test-lessons/issues/59) | deliverable | Lessons Owner | ai | – |
 | #60 | [Lesson: anti-patterns in existing tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/60) | deliverable | Lessons Owner | ai | – |
 | #28 | [Running old code unplugged: the airgap agent refuses every outbound call an old Spring service makes, and its report becomes the connection list and the test profile (lesson)](https://github.com/fiftiesHousewife/under-test-lessons/issues/28) | deliverable | Lessons Owner | ai | – |
-| #97 | [Every lesson has an exercise whose answer the build checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/97) | deliverable | Lessons Owner | ai | – |
 | #15 | [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15) | deliverable | Lessons Owner | ai | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) |
 | #58 | [Lesson: recording current behaviour from real traffic, with Keploy](https://github.com/fiftiesHousewife/under-test-lessons/issues/58) | deliverable | Lessons Owner | ai | – |
 | #32 | [Lesson: AI-written tests that pass the acceptance check](https://github.com/fiftiesHousewife/under-test-lessons/issues/32) | deliverable | Lessons Owner | ai | – |
