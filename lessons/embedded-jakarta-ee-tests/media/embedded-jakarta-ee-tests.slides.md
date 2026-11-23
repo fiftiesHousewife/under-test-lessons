@@ -67,6 +67,8 @@ Say: CDI arrived with Java E E six, in 2009, and lives on in Jakarta E E. Weld i
 - https://weld.cdi-spec.org — Weld
 - https://github.com/weld/weld-testing — Weld's JUnit support
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: add a third rate with no mark, and see what the container does; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Weld site, and its testing project. The links on screen also take you to this
-  lesson's test code and examples, to run yourself.
+  lesson's test code and examples, to run yourself. And try the exercise in the README: add a zero rate with no mark,
+  and check the checkout still charges the standard rate.

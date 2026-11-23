@@ -1,0 +1,22 @@
+$ ./gradlew :lessons:fake-behind-an-interface:test -Pcode=answer
+FakeQueueTest > bigOrderReachesTheWarehouseAndTheFraudCheck() FAILED
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [fraud checks]
+    Expecting actual:
+      []
+    to contain exactly (and in same order):
+      ["A-1 15000"]
+    but could not find the following elements:
+      ["A-1 15000"]
+FakeQueueTest > smallOrderSkipsTheFraudCheck() PASSED
+MockedQueueTest > bigOrderSendsBothMessagesAndCommits() PASSED
+QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() PASSED
+HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsReachesTheFraudCheck() FAILED
+    org.opentest4j.AssertionFailedError: [fraud checks]
+    Expecting actual:
+      []
+    to contain exactly (and in same order):
+      ["A-3 10000"]
+    but could not find the following elements:
+      ["A-3 10000"]
+5 tests completed, 2 failed

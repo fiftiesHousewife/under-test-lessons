@@ -1,0 +1,22 @@
+$ ./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=answer
+StockAnswerTest > supplierWithStockGivesTheUnits() PASSED
+StockAnswerTest > supplierOutageSaysTheSupplierIsUnavailable() PASSED
+SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [1] fault = CONNECTION_RESET_BY_PEER FAILED
+    org.opentest4j.AssertionFailedError: [CONNECTION_RESET_BY_PEER]
+    expected: "supplier unavailable: the connection failed"
+     but was: "UncheckedIOException: java.io.IOException: HTTP/1.1 header parser received no bytes"
+SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [2] fault = EMPTY_RESPONSE FAILED
+    org.opentest4j.AssertionFailedError: [EMPTY_RESPONSE]
+    expected: "supplier unavailable: the connection failed"
+     but was: "UncheckedIOException: java.io.IOException: HTTP/1.1 header parser received no bytes"
+SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [3] fault = MALFORMED_RESPONSE_CHUNK FAILED
+    org.opentest4j.AssertionFailedError: [MALFORMED_RESPONSE_CHUNK]
+    expected: "supplier unavailable: the connection failed"
+     but was: "UncheckedIOException: java.io.IOException: Illegal character in chunk size: 108"
+SupplierFaultTest > slowSupplierCostsTheShopOneTimeout() FAILED
+    org.opentest4j.AssertionFailedError: the shop kept the customer waiting for the supplier ==> execution timed out after 3000 ms
+RandomDataAnswerTest > randomDataSaysTheSupplierIsUnavailable() FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "supplier unavailable: the connection failed"
+     but was: "UncheckedIOException: java.io.IOException: parsing HTTP/1.1 status line, receiving [lskdu018973t09sylgasjkfg1][]'./.sdlv], parser state [STATUS_LINE]"
+7 tests completed, 5 failed

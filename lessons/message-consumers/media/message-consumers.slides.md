@@ -93,7 +93,9 @@ Say: Artemis began inside the Apache ActiveMQ project. In 2025, that project vot
 - https://jakarta.ee/specifications/messaging/ — Jakarta Messaging
 - https://kafka.apache.org/documentation/ — Apache Kafka
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: send a message with no order, and check where it ends up; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Artemis site, and its guide to embedding the broker. Then the Jakarta
   Messaging specification, and Kafka's documentation. The links on screen also take you to this lesson's test code
-  and examples, to run yourself.
+  and examples, to run yourself. And try the exercise in the README: send a payment message that names no order, and
+  check it ends in the dead-letter queue.

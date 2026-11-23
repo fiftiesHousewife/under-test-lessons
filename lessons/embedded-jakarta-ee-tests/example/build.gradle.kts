@@ -12,8 +12,14 @@ dependencies {
     testImplementation(libs.weld.junit5)
 }
 
+// `./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=answer` runs today's checkout with the exercise's answer
+// (answer/*AnswerTest), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

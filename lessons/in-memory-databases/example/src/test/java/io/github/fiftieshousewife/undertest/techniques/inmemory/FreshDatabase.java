@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.h2.jdbcx.JdbcDataSource;
 
 /** A new H2 database, held in memory, with the real schema. It disappears when the test closes it. */
-final class FreshDatabase implements AutoCloseable {
+public final class FreshDatabase implements AutoCloseable {
 
     // As close to PostgreSQL as H2 comes: the settings H2's own documentation gives for its PostgreSQL mode.
     private static final String LIKE_POSTGRESQL = ";MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH";
@@ -21,11 +21,11 @@ final class FreshDatabase implements AutoCloseable {
         Schema.apply(keepAlive); // the same schema file the application applies to production
     }
 
-    static FreshDatabase start() throws SQLException {
+    public static FreshDatabase start() throws SQLException {
         return new FreshDatabase();
     }
 
-    Connections connections() {
+    public Connections connections() {
         return database::getConnection;
     }
 

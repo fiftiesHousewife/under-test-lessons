@@ -8,4 +8,5 @@ RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
 RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
 RecordingTest > cleanedFirstTheFilesHoldSubstitutes() PASSED
 RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
-All 9 tests that ran passed; 1 skipped.
+TooManyRequestsAnswerTest > tooManyRequestsSaysTheSupplierIsUnavailable() PASSED
+All 10 tests that ran passed; 1 skipped.

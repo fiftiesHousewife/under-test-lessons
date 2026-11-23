@@ -1,0 +1,8 @@
+{
+  "request": { "method": "GET", "url": "/postcodes/B1%201BB" },
+  "response": {
+    "status": 429,
+    "headers": { "Content-Type": "application/json", "Retry-After": "60" },
+    "jsonBody": { "error": "too many requests" }
+  }
+}

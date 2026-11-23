@@ -75,6 +75,8 @@ Say: WireMock was created by Tom Akehurst, and is free under the Apache licence.
 ## closing: Find out more
 - https://wiremock.org — WireMock, with its documentation
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: add a too-many-requests answer by hand, and a test for it; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the WireMock documentation. The links on screen also take you to this lesson's
-  test code and examples, to run yourself.
+  test code and examples, to run yourself. And try the exercise in the README: add a recording of the supplier saying
+  too many requests, and check that the client says the supplier is unavailable.

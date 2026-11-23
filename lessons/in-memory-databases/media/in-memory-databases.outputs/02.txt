@@ -6,4 +6,5 @@ PortableSqlTest > theCheckFindsSqlThatDependsOnTheDatabase() PASSED
 PortableSqlTest > theCodeTestedOnH2UsesOnlyPortableSql() PASSED
 SharedDatabaseTest > newInvoicesAreNumberedInTurn() PASSED
 SharedDatabaseTest > anIssuedInvoiceIsKept() PASSED
-All 7 tests passed.
+NoCustomerAnswerTest > anInvoiceWithNoCustomerIsRefused() PASSED
+All 8 tests passed.

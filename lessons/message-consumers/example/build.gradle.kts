@@ -12,8 +12,14 @@ dependencies {
     testImplementation(libs.mockito.core) // only for the "before" test's hand-built message
 }
 
+// `./gradlew :lessons:message-consumers:test -Pcode=answer` runs today's consumer with the exercise's answer
+// (answer/*AnswerTest), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
     // The broker's network library and its optional native journal ask the JDK for low-level access; allowing it
     // here keeps the JDK's warnings out of the test output.

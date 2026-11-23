@@ -5,4 +5,5 @@ SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [3] fa
 SupplierFaultTest > slowSupplierCostsTheShopOneTimeout() PASSED
 StockAnswerTest > supplierWithStockGivesTheUnits() PASSED
 StockAnswerTest > supplierOutageSaysTheSupplierIsUnavailable() PASSED
-All 6 tests passed.
+RandomDataAnswerTest > randomDataSaysTheSupplierIsUnavailable() PASSED
+All 7 tests passed.

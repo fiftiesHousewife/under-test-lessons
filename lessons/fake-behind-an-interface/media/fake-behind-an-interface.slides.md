@@ -65,6 +65,8 @@ Say: Gerard Meszaros named fakes, among other kinds of test doubles, in his book
 ## closing: Find out more
 - https://martinfowler.com/articles/mocksArentStubs.html — Mocks Aren't Stubs
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: test an order of exactly £100 against the fake queue; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read Martin Fowler's article, Mocks Aren't Stubs. The links on screen also take you to this
-  lesson's test code and examples, to run yourself.
+  lesson's test code and examples, to run yourself. And try the exercise in the README: check that an order of exactly
+  £100 reaches the fraud check.

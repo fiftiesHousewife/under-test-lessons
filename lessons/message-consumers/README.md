@@ -47,6 +47,23 @@ Collect them in a test environment first, with the queue owner's agreement, then
 - **Cleaning:** drop secrets and free text, and replace identifiers with keyed substitutes, so the same customer always
   gets the same substitute and the messages still fit together. The example messages here have been cleaned that way.
 
+## Exercise
+
+The example messages hold one that no one can read: pounds instead of pence. A message can be unreadable in other
+ways, and each must be kept in the dead-letter queue, not skipped. Try one that names no order at all:
+`customer=customer-19c2;pence=500`.
+
+1. Add a test class beside [`PaymentsOnABrokerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/messages/PaymentsOnABrokerTest.java)
+   that sends just that message to [the broker in the test](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/messages/EmbeddedBroker.java),
+   and lets the consumer take it.
+2. Expect the dead-letter queue to hold exactly that message.
+3. Compare with the answer, [`NoOrderAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/messages/answer/NoOrderAnswerTest.java),
+   which runs against today's consumer with:
+
+```bash
+./gradlew :lessons:message-consumers:test -Pcode=answer   # today's consumer: 4 of 6 tests fail; the message with no order is skipped, and the dead-letter queue is empty
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/message-consumers.html) (its source is [`media/message-consumers.deck.html`](media/message-consumers.deck.html)). Arrow keys

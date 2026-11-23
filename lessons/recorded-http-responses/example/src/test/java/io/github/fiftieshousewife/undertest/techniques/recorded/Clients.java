@@ -5,9 +5,10 @@ import io.github.fiftieshousewife.undertest.techniques.recorded.fixed.PostcodeCl
 import io.github.fiftieshousewife.undertest.techniques.recorded.today.TodaysPostcodeClient;
 import io.github.fiftieshousewife.undertest.techniques.recorded.today.TodaysRecordingCleaner;
 import java.net.URI;
+import java.util.Set;
 
-/** The code the tests run against: the fix, or today's with -Pcode=today. */
-final class Clients {
+/** The code the tests run against: the fix, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
+public final class Clients {
 
     /** A fixed key, for tests only: the same name gets the same substitute on every run. */
     private static final String TEST_KEY = "a key for test recordings only";
@@ -15,7 +16,7 @@ final class Clients {
     private Clients() {
     }
 
-    static PostcodeLookup at(final String baseUrl) {
+    public static PostcodeLookup at(final String baseUrl) {
         final SupplierHttp supplier = new SupplierHttp(URI.create(baseUrl));
         return today() ? new TodaysPostcodeClient(supplier) : new PostcodeClient(supplier);
     }
@@ -25,6 +26,6 @@ final class Clients {
     }
 
     private static boolean today() {
-        return "today".equals(System.getProperty("code"));
+        return Set.of("today", "answer").contains(System.getProperty("code"));
     }
 }

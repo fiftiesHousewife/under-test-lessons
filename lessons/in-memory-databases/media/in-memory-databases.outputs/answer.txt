@@ -1,0 +1,16 @@
+$ ./gradlew :lessons:in-memory-databases:test -Pcode=answer
+FreshDatabaseTest > invoicesAreNumberedOneTwoThree() FAILED
+    org.opentest4j.AssertionFailedError: [invoice numbers]
+    expected: [1, 2, 3]
+     but was: [0, 1, 2]
+FreshDatabaseTest > eachTestStartsWithNoInvoices() PASSED
+FreshDatabaseTest > theShopsFirstInvoiceIsNumberOne() FAILED
+    org.opentest4j.AssertionFailedError: [the first invoice's number]
+    expected: 1
+     but was: 0
+PortableSqlTest > theCheckFindsSqlThatDependsOnTheDatabase() PASSED
+PortableSqlTest > theCodeTestedOnH2UsesOnlyPortableSql() PASSED
+SharedDatabaseTest > newInvoicesAreNumberedInTurn() PASSED
+SharedDatabaseTest > anIssuedInvoiceIsKept() PASSED
+NoCustomerAnswerTest > anInvoiceWithNoCustomerIsRefused() PASSED
+8 tests completed, 2 failed

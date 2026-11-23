@@ -83,6 +83,8 @@ Say: Timeouts, and circuit breakers that stop calling a failing service for a wh
 - https://github.com/Shopify/toxiproxy — Toxiproxy, for network faults between real services
 - https://java.testcontainers.org/modules/toxiproxy/ — Toxiproxy in a container, from a Java test
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: try WireMock's fourth fault, random bytes instead of an answer; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with WireMock's guide to delays and faults. The links on screen also lead to Toxiproxy,
-  and to running it from a Java test, and take you to this lesson's test code and examples, to run yourself.
+  and to running it from a Java test, and take you to this lesson's test code and examples, to run yourself. And try
+  the exercise in the README: make the supplier send random bytes, and check the shop still says it is unavailable.

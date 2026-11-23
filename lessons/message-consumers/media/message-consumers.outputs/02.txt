@@ -4,4 +4,5 @@ PaymentsOnABrokerTest > aMessageNoOneCanReadEndsInTheDeadLetterQueue() PASSED
 PaymentsOnABrokerTest > aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() PASSED
 BrowsingTest > browsingReadsEveryMessageWithoutTakingAny() PASSED
 PaymentByHandTest > recordsThePaymentInAMessage() PASSED
-All 5 tests passed.
+NoOrderAnswerTest > aMessageWithNoOrderEndsInTheDeadLetterQueue() PASSED
+All 6 tests passed.

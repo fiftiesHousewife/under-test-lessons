@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /** A fake message queue: it holds messages until commit, then delivers them, as the real queue does. */
-final class InMemoryMessageQueue implements MessageQueue {
+public final class InMemoryMessageQueue implements MessageQueue {
 
     private final Map<String, List<String>> pending = new LinkedHashMap<>();
     private final Map<String, List<String>> arrived = new LinkedHashMap<>();
@@ -23,7 +23,7 @@ final class InMemoryMessageQueue implements MessageQueue {
     }
 
     /** The messages delivered on a topic so far. */
-    List<String> delivered(final String topic) {
+    public List<String> delivered(final String topic) {
         return List.copyOf(arrived.getOrDefault(topic, List.of()));
     }
 }

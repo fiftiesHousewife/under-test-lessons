@@ -2,18 +2,19 @@ package io.github.fiftieshousewife.undertest.techniques.jakartaee;
 
 import io.github.fiftieshousewife.undertest.techniques.jakartaee.fixed.StandardCheckout;
 import io.github.fiftieshousewife.undertest.techniques.jakartaee.today.TodaysCheckout;
+import java.util.Set;
 
-/** The checkout class the tests use: the fixed one, or today's with -Pcode=today. */
-final class Checkouts {
+/** The checkout class the tests use: the fixed one, or today's with -Pcode=today (and -Pcode=answer, the exercise). */
+public final class Checkouts {
 
     private Checkouts() {
     }
 
     static boolean today() {
-        return "today".equals(System.getProperty("code"));
+        return Set.of("today", "answer").contains(System.getProperty("code"));
     }
 
-    static Class<? extends Checkout> chosen() {
+    public static Class<? extends Checkout> chosen() {
         return today() ? TodaysCheckout.class : StandardCheckout.class;
     }
 

@@ -8,9 +8,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Set;
 
-/** The code the tests run against: the fix, or today's with -Pcode=today. */
-final class Clients {
+/** The code the tests run against: the fix, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
+public final class Clients {
 
     /** How long the fixed client waits to connect, and then for an answer. */
     static final Duration TIMEOUT = Duration.ofMillis(500);
@@ -18,7 +19,7 @@ final class Clients {
     private Clients() {
     }
 
-    static StockCheck at(final String baseUrl) {
+    public static StockCheck at(final String baseUrl) {
         final URI supplier = URI.create(baseUrl);
         warmUp(supplier);
         return today() ? new TodaysStockClient(supplier) : new StockClient(supplier, TIMEOUT, TIMEOUT);
@@ -42,7 +43,7 @@ final class Clients {
     }
 
     /** The answer, or the error's type and message, so a failure reads in one line. */
-    static String outcome(final StockCheck stock, final String sku) {
+    public static String outcome(final StockCheck stock, final String sku) {
         try {
             return stock.check(sku).toString();
         } catch (RuntimeException e) {
@@ -51,6 +52,6 @@ final class Clients {
     }
 
     private static boolean today() {
-        return "today".equals(System.getProperty("code"));
+        return Set.of("today", "answer").contains(System.getProperty("code"));
     }
 }

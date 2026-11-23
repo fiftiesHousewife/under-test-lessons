@@ -13,7 +13,7 @@ including the many company laptops that can't run containers.
 
 ```bash
 ./gradlew :lessons:in-memory-databases:test -Pcode=today   # today's invoice book: the shared-database tests pass; on a fresh database the first invoice is number 0, and 2 of 7 tests fail
-./gradlew :lessons:in-memory-databases:test                # the fixed invoice book: all 7 tests pass
+./gradlew :lessons:in-memory-databases:test                # the fixed invoice book: all 8 tests pass
 ```
 
 The example numbers a shop's invoices: each new invoice gets the highest number so far, plus one.
@@ -41,6 +41,22 @@ The fresh databases use the settings
 `MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH`. They narrow the gap, and the last one even
 sorts nulls as PostgreSQL does. But H2 says itself that only a small subset of the differences between databases is
 covered this way, so a mode is never evidence of what the real database does.
+
+## Exercise
+
+A fresh database brings the real schema, rules and all. The schema says every invoice has a customer (`NOT NULL`);
+the shared test database's table, typed in by hand, left that rule out, so it would take an invoice with no customer.
+
+1. Add a test class beside [`FreshDatabaseTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/FreshDatabaseTest.java)
+   that starts a [`FreshDatabase`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/FreshDatabase.java)
+   and issues an invoice with no customer (`null`).
+2. Expect it to be refused, with an `SQLIntegrityConstraintViolationException` naming the `customer` column.
+3. Compare with the answer, [`NoCustomerAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/answer/NoCustomerAnswerTest.java),
+   which runs with today's invoice book with:
+
+```bash
+./gradlew :lessons:in-memory-databases:test -Pcode=answer   # today's invoice book: 2 of 8 tests fail, and the answer passes: the fresh database refuses an invoice with no customer
+```
 
 ## Watch it, or present it
 

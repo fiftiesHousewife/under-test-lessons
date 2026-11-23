@@ -86,6 +86,8 @@ Say: H2 was started in 2004, and first published in 2005, by the author of an ea
 - https://h2database.com/html/features.html — H2's features: in-memory databases and compatibility modes
 - https://h2database.com — H2's home page
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check that a fresh database refuses an invoice with no customer; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with H2's features page, which explains in-memory databases and compatibility modes.
-  The links on screen also take you to this lesson's test code and examples, to run yourself.
+  The links on screen also take you to this lesson's test code and examples, to run yourself. And try the exercise in
+  the README: check that a fresh database, with the real schema, refuses an invoice with no customer.

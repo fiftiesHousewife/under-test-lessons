@@ -37,6 +37,23 @@ The example looks up a town for a postcode, using a supplier's web service.
   [`CredentialsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/recorded/CredentialsTest.java)
   cleans a recording holding every kind of credential, and scans every recording kept with the tests for any left.
 
+## Exercise
+
+The supplier has one more answer it rarely gives: `429 Too Many Requests`, when callers ask too often. Today's client
+reads an empty town from it and says nothing is wrong.
+
+1. Add a recording by hand beside [the others](example/src/test/resources/supplier/mappings): `GET /postcodes/B1%201BB`
+   answered with status `429` and the body `{"error": "too many requests"}`.
+2. Add a test class beside [`RecordedSupplierTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/recorded/RecordedSupplierTest.java)
+   that looks up `B1 1BB` and expects the error `the postcode supplier answered 429`.
+3. Compare with the answer, [`TooManyRequestsAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/recorded/answer/TooManyRequestsAnswerTest.java)
+   and [its recording](example/src/test/resources/supplier/mappings/too-many-requests.json), which runs against
+   today's client with:
+
+```bash
+./gradlew :lessons:recorded-http-responses:test -Pcode=answer   # today's client: 5 of 11 tests fail; the answer expected "answered 429" but was "no error"
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/recorded-http-responses.html) (its source is [`media/recorded-http-responses.deck.html`](media/recorded-http-responses.deck.html)). Arrow keys

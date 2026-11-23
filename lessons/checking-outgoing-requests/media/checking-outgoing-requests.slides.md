@@ -75,7 +75,8 @@ Say: WireMock was created by Tom Akehurst, and is free under the Apache licence.
 - https://wiremock.org/docs/request-matching/ — matching headers and bodies, including equalToJson
 - https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/ — the Idempotency-Key header
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check the amounts sent for refunds of 1p and £19.99; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with WireMock's guides to verifying requests, and to matching headers and bodies. The
   links on screen also describe the Idempotency-Key header, and take you to this lesson's test code and examples, to
-  run yourself.
+  run yourself. And try the exercise in the README: check that refunds of 1p and £19.99 are sent as whole pence.

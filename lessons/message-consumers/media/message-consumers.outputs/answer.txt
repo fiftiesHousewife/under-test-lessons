@@ -1,0 +1,24 @@
+$ ./gradlew :lessons:message-consumers:test -Pcode=answer
+BrowsingTest > browsingReadsEveryMessageWithoutTakingAny() PASSED
+PaymentByHandTest > recordsThePaymentInAMessage() PASSED
+PaymentsOnABrokerTest > aMessageDeliveredAgainIsRecordedOnce() FAILED
+    java.lang.AssertionError: [payments recorded for an order delivered twice]
+    Expected size: 1 but was: 2 in:
+    [Payment[order=A-1001, pence=2599], Payment[order=A-1001, pence=2599]]
+PaymentsOnABrokerTest > aMessageNoOneCanReadEndsInTheDeadLetterQueue() FAILED
+    org.opentest4j.AssertionFailedError: [dead-letter queue]
+    expected: ["order=A-1003;customer=customer-7f3a;pence=12.50"]
+     but was: []
+PaymentsOnABrokerTest > aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() FAILED
+    org.opentest4j.AssertionFailedError: [payments recorded]
+    expected: ["A-1001", "A-1002", "A-1004"]
+     but was: ["A-1001", "A-1004"]
+NoOrderAnswerTest > aMessageWithNoOrderEndsInTheDeadLetterQueue() FAILED
+    org.opentest4j.AssertionFailedError: [dead-letter queue]
+    Expecting actual:
+      []
+    to contain exactly (and in same order):
+      ["customer=customer-19c2;pence=500"]
+    but could not find the following elements:
+      ["customer=customer-19c2;pence=500"]
+6 tests completed, 4 failed

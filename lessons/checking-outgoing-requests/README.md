@@ -12,7 +12,7 @@ by field. When nothing matches, the failure shows the closest request beside the
 
 ```bash
 ./gradlew :lessons:checking-outgoing-requests:test -Pcode=today   # today's code: the 2 strong tests fail, showing the missing header and an amount of 12.5 instead of 1250
-./gradlew :lessons:checking-outgoing-requests:test                # the fix: all 4 tests pass
+./gradlew :lessons:checking-outgoing-requests:test                # the fix: all 5 tests pass
 ```
 
 The example sends a shop's refunds to a payment provider: a `POST` to `/refunds` with the order's number and the
@@ -32,6 +32,22 @@ paid once. The provider answers `201 Created` with a refund id.
 - [`RefundRequestTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundRequestTest.java)
   is the "after": WireMock's `verify` checks the method, address, headers and body (`equalToJson`) of the request the
   client really sent.
+
+## Exercise
+
+The strong test checks one amount, £12.50. Two more are worth checking: the smallest refund there is, 1p, and one
+with odd pence, £19.99.
+
+1. Add a test class beside [`RefundRequestTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundRequestTest.java)
+   that sends both refunds to WireMock, then reads the `amount` from the body of each request WireMock kept
+   (`findAll`, as [`RefundKeyTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundKeyTest.java) does for the header).
+2. Expect `1` and `1999`: whole pence.
+3. Compare with the answer, [`OddAmountsAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/answer/OddAmountsAnswerTest.java),
+   which runs against today's client with:
+
+```bash
+./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer   # today's client: 3 of 5 tests fail; the answer expected 1 and 1999 but was 0.01 and 19.99
+```
 
 ## Watch it, or present it
 

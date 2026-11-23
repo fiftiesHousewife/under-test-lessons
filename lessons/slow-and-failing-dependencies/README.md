@@ -14,7 +14,7 @@ delay (`withFixedDelay`) holds an answer back, and faults (`Fault.CONNECTION_RES
 
 ```bash
 ./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today   # today's code: the 2 weak tests pass and the 4 strong tests fail, the slow supplier stopped after 3 seconds
-./gradlew :lessons:slow-and-failing-dependencies:test                # the fix: all 6 tests pass
+./gradlew :lessons:slow-and-failing-dependencies:test                # the fix: all 7 tests pass
 ```
 
 The example is a shop that asks its supplier how many of an item are in stock (`GET /stock/KETTLE-2`, answered with
@@ -32,6 +32,21 @@ unavailable", so it can tell the customer it will confirm by email.
   is the "after": the supplier answers 5 seconds late, or resets the connection, sends nothing, or sends an OK status
   followed by garbage. Each test allows the shop 3 seconds (`assertTimeoutPreemptively`, so a client with no timeout
   fails quickly instead of hanging the build) and expects "supplier unavailable".
+
+## Exercise
+
+WireMock has four faults, and the strong tests try three. The fourth, `RANDOM_DATA_THEN_CLOSE`, sends random bytes
+instead of an answer, then closes the connection.
+
+1. Add a test class beside [`SupplierFaultTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/faults/SupplierFaultTest.java)
+   whose stand-in supplier answers with that fault.
+2. Expect `supplier unavailable: the connection failed`, from `Clients.outcome`, as the strong tests do.
+3. Compare with the answer, [`RandomDataAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/faults/answer/RandomDataAnswerTest.java),
+   which runs against today's client with:
+
+```bash
+./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=answer   # today's client: 5 of 7 tests fail; the random bytes escape as an UncheckedIOException
+```
 
 ## Watch it, or present it
 

@@ -10,8 +10,15 @@ dependencies {
     testImplementation(libs.wiremock)
 }
 
+// `./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer` runs today's client with the exercise's answer
+// (answer/*AnswerTest), which -Pcode=today leaves out. RefundAnswerTest is one of the lesson's own tests, so the
+// answer is left out by its package.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*.answer.*") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

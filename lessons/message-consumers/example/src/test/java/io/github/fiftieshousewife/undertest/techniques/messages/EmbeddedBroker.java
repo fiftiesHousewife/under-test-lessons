@@ -23,9 +23,9 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * (no network), keeps nothing on disk, and is set up as production's broker is: three tries, then the dead-letter
  * queue.
  */
-final class EmbeddedBroker implements BeforeEachCallback, AfterEachCallback {
+public final class EmbeddedBroker implements BeforeEachCallback, AfterEachCallback {
 
-    static final String DEAD_LETTERS = "payments.dead-letter";
+    public static final String DEAD_LETTERS = "payments.dead-letter";
     private static final String ADDRESS = "vm://0";
 
     private final EmbeddedActiveMQ broker = new EmbeddedActiveMQ();
@@ -57,7 +57,7 @@ final class EmbeddedBroker implements BeforeEachCallback, AfterEachCallback {
     }
 
     /** Sends each text as a message to the payments queue. */
-    void sendPayments(final List<String> texts) {
+    public void sendPayments(final List<String> texts) {
         try (JMSContext jms = connections.createContext()) {
             final Queue payments = jms.createQueue(PaymentConsumer.QUEUE);
             final JMSProducer producer = jms.createProducer();
@@ -66,7 +66,7 @@ final class EmbeddedBroker implements BeforeEachCallback, AfterEachCallback {
     }
 
     /** The text of every message on a queue, read with a queue browser, so none is taken off it. */
-    List<String> browse(final String queue) throws JMSException {
+    public List<String> browse(final String queue) throws JMSException {
         return QueueBrowsing.textOn(connections, queue);
     }
 }
