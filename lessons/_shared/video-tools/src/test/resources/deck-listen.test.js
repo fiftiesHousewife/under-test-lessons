@@ -66,8 +66,22 @@ for (let i = 0; i < 3; i++) {
 check('the second slide plays after the first, without another click', started[1] === 'b.m4a');
 check('the third slide plays after the second', started[2] === 'c.m4a');
 check('the deck says when its last slide has been read', finished);
-check('the next slide follows its narration after a short gap, under half a second', delays.length > 0 && delays.every(ms => ms < 500));
+check('the next slide follows its narration after a short gap, under a fifth of a second', delays.length > 0 && delays.every(ms => ms < 200));
 
+// Moving by hand, not listening: the Back and Next buttons are there, each move reads that slide's narration, and the
+// deck stays on it when the narration ends.
+const back = appended.find(el => el.className.indexOf('deck-back') >= 0);
+const next = appended.find(el => el.className.indexOf('deck-next') >= 0);
+check('every deck has a Back and a Next button', Boolean(back) && Boolean(next));
+const counter = appended.find(el => el.className === 'deck-counter');
+back.click();
+check('Back goes to the slide before', counter.textContent === '2 / 3');
+check('moving back reads that slide', started[started.length - 1] === 'b.m4a');
+everyAudio.find(a => !a.paused).finish();
+runTimers();
+check('a slide reached by hand stays when its narration ends', counter.textContent === '2 / 3');
+next.click();
+check('Next reads the next slide', counter.textContent === '3 / 3' && started[started.length - 1] === 'c.m4a');
 // Arriving with no click yet (the index's listen link, or the last lesson carrying on): the browser refuses to play,
 // so the deck asks for a click, and the next click on the page starts it. A fresh deck, as a newly opened page has.
 const freshClips = ['x.m4a', 'y.m4a'].map(src => new FakeAudio(src));

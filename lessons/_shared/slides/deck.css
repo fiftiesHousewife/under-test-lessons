@@ -23,12 +23,19 @@ body.show-notes .deck-counter { display: none; }
 .deck-listen[aria-pressed="true"] { color: inherit; border-color: currentColor; }
 .deck-listen.waiting { color: inherit; border-color: currentColor; font-weight: bold; }
 body.show-notes .deck-listen { display: none; }
+.deck-move {
+  position: fixed; bottom: 8px; padding: 4px 14px; font: 14px var(--font); color: var(--grey);
+  background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
+}
+.deck-move:hover, .deck-listen:hover { color: inherit; border-color: currentColor; }
+.deck-back { right: calc(50% + 6px); }
+.deck-next { left: calc(50% + 6px); }
 @media print {
   @page { size: 1920px 1080px; margin: 0; }
   html, body.deck { overflow: visible; }
   .deck-slide { display: block; position: static; width: 1920px; height: 1080px; page-break-after: always; break-after: page; }
   .deck .slide { position: static; transform: none; }
-  .notes, .deck-counter, .deck-listen { display: none !important; }
+  .notes, .deck-counter, .deck-listen, .deck-move { display: none !important; }
 }
 
 /* Scene slides: what the video shows at each step, as text: narration and callouts beside the code. */
