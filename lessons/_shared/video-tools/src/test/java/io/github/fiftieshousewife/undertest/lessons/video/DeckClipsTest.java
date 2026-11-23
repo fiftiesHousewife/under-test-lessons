@@ -115,8 +115,9 @@ class DeckClipsTest {
     private static byte[] wav(final double seconds) {
         final int size = (int) Math.round(seconds * 16000);
         final ByteBuffer out = ByteBuffer.allocate(44 + size).order(java.nio.ByteOrder.LITTLE_ENDIAN);
-        out.put("RIFF".getBytes(StandardCharsets.US_ASCII)).putInt(36 + size).put("WAVE".getBytes(StandardCharsets.US_ASCII))
-                .put("fmt ".getBytes(StandardCharsets.US_ASCII)).putInt(16).putShort((short) 1).putShort((short) 1)
+        out.put("RIFF".getBytes(StandardCharsets.US_ASCII)).putInt(36 + size)
+                .put("WAVE".getBytes(StandardCharsets.US_ASCII)).put("fmt ".getBytes(StandardCharsets.US_ASCII))
+                .putInt(16).putShort((short) 1).putShort((short) 1)
                 .putInt(8000).putInt(16000).putShort((short) 2).putShort((short) 16)
                 .put("data".getBytes(StandardCharsets.US_ASCII)).putInt(size);
         return out.array();

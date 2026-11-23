@@ -124,15 +124,7 @@ final class LessonChecks {
     static List<Problem> slides(final Path slidesFile) {
         final List<String> lines = lines(slidesFile);
         final String text = String.join("\n", lines);
-        final List<Problem> problems = new ArrayList<>();
-        boolean saying = false;
-        for (int i = 0; i < lines.size(); i++) {
-            final String line = lines.get(i);
-            saying = line.startsWith("Say:") || saying && line.startsWith(" ") && !line.isBlank();
-            if (saying && line.contains(";")) {
-                problems.add(new Problem(slidesFile, "line " + (i + 1) + ": what the slide says " + SEMICOLON));
-            }
-        }
+        final List<Problem> problems = new ArrayList<>(semicolonsSaid(slidesFile, lines));
         if (!text.contains("Sources:")) {
             problems.add(new Problem(slidesFile, "no Sources: line; name where each fact on the slides comes from"));
         }
@@ -145,6 +137,20 @@ final class LessonChecks {
             if (!Files.isRegularFile(lessons.resolve(link.group(1)).resolve("README.md"))) {
                 problems.add(new Problem(slidesFile, "a slide links lesson " + link.group(1)
                         + ", which doesn't exist"));
+            }
+        }
+        return problems;
+    }
+
+    /** Each line of a slide's Say: text with a semicolon, which the voice runs on through. */
+    private static List<Problem> semicolonsSaid(final Path slidesFile, final List<String> lines) {
+        final List<Problem> problems = new ArrayList<>();
+        boolean saying = false;
+        for (int i = 0; i < lines.size(); i++) {
+            final String line = lines.get(i);
+            saying = line.startsWith("Say:") || saying && line.startsWith(" ") && !line.isBlank();
+            if (saying && line.contains(";")) {
+                problems.add(new Problem(slidesFile, "line " + (i + 1) + ": what the slide says " + SEMICOLON));
             }
         }
         return problems;

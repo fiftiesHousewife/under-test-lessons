@@ -40,26 +40,11 @@ final class DeckClips {
         final List<Problem> problems = new ArrayList<>();
         final List<Problem> warnings = new ArrayList<>();
         for (int i = 0; i < slides.size(); i++) {
-            final Spoken slide = slides.get(i);
-            final List<Path> found = DeckVoice.clips(folder, slide);
+            final List<Path> found = DeckVoice.clips(folder, slides.get(i));
             if (found.isEmpty()) {
-                (missingFails ? problems : warnings).add(new Problem(folder, "slide " + (i + 1) + " (\""
-                        + opening(slide.written()) + "\") has no clip " + slide.clipName()
-                        + "; voice the deck, or record it"));
-                continue;
-            }
-            final Path clip = found.getFirst();
-            if (found.size() > 1) {
-                warnings.add(new Problem(clip, "slide " + (i + 1) + " has " + found.size() + " clips, "
-                        + found.stream().map(file -> String.valueOf(file.getFileName())).collect(Collectors.joining(
-                                " and ")) + "; the deck plays " + clip.getFileName() + ", so remove the other"));
-            }
-            final double expected = VideoLength.spoken(slide.written());
-            final double seconds = seconds(clip);
-            if (seconds >= 0 && (seconds < expected * TOO_SHORT || seconds > expected * TOO_LONG)) {
-                warnings.add(new Problem(clip, String.format(Locale.ROOT, "slide %d (\"%s\") takes %.1f s, but its"
-                        + " words take about %.1f s to say; check it says the slide's words, whole", i + 1,
-                        opening(slide.written()), seconds, expected)));
+                (missingFails ? problems : warnings).add(missing(folder, i + 1, slides.get(i)));
+            } else {
+                warnings.addAll(clipWarnings(i + 1, slides.get(i), found));
             }
         }
         final Set<String> used = slides.stream().map(Spoken::clipStem).collect(Collectors.toSet());
@@ -72,6 +57,30 @@ final class DeckClips {
                     + " it with -PremoveUnused=true")));
         }
         return new Findings(problems, warnings);
+    }
+
+    private static Problem missing(final Path folder, final int number, final Spoken slide) {
+        return new Problem(folder, "slide " + number + " (\"" + opening(slide.written()) + "\") has no clip "
+                + slide.clipName() + "; voice the deck, or record it");
+    }
+
+    /** A slide with clips in two formats, and a clip far longer or shorter than its words. */
+    private static List<Problem> clipWarnings(final int number, final Spoken slide, final List<Path> found) {
+        final List<Problem> warnings = new ArrayList<>();
+        final Path clip = found.getFirst();
+        if (found.size() > 1) {
+            warnings.add(new Problem(clip, "slide " + number + " has " + found.size() + " clips, "
+                    + found.stream().map(file -> String.valueOf(file.getFileName())).collect(Collectors.joining(
+                            " and ")) + "; the deck plays " + clip.getFileName() + ", so remove the other"));
+        }
+        final double expected = VideoLength.spoken(slide.written());
+        final double seconds = seconds(clip);
+        if (seconds >= 0 && (seconds < expected * TOO_SHORT || seconds > expected * TOO_LONG)) {
+            warnings.add(new Problem(clip, String.format(Locale.ROOT, "slide %d (\"%s\") takes %.1f s, but its"
+                    + " words take about %.1f s to say; check it says the slide's words, whole", number,
+                    opening(slide.written()), seconds, expected)));
+        }
+        return warnings;
     }
 
     /** The first few words, to name a slide by. */
@@ -156,13 +165,16 @@ final class DeckClips {
     /** A clip's length, read from its MP4 header ({@code moov/mvhd}), so no player or ffmpeg is needed. */
     static final class Mp4Length {
 
+        /** Where {@link #box} looks when it looks at the file's top-level boxes, not inside one. */
+        private static final int WHOLE_FILE = -1;
+
         private Mp4Length() {
         }
 
         static double seconds(final Path clip) {
             final ByteBuffer data = ByteBuffer.wrap(bytes(clip));
-            final int moov = box(data, 0, data.limit(), "moov");
-            final int mvhd = moov < 0 ? -1 : box(data, moov + 8, moov + (int) size(data, moov), "mvhd");
+            final int moov = box(data, WHOLE_FILE, "moov");
+            final int mvhd = moov < 0 ? -1 : box(data, moov, "mvhd");
             if (mvhd < 0) {
                 throw new IllegalArgumentException(clip + " is not an MP4 sound file: it has no moov/mvhd header");
             }
@@ -173,9 +185,10 @@ final class DeckClips {
             return (double) duration / timescale;
         }
 
-        /** Where the box of this type starts, among the boxes from {@code start} to {@code end}, or -1. */
-        private static int box(final ByteBuffer data, final int start, final int end, final String type) {
-            int at = start;
+        /** Where the box of this type starts, among those inside the box at {@code parent} or the file's, or -1. */
+        private static int box(final ByteBuffer data, final int parent, final String type) {
+            final int end = parent == WHOLE_FILE ? data.limit() : parent + (int) size(data, parent);
+            int at = parent == WHOLE_FILE ? 0 : parent + 8;
             while (at + 8 <= end) {
                 final long size = size(data, at);
                 if (type.equals(fourLetters(data, at + 4))) {

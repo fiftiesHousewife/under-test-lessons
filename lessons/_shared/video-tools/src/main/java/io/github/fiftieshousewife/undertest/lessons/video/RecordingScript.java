@@ -32,7 +32,8 @@ public final class RecordingScript {
         final boolean missingOnly = args.length > 2 && "missing".equals(args[2]);
         final Path page = root.resolve("build/recording-scripts").resolve(media.safeLesson() + ".html");
         final int entries = write(media, missingOnly, page);
-        log.info("{}: recording script with {} clip(s) written to {}", media.safeLesson(), entries, page);
+        log.info("{}: recording script with {} clip(s) written to build/recording-scripts/{}.html", media.safeLesson(),
+                entries, media.safeLesson());
     }
 
     /** Writes the script to {@code page}; returns how many clips it lists. */
@@ -40,46 +41,50 @@ public final class RecordingScript {
         final List<Spoken> slides = DeckVoice.spoken(media);
         final List<String> titles = DeckVoice.titles(media);
         final Pronunciation pronunciation = DeckVoice.pronunciation(media);
-        final Path folder = media.file(DeckVoice.FOLDER);
-        final StringBuilder html = new StringBuilder("<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\">"
-                + "<title>Recording script: ").append(SlideHtml.escape(SlideDeck.title(media))).append("</title><style>"
-                + "body{font:16px/1.5 sans-serif;max-width:46em;margin:2em auto;padding:0 1em}"
-                + ".clip{border-top:1px solid #999;padding:.6em 0;break-inside:avoid}"
-                + ".file{font-family:monospace}.words{font-size:1.2em}.pause{color:#666;font-style:italic}"
-                + ".hints{color:#444}</style></head><body><h1>Recording script: ")
-                .append(SlideHtml.escape(SlideDeck.title(media))).append("</h1><p>Record each clip in one take, the"
-                        + " same person, microphone and room throughout; trim the silence from both ends, and level"
-                        + " the loudness to about −16 LUFS. Save it in <span class=\"file\">")
-                .append(SlideHtml.escape(media.name(DeckVoice.FOLDER))).append("/</span> under the name shown, as"
-                        + " .m4a, .wav or .mp3.</p>");
+        final Path clips = media.file(DeckVoice.FOLDER);
+        final StringBuilder html = new StringBuilder(heading(media));
         int entries = 0;
         for (int i = 0; i < slides.size(); i++) {
-            final Spoken slide = slides.get(i);
-            if (missingOnly && !DeckVoice.clips(folder, slide).isEmpty()) {
-                continue;
+            if (!missingOnly || DeckVoice.clips(clips, slides.get(i)).isEmpty()) {
+                final String label = (i + 1) + ". " + (i < titles.size() ? titles.get(i) : "");
+                html.append(entry(label, slides.get(i), hints(pronunciation.used(slides.get(i).written()))));
+                entries++;
             }
-            entries++;
-            html.append("<div class=\"clip\"><p><b>").append(i + 1).append(". ")
-                    .append(SlideHtml.escape(i < titles.size() ? titles.get(i) : "")).append("</b> · save as <span"
-                            + " class=\"file\">").append(slide.clipStem()).append(".m4a</span></p><p class=\"words\">")
-                    .append(words(slide.written())).append("</p>");
-            final List<String> hints = hints(pronunciation.used(slide.written()));
-            if (!hints.isEmpty()) {
-                html.append("<p class=\"hints\">").append(String.join(" · ", hints)).append("</p>");
-            }
-            html.append("</div>");
         }
-        if (entries == 0) {
-            html.append("<p>Every slide has its clip: there is nothing to record.</p>");
-        }
-        html.append("</body></html>\n");
+        html.append(entries == 0 ? "<p>Every slide has its clip: there is nothing to record.</p>" : "")
+                .append("</body></html>\n");
         try {
-            Files.createDirectories(page.getParent());
+            final Path pages = page.toAbsolutePath().getParent();
+            if (pages != null) {
+                Files.createDirectories(pages);
+            }
             Files.writeString(page, html);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
         return entries;
+    }
+
+    /** The page's head, title and how to record. */
+    private static String heading(final Media media) {
+        final String title = SlideHtml.escape(SlideDeck.title(media));
+        return "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Recording script: " + title
+                + "</title><style>body{font:16px/1.5 sans-serif;max-width:46em;margin:2em auto;padding:0 1em}"
+                + ".clip{border-top:1px solid #999;padding:.6em 0;break-inside:avoid}"
+                + ".file{font-family:monospace}.words{font-size:1.2em}.pause{color:#666;font-style:italic}"
+                + ".hints{color:#444}</style></head><body><h1>Recording script: " + title + "</h1><p>Record each clip"
+                + " in one take, the same person, microphone and room throughout; trim the silence from both ends, and"
+                + " level the loudness to about −16 LUFS. Save it in <span class=\"file\">"
+                + SlideHtml.escape(media.name(DeckVoice.FOLDER)) + "/</span> under the name shown, as .m4a, .wav or"
+                + " .mp3.</p>";
+    }
+
+    /** One clip to record: its number and title, its file name, its words, and its reading hints (already HTML). */
+    private static String entry(final String label, final Spoken slide, final List<String> hints) {
+        return "<div class=\"clip\"><p><b>" + SlideHtml.escape(label) + "</b> · save as <span"
+                + " class=\"file\">" + slide.clipStem() + ".m4a</span></p><p class=\"words\">" + words(slide.written())
+                + "</p>" + (hints.isEmpty() ? "" : "<p class=\"hints\">" + String.join(" · ", hints) + "</p>")
+                + "</div>";
     }
 
     /** The words, with each pause marker written as a direction: "(pause 1.6 s)". */
