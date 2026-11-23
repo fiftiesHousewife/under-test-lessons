@@ -87,6 +87,24 @@ class LessonFileChecksTest {
     }
 
     @Test
+    void aLessonMayTeachAJourneyStepByItsSkillAndTheSkillMustExist() {
+        TestRepo.write(root, "lessons/feature-flags/lesson.yaml",
+                "id: feature-flags\ntitle: Flags\ntechniques: []\nskills: [draft-the-connection-list]\n");
+        TestRepo.write(root, "lessons/feature-flags/example/build.gradle.kts", "plugins { }\n");
+        TestRepo.write(toolkit, ".github/skills/draft-the-connection-list/SKILL.md", "# Draft\n");
+        final List<String> known = LessonFileChecks.unknownSkills(root, new Toolkit(toolkit).skillNames()).stream()
+                .map(Problem::message).toList();
+        final List<String> unknown = LessonFileChecks.unknownSkills(root, Set.of()).stream()
+                .map(Problem::message).toList();
+
+        assertAll(
+                () -> assertThat(known).isEmpty(),
+                () -> assertThat(unknown).containsExactly(
+                        "names the skill draft-the-connection-list, which the toolkit's .github/skills/ doesn't have"),
+                () -> assertThat(messages()).noneMatch(message -> message.contains("names no toolkit technique")));
+    }
+
+    @Test
     void failsTheBuildOnAnyProblem() {
         TestRepo.write(root, "lessons/new-lesson/README.md", "# New\n");
 

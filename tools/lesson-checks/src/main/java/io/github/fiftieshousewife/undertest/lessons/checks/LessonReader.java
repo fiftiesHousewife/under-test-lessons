@@ -61,11 +61,18 @@ public final class LessonReader {
             errors.forEach(error -> problems.add(new Problem(file, error.toString())));
             return Optional.empty();
         }
-        final Lesson lesson = yaml.treeToValue(document, Lesson.class);
+        final Lesson lesson = new Lesson(document.path("id").asString(), document.path("title").asString(),
+                new Lesson.Teaches(names(document, "techniques"), names(document, "skills")));
         final String folderName = String.valueOf(folder.getFileName());
         if (!lesson.id().equals(folderName)) {
             problems.add(new Problem(file, "id " + lesson.id() + " is not the folder name " + folderName));
         }
         return Optional.of(lesson);
+    }
+
+    private static List<String> names(final JsonNode document, final String field) {
+        final List<String> names = new ArrayList<>();
+        document.path(field).forEach(name -> names.add(name.asString()));
+        return names;
     }
 }

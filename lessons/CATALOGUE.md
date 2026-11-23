@@ -115,7 +115,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
-| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md), [Slow and failing dependencies](slow-and-failing-dependencies/README.md), [Running old code unplugged](running-old-code-unplugged/README.md) | built |
+| recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md), [Slow and failing dependencies](slow-and-failing-dependencies/README.md) | built |
 | business-rule-tests | [Behaviour written down as examples](behaviour-as-examples/README.md), [Outside-in HTTP tests](outside-in-http-tests/README.md) | built |
 | fake-behind-an-interface | [Fake behind an interface](fake-behind-an-interface/README.md) | built |
 | differential-testing | [Differential testing](differential-testing/README.md) | built |
@@ -139,6 +139,17 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | traffic-record-and-replay | Recording current behaviour from real traffic (planned) | later: after the toolkit's Keploy trial |
 | machine-state-checks | Checking a machine after an install script | last |
 | post-release-checks | Checks that run against production after a release | last |
+
+## Every journey step a lesson teaches
+
+Some lessons teach a step of the toolkit's journey rather than a technique. Their `lesson.yaml` names the step's skill
+(a folder under the toolkit's [`.github/skills/`](https://github.com/fiftiesHousewife/under-test/tree/main/.github/skills)),
+and `./gradlew check` fails a name the toolkit doesn't have (see
+[A lesson that teaches a step of the toolkit's journey names that step's skill](../docs/decisions/0033-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill.md)).
+
+| Journey step (skill) | Lesson |
+|---|---|
+| draft-the-connection-list | [Running old code unplugged](running-old-code-unplugged/README.md) |
 
 ## Lesson designs
 

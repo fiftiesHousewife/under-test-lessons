@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Entry point: {@code <repository root> [<toolkit checkout>]}. Fails if the lesson.yaml files, the catalogue, the
- * lessons index and (when a toolkit checkout is given) the toolkit's techniques disagree, or if a lesson with an
- * example teaches no toolkit technique.
+ * lessons index and (when a toolkit checkout is given) the toolkit's techniques and journey steps disagree, or if a
+ * lesson with an example teaches neither a toolkit technique nor a journey step.
  */
 @Slf4j
 public final class LessonFileChecks {
@@ -23,14 +23,17 @@ public final class LessonFileChecks {
         if (args.length == 0 || args.length > 2) {
             throw new IllegalArgumentException("usage: LessonFileChecks <repository root> [<toolkit checkout>]");
         }
-        final Optional<Set<String>> techniques = args.length == 2
-                ? Optional.of(new Toolkit(Path.of(args[1])).techniqueIds())
+        final Optional<Toolkit> toolkit = args.length == 2
+                ? Optional.of(new Toolkit(Path.of(args[1])))
                 : Optional.empty();
-        if (techniques.isEmpty()) {
+        if (toolkit.isEmpty()) {
             log.warn("No toolkit checkout found, so lessons were not checked against the toolkit's techniques."
                     + " Put under-test beside this repository, or pass -PtoolkitDir=<path>.");
         }
-        failOn(check(Path.of(args[0]), techniques));
+        final Path root = Path.of(args[0]);
+        final List<Problem> problems = new ArrayList<>(check(root, toolkit.map(Toolkit::techniqueIds)));
+        toolkit.ifPresent(checkout -> problems.addAll(unknownSkills(root, checkout.skillNames())));
+        failOn(problems);
     }
 
     static List<Problem> check(final Path root, final Optional<Set<String>> techniques) {
@@ -55,9 +58,9 @@ public final class LessonFileChecks {
         final List<Problem> problems = new ArrayList<>();
         for (final Lesson lesson : lessons) {
             final Path folder = root.resolve("lessons/" + lesson.id());
-            if (lesson.techniques().isEmpty() && Files.isDirectory(folder.resolve("example"))) {
-                problems.add(new Problem(folder.resolve("lesson.yaml"), "names no toolkit technique: name the one"
-                        + " it teaches in techniques, or ask for one to be added to the toolkit"));
+            if (lesson.teaches().nothing() && Files.isDirectory(folder.resolve("example"))) {
+                problems.add(new Problem(folder.resolve("lesson.yaml"), "names no toolkit technique or journey step:"
+                        + " name what it teaches in techniques or skills, or ask for it to be added to the toolkit"));
             }
         }
         return problems;
@@ -91,6 +94,17 @@ public final class LessonFileChecks {
         } catch (java.io.IOException e) {
             throw new java.io.UncheckedIOException(e);
         }
+    }
+
+    /** Every skill a lesson names is one of the toolkit's journey steps: a folder under its .github/skills/. */
+    static List<Problem> unknownSkills(final Path root, final Set<String> skills) {
+        final List<Problem> problems = new ArrayList<>();
+        for (final Lesson lesson : new LessonReader().read(root, new ArrayList<>())) {
+            lesson.skills().stream().filter(skill -> !skills.contains(skill))
+                    .forEach(skill -> problems.add(new Problem(root.resolve("lessons/" + lesson.id() + "/lesson.yaml"),
+                            "names the skill " + skill + ", which the toolkit's .github/skills/ doesn't have")));
+        }
+        return problems;
     }
 
     private static List<Problem> unknownTechniques(final Path root, final List<Lesson> lessons, final Set<String> ids) {
