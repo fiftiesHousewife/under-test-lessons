@@ -1,8 +1,4 @@
 $ ./gradlew :lessons:cleaning-captured-data:test -Pcode=today
-CleanedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
-DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeCleaning() PASSED
-DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
-DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
 NothingPersonalLeftTest > cleanedCaptureHasNothingThatLooksPersonal() FAILED
     java.lang.AssertionError: [personal data left after cleaning]
     Expecting empty but was: ["orders.csv row 4, note: an email address",
@@ -15,5 +11,9 @@ ReportsStillWorkTest > ordersStillMatchPaymentsByAccount() FAILED
     org.opentest4j.AssertionFailedError: [pence owed by each unsettled account]
     expected: [-500, 640]
      but was: [140]
+CleanedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
+DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeCleaning() PASSED
+DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
+DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
 SyntheticCleaningTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
 8 tests completed, 3 failed

@@ -7,4 +7,5 @@ DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeCleaning() PASSED
 DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
 DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
 SyntheticCleaningTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
-All 8 tests passed.
+PhoneInANoteAnswerTest > aPhoneNumberInANoteIsCleanedToo() PASSED
+All 9 tests passed.

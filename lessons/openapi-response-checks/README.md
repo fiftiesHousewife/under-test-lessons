@@ -34,6 +34,23 @@ published as [`openapi.yaml`](example/src/main/resources/openapi.yaml).
   It works as the validator's own `OpenApiValidationFilter` does, but reports each problem on one line rather than as
   a block of JSON. By default the validator also refuses fields the document doesn't name.
 
+## Exercise
+
+The document lists the four statuses a parcel can have. Another team adds a fifth, `LOST`, and every screen built on
+the list breaks. A test that checks a few fields wouldn't notice; the document check should.
+
+1. Add a test class beside [`ParcelDocumentTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelDocumentTest.java)
+   that starts a [`ParcelServer`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelServer.java)
+   knowing one parcel whose status is `LOST`, with the answers [`Services`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/Services.java) chooses.
+2. Ask for it through [`DocumentCheck`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/DocumentCheck.java),
+   and expect the check to fail, naming the status field.
+3. Compare with the answer, [`UnlistedStatusAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/answer/UnlistedStatusAnswerTest.java),
+   which runs against today's service with:
+
+```bash
+./gradlew :lessons:openapi-response-checks:test -Pcode=answer   # today's service: 2 of 5 tests fail; the answer passes, as the check refuses a status the document doesn't list
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) (its source is [`media/openapi-response-checks.deck.html`](media/openapi-response-checks.deck.html)). Arrow keys

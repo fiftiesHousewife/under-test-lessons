@@ -1,0 +1,4 @@
+Request received: GET /customers/C-9999
+Authorization: XXX
+
+Response sent: 404

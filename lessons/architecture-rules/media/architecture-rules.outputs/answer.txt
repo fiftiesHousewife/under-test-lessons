@@ -1,0 +1,12 @@
+$ ./gradlew :lessons:architecture-rules:test -Pcode=answer
+LayerRulesTest > onlyTheServiceLayerUsesStorage() FAILED
+    java.lang.AssertionError: Constructor <web.today.TodaysSummaryPage.<init>(storage.OrderStore)> has parameter of type <storage.OrderStore>
+    Field <web.today.TodaysSummaryPage.store> has type <storage.OrderStore>
+    Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>
+OrderSummaryPageTest > bothPagesCountTheOrders() PASSED
+WebDependenciesAnswerTest > theWebLayerUsesOnlyTheServiceLayerAndJava() FAILED
+    java.lang.AssertionError: [web classes that use something other than the service layer or Java]
+    Expecting empty but was: ["Constructor <web.today.TodaysSummaryPage.<init>(storage.OrderStore)> has parameter of type <storage.OrderStore>",
+        "Field <web.today.TodaysSummaryPage.store> has type <storage.OrderStore>",
+        "Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>"]
+3 tests completed, 2 failed

@@ -18,10 +18,10 @@ import org.zalando.logbook.Logbook;
  * The old service running with its capture switched on, and a stand-in loyalty provider on the same machine. The
  * capture is the fix, or today's with -Pcode=today.
  */
-final class OldService implements AutoCloseable {
+public final class OldService implements AutoCloseable {
 
     /** The token a caller sends the old service, and the key the old service sends the loyalty provider. */
-    static final String CALLER_TOKEN = "Bearer caller-7f3a9c";
+    public static final String CALLER_TOKEN = "Bearer caller-7f3a9c";
     static final String LOYALTY_KEY = "loyalty-51d2";
     static final String EMAIL = "jo.bloggs@example.com";
 
@@ -31,7 +31,7 @@ final class OldService implements AutoCloseable {
     private final CustomerServer server;
     private final URI address;
 
-    OldService() throws IOException {
+    public OldService() throws IOException {
         provider.createContext("/points", exchange -> {
             final byte[] answer = "{\"points\":120}".getBytes(StandardCharsets.UTF_8);
             exchange.getResponseHeaders().add("Content-Type", "application/json");
@@ -50,7 +50,7 @@ final class OldService implements AutoCloseable {
     }
 
     /** Asks the old service for a customer, as a caller with a token would; returns its answer's body. */
-    String customer(final String id) throws IOException, InterruptedException {
+    public String customer(final String id) throws IOException, InterruptedException {
         final HttpRequest request = HttpRequest.newBuilder(address.resolve("/customers/" + id))
                 .header("Authorization", CALLER_TOKEN).GET().build();
         try (HttpClient http = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build()) {
@@ -59,7 +59,7 @@ final class OldService implements AutoCloseable {
     }
 
     /** Everything the capture has written. */
-    String captured() {
+    public String captured() {
         return captureLog.text();
     }
 

@@ -29,6 +29,21 @@ without a receipt, or later with one: store credit. Later, and no receipt: nothi
 - [`ShopRefundPolicy`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/examples/fixed/ShopRefundPolicy.java)
   is the fix, after the team confirmed their example: the 30 days include the 30th day.
 
+## Exercise
+
+The returns team's examples check the 30th day with a receipt. The same boundary matters without one: on the 30th
+day, no receipt, the team's rules give store credit.
+
+1. Add that row to [the returns team's examples](example/src/test/resources/returns-team-examples.csv): named
+   "returned on the 30th day without a receipt", bought 2027-03-01, returned 2027-03-31, no receipt, store credit.
+2. Run the examples against today's refunds: the new row fails too, and says what today's code gives instead.
+3. Compare with the answer, [`ThirtiethDayAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/examples/answer/ThirtiethDayAnswerTest.java),
+   which runs the row against today's refunds with:
+
+```bash
+./gradlew :lessons:behaviour-as-examples:test -Pcode=answer   # today's refunds: 2 of 7 tests fail; the new row expected store credit but was nothing
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) (its source is [`media/behaviour-as-examples.deck.html`](media/behaviour-as-examples.deck.html)). Arrow keys

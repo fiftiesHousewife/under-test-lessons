@@ -64,6 +64,8 @@ Say: ArchUnit was written at TNG Technology Consulting, and is free to use under
 ## closing: Find out more
 - https://www.archunit.org — ArchUnit, with its user guide
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: write a rule listing the only layers the web layer may use; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the ArchUnit user guide. The links on screen also take you to this lesson's test
-  code and examples, to run yourself.
+  code and examples, to run yourself. And try the exercise in the README: write a rule that lists the only layers the
+  web layer may use.

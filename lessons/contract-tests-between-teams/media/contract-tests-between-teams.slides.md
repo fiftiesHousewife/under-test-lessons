@@ -87,7 +87,9 @@ Say: Ian Robinson described consumer-driven contracts in 2006: the consumers say
 - https://martinfowler.com/articles/consumerDrivenContracts.html — consumer-driven contracts
 - https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md — the toolkit's guide to sharing pacts without a broker
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: verify version 1.1.0 of the pact, which adds an item nobody stocks; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Pact's own documentation, which also says when Pact is not a good fit. The links
   on screen also take you to Pact JVM, to the original article on consumer-driven contracts, to the toolkit's guide to
-  sharing pacts without a broker, and to this lesson's test code and examples, to run yourself.
+  sharing pacts without a broker, and to this lesson's test code and examples, to run yourself. And try the exercise
+  in the README: verify version 1.1.0 of the pact, which adds an item nobody stocks.

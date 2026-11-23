@@ -63,6 +63,23 @@ Seeded synthetic values are the same while the table of choices is kept. Only da
 Datafaker's output with no real capture behind it, is safe to publish. This lesson's own capture is made up, which is
 why it can live in a public repository with a key written into its tests.
 
+## Exercise
+
+The detector check only sees what the captured day happens to hold. Tomorrow's capture may have a phone number in a
+note, a shape today's day never shows, and the cleaning must catch that too.
+
+1. Add a test class beside [`NothingPersonalLeftTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/cleaning/NothingPersonalLeftTest.java)
+   that makes a capture of one order, with `CapturedFile.parse`, whose note reads `Call 07700 900123 before delivery`.
+2. Clean it with the cleaning [`Captures`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/cleaning/Captures.java)
+   chooses, and expect [`PersonalDataDetector`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/cleaning/PersonalDataDetector.java)
+   to find nothing.
+3. Compare with the answer, [`PhoneInANoteAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/cleaning/answer/PhoneInANoteAnswerTest.java),
+   which runs against today's cleaning with:
+
+```bash
+./gradlew :lessons:cleaning-captured-data:test -Pcode=answer   # today's cleaning: 4 of 9 tests fail; the new order's note still has a phone number
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/cleaning-captured-data.html) (its source is [`media/cleaning-captured-data.deck.html`](media/cleaning-captured-data.deck.html)). Arrow keys

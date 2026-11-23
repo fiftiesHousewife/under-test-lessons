@@ -58,10 +58,20 @@ val approvalSummary = tasks.register("approvalSummary") {
     }
 }
 
+// `./gradlew :lessons:capturing-with-logbook:test -Pcode=answer` runs today's capture with the exercise's answer
+// (answer/*AnswerTest), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", if (code == "answer") "today" else code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
     finalizedBy(approvalSummary) // shows, line by line, how a capture differs from its approved file
+    val sources = testSources
+    doFirst { // a capture left from an earlier run, such as the answer's, must not show in this run's summary
+        sources.walkTopDown().filter { it.name.endsWith(".received.txt") }.forEach { it.delete() }
+    }
 }
 
 // Today's capture is the "before", run with -Pcode=today; coverage is measured on the rest.

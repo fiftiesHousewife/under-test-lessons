@@ -56,3 +56,13 @@ tasks.jacocoTestCoverageVerification {
         }
     }
 }
+
+// The exercise's answer (answer/*AnswerTest): `./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=answer` runs
+// PIT with the change's weak test and the answer, one more test. PIT's other runs leave the answer out, and so does
+// -Pcode=today's test run; `check` runs it with the fixed code's tests.
+pitest {
+    excludedTestClasses = if (code == "answer") listOf("*StrongTest") else listOf(unusedTests, "*AnswerTest")
+}
+if (code == "today") {
+    tasks.test { filter { excludeTestsMatching("*AnswerTest") } }
+}

@@ -24,6 +24,22 @@ The example is a shop in three layers: web, service and storage.
 - [`LayerRulesTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/architecture/LayerRulesTest.java)
   is the "after": a layered architecture rule that fails for today's page and names each break.
 
+## Exercise
+
+The layer rule says what may not reach storage. A second kind of rule says what the web layer may use, and nothing
+else: the service layer, the web layer itself and Java's own classes. It also catches a library nobody agreed to.
+
+1. Add a test class beside [`LayerRulesTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/architecture/LayerRulesTest.java)
+   that imports the web classes and checks them with ArchUnit's `classes().that().resideInAPackage(...)`
+   `.should().onlyDependOnClassesThat().resideInAnyPackage(...)`.
+2. Run it against today's admin page: it should name the same 3 breaks as the layer rule.
+3. Compare with the answer, [`WebDependenciesAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/architecture/answer/WebDependenciesAnswerTest.java),
+   which runs against today's admin page with:
+
+```bash
+./gradlew :lessons:architecture-rules:test -Pcode=answer   # today's admin page: 2 of 3 tests fail; the answer names the 3 uses of storage
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) (its source is [`media/architecture-rules.deck.html`](media/architecture-rules.deck.html)). Arrow keys

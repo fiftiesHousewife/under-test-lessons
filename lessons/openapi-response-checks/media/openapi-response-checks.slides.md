@@ -86,6 +86,8 @@ Say: OpenAPI began as the Swagger specification. SmartBear gave it to the OpenAP
 - https://github.com/atlassian/openapi-request-validator — the validator, with its REST Assured filter
 - https://www.asyncapi.com — AsyncAPI, for messages
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: show the check refuses a parcel whose status the document doesn't list; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the OpenAPI Initiative's site, and the validator's own pages. The links on screen
-  also take you to AsyncAPI, and to this lesson's test code and examples, to run yourself.
+  also take you to AsyncAPI, and to this lesson's test code and examples, to run yourself. And try the exercise in
+  the README: show that the check refuses a parcel whose status the document doesn't list.

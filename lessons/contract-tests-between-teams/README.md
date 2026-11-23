@@ -68,6 +68,23 @@ publication. The build also sets `pact_do_not_track`, so Pact JVM sends no usage
 Pact JVM 4.7, used here, needs Java 17 or later. On older code bases, use the 4.5 line for Java 11, and the 4.1 line
 for Java 8, which Pact no longer supports actively.
 
+## Exercise
+
+The order screen's team has published version 1.1.0 of its pact. Beside the kettle, it now writes down what the order
+screen relies on when nobody stocks an item: a 404, with an error message. The stock service's build should verify the
+new version too, with a state for the new request.
+
+1. Read [version 1.1.0 of the pact](example/package-repository/order-screen-pacts/1.1.0/order-screen-stock-service.json),
+   and find the state its new request names: `nothing called TOASTER-99 is stocked`.
+2. Add a test class beside [`StockServicePactTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/contracts/provider/StockServicePactTest.java)
+   that reads that folder with `@PactFolder`, and give it a `@State` method for each state the pact names.
+3. Compare with the answer, [`NewPactVersionAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/contracts/provider/answer/NewPactVersionAnswerTest.java),
+   which runs against today's stock service with:
+
+```bash
+./gradlew :lessons:contract-tests-between-teams:test -Pcode=answer   # today's stock service: 2 of 7 tests fail; the new request for an item nobody stocks passes, the kettle still fails
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/contract-tests-between-teams.html)

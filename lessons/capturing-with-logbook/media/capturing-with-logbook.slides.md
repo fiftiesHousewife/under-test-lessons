@@ -85,7 +85,8 @@ Say: Logbook was written at Zalando, and is free under the MIT licence. It has b
 - https://approvaltests.com — ApprovalTests, for approved files
 - {toolkit-repo} — the toolkit, with its characterisation tests technique
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: approve the capture for a customer nobody has; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Logbook's guide, which lists its integrations, filters, formatters and writers. The
   links on screen also take you to ApprovalTests, to the toolkit, and to this lesson's test code and examples, to run
-  yourself.
+  yourself. And try the exercise in the README: approve the capture for a customer nobody has.

@@ -1,0 +1,22 @@
+$ ./gradlew :lessons:capturing-with-logbook:test -Pcode=answer
+ApprovedCaptureTest > matchesTheApprovedCapture() FAILED
+    java.lang.AssertionError: the capture differs from its approved file
+ApprovedCaptureTest > writesNoSecrets() FAILED
+    java.lang.AssertionError: [secrets in the capture]
+    Expecting empty but was: ["the caller's token", "the customer's email", "the loyalty provider's key"]
+CaptureRecordsTest > recordsWhatTheServiceReceivesAndSends() PASSED
+UnknownCustomerAnswerTest > approvesTheCaptureForACustomerNobodyHas() FAILED
+    java.lang.AssertionError: the capture for a customer nobody has differs from its approved file
+4 tests completed, 3 failed
+Approvals: the output differs from its approved file (- approved, + received):
+  - Authorization: XXX
+  + Authorization: Bearer caller-7f3a9c
+Approvals: the output differs from its approved file (- approved, + received):
+  - Authorization: XXX
+  + Authorization: Bearer caller-7f3a9c
+  - Authorization: XXX
+  + Authorization: Bearer loyalty-51d2
+  - {"email":"customer@example.invalid"}
+  + {"email":"jo.bloggs@example.com"}
+  - {"id":"C-1001","email":"customer@example.invalid","tier":"gold","points":120}
+  + {"id":"C-1001","email":"jo.bloggs@example.com","tier":"gold","points":120}

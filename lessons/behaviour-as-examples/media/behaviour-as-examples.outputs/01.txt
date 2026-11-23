@@ -1,5 +1,4 @@
 $ ./gradlew :lessons:behaviour-as-examples:test -Pcode=today
-RefundPolicyTest > refundsDependOnDaysAndReceipt() PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned the next day with a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 30th day with a receipt FAILED
     org.opentest4j.AssertionFailedError: [returned on the 30th day with a receipt]
@@ -8,4 +7,5 @@ ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on th
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 31st day with a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt PASSED
+RefundPolicyTest > refundsDependOnDaysAndReceipt() PASSED
 6 tests completed, 1 failed

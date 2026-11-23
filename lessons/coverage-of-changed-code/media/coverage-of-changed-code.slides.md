@@ -77,6 +77,8 @@ Say: PIT's own advice is to run mutation testing often, against only the code th
 - https://github.com/szpak/gradle-pitest-plugin — the Gradle plugin, and its targetClasses setting
 - https://github.com/Bachmann1234/diff_cover — diff-cover, coverage of changed lines
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: write the one test that gets the gate to pass; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with PIT's website, and its Gradle plugin. The links on screen also take you to
-  diff-cover, and to this lesson's test code and examples, to run yourself.
+  diff-cover, and to this lesson's test code and examples, to run yourself. And try the exercise in the README: write
+  the one test that gets the gate to pass.

@@ -1,0 +1,125 @@
+{
+  "consumer": {
+    "name": "order-screen"
+  },
+  "interactions": [
+    {
+      "description": "a request for the kettle's stock",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "three kettles are in stock"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/stock/KETTLE-01"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "available": 3,
+            "sku": "KETTLE-01"
+          },
+          "contentType": "application/json; charset=UTF-8",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.available": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "integer"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 200
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    },
+    {
+      "description": "a request for an item nobody stocks",
+      "pending": false,
+      "providerStates": [
+        {
+          "name": "nothing called TOASTER-99 is stocked"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "path": "/stock/TOASTER-99"
+      },
+      "response": {
+        "body": {
+          "content": {
+            "error": "no item TOASTER-99"
+          },
+          "contentType": "application/json; charset=UTF-8",
+          "encoded": false
+        },
+        "headers": {
+          "Content-Type": [
+            "application/json; charset=UTF-8"
+          ]
+        },
+        "matchingRules": {
+          "body": {
+            "$.error": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {
+            "Content-Type": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "regex",
+                  "regex": "application/json(;\\s?charset=[\\w\\-]+)?"
+                }
+              ]
+            }
+          }
+        },
+        "status": 404
+      },
+      "transport": "http",
+      "type": "Synchronous/HTTP"
+    }
+  ],
+  "metadata": {
+    "pact-jvm": {
+      "version": "4.7.7"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "stock-service"
+  }
+}

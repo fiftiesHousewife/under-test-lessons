@@ -63,6 +63,22 @@ It needs no extra service: CI checks out enough history to see the main branch (
 shallow one). The lesson keeps the list as a file, so it gives the same result on every run whatever the repository's
 own history. A team can just as well pass the list as a Gradle property, or point the build at the file git wrote.
 
+## Exercise
+
+The change's weak test lets 5 of the 11 planted bugs through, so the gate stops the build. One more test, with exact
+line totals on both sides of each boundary, is enough to get it to pass.
+
+1. Run `./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=today` and read the "Missed" list: lines 14, 17, 25
+   and 26 of [`BulkDiscount`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/changedcode/BulkDiscount.java).
+2. Add one test to [`BulkDiscountWeakTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/changedcode/BulkDiscountWeakTest.java)
+   that checks the exact `lineTotal` for 9, 10, 49 and 50 items at £2, and run PIT again until the gate passes.
+3. Compare with the answer, [`BulkDiscountAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/changedcode/answer/BulkDiscountAnswerTest.java),
+   which PIT runs beside the weak test with:
+
+```bash
+./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=answer   # the weak test and the answer: all 11 planted bugs caught, the gate passes
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/coverage-of-changed-code.html) (its

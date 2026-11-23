@@ -89,6 +89,8 @@ Say: The keyed hash, HMAC, was described in an internet document in 1997. It com
 - https://www.rfc-editor.org/rfc/rfc2104 — RFC 2104, HMAC
 - https://www.datafaker.net — Datafaker, and its guide to repeatable results
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: check that a phone number in an order's note is cleaned too; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the UK regulator's guidance on pseudonymisation, the HMAC standard, and Datafaker's
-  guide. The links on screen also take you to this lesson's test code and examples, to run yourself.
+  guide. The links on screen also take you to this lesson's test code and examples, to run yourself. And try the
+  exercise in the README: check that a phone number in an order's note is cleaned too.

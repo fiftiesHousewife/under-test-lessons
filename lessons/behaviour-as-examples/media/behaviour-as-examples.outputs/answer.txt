@@ -1,0 +1,15 @@
+$ ./gradlew :lessons:behaviour-as-examples:test -Pcode=answer
+RefundPolicyTest > refundsDependOnDaysAndReceipt() PASSED
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned the next day with a receipt PASSED
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 30th day with a receipt FAILED
+    org.opentest4j.AssertionFailedError: [returned on the 30th day with a receipt]
+    expected: "refund to card"
+     but was: "store credit"
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 31st day with a receipt PASSED
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt PASSED
+ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt PASSED
+ThirtiethDayAnswerTest > returnsTeamExample(String, int, String) > returned on the 30th day without a receipt FAILED
+    org.opentest4j.AssertionFailedError: [returned on the 30th day without a receipt]
+    expected: "store credit"
+     but was: "nothing"
+7 tests completed, 2 failed

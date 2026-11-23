@@ -5,4 +5,5 @@ ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on th
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt PASSED
 RefundPolicyTest > refundsDependOnDaysAndReceipt() PASSED
-All 6 tests passed.
+ThirtiethDayAnswerTest > returnsTeamExample(String, int, String) > returned on the 30th day without a receipt PASSED
+All 7 tests passed.

@@ -6,8 +6,14 @@ plugins {
 // the code. JUnit's parameterised tests come with the build conventions' JUnit, so there is nothing to add.
 //   ./gradlew :lessons:behaviour-as-examples:test -Pcode=today   today's refunds: one of the returns team's examples fails
 //   ./gradlew :lessons:behaviour-as-examples:test                the refunds the returns team confirmed: every example passes
+// `./gradlew :lessons:behaviour-as-examples:test -Pcode=answer` runs today's refunds with the exercise's answer
+// (answer/*AnswerTest), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", if (code == "answer") "today" else code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

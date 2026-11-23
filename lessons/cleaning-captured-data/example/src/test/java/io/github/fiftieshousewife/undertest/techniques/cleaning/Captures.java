@@ -11,7 +11,7 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 
 /** The captured day kept with the tests (made up, as if captured), and the cleaning the tests use. */
-final class Captures {
+public final class Captures {
 
     /** A fixed key for the lesson. A real key is kept out of the repository, apart from the cleaned files. */
     static final byte[] TEST_KEY = "lessons: a fixed test key, never a real one".getBytes(StandardCharsets.UTF_8);
@@ -25,7 +25,7 @@ final class Captures {
     }
 
     /** The cleaning the tests use: keyed substitutes, or today's cleaning with -Pcode=today. */
-    static Cleaning cleaning() throws GeneralSecurityException {
+    public static Cleaning cleaning() throws GeneralSecurityException {
         return "today".equals(System.getProperty("code"))
                 ? new TodaysCleaning()
                 : new KeyedCleaning(new KeyedSubstitutes(TEST_KEY));

@@ -15,7 +15,7 @@ keeps it as an approved file, and a later capture that differs fails the test, l
 
 ```bash
 ./gradlew :lessons:capturing-with-logbook:test -Pcode=today   # today's capture: the weak test passes, the 2 strong tests fail, showing both tokens and the customer's email written as they are
-./gradlew :lessons:capturing-with-logbook:test                # the filtered capture: all 3 tests pass, and it matches its approved file
+./gradlew :lessons:capturing-with-logbook:test                # the filtered capture: all 4 tests pass, and each capture matches its approved file
 ```
 
 The example is an old customer service, a servlet on an embedded Jetty server. A caller asks it for a customer with
@@ -44,6 +44,24 @@ built against. On the client side, `logbook-httpclient5` hooks into Apache's HTT
 no integration for the JDK's own HTTP server or client, so they appear only as the test's stand-in and caller.
 `logbook-json` brings the JSON body filters. Logbook 4 needs Java 17 or later; the older 2.x line, for `javax.servlet`
 and Java 8, is no longer the maintained line.
+
+## Exercise
+
+The approved capture covers a customer the service knows. A caller who asks for one it doesn't know takes another
+path: the service answers 404 and never calls the loyalty provider, and the caller's token must still be hidden.
+
+1. Add a test class beside [`ApprovedCaptureTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/capture/ApprovedCaptureTest.java)
+   that asks [`OldService`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/capture/OldService.java)
+   for `C-9999` and passes the capture to `Approvals.verify`.
+2. Run it with the filtered capture, read the `.received.txt` file it writes, and, once you have checked it holds no
+   secrets, rename it to `.approved.txt`.
+3. Compare with the answer, [`UnknownCustomerAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/capture/answer/UnknownCustomerAnswerTest.java)
+   and [its approved file](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/capture/answer/UnknownCustomerAnswerTest.approvesTheCaptureForACustomerNobodyHas.approved.txt),
+   which runs with today's capture with:
+
+```bash
+./gradlew :lessons:capturing-with-logbook:test -Pcode=answer   # today's capture: 3 of 4 tests fail; the capture for a customer nobody has shows the caller's token
+```
 
 ## Watch it, or present it
 

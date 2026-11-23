@@ -11,8 +11,14 @@ dependencies {
     testImplementation(libs.pact.provider.junit5)
 }
 
+// `./gradlew :lessons:contract-tests-between-teams:test -Pcode=answer` runs today's stock service with the exercise's
+// answer (answer/*AnswerTest), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", if (code == "answer") "today" else code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*AnswerTest") }
+    }
     // The order screen's pact test writes its pact here, never over the published copy, and replaces it on every run.
     systemProperty("pact.rootDir", "build/pacts")
     systemProperty("pact.writer.overwrite", "true")

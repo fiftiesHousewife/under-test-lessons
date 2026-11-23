@@ -1,4 +1,5 @@
 $ ./gradlew :lessons:architecture-rules:test
 LayerRulesTest > onlyTheServiceLayerUsesStorage() PASSED
 OrderSummaryPageTest > bothPagesCountTheOrders() PASSED
-All 2 tests passed.
+WebDependenciesAnswerTest > theWebLayerUsesOnlyTheServiceLayerAndJava() PASSED
+All 3 tests passed.

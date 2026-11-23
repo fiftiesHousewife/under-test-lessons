@@ -74,7 +74,9 @@ Say: Ward Cunningham's tool Fit, in 2002, let customers write examples in tables
 - https://cucumber.io/docs/ — Cucumber, for examples written as sentences
 - https://gojko.net/books/specification-by-example/ — Specification by Example, by Gojko Adzic
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: add the example for the 30th day without a receipt; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with JUnit's guide to parameterised tests, and Cucumber's documentation. Gojko Adzic's
   book shows how whole teams write their rules down as examples. The links on screen also take you to this lesson's
-  test code and examples, to run yourself.
+  test code and examples, to run yourself. And try the exercise in the README: add the example for the 30th day
+  without a receipt.

@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
  * A REST Assured filter that checks every request and answer against an OpenAPI document, as the validator's own
  * OpenApiValidationFilter does, but names each contradiction on one line: the request, the field and the rule broken.
  */
-final class DocumentCheck implements Filter {
+public final class DocumentCheck implements Filter {
 
     private final OpenApiInteractionValidator validator;
 
-    DocumentCheck(final String document) {
+    public DocumentCheck(final String document) {
         validator = OpenApiInteractionValidator.createForSpecificationUrl(document).build();
     }
 
