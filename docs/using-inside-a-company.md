@@ -126,9 +126,11 @@ No speech engine runs inside a company. When a company changes a slide's narrati
   so a clip is only needed again when the words change. The deck plays the clip that matches each slide, and stays
   silent on a slide with none. A clip that isn't listed in that folder's `voices.txt` counts as a person's recording,
   and the build never reads it again or removes it.
-- **What to record:** a printable script that lists each clip to record, with its file name, the text, the pauses as
-  directions and hints from the pronunciation list, is planned (`recordingScript`), as is accepting `.wav` and `.mp3`
-  as well as `.m4a`; see [the backlog](BACKLOG.md). Windows' Sound Recorder saves `.m4a`.
+- **What to record:** `./gradlew :lessons:video-tools:recordingScript -Plesson=<lesson> -Pmissing=true` writes a
+  printable script, `build/recording-scripts/<lesson>.html`, of the slides with no clip: the file name to save each
+  as, the slide's title, its words with the pauses as directions, and hints from the pronunciation list. Leave out
+  `-Pmissing=true` for every slide. A clip may be `.m4a`, `.wav` or `.mp3`; Windows' Sound Recorder saves `.m4a`.
+  `./gradlew check` lists slides still without a clip, and clips no slide uses (removed with `-PremoveUnused=true`).
 - **How to record:** one person per lesson, with the same microphone and room; one take per clip, with the silence
   trimmed from both ends; and the loudness levelled to about −16 LUFS, the usual level for speech, for example with
   Audacity's loudness normalisation. Re-recording one slide of a lesson voiced by someone else, or by Kokoro, leaves

@@ -960,6 +960,7 @@ items:
     blocked_by:
       - "clips-named-by-the-written-narration"
     decision_record: "docs/decisions/0027-inside-a-company-a-person-records-the-voice.md"
+    status: "done"
   - key: "decks-play-recorded-clips-in-common-formats"
     type: "deliverable"
     title: "Decks play recorded clips as .m4a, .wav or .mp3"

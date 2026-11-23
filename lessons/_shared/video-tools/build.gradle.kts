@@ -63,6 +63,22 @@ tasks.register<JavaExec>("buildLessonDecks") {
     })
 }
 
+// A printable script for a person to voice a lesson's deck, where no speech engine runs (docs/decisions/0027): the
+// file to save each clip as, the slide's title, its words with the pauses as directions, and pronunciation hints.
+// -Plesson=<id>; -Pmissing=true lists only the slides with no clip yet. Written to build/recording-scripts/<id>.html.
+tasks.register<JavaExec>("recordingScript") {
+    group = "documentation"
+    description = "Writes a printable script for a person to record a lesson's voice clips (-Plesson=<id>)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.RecordingScript"
+    val root = repoRoot
+    val lessonId = lesson
+    val missing = providers.gradleProperty("missing").map { it.toBoolean() }.orElse(false)
+    argumentProviders.add(CommandLineArgumentProvider {
+        listOf(root, lessonId.getOrElse("")) + (if (missing.get()) listOf("missing") else emptyList())
+    })
+}
+
 // One command to pick up revised stylesheets and pictures: rebuilds every lesson's deck and slide images (or one
 // lesson's, with -Plesson=<id>). It always reruns, so edits are never missed.
 tasks.register("buildLessonSlides") {

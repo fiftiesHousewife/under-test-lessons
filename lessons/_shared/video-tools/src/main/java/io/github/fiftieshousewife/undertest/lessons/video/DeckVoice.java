@@ -29,6 +29,16 @@ final class DeckVoice {
         return written.stream().map(text -> Spoken.of(text, pronunciation)).toList();
     }
 
+    /** Each slide's title, in the order of {@link #spoken}. */
+    static List<String> titles(final Media media) {
+        final Slides slides = media.slides();
+        final List<String> titles = new ArrayList<>();
+        slides.intro().forEach(slide -> titles.add(slide.heading().title()));
+        SlideDeck.scenes(media).forEach(scene -> titles.add(scene.heading().title()));
+        slides.closing().forEach(slide -> titles.add(slide.heading().title()));
+        return titles;
+    }
+
     /**
      * The formats a clip may have, in the order the deck looks for them: the voice makes {@code .m4a}; a person may
      * record any of them (Windows' Sound Recorder saves {@code .m4a}).

@@ -60,6 +60,18 @@ final class Pronunciation {
         return words.matcher(money).replaceAll(found -> Matcher.quoteReplacement(spoken.get(found.group())));
     }
 
+    /** Each listed word or phrase the text uses, once, in the order it first appears, with how to say it. */
+    Map<String, String> used(final String text) {
+        final Map<String, String> found = new LinkedHashMap<>();
+        if (words != null) {
+            final Matcher match = words.matcher(text);
+            while (match.find()) {
+                found.putIfAbsent(match.group(), spoken.get(match.group()));
+            }
+        }
+        return found;
+    }
+
     /** "£12.50" as "12 pounds 50", "£1.00" as "1 pound", "£0.50" as "50 pence". */
     private static String pounds(final MatchResult money) {
         final String whole = money.group(1).replace(",", "");
