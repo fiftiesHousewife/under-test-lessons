@@ -1291,6 +1291,7 @@ items:
     done_when:
       - "publish-decks.py adds 'Lesson N of M · group' to each deck, from the catalogue"
     decision_record: "docs/decisions/0032-decks-show-their-place-in-the-series-and-lessons-are-not-numbered.md"
+    status: "done"
   - key: "maintainer-tools-in-a-folder-of-their-own"
     type: "deliverable"
     title: "This repo's upkeep tools in a maintainer/ folder"

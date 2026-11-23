@@ -4,8 +4,8 @@
 
 The index follows the catalogue (lessons/CATALOGUE.md): its groups, and the built lessons in each, in order, marked
 where a deck has its voice. Each deck becomes <out>/<lesson id>.html, with its voice clips (<lesson id>.deck-voice/)
-beside it, and gains series.js: links back to the index and on to the next lesson, and, while you listen, the next
-lesson carries on when one ends. The decks themselves are not changed in the repository.
+beside it, and gains series.js: its place in the series ("Lesson 7 of 38 · <group>"), links back to the index and on
+to the next lesson, and, while you listen, the next lesson carries on when one ends. The decks themselves are not changed in the repository.
 """
 import html
 import os
@@ -19,10 +19,13 @@ SERIES_JS = """// Added to each published deck: links back to the index and on t
 (function () {
   var me = document.currentScript;
   var next = me.getAttribute('data-next');
+  var place = me.getAttribute('data-place');
   var nav = document.createElement('nav');
   nav.className = 'series';
   nav.setAttribute('style', 'position:fixed;left:16px;bottom:10px;font:14px Helvetica,Arial,sans-serif;z-index:5');
-  nav.innerHTML = '<a href="index.html">All lessons</a>' + (next ? ' · <a href="' + next + '.html#1">Next lesson</a>' : '');
+  nav.innerHTML = (place ? '<span class="place"></span> · ' : '') + '<a href="index.html">All lessons</a>'
+    + (next ? ' · <a href="' + next + '.html#1">Next lesson</a>' : '');
+  if (place) { nav.querySelector('.place').textContent = place; }
   document.body.appendChild(nav);
   var listen = function () { return document.querySelector('.deck-listen'); };
   if (next) {
@@ -69,12 +72,18 @@ def voice_of(lesson):
     return path if os.path.isdir(path) else None
 
 
-def publish_deck(lesson, following, out):
+def place_label(number, total, group):
+    """Where a deck sits in the series, as its page shows it: "Lesson 7 of 38 · Stand in for the systems around it"."""
+    return f"Lesson {number} of {total} · {group}"
+
+
+def publish_deck(lesson, following, out, place=""):
     with open(deck_of(lesson), encoding="utf-8") as f:
         page = f.read()
     # Links to other lessons point at their deck files in the repository; published, each deck is <id>.html.
     page = re.sub(r'href="\.\./\.\./([a-z0-9-]+)/media/\1\.deck\.html', r'href="\1.html', page)
-    tag = f'<script src="series.js" data-next="{html.escape(following or "")}"></script>'
+    tag = (f'<script src="series.js" data-next="{html.escape(following or "")}"'
+           f' data-place="{html.escape(place)}"></script>')
     page = page.replace("</body>", tag + "</body>", 1)
     with open(os.path.join(out, lesson + ".html"), "w", encoding="utf-8") as f:
         f.write(page)
@@ -86,8 +95,10 @@ def main(out):
     os.makedirs(out, exist_ok=True)
     groups = lessons_in_order()
     order = [lesson for _, lessons in groups for lesson, _ in lessons]
+    group_of = {lesson: title for title, lessons in groups for lesson, _ in lessons}
     for i, lesson in enumerate(order):
-        publish_deck(lesson, order[i + 1] if i + 1 < len(order) else None, out)
+        publish_deck(lesson, order[i + 1] if i + 1 < len(order) else None, out,
+                     place_label(i + 1, len(order), group_of[lesson]))
     with open(os.path.join(out, "series.js"), "w", encoding="utf-8") as f:
         f.write(SERIES_JS)
     sections = []
