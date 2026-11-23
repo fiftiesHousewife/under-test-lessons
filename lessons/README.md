@@ -24,6 +24,7 @@ Words follow [GLOSSARY.md](../GLOSSARY.md). The rules for when each technique ap
 
 | Lesson | The toolkit's technique | Slide deck |
 |---|---|---|
+| [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md) | journey step: [find-test-anti-patterns](https://github.com/fiftiesHousewife/under-test/blob/main/.github/skills/find-test-anti-patterns/SKILL.md) | [deck](https://fiftieshousewife.github.io/under-test-lessons/anti-patterns-in-existing-tests.html) |
 | [Architecture rules](architecture-rules/README.md) | [architecture-rules](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/architecture-rules/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) |
 | [Batch file-in, file-out](batch-file-in-file-out/README.md) | [batch-file-in-file-out](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) |
 | [Behaviour written down as examples](behaviour-as-examples/README.md) | [business-rule-tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/business-rule-tests/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) |

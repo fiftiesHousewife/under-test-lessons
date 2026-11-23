@@ -40,6 +40,7 @@ actually catch; later, use the same measure to decide when new tests are strong 
 |---|---|---|
 | [Mutation testing](lessons/mutation-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/mutation-testing.html) | [PIT](https://pitest.org/) | Two test suites with the same 100% line coverage: PIT shows one catches 5 of 13 planted bugs, the other all 13 |
 | [Coverage of changed code](lessons/coverage-of-changed-code/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/coverage-of-changed-code.html) | [PIT](https://pitest.org/), [JaCoCo](https://www.jacoco.org/) | PIT mutates only the class a change touched: the weak test lets 5 of 11 planted bugs through, the strong one catches all 11 |
+| [Anti-patterns in existing tests](lessons/anti-patterns-in-existing-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/anti-patterns-in-existing-tests.html) | [ArchUnit](https://www.archunit.org) | An old repo's tests listed for 5 kinds of anti-pattern, each with its file and line; a register of decisions makes the ratchet pass and refuse new ones |
 | [Running old code unplugged](lessons/running-old-code-unplugged/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/running-old-code-unplugged.html) | the [airgap agent](https://github.com/fiftiesHousewife/under-test-airgap), Spring Boot, H2, WireMock | An old service's tests are refused at every call to production; a test profile gives each a stand-in until the report is clean |
 | *AI-written tests that pass the acceptance check* | [PIT](https://pitest.org/), the toolkit's acceptance check | *coming* |
 
@@ -134,7 +135,7 @@ in every new test, and when reviewing tests written by people or by AI.
 
 The lessons in italics above, in the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
-1. **Before you change anything:** the safety inventory, and anti-patterns in existing tests.
+1. **Before you change anything:** the safety inventory.
 2. **Message consumers on Kafka,** and **AI-written tests that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).

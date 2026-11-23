@@ -1,0 +1,7 @@
+$ ./gradlew :lessons:anti-patterns-in-existing-tests:test -Pcode=answer
+MockCallsAnswerTest > findsTheTestsOfAClassThatMakesFiveMocksWithCalls() PASSED
+The answer's rule, counting mock() calls too: 2 anti-patterns not in the register.
+  kind               test                                             where                    decision
+  mocks-everything   CheckoutEmailTest.mailsTheReceipt                CheckoutEmailTest.java:29 not in the register
+  mocks-everything   CheckoutEmailTest.recordsTheSale                 CheckoutEmailTest.java:35 not in the register
+All 1 tests passed.

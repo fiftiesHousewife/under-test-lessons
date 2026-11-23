@@ -1,0 +1,21 @@
+$ ./gradlew :lessons:anti-patterns-in-existing-tests:test -Pcode=today
+AntiPatternChecksTest > refusesAnyAntiPatternTheRegisterDoesNotHold() FAILED
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [anti-patterns not in the register]
+    expected: 0
+     but was: 9
+AntiPatternChecksTest > listsEachAntiPatternWithItsTestFileAndLine() PASSED
+RegisterTest > reportsEachFindingWithItsDecision() PASSED
+RegisterTest > refusesOnlyFindingsItDoesNotHold() PASSED
+4 tests completed, 1 failed
+The old shop's tests: 9 anti-patterns in 8 of 13 tests, 0 of them in the register.
+  kind               test                                             where                    decision
+  disabled           RefundsTest.refundsToAGiftCardWithABonus         RefundsTest.java:18      not in the register
+  mocks-everything   CheckoutTest.placesTheOrder                      CheckoutTest.java:44     not in the register
+  mocks-everything   CheckoutTest.takesThePayment                     CheckoutTest.java:38     not in the register
+  no-real-assertion  BasketTest.handlesAnEmptyBasket                  BasketTest.java:21       not in the register
+  no-real-assertion  CheckoutTest.placesTheOrder                      CheckoutTest.java:44     not in the register
+  order-dependent    OrderNumbersTest.theFirstOrderIsNumberOne        OrderNumbersTest.java:16 not in the register
+  order-dependent    OrderNumbersTest.theNextOrderIsNumberTwo         OrderNumbersTest.java:22 not in the register
+  sleeps             DispatcherTest.sendsThePaidOrderToTheWarehouse   DispatcherTest.java:17   not in the register
+  sleeps             DispatcherTest.triesAgainWhenTheWarehouseIsBusy  DispatcherTest.java:24   not in the register

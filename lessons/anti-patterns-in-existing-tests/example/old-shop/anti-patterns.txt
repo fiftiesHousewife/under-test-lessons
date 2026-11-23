@@ -1,0 +1,13 @@
+# The register of anti-patterns in the old shop's tests: each one the checks found, and the decision taken on it.
+# No test here is deleted before the approval-test baseline exists: it may be the only record of what the code does.
+# The checks compare their findings with this file, and refuse any it doesn't hold: a new anti-pattern fails the build.
+# Each row: kind, test and decision, separated by two or more spaces.
+disabled           RefundsTest.refundsToAGiftCardWithABonus         the owner decides: re-enable or delete
+mocks-everything   CheckoutTest.placesTheOrder                      strengthen the tests
+mocks-everything   CheckoutTest.takesThePayment                     strengthen the tests
+no-real-assertion  BasketTest.handlesAnEmptyBasket                  strengthen the tests
+no-real-assertion  CheckoutTest.placesTheOrder                      strengthen the tests
+order-dependent    OrderNumbersTest.theFirstOrderIsNumberOne        fix with the flaky tests
+order-dependent    OrderNumbersTest.theNextOrderIsNumberTwo         fix with the flaky tests
+sleeps             DispatcherTest.sendsThePaidOrderToTheWarehouse   fix with the flaky tests
+sleeps             DispatcherTest.triesAgainWhenTheWarehouseIsBusy  fix with the flaky tests

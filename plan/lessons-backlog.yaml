@@ -222,6 +222,7 @@ items:
       - "Its README, slides, narration and script are written and its deck is voiced"
       - "Its facts are checked at their sources, named in its slides file"
     notes: "An old repo's tests read for what makes them untrustworthy, each found by a check and listed. In the catalogue's opening group; follows the toolkit's decision guide on anti-patterns in existing tests."
+    status: "done"
   - key: "lesson-capturing-what-an-old-service-receives-and-sends"
     type: "deliverable"
     title: "Lesson: capturing what an old service receives and sends, with Logbook"

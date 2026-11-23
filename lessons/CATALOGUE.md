@@ -24,7 +24,7 @@ and see what its existing tests really check.
 |---|---|---|---|
 | The safety inventory: an old repo searched, before anything runs, for what could reach production, leak a secret or cause harm (addresses in settings, credentials, scheduled jobs, calls that send money or messages), each listed with where it is | the toolkit's safety inventory | Java only | planned |
 | [Running old code unplugged](running-old-code-unplugged/README.md): an old Spring service's tests run under the airgap agent, every outside call refused and reported, then a test profile written until the report is clean | the airgap agent, Spring Boot test profiles, H2, WireMock | Java only | built |
-| Anti-patterns in existing tests: an old repo's tests read for what makes them untrustworthy (tests that check nothing, sleep, depend on order or on the network, or are switched off), each found by a check and listed | the toolkit's anti-pattern checks | Java only | planned |
+| [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md): an old shop's tests read by ArchUnit rules for what makes them untrustworthy (disabled, no real assertion, sleeps, fixed order, mocks everything), each finding listed with its file and line and written in a register with its decision; none deleted | ArchUnit | Java only | built |
 
 ## Measure how far tests can be trusted
 
@@ -150,6 +150,7 @@ and `./gradlew check` fails a name the toolkit doesn't have (see
 | Journey step (skill) | Lesson |
 |---|---|
 | draft-the-connection-list | [Running old code unplugged](running-old-code-unplugged/README.md) |
+| find-test-anti-patterns | [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md) |
 
 ## Lesson designs
 
@@ -188,6 +189,7 @@ adding its row first.
 | Mockito well used (`mockito-well-used`) | Refunds for a returned item, paid back to the card | Everything is mocked; the test checks a refund call was made, and passes while the card gets the whole order back | A fake order book, one mock where money leaves, and an argument captor checks the refund's card and amount | `-Pcode=today` |
 | Old command-line programs (`old-command-line-programs`) | A nightly payments import: limit from an environment variable, payments on standard input, exit code 1 over the limit | Tests of the pieces pass; System Stubs runs the program unchanged until its `System.exit` stops the whole test run | The program is given how to print and how to end; System Stubs stubs its environment, input and output | `-Pcode=today` |
 | Responses checked against the OpenAPI document (`openapi-response-checks`) | A parcel tracking service and its published openapi.yaml | REST Assured tests check the status and a few fields, and pass while the weight is sent as text and the error field is renamed | The same tests with a filter that checks every answer against the document, naming the request, field and rule | `-Pcode=today` |
+| Anti-patterns in existing tests (`anti-patterns-in-existing-tests`) | An old shop's 13 tests: basket, refunds, order numbers, dispatch, checkout | No register: the checks list 9 anti-patterns in 8 tests, and the ratchet refuses all 9 | The register written down after triage, one decision per finding; the ratchet passes and refuses only new ones | `-Pcode=today` |
 | Running old code unplugged (`running-old-code-unplugged`) | A shop's old quote service: a price from the database plus delivery from the courier's rates service | The service's own tests, with application.yml naming production; the airgap agent refuses each call and its report names the host, test and line | application-test.yml gives each refused setting a stand-in (H2, WireMock); the report is clean | `-Pcode=today` |
 | Slow and failing dependencies (`slow-and-failing-dependencies`) | A shop checking a supplier's stock before promising delivery | A stand-in answers at once, with stock or 503, so a client with no timeout that throws on a dropped connection passes | WireMock answers 2 seconds late, resets the connection, answers empty or broken; each test allows 1 second and expects "supplier unavailable" | `-Pcode=today` |
 | Black-box tests of a whole application (`black-box-tests`) | A shop's order service: reserve stock at the warehouse, keep the order as 2 rows | Unit tests of the order rules with stand-ins pass while the order is never committed | The service started from its entry point and a settings file; WireMock as the warehouse; the answer, the warehouse call and the rows written are checked | `-Pcode=today` |
@@ -203,9 +205,7 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
 
 1. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
    secret or cause harm, and each finding is listed with where it is.
-2. **Anti-patterns in existing tests:** an old repo's tests read for what makes them untrustworthy, each found by a
-   check and listed.
-3. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+2. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

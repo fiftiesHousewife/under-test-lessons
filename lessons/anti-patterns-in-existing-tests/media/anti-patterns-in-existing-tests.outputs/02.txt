@@ -1,0 +1,18 @@
+$ ./gradlew :lessons:anti-patterns-in-existing-tests:test
+AntiPatternChecksTest > refusesAnyAntiPatternTheRegisterDoesNotHold() PASSED
+AntiPatternChecksTest > listsEachAntiPatternWithItsTestFileAndLine() PASSED
+RegisterTest > reportsEachFindingWithItsDecision() PASSED
+RegisterTest > refusesOnlyFindingsItDoesNotHold() PASSED
+MockCallsAnswerTest > findsTheTestsOfAClassThatMakesFiveMocksWithCalls() PASSED
+The old shop's tests: 9 anti-patterns in 8 of 13 tests, 9 of them in the register.
+  kind               test                                             where                    decision
+  disabled           RefundsTest.refundsToAGiftCardWithABonus         RefundsTest.java:18      the owner decides: re-enable or delete
+  mocks-everything   CheckoutTest.placesTheOrder                      CheckoutTest.java:44     strengthen the tests
+  mocks-everything   CheckoutTest.takesThePayment                     CheckoutTest.java:38     strengthen the tests
+  no-real-assertion  BasketTest.handlesAnEmptyBasket                  BasketTest.java:21       strengthen the tests
+  no-real-assertion  CheckoutTest.placesTheOrder                      CheckoutTest.java:44     strengthen the tests
+  order-dependent    OrderNumbersTest.theFirstOrderIsNumberOne        OrderNumbersTest.java:16 fix with the flaky tests
+  order-dependent    OrderNumbersTest.theNextOrderIsNumberTwo         OrderNumbersTest.java:22 fix with the flaky tests
+  sleeps             DispatcherTest.sendsThePaidOrderToTheWarehouse   DispatcherTest.java:17   fix with the flaky tests
+  sleeps             DispatcherTest.triesAgainWhenTheWarehouseIsBusy  DispatcherTest.java:24   fix with the flaky tests
+All 5 tests passed.
