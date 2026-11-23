@@ -26,6 +26,26 @@ holds today's query (`ORDER BY last_order`) and the fixed one (`ORDER BY last_or
 - [`RealPostgresTest`](example/src/integrationTest/java/io/github/fiftieshousewife/undertest/techniques/database/RealPostgresTest.java)
   is the "after": on PostgreSQL, nulls sort last, and the test fails.
 
+## In continuous integration: Docker or Kubernetes
+
+The tests are the same everywhere; only where their containers run changes, and that depends on the CI platform (the
+toolkit's guide, [How CI runs container tests for each kind of CI platform](https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0020-how-ci-runs-container-tests-for-each-kind-of-ci-platform.md)).
+
+- **CI on virtual machines usually has Docker,** and Testcontainers finds it with nothing to set. GitHub's Ubuntu
+  runners list Docker among their tools; this repository's own CI runs the lesson there.
+- **CI built on Kubernetes,** such as OpenShift or Tekton, usually has no Docker daemon in its build pods. Image build
+  tools such as Buildah or Kaniko build images; they don't run the containers tests need. Two ways to run them:
+  - [kubedock](https://github.com/joyrex2001/kubedock) runs each test container as a pod. Start `kubedock server`
+    beside the tests, for example as a sidecar in a Tekton pipeline; it serves Docker's API on port 2475, so the tests
+    set `DOCKER_HOST=tcp://127.0.0.1:2475`. Its README also sets `TESTCONTAINERS_RYUK_DISABLED=true`, since kubedock
+    removes the pods it made itself (after 60 minutes, by default). It needs permission to create pods.
+  - Rootless Podman inside the build pod, through its Docker-compatible socket: as
+    [Testcontainers' guide](https://java.testcontainers.org/supported_docker_environment/) says, set
+    `DOCKER_HOST=unix://${XDG_RUNTIME_DIR}/podman/podman.sock` and `TESTCONTAINERS_RYUK_DISABLED=true`. The pod's
+    settings need the platform and security owners' approval.
+
+Neither changes the test code. Record the choice in the organisation's own decision record.
+
 ## Exercise
 
 Where no container runtime is to hand, H2 can be told to sort nulls as PostgreSQL does. That copies one difference

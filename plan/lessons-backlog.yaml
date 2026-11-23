@@ -627,6 +627,7 @@ items:
     done_by: "ai"
     done_when:
       - "The lesson explains both, as the toolkit's decision guides expect"
+    status: "done"
   - key: "lessons-use-the-tools-the-toolkit-names"
     type: "deliverable"
     title: "Lessons for the tools the toolkit names that none uses yet"
