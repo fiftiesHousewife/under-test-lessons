@@ -5,6 +5,10 @@ description: Add or change a lesson under lessons/<id>/ - a runnable example wit
 
 # Writing a technique lesson
 
+Every step in this skill is **[inside]** ([AGENTS.md](../../../AGENTS.md#which-group-each-step-is-in)): it needs only the
+JDK, Gradle and the installed Chrome, so it runs in a company too. Voicing the deck and making the video are
+**[production]**, in [make-a-lesson-video](../make-a-lesson-video/SKILL.md).
+
 Every lesson follows one recipe, so most of the work is filling it in. The reader is an engineer who has never used
 the technique; the lesson must make its value obvious in a few minutes. Words follow [GLOSSARY.md](../../../GLOSSARY.md).
 Good models: `lessons/recorded-http-responses/` (a library added to the build), `lessons/nested-tests/` (nothing to

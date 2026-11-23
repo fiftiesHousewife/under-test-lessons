@@ -12,6 +12,10 @@ A lesson video shows one technique working, in the terminal, from a script. It i
 edited by hand. Good models: `lessons/recorded-http-responses/media/` and `lessons/nested-tests/media/`; generate new
 scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill).
 
+Each step below is marked with its group ([AGENTS.md](../../../AGENTS.md#which-group-each-step-is-in)): **[inside]**
+runs anywhere, a company included; **[production]** needs VHS, ffmpeg or the voice, and runs only on the machine that
+makes videos. Writing and checking a script, slides, captions and decks is inside; recording and voicing is production.
+
 ## Keep it short
 
 - **Ten minutes is the ceiling, not the goal.** Aim for two to five minutes. If a video is heading past ten, it is two
@@ -64,10 +68,10 @@ scripts with `tools/new-video-script.py` (see the write-a-technique-lesson skill
   the machine awake: a recording waiting on a live run fails if the machine sleeps.
 - **Container lessons** fetch their image off camera first; the shared set-up points Testcontainers at Colima by itself
   where Colima is running.
-- **Before the first recording on a machine,** run `./gradlew :production:video-render:checkVideoInRecording`: half a
+- **[production] Before the first recording on a machine,** run `./gradlew :production:video-render:checkVideoInRecording`: half a
   minute that runs every step a video goes through with the real tools (code rolling in, the zoom, a callout sliding in,
   a slide building up, captions burned in), leaving `build/video-check/video-check.mp4` to watch.
-- **`./gradlew :lessons:video-tools:checkVideoScripts` before recording** catches waits that would hang, scene and
+- **[inside] `./gradlew :lessons:video-tools:checkVideoScripts` before recording** catches waits that would hang, scene and
   narration counts that differ, code panels that would show the wrong file or lines, scenes too short for their
   narration, slides without sources or repository links, live commands without their kept output, and lines a scene
   names that it doesn't show marked.
@@ -118,7 +122,7 @@ Each of these cost a failed render once. The video checks in `./gradlew check` c
 
 ## Captions
 
-`./gradlew :lessons:video-tools:buildLessonCaptions -Plesson=<id>` writes `<id>.vtt` and `<id>.srt` next to the script.
+**[inside]** `./gradlew :lessons:video-tools:buildLessonCaptions -Plesson=<id>` writes `<id>.vtt` and `<id>.srt` next to the script.
 It times each scene from the script's pauses, and each live run from the time the recording measured, then splits the
 narration into short cues. It fails if a `Wait` is on camera without a measured run, or if the narration has a
 different number of items from the script's scenes.
@@ -144,25 +148,27 @@ terminal recording and the closing slides after it, with their own captions.
   `pictures/ink/`, the default, is generated: each picture is a hand-drawn figure from `slides/figures/` (Open Peeps,
   public domain) chosen by the kind of slide. Adding a picture name to the colour set? Map it to a figure in
   `tools/compose-pictures.py` and rerun the script.
-- **Rebuild everything:** `./gradlew :lessons:video-tools:buildLessonSlides` rebuilds every deck and slide image from
+- **[inside] Rebuild everything:** `./gradlew :lessons:video-tools:buildLessonSlides` rebuilds every deck and slide image from
   the current stylesheets and pictures; settings can live in `gradle.properties`.
-- **Decks:** `./gradlew :lessons:video-tools:buildLessonDecks` writes every lesson's `media/<id>.deck.html` (commit
+- **[inside] Decks:** `./gradlew :lessons:video-tools:buildLessonDecks` writes every lesson's `media/<id>.deck.html` (commit
   it): intro slides, one slide per scene with its narration, code panels (marked lines highlighted), commands and
   their output, and callouts (read from the script's `show`, `run_live` and `callout` lines), and closing slides.
   Rebuild decks whenever slides or narration change; `-PlessonDeckPdf=true` adds a PDF.
-- **What live commands print:** `python3 tools/capture-lesson-outputs.py <id>` runs each live
+- **[inside] What live commands print:** `python3 tools/capture-lesson-outputs.py <id>` runs each live
   command as a recording would and keeps its output in `media/<id>.outputs/` (commit it), so the deck shows what the
   video shows. Run it again after changing the lesson's code or its live commands; `./gradlew check` fails a live
   command without its output. The database lessons need a container runtime for a true capture.
-- **The deck's voice:** `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` reads each slide's
+- **[production] The deck's voice:** `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` reads each slide's
   narration aloud into `media/<id>.deck-voice/` (commit it) and rebuilds the deck, which then plays it (Listen, or V).
   Only changed slides are read again. Run it after changing narration or slides; a slide without its clip is silent.
-- **A quick look:** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
+- **[production] A quick look:** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
   slides (into `media/<id>.voice/`) in about a minute.
 
 What goes on the slides is in [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md).
 
 ## Voice and the finished video
+
+Every step in this section is **[production]**.
 
 1. **One command makes the whole video:** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>`. It records
    the silent video and GIF with VHS (timed progress, and a heartbeat during slow steps), builds the captions, reads
@@ -183,8 +189,8 @@ What goes on the slides is in [write-lesson-slides-and-narration](../write-lesso
 
 ## Check, render, look
 
-1. `./gradlew :lessons:video-tools:check` checks the script and the shared helpers.
-2. `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` makes it (see above). On failure it shows the end of
+1. **[inside]** `./gradlew :lessons:video-tools:check` checks the script and the shared helpers.
+2. **[production]** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` makes it (see above). On failure it shows the end of
    the VHS log.
 3. If a render stalls, don't guess: copy the script, replace the stuck `Wait` with `Sleep 60s`, render that, and look at
    the last frame (`ffmpeg -sseof -0.1 -i <gif> -frames:v 1 frame.png`).

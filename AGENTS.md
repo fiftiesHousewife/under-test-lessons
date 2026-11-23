@@ -28,6 +28,28 @@ lives in that repo; link to it by full URL.
 | `tools/` | Helpers: the video-script generator, and PMD and Checkstyle without Gradle worker processes |
 | [`.github/skills/`](.github/skills/) | This repo's own skills, listed below |
 
+## Which group each step is in
+Every step belongs to one of three groups ([decision](docs/decisions/0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md)).
+**Inside** steps need only the JDK, Gradle, a Maven repository and the installed Chrome, so they run in a company too.
+**Production** steps make videos and voices (VHS, ffmpeg, Python, Kokoro) and run only on the machine that makes them.
+**Maintainer** steps keep this repository in order, with GitHub's API and tokens.
+
+| Step | Command | Group |
+|---|---|---|
+| Check everything | `./gradlew check` | Inside |
+| Check video scripts and deck clips | `./gradlew :lessons:video-tools:checkVideoScripts` | Inside |
+| Rebuild decks and slide pictures | `./gradlew :lessons:video-tools:buildLessonSlides` | Inside |
+| Write captions | `./gradlew :lessons:video-tools:buildLessonCaptions -Plesson=<id>` | Inside |
+| A script for a person to record the voice | `./gradlew :lessons:video-tools:recordingScript -Plesson=<id>` | Inside |
+| Keep what live commands print | `python3 tools/capture-lesson-outputs.py <id>` | Inside |
+| Generate a video script | `python3 tools/new-video-script.py spec.json <tape>` | Inside |
+| Voice a deck | `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` | Production |
+| Make a video | `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` | Production |
+| Set up the voice, check the video tools | `setUpLessonVoice`, `checkVideoInRecording` (in `:production:video-render`) | Production |
+| Push, syncing the backlog into issues | `maintainer-tools/sync/sync.sh "What changed"` | Maintainer |
+| Import the backlog alone | `python3 tools/backlog-import/import_to_github.py` | Maintainer |
+| Install external skills | `python3 tools/install-skills.py` | Maintainer |
+
 ## Adding a lesson
 Follow [write-a-technique-lesson](.github/skills/write-a-technique-lesson/SKILL.md): design the lesson as one row of the
 catalogue, build today's code and the fix behind `-Pcode=today`, write the README, then the slides, narration and

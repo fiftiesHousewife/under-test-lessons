@@ -30,6 +30,6 @@ Copied from the toolkit's skill of the same name, for the lessons.
   or `docs/BACKLOG.md` by hand.
 
 ## 4. Finish
-1. Run `./gradlew check` and include the result.
-2. Mark the item done in the backlog file, and push with `maintainer-tools/sync/sync.sh "What changed"`, which closes
+1. **[inside]** Run `./gradlew check` and include the result.
+2. **[maintainer]** Mark the item done in the backlog file, and push with `maintainer-tools/sync/sync.sh "What changed"`, which closes
    its issue. Where the sync can't run (no token, or a sandbox), say so and leave the push to the person.

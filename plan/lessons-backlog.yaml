@@ -923,6 +923,7 @@ items:
     blocked_by:
       - "split-video-tools-into-inside-and-production"
     decision_record: "docs/decisions/0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md"
+    status: "done"
   - key: "decide-how-companies-receive-the-lessons"
     type: "decision"
     title: "Decide how companies receive the lessons: a corporate branch, a bundle or a split repo"
