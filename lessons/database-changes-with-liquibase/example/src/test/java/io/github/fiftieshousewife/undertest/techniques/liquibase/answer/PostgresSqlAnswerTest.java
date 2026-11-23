@@ -3,9 +3,12 @@ package io.github.fiftieshousewife.undertest.techniques.liquibase.answer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.github.fiftieshousewife.undertest.techniques.liquibase.Changelogs;
-import java.io.StringWriter;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import liquibase.Liquibase;
+import liquibase.command.CommandScope;
+import liquibase.command.core.UpdateSqlCommandStep;
+import liquibase.command.core.helpers.DbUrlConnectionArgumentsCommandStep;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.OfflineConnection;
@@ -23,17 +26,21 @@ import org.junit.jupiter.api.io.TempDir;
 class PostgresSqlAnswerTest {
 
     @Test
-    @SuppressWarnings("deprecation") // as in DatabaseChanges: Liquibase's simplest entry point
     void theLoyaltyLevelGetsATypePostgresHas(@TempDir final Path folder) throws LiquibaseException {
         final ResourceAccessor files = new ClassLoaderResourceAccessor();
         final String offline = "offline:postgresql?changeLogFile=" + folder.resolve("databasechangelog.csv");
         final Database postgres = DatabaseFactory.getInstance()
                 .findCorrectDatabaseImplementation(new OfflineConnection(offline, files));
-        final StringWriter sql = new StringWriter();
+        final ByteArrayOutputStream sql = new ByteArrayOutputStream();
 
-        new Liquibase(Changelogs.current(), files, postgres).update("", sql);
+        new CommandScope(UpdateSqlCommandStep.COMMAND_NAME)
+                .addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, postgres)
+                .addArgumentValue(UpdateSqlCommandStep.CHANGELOG_FILE_ARG, Changelogs.current())
+                .setOutput(sql)
+                .execute();
 
-        final String loyaltyLevel = sql.toString().lines().filter(line -> line.contains("loyalty_level"))
+        final String loyaltyLevel = sql.toString(StandardCharsets.UTF_8).lines()
+                .filter(line -> line.contains("loyalty_level"))
                 .findFirst().orElse("no SQL for the loyalty level");
         assertThat(loyaltyLevel).as("the SQL PostgreSQL would be sent").contains("SMALLINT");
     }

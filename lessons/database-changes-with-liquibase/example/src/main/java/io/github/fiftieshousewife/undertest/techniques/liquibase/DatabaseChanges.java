@@ -2,12 +2,13 @@ package io.github.fiftieshousewife.undertest.techniques.liquibase;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import liquibase.Liquibase;
+import liquibase.command.CommandScope;
+import liquibase.command.core.UpdateCommandStep;
+import liquibase.command.core.helpers.DbUrlConnectionArgumentsCommandStep;
 import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
-import liquibase.resource.ClassLoaderResourceAccessor;
 
 /** Brings a database up to date with a changelog, as the application does when it starts. */
 public final class DatabaseChanges {
@@ -15,13 +16,18 @@ public final class DatabaseChanges {
     private DatabaseChanges() {
     }
 
-    /** Applies every change in the changelog that the database hasn't had yet. */
-    @SuppressWarnings("deprecation") // Liquibase 4's simplest entry point; its replacement needs more set-up
+    /**
+     * Applies every change in the changelog that the database hasn't had yet, with Liquibase's update command, which
+     * reads the changelog from the class path.
+     */
     public static void apply(final Connection connection, final String changelog) throws SQLException {
         try {
             final Database database = DatabaseFactory.getInstance()
                     .findCorrectDatabaseImplementation(new JdbcConnection(connection));
-            new Liquibase(changelog, new ClassLoaderResourceAccessor(), database).update("");
+            new CommandScope(UpdateCommandStep.COMMAND_NAME)
+                    .addArgumentValue(DbUrlConnectionArgumentsCommandStep.DATABASE_ARG, database)
+                    .addArgumentValue(UpdateCommandStep.CHANGELOG_FILE_ARG, changelog)
+                    .execute();
         } catch (LiquibaseException e) {
             throw new SQLException("a database change failed: " + rootMessage(e), e);
         }
