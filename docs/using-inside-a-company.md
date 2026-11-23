@@ -23,10 +23,12 @@ videos or the voice, and it needs no AI tool: every lesson works by hand.
 | **Production** | VHS, ttyd, Python, the Kokoro voice, ffmpeg, downloads from GitHub and PyPI | Recording, reading narration aloud, joining and captioning videos, publishing videos | No: done by this repository, outside |
 | **Maintainer** | GitHub's API and a token | This repository's own upkeep: the backlog and its issues, installing skills, the Pages workflow | No |
 
-Today all of the video tools are one Gradle module, `lessons/_shared/video-tools`. Inside a company, run only the
-checks and deck building (`./gradlew check`, `buildLessonSlides`), never `renderLessonVideo`, `buildLessonDeckVoice`
-or `setUpLessonVoice`. Splitting the production tools into a module and folder of their own, with a check that keeps
-the inside part free of them, is planned; see [the backlog](BACKLOG.md).
+The video tools are in two Gradle modules. `lessons/_shared/video-tools` is everything a company runs: the checks,
+deck building, slide pictures, captions and the recording script (`./gradlew check`, `buildLessonSlides`,
+`recordingScript`). `production/video-render` records videos and reads narration aloud (`renderLessonVideo`,
+`buildLessonDeckVoice`, `setUpLessonVoice`), and is never run in a company: leave the `production/` folder out of the
+company's copy, and the build includes it only where the folder is there. The inside module doesn't depend on it, so
+the compiler keeps the two apart.
 
 ## What the lessons fetch, and how to route it
 

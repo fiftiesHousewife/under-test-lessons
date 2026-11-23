@@ -896,6 +896,7 @@ items:
     done_when:
       - "A company that allows only its repository manager can fetch Gradle by changing one setting"
     decision_record: "docs/decisions/0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md"
+    status: "done"
   - key: "lesson-checks-skip-without-the-toolkit"
     type: "deliverable"
     title: "The lesson checks skip, with a message, when the toolkit isn't checked out"
