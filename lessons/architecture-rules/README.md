@@ -55,6 +55,18 @@ else: the service layer, the web layer itself and Java's own classes. It also ca
   ones fail the build.
 - **Keep rules few and clearly named,** so a failure says what was agreed.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ and ArchUnit run on Java 8 as they are.
+
 ## Find out more
 
 - [ArchUnit](https://www.archunit.org) and its user guide

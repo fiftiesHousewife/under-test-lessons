@@ -66,6 +66,19 @@ exactly £100, the smallest that needs a fraud check.
 - **Keep it that way** with an [architecture rule](../architecture-rules/README.md): only the connection code may use
   the system's client library. `QueueClientRuleTest` is that rule for this example.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Mockito | 4.11 | the current version |
+
+AssertJ and ArchUnit run on Java 8 as they are.
+
 ## Find out more
 
 - [Mocks Aren't Stubs](https://martinfowler.com/articles/mocksArentStubs.html), by Martin Fowler

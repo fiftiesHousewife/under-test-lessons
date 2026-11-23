@@ -58,6 +58,18 @@ penny too: 3 pence refunded gives 0.6 pence of VAT back, which is 1 penny.
 - **Give each row a readable name** (`name = "{0} pence net gives {1} pence VAT"`), so a failure says which case broke.
 - **Keep one idea per test:** if rows need different set-up or different checks, they belong in different tests.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [JUnit](https://junit.org/) and its user guide's section on parameterised tests

@@ -55,6 +55,18 @@ differential test compares failures as well as answers.
   or WireMock recordings compared with ApprovalTests). Not Diffy: it is archived, and its only fork has a
   non-commercial licence.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - William McKeeman, *Differential Testing for Software* (Digital Technical Journal, 1998)

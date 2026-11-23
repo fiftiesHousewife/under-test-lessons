@@ -142,6 +142,24 @@ The service also takes card payments, through the payment gateway that `applicat
 - **Not against hostile code:** the agent runs inside the JVM it guards, so code written to get round it can. It
   guards against accidental calls from code whose settings point at production.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Spring Boot | 2.7 | 2.7 |
+| H2 | 2.2.224 | the current version |
+| WireMock | 2.35 (`wiremock-jre8`) | the current version |
+
+AssertJ and the PostgreSQL driver run on Java 8 as they are.
+
+Spring Boot 2.7 uses the `javax` names; Spring Boot 3 and later use `jakarta`. Moving from `javax` to `jakarta` is a
+migration of its own, best done with an automated recipe, apart from adding these tests.
+
 ## Find out more
 
 - [The airgap agent](https://github.com/fiftiesHousewife/under-test-airgap): what it refuses, its settings, its report

@@ -55,6 +55,23 @@ arrives the same way: a zero rate, 0%, for things like books?
 - **Before adding a bean** that could change what other beans get.
 - **Keep server tests** for what truly needs the server.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Weld, with weld-junit5 | 3.1 with 2.0 (`javax`), or 4.0 with 3.1 (`jakarta`) | 5.1 with 4.0 (`jakarta`), or 3.1 with 2.0 (`javax`) |
+
+AssertJ runs on Java 8 as it is.
+
+Weld 3 and weld-junit5 2 use the `javax.inject` and `javax.enterprise` names (CDI 2.0); later versions use `jakarta`.
+Moving from `javax` to `jakarta` is a migration of its own, best done with an automated recipe, apart from adding these
+tests.
+
 ## Find out more
 
 - [Weld](https://weld.cdi-spec.org) and [weld-testing](https://github.com/weld/weld-testing)

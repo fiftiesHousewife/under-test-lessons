@@ -68,7 +68,8 @@ public final class LessonFileChecks {
 
     /**
      * Every lesson with an example has an exercise whose answer the build checks: an {@code answer} package in its
-     * example, and an "Exercise" section in its README (docs/decisions/0029).
+     * example, and an "Exercise" section in its README (docs/decisions/0029). Its README also says what to use on
+     * older Java (docs/decisions/0028).
      */
     private static List<Problem> lessonsWithoutAnExercise(final Path root, final List<Lesson> lessons) {
         final List<Problem> problems = new ArrayList<>();
@@ -78,13 +79,19 @@ public final class LessonFileChecks {
                 if (!hasAnswerPackage(folder.resolve("example"))) {
                     problems.add(new Problem(folder.resolve("example"), "has no answer package for its exercise"));
                 }
-                final Path readme = folder.resolve("README.md");
-                if (!Files.isRegularFile(readme) || Text.read(readme).lines().noneMatch("## Exercise"::equals)) {
-                    problems.add(new Problem(readme, "has no \"## Exercise\" section"));
-                }
+                problems.addAll(missingSections(folder.resolve("README.md")));
             }
         }
         return problems;
+    }
+
+    /** The sections every lesson's README with an example must have. */
+    private static final List<String> SECTIONS = List.of("## Exercise", "## On older Java");
+
+    private static List<Problem> missingSections(final Path readme) {
+        final List<String> lines = Files.isRegularFile(readme) ? Text.read(readme).lines().toList() : List.of();
+        return SECTIONS.stream().filter(section -> !lines.contains(section))
+                .map(section -> new Problem(readme, "has no \"" + section + "\" section")).toList();
     }
 
     private static boolean hasAnswerPackage(final Path example) {

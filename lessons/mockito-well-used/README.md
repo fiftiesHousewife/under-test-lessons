@@ -74,6 +74,19 @@ be refused, and send nothing to the card.
   [Fake behind an interface](../fake-behind-an-interface/README.md).
 - **Old code that can't take a stand-in yet:** first [replace its hard-wired dependencies](../replacing-hard-wired-dependencies/README.md).
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Mockito | 4.11 | the current version |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [Mockito](https://site.mockito.org) and its [documentation](https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html),

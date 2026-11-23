@@ -78,6 +78,19 @@ the shared test database's table, typed in by hand, left that rule out, so it wo
 - **Keep the choice honest:** a check like `PortableSqlTest`, or the same repository tests tagged (see
   [JUnit tags](../junit-tags/README.md)) and run on H2 everywhere and on the real database in CI, where containers run.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| H2 | 2.2.224 | the current version |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [H2's features](https://h2database.com/html/features.html): in-memory databases and compatibility modes

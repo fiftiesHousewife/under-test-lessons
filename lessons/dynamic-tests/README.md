@@ -58,6 +58,18 @@ Records from the new web form arrive in lower case: `o'neill,sean,mr` must still
 - **Name each test after its file,** so a failure points straight at it.
 - **For cases written in the test itself,** [parameterised tests](../parameterised-tests/README.md) are simpler.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [JUnit](https://junit.org/) and its user guide's section on dynamic tests

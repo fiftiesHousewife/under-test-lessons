@@ -106,6 +106,20 @@ new version too, with a state for the new request.
   [recorded HTTP responses](../recorded-http-responses/README.md) with scheduled checks against the supplier's
   sandbox, or [responses checked against the OpenAPI document](../openapi-response-checks/README.md).
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| Pact JVM | 4.1 | 4.5 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [Pact's documentation](https://docs.pact.io), including

@@ -72,6 +72,22 @@ the test writes its own settings file and starts the service through the same en
   messages and clean them of personal data first (see [recorded HTTP responses](../recorded-http-responses/README.md)).
 - **Keep a few.** They are slower than unit tests; test the detailed rules in unit tests, and the edges here.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| H2 | 2.2.224 | the current version |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| REST Assured | 5.5 | 5.5 |
+| WireMock | 2.35 (`wiremock-jre8`) | the current version |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - WireMock's documentation on [verifying requests](https://wiremock.org/docs/verifying/)

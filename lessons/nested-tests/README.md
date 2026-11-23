@@ -51,6 +51,18 @@ Each nested class asks two questions. Ask a third in every situation: does a ref
 - **Ask the same questions in every situation,** so gaps show.
 - **Keep nesting shallow:** two or three levels at most.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [JUnit](https://junit.org/) and its user guide's section on nested tests

@@ -64,6 +64,18 @@ exactly one share, and leave every other share as it was.
   ones nobody thought of.
 - After a property finds a bug, keep its smallest failing input as an example test too.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ and jetCheck run on Java 8 as they are.
+
 ## Find out more
 
 - [jetCheck](https://github.com/JetBrains/jetCheck), its README and examples

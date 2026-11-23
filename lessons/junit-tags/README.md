@@ -71,6 +71,18 @@ The three runs above leave the answer out; `check` runs both its tests with a ta
 - **Container tests** have their own suite in these lessons (`integrationTest`); tags suit slow tests that share the
   ordinary test sources.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [JUnit](https://junit.org/) and its user guide's sections on [tagging and filtering](https://docs.junit.org/current/writing-tests/tagging-and-filtering.html)

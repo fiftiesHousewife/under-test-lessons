@@ -85,6 +85,20 @@ more, and the closing line must count and add up across every chunk.
   repository: anyone with the key can work back from a substitute by trying every account number.
 - **For Spring Batch jobs,** spring-batch-test runs a whole job, or a single step.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Datafaker | 1.9 | 1.9 |
+| Spring Batch | 4.3 | 4.3 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [Testing Spring Batch jobs](https://docs.spring.io/spring-batch/reference/testing.html), on spring-batch-test

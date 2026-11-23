@@ -83,6 +83,26 @@ path: the service answers 404 and never calls the loyalty provider, and the call
 - **Keep checked captures as approved files,** and change them only on purpose, in a reviewed pull request. Captures of
   real traffic need cleaning of personal data before they leave the environment they were made in.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| Jetty | 9.4 | 10 (`javax`) or 11 (`jakarta`) |
+| Logbook | 2.16 or 3.12 | 3.12 |
+
+AssertJ, ApprovalTests and Apache HttpClient 5 run on Java 8 as they are.
+
+Jetty 9.4 and 10 use the `javax.servlet` names, and Jetty 11 and later `jakarta.servlet`. Logbook 2 uses the
+`javax.servlet` names; Logbook 3 uses `jakarta`, with a `javax` jar beside it (classifier `javax`); Logbook 4 has only
+`jakarta`. Moving from `javax` to `jakarta` is a migration of its own, best done with an automated recipe, apart from
+adding these tests.
+
 ## Find out more
 
 - [Logbook](https://github.com/zalando/logbook): its integrations, phases, filters, formatters and writers

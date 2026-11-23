@@ -71,6 +71,20 @@ reads an empty town from it and says nothing is wrong.
 - **Keep recordings honest:** check them against the real service now and then. Between teams, use
   [contract tests](../CATALOGUE.md) instead.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| WireMock | 2.35 (`wiremock-jre8`) | the current version |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [WireMock](https://wiremock.org) and its documentation on [recording and playback](https://wiremock.org/docs/record-playback/)

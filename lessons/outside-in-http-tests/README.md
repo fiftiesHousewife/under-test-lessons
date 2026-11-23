@@ -54,6 +54,20 @@ Callers make mistakes too. One who sends `"night": 2`, misspelling the field, mu
 - **Run the service as it really starts,** with stand-ins (such as [recorded responses](../recorded-http-responses/README.md))
   only for the systems it calls.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| REST Assured | 5.5 | 5.5 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [REST Assured](https://rest-assured.io) and its user guide

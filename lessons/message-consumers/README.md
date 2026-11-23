@@ -79,6 +79,24 @@ ways, and each must be kept in the dead-letter queue, not skipped. Try one that 
 - **Next, Kafka:** a consumer that saves its position before processing loses messages on a failure; one that saves it
   after reads them again. The same test, on a real Kafka broker, finds the difference.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Mockito | 4.11 | the current version |
+| ActiveMQ Artemis | 2.19 | 2.38 |
+
+AssertJ runs on Java 8 as it is.
+
+For the `javax.jms` names, use `artemis-jms-server` and `artemis-jms-client` in place of the `artemis-jakarta-` ones;
+both are still published. Moving from `javax` to `jakarta` is a migration of its own, best done with an automated
+recipe, apart from adding these tests.
+
 ## Find out more
 
 - [Apache Artemis](https://artemis.apache.org), and its guides to

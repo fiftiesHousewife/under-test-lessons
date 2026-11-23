@@ -69,6 +69,18 @@ balance after it moved. A smaller approval, one per behaviour, says the same thi
   approving (ApprovalTests calls these scrubbers).
 - **One giant approval.** Several smaller approvals, one per behaviour, make a failure easier to understand.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ and ApprovalTests run on Java 8 as they are.
+
 ## Find out more
 
 - [ApprovalTests](https://approvaltests.com/) and its [Java library](https://github.com/approvals/ApprovalTests.Java)

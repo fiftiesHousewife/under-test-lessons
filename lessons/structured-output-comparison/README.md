@@ -74,6 +74,20 @@ can stop the clock and check the time exactly. Only the id, new on every run, ne
 - **Ignore only what must vary,** with placeholders that still check the field is there.
 - **Prefer a fixed clock** (`java.time.Clock`) where you can; use placeholders for what you can't control, such as ids.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| JsonUnit | 2.40 | 2.40 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [JSONUnit](https://github.com/lukas-krecan/JsonUnit) and [XMLUnit](https://www.xmlunit.org)

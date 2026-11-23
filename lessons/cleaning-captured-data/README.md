@@ -103,6 +103,19 @@ note, a shape today's day never shows, and the cleaning must catch that too.
   detector on every cleaned capture before it is kept.
 - **Treat the result as personal data:** internal repositories only, and the key out of the repository.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Datafaker | 1.9 | 1.9 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - The ICO's guidance on [pseudonymisation](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-sharing/anonymisation/pseudonymisation/)

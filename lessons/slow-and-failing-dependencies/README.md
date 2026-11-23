@@ -71,6 +71,20 @@ instead of an answer, then closes the connection.
 - With [recorded HTTP responses](../recorded-http-responses/README.md) for the answers a healthy service gives, and
   [checking the requests your code sends](../checking-outgoing-requests/README.md) for what goes out.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| Jackson | 2.x (`com.fasterxml.jackson`) | 2.x (`com.fasterxml.jackson`) |
+| WireMock | 2.35 (`wiremock-jre8`) | the current version |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - WireMock's documentation on [simulating faults](https://wiremock.org/docs/simulating-faults/): fixed and random

@@ -87,6 +87,21 @@ class LessonFileChecksTest {
     }
 
     @Test
+    void aLessonWithAnExampleSaysWhatToUseOnOlderJava() {
+        TestRepo.write(root, "lessons/feature-flags/example/build.gradle.kts", "plugins { }\n");
+        TestRepo.write(root, "lessons/feature-flags/README.md", "# Flags\n\n## Exercise\n\nTry it.\n");
+        final List<String> without = messages();
+        TestRepo.write(root, "lessons/feature-flags/README.md",
+                "# Flags\n\n## Exercise\n\nTry it.\n\n## On older Java\n\nJUnit 5.14.\n");
+
+        final List<String> with = messages();
+
+        assertAll(
+                () -> assertThat(without).contains("has no \"## On older Java\" section"),
+                () -> assertThat(with).noneMatch(message -> message.contains("older Java")));
+    }
+
+    @Test
     void aLessonMayTeachAJourneyStepByItsSkillAndTheSkillMustExist() {
         TestRepo.write(root, "lessons/feature-flags/lesson.yaml",
                 "id: feature-flags\ntitle: Flags\ntechniques: []\nskills: [draft-the-connection-list]\n");

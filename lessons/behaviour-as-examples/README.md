@@ -63,6 +63,18 @@ day, no receipt, the team's rules give store credit.
   as plain sentences (given, when, then). It adds a second language and a layer of glue code; a table is enough
   when developers keep the examples.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+
+AssertJ runs on Java 8 as it is.
+
 ## Find out more
 
 - [Parameterized classes and tests](https://docs.junit.org/current/writing-tests/parameterized-classes-and-tests.html), in the JUnit User Guide

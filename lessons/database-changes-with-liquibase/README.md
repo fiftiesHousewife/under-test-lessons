@@ -61,6 +61,21 @@ It writes out the SQL only: the real database is still the only way to know Post
 - **Check the licence:** Liquibase 5 uses the Functional Source License (FSL-1.1-ALv2), which becomes Apache 2.0 after
   two years; confirm your company accepts it. Flyway works the same way.
 
+## On older Java
+
+The example builds on Java 25 with current libraries
+([why](../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md)). On older Java,
+the technique is the same; use the last versions of its libraries built for that Java:
+
+| Library | On Java 8 | On Java 11 |
+|---|---|---|
+| JUnit | 5.14 | 5.14 |
+| H2 | 2.2.224 | the current version |
+| Liquibase | 4.33 | 4.33 |
+| Testcontainers | 1.21 | 1.21 |
+
+AssertJ and the PostgreSQL driver run on Java 8 as they are.
+
 ## Find out more
 
 - [Liquibase documentation](https://docs.liquibase.com)
