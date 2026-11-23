@@ -1,0 +1,7 @@
+$ ./gradlew :lessons:junit-tags:test -Pcode=answer
+DeliveryChargeTest > isFreeOnABasketOfExactlyFiftyPounds() PASSED
+DeliveryChargeTest > chargesOnABasketJustUnderFiftyPounds() PASSED
+StockCheckTest > refusesWhenThereIsNotEnoughStock() PASSED
+StockCheckTest > sendsWhenThereIsEnoughStock() PASSED
+LargeBasketAnswerTest > deliveryIsFreeOnALargeBasket() PASSED
+All 5 tests passed.

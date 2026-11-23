@@ -29,6 +29,21 @@ The example is a shop whose settings, shared by the whole program, say whether p
 
 Both test classes fix their order with `@TestMethodOrder`, so the leak shows the same way on every run.
 
+## Exercise
+
+The extension runs between tests, so it can't see harm done inside one. A customer who is sent a trade invoice and
+then buys at the till must still be charged VAT.
+
+1. Add a test class beside [`GuardedSettingsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/extensions/GuardedSettingsTest.java),
+   using the same extension, with one test that writes a trade invoice line and then a shop receipt line.
+2. Expect the receipt to say `Car seat  £120.00`. This test finds the leak whatever order the tests run in.
+3. Compare with the answer, [`ReceiptAfterInvoiceAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/extensions/answer/ReceiptAfterInvoiceAnswerTest.java),
+   which runs against today's trade invoice with:
+
+```bash
+./gradlew :lessons:junit-extensions:test -Pcode=answer   # today's trade invoice: 3 of 7 tests fail; the answer's receipt was "Car seat  £100.00 + VAT"
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/junit-extensions.html) (its source is [`media/junit-extensions.deck.html`](media/junit-extensions.deck.html)). Arrow keys

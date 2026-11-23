@@ -58,6 +58,8 @@ Say: Nested tests and display names have been part of JUnit since JUnit 5, in 20
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide on nested tests
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: ask every situation whether a refused step leaves the loan as it was; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on nested tests. The links on screen also take you to
-  this lesson's test code and examples, to run yourself.
+  this lesson's test code and examples, to run yourself. And try the exercise in the README: ask every situation one
+  more question, whether a refused step leaves the loan as it was.

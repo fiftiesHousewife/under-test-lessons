@@ -3,4 +3,5 @@ CapturedRefundTest > refundsOnlyTheReturnedMug() PASSED
 MockEverythingTest > refundsTheReturnedMug() PASSED
 OrderTest > returningOneOfTwoMugsRefundsOneMug() PASSED
 OrderTest > anItemNotOnTheOrderOrReturnedTooOftenIsRefused() PASSED
-All 4 tests passed.
+RefusedReturnAnswerTest > aKettleThatWasNeverBoughtSendsNoMoney() PASSED
+All 5 tests passed.

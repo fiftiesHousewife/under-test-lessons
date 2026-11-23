@@ -62,6 +62,8 @@ Say: JUnit 4 had runners and rules for this, such as the temporary folder rule. 
 - https://docs.junit.org/current/extensions/overview.html — JUnit's user guide on extensions
 - https://junit.org — JUnit
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: one test that writes a trade invoice and then a receipt; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on extensions. The links on screen also take you to this
-  lesson's test code and examples, to run yourself.
+  lesson's test code and examples, to run yourself. And try the exercise in the README: one test that writes a trade
+  invoice and then a shop receipt, which finds the leak whatever order the tests run in.

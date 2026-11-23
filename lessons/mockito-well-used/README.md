@@ -38,6 +38,22 @@ in its [`OrderBook`](example/src/main/java/io/github/fiftieshousewife/undertest/
 Mockito's agent is given to every test JVM by the build conventions, as Mockito's documentation asks on Java 21 and
 later, so the lesson's build only adds `mockito-core` as a test dependency.
 
+## Exercise
+
+The mock at the edge can also check that money did not leave the shop. Returning a kettle that was never bought must
+be refused, and send nothing to the card.
+
+1. Add a test class beside [`CapturedRefundTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mockito/CapturedRefundTest.java)
+   that refunds a `kettle` from order `A-1`, with the same fake order book and a mock of `CardPayments`.
+2. Expect the refusal `kettle is not on this order to return`, and check with Mockito's `verifyNoInteractions` that
+   the card was sent nothing.
+3. Compare with the answer, [`RefusedReturnAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mockito/answer/RefusedReturnAnswerTest.java),
+   which runs against today's refunds with:
+
+```bash
+./gradlew :lessons:mockito-well-used:test -Pcode=answer   # today's refunds: 1 of 5 tests fails, the captor test; the answer passes
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/mockito-well-used.html) (its source is [`media/mockito-well-used.deck.html`](media/mockito-well-used.deck.html)). Arrow keys

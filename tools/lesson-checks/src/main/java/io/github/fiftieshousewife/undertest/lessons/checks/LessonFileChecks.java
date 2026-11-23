@@ -39,6 +39,7 @@ public final class LessonFileChecks {
         problems.addAll(LessonTables.catalogue(root, lessons, techniques));
         problems.addAll(LessonTables.index(root, lessons));
         problems.addAll(lessonsWithoutATechnique(root, lessons));
+        problems.addAll(lessonsWithoutAnExercise(root, lessons));
         techniques.ifPresent(ids -> {
             problems.addAll(unknownTechniques(root, lessons, ids));
             problems.addAll(TechniqueLinks.check(root, ids));
@@ -60,6 +61,36 @@ public final class LessonFileChecks {
             }
         }
         return problems;
+    }
+
+    /**
+     * Every lesson with an example has an exercise whose answer the build checks: an {@code answer} package in its
+     * example, and an "Exercise" section in its README (docs/decisions/0029).
+     */
+    private static List<Problem> lessonsWithoutAnExercise(final Path root, final List<Lesson> lessons) {
+        final List<Problem> problems = new ArrayList<>();
+        for (final Lesson lesson : lessons) {
+            final Path folder = root.resolve("lessons/" + lesson.id());
+            if (Files.isDirectory(folder.resolve("example"))) {
+                if (!hasAnswerPackage(folder.resolve("example"))) {
+                    problems.add(new Problem(folder.resolve("example"), "has no answer package for its exercise"));
+                }
+                final Path readme = folder.resolve("README.md");
+                if (!Files.isRegularFile(readme) || Text.read(readme).lines().noneMatch("## Exercise"::equals)) {
+                    problems.add(new Problem(readme, "has no \"## Exercise\" section"));
+                }
+            }
+        }
+        return problems;
+    }
+
+    private static boolean hasAnswerPackage(final Path example) {
+        try (java.util.stream.Stream<Path> paths = Files.walk(example)) {
+            return paths.anyMatch(path -> Files.isDirectory(path) && "answer".equals(String.valueOf(path.getFileName()))
+                    && !path.toString().contains("/build/"));
+        } catch (java.io.IOException e) {
+            throw new java.io.UncheckedIOException(e);
+        }
     }
 
     private static List<Problem> unknownTechniques(final Path root, final List<Lesson> lessons, final Set<String> ids) {

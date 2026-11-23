@@ -70,6 +70,23 @@ class LessonFileChecksTest {
     }
 
     @Test
+    void aLessonWithAnExampleMustHaveACheckedExercise() {
+        TestRepo.write(root, "lessons/feature-flags/example/build.gradle.kts", "plugins { }\n");
+        final List<String> without = messages();
+        TestRepo.write(root, "lessons/feature-flags/example/src/test/java/demo/answer/DemoAnswerTest.java",
+                "class X { }\n");
+        TestRepo.write(root, "lessons/feature-flags/README.md", "# Flags\n\n## Exercise\n\nTry it.\n");
+
+        final List<String> with = messages();
+
+        assertAll(
+                () -> assertThat(without).contains("has no answer package for its exercise",
+                        "has no \"## Exercise\" section"),
+                () -> assertThat(with).noneMatch(message -> message.contains("exercise")
+                        || message.contains("Exercise")));
+    }
+
+    @Test
     void failsTheBuildOnAnyProblem() {
         TestRepo.write(root, "lessons/new-lesson/README.md", "# New\n");
 
@@ -85,5 +102,9 @@ class LessonFileChecksTest {
                 () -> assertThatThrownBy(LessonFileChecks::main).isInstanceOf(IllegalArgumentException.class),
                 () -> assertThatThrownBy(() -> LessonFileChecks.main(root.toString(), notTheToolkit))
                         .hasMessageContaining("not a toolkit checkout"));
+    }
+
+    private List<String> messages() {
+        return LessonFileChecks.check(root, Optional.empty()).stream().map(Problem::message).toList();
     }
 }

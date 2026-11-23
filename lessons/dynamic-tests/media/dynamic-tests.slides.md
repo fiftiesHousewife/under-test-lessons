@@ -60,6 +60,8 @@ Say: Dynamic tests have been part of JUnit since JUnit 5, in 2017. They make tes
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide on dynamic tests
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: add one example file, a record in lower case; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on dynamic tests. The links on screen also take you to
-  this lesson's test code and examples, to run yourself.
+  this lesson's test code and examples, to run yourself. And try the exercise in the README: add one example file,
+  a record in lower case, and see what today's formatter makes of it.

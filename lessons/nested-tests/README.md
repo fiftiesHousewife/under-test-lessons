@@ -22,6 +22,21 @@ The example is a loan: requested, then approved, then repaid.
 - [`LoanTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/nested/LoanTest.java)
   is the "after": one nested class per state, each asking "can it be approved?" and "can it be repaid?".
 
+## Exercise
+
+Each nested class asks two questions. Ask a third in every situation: does a refused step leave the loan as it was?
+
+1. In [`LoanTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/nested/LoanTest.java), add a
+   test to each nested class that tries the step that should be refused, then checks the loan's state hasn't changed.
+2. Run `./gradlew :lessons:nested-tests:test -Pcode=today`: one of the three fails, and its message names the state
+   today's loan was left in.
+3. Compare with the answer, [`RefusedStepAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/nested/answer/RefusedStepAnswerTest.java),
+   which runs against today's loan with:
+
+```bash
+./gradlew :lessons:nested-tests:test -Pcode=answer   # today's loan: 2 of 13 tests fail; the answer expected REQUESTED but was REPAID
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) (its source is [`media/nested-tests.deck.html`](media/nested-tests.deck.html)). Arrow keys

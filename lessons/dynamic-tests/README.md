@@ -24,6 +24,22 @@ The example turns customer records such as `O'BRIEN,PATRICK,MR` into names for l
 - [`EachExampleTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dynamic/EachExampleTest.java)
   is the "after": a test factory, one named test per file.
 
+## Exercise
+
+Records from the new web form arrive in lower case: `o'neill,sean,mr` must still become `Mr Sean O'Neill`.
+
+1. Add a file `lower-case.txt` to the [examples folder](example/src/test/resources/examples), with that record on its
+   first line and the name expected on its second.
+2. Run `./gradlew :lessons:dynamic-tests:test -Pcode=today`: one more test, named after your file, fails, and shows a
+   bug none of the examples found: today's formatter leaves a lower-case record in lower case.
+3. Compare with the answer, [`LowerCaseAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/dynamic/answer/LowerCaseAnswerTest.java),
+   which makes its tests from [its own folder](example/src/test/resources/answer), and runs against today's formatter
+   with:
+
+```bash
+./gradlew :lessons:dynamic-tests:test -Pcode=answer   # today's formatter: 5 of 7 tests fail; lower-case.txt expected "Mr Sean O'Neill" but was "mr sean o'neill"
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/dynamic-tests.html) (its source is [`media/dynamic-tests.deck.html`](media/dynamic-tests.deck.html)). Arrow keys

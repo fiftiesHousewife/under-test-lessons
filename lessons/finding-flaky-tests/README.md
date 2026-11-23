@@ -32,6 +32,21 @@ machine is, and the fix is in the tests.
 The busy machine is made repeatable for the lesson: the slow message is always the third, so the failure is the same
 on every run. Real flaky tests are rarely so polite; that is why five runs, not one, are the gate.
 
+## Exercise
+
+A test often waits for more than one thing. Place two orders at once and wait for both confirmations, with a check
+that names what was missing if time runs out.
+
+1. Add a test class beside [`WaitingTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flaky/WaitingTest.java),
+   repeated 5 times, that places two orders with one [`OrderDesk`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/flaky/OrderDesk.java).
+2. Wait with Awaitility's `untilAsserted`, around an AssertJ check that the mail server sent both confirmations.
+3. Compare with the answer, [`TwoOrdersAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flaky/answer/TwoOrdersAnswerTest.java),
+   which runs on today's busy machine with:
+
+```bash
+./gradlew :lessons:finding-flaky-tests:test -Pcode=answer   # a busy machine: 1 of 15 runs fails, the sleeping test's third; none of the answer's 5 runs fails
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/finding-flaky-tests.html) (its source is [`media/finding-flaky-tests.deck.html`](media/finding-flaky-tests.deck.html)). Arrow keys

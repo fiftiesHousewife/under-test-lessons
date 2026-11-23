@@ -1,0 +1,11 @@
+$ ./gradlew :lessons:mockito-well-used:test -Pcode=answer
+CapturedRefundTest > refundsOnlyTheReturnedMug() FAILED
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [refund sent]
+    expected: Refund[card=card ending 4242, pence=1250]
+     but was: Refund[card=card ending 4242, pence=3750]
+MockEverythingTest > refundsTheReturnedMug() PASSED
+OrderTest > returningOneOfTwoMugsRefundsOneMug() PASSED
+OrderTest > anItemNotOnTheOrderOrReturnedTooOftenIsRefused() PASSED
+RefusedReturnAnswerTest > aKettleThatWasNeverBoughtSendsNoMoney() PASSED
+5 tests completed, 1 failed

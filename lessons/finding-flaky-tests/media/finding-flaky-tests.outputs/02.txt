@@ -9,4 +9,9 @@ WaitingTest > the confirmation is sent > run 2 of 5 PASSED
 WaitingTest > the confirmation is sent > run 3 of 5 PASSED
 WaitingTest > the confirmation is sent > run 4 of 5 PASSED
 WaitingTest > the confirmation is sent > run 5 of 5 PASSED
-All 10 tests passed.
+TwoOrdersAnswerTest > both confirmations are sent > run 1 of 5 PASSED
+TwoOrdersAnswerTest > both confirmations are sent > run 2 of 5 PASSED
+TwoOrdersAnswerTest > both confirmations are sent > run 3 of 5 PASSED
+TwoOrdersAnswerTest > both confirmations are sent > run 4 of 5 PASSED
+TwoOrdersAnswerTest > both confirmations are sent > run 5 of 5 PASSED
+All 15 tests passed.

@@ -1,0 +1,24 @@
+$ ./gradlew :lessons:dynamic-tests:test -Pcode=answer
+AllExamplesInOneTest > everyExampleFormatsAsExpected() FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Mr Patrick O'Brien"
+     but was: "Mr Patrick O'brien"
+EachExampleTest > eachExampleFormatsAsExpected() > apostrophe.txt FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Mr Patrick O'Brien"
+     but was: "Mr Patrick O'brien"
+EachExampleTest > eachExampleFormatsAsExpected() > double-barrelled.txt FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Ms Anna Smith-Jones"
+     but was: "Ms Anna Smith-jones"
+EachExampleTest > eachExampleFormatsAsExpected() > hyphenated-first-name.txt FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Mrs Mary-Ann Lee"
+     but was: "Mrs Mary-ann Lee"
+EachExampleTest > eachExampleFormatsAsExpected() > plain-name.txt PASSED
+EachExampleTest > eachExampleFormatsAsExpected() > several-words.txt PASSED
+LowerCaseAnswerTest > lowerCaseRecordsFormatAsExpected() > lower-case.txt FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Mr Sean O'Neill"
+     but was: "mr sean o'neill"
+7 tests completed, 5 failed

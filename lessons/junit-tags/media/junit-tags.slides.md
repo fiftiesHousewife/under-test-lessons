@@ -64,6 +64,8 @@ Say: JUnit 4 had categories for this, and TestNG had test groups. JUnit 5, in 20
 - https://docs.junit.org/current/writing-tests/tagging-and-filtering.html — JUnit's user guide on tags
 - https://docs.gradle.org/current/userguide/java_testing.html#test_grouping — Gradle's guide to test grouping
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: tag one slow test in a class of quick ones; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on tagging and filtering, and Gradle's guide to grouping
-  tests. The links on screen also take you to this lesson's test code and examples, to run yourself.
+  tests. The links on screen also take you to this lesson's test code and examples, to run yourself. And try the
+  exercise in the README: tag just one slow test in a class of quick ones, so the quick task still runs the rest.

@@ -1,0 +1,16 @@
+$ ./gradlew :lessons:junit-extensions:test -Pcode=answer
+GuardedSettingsTest > tradeInvoiceShowsPriceWithoutVat() FAILED
+    java.lang.AssertionError: The test left a shop setting changed: prices.include.vat was true, now false
+GuardedSettingsTest > shopReceiptShowsPriceWithVat() PASSED
+HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() PASSED
+HandSetUpTest > shopReceiptShowsPriceWithVat() FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Car seat  £120.00"
+     but was: "Car seat  £100.00 + VAT"
+PricesTest > aCreditIsWrittenWithItsSignInFront() PASSED
+PricesTest > vatIsRoundedToTheNearestPenny() PASSED
+ReceiptAfterInvoiceAnswerTest > aReceiptAfterATradeInvoiceStillIncludesVat() FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: "Car seat  £120.00"
+     but was: "Car seat  £100.00 + VAT"
+7 tests completed, 3 failed

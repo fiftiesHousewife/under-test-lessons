@@ -9,8 +9,13 @@ dependencies {
     testImplementation(libs.awaitility)
 }
 
+// `-Pcode=answer` runs the busy machine with the exercise's answer (the answer package), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*.answer.*") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

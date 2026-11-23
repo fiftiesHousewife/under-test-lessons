@@ -47,3 +47,24 @@ val slowTest = tasks.register<Test>("slowTest") {
 tasks.check {
     dependsOn(slowTest)
 }
+
+// The exercise's answer (the answer package): `./gradlew :lessons:junit-tags:test -Pcode=answer` keeps the tagged
+// build and adds the answer, so the quick task runs its quick test and leaves out the one tagged slow. The three runs
+// above leave the answer out, so they show what they always did; check runs it with a task of its own.
+val answerRun = providers.gradleProperty("code").getOrElse("fixed") == "answer"
+if (!answerRun) {
+    tasks.test { filter { excludeTestsMatching("*.answer.*") } }
+    slowTest.configure { filter { excludeTestsMatching("*.answer.*") } }
+}
+val answerTest = tasks.register<Test>("answerTest") {
+    description = "Runs the exercise's answer, quick and slow tests alike."
+    group = "verification"
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+    useJUnitPlatform()
+    filter { includeTestsMatching("*.answer.*") }
+    shouldRunAfter(slowTest)
+}
+tasks.check {
+    dependsOn(answerTest)
+}

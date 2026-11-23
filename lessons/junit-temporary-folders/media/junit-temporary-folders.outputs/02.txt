@@ -3,4 +3,5 @@ TempDirTest > writesOneLinePerOrder(Path) PASSED
 TempDirTest > leavesOutCancelledOrders(Path) PASSED
 FixedFolderTest > writesOneLinePerOrder() PASSED
 FixedFolderTest > leavesOutCancelledOrders() PASSED
-All 4 tests passed.
+AllCancelledAnswerTest > aDayOfCancelledOrdersWritesJustTheHeader(Path) PASSED
+All 5 tests passed.

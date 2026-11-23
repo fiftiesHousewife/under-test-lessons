@@ -1242,6 +1242,7 @@ items:
     blocked_by:
       - "one-switch-name-in-every-lesson"
     decision_record: "docs/decisions/0029-every-lesson-has-a-checked-exercise.md"
+    status: "done"
   - key: "readmes-say-what-to-use-on-older-java"
     type: "deliverable"
     title: "Each README says what to use on older Java"

@@ -9,4 +9,7 @@ FlatLoanTest > approvingRequestedLoanApprovesIt() PASSED
 FlatLoanTest > repayingRepaidLoanIsRefused() PASSED
 FlatLoanTest > newLoanIsRequested() PASSED
 FlatLoanTest > repayingApprovedLoanRepaysIt() PASSED
-All 10 tests passed.
+A loan, after a refused step > when approved > is still approved PASSED
+A loan, after a refused step > when requested > is still requested PASSED
+A loan, after a refused step > when repaid > is still repaid PASSED
+All 13 tests passed.

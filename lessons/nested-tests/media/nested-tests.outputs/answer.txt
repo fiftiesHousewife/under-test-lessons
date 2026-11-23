@@ -1,0 +1,20 @@
+$ ./gradlew :lessons:nested-tests:test -Pcode=answer
+FlatLoanTest > approvingRequestedLoanApprovesIt() PASSED
+FlatLoanTest > repayingRepaidLoanIsRefused() PASSED
+FlatLoanTest > newLoanIsRequested() PASSED
+FlatLoanTest > repayingApprovedLoanRepaysIt() PASSED
+A loan > when requested > can be approved PASSED
+A loan > when requested > cannot be repaid FAILED
+    java.lang.AssertionError:
+    Expecting code to raise a throwable.
+A loan > when repaid > cannot be repaid again PASSED
+A loan > when repaid > cannot be approved PASSED
+A loan > when approved > cannot be approved again PASSED
+A loan > when approved > can be repaid PASSED
+A loan, after a refused step > when approved > is still approved PASSED
+A loan, after a refused step > when requested > is still requested FAILED
+    org.opentest4j.AssertionFailedError:
+    expected: REQUESTED
+     but was: REPAID
+A loan, after a refused step > when repaid > is still repaid PASSED
+13 tests completed, 2 failed

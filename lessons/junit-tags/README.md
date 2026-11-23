@@ -33,6 +33,26 @@ are the same both ways, and `-Pcode=today` keeps today's build, whose test task 
 - [The build file](example/build.gradle.kts) gives the quick task `excludeTags("slow")`, and registers `slowTest`
   with `includeTags("slow")`, which `check` depends on.
 
+## Exercise
+
+A tag can go on one test, not only on a class. A quick test class gains a test that needs the warehouse's test
+system: tag just that test, so the quick task still runs the rest of the class.
+
+1. Add a test class beside [`DeliveryChargeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tags/DeliveryChargeTest.java)
+   with a quick test that delivery is free on a £120 basket, and a second test that starts
+   [`WarehouseTestSystem`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tags/WarehouseTestSystem.java)
+   to check the warehouse can send that basket.
+2. Put [`@Slow`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tags/Slow.java) on the second
+   test only, and run the quick task: the first test runs, the second is left for the slow task.
+3. Compare with the answer, [`LargeBasketAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tags/answer/LargeBasketAnswerTest.java),
+   which the build adds to the tagged build with:
+
+```bash
+./gradlew :lessons:junit-tags:test -Pcode=answer   # with tags and the answer: all 5 quick tests pass, the answer's slow test left out
+```
+
+The three runs above leave the answer out; `check` runs both its tests with a task of its own, `answerTest`.
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/junit-tags.html) (its source is [`media/junit-tags.deck.html`](media/junit-tags.deck.html)). Arrow keys

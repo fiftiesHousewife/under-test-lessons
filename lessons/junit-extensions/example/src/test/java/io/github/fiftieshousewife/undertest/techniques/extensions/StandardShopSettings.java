@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 /** A JUnit extension: the shop's standard settings before each test, put back after it, and a check nothing leaked. */
-final class StandardShopSettings implements BeforeEachCallback, AfterEachCallback {
+public final class StandardShopSettings implements BeforeEachCallback, AfterEachCallback {
 
     private static final Map<String, String> STANDARD =
             Map.of(ShopSettings.PRICES_INCLUDE_VAT, "true", ShopSettings.VAT_PERCENT, "20");

@@ -6,8 +6,13 @@ plugins {
 // JUnit's @Nested comes with the build conventions' JUnit, so there is nothing to add.
 //   ./gradlew :lessons:nested-tests:test -Pcode=today   today's loan: a case the flat tests never covered fails
 //   ./gradlew :lessons:nested-tests:test                the fixed loan: every situation behaves
+// `-Pcode=answer` runs today's loan with the exercise's answer (the answer package), which -Pcode=today leaves out.
+val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
-    systemProperty("code", providers.gradleProperty("code").getOrElse("fixed"))
+    systemProperty("code", code)
+    if (code == "today") {
+        filter { excludeTestsMatching("*.answer.*") }
+    }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 

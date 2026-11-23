@@ -1,0 +1,9 @@
+$ ./gradlew :lessons:junit-temporary-folders:test -Pcode=answer
+FixedFolderTest > writesOneLinePerOrder() PASSED
+FixedFolderTest > leavesOutCancelledOrders() PASSED
+TempDirTest > writesOneLinePerOrder(Path) PASSED
+TempDirTest > leavesOutCancelledOrders(Path) FAILED
+    java.lang.AssertionError: No orders.csv was written
+AllCancelledAnswerTest > aDayOfCancelledOrdersWritesJustTheHeader(Path) FAILED
+    java.lang.AssertionError: No orders.csv was written
+5 tests completed, 2 failed

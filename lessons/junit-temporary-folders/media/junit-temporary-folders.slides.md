@@ -62,6 +62,8 @@ Say: JUnit 4 point 7 added rules, among them the temporary folder rule. Temp dir
 - https://docs.junit.org/current/writing-tests/built-in-extensions.html — JUnit's user guide on @TempDir
 - https://junit.org — JUnit
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: export a day when every order was cancelled; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on its built-in extensions, which covers temporary folders.
-  The links on screen also take you to this lesson's test code and examples, to run yourself.
+  The links on screen also take you to this lesson's test code and examples, to run yourself. And try the exercise in
+  the README: export a day when every order was cancelled, in a folder of its own, and expect just the header.

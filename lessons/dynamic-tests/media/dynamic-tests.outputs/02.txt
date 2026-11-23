@@ -5,4 +5,5 @@ EachExampleTest > eachExampleFormatsAsExpected() > double-barrelled.txt PASSED
 EachExampleTest > eachExampleFormatsAsExpected() > hyphenated-first-name.txt PASSED
 EachExampleTest > eachExampleFormatsAsExpected() > plain-name.txt PASSED
 EachExampleTest > eachExampleFormatsAsExpected() > several-words.txt PASSED
-All 6 tests passed.
+LowerCaseAnswerTest > lowerCaseRecordsFormatAsExpected() > lower-case.txt PASSED
+All 7 tests passed.

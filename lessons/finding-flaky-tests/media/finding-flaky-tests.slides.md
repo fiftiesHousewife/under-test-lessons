@@ -71,6 +71,8 @@ Say: Awaitility was written by Johan Haleby, and first released in 2010. Martin 
 - https://martinfowler.com/articles/nonDeterminism.html — Eradicating Non-Determinism in Tests, by Martin Fowler
 - https://testing.googleblog.com/2016/05/flaky-tests-at-google-and-how-we.html — Flaky Tests at Google, by John Micco
 - {lessons-repo} — run this lesson yourself: its test code and examples
+- Exercise: place two orders and wait for both confirmations; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Awaitility's project page and its usage guide, and Martin Fowler's article on non
   deterministic tests. The links on screen also take you to this lesson's test code and examples, to run yourself.
+  And try the exercise in the README: place two orders at once, and wait for both confirmations, 5 clean runs in a row.

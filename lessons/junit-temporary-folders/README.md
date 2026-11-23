@@ -34,6 +34,21 @@ folder's file is also still there after the run; the temporary folders are gone.
 `@TempDir` deletes the folder after the test by default; `@TempDir(cleanup = CleanupMode.ON_SUCCESS)` keeps it when the
 test fails, so you can look at what was written, and `NEVER` always keeps it.
 
+## Exercise
+
+The accounts system expects `orders.csv` every day, even a day when every order was cancelled: then it should hold
+just the header.
+
+1. Add a test class beside [`TempDirTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tempfolders/TempDirTest.java)
+   with one test, given its own folder with `@TempDir`, that exports a single cancelled order.
+2. Expect the file to hold only `order,total`, read with [`ExportFile`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tempfolders/ExportFile.java).
+3. Compare with the answer, [`AllCancelledAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/tempfolders/answer/AllCancelledAnswerTest.java),
+   which runs against today's export with:
+
+```bash
+./gradlew :lessons:junit-temporary-folders:test -Pcode=answer   # today's export: 2 of 5 tests fail, the answer too: "No orders.csv was written"
+```
+
 ## Watch it, or present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/junit-temporary-folders.html) (its source is [`media/junit-temporary-folders.deck.html`](media/junit-temporary-folders.deck.html)). Arrow keys
