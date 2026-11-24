@@ -187,6 +187,9 @@ def write_page(items, by_key, path):
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
+    for option in ("--page", "--file"):
+        if option in sys.argv and sys.argv.index(option) + 1 >= len(sys.argv):
+            sys.exit(f"{option} needs a path after it, for example {option} docs/BACKLOG.md")
     repo, apply = sys.argv[1], "--apply" in sys.argv
     seed = REPO_ROOT / sys.argv[sys.argv.index("--file") + 1] if "--file" in sys.argv else DEFAULT_SEED
     items = parse_seed(seed)
