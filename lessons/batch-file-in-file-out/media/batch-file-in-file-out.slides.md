@@ -13,10 +13,12 @@ keyed hash, February 1997); Java Security Standard Algorithm Names (HmacSHA256).
 - The bank expects a closing line with the count and total: 6, and 427.14
 - Today's job leaves it out, and the tests of each piece all pass
 Picture: bug
-Say: Here is the problem. A day of 6 payments, 427 pounds 14 in all, goes to the bank as a settlement file. The bank
-  checks the file's layout, including a closing line with the number of payments and their total. Today's nightly
-  job leaves that closing line out. Yet its tests pass. They check one line read, and one line written, and never
-  look at the whole file.
+Say: This lesson is about testing a batch job whole: a file goes in, a file comes out, and the test checks the whole
+  file. We'll see a settlement file that loses its closing line, and how a JUnit test with its own folder catches it.
+  [pause 1s] Here is the problem. A day of 6 payments, 427 pounds 14 in all, goes to the bank as a settlement file. The
+  bank checks the file's layout, including a closing line with the number of payments and their total. Today's nightly
+  job leaves that closing line out. Yet its tests pass. They check one line read, and one line written, and never look
+  at the whole file.
 
 ## intro: Our example: a nightly settlement file
 - Each night, a Spring Batch job reads the day's payments

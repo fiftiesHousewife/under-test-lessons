@@ -15,10 +15,12 @@ database-unit-tests technique (an in-memory database is not evidence of what a d
 - It holds 2 old invoices, and every row earlier runs left behind
 - So the tests can only check "more than 0", and the bug hides
 Picture: bug
-Say: Here is the problem. A new shop's first invoice should be number 1. The code gives it number 0. And the tests
-  pass. They share one test database, set up by hand long ago, and it is never empty. It holds 2 old invoices, and
-  every row that earlier runs left behind. So the tests can't know what the next number should be. They only check
-  that it's more than 0, and the bug hides behind the leftovers.
+Say: This lesson is about in-memory databases: when one is enough, and when it isn't. We'll see invoice numbers that go
+  wrong between tests, how H2 gives each test a fresh database, and the signs that you need the real database instead.
+  [pause 1s] Here is the problem. A new shop's first invoice should be number 1. The code gives it number 0. And the
+  tests pass. They share one test database, set up by hand long ago, and it is never empty. It holds 2 old invoices, and
+  every row that earlier runs left behind. So the tests can't know what the next number should be. They only check that
+  it's more than 0, and the bug hides behind the leftovers.
 
 ## intro: Our example: a shop's invoice numbers
 - Every invoice the shop sends gets its own number

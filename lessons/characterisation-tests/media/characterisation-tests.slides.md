@@ -9,10 +9,12 @@ characterisation tests.
 - A tidier rewrite drops a £25 fee nobody knew about
 - The closing balance moves from £2,030 to £2,055, and the test still passes
 Picture: bug
-Say: Here is the problem. A bank's statement printer has run for years, and its only test checks that something was
-  printed. Someone rewrites it to make it tidier. The rewrite quietly drops a 25 pound overdraft fee that the old
-  printer charged, and that nobody remembered. On a test month, the closing balance moves from 2030 pounds to 2055.
-  And the test still passes.
+Say: This lesson is about characterisation tests: tests that record what old code does today, right or wrong, so any
+  change to it is noticed. We'll see a tidy rewrite that quietly changes a bank statement, and how ApprovalTests records
+  the whole statement and shows the difference. [pause 1s] Here is the problem. A bank's statement printer has run for
+  years, and its only test checks that something was printed. Someone rewrites it to make it tidier. The rewrite quietly
+  drops a 25 pound overdraft fee that the old printer charged, and that nobody remembered. On a test month, the closing
+  balance moves from 2030 pounds to 2055. And the test still passes.
 
 ## intro: Our example: a bank statement printer
 - Prints a month of transactions with a running balance

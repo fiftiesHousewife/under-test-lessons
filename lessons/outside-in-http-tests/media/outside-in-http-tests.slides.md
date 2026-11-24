@@ -8,10 +8,12 @@ versions on Maven Central, as com.jayway.restassured, published December 2010); 
 - The refusal is hidden in the body, so a caller thinks the room is booked
 - Its tests call the price rules directly, and all pass
 Picture: bug
-Say: Here is the problem. A hotel's booking service is asked to book a room for no nights. It refuses, but it answers
-  with the status code 200 OK, which tells the caller all is well. The refusal is hidden in the body of the answer, so
-  a caller may think the room is booked. And the service's tests pass, because they call its price rules directly
-  and never see the answer a caller gets.
+Say: This lesson is about outside-in tests of an HTTP service: tests that call it the way a real caller does. We'll see
+  a service that says yes when it has refused, and how REST Assured checks both the status and the body. [pause 1s] Here
+  is the problem. A hotel's booking service is asked to book a room for no nights. It refuses, but it answers with the
+  status code 200 OK, which tells the caller all is well. The refusal is hidden in the body of the answer, so a caller
+  may think the room is booked. And the service's tests pass, because they call its price rules directly and never see
+  the answer a caller gets.
 
 ## intro: Our example: a hotel booking service
 - Callers book a room for some nights: a night costs £90, so 2 nights cost £180

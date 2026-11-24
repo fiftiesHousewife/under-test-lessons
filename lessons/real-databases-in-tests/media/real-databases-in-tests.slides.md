@@ -9,10 +9,12 @@ last in ascending order, unless NULLS FIRST is given); h2database.com (H2 sorts 
 - On H2, the in-memory database the tests use, Bob comes first, and the test passes
 - On PostgreSQL, the database production uses, a missing date sorts last, so Bob comes last
 Picture: bug
-Say: Here is the problem. A sales team calls customers who never ordered first. Bob has never ordered, so Bob should
-  be first. The tests run the query on H2, a database held in memory, and there Bob comes first, so the test
-  passes. But production runs PostgreSQL. There, a missing date sorts after every real one, so Bob comes last. The
-  test checked a different database, so it checked a different program.
+Say: This lesson is about using real databases in tests, started in a throwaway container. We'll see a query that sorts
+  differently on the real database, and how Testcontainers starts PostgreSQL for the test. [pause 1s] Here is the
+  problem. A sales team calls customers who never ordered first. Bob has never ordered, so Bob should be first. The
+  tests run the query on H2, a database held in memory, and there Bob comes first, so the test passes. But production
+  runs PostgreSQL. There, a missing date sorts after every real one, so Bob comes last. The test checked a different
+  database, so it checked a different program.
 
 ## intro: Our example: who to call first
 - Customers, and the date of their last order

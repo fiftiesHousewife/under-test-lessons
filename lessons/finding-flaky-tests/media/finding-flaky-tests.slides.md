@@ -11,11 +11,13 @@ Mitigate Them", Google Testing Blog, May 2016.
 - In busy continuous integration, every third email waits 600 milliseconds
 - Run 5 times, it fails on run 3 only: nothing changed, so people just rerun it
 Picture: bug
-Say: Here is the problem. The test places an order, sleeps for 200 milliseconds, and then checks that the
-  confirmation email went. In continuous integration, the shared build that runs every test whenever someone pushes a
-  change, the machines are busy, and every third email waits 600 milliseconds. So, run 5 times, the
-  test passes twice, fails on its third run, and passes again. Nothing changed. A test like this is called flaky, and
-  every flaky failure teaches people to rerun the build, and then to ignore real failures too.
+Say: This lesson is about flaky tests: tests that pass on one run and fail on the next. We'll see how to find one by
+  running it many times, and how Awaitility waits for slow work instead of sleeping for a fixed time. [pause 1s] Here is
+  the problem. The test places an order, sleeps for 200 milliseconds, and then checks that the confirmation email went.
+  In continuous integration, the shared build that runs every test whenever someone pushes a change, the machines are
+  busy, and every third email waits 600 milliseconds. So, run 5 times, the test passes twice, fails on its third run,
+  and passes again. Nothing changed. A test like this is called flaky, and every flaky failure teaches people to rerun
+  the build, and then to ignore real failures too.
 
 ## intro: Our example: order confirmations
 - A shop's order desk takes an order and returns at once

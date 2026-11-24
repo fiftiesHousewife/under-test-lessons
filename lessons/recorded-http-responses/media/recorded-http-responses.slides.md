@@ -11,11 +11,13 @@ for signing data); Java Security Standard Algorithm Names (HmacSHA256, which eve
 - Nobody saw: the only test needs the real service and an account, so it is skipped
 - And recordings saved as recorded keep a person's name, email address and password token
 Picture: bug
-Say: Here is the problem. A shop's postcode client works for a postcode the supplier knows. Ask for one it doesn't
-  know, and the client hands back an empty town, instead of saying there is none. When the supplier is down, it
-  answers 503, with a web page. The client tries to read that page as data, and fails with a confusing error. Nobody
-  saw either one, because the only test needs the real service and an account, so it is skipped. And when we record
-  the supplier's answers to test with, the files keep a person's name, email address and password token.
+Say: This lesson is about recorded HTTP responses: a supplier's real answers, saved and replayed in tests. We'll see a
+  postcode client that trips over the rare answers, and how WireMock replays them on demand. [pause 1s] Here is the
+  problem. A shop's postcode client works for a postcode the supplier knows. Ask for one it doesn't know, and the client
+  hands back an empty town, instead of saying there is none. When the supplier is down, it answers 503, with a web page.
+  The client tries to read that page as data, and fails with a confusing error. Nobody saw either one, because the only
+  test needs the real service and an account, so it is skipped. And when we record the supplier's answers to test with,
+  the files keep a person's name, email address and password token.
 
 ## intro: Our example: a postcode lookup
 - A supplier's web service turns a postcode into a town

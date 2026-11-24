@@ -10,10 +10,12 @@ data types (no TINYINT; SMALLINT is the smallest integer type).
 - PostgreSQL, the database production uses, has no TINYINT, and refuses it
 - A failed change stops a release part way through, on production data
 Picture: bug
-Say: Here is the problem. A shop adds a loyalty level to each customer. The change asks for a column of a very small
-  number type, called tiny int. The developers' in-memory database, H2, accepts it, and the test passes. But
-  production runs PostgreSQL, which has no such type, and refuses the change. A failed change stops a release part
-  way through, on production data. And changes are hard to undo once they've run.
+Say: This lesson is about testing database changes, written as a Liquibase changelog and run on the real database inside
+  a test. We'll see a change that works on H2 and fails on production, and how Liquibase and Testcontainers catch it
+  before it ships. [pause 1s] Here is the problem. A shop adds a loyalty level to each customer. The change asks for a
+  column of a very small number type, called tiny int. The developers' in-memory database, H2, accepts it, and the test
+  passes. But production runs PostgreSQL, which has no such type, and refuses the change. A failed change stops a
+  release part way through, on production data. And changes are hard to undo once they've run.
 
 ## intro: Our example: a loyalty level
 - Customers are stored in a customers table

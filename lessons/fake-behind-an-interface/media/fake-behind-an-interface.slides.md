@@ -9,10 +9,12 @@ interface.
 - The code commits the queue too early, so the fraud check message is never delivered
 - The mock test passes: every call it lists was made
 Picture: bug
-Say: Here is the problem. A customer places an order of £150. It should go to the warehouse, and, because it is £100
-  or more, for a fraud check as well. But the code commits the queue too early, before it sends the fraud check
-  message. So that message is never delivered. And the test passes. It uses a mock, a stand-in that only records the
-  calls made. Every call the test lists was made, so it can't see that the message never arrived.
+Say: This lesson is about putting a fake behind an interface: a small, working stand-in for something the code talks to
+  a lot. We'll see an order that never reaches the fraud check, and a fake message queue that behaves the way the real
+  one does. [pause 1s] Here is the problem. A customer places an order of £150. It should go to the warehouse, and,
+  because it is £100 or more, for a fraud check as well. But the code commits the queue too early, before it sends the
+  fraud check message. So that message is never delivered. And the test passes. It uses a mock, a stand-in that only
+  records the calls made. Every call the test lists was made, so it can't see that the message never arrived.
 
 ## intro: Our example: orders on a message queue
 - Every order is sent to the warehouse

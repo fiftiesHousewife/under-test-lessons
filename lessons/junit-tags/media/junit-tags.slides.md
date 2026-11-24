@@ -10,9 +10,11 @@ includeTags and excludeTags in useJUnitPlatform; a test task of your own, given 
 - The slow ones start the warehouse's test system, which takes 2 seconds
 - Every test run waits for them, so people stop running the tests
 Picture: bug
-Say: Here is the problem. The code of an online shop has 4 quick tests, and 2 slow ones. The slow ones start the
-  warehouse's test system first, which takes 2 seconds. Every test run waits for them, even after the smallest change.
-  And when every run is slow, people stop running the tests.
+Say: This lesson is about JUnit tags: labels that let the build run the fast tests first, and the slow ones apart. We'll
+  see every change wait for the slow tests, and how one label and the build fix it. [pause 1s] Here is the problem. The
+  code of an online shop has 4 quick tests, and 2 slow ones. The slow ones start the warehouse's test system first,
+  which takes 2 seconds. Every test run waits for them, even after the smallest change. And when every run is slow,
+  people stop running the tests.
 
 ## intro: Our example: a shop's stock check
 - Before promising an order, the shop asks the warehouse: is there enough?

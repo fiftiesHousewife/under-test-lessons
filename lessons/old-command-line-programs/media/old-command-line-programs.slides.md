@@ -14,10 +14,12 @@ variables, standard input and output work; its SystemExit fails with Unsupported
 - Its 3 tests check pieces, such as reading one line, never the program
 - Run the program in a test, and its call to System.exit ends the whole test run
 Picture: bug
-Say: Here is the problem. Every night, a script runs a payments import, and reads the code the program ends with,
-  its exit code. 0 means done. 1 means a person must look. The program has 3 tests, but they check pieces, such as
-  reading one line. None runs the whole program, so nothing checks what it prints, or how it ends. And when a test
-  does run it, the program's call to end itself ends the whole test run, and the tests after it never run.
+Say: This lesson is about testing an old command-line program whole: its settings, its input, its output and the code it
+  ends with. We'll see a nightly import that's never tested whole, and how System Stubs runs the whole program inside a
+  test. [pause 1s] Here is the problem. Every night, a script runs a payments import, and reads the code the program
+  ends with, its exit code. 0 means done. 1 means a person must look. The program has 3 tests, but they check pieces,
+  such as reading one line. None runs the whole program, so nothing checks what it prints, or how it ends. And when a
+  test does run it, the program's call to end itself ends the whole test run, and the tests after it never run.
 
 ## intro: Our example: a nightly payments import
 - Payments arrive on standard input, one per line: an account and an amount in pence

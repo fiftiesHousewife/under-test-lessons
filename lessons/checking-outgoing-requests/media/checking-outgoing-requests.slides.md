@@ -13,10 +13,12 @@ HTTP Header Field" (a request header that makes a POST safe to repeat).
 - It goes with no Idempotency-Key, so a refund sent twice could be paid twice
 - The tests pass: the stand-in provider answers "created" whatever it is sent
 Picture: bug
-Say: Here is the problem. A shop refunds a customer £12.50. The payment provider expects the amount in pence, 1250.
-  The shop sends 12.5. It also leaves out the header that names the refund, so a refund sent twice could be paid
-  twice. And the tests pass. The stand-in provider in the tests answers that the refund is created, whatever it is
-  sent. So the mistakes only show up at the real provider, when a customer gets the wrong amount back.
+Say: This lesson is about checking the requests your code sends to other services, not just the answers it gets back.
+  We'll see a refund sent wrong while every test passes, and how WireMock's verify checks the request itself. [pause 1s]
+  Here is the problem. A shop refunds a customer £12.50. The payment provider expects the amount in pence, 1250. The
+  shop sends 12.5. It also leaves out the header that names the refund, so a refund sent twice could be paid twice. And
+  the tests pass. The stand-in provider in the tests answers that the refund is created, whatever it is sent. So the
+  mistakes only show up at the real provider, when a customer gets the wrong amount back.
 
 ## intro: Our example: refunds to a payment provider
 - A shop gives money back to a customer for an order

@@ -10,7 +10,9 @@ February 2019), and JUnit 4's release notes for version 4.7 (rules, such as Temp
 - The test passes: it reads the file the test before it left behind
 - Both tests use the same folder, and nothing ever cleans it up
 Picture: bug
-Say: Here is the problem. On a day with a cancelled order, the export writes no file at all, so the accounts get
+Say: This lesson is about JUnit's temporary folders: a new, empty folder for every test that writes files. We'll see an
+  end-of-day export that writes no file at all, and how a temporary folder lets the test check exactly what was written.
+  [pause 1s] Here is the problem. On a day with a cancelled order, the export writes no file at all, so the accounts get
   nothing. Yet the test of a cancelled order passes. It reads the file that the test before it left behind. Both tests
   write to the same folder, and nothing ever cleans it up, so the leftover file looks like the right answer.
 

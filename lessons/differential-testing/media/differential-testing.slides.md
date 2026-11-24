@@ -9,9 +9,12 @@ with ApprovalTests; not Diffy, which is archived and whose only fork has a non-c
 - Parcels from 451 g to 500 g now cost £3.15, not £1.95
 - The rewrite's 5 tests try one typical weight per row, and all pass
 Picture: bug
-Say: Here is the problem. A postage calculator is rewritten, and one row of its new price list is mistyped. Parcels
-  weighing from 451 grams to 500 grams now cost 3 pounds 15, instead of 1 pound 95. The rewrite has 5 tests, one
-  typical weight for each row of prices. None of them weighs between 451 and 500 grams, so they all pass.
+Say: This lesson is about differential testing: the old code and its rewrite given the same inputs, thousands of them,
+  and their answers compared. We'll see a rewrite with a mistyped price that its own tests miss, and how a test that
+  asks the old calculator finds it. [pause 1s] Here is the problem. A postage calculator is rewritten, and one row of
+  its new price list is mistyped. Parcels weighing from 451 grams to 500 grams now cost 3 pounds 15, instead of 1 pound
+  95. The rewrite has 5 tests, one typical weight for each row of prices. None of them weighs between 451 and 500 grams,
+  so they all pass.
 
 ## intro: Our example: postage prices
 - The price of posting a parcel, by weight, up to 5 kg

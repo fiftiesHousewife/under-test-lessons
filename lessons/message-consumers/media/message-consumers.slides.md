@@ -17,10 +17,12 @@ queue and reading a Kafka topic with its own consumer group, in non-production f
 - The old till's message, which no one can read, just disappears
 - The unit test passes: it hands the consumer one message, with no broker behind it
 Picture: bug
-Say: Here is the problem. A shop records card payments sent from its tills. When the payment book is busy for a
-  moment, one payment, order A-1002, is lost for good. When a payment arrives a second time, order A-1001 is
-  recorded twice. And a message from an old till, which no one can read, simply disappears. The unit test passes. It
-  hands the consumer one message it built by hand, so it can't see any of this.
+Say: This lesson is about testing message consumers: the code that takes messages off a queue. We'll see a payment lost
+  and another recorded twice, and how an Artemis broker, started inside the test, catches both. [pause 1s] Here is the
+  problem. A shop records card payments sent from its tills. When the payment book is busy for a moment, one payment,
+  order A-1002, is lost for good. When a payment arrives a second time, order A-1001 is recorded twice. And a message
+  from an old till, which no one can read, simply disappears. The unit test passes. It hands the consumer one message it
+  built by hand, so it can't see any of this.
 
 ## intro: Our example: card payments for a shop
 - The till sends one message per card payment: the order, the customer and the amount in pence

@@ -8,9 +8,11 @@ its README); xmlunit.org (XMLUnit, for Java and .NET).
 - Today's summary says £3.70: it forgets how many of each were bought
 - The test only checks that some words appear, so it passes
 Picture: bug
-Say: Here is the problem. An order has 4 teas at 2 pounds 50, and 1 packet of biscuits at 1 pound 20. That should
-  come to 11 pounds 20. Today's order summary says 3 pounds 70, because it forgets how many of each were bought. And
-  its test passes. It only checks that a few words appear, whatever the numbers are.
+Say: This lesson is about comparing structured output, such as JSON, as data rather than as text. We'll see a wrong
+  total that a loose test passes, and how JSONUnit names the field and both values. [pause 1s] Here is the problem. An
+  order has 4 teas at 2 pounds 50, and 1 packet of biscuits at 1 pound 20. That should come to 11 pounds 20. Today's
+  order summary says 3 pounds 70, because it forgets how many of each were bought. And its test passes. It only checks
+  that a few words appear, whatever the numbers are.
 
 ## intro: Our example: an order summary
 - An order goes to the warehouse as JSON, a common text format for data

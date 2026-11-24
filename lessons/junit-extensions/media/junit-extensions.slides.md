@@ -9,8 +9,10 @@ release notes for version 4.7 (rules, such as TemporaryFolder and ExternalResour
 - The next test, the shop receipt, gets £100.00 + VAT, not £120.00
 - The failure blames the receipt, and only shows when the tests run in that order
 Picture: bug
-Say: Here is the problem. The test of a trade invoice switches VAT off for the whole shop, and leaves it off. So the
-  next test, of a shop receipt, gets £100 plus VAT, not £120, and fails. The failure blames the receipt, which is
+Say: This lesson is about JUnit extensions: code that runs around every test, here to put shared settings back
+  afterwards. We'll see one test break another by leaving a setting changed, and an extension that guards the settings.
+  [pause 1s] Here is the problem. The test of a trade invoice switches VAT off for the whole shop, and leaves it off. So
+  the next test, of a shop receipt, gets £100 plus VAT, not £120, and fails. The failure blames the receipt, which is
   fine. And it only shows when the tests run in that order, so it comes and goes.
 
 ## intro: Our example: a shop's settings

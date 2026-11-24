@@ -14,10 +14,12 @@ Development of Mutation Testing", IEEE Transactions on Software Engineering, 201
 - Plant 13 small bugs in those lines, one at a time: the tests catch 5
 - The other 8 pass unnoticed: an order of exactly £50 could lose its discount
 Picture: coverage
-Say: Here is the problem. A shop's tests run every one of the 13 lines in its discount rules, so line coverage is
-  100 percent. Line coverage only counts the lines the tests ran. So we plant 13 small bugs in those lines, one at a
-  time, and run the tests against each. They catch 5. The other 8 slip through. One of them means an order of
-  exactly 50 pounds loses its discount, and every test still passes.
+Say: This lesson is about mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
+  whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
+  bugs and counts the ones caught. [pause 1s] Here is the problem. A shop's tests run every one of the 13 lines in its
+  discount rules, so line coverage is 100 percent. Line coverage only counts the lines the tests ran. So we plant 13
+  small bugs in those lines, one at a time, and run the tests against each. They catch 5. The other 8 slip through. One
+  of them means an order of exactly 50 pounds loses its discount, and every test still passes.
 
 ## intro: Our example: a shop's discount rules
 - Orders of £50 or more get 5% off

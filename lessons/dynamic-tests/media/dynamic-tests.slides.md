@@ -8,9 +8,11 @@ JUnit 6 is the current generation).
 - The test loops over all 5, and stops at the first wrong one
 - It reports 1 failure, with no example's name: the other 2 stay hidden
 Picture: bug
-Say: Here is the problem. Letters go out to Mister Patrick O'brien, with a small b. 3 of the 5 example names come out
-  wrong: O'brien, Smith-jones, and Mary-ann. The test loops over all 5 examples, and stops at the first wrong one. So it
-  reports a single failure, and its name doesn't say which example broke. The other 2 stay hidden.
+Say: This lesson is about dynamic tests: tests that JUnit makes while it runs, one for each example in a folder. We'll
+  see names printed wrong on letters, and how one test for each example file finds every name that goes wrong.
+  [pause 1s] Here is the problem. Letters go out to Mister Patrick O'brien, with a small b. 3 of the 5 example names
+  come out wrong: O'brien, Smith-jones, and Mary-ann. The test loops over all 5 examples, and stops at the first wrong
+  one. So it reports a single failure, and its name doesn't say which example broke. The other 2 stay hidden.
 
 ## intro: Our example: names on letters
 - Customer records are stored as SURNAME,FIRST NAME,TITLE, in capitals

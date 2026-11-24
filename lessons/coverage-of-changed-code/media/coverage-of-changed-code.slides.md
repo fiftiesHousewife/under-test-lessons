@@ -17,10 +17,12 @@ up in this repository's build conventions.
 - A change adds a bulk discount, and its own test runs all 8 new lines
 - Yet 5 of 11 small bugs planted in those lines go unnoticed
 Picture: bug
-Say: Here is the problem. A shop's old pricing module has no tests. A rule that the module needs 80 percent line
-  coverage can never pass, so the team turned it off. Now a change adds a bulk discount, and its own test runs all 8
-  of the new lines. But when we plant 11 small bugs in those lines, one at a time, the test misses 5 of them. And
-  nothing in the build stops the change.
+Say: This lesson is about measuring the tests of only the code a change touched, so old code with no tests doesn't block
+  every change. We'll see a coverage rule that every change fails, and how PIT checks just the changed class instead.
+  [pause 1s] Here is the problem. A shop's old pricing module has no tests. A rule that the module needs 80 percent line
+  coverage can never pass, so the team turned it off. Now a change adds a bulk discount, and its own test runs all 8 of
+  the new lines. But when we plant 11 small bugs in those lines, one at a time, the test misses 5 of them. And nothing
+  in the build stops the change.
 
 ## intro: Our example: a shop's old pricing module
 - Delivery charges, VAT and order totals, written long ago, with no tests

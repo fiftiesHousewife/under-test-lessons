@@ -13,10 +13,12 @@ kept only when commit is called).
 - But the order never reaches the database: it is written, and never committed
 - The unit tests pass: a list stands in for the database
 Picture: bug
-Say: Here is the problem. A customer orders 3 pens from a shop. The warehouse puts the pens aside, and the shop
+Say: This lesson is about black-box tests: the whole application started as it ships, and tested only through its edges.
+  We'll see an order that's confirmed and then lost, and how WireMock, REST Assured and H2 catch it from outside.
+  [pause 1s] Here is the problem. A customer orders 3 pens from a shop. The warehouse puts the pens aside, and the shop
   answers that the order is created. But the order is never kept. The service writes it to the database, and never
-  commits it, the step that makes a change permanent. So the database throws it away. The unit tests all pass,
-  because a simple list stands in for the database.
+  commits it, the step that makes a change permanent. So the database throws it away. The unit tests all pass, because a
+  simple list stands in for the database.
 
 ## intro: Our example: a shop's order service
 - A customer orders a quantity of one product

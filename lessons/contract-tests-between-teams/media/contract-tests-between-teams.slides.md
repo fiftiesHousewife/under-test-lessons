@@ -19,11 +19,11 @@ pacts as versioned artifacts through the package repository, without a broker".
 - The stock service's tests pass: they check the status code and the item's code
 - The break shows only when the two services meet
 Picture: bug
-Say: Here is the problem. A tidy-up in a shop's stock service renames the field that says how many kettles are
-  available. The order screen, run by another team, still looks for the old name. Both teams' builds pass. The order
-  screen's tests run against a stand-in for the stock service that their own team wrote, so it agrees with them,
-  always. The stock service's tests check only the status code and the item's code. So the break shows up only when the
-  two services finally meet, in a shared test environment, or in production.
+Say: This lesson is about contract tests between teams, with Pact: one agreement, checked by both sides. [pause 1s] Here
+  is the problem. A tidy-up in a shop's stock service renames the field that says how many kettles are available. The
+  order screen, run by another team, still looks for the old name. Both teams' builds pass. The order screen's tests use
+  a stand-in that their own team wrote, so it always agrees with them. The stock service's tests check only the status
+  code and the item's code. So the break shows up only when the two services meet.
 
 ## intro: Our example: an order screen and a stock service
 - The order screen asks the stock service how many of an item are available, by the item's code

@@ -10,10 +10,12 @@ martinfowler.com, 2017; Paul Hammant, "Branch by Abstraction", 2007.
 - The tests pass: they never switch the new rules on
 - The mistake waits for the day someone does, in production
 Picture: bug
-Say: Here is the problem. A shop has written new shipping rules, and they wait, switched off, beside the old ones.
-  But they compare a basket in pence with a threshold in pounds. So delivery is free from 50 pence, not from £50, and a
-  £20 basket ships free. The tests all pass, because they never switch the new rules on. So the mistake waits for the
-  day someone does, in production.
+Say: This lesson is about feature flags: new code shipped behind a switch, and tested with the switch both off and on.
+  We'll see new shipping rules that would send a basket free, and how OpenFeature lets a test choose each side.
+  [pause 1s] Here is the problem. A shop has written new shipping rules, and they wait, switched off, beside the old
+  ones. But they compare a basket in pence with a threshold in pounds. So delivery is free from 50 pence, not from £50,
+  and a £20 basket ships free. The tests all pass, because they never switch the new rules on. So the mistake waits for
+  the day someone does, in production.
 
 ## intro: Our example: shipping costs
 - Delivery costs £3.99, and is free from £50

@@ -17,11 +17,13 @@ Release It! by Michael Nygard (second edition 2018; its stability patterns inclu
 - When the connection drops, the shop throws an error page at the customer
 - The tests pass: the stand-in supplier always answers at once
 Picture: bug
-Say: Here is the problem. A shop asks its supplier how many kettles are in stock. When the supplier answers 5
-  seconds late, the shop waits all 5 seconds, because it sets no limit on how long to wait. When the connection
-  drops, the shop throws an error at the customer. And the tests pass, because the stand-in supplier in the tests
-  always answers at once. Real services slow down and drop connections, most often when they are busy. And one slow
-  supplier then holds up every page that asks it.
+Say: This lesson is about testing against slow and failing dependencies. We'll see a slow supplier hold up the whole
+  shop, and how WireMock makes a service slow or broken on purpose, so the test can check what the shop does. [pause 1s]
+  Here is the problem. A shop asks its supplier how many kettles are in stock. When the supplier answers 5 seconds late,
+  the shop waits all 5 seconds, because it sets no limit on how long to wait. When the connection drops, the shop throws
+  an error at the customer. And the tests pass, because the stand-in supplier in the tests always answers at once. Real
+  services slow down and drop connections, most often when they are busy. And one slow supplier then holds up every page
+  that asks it.
 
 ## intro: Our example: checking a supplier's stock
 - A shop asks its supplier how many kettles are in stock

@@ -16,10 +16,12 @@ smells); Gerard Meszaros, xUnit Test Patterns: Refactoring Test Code, Addison-We
 - One is switched off, two wait with fixed sleeps, two only pass in order
 - Deleting them would lose what they do pin down
 Picture: magnifier
-Say: Here is the problem. We have been given an old shop's code, with 13 tests. Coverage counts every one of them.
-  But one test checks nothing at all, and another checks only that an answer exists. One has been switched off. Two
-  wait with fixed sleeps, and two only pass in a certain order. We can't trust them as they are. And we can't just
-  delete them, because some of them pin down behaviour that nothing else records.
+Say: This lesson is about the tests you already have, and the habits that make them look stronger than they are. We'll
+  find five kinds of anti-pattern in an old shop's tests with ArchUnit, write each one down, and then make the build
+  refuse new ones. [pause 1s] Here is the problem. We have been given an old shop's code, with 13 tests. Coverage counts
+  every one of them. But one test checks nothing at all, and another checks only that an answer exists. One has been
+  switched off. Two wait with fixed sleeps, and two only pass in a certain order. We can't trust them as they are. And
+  we can't just delete them, because some of them pin down behaviour that nothing else records.
 
 ## intro: Our example: an old shop's tests
 - A basket: 5% off orders of £50 or more
@@ -55,13 +57,13 @@ Say: How does it look? [pause 1600ms] Each kind is one rule, written with ArchUn
 Include: how-we-build
 
 ## closing: What these checks leave out
-- Tests that reach shared systems: run them unplugged, under the airgap agent
+- Tests that reach shared systems: run them on a machine with no route out
 - Copy-pasted tests: PMD's copy-paste detector, which this build runs already
 - The toolkit's find-test-anti-patterns skill counts all seven kinds by reading the code
 - Coverage, reported with and without the tests in the register
 Picture: files
 Say: The toolkit's skill counts 7 kinds. The lesson's checks find 5. Tests that reach shared systems show up when
-  they run unplugged, under the airgap agent. Copy-pasted tests are found by PMD's copy-paste detector, which this
+  they run on a machine with no route out. Copy-pasted tests are found by PMD's copy-paste detector, which this
   build runs already. And report coverage twice, with and without the tests in the register.
 
 ## closing: When to look for anti-patterns

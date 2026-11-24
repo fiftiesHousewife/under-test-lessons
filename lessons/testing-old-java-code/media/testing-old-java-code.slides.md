@@ -1,4 +1,4 @@
-# Slides: testing old Java code, a map
+# Slides: testing old Java code, a journey
 
 The overview lesson: slides only, with no video script. Each technique slide links the lessons that teach it; planned
 lessons are marked "coming". Written to be spoken: plain English, each term explained before it is used.
@@ -13,9 +13,11 @@ them "coming".
 - It works, and people rely on it
 - Nobody is sure what a change will break
 - Old code usually has no tests, or none it can trust
-Picture: map
-Say: This is a map of testing old Java code. [pause 500ms] Old code works, and people rely on it every day. But
-  nobody is quite sure what a change will break. And old code usually has no tests, or tests that nobody can trust.
+Picture: road
+Say: Welcome to this series on testing old Java code. [pause 800ms] Over these lessons, we'll take a journey, from
+  code that nobody dares to change, [pause 300ms] to code a team can change safely. [pause 1s] Old code works, and
+  people rely on it every day. [pause 600ms] But nobody is quite sure what a change will break. [pause 600ms] And old
+  code usually has no tests, or tests that nobody can trust.
 
 ## intro: Tests are a software vice
 - A vice holds the work still, so it can't move while you work on it
@@ -65,16 +67,15 @@ Say: For old code, the mix starts the other way round from new code. At first, a
   protect the most behaviour for the least effort, because the code inside can't yet be tested in small pieces. As the
   code is made testable, the mix moves to many small, fast tests. A few large tests stay, to check the wiring.
 
-## intro: Is it safe to run at all?
+## intro: Safe to run? A safety inventory, then run it unplugged
 - Find what could reach production or leak a secret, before anything runs
 - Run it unplugged, so every call outside is refused and reported
-- The safety inventory, and running old code unplugged (coming)
 Picture: plug
 Say: The first question about old code is whether it's safe to run at all. Its settings may point at a real database,
   or send real emails. So, before anything runs, find what could reach production or leak a secret. Then run it
   unplugged, so every call to the outside world is refused and reported.
 
-## intro: Can we trust the tests we have?
+## intro: Trust the tests? Mutation testing with PIT
 - Line coverage only says which lines ran, not whether anything was checked
 - Mutation testing plants small bugs and counts how many the tests catch
 - lesson: Mutation testing (mutation-testing)
@@ -84,7 +85,7 @@ Say: Next, can we trust the tests we already have? [pause 1.6s] Line coverage on
   counts how many the tests catch. That's a truer measure, and the lesson shows two test suites with the same
   coverage, but very different strength.
 
-## intro: What does the code do today?
+## intro: What it does today: characterisation tests
 - Treat the application as a black box: drive it through its edges
 - Record what comes out, before touching anything inside
 - lesson: Characterisation tests (characterisation-tests)
@@ -100,7 +101,7 @@ Say: What does the code do today? [pause 1.6s] Treat the application as a black 
   lessons record a whole statement, a running service, a nightly file, JSON results that differ only in their
   timestamps, a whole application started as it ships, and an old program run from the command line.
 
-## intro: What does it receive and send?
+## intro: What it sends: capturing with Logbook
 - Capture real requests and answers, with secrets filtered at the source
 - Clean captured data so the tests still work
 - lesson: Capturing what an old service receives and sends (capturing-with-logbook)
@@ -110,7 +111,7 @@ Say: What does an old service receive, and what does it send? [pause 1.6s] Captu
   realistic examples to test with. But captures hold personal data, so they're cleaned first, in a way that keeps the
   tests working: the same name always gets the same stand-in.
 
-## intro: Does the rewrite give the same answers?
+## intro: Same answers? Differential testing
 - Run the old code and the new on the same inputs
 - Every difference is either a bug or a decision
 - lesson: Differential testing (differential-testing)
@@ -119,7 +120,7 @@ Say: Does the rewrite still give the same answers? [pause 1.6s] Run the old code
   thousands of them, and compare. Every difference is either a bug in the rewrite, or a decision someone has to make.
   The lesson finds a mistyped price that no example test noticed.
 
-## intro: What should it do?
+## intro: What it should do: examples and OpenAPI
 - Write the rules down as examples, with the people who know them
 - Check the code against each example, and each answer against the published document
 - lesson: Behaviour written down as examples (behaviour-as-examples)
@@ -130,7 +131,7 @@ Say: What should the code do? [pause 1.6s] Write the rules down as examples, wit
   a test to delete. And where other teams build against a published document of the service's interface, check every
   answer against that document.
 
-## intro: How do we test without the real systems?
+## intro: No real systems: WireMock, H2, Testcontainers
 - Recorded answers for services you don't own; a fake for what you talk to a lot
 - An in-memory database where plain SQL is all the code uses; a real one where the database's own behaviour matters
 - lesson: Recorded HTTP responses (recorded-http-responses)
@@ -148,7 +149,7 @@ Say: How do we test without the real systems? [pause 1.6s] Use recorded answers 
   or locking, start a real one in a throwaway container. These lessons show how to tell which you need. Others check the requests the
   code sends, make a service slow or broken on demand, and run a real message broker inside the test.
 
-## intro: Why can't this class be tested?
+## intro: Untestable classes: pass dependencies in
 - It reaches out for what it needs: the clock, a static, a hard-wired service
 - Pass those in instead, with the smallest change first
 - lesson: Replacing hard-wired dependencies (replacing-hard-wired-dependencies)
@@ -157,7 +158,7 @@ Say: Why can't this class be tested at all? [pause 1.6s] Usually because it reac
   a static method, a service it creates itself. Pass those things in instead, starting with the smallest change. Then
   a test can hand over a stand-in.
 
-## intro: How do we change it without a big bang?
+## intro: No big bang: feature flags with OpenFeature
 - Put the new code behind a switch
 - Test it both ways, until it has proved itself
 - lesson: Feature flags (feature-flags)
@@ -165,7 +166,7 @@ Picture: switch
 Say: How do we change it without a big bang? [pause 1.6s] Put the new code behind a switch, test it with the switch
   both off and on, and only remove the old code once the new code has proved itself.
 
-## intro: How do we write fewer tests that check more?
+## intro: Fewer tests, more cases: tables and properties
 - One test, many cases: a table of inputs and the answers expected
 - Let the computer find the cases: generated inputs, checked against a rule
 - Group tests by situation, so a missing case is easy to see
@@ -179,7 +180,7 @@ Say: How do we write fewer tests that check more? [pause 1.6s] First, instead of
   hundreds of inputs, and checks each one against a rule that must always hold, such as "the shares add up to the
   bill". Third, group the tests by situation, so a case nobody wrote stands out. Each lesson takes one of these ideas.
 
-## intro: How do we keep the tests trustworthy?
+## intro: Trustworthy tests: Mockito, Awaitility, ArchUnit
 - Stand-ins only where they help, and checks of what the code really did
 - Shared settings put back after every test, so one test can't break another
 - Wait for slow work instead of sleeping, so a test doesn't pass on one machine and fail on another

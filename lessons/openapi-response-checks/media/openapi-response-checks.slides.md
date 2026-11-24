@@ -16,10 +16,12 @@ don't suit an outside supplier's API).
 - A tidy-up renamed the 404's error field to message
 - The tests pass: they check the status code and 2 fields, never the weight or the error
 Picture: bug
-Say: Here is the problem. Today a parcel service sends a parcel's weight as text, 1200 in quotes, not the number 1200.
-  And a tidy-up renamed the field that gives the reason for a 404, from error to message. The service's own tests still
-  pass. They check the status code and 2 fields, the ones someone thought of. But every team that reads the weight as a
-  number, or looks for the error field, is now broken.
+Say: This lesson is about checking a service's answers against its published OpenAPI document. We'll see an answer that
+  changed while every test passed, and how a validator checks each answer against the document. [pause 1s] Here is the
+  problem. Today a parcel service sends a parcel's weight as text, 1200 in quotes, not the number 1200. And a tidy-up
+  renamed the field that gives the reason for a 404, from error to message. The service's own tests still pass. They
+  check the status code and 2 fields, the ones someone thought of. But every team that reads the weight as a number, or
+  looks for the error field, is now broken.
 
 ## intro: Our example: a parcel tracking service
 - Callers ask where a parcel is, by its id

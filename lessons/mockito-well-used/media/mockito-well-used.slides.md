@@ -12,10 +12,12 @@ stubs and fakes.
 - The card gets the whole order back: £37.50
 - The test passes: it makes stand-ins for everything, and any refund will do
 Picture: bug
-Say: Here is the problem. A customer returns a mug, so £12.50 should go back to their card. Instead, the card gets the
-  whole order back: £37.50. Yet the test passes. It replaces everything around the refunds with stand-ins, called
-  mocks, made by a library called Mockito. Then it checks only that the order was looked up, and that some refund was
-  sent. Any refund will do.
+Say: This lesson is about using Mockito well: mocking only the edge where the code reaches the outside world, and
+  checking what it really did. We'll see a refund for the wrong amount that every test passes, and how a fake and one
+  mock catch it. [pause 1s] Here is the problem. A customer returns a mug, so £12.50 should go back to their card.
+  Instead, the card gets the whole order back: £37.50. Yet the test passes. It replaces everything around the refunds
+  with stand-ins, called mocks, made by a library called Mockito. Then it checks only that the order was looked up, and
+  that some refund was sent. Any refund will do.
 
 ## intro: Our example: refunds for returned items
 - A customer orders a mug at £12.50 and a teapot at £25

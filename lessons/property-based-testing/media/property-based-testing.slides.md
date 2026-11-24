@@ -8,9 +8,11 @@ IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
 - The tests pass: £9 between 3, £1 between 3, £1.01 between 2
 - Each leaves at most a penny over, so nobody saw the bug
 Picture: bug
-Say: Here is the problem. Split 3 pence between 4 people, and the first person pays all 3, while the others pay
-  nothing. With a bigger bill, one person pays several pence more than everyone else. Yet the tests pass. They split
-  £9 between 3, £1 between 3, and £1.01 between 2. Each of those leaves at most a penny over, so nobody saw the bug.
+Say: This lesson is about property-based testing: rules that must always hold, checked against hundreds of generated
+  inputs. We'll see a bill split where one person pays every penny left over, and how jetCheck finds it. [pause 1s] Here
+  is the problem. Split 3 pence between 4 people, and the first person pays all 3, while the others pay nothing. With a
+  bigger bill, one person pays several pence more than everyone else. Yet the tests pass. They split £9 between 3, £1
+  between 3, and £1.01 between 2. Each of those leaves at most a penny over, so nobody saw the bug.
 
 ## intro: Our example: splitting a bill
 - Share a bill, in pence, between several people

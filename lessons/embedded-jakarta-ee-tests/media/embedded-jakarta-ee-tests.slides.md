@@ -8,10 +8,12 @@ servers); github.com/weld/weld-testing (weld-junit5); jakarta.ee (CDI, first rel
 - Since a reduced rate of 5% was added, the server wires in that one, and charges £10.50
 - The unit test passes: it builds the checkout by hand, and hands it the rate it wants
 Picture: bug
-Say: Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. But since a reduced rate of
-  5% was added, the server gives the checkout that rate instead, and it charges £10.50. Nobody changed the checkout's
-  code. And the unit test passes, because it builds the checkout by hand, and hands it the rate it wants. It never
-  sees what the server chooses.
+Say: This lesson is about testing Jakarta EE code with its real wiring, in a small container started inside the test.
+  We'll see a checkout that charges the wrong VAT, and how Weld and its JUnit support build the checkout as the server
+  would. [pause 1s] Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. But since a
+  reduced rate of 5% was added, the server gives the checkout that rate instead, and it charges £10.50. Nobody changed
+  the checkout's code. And the unit test passes, because it builds the checkout by hand, and hands it the rate it wants.
+  It never sees what the server chooses.
 
 ## intro: Our example: VAT at the checkout
 - The checkout adds VAT to a net price

@@ -14,9 +14,10 @@
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
-  // While listening: the pause after a slide's narration before the next slide, and how long a slide with no
-  // narration stays.
-  var GAP_MS = 150;
+  // While listening: the pause after a slide appears before its narration starts, so its heading can be read first;
+  // the pause after a slide's narration before the next slide; and how long a slide with no narration stays.
+  var LEAD_MS = 800;
+  var GAP_MS = 1000;
   var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
@@ -38,10 +39,13 @@
   function playVoice() {
     var source = clipSource(current);
     if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
+    // The first clip plays at once, inside the click that started listening, which some browsers insist on.
+    var first = !player;
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
-    player.play().catch(waitForClick);
     fetchNext();
+    if (first) { player.play().catch(waitForClick); return; }
+    nextTimer = setTimeout(function () { player.play().catch(waitForClick); }, LEAD_MS);
   }
   // The next slide's clip is fetched while this one plays, so it starts the moment its slide shows.
   var fetched = null;

@@ -13,11 +13,13 @@ beside Spring Boot 4.
 - Every test starts the whole application: slow, so they're written loosely
 - "D-1001 appears somewhere in the answer" passes, whatever the date says
 Picture: bug
-Say: Here is the problem. A change for a shop's printed delivery notes made its delivery service write the due date
-  day first, 23/11/2026, where it promised year first, 2026-11-23. Every caller that reads the date year first now
-  breaks. Yet every test passes. Each one starts the whole application, with the database, a stand-in for the courier,
-  and every setting. So the tests are slow, and people write them loosely. A test that only checks that a reference
-  appears somewhere in the answer passes, whatever the date says.
+Say: This lesson is about Spring tests in slices: one layer tested at a time, with only the part of Spring it needs.
+  We'll see a changed due date that every test missed, and how Spring Boot's test slices catch it quickly. [pause 1s]
+  Here is the problem. A change for a shop's printed delivery notes made its delivery service write the due date day
+  first, 23/11/2026, where it promised year first, 2026-11-23. Every caller that reads the date year first now breaks.
+  Yet every test passes. Each one starts the whole application, with the database, a stand-in for the courier, and every
+  setting. So the tests are slow, and people write them loosely. A test that only checks that a reference appears
+  somewhere in the answer passes, whatever the date says.
 
 ## intro: Our example: a shop's delivery service
 - It lists a customer's deliveries still to come, as JSON

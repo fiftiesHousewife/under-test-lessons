@@ -14,11 +14,11 @@ domain for testing).
 - Now there's 1 customer with 7 orders, and the accounts owing don't add up
 - And a note still holds a customer's email, and another a customer's name
 Picture: bug
-Say: Here is the problem. A shop keeps a captured day of real orders as test data: 7 orders from 4 customers, and 5
-  payments. Before it's kept, today's cleaning writes the word REMOVED in every name, email address and account
-  number. Now the reports see 1 customer with all 7 orders. One account owes £6.40, and another paid £5 too much, but
-  after cleaning, the report sees a single account owing £1.40. And nobody wrote a rule for the free-text note, so one
-  note still holds a customer's email address, and another a customer's name.
+Say: This lesson is about cleaning captured data, so it's safe to keep, and the tests still work. [pause 1s] Here is the
+  problem. A shop keeps a captured day of real orders as test data: 7 orders from 4 customers. Today's cleaning writes
+  the word REMOVED in every name, email address and account number. Now the reports see 1 customer with all 7 orders,
+  and the accounts no longer add up. And nobody wrote a rule for the free-text note, so one note still holds a
+  customer's email address, and another a customer's name.
 
 ## intro: Our example: a shop's day of orders
 - 7 orders and 5 payments, in two files

@@ -10,10 +10,12 @@ stand-ins built in).
 - On a test machine: cannot reach the bank's exchange-rate service
 - So every test fails before it checks a single number
 Picture: bug
-Say: Here is the problem. An invoice of £12.50 should come to 14 euros 63 cents, at a rate of 1.17 euros to the
-  pound. But the code fetches the rate itself, from the bank's live rate service. A test machine has no network and no
-  account for it. So both tests fail with the same error, cannot reach the bank's exchange-rate service, before they
-  check a single number.
+Say: This lesson is about replacing hard-wired dependencies, so a class can be tested at all. We'll see an invoice that
+  can't be tested because it fetches its own exchange rates, how passing the rates in fixes it, and how Mockito makes
+  the stand-in. [pause 1s] Here is the problem. An invoice of £12.50 should come to 14 euros 63 cents, at a rate of 1.17
+  euros to the pound. But the code fetches the rate itself, from the bank's live rate service. A test machine has no
+  network and no account for it. So both tests fail with the same error, cannot reach the bank's exchange-rate service,
+  before they check a single number.
 
 ## intro: Our example: an invoice in euros
 - Lines are priced in pounds, in pence

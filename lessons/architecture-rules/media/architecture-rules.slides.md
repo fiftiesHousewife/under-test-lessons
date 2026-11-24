@@ -9,10 +9,12 @@ Sources: archunit.org and github.com/TNG/ArchUnit (Apache 2.0 licence, by TNG Te
 - So the unit tests pass, and nobody notices the shortcut
 - Each shortcut skips the shop's rules, and makes the next change harder
 Picture: bug
-Say: Here is the problem. A shop's admin page reads the stored orders directly, and skips the layer that holds the
-  shop's rules. It still shows the right answer: 2 orders. So the unit tests pass, and a review can easily miss it.
-  But every shortcut like this skips the shop's rules, and makes the next change harder. In old code, these shortcuts
-  pile up quietly.
+Say: This lesson is about architecture rules: a shop's rules for which layer may use which, written as a test with
+  ArchUnit, so every build checks them. We'll see a shortcut that breaks the rules, the test that catches it, and how
+  ArchUnit reads. [pause 1s] Here is the problem. A shop's admin page reads the stored orders directly, and skips the
+  layer that holds the shop's rules. It still shows the right answer: 2 orders. So the unit tests pass, and a review can
+  easily miss it. But every shortcut like this skips the shop's rules, and makes the next change harder. In old code,
+  these shortcuts pile up quietly.
 
 ## intro: Our example: a shop in three layers
 - Web: the pages people see, including an admin page

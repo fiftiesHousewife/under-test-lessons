@@ -17,11 +17,13 @@ characterisation tests.
 - The test passes: it checks only that each request and answer was recorded
 - Once a secret is written to a log or a file, it is hard to take back
 Picture: bug
-Say: Here is the problem. Before anyone changes an old service, we record every request it receives and sends, as
-  they really happen. But today the recording holds the caller's token, the loyalty provider's key, and a customer's
-  email address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only checks that
-  each request and answer was recorded. It never reads what was written. And once a secret is written to a log or a
-  file, it is hard to take back.
+Say: This lesson is about capturing what an old service receives and sends, with Logbook, so the capture can become a
+  test. We'll see a recording that keeps the secrets, and how Logbook's filters take them out before anything is written
+  down. [pause 1s] Here is the problem. Before anyone changes an old service, we record every request it receives and
+  sends, as they really happen. But today the recording holds the caller's token, the loyalty provider's key, and a
+  customer's email address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only
+  checks that each request and answer was recorded. It never reads what was written. And once a secret is written to a
+  log or a file, it is hard to take back.
 
 ## intro: Our example: an old customer service
 - Callers ask it for a customer, with their own token in an Authorization header

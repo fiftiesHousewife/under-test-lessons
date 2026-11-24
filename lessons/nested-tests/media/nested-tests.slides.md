@@ -8,9 +8,11 @@ JUnit Jupiter since JUnit 5 in 2017; JUnit 6 is the current generation).
 - The 4 tests pass: none of them asks
 - In one flat list, with long names, the missing question is invisible
 Picture: bug
-Say: Here is the problem. A loan that was only requested, and never approved, can be marked as repaid. It skips the
-  approval altogether. Yet the 4 tests all pass, because none of them asks. They are one flat list, with long names,
-  and in a list like that a missing question is invisible.
+Say: This lesson is about nested tests: tests grouped by the situation they start from, so a missing case is easy to
+  see. We'll see a loan marked repaid that was never approved, and how JUnit's nested classes show the gap. [pause 1s]
+  Here is the problem. A loan that was only requested, and never approved, can be marked as repaid. It skips the
+  approval altogether. Yet the 4 tests all pass, because none of them asks. They are one flat list, with long names, and
+  in a list like that a missing question is invisible.
 
 ## intro: Our example: a loan
 - A loan is requested, then approved, then repaid

@@ -13,10 +13,12 @@ dannorth.net, first in Better Software magazine, March 2006; Gojko Adzic, "Speci
 - The tills give store credit: the returns team says it's a refund to the card
 - The tests pass: they were written by reading the code, on days far from 30
 Picture: bug
-Say: Here is the problem. A customer bought an item on the 1st of March, and brings it back on the 31st, the 30th
-  day, with the receipt. The tills give store credit. The returns team says that customer should get a refund to the
-  card. Yet the tests pass. They were written by reading the code, so they agree with it, mistakes and all, and they
-  only try days far from the 30th.
+Say: This lesson is about writing a business rule down as examples, agreed with the people who know the rule, and
+  running each example as a test. We'll see a refund rule that goes wrong on the 30th day, and a table of examples that
+  JUnit runs. [pause 1s] Here is the problem. A customer bought an item on the 1st of March, and brings it back on the
+  31st, the 30th day, with the receipt. The tills give store credit. The returns team says that customer should get a
+  refund to the card. Yet the tests pass. They were written by reading the code, so they agree with it, mistakes and
+  all, and they only try days far from the 30th.
 
 ## intro: Our example: a shop's refunds
 - Returned within 30 days, with a receipt: a refund to the card
