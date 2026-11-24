@@ -262,21 +262,41 @@ All 5 tests passed.</pre></figure></main><aside class="notes">Now the fair split
   }
   // One player for every slide: browsers that guard autoplay (Safari, and others) let an audio element play without a
   // click only once a click has started that same element, so a player per slide would fall silent after the first.
-  // While listening: the pause after a slide appears before its narration starts, so its heading can be read first;
-  // the pause after a slide's narration before the next slide; and how long a slide with no narration stays.
+  // While listening, the silence between one slide's narration and the next is GAP_MS + LEAD_MS: the next slide comes
+  // up GAP_MS after the narration ends, and its narration starts LEAD_MS after the slide appears, so its heading can be
+  // read first. A slide with no narration stays SILENT_SLIDE_MS.
   var LEAD_MS = 800;
-  var GAP_MS = 400;
+  var GAP_MS = 700;
   var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
   var nextTimer = null;
   var player = null;
+  var unlocked = false;
+  var turn = 0;
   function clipSource(index) {
     var clip = slides[index] && slides[index].querySelector('audio.voice');
     return clip ? clip.getAttribute('src') : null;
   }
+  // Each clip is downloaded whole before its slide comes up (the next slide's while this one plays), so a slow
+  // network can't stretch the pause: the player is given the downloaded copy, which starts at once. Where the
+  // download fails, as for a deck opened from a file, the player is given the clip's own address.
+  var loads = {};
+  function load(source) {
+    if (!loads[source]) {
+      loads[source] = (typeof fetch === 'function' ? fetch(source) : Promise.reject(new Error('no fetch')))
+        .then(function (response) {
+          if (!response.ok) { throw new Error(String(response.status)); }
+          return response.blob();
+        })
+        .then(function (blob) { return URL.createObjectURL(blob); })
+        .catch(function () { return source; });
+    }
+    return loads[source];
+  }
   function stopVoice() {
     clearTimeout(nextTimer);
+    turn++;
     if (player) { player.pause(); }
   }
   function slideRead() {
@@ -284,34 +304,31 @@ All 5 tests passed.</pre></figure></main><aside class="notes">Now the fair split
     if (current === slides.length - 1) { document.dispatchEvent(new CustomEvent('deck-voice-finished')); }
     nextTimer = setTimeout(function () { advance(); }, GAP_MS);
   }
+  function start(source, refused) {
+    if (!player) { player = new Audio(); player.onended = slideRead; }
+    player.src = source;
+    player.play().then(function () { unlocked = true; }).catch(refused);
+  }
   function playVoice() {
     var source = clipSource(current);
     if (!source) { nextTimer = setTimeout(function () { advance(); }, SILENT_SLIDE_MS); return; }
-    // The first clip plays at once, inside the click that started listening, which some browsers insist on.
-    var first = !player;
-    if (!player) { player = new Audio(); player.onended = slideRead; }
-    player.src = source;
-    fetchNext();
-    if (first) { player.play().catch(waitForClick); return; }
-    nextTimer = setTimeout(function () { player.play().catch(waitForClick); }, LEAD_MS);
+    var next = clipSource(current + 1);
+    if (next) { load(next); }
+    // Until the browser has let the player play once, it plays at once, inside the click that started listening.
+    if (!unlocked) { start(source, waitForClick); return; }
+    var mine = turn;
+    var shown = Date.now();
+    load(source).then(function (copy) {
+      if (mine !== turn || !listening) { return; }
+      nextTimer = setTimeout(function () { start(copy, waitForClick); }, Math.max(0, LEAD_MS - (Date.now() - shown)));
+    });
   }
-  // The next slide's clip is fetched while this one plays, so it starts the moment its slide shows.
-  var fetched = null;
-  function fetchNext() {
-    var source = clipSource(current + 1);
-    if (!source) { return; }
-    fetched = new Audio();
-    fetched.preload = 'auto';
-    fetched.src = source;
-  }
-  // Moving to a slide by hand reads its narration once, without moving on when it ends.
+  // Moving to a slide by hand reads its narration once, at once, without moving on when it ends.
   function readThisSlide() {
     stopVoice();
     var source = clipSource(current);
     if (!source) { return; }
-    if (!player) { player = new Audio(); player.onended = slideRead; }
-    player.src = source;
-    player.play().catch(function () { /* the browser refused: the slide stays, silent, until the next move */ });
+    start(source, function () { /* the browser refused: the slide stays, silent, until the next move */ });
   }
   function advance() {
     if (current < slides.length - 1) { show(current + 1); } else { setListening(false); }

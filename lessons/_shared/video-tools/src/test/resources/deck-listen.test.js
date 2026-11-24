@@ -40,6 +40,11 @@ const delays = [];
 global.setTimeout = (fn, ms) => { timers.push(fn); delays.push(ms); return timers.length; };
 global.clearTimeout = id => { if (id) { timers[id - 1] = null; } };
 function runTimers() { while (timers.some(Boolean)) { const i = timers.findIndex(Boolean); const fn = timers[i]; timers[i] = null; fn(); } }
+// Downloads fail here, as for a deck opened from a file, so the player is given each clip's own address.
+const fetchedUrls = [];
+global.fetch = url => { fetchedUrls.push(url); return Promise.reject(new Error('offline')); };
+// Lets the deck's downloads settle, running the timers they set, as a browser would over a second or two.
+async function settle() { for (let k = 0; k < 6; k++) { await new Promise(resolve => setImmediate(resolve)); runTimers(); } }
 global.document = {
   documentElement: { style: { setProperty() {} } },
   body: Object.assign(element('body'), { appendChild(el) { appended.push(el); } }),
@@ -51,22 +56,27 @@ global.document = {
 };
 global.CustomEvent = function (type) { this.type = type; };
 
+(async () => {
 eval(script);
 const listen = appended.find(el => el.className === 'deck-listen');
 check('a deck with voice has a Listen button', Boolean(listen));
 listen.click();
 check('Listen plays the first slide', started[0] === 'a.m4a');
+check('the next slide\'s clip is downloaded while this one plays', fetchedUrls.includes('b.m4a'));
+await settle();
 let finished = false;
 document.addEventListener('deck-voice-finished', () => { finished = true; });
 for (let i = 0; i < 3; i++) {
   const playing = everyAudio.find(a => !a.paused);
   if (playing) { playing.finish(); }
-  runTimers();
+  await settle();
 }
 check('the second slide plays after the first, without another click', started[1] === 'b.m4a');
 check('the third slide plays after the second', started[2] === 'c.m4a');
 check('the deck says when its last slide has been read', finished);
-check('the next slide follows its narration after a short gap, under a fifth of a second', delays.length > 0 && delays.every(ms => ms < 200));
+check('the next slide comes up 0.7 s after the narration ends', delays.includes(700));
+check('its narration starts 0.8 s after the slide appears, and no later', delays.some(ms => ms > 700 && ms <= 800)
+  && delays.every(ms => ms <= 800 || ms === 2500));
 
 // Moving by hand, not listening: the Back and Next buttons are there, each move reads that slide's narration, and the
 // deck stays on it when the narration ends.
@@ -102,3 +112,4 @@ Promise.resolve().then(() => Promise.resolve()).then(() => {
   check('the next click on the page starts the voice', started.length > before && freshListen.textContent === 'Pause');
   process.exit(failures ? 1 : 0);
 });
+})();
