@@ -19,11 +19,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  publish:
+  # Uploading and deploying are separate jobs, as in GitHub's own Pages workflow: a deploy step straight after the
+  # upload, in the same job, can look before GitHub lists the upload, and fail with "No artifacts named github-pages".
+  upload:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v5
       - name: Gather the decks and an index page
@@ -31,5 +30,13 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
+
+  publish:
+    needs: upload
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - id: deployment
         uses: actions/deploy-pages@v5
