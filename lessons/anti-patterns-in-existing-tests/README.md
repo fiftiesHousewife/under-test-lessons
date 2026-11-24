@@ -7,12 +7,9 @@ switched off years ago, some wait with fixed sleeps, some pass only in a certain
 touch. Some of them still pin down behaviour nothing else records, so deleting them loses it. The toolkit's decision
 guide,
 [Anti-patterns in existing tests are recorded and triaged, and no existing test is deleted before the approval-test baseline exists](https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md),
-says what to do instead: find each one, write it down, decide what happens to it, and fix them in order. This lesson
-teaches that step of the toolkit's journey, whose skill is
-[find-test-anti-patterns](https://github.com/fiftiesHousewife/under-test/blob/main/.github/skills/find-test-anti-patterns/SKILL.md).
-The skill is written for an AI assistant reading the code; the lesson finds the same kinds with ordinary checks the
-build runs, written with [ArchUnit](https://www.archunit.org), which reads compiled Java classes, so no AI tool is
-needed.
+says what to do instead: find each one, write it down, decide what happens to it, and fix them in order. The lesson
+finds them with ordinary checks the build runs, written with [ArchUnit](https://www.archunit.org), which reads
+compiled Java classes.
 
 ## Run the example
 
@@ -29,7 +26,7 @@ are compiled but never run by the lesson, and never changed: the checks read the
 repository's own quality checks, since it is the lesson's subject, not this repository's code.
 
 - [`AntiPatternRules`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/antipatterns/AntiPatternRules.java)
-  holds one rule for each kind, over ArchUnit's view of each test, counted as the skill counts them:
+  holds one rule for each kind, over ArchUnit's view of each test:
   - **disabled:** the test or its class has `@Disabled`. A disabled test counts under this kind only.
   - **no-real-assertion:** the test calls no assertion from AssertJ or JUnit, and no Mockito `verify`, other than
     one that checks only that something exists (`isNotNull`, `assertNotNull`, `assertNull`).
@@ -49,7 +46,7 @@ repository's own quality checks, since it is the lesson's subject, not this repo
 
 ### Triage
 
-The decisions in the register follow the decision guide and the skill:
+The decisions in the register follow the decision guide:
 
 | Kind | Decision |
 |---|---|
@@ -64,11 +61,11 @@ twice, with and without the tests in the register: a test with no real assertion
 
 ### What the checks here leave out
 
-The skill counts seven kinds; the lesson's checks find five.
+Seven kinds are common; the lesson's checks find five.
 
 - **Tests that reach shared systems,** such as a test that names a production database, show up when the tests run on a
-  machine with no route to them: each such test fails, naming the machine it tried to reach. The skill also looks for
-  host names in the test code and its settings files.
+  machine with no route to them: each such test fails, naming the machine it tried to reach. Also look for host
+  names in the test code and its settings files.
 - **Copy-pasted tests** are found by PMD's copy-paste detector, which this repository's build already runs as
   `cpdCheck` (75 tokens or more). Point it at an old repo's test folders to list them.
 
@@ -125,8 +122,7 @@ AssertJ and ArchUnit run on Java 8 as they are.
 
 ## Find out more
 
-- The toolkit's [find-test-anti-patterns](https://github.com/fiftiesHousewife/under-test/blob/main/.github/skills/find-test-anti-patterns/SKILL.md)
-  skill, and the [decision guide](https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)
+- The toolkit's [decision guide](https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0059-anti-patterns-in-existing-tests-are-recorded-and-triaged-and-no-existing-test-is-deleted-before-the-approval-test-baseline-exists.md)
   it follows
 - [ArchUnit's user guide](https://www.archunit.org/userguide/html/000_Index.html), and the lesson on
   [architecture rules](../architecture-rules/README.md)

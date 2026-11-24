@@ -1,12 +1,12 @@
 ---
-status: accepted
+status: superseded by 0034
 decision-makers: Lessons maintainers
 group: How lessons are built
 ---
 
 # A lesson that teaches a step of the toolkit's journey names that step's skill
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** superseded by [Lessons teach established external frameworks](0034-lessons-teach-established-external-frameworks.md)
 
 ## Context and Problem Statement
 

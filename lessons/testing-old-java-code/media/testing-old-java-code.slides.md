@@ -67,7 +67,7 @@ Say: For old code, the mix starts the other way round from new code. At first, a
   protect the most behaviour for the least effort, because the code inside can't yet be tested in small pieces. As the
   code is made testable, the mix moves to many small, fast tests. A few large tests stay, to check the wiring.
 
-## intro: Safe to run? A safety inventory, then run it unplugged
+## intro: Safe to run? Find the risks, then run it unplugged
 - Find what could reach production or leak a secret, before anything runs
 - Run it unplugged, so every call outside is refused and reported
 Picture: plug

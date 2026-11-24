@@ -13,16 +13,14 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Testing old Java code: a map](testing-old-java-code/README.md): every kind of test and technique as the answer to a team's question, with every lesson linked | none | slides only | built |
+| [Testing old Java code: a journey](testing-old-java-code/README.md): every kind of test and technique as the answer to a team's question, with every lesson linked | none | slides only | built |
 
 ## Before you change anything
 
-The first steps the toolkit takes with any old repo: find what could do harm, run it where it can't reach production,
-and see what its existing tests really check.
+The first step with any old repo: see what its existing tests really check.
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| The safety inventory: an old repo searched, before anything runs, for what could reach production, leak a secret or cause harm (addresses in settings, credentials, scheduled jobs, calls that send money or messages), each listed with where it is | the toolkit's safety inventory | Java only | planned |
 | [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md): an old shop's tests read by ArchUnit rules for what makes them untrustworthy (disabled, no real assertion, sleeps, fixed order, mocks everything), each finding listed with its file and line and written in a register with its decision; none deleted | ArchUnit | Java only | built |
 
 ## Measure how far tests can be trusted
@@ -31,7 +29,7 @@ and see what its existing tests really check.
 |---|---|---|---|
 | [Mutation testing](mutation-testing/README.md) | PIT | Java only | built |
 | [Coverage of changed code](coverage-of-changed-code/README.md): the coverage and PIT gates applied only to the classes a change touched | PIT, JaCoCo | Java only | built |
-| The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix): a slide of [Testing old Java code: a map](testing-old-java-code/README.md), "The mix for old code starts with large tests" | none | slides only | built, in the overview |
+| The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix): a slide of [Testing old Java code: a journey](testing-old-java-code/README.md), "The mix for old code starts with large tests" | none | slides only | built, in the overview |
 
 ## Record what the code does today (outside in, black box)
 
@@ -111,7 +109,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | mutation-testing | [Mutation testing](mutation-testing/README.md), [Coverage of changed code](coverage-of-changed-code/README.md) | built |
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md), [Cleaning captured data so tests still work](cleaning-captured-data/README.md), [Capturing what an old service receives and sends](capturing-with-logbook/README.md) | built |
 | property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
-| architecture-rules | [Architecture rules](architecture-rules/README.md) | built |
+| architecture-rules | [Architecture rules](architecture-rules/README.md), [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
 | recorded-http-responses | [Recorded HTTP responses](recorded-http-responses/README.md), [Checking the requests your code sends](checking-outgoing-requests/README.md), [Slow and failing dependencies](slow-and-failing-dependencies/README.md) | built |
@@ -138,17 +136,6 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 | traffic-record-and-replay | Recording current behaviour from real traffic (planned) | later: after the toolkit's Keploy trial |
 | machine-state-checks | Checking a machine after an install script | last |
 | post-release-checks | Checks that run against production after a release | last |
-
-## Every journey step a lesson teaches
-
-Some lessons teach a step of the toolkit's journey rather than a technique. Their `lesson.yaml` names the step's skill
-(a folder under the toolkit's [`.github/skills/`](https://github.com/fiftiesHousewife/under-test/tree/main/.github/skills)),
-and `./gradlew check` fails a name the toolkit doesn't have (see
-[A lesson that teaches a step of the toolkit's journey names that step's skill](../docs/decisions/0033-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill.md)).
-
-| Journey step (skill) | Lesson |
-|---|---|
-| find-test-anti-patterns | [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md) |
 
 ## Lesson designs
 
@@ -200,9 +187,7 @@ adding its row first.
 
 The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
-1. **The safety inventory:** before anything runs, an old repo is searched for what could reach production, leak a
-   secret or cause harm, and each finding is listed with where it is.
-2. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+1. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
 
 ## Plan
 

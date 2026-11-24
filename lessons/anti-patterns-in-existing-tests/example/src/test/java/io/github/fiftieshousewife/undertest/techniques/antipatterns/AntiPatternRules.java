@@ -21,8 +21,7 @@ import org.mockito.Mock;
 
 /**
  * The anti-pattern checks: ArchUnit reads the old tests' compiled classes, and each rule says when a test shows one
- * kind of anti-pattern, as the toolkit's find-test-anti-patterns skill counts them. A disabled test counts as
- * disabled only.
+ * kind of anti-pattern. A disabled test counts as disabled only.
  */
 public final class AntiPatternRules {
 

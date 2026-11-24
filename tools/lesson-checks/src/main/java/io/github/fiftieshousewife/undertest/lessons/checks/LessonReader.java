@@ -62,7 +62,7 @@ public final class LessonReader {
             return Optional.empty();
         }
         final Lesson lesson = new Lesson(document.path("id").asString(), document.path("title").asString(),
-                new Lesson.Teaches(names(document, "techniques"), names(document, "skills")));
+                names(document, "techniques"));
         final String folderName = String.valueOf(folder.getFileName());
         if (!lesson.id().equals(folderName)) {
             problems.add(new Problem(file, "id " + lesson.id() + " is not the folder name " + folderName));

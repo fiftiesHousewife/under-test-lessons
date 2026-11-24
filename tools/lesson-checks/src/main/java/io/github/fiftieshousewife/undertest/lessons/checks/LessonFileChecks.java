@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Entry point: {@code <repository root> [<toolkit checkout>]}. Fails if the lesson.yaml files, the catalogue, the
- * lessons index and (when a toolkit checkout is given) the toolkit's techniques and journey steps disagree, or if a
- * lesson with an example teaches neither a toolkit technique nor a journey step.
+ * lessons index and (when a toolkit checkout is given) the toolkit's techniques disagree, or if a lesson with an
+ * example teaches no toolkit technique.
  */
 @Slf4j
 public final class LessonFileChecks {
@@ -32,7 +32,6 @@ public final class LessonFileChecks {
         }
         final Path root = Path.of(args[0]);
         final List<Problem> problems = new ArrayList<>(check(root, toolkit.map(Toolkit::techniqueIds)));
-        toolkit.ifPresent(checkout -> problems.addAll(unknownSkills(root, checkout.skillNames())));
         failOn(problems);
     }
 
@@ -58,9 +57,9 @@ public final class LessonFileChecks {
         final List<Problem> problems = new ArrayList<>();
         for (final Lesson lesson : lessons) {
             final Path folder = root.resolve("lessons/" + lesson.id());
-            if (lesson.teaches().nothing() && Files.isDirectory(folder.resolve("example"))) {
-                problems.add(new Problem(folder.resolve("lesson.yaml"), "names no toolkit technique or journey step:"
-                        + " name what it teaches in techniques or skills, or ask for it to be added to the toolkit"));
+            if (lesson.techniques().isEmpty() && Files.isDirectory(folder.resolve("example"))) {
+                problems.add(new Problem(folder.resolve("lesson.yaml"), "names no toolkit technique:"
+                        + " name what it teaches in techniques, or ask for it to be added to the toolkit"));
             }
         }
         return problems;
@@ -103,16 +102,6 @@ public final class LessonFileChecks {
         }
     }
 
-    /** Every skill a lesson names is one of the toolkit's journey steps: a folder under its .github/skills/. */
-    static List<Problem> unknownSkills(final Path root, final Set<String> skills) {
-        final List<Problem> problems = new ArrayList<>();
-        for (final Lesson lesson : new LessonReader().read(root, new ArrayList<>())) {
-            lesson.skills().stream().filter(skill -> !skills.contains(skill))
-                    .forEach(skill -> problems.add(new Problem(root.resolve("lessons/" + lesson.id() + "/lesson.yaml"),
-                            "names the skill " + skill + ", which the toolkit's .github/skills/ doesn't have")));
-        }
-        return problems;
-    }
 
     private static List<Problem> unknownTechniques(final Path root, final List<Lesson> lessons, final Set<String> ids) {
         final List<Problem> problems = new ArrayList<>();

@@ -1,4 +1,4 @@
-# The overview lesson: testing old Java code, a map
+# The overview lesson: testing old Java code, a journey
 
 One video and deck that comes before all the others: what each kind of test and each technique is for, when to reach
 for it, and which lesson teaches it. About eight minutes, slides only (no terminal), every lesson linked from the

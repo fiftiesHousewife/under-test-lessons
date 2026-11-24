@@ -3,8 +3,8 @@
 Sources: the toolkit's decision guide, Anti-patterns in existing tests are recorded and triaged, and no existing test
 is deleted before the approval-test baseline exists (record, triage and fix in order; disabled tests to the
 Application Owner; tests that reach shared systems tagged and left out of normal runs; coverage overstates how far the
-tests can be trusted); the toolkit's find-test-anti-patterns skill (the seven kinds, how each is counted, a disabled
-test counted as disabled only, five or more mocks); ArchUnit's user guide (it reads compiled classes; frozen rules
+tests can be trusted); the seven common kinds, how each is counted (a
+disabled test counted as disabled only, five or more mocks); ArchUnit's user guide (it reads compiled classes; frozen rules
 record today's violations in a store and fail only on new ones); Maven Central (ArchUnit 0.4.0, April 2017); PMD's
 documentation (CPD, the copy-paste detector, with a minimum number of tokens; 75 in this repository's build); van
 Deursen, Moonen, van den Bergh and Kok, Refactoring Test Code, XP2001, Cagliari, May 2001 (a catalogue of test
@@ -59,10 +59,9 @@ Include: how-we-build
 ## closing: What these checks leave out
 - Tests that reach shared systems: run them on a machine with no route out
 - Copy-pasted tests: PMD's copy-paste detector, which this build runs already
-- The toolkit's find-test-anti-patterns skill counts all seven kinds by reading the code
 - Coverage, reported with and without the tests in the register
 Picture: files
-Say: The toolkit's skill counts 7 kinds. The lesson's checks find 5. Tests that reach shared systems show up when
+Say: There are 7 common kinds. The lesson's checks find 5. Tests that reach shared systems show up when
   they run on a machine with no route out. Copy-pasted tests are found by PMD's copy-paste detector, which this
   build runs already. And report coverage twice, with and without the tests in the register.
 
@@ -89,12 +88,11 @@ Say: Test smells were first catalogued in 2001, in a paper called Refactoring Te
   ones.
 
 ## closing: Find out more
-- https://github.com/fiftiesHousewife/under-test/blob/main/.github/skills/find-test-anti-patterns/SKILL.md — the toolkit's find-test-anti-patterns skill
 - https://www.archunit.org/userguide/html/000_Index.html — ArchUnit's user guide, with frozen rules
 - https://pmd.github.io/pmd/pmd_userdocs_cpd.html — PMD's copy-paste detector
 - {lessons-repo} — run this lesson yourself: its test code and examples
 - Exercise: count mocks made with calls to mock(); the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with the toolkit's skill for finding test anti-patterns, ArchUnit's user guide, and PMD's
-  copy-paste detector. The links on screen also take you to this lesson's test code, to run yourself. And try the
-  exercise in the README: count the mocks a test class makes with calls, as well as the marked fields.
+Say: To find out more, start with ArchUnit's user guide, and PMD's copy-paste detector. The links on screen also take
+  you to this lesson's test code, to run yourself. And try the exercise in the README: count the mocks a test class
+  makes with calls, as well as the marked fields.

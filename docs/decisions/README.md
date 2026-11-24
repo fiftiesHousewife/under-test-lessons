@@ -20,7 +20,8 @@ below in step when adding a record.
 | [The old command-line programs lesson may use forbidden APIs in its today code](0023-the-old-command-line-programs-lesson-may-use-forbidden-apis-in-its-today-code.md) | accepted |
 | [Examples build on current Java, and each README says what to use on older Java](0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md) | accepted |
 | [Every lesson has an exercise whose answer the build checks](0029-every-lesson-has-a-checked-exercise.md) | accepted |
-| [A lesson that teaches a step of the toolkit's journey names that step's skill](0033-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill.md) | accepted |
+| [A lesson that teaches a step of the toolkit's journey names that step's skill](0033-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill.md) | superseded |
+| [Lessons teach established external frameworks](0034-lessons-teach-established-external-frameworks.md) | accepted |
 
 ## Videos and slides
 

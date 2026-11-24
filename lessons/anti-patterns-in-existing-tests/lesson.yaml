@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=../../schema/lesson.schema.json
 id: anti-patterns-in-existing-tests
 title: Anti-patterns in existing tests
-techniques: []
-skills: [find-test-anti-patterns]
+techniques: [architecture-rules]

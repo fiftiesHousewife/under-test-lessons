@@ -21,7 +21,7 @@ lesson's own) shows the "before"; without it, every test passes, so the whole re
 
 ## The lessons, and when you need them
 
-**Start here:** [Testing old Java code, a map](lessons/testing-old-java-code/README.md) ·
+**Start here:** [Testing old Java code, a journey](lessons/testing-old-java-code/README.md) ·
 [deck](https://fiftieshousewife.github.io/under-test-lessons/testing-old-java-code.html) is an overview that introduces
 every kind of test and technique below, and links to each lesson. Lessons in *italics* are still to come.
 
@@ -134,8 +134,7 @@ in every new test, and when reviewing tests written by people or by AI.
 
 The lessons in italics above, in the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
-1. **Before you change anything:** the safety inventory.
-2. **Message consumers on Kafka,** and **AI-written tests that pass the acceptance check.**
+1. **Message consumers on Kafka,** and **AI-written tests that pass the acceptance check.**
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

@@ -11,8 +11,7 @@ import java.util.stream.Stream;
 
 /**
  * A checkout of the toolkit (under-test). Its technique ids are the folders under {@code techniques/} that hold a
- * {@code technique.yaml}; its skills, the steps of its journey, are the folders under {@code .github/skills/} that hold
- * a {@code SKILL.md}.
+ * {@code technique.yaml}.
  */
 public record Toolkit(Path root) {
 
@@ -30,17 +29,4 @@ public record Toolkit(Path root) {
         }
     }
 
-    public Set<String> skillNames() {
-        final Path skills = root.resolve(".github/skills");
-        if (!Files.isDirectory(skills)) {
-            return Set.of();
-        }
-        try (Stream<Path> folders = Files.list(skills)) {
-            return folders.filter(folder -> Files.isRegularFile(folder.resolve("SKILL.md")))
-                    .map(folder -> String.valueOf(folder.getFileName()))
-                    .collect(Collectors.toCollection(TreeSet::new));
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
 }
