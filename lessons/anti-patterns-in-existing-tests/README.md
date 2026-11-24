@@ -66,10 +66,9 @@ twice, with and without the tests in the register: a test with no real assertion
 
 The skill counts seven kinds; the lesson's checks find five.
 
-- **Tests that reach shared systems,** such as a test that names a production database, show up when the tests run
-  unplugged: [Running old code unplugged](../running-old-code-unplugged/README.md) runs them under the airgap agent,
-  whose report names each test and the machine it tried to reach. The skill also looks for host names in the test
-  code and its settings files.
+- **Tests that reach shared systems,** such as a test that names a production database, show up when the tests run on a
+  machine with no route to them: each such test fails, naming the machine it tried to reach. The skill also looks for
+  host names in the test code and its settings files.
 - **Copy-pasted tests** are found by PMD's copy-paste detector, which this repository's build already runs as
   `cpdCheck` (75 tokens or more). Point it at an old repo's test folders to list them.
 

@@ -70,8 +70,6 @@ jakarta-jms = "3.1.0"
 pact-jvm = "4.7.7"
 # The Spring tests in slices lesson. Spring Boot 4.2 runs on Spring Framework 7.1; its BOM sets its starters' versions.
 spring-boot = "4.2.0"
-# The running old code unplugged lesson: the airgap agent and its JUnit listener.
-airgap = "0.1.0"
 
 [libraries]
 jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
@@ -147,8 +145,3 @@ spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-bo
 spring-boot-starter-data-jpa-test = { module = "org.springframework.boot:spring-boot-starter-data-jpa-test" }
 # WireMock with its own Jetty 11 inside: Spring Boot 4's BOM lifts the plain artifact's Jetty to 12, where it can't start
 wiremock-standalone = { module = "org.wiremock:wiremock-standalone", version.ref = "wiremock" }
-# The running old code unplugged lesson: JDBC on its own, without JPA; Spring Boot's BOM sets its version
-spring-boot-starter-jdbc = { module = "org.springframework.boot:spring-boot-starter-jdbc" }
-# The running old code unplugged lesson: the airgap agent, named on the test JVM's command line, and its JUnit listener
-airgap-agent = { module = "io.github.fiftieshousewife.airgap:airgap-agent", version.ref = "airgap" }
-airgap-junit = { module = "io.github.fiftieshousewife.airgap:airgap-junit", version.ref = "airgap" }

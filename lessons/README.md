@@ -1,6 +1,8 @@
 # Lessons
 
-One folder per lesson, each teaching one testing technique on old Java code. The repository's
+One folder per lesson, each teaching one testing technique on old Java code, with an established external framework or
+library (JUnit, ArchUnit, PIT, WireMock and the like). A deck about this repository's or the toolkit's own process is
+separate work, never a lesson. The repository's
 [README](../README.md) groups them by when you need them; [the catalogue](CATALOGUE.md) is the plan, with the lessons
 still to come.
 
@@ -11,6 +13,26 @@ still to come.
 | `README.md` | The lesson: what the technique is for, the commands to run and what each shows, when to use it |
 | `example/` | A small runnable Gradle project (`:lessons:<id>`): today's code and the fix, switched by `-Pcode=today` (the four oldest lessons have their own switch), with a weak test and a strong one |
 | `media/` | The video script (`.tape`), narration, slides, and the generated slide deck (`.deck.html`); videos, captions and audio are generated from them, never edited by hand |
+
+## How every lesson runs
+
+Every deck and video follows the same flow, so a viewer always knows where they are:
+
+1. **What the lesson covers**, before anything else: the technique, the framework, the problem it will show and how
+   the framework fixes it, in two or three sentences ("This lesson is about mutation testing, with PIT...").
+2. **The problem**, in the example's own terms and numbers: what goes wrong today, and why it matters.
+3. **Our example**, in everyday terms, before anything refers to it.
+4. **The fix**, in a sentence or two, with the technique's own term explained where it first appears.
+5. **How the framework looks**: the annotation, setting or command as it really is, then the shared "how we build"
+   slide.
+6. **In the video, the terminal scenes:** the build step by step, the code under test, the weak tests, the before
+   run, the strong tests, the after run.
+7. **When to use it, and where it came from.**
+8. **Find out more, and the exercise:** the framework's own pages, this lesson's code, and one exercise whose answer
+   the build checks.
+
+The [write-lesson-slides-and-narration skill](../.github/skills/write-lesson-slides-and-narration/SKILL.md) has the
+detail of each step.
 
 Shared pieces live in [`_shared/`](_shared/): the video tools and their checks (which run in `./gradlew check`), the
 in-terminal helpers, the slide styles, themes, pictures and figures, the shared "how we build" slide, and the
@@ -56,7 +78,6 @@ Words follow [GLOSSARY.md](../GLOSSARY.md). The rules for when each technique ap
 | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md) | [refactoring-for-testability](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/refactoring-for-testability/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) |
 | [Comparing structured output](structured-output-comparison/README.md) | [structured-output-comparison](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/structured-output-comparison/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) |
 | [Responses checked against the OpenAPI document](openapi-response-checks/README.md) | [openapi-response-checks](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/openapi-response-checks/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) |
-| [Running old code unplugged](running-old-code-unplugged/README.md) | journey step: [draft-the-connection-list](https://github.com/fiftiesHousewife/under-test/blob/main/.github/skills/draft-the-connection-list/SKILL.md) | [deck](https://fiftieshousewife.github.io/under-test-lessons/running-old-code-unplugged.html) |
 | [Slow and failing dependencies](slow-and-failing-dependencies/README.md) | [recorded-http-responses](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/recorded-http-responses/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) |
 | [Spring tests in slices](spring-tests-in-slices/README.md) | [spring-tests-in-slices](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/spring-tests-in-slices/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/spring-tests-in-slices.html) |
 | [Tags: fast tests first, slow tests apart](junit-tags/README.md) | [junit-tags](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/junit-tags/technique.yaml) | [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-tags.html) |

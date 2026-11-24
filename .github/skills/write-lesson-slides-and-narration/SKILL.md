@@ -17,17 +17,26 @@ it on "need".
 
 ## The story, in order
 
+Every lesson teaches an established external framework or library (JUnit, ArchUnit, PIT, WireMock and the like). Never
+promote this repository's or the toolkit's own tools or process in a lesson: a deck about our own process is separate
+work.
+
 **Intro slides** (`media/<id>.slides.md`, `## intro:` headings). Start from the example, never from definitions:
 a newcomer follows a concrete problem, and an abstract slide before it makes little sense.
-1. **The problem, in the example:** what goes wrong today, in the example's own terms and numbers ("a shop's build
+1. **What the lesson covers,** at the start of the first slide's narration, before the problem: the technique, the
+   framework, the problem it will show and how the framework fixes it, in two or three sentences, then `[pause 1s]`.
+   "This lesson is about mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
+   whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
+   bugs and counts the ones caught." Never open with a bare "Here is the problem".
+2. **The problem, in the example:** what goes wrong today, in the example's own terms and numbers ("a shop's build
    has 4 quick tests and 2 slow ones; every run waits for the slow ones"), and why that matters.
-2. **Our example**, in everyday terms, before anything refers to it: "a shop's discount rules: 5% off orders of £50 or
+3. **Our example**, in everyday terms, before anything refers to it: "a shop's discount rules: 5% off orders of £50 or
    more...". Never mention a class name before this slide has explained what it does.
-3. **The fix**, in a sentence or two, with the technique's own term explained through the example where it first
+4. **The fix**, in a sentence or two, with the technique's own term explained through the example where it first
    appears ("label the slow tests: JUnit calls the label a tag"). No separate "what we'll compare" slide: the
    terminal scenes show today's code, the weak tests and the strong ones.
-4. **How the tool works**, as it really looks: the annotation, the setting, the command, not a description of them.
-5. **How we build**, the shared slide, `Include: how-we-build`. Never a terminal scene, and never rewritten per lesson.
+5. **How the tool works**, as it really looks: the annotation, the setting, the command, not a description of them.
+6. **How we build**, the shared slide, `Include: how-we-build`. Never a terminal scene, and never rewritten per lesson.
 
 **Terminal scenes** (`media/<id>.tape`, narrated in `media/<id>.narration.md`, one item per scene):
 1. **The build, one step per scene:** the version catalogue entry, adding the plugin or library, configuring it. Show

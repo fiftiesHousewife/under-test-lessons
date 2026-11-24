@@ -9,7 +9,9 @@ Every step in this skill is **[inside]** ([AGENTS.md](../../../AGENTS.md#which-g
 JDK, Gradle and the installed Chrome, so it runs in a company too. Voicing the deck and making the video are
 **[production]**, in [make-a-lesson-video](../make-a-lesson-video/SKILL.md).
 
-Every lesson follows one recipe, so most of the work is filling it in. The reader is an engineer who has never used
+Every lesson teaches an established external framework or library, never this repository's or the toolkit's own
+tools or process (a deck about our own process is separate work). Every lesson follows one recipe, and one flow,
+listed in [the lessons README](../../../lessons/README.md#how-every-lesson-runs), so most of the work is filling it in. The reader is an engineer who has never used
 the technique; the lesson must make its value obvious in a few minutes. Words follow [GLOSSARY.md](../../../GLOSSARY.md).
 Good models: `lessons/recorded-http-responses/` (a library added to the build), `lessons/nested-tests/` (nothing to
 add), `lessons/real-databases-in-tests/` (container tests).
