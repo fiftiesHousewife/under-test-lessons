@@ -26,7 +26,7 @@ paid once. The provider answers `201 Created` with a refund id.
   too. A key made from the order's number would treat that second refund as a repeat, and never pay it.
   [`RefundKeyTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundKeyTest.java)
   checks both.
-- [`RefundAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundAnswerTest.java)
+- [`RefundResponseTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundResponseTest.java)
   is the "before": WireMock answers, and the tests check the answer was handled (a refund id, an outage, no answer at
   all). They pass on both versions.
 - [`RefundRequestTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outgoing/RefundRequestTest.java)
@@ -46,7 +46,7 @@ with odd pence, £19.99.
    which runs against today's client with:
 
 ```bash
-./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer   # today's client: 3 of 5 tests fail; the answer expected 1 and 1999 but was 0.01 and 19.99
+./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer   # today's client: 3 of 5 tests fail; the answer expected 1 and 1999 but got 0.01 and 19.99, not whole numbers
 ```
 
 ## Watch it, or present it

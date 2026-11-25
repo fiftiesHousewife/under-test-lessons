@@ -1,7 +1,7 @@
 $ ./gradlew :lessons:checking-outgoing-requests:test
 RefundKeyTest > eachRefundHasItsOwnKeyAndARetryRepeatsIt() PASSED
 RefundRequestTest > sendsTheRefundTheProviderExpects() PASSED
-RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
-RefundAnswerTest > acceptedRefundGivesItsId() PASSED
+RefundResponseTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
+RefundResponseTest > acceptedRefundGivesItsId() PASSED
 OddAmountsAnswerTest > oddAmountsAreSentInWholePence() PASSED
 All 5 tests passed.

@@ -49,13 +49,13 @@ Say: How does JUnit make them? You mark a method as a test factory, and it retur
   name.
 
 ## closing: When to use dynamic tests
-- When the cases live in files: regression packs, sample messages, old bug reports
+- When the test cases live in files: regression packs, sample messages, old bug reports
 - Name each test after its file, so a failure points straight at it
-- For cases written in the test itself, parameterised tests are simpler
+- For test cases written in the test itself, parameterised tests are simpler
 Picture: map
-Say: When should you use dynamic tests? [pause 1600ms] When the cases live in files: regression packs, sample messages,
-  and old bug reports. Name each test after its file, so a failure points straight at it. And for cases written in the
-  test itself, parameterised tests are simpler.
+Say: When should you use dynamic tests? [pause 1600ms] When the test cases live in files: regression packs, sample
+  messages, and old bug reports. Name each test after its file, so a failure points straight at it. And for test cases
+  written in the test itself, parameterised tests are simpler.
 
 ## closing: Where they came from
 - Part of JUnit since JUnit 5, in 2017

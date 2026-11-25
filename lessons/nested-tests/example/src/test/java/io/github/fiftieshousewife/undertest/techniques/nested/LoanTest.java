@@ -28,7 +28,7 @@ class LoanTest {
         @Test
         @DisplayName("cannot be repaid")
         void cannotBeRepaid() {
-            assertThatIllegalStateException().isThrownBy(loan::repay);
+            assertThatIllegalStateException().as("repaying a loan that was never approved").isThrownBy(loan::repay);
         }
     }
 
@@ -51,7 +51,7 @@ class LoanTest {
         @Test
         @DisplayName("cannot be approved again")
         void cannotBeApprovedAgain() {
-            assertThatIllegalStateException().isThrownBy(loan::approve);
+            assertThatIllegalStateException().as("approving a loan a second time").isThrownBy(loan::approve);
         }
     }
 
@@ -68,13 +68,13 @@ class LoanTest {
         @Test
         @DisplayName("cannot be approved")
         void cannotBeApproved() {
-            assertThatIllegalStateException().isThrownBy(loan::approve);
+            assertThatIllegalStateException().as("approving a loan already repaid").isThrownBy(loan::approve);
         }
 
         @Test
         @DisplayName("cannot be repaid again")
         void cannotBeRepaidAgain() {
-            assertThatIllegalStateException().isThrownBy(loan::repay);
+            assertThatIllegalStateException().as("repaying a loan a second time").isThrownBy(loan::repay);
         }
     }
 }

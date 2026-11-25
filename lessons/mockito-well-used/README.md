@@ -69,7 +69,9 @@ be refused, and send nothing to the card.
 - **Don't mock value objects** such as orders and lines: make real ones, with a builder or a shared fixture if they
   are hard to make.
 - **Check results, not calls.** Where the result is a call across an edge (a payment, a message, an email), capture it
-  with an `ArgumentCaptor` and check what it carried. Use captors with `verify`, not with `when`.
+  with an `ArgumentCaptor` and check what it carried. Use captors with `verify`, not with `when`. When the argument is
+  a record, `verify(payments).refund(new Refund("card ending 4242", 1250))` is simpler: records compare by their
+  values. A captor earns its place when the test checks only part of what was sent.
 - **A fake is better** for something the code reads and writes a lot, such as a store or a queue: see
   [Fake behind an interface](../fake-behind-an-interface/README.md).
 - **Old code that can't take a stand-in yet:** first [replace its hard-wired dependencies](../replacing-hard-wired-dependencies/README.md).

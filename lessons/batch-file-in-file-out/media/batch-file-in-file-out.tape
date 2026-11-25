@@ -137,7 +137,7 @@ Sleep 300ms
 Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-settlement.csv 1 8 "settlement file the bank accepted, masked"`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedSubstitutes 28 31 "keyed substitutes" --zoom 29`
+Type@1ms `show KeyedSubstitutes 29 33 "keyed substitutes" --zoom 31-32`
 Enter
 Sleep 300ms
 Show

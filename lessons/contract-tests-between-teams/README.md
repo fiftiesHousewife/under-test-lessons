@@ -57,21 +57,24 @@ on any other library:
 3. **A Pact Broker** (or PactFlow) adds a record of which versions work together, but it is a service a team must
    host and own. Use one only where the platform team runs it; the tests don't change if you move to one later.
 
-In this lesson the folder
-[`example/package-repository/order-screen-pacts/1.0.0/`](example/package-repository/order-screen-pacts/1.0.0/order-screen-stock-service.json)
-stands in for the package repository: it holds the order screen's published pact, and it is the folder the provider's
-test reads. The consumer's test writes a fresh pact to `example/build/pacts/` on every run and never touches the
-published copy, so runs are repeatable and need no network. To publish a changed pact,
-`./gradlew :lessons:contract-tests-between-teams:publishPact` copies it into the folder, standing in for a real
-publication. The build also sets `pact_do_not_track`, so Pact JVM sends no usage figures over the internet.
+In this lesson the folder `example/package-repository/order-screen-pacts/` stands in for the package repository, with
+one folder per published version:
+[1.0.0](example/package-repository/order-screen-pacts/1.0.0/order-screen-stock-service.json), the kettle alone, is the
+one the provider's test reads, and
+[1.1.0](example/package-repository/order-screen-pacts/1.1.0/order-screen-stock-service.json) is what today's consumer
+tests write. The consumer's test writes a fresh pact to `example/build/pacts/` on every run and never touches the
+published copy, so runs are repeatable and need no network. To publish a changed pact as a new version,
+`./gradlew :lessons:contract-tests-between-teams:publishPact -PpactVersion=1.2.0` copies it into that version's folder,
+standing in for a real publication; it needs the version, so it never writes over one already published. The build also sets `pact_do_not_track`, so Pact JVM sends no usage figures over the internet.
 
 Pact JVM 4.7, used here, needs Java 17 or later. On older code bases, use the 4.5 line for Java 11, and the 4.1 line
 for Java 8, which Pact no longer supports actively.
 
 ## Exercise
 
-The order screen's team has published version 1.1.0 of its pact. Beside the kettle, it now writes down what the order
-screen relies on when the shop doesn't stock an item: a 404, with an error message. The stock service's build should verify the
+The order screen's team has published version 1.1.0 of its pact. Beside the kettle, a second interaction in
+[`StockClientPactTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/contracts/consumer/StockClientPactTest.java)
+now writes down what the order screen relies on when the shop doesn't stock an item: a 404, with an error message. The stock service's build should verify the
 new version too, with a state for the new request.
 
 1. Read [version 1.1.0 of the pact](example/package-repository/order-screen-pacts/1.1.0/order-screen-stock-service.json),
@@ -82,7 +85,7 @@ new version too, with a state for the new request.
    which runs against today's stock service with:
 
 ```bash
-./gradlew :lessons:contract-tests-between-teams:test -Pcode=answer   # today's stock service: 2 of 7 tests fail; the new request for an item nobody stocks passes, the kettle still fails
+./gradlew :lessons:contract-tests-between-teams:test -Pcode=answer   # today's stock service: 2 of 8 tests fail; the new request for an item the shop doesn't stock passes, the kettle still fails
 ```
 
 ## Watch it, or present it

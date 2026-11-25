@@ -8,4 +8,8 @@ public final class ProviderUnavailableException extends RuntimeException {
     public ProviderUnavailableException(final String message) {
         super(message);
     }
+
+    public ProviderUnavailableException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

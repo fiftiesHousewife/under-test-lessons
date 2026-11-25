@@ -27,13 +27,16 @@ tasks.test {
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
 }
 
-// Stands in for the order screen's build publishing its pact to the company's package repository, as version 1.0.0.
+// Stands in for the order screen's build publishing its pact to the company's package repository, as the version given:
+//   ./gradlew :lessons:contract-tests-between-teams:test :lessons:contract-tests-between-teams:publishPact -PpactVersion=1.1.0
 // In a real build this is a Maven publication of the pact file; the stock service's build then depends on it by version.
+val pactVersion = providers.gradleProperty("pactVersion")
+    .orElse(providers.provider { error("publishPact needs the version to publish, such as -PpactVersion=1.1.0") })
 tasks.register<Copy>("publishPact") {
     description = "Copies the pact the order screen's tests wrote into the folder that stands in for the package repository."
     dependsOn(tasks.test)
     from(layout.buildDirectory.dir("pacts"))
-    into(layout.projectDirectory.dir("package-repository/order-screen-pacts/1.0.0"))
+    into(layout.projectDirectory.dir(pactVersion.map { "package-repository/order-screen-pacts/$it" }))
 }
 
 // Today's stock service is the "before", run with -Pcode=today; coverage is measured on the rest.

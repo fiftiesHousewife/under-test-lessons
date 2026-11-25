@@ -8,4 +8,8 @@ public final class SupplierUnavailableException extends RuntimeException {
     public SupplierUnavailableException(final String message) {
         super(message);
     }
+
+    public SupplierUnavailableException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 }

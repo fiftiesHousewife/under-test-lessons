@@ -14,7 +14,7 @@ public final class SupplierHttp {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();
 
-    private final HttpClient http = HttpClient.newHttpClient();
+    private static final HttpClient HTTP = HttpClient.newHttpClient();
     private final URI base;
 
     public SupplierHttp(final URI base) {
@@ -25,12 +25,12 @@ public final class SupplierHttp {
         final String path = "/postcodes/" + URLEncoder.encode(postcode, StandardCharsets.UTF_8).replace("+", "%20");
         final HttpRequest request = HttpRequest.newBuilder(base.resolve(path)).GET().build();
         try {
-            return http.send(request, HttpResponse.BodyHandlers.ofString());
+            return HTTP.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException e) {
-            throw new SupplierUnavailableException("the postcode supplier can't be reached");
+            throw new SupplierUnavailableException("the postcode supplier can't be reached", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new SupplierUnavailableException("interrupted while asking the postcode supplier");
+            throw new SupplierUnavailableException("interrupted while asking the postcode supplier", e);
         }
     }
 

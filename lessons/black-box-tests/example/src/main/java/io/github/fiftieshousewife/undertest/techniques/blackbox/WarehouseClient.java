@@ -13,7 +13,7 @@ public final class WarehouseClient implements Warehouse {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();
 
-    private final HttpClient http = HttpClient.newHttpClient();
+    private static final HttpClient HTTP = HttpClient.newHttpClient();
     private final URI base;
 
     public WarehouseClient(final URI base) {
@@ -38,7 +38,7 @@ public final class WarehouseClient implements Warehouse {
 
     private HttpResponse<String> exchange(final HttpRequest request) {
         try {
-            return http.send(request, HttpResponse.BodyHandlers.ofString());
+            return HTTP.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException e) {
             throw new IllegalStateException("the warehouse can't be reached", e);
         } catch (InterruptedException e) {

@@ -14,6 +14,7 @@ public final class StockClient {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();
     private static final HttpClient HTTP = HttpClient.newHttpClient();
+    private static final int NOT_FOUND = 404;
 
     private final URI stockService;
 
@@ -21,10 +22,13 @@ public final class StockClient {
         this.stockService = stockService;
     }
 
-    /** The item's stock level, read from the stock service's answer. */
+    /** The item's stock level, read from the stock service's answer; an item the shop doesn't stock is refused. */
     public StockLevel stockOf(final String sku) {
         final HttpResponse<String> answer = get(stockService.resolve("/stock/" + sku));
         final JsonNode item = JSON.readTree(answer.body());
+        if (answer.statusCode() == NOT_FOUND) {
+            throw new NoSuchItemException(item.path("error").asString());
+        }
         return new StockLevel(item.required("sku").asString(), item.required("available").asInt());
     }
 

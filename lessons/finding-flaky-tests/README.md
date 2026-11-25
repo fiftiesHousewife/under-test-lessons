@@ -30,7 +30,9 @@ machine is, and the fix is in the tests.
   on the moment the confirmation has gone. It passes every run on either machine.
 
 The busy machine is made repeatable for the lesson: the slow message is always the third, so the failure is the same
-on every run. Real flaky tests are rarely so polite; that is why five runs, not one, are the gate.
+on every run. Real flaky tests are rarely so polite; that is why five runs, not one, are the gate. On the quiet
+machine the sleeping test still guesses: it passes because 200 ms is nearly always enough, and a heavily loaded
+build machine can still fail it. That is the reason to replace it, not to keep it.
 
 ## Exercise
 
@@ -61,7 +63,8 @@ that names what was missing if time runs out.
   or rerun the build), and let it in only if every run passes. Five runs are a cheap first filter, not proof: a test
   that fails one run in a hundred passes five in a row about 95 times in 100. Rare flakes show up only over many runs,
   such as `@RepeatedTest(100)` left to run overnight, or in CI's history of tests that failed and then passed on a
-  rerun.
+  rerun. Nothing makes a new test repeat itself: the gate is a rule the team keeps, in review or in the CI job that
+  runs changed tests.
 - **When a build fails and passes on a rerun:** find the test that failed, rather than just rerunning it.
 - **In tests of background work, messages or anything with a timeout:** wait for the result with Awaitility, never
   `Thread.sleep` for a guess. Better still, where the code allows it, inject the executor or `Clock` so the test

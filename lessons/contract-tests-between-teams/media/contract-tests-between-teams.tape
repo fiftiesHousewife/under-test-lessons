@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test, the consumer: the order screen reads *available* from the stock service."`
 Enter
 Sleep 300ms
-Type@1ms `show StockClient.java 25 33 "the order screen's client" --zoom 32`
+Type@1ms `show StockClient.java 26 33 "the order screen's client" --zoom 32`
 Enter
 Sleep 300ms
 Show

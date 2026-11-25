@@ -31,7 +31,7 @@ Callers make mistakes too. One who sends `"night": 2`, misspelling the field, mu
 
 1. Add a test class beside [`BookingApiTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outsidein/BookingApiTest.java) that posts
    `{"room": "101", "night": 2}` to the running service, started the way [`Services`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outsidein/Services.java) starts it.
-2. Expect `400` and the error `nights must be at least 1`.
+2. Expect `400` and the error `nights is required`.
 3. Compare with the answer, [`MisspeltFieldAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/outsidein/answer/MisspeltFieldAnswerTest.java), which runs against
    today's service with:
 

@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "The *weak* test: a stand-in provider answers, and the test checks the answer was handled."`
 Enter
 Sleep 300ms
-Type@1ms `show RefundAnswerTest 35 39 "the weak test" --zoom 38`
+Type@1ms `show RefundResponseTest 35 39 "the weak test" --zoom 38`
 Enter
 Sleep 300ms
 Show

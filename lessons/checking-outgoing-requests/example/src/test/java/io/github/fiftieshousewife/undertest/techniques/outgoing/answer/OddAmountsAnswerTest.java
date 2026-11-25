@@ -14,6 +14,7 @@ import io.github.fiftieshousewife.undertest.techniques.outgoing.Refund;
 import io.github.fiftieshousewife.undertest.techniques.outgoing.Refunds;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
 /*
@@ -46,6 +47,7 @@ class OddAmountsAnswerTest {
     }
 
     private static String amount(final LoggedRequest request) {
-        return JSON.readTree(request.getBodyAsString()).path("amount").asString();
+        final JsonNode amount = JSON.readTree(request.getBodyAsString()).path("amount");
+        return amount.isIntegralNumber() ? amount.asString() : "not a whole number: " + amount;
     }
 }

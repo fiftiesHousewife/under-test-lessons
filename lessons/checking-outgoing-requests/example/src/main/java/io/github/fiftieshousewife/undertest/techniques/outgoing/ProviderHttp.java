@@ -13,7 +13,7 @@ public final class ProviderHttp {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();
 
-    private final HttpClient http = HttpClient.newHttpClient();
+    private static final HttpClient HTTP = HttpClient.newHttpClient();
     private final URI base;
     private final String apiKey;
 
@@ -43,12 +43,12 @@ public final class ProviderHttp {
 
     private HttpResponse<String> exchange(final HttpRequest request) {
         try {
-            return http.send(request, HttpResponse.BodyHandlers.ofString());
+            return HTTP.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException e) {
-            throw new ProviderUnavailableException("the payment provider can't be reached");
+            throw new ProviderUnavailableException("the payment provider can't be reached", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new ProviderUnavailableException("interrupted while asking the payment provider");
+            throw new ProviderUnavailableException("interrupted while asking the payment provider", e);
         }
     }
 }

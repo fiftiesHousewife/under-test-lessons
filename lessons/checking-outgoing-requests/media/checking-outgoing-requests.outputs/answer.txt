@@ -1,6 +1,4 @@
 $ ./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer
-RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
-RefundAnswerTest > acceptedRefundGivesItsId() PASSED
 RefundKeyTest > eachRefundHasItsOwnKeyAndARetryRepeatsIt() FAILED
     org.opentest4j.AssertionFailedError: [the Idempotency-Key of each refund sent]
     expected: ["RF-5501", "RF-5502", "RF-5502"]
@@ -27,8 +25,10 @@ RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
       "amount" : 12.5,
       "currency" : "GBP"
     }>
+RefundResponseTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
+RefundResponseTest > acceptedRefundGivesItsId() PASSED
 OddAmountsAnswerTest > oddAmountsAreSentInWholePence() FAILED
     org.opentest4j.AssertionFailedError: [the amount in each refund sent]
     expected: ["1", "1999"]
-     but was: ["0.01", "19.99"]
+     but was: ["not a whole number: 0.01", "not a whole number: 19.99"]
 5 tests completed, 3 failed

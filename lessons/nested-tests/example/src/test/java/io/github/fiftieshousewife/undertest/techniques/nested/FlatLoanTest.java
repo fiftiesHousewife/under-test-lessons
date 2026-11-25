@@ -33,6 +33,6 @@ class FlatLoanTest {
         final Loan loan = Loans.newLoan();
         loan.approve();
         loan.repay();
-        assertThatIllegalStateException().isThrownBy(loan::repay);
+        assertThatIllegalStateException().as("repaying a loan a second time").isThrownBy(loan::repay);
     }
 }

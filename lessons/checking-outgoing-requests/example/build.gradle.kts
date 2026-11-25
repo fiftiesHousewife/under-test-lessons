@@ -11,8 +11,7 @@ dependencies {
 }
 
 // `./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer` runs today's client with the exercise's answer
-// (answer/*AnswerTest), which -Pcode=today leaves out. RefundAnswerTest is one of the lesson's own tests, so the
-// answer is left out by its package.
+// (the answer package), which -Pcode=today leaves out.
 val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
     systemProperty("code", code)

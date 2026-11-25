@@ -19,7 +19,8 @@ class KeyedSubstitutesTest {
         assertAll(
                 () -> assertThat(payment.split(",")[0]).as("same substitute in both files")
                         .isEqualTo(settlement.split(",")[1]),
-                () -> assertThat(payment).as("masked payment").doesNotContain("40518812").matches("\\d{8},1250"),
+                () -> assertThat(payment).as("masked payment").doesNotContain("40518812")
+                        .matches("TEST-\\p{XDigit}{12},1250"),
                 () -> assertThat(mask.account("40518813")).as("another account")
                         .isNotEqualTo(mask.account("40518812")));
     }

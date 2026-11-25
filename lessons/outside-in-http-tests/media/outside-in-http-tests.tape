@@ -121,7 +121,7 @@ Sleep 300ms
 Type@1ms `note "The service that answers 201 Created, or 400 Bad Request:"`
 Enter
 Sleep 300ms
-Type@1ms `show BookingHandler 16 26 "the fixed service" --zoom 22-24`
+Type@1ms `show BookingHandler 20 35 "the fixed service" --zoom 29-31`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:outside-in-http-tests:test"`

@@ -179,18 +179,18 @@ Say: Now we talk about feature flags. [pause 600ms] A feature flag is a switch t
   the new code behind a switch, and test it with the switch both off and on. OpenFeature is a standard way for code to
   read its flags. Remove the old code only once the new code has proved itself.
 
-## intro: More cases: tables and properties
-- One test, many cases: a table of inputs and the answers expected
-- Let the computer find the cases: generated inputs, checked against a rule
-- Group tests by situation, so a missing case is easy to see
+## intro: More test cases: tables and properties
+- One test, many test cases: a table of inputs and the answers expected
+- Let the computer find the test cases: generated inputs, checked against a rule
+- Group tests by situation, so a missing test case is easy to see
 - lesson: Parameterised tests (parameterised-tests)
 - lesson: Property-based testing (property-based-testing)
 - lesson: Nested tests (nested-tests)
 - lesson: Dynamic tests (dynamic-tests)
 Picture: table
-Say: Now we talk about tests that check more cases. [pause 600ms] Parameterised tests run one test over a table of
-  cases. Property-based tests make up hundreds of inputs, and check a rule against each. Nested tests group tests by
-  situation. [pause 800ms] They answer the question: how do we write fewer tests that check more? [pause 600ms] Each
+Say: Now we talk about tests that check more test cases. [pause 600ms] Parameterised tests run one test over a table of
+  test cases. Property-based tests make up hundreds of inputs, and check a rule against each. Nested tests group tests
+  by situation. [pause 800ms] They answer the question: how do we write fewer tests that check more? [pause 600ms] Each
   lesson takes one of these ideas.
 
 ## intro: Keep tests trustworthy: Mockito, ArchUnit

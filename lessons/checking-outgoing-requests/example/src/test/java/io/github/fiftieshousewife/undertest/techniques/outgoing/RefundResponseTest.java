@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
  * BEFORE: a stand-in provider gives its answer, and the tests check the code handled it. Nothing checks the request
  * the code sent, so a wrong amount or a missing header goes unnoticed.
  */
-class RefundAnswerTest {
+class RefundResponseTest {
 
     private final WireMockServer provider = new WireMockServer(options().dynamicPort());
 

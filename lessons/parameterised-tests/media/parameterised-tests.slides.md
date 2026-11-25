@@ -6,11 +6,11 @@ Maven Central (junit-jupiter-params, first released with JUnit 5.0.0 in Septembe
 
 ## intro: Parameterised tests
 - The problem: the VAT comes out a penny short
-- The fix: one test, a table of cases
+- The fix: one test, a table of test cases
 - The tool: JUnit
 Picture: road
-Say: This lesson is about parameterised tests: one test, with a table of cases. We'll see VAT that comes out a penny
-  short, and how JUnit runs the same test for every row of the table.
+Say: This lesson is about parameterised tests: one test, with a table of test cases. We'll see VAT that comes out a
+  penny short, and how JUnit runs the same test for every row of the table.
 
 ## intro: The VAT comes out a penny short
 - On a price of 3 pence, VAT should be 1 penny: the calculator says 0
@@ -19,7 +19,7 @@ Say: This lesson is about parameterised tests: one test, with a table of cases. 
 Picture: bug
 Say: Here is the problem. On a price of 3 pence, the VAT should be 1 penny, and the calculator says 0. On 998 pence, it
   should be 200, and the calculator says 199. Yet all 3 tests pass. They try only zero, £1 and £10, round numbers where
-  rounding never comes into it. Each case is a whole copied test, so the awkward ones never made it in.
+  rounding never comes into it. Each test case is a whole copied test, so the awkward ones never made it in.
 
 ## intro: Our example: VAT on a price
 - Work out VAT at 20% on a net price, in pence
@@ -28,37 +28,37 @@ Say: Here is the problem. On a price of 3 pence, the VAT should be 1 penny, and 
 Picture: tag
 Say: Our example works out VAT, at 20 percent, on a price before tax, in pence, and rounds it to the nearest penny.
   20 percent is a fifth, and a fifth of a price can end in part of a penny, which should round up, or down. So every
-  way the rounding can go is a case worth checking.
+  way the rounding can go is a test case worth checking.
 
-## intro: The fix: one test, a table of cases
-- Write the check once, and list the cases as rows of a table
+## intro: The fix: one test, a table of test cases
+- Write the check once, and list the test cases as rows of a table
 - Each row holds a price and the VAT it should give
-- A new case is one more row, so the awkward ones get added
+- A new test case is one more row, so the awkward ones get added
 Picture: table
-Say: The fix is to write the check once, and list the cases as a table. This is called a parameterised test: one test
-  that runs once for each row. Each row holds a price and the VAT it should give. A new case costs one more row, not a
-  copied test, so the awkward cases, like 3 pence, get added.
+Say: The fix is to write the check once, and list the test cases as a table. This is called a parameterised test: one
+  test that runs once for each row. Each row holds a price and the VAT it should give. A new test case costs one more
+  row, not a copied test, so the awkward test cases, like 3 pence, get added.
 
 ## intro: How JUnit runs the table
 - @ParameterizedTest(name = "{0} pence net gives {1} pence VAT")
-- @CsvSource({"3, 1", "998, 200"}): one row per case
+- @CsvSource({"3, 1", "998, 200"}): one row per test case
 - Each row is its own test: 3 pence net gives 1 pence VAT FAILED
 Picture: robot
 Say: How does JUnit run the table? You mark the method as a parameterised test, with a pattern for each run's name.
   You give the rows as comma separated values, a price and its VAT. JUnit runs the method once per row, and reports
-  each row by its name. So the failure says exactly which case broke: 3 pence net gives 1 pence VAT.
+  each row by its name. So the failure says exactly which test case broke: 3 pence net gives 1 pence VAT.
 
 Include: how-we-build
 
 ## closing: When to use parameterised tests
 - Whenever the same check runs on several inputs: boundaries, rounding, conversions, validation
-- Give every row a readable name, so a failure says which case broke
+- Give every row a readable name, so a failure says which test case broke
 - Keep one idea per test
 - Rows that need different checks belong in different tests
 Picture: map
 Say: When should you use them? [pause 1600ms] Whenever the same check runs on several inputs, like boundaries, rounding,
-  conversions, and validation rules. Give every row a readable name, so a failure tells you which case broke. And keep
-  one idea per test.
+  conversions, and validation rules. Give every row a readable name, so a failure tells you which test case broke. And
+  keep one idea per test.
 
 ## closing: Where they came from
 - JUnit 4 ran a test once for each row of a table, with its Parameterized runner

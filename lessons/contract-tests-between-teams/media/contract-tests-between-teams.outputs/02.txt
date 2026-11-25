@@ -1,9 +1,10 @@
 $ ./gradlew :lessons:contract-tests-between-teams:test
 StockServicePactTest > meetsThePact(PactVerificationContext) > order-screen - a request for the kettle's stock PASSED
 StockClientPactTest > readsHowManyAreAvailable(MockServer) PASSED
+StockClientPactTest > refusesAnItemTheShopDoesNotStock(MockServer) PASSED
 StockClientTest > readsHowManyAreAvailable() PASSED
 StockServiceTest > anItemNobodyStocks() PASSED
 StockServiceTest > anItemOnTheShelves() PASSED
+NewPactVersionAnswerTest > meetsVersion110(PactVerificationContext) > order-screen - a request for an item the shop doesn't stock PASSED
 NewPactVersionAnswerTest > meetsVersion110(PactVerificationContext) > order-screen - a request for the kettle's stock PASSED
-NewPactVersionAnswerTest > meetsVersion110(PactVerificationContext) > order-screen - a request for an item nobody stocks PASSED
-All 7 tests passed.
+All 8 tests passed.

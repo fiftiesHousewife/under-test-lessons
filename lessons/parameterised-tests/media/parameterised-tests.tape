@@ -82,7 +82,7 @@ Type@1ms `show VatParameterisedTest 13 30 --zoom 20-24`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 16s
 
 # ---- Scene 5: the table finds a bug ----
 Hide

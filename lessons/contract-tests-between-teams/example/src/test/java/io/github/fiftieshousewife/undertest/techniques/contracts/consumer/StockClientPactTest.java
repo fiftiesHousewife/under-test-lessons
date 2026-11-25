@@ -1,6 +1,7 @@
 package io.github.fiftieshousewife.undertest.techniques.contracts.consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import au.com.dius.pact.consumer.MockServer;
 import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
@@ -39,5 +40,24 @@ class StockClientPactTest {
     void readsHowManyAreAvailable(final MockServer stockService) {
         final StockClient client = new StockClient(URI.create(stockService.getUrl()));
         assertThat(client.stockOf("KETTLE-01")).isEqualTo(new StockLevel("KETTLE-01", 3));
+    }
+
+    @Pact(consumer = "order-screen")
+    V4Pact anItemTheShopDoesNotStock(final PactDslWithProvider stockService) {
+        return stockService
+                .given("nothing called TOASTER-99 is stocked")
+                .uponReceiving("a request for an item the shop doesn't stock")
+                .path("/stock/TOASTER-99").method("GET")
+                .willRespondWith().status(404)
+                .body(new PactDslJsonBody().stringType("error", "no item TOASTER-99"))
+                .toPact(V4Pact.class);
+    }
+
+    @Test
+    @PactTestFor(pactMethod = "anItemTheShopDoesNotStock")
+    void refusesAnItemTheShopDoesNotStock(final MockServer stockService) {
+        final StockClient client = new StockClient(URI.create(stockService.getUrl()));
+        assertThatExceptionOfType(NoSuchItemException.class).as("asking for TOASTER-99")
+                .isThrownBy(() -> client.stockOf("TOASTER-99")).withMessage("no item TOASTER-99");
     }
 }

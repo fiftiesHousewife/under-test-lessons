@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 /*
  * THE EXERCISE'S ANSWER: a caller who misspells the field, sending "night" instead of "nights", must be refused with
- * 400 Bad Request, not told 200 OK. Run it against today's service with {@code -Pcode=answer}.
+ * 400 Bad Request and the reason "nights is required", not told 200 OK. Run it against today's service with
+ * {@code -Pcode=answer}.
  */
 class MisspeltFieldAnswerTest {
 
@@ -22,7 +23,7 @@ class MisspeltFieldAnswerTest {
             given().port(service.port()).contentType("application/json").body("{\"room\": \"101\", \"night\": 2}")
                     .when().post("/bookings")
                     .then().statusCode(400)
-                    .body("error", equalTo("nights must be at least 1"));
+                    .body("error", equalTo("nights is required"));
         }
     }
 }

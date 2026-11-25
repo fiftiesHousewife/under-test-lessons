@@ -1,6 +1,4 @@
 $ ./gradlew :lessons:checking-outgoing-requests:test -Pcode=today
-RefundAnswerTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
-RefundAnswerTest > acceptedRefundGivesItsId() PASSED
 RefundKeyTest > eachRefundHasItsOwnKeyAndARetryRepeatsIt() FAILED
     org.opentest4j.AssertionFailedError: [the Idempotency-Key of each refund sent]
     expected: ["RF-5501", "RF-5502", "RF-5502"]
@@ -27,4 +25,6 @@ RefundRequestTest > sendsTheRefundTheProviderExpects() FAILED
       "amount" : 12.5,
       "currency" : "GBP"
     }>
+RefundResponseTest > outageAndSilenceSayTheProviderIsUnavailable() PASSED
+RefundResponseTest > acceptedRefundGivesItsId() PASSED
 4 tests completed, 2 failed

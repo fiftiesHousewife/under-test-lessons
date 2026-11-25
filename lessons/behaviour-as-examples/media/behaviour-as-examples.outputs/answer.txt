@@ -8,7 +8,7 @@ ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on th
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 31st day with a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt PASSED
 ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt PASSED
-ThirtiethDayAnswerTest > returnsTeamExample(String, int, String) > returned on the 30th day without a receipt FAILED
+ThirtiethDayAnswerTest > returnsTeamExample(ArgumentsAccessor) > returned on the 30th day without a receipt FAILED
     org.opentest4j.AssertionFailedError: [returned on the 30th day without a receipt]
     expected: "store credit"
      but was: "nothing"

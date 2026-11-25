@@ -6,23 +6,22 @@ import io.github.fiftieshousewife.undertest.techniques.examples.Policies;
 import io.github.fiftieshousewife.undertest.techniques.examples.ReturnedItem;
 import java.time.LocalDate;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 /*
- * THE EXERCISE'S ANSWER: one more row the returns team would write, the 30th day without a receipt. It is the same
- * boundary as their 30th-day example, on the other side of the receipt rule: the team's rules give store credit, and
- * today's code gives nothing. Run it against today's refunds with {@code -Pcode=answer}.
+ * THE EXERCISE'S ANSWER: the row the exercise adds to the returns team's examples, the 30th day without a receipt, in
+ * a copy of their table with the same columns. It is the same boundary as their 30th-day example, on the other side of
+ * the receipt rule: the team's rules give store credit, and today's code gives nothing. Run it against today's refunds
+ * with {@code -Pcode=answer}.
  */
 class ThirtiethDayAnswerTest {
 
-    private static final LocalDate BOUGHT = LocalDate.of(2027, 3, 1);
-
     @ParameterizedTest(name = "{0}", quoteTextArguments = false)
-    @CsvSource(textBlock = """
-            returned on the 30th day without a receipt, 30, store credit
-            """)
-    void returnsTeamExample(final String example, final int daysAfterBuying, final String refund) {
-        final ReturnedItem item = new ReturnedItem(BOUGHT, BOUGHT.plusDays(daysAfterBuying), false);
-        assertThat(Policies.underTest().refundFor(item).words()).as(example).isEqualTo(refund);
+    @CsvFileSource(resources = "/answer/returns-team-examples.csv", numLinesToSkip = 1)
+    void returnsTeamExample(final ArgumentsAccessor row) {
+        final boolean receipt = "yes".equals(row.getString(3));
+        final ReturnedItem item = new ReturnedItem(row.get(1, LocalDate.class), row.get(2, LocalDate.class), receipt);
+        assertThat(Policies.underTest().refundFor(item).words()).as(row.getString(0)).isEqualTo(row.getString(4));
     }
 }

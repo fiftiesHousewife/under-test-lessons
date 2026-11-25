@@ -1,5 +1,6 @@
 $ ./gradlew :lessons:contract-tests-between-teams:test -Pcode=today
 StockClientPactTest > readsHowManyAreAvailable(MockServer) PASSED
+StockClientPactTest > refusesAnItemTheShopDoesNotStock(MockServer) PASSED
 StockClientTest > readsHowManyAreAvailable() PASSED
 StockServicePactTest > meetsThePact(PactVerificationContext) > order-screen - a request for the kettle's stock FAILED
     java.lang.AssertionError: order-screen - Upon a request for the kettle's stock
@@ -13,4 +14,4 @@ StockServicePactTest > meetsThePact(PactVerificationContext) > order-screen - a 
             }
 StockServiceTest > anItemNobodyStocks() PASSED
 StockServiceTest > anItemOnTheShelves() PASSED
-5 tests completed, 1 failed
+6 tests completed, 1 failed

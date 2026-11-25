@@ -29,7 +29,8 @@ The example numbers a shop's invoices: each new invoice gets the highest number 
   [`Schema`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/inmemory/Schema.java), and gone when the test closes its connection. It checks exact numbers: the first
   invoice is 1, then 2 and 3.
 - [`FixedInvoiceBook`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/inmemory/fixed/FixedInvoiceBook.java) asks for `COALESCE(MAX(invoice_number), 0) + 1`: plain SQL,
-  the same on every database.
+  the same on every database. It is still unsafe when two invoices are issued at once, since both can read the same
+  largest number; a database sequence, or a unique key and a retry, fixes that.
 - [`PortableSqlTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/PortableSqlTest.java) keeps the choice honest: it reads every piece of SQL in the code and
   fails on SQL that only PostgreSQL runs, or whose answer depends on the database (`ILIKE`, `NULLS FIRST`,
   `ON CONFLICT`, `RETURNING`, `::` casts, `NOW()` and others).

@@ -47,7 +47,8 @@ into a settlement line in pounds, and writes the line.
 - [`KeyedSubstitutes`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/KeyedSubstitutes.java)
   masked that capture before it was kept: each account number became a keyed substitute, made with the JDK's
   HMAC-SHA256 (`javax.crypto.Mac`) and a fixed test key. The same number always gets the same substitute, so each
-  payment still matches its settlement line.
+  payment still matches its settlement line. A substitute such as `TEST-959fa6dcb90d` is marked as made up, and its
+  48 bits keep two accounts from sharing one: eight digits would start to clash at around ten thousand accounts.
 
 The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
 field in quotes when it holds a comma or a line break, so read them with a CSV parser, such as

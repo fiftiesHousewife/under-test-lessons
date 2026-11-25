@@ -37,7 +37,8 @@ day, no receipt, the team's rules give store credit.
 1. Add that row to [the returns team's examples](example/src/test/resources/returns-team-examples.csv): named
    "returned on the 30th day without a receipt", bought 2027-03-01, returned 2027-03-31, no receipt, store credit.
 2. Run the examples against today's refunds: the new row fails too, and says what today's code gives instead.
-3. Compare with the answer, [`ThirtiethDayAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/examples/answer/ThirtiethDayAnswerTest.java),
+3. Compare with the answer: [the row in a copy of the team's table](example/src/test/resources/answer/returns-team-examples.csv),
+   run by [`ThirtiethDayAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/examples/answer/ThirtiethDayAnswerTest.java),
    which runs the row against today's refunds with:
 
 ```bash
