@@ -143,8 +143,23 @@
     try { window.localStorage.setItem(MUTED, muting ? '1' : '0'); } catch (e) { /* not remembered, nothing more */ }
     setListening(!muting);
   }
+  // A live run's clip plays from its start, muted, whenever its slide comes up, and stops when the slide goes.
+  function playClips() {
+    slides.forEach(function (slide, i) {
+      var clip = slide.querySelector('video.live-run');
+      if (!clip) { return; }
+      if (i === current) {
+        clip.currentTime = 0;
+        var playing = clip.play();
+        if (playing && playing.catch) { playing.catch(function () { /* the slide still shows its first frame */ }); }
+      } else {
+        clip.pause();
+      }
+    });
+  }
   function show(index, byHand) {
     current = Math.max(0, Math.min(slides.length - 1, index));
+    playClips();
     slides.forEach(function (slide, i) { slide.classList.toggle('current', i === current); });
     counter.textContent = (current + 1) + ' / ' + slides.length;
     history.replaceState(null, '', '#' + (current + 1));

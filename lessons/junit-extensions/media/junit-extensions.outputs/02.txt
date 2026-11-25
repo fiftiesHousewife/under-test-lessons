@@ -5,5 +5,5 @@ HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() PASSED
 HandSetUpTest > shopReceiptShowsPriceWithVat() PASSED
 PricesTest > aCreditIsWrittenWithItsSignInFront() PASSED
 PricesTest > vatIsRoundedToTheNearestPenny() PASSED
-ReceiptAfterInvoiceAnswerTest > aReceiptAfterATradeInvoiceStillIncludesVat() PASSED
+ReducedRateAnswerTest > aReceiptAfterADeliveryNoteKeepsTheReducedRate() PASSED
 All 7 tests passed.

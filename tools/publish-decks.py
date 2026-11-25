@@ -94,6 +94,9 @@ def publish_deck(lesson, neighbours, out, place=""):
         f.write(page)
     if voice_of(lesson):
         shutil.copytree(voice_of(lesson), os.path.join(out, lesson + ".deck-voice"), dirs_exist_ok=True)
+    clips = os.path.join("lessons", lesson, "media", lesson + ".deck-clips")
+    if os.path.isdir(clips):
+        shutil.copytree(clips, os.path.join(out, lesson + ".deck-clips"), dirs_exist_ok=True)
 
 
 def main(out):

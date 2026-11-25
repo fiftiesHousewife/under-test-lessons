@@ -9,8 +9,8 @@ HandSetUpTest > shopReceiptShowsPriceWithVat() FAILED
      but was: "Car seat  £100.00 + VAT"
 PricesTest > aCreditIsWrittenWithItsSignInFront() PASSED
 PricesTest > vatIsRoundedToTheNearestPenny() PASSED
-ReceiptAfterInvoiceAnswerTest > aReceiptAfterATradeInvoiceStillIncludesVat() FAILED
-    org.opentest4j.AssertionFailedError:
-    expected: "Car seat  £120.00"
-     but was: "Car seat  £100.00 + VAT"
+ReducedRateAnswerTest > aReceiptAfterADeliveryNoteKeepsTheReducedRate() FAILED
+    org.opentest4j.AssertionFailedError: [a car seat's receipt at the reduced rate]
+    expected: "Car seat  £105.00"
+     but was: "Car seat  £120.00"
 7 tests completed, 3 failed

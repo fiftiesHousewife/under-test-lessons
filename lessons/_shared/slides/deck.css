@@ -90,3 +90,6 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
   .deck-slide.current li:nth-child(n+6) { animation-delay: 3400ms; }
   .deck-slide.current .callout { animation-delay: 2400ms; }
 }
+
+/* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
+video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }

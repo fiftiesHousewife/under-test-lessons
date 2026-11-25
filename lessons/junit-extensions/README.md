@@ -31,17 +31,21 @@ Both test classes fix their order with `@TestMethodOrder`, so the leak shows the
 
 ## Exercise
 
-The extension runs between tests, so it can't see harm done inside one. A customer who is sent a trade invoice and
-then buys at the till must still be charged VAT.
+The extension checks the settings against its standard at the end of each test. Harm that ends at the standard is
+out of its sight. The shop also prints delivery notes, with
+[today's delivery note](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/extensions/today/TodaysDeliveryNote.java)
+and [the fixed one](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/extensions/fixed/FixedDeliveryNote.java),
+and a car seat sells at the reduced VAT rate of 5%.
 
 1. Add a test class beside [`GuardedSettingsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/extensions/GuardedSettingsTest.java),
-   using the same extension, with one test that writes a trade invoice line and then a shop receipt line.
-2. Expect the receipt to say `Car seat  £120.00`. This test finds the leak whatever order the tests run in.
-3. Compare with the answer, [`ReceiptAfterInvoiceAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/extensions/answer/ReceiptAfterInvoiceAnswerTest.java),
-   which runs against today's trade invoice with:
+   using the same extension, with one test that sets the VAT rate to 5, writes a delivery note line with
+   `Invoices.deliveryNote()`, then a shop receipt line, and puts the rate back to 20.
+2. Expect the receipt to say `Car seat  £105.00`.
+3. Compare with the answer, [`ReducedRateAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/extensions/answer/ReducedRateAnswerTest.java),
+   which runs against today's delivery note with:
 
 ```bash
-./gradlew :lessons:junit-extensions:test -Pcode=answer   # today's trade invoice: 3 of 7 tests fail; the answer's receipt was "Car seat  £100.00 + VAT"
+./gradlew :lessons:junit-extensions:test -Pcode=answer   # today's code: 3 of 7 tests fail; the answer's receipt was "Car seat  £120.00", not £105.00
 ```
 
 ## Watch it, or present it

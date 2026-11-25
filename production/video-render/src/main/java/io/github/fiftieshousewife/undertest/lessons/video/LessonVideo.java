@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>{@code assemble <root> <id>}: combines the silent video, the narration and the captions (burned into the
  *   picture unless {@code video.burnCaptions} is false, and as a captions track) into {@code <id>.mp4},
  *   and writes the narration as {@code <id>.narration.m4a} too;</li>
+ *   <li>{@code clips <root> <id>}: cuts each live-run scene out of the silent video into {@code <id>.deck-clips/},
+ *   for the deck to play ({@link DeckClips});</li>
  *   <li>{@code deckvoice <root> <id|all> <command...>}: reads each deck slide's narration aloud into
  *   {@code <id>.deck-voice/}, then rewrites the deck so it can play them ({@link DeckVoice}).</li>
  * </ul>
@@ -41,15 +43,16 @@ public final class LessonVideo {
         switch (args[0]) {
             case "record" -> new Recorder(Clock.systemUTC()).record(media);
             case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
+            case "clips" -> DeckClips.cut(media);
             default -> FinishedVideo.assemble(media);
         }
     }
 
     private static void checkUsage(final String... args) {
-        final List<String> commands = List.of("record", "voice", "assemble", "deckvoice");
+        final List<String> commands = List.of("record", "voice", "assemble", "clips", "deckvoice");
         if (args.length < 3 || !commands.contains(args[0])) {
             throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
-                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson>"
+                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson> | clips <root> <lesson>"
                     + " | deckvoice <root> <lesson|all> <command...>");
         }
     }

@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -76,10 +77,19 @@ final class SlideDeck {
         final List<SceneContent> contents = Files.isRegularFile(media.file(".tape"))
                 ? SceneContent.read(media.root(), media.file(".tape")) : List.of();
         for (int i = 0; i < scenes.size(); i++) {
-            sections.add(SceneSlide.section(scenes.get(i), i < contents.size() ? contents.get(i) : new SceneContent()));
+            sections.add(SceneSlide.section(scenes.get(i), i < contents.size() ? contents.get(i) : new SceneContent(),
+                    clip(media, i)));
         }
         slides.closing().forEach(slide -> sections.add(section(slide, pictures, "")));
         return sections;
+    }
+
+    /* The scene's clip, cut from the recording, as the deck refers to it, where one was cut. */
+    private static Optional<String> clip(final Media media, final int index) {
+        final Path folder = media.file(".deck-clips");
+        final String name = "scene-" + (index + 1) + ".mp4";
+        return Files.isRegularFile(folder.resolve(name))
+                ? Optional.of(folder.getFileName() + "/" + name) : Optional.empty();
     }
 
     private static String section(final Slide slide, final List<Path> pictures, final String paragraph) {

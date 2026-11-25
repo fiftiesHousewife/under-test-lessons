@@ -10,6 +10,7 @@ plugins {
 // this folder. They use the inside video tools (lessons/_shared/video-tools). The main tasks:
 //   renderLessonVideo:     makes a lesson's video (-Plesson=<id>; -PslidesOnly=true for just its slides).
 //   buildLessonDeckVoice:  reads each deck slide's narration aloud (-Plesson=<id>, or every lesson).
+//   cutLessonDeckClips:    cuts each live-run scene out of the silent video, for the deck (-Plesson=<id>).
 //   checkVideoInRecording: checks every video step with the real tools in half a minute.
 //   testVideoHelpers:      tests the in-terminal helpers against a stand-in for VHS (needs bash).
 
@@ -168,6 +169,18 @@ tasks.register<JavaExec>("assembleLessonVideo") {
     val lessonId = lesson
     argumentProviders.add(CommandLineArgumentProvider { listOf("assemble", root, lessonId.getOrElse("")) })
     dependsOn(":lessons:video-tools:buildLessonCaptions", buildLessonVoice)
+}
+
+// The deck's live-run slides play their scene, cut from the silent recording, in place of the kept output.
+tasks.register<JavaExec>("cutLessonDeckClips") {
+    group = "documentation"
+    description = "Cuts each live-run scene out of a lesson's silent video, for its deck to play (-Plesson=<id>)."
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
+    val root = repoRoot
+    val lessonId = lesson
+    argumentProviders.add(CommandLineArgumentProvider { listOf("clips", root, lessonId.getOrElse("")) })
+    mustRunAfter(recordLessonVideo)
 }
 
 // Later steps use the recorded video's real length, so they run after recording when both are asked for.
