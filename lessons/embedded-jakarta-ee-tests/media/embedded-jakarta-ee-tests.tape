@@ -65,7 +65,7 @@ Type@1ms `show ReducedRate 5 12 "the reduced rate"`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 19s
 
 # ---- Scene 4: the code under test ----
 Hide

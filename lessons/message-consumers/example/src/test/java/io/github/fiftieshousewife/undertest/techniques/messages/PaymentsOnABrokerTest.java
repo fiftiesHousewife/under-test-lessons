@@ -38,13 +38,13 @@ class PaymentsOnABrokerTest {
     }
 
     @Test
-    void aMessageDeliveredAgainIsRecordedOnce() throws JMSException {
+    void theSamePaymentSentTwiceIsRecordedOnce() throws JMSException {
         final BusyOnceBook book = new BusyOnceBook();
         final String payment = ExampleMessages.forOrder("A-1001");
         broker.sendPayments(List.of(payment, payment));
 
         Consumers.using(broker.factory(), book).takeWaiting();
 
-        assertThat(book.recorded()).as("payments recorded for an order delivered twice").hasSize(1);
+        assertThat(book.recorded()).as("the same payment, sent twice").hasSize(1);
     }
 }

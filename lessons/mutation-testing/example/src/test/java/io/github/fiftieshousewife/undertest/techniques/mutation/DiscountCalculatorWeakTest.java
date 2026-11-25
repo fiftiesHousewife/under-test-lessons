@@ -17,7 +17,7 @@ class DiscountCalculatorWeakTest {
 
     @Test
     void bigOrderGetsDiscount() {
-        // Weak: "> 0" also passes for 5% or 12%. Survives: `total >= 10_000` replaced with false.
+        // Weak: "> 0", on £200, far from £100. Survives: `>= 10_000` changed to `> 10_000`.
         assertTrue(calc.discountPercent(20_000, false) > 0);
     }
 
@@ -34,7 +34,7 @@ class DiscountCalculatorWeakTest {
 
     @Test
     void loyalCustomer() {
-        // Weak: no assertion at all. Survives: `+= 2` changed to `-= 2`, loyalty branch removed.
+        // Weak: no assertion at all. Survives: `+= 2` changed to `-= 2`.
         calc.discountPercent(1_000, true);
     }
 

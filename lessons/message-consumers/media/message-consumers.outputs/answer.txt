@@ -1,13 +1,14 @@
 $ ./gradlew :lessons:message-consumers:test -Pcode=answer
 BrowsingTest > browsingReadsEveryMessageWithoutTakingAny() PASSED
 PaymentByHandTest > recordsThePaymentInAMessage() PASSED
-PaymentsOnABrokerTest > aMessageDeliveredAgainIsRecordedOnce() FAILED
-    java.lang.AssertionError: [payments recorded for an order delivered twice]
+PaymentsOnABrokerTest > theSamePaymentSentTwiceIsRecordedOnce() FAILED
+    java.lang.AssertionError: [the same payment, sent twice]
     Expected size: 1 but was: 2 in:
-    [Payment[order=A-1001, pence=2599], Payment[order=A-1001, pence=2599]]
+    [Payment[id=P-501, order=A-1001, pence=2599],
+        Payment[id=P-501, order=A-1001, pence=2599]]
 PaymentsOnABrokerTest > aMessageNoOneCanReadEndsInTheDeadLetterQueue() FAILED
     org.opentest4j.AssertionFailedError: [dead-letter queue]
-    expected: ["order=A-1003;customer=customer-7f3a;pence=12.50"]
+    expected: ["payment=P-503;order=A-1003;customer=customer-7f3a;pence=12.50"]
      but was: []
 PaymentsOnABrokerTest > aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() FAILED
     org.opentest4j.AssertionFailedError: [payments recorded]

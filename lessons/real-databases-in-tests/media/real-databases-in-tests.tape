@@ -67,7 +67,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's query. Who should sales call first? Oldest order first."`
 Enter
 Sleep 300ms
-Type@1ms `show CustomerRepository 15 16 "today's query" --zoom 16`
+Type@1ms `show CustomerRepository 15 17 "today's query" --zoom 15-17`
 Enter
 Sleep 300ms
 Show
@@ -95,7 +95,7 @@ Sleep 300ms
 Type@1ms `note "The same test on *real PostgreSQL*, started in a container for the test, and thrown away after."`
 Enter
 Sleep 300ms
-Type@1ms `show RealPostgresTest 17 30 "the test on PostgreSQL" --zoom 21-24`
+Type@1ms `show RealPostgresTest 17 31 "the test on PostgreSQL" --zoom 21-25`
 Enter
 Sleep 300ms
 Show
@@ -130,7 +130,7 @@ Sleep 300ms
 Type@1ms `note "The query that says where customers who never ordered belong:"`
 Enter
 Sleep 300ms
-Type@1ms `show CustomerRepository 18 19 "the fixed query" --zoom 19`
+Type@1ms `show CustomerRepository 19 21 "the fixed query" --zoom 19-21`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest"`

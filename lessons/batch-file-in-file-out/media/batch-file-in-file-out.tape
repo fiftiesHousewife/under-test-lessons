@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: a Spring Batch job. Read each payment, process it, write its line."`
 Enter
 Sleep 300ms
-Type@1ms `show SettlementBatch 48 54 "the nightly job" --zoom 53`
+Type@1ms `show SettlementBatch 47 53 "the nightly job" --zoom 52`
 Enter
 Sleep 300ms
 Show

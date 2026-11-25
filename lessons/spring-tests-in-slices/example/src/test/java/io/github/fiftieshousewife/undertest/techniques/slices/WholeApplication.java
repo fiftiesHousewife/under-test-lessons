@@ -21,8 +21,9 @@ import org.springframework.web.client.RestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 abstract class WholeApplication {
 
-    /* Started once for every test class: Spring keeps the started application for the next class, and its setting. */
-    static final WireMockServer COURIER = startCourier();
+    static final WireMockServer COURIER =
+            // Started once for every test class: Spring keeps the started application, and its setting, for the next.
+            startCourier();
 
     @Autowired
     private DeliveryRepository repository;

@@ -7,6 +7,8 @@
 #
 # It takes out only padding, never a result:
 #   - blank lines, which Gradle prints after every test's result line;
+#   - the JDK's warnings about Lombok's use of sun.misc.Unsafe, and about Gradle's native library, which a newer JDK
+#     prints before a build starts;
 #   - Gradle's general advice after a failure ("* Try:" and its "> Run with --stacktrace" lines), and its
 #     "FAILURE: Build failed with an exception." heading;
 #   - the "* What went wrong:" block of the build's own test summary task (testFailures), which only repeats the line
@@ -41,5 +43,6 @@ while (my $line = <STDIN>) {
     }
     next if $line =~ /^\s*$/;
     next if $line =~ /^FAILURE: Build failed with an exception\.$/;
+    next if $line =~ /^WARNING: .*(sun\.misc\.Unsafe|lombok\.permit|terminally deprecated method|restricted method|System::load|--enable-native-access|Restricted methods will be blocked)/;
     print $line;
 }

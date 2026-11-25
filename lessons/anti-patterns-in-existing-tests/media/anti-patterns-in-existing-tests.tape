@@ -109,7 +109,7 @@ Sleep 300ms
 Type@1ms `note "The checks: *one rule for each kind*, over ArchUnit's view of each compiled test."`
 Enter
 Sleep 300ms
-Type@1ms `show AntiPatternRules 29 57 "the anti-pattern rules" --zoom 29-34`
+Type@1ms `show AntiPatternRules 29 58 "the anti-pattern rules" --zoom 29-34`
 Enter
 Sleep 300ms
 Show

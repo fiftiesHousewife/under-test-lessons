@@ -221,15 +221,16 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  19          if (grams &lt;= 0 || grams &gt; MAX_GRAMS) {
  20              throw new IllegalArgumentException(&quot;a parcel weighs from 1 g to 5 kg&quot;);
  21          }
-<mark> 22          for (final Band band : bands) {</mark>
-<mark> 23              if (grams &lt;= band.upToGrams()) {</mark>
-<mark> 24                  return band.pence();</mark>
- 25              }
- 26          }
+<mark> 22          return bands.stream().filter(band -&gt; grams &lt;= band.upToGrams()).findFirst()</mark>
+<mark> 23                  .map(Band::pence).orElseGet(() -&gt; overTheLastBand(grams));</mark>
+ 24      }
+ 25  
+ 26      private int overTheLastBand(final int grams) {
  27          final Band last = bands.getLast();
  28          final int extraHalfKilos = (grams - last.upToGrams() + 499) / 500;
- 29          return last.pence() + extraHalfKilos * EXTRA_PENCE_PER_HALF_KILO;</pre></figure></main><aside class="notes">And here is the code under test, the rewrite. It reads the same prices from a price list, typed in from the printed one, instead of a chain of ifs.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/f2910b7d6d8e8cad.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The rewrite's own tests</h1><div class="rule"></div><ul class="scene-points"><li class="point">One typical weight from each row of the price list</li></ul></section><figure class="code" style="--code-size: 18px"><figcaption>the rewrite's own tests</figcaption><pre>  8  /** BEFORE: the rewrite's own tests: one typical weight from each row of the price list. */
+ 29          return last.pence() + extraHalfKilos * EXTRA_PENCE_PER_HALF_KILO;
+ 30      }</pre></figure></main><aside class="notes">And here is the code under test, the rewrite. It reads the same prices from a price list, typed in from the printed one, instead of a chain of ifs.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/f2910b7d6d8e8cad.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The rewrite's own tests</h1><div class="rule"></div><ul class="scene-points"><li class="point">One typical weight from each row of the price list</li></ul></section><figure class="code" style="--code-size: 18px"><figcaption>the rewrite's own tests</figcaption><pre>  8  /* BEFORE: the rewrite's own tests: one typical weight from each row of the price list. */
   9  class RewriteExamplesTest {
  10  
  11      @ParameterizedTest(name = &quot;{0} g costs {1} pence&quot;, quoteTextArguments = false)
@@ -238,27 +239,31 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  14          assertThat(Rewrites.current().pence(grams)).isEqualTo(pence);
  15      }
  16  }</pre></figure></main><aside class="notes">These are the rewrite's own tests. They check one typical weight from each row of the price list.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/52ce05451336864d.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The differential test</h1><div class="rule"></div><ul class="scene-points"><li class="point">A differential test</li><li class="point">Ask both calculators about every weight, and list where they disagree</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>the differential test</figcaption><pre> 14  class OldAndNewAgreeTest {
- 15  
- 16      private final Postage legacy = new LegacyPostage();
- 17      private final Postage rewrite = Rewrites.current();
- 18  
- 19      @Test
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The differential test</h1><div class="rule"></div><ul class="scene-points"><li class="point">A differential test</li><li class="point">Ask both calculators about every weight, and list where they disagree</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>the differential test</figcaption><pre> 19      @Test
  20      void rewriteAgreesWithTheOldCalculatorOnEveryWeight() {
- 21          final List&lt;String&gt; differences = new ArrayList&lt;&gt;();
- 22          int from = 0;
-<mark> 23          for (int grams = 1; grams &lt;= Postage.MAX_GRAMS + 1; grams++) {</mark>
-<mark> 24              final boolean differs = grams &lt;= Postage.MAX_GRAMS &amp;&amp; legacy.pence(grams) != rewrite.pence(grams);</mark>
- 25              if (differs &amp;&amp; from == 0) {
- 26                  from = grams;
- 27              } else if (!differs &amp;&amp; from &gt; 0) {
- 28                  differences.add(&quot;%d g to %d g: old %dp, new %dp&quot;.formatted(
- 29                          from, grams - 1, legacy.pence(from), rewrite.pence(from)));
- 30                  from = 0;
- 31              }
- 32          }
- 33          assertThat(differences).as(&quot;weights where the rewrite disagrees&quot;).isEmpty();
- 34      }</pre></figure></main><aside class="notes">Now, a differential test. It asks both calculators about every weight, from one gram to five kilograms, and lists each run of weights where they disagree. There are no expected prices to write: the old calculator is the reference.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/b1ba8e270480346b.m4a"></audio></section>
+ 21          assertThat(disagreements()).as(&quot;weights where the rewrite disagrees&quot;).isEmpty();
+ 22      }
+ 23  
+ 24      /* Each run of weights where the two disagree: it starts at a weight that differs after one that doesn't. */
+ 25      private List&lt;String&gt; disagreements() {
+ 26          return IntStream.rangeClosed(1, Postage.MAX_GRAMS)
+ 27                  .filter(grams -&gt; differs(grams) &amp;&amp; !differs(grams - 1))
+ 28                  .mapToObj(from -&gt; &quot;%d g to %d g: old %dp, new %dp&quot;.formatted(
+ 29                          from, lastOfRun(from), legacy.pence(from), rewrite.pence(from)))
+ 30                  .toList();
+ 31      }
+ 32  
+ 33      private int lastOfRun(final int from) {
+ 34          int to = from;
+ 35          while (differs(to + 1)) {
+ 36              to++;
+ 37          }
+ 38          return to;
+ 39      }
+ 40  
+<mark> 41      private boolean differs(final int grams) {</mark>
+<mark> 42          return grams &gt;= 1 &amp;&amp; grams &lt;= Postage.MAX_GRAMS &amp;&amp; legacy.pence(grams) != rewrite.pence(grams);</mark>
+ 43      }</pre></figure></main><aside class="notes">Now, a differential test. It asks both calculators about every weight, from one gram to five kilograms, and lists each run of weights where they disagree. There are no expected prices to write: the old calculator is the reference.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/b1ba8e270480346b.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The comparison finds a gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the rewrite as it is today</li></ul><p class="callout">Every example passes. The comparison finds 50 weights, 451 g to 500 g, where the rewrite charges more.</p></section><figure class="code" style="--code-size: 18px"><pre class="command">$ ./gradlew :lessons:differential-testing:test -Pcode=today</pre><pre class="output">OldAndNewAgreeTest &gt; rewriteAgreesWithTheOldCalculatorOnEveryWeight() FAILED
     java.lang.AssertionError: [weights where the rewrite disagrees]
     Expecting empty but was: [&quot;451 g to 500 g: old 195p, new 315p&quot;]
@@ -268,13 +273,11 @@ RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 400 g c
 RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 800 g costs 315 pence PASSED
 RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 1500 g costs 435 pence PASSED
 6 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against the rewrite as it is today. Every example passes. The comparison finds 50 weights, from 451 grams to 500, where the rewrite charges more.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/c0b20e1b814ccf49.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The corrected price list</h1><div class="rule"></div><ul class="scene-points"><li class="point">The price list, checked against the printed one</li></ul><p class="callout">The rewrite agrees with the old calculator on all 5,000 weights. Now the old one can go.</p></section><figure class="code" style="--code-size: 18px"><figcaption>the price list</figcaption><pre>  8      /** As typed today: &quot;up to 500 g&quot; was typed as 450. */
-  9      public static final List&lt;Band&gt; AS_TYPED_TODAY = List.of(
-<mark> 10              new Band(100, 85), new Band(250, 155), new Band(450, 195), new Band(1000, 315));</mark>
-<mark> 11  </mark>
-<mark> 12      /** Checked against the printed list. */</mark>
-<mark> 13      public static final List&lt;Band&gt; CORRECTED = List.of(</mark>
-<mark> 14              new Band(100, 85), new Band(250, 155), new Band(500, 195), new Band(1000, 315));</mark></pre><pre class="command">$ ./gradlew :lessons:differential-testing:test</pre><pre class="output">OldAndNewAgreeTest &gt; rewriteAgreesWithTheOldCalculatorOnEveryWeight() PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The corrected price list</h1><div class="rule"></div><ul class="scene-points"><li class="point">The price list, checked against the printed one</li></ul><p class="callout">The rewrite agrees with the old calculator on all 5,000 weights. Now the old one can go.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the price list</figcaption><pre>  8      public static final List&lt;Band&gt; AS_TYPED_TODAY = List.of( // As typed today: &quot;up to 500 g&quot; was typed as 450.
+<mark>  9              new Band(100, 85), new Band(250, 155), new Band(450, 195), new Band(1000, 315));</mark>
+<mark> 10  </mark>
+<mark> 11      public static final List&lt;Band&gt; CORRECTED = List.of( // Checked against the printed list.</mark>
+<mark> 12              new Band(100, 85), new Band(250, 155), new Band(500, 195), new Band(1000, 315));</mark></pre><pre class="command">$ ./gradlew :lessons:differential-testing:test</pre><pre class="output">OldAndNewAgreeTest &gt; rewriteAgreesWithTheOldCalculatorOnEveryWeight() PASSED
 RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 50 g costs 85 pence PASSED
 RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 200 g costs 155 pence PASSED
 RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 400 g costs 195 pence PASSED

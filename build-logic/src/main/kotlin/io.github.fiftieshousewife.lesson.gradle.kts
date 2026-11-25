@@ -11,11 +11,8 @@ val libs = the<VersionCatalogsExtension>().named("libs")
 
 // ---------- Code a lesson shows as it really is ----------
 // Today's code, old code and the weak tests are deliberately complex, copied or untested: that is what a lesson
-// shows. The code-quality checks leave them out (SpotBugs through underTest.spotbugsExcludeFilter, in
+// shows. The code-quality checks leave them out, through the shared plugin's underTest.codeStyleExcludes (set in
 // gradle.properties); the fixed code and the strong tests meet every standard.
-val shownAsItIs = listOf("**/today/**", "**/legacy/**", "**/*WeakTest.java")
-tasks.withType<Checkstyle>().configureEach { exclude(shownAsItIs) }
-tasks.withType<Pmd>().configureEach { exclude(shownAsItIs) }
 fun library(alias: String) = libs.findLibrary(alias).get()
 
 // ---------- Tests that read well in a recording ----------
@@ -49,9 +46,10 @@ fun registerFailureSummary(testTask: String, skipsFail: Provider<Boolean>) = tas
         val ran = total - skipped
         logger.quiet(
             when {
+                skipped == 0 && total == 1 -> "1 test passed."
                 skipped == 0 -> "All $total tests passed."
                 ran == 0 -> "No tests ran; $skipped skipped."
-                else -> "All $ran tests that ran passed; $skipped skipped."
+                else -> "$ran of $total tests passed; $skipped didn't run."
             },
         )
     }

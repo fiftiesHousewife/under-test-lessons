@@ -204,11 +204,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 </figure></main><aside class="notes">Here is how a keyed substitute looks. HMAC is a keyed hash that comes with Java. The code gives it a secret key, which we keep apart from the data. Each value becomes 16 capital letters, the same for the same value. Or, for realistic made-up names, use Datafaker with a fixed seed.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/fd779d078b522470.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 1, the version catalogue</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 1</li><li class="point">Datafaker is in the version catalogue</li><li class="point">The keyed hash comes with Java</li></ul></section><figure class="code" style="--code-size: 21px"><figcaption>gradle/libs.versions.toml</figcaption><pre>  3  [versions]
    ⋮
- 49  datafaker = &quot;2.7.0&quot;
+ 51  datafaker = &quot;2.7.0&quot;
    ⋮
- 74  [libraries]
+ 76  [libraries]
    ⋮
-107  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. Datafaker, which makes up realistic test data, is already in the version catalogue. The keyed hash needs no library at all: it comes with Java.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/8eb15ea7561fc212.m4a"></audio></section>
+110  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. Datafaker, which makes up realistic test data, is already in the version catalogue. The keyed hash needs no library at all: it comes with Java.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/8eb15ea7561fc212.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">The third way of data masking, made-up values, uses Datafaker</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      implementation(libs.datafaker)</mark>
  10      compileOnly(libs.spotbugs.annotations)

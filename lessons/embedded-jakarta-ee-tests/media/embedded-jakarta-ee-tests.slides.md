@@ -14,21 +14,22 @@ Say: This lesson is about testing Jakarta EE code with its real wiring, in a sma
 
 ## intro: The checkout charges 5% VAT, not 20%
 - On a £10 item, the checkout should charge £12: 20% VAT
-- Since a reduced rate of 5% was added, the server wires in that one, and charges £10.50
+- A 5% rate arrived; the standard rate got a mark, the checkout didn't: it charges £10.50
 - The unit test passes: it builds the checkout by hand, and hands it the rate it wants
 Picture: bug
-Say: Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. But since the team added a
-  reduced rate of 5%, the server gives the checkout that rate instead, and it charges £10.50. The checkout's code stayed
-  the same. And the unit test passes, because it builds the checkout by hand, and hands it the rate it wants. It never
-  gets the rate the server chooses.
+Say: Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. Then the team added a reduced
+  rate of 5%. To tell the two apart, they marked the standard rate as standard, and left the new rate unmarked. But they
+  forgot the checkout. It still asks for any tax rate, so the server now gives it the unmarked one, the reduced rate,
+  and it charges £10.50. And the unit test passes, because it builds the checkout by hand, and hands it the rate it
+  wants. It never gets the rate the server chooses.
 
 ## intro: Our example: VAT at the checkout
 - The checkout adds VAT to a net price
 - The standard rate is 20%, marked as standard
-- A reduced rate of 5% was added later, with no mark
+- A reduced rate of 5%, added later, with no mark
 Picture: tag
-Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. A
-  reduced rate of 5% came later, with no mark.
+Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. That
+  mark came with the reduced rate of 5%, which has none.
 
 ## intro: The fix: let the real wiring build it
 - Old enterprise Java runs in an application server, whose container wires the parts together

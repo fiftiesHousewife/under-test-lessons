@@ -7,12 +7,12 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 /*
  * Two partial refunds on one order are two refunds, so each has its own Idempotency-Key; a retry of the same refund
@@ -20,27 +20,22 @@ import org.junit.jupiter.api.Test;
  */
 class RefundKeyTest {
 
-    private final WireMockServer provider = new WireMockServer(options().dynamicPort());
+    @RegisterExtension
+    static final WireMockExtension PROVIDER = WireMockExtension.newInstance().options(options().dynamicPort()).build();
 
     @BeforeEach
-    void start() {
-        provider.start();
-        provider.stubFor(post(urlEqualTo("/refunds")).willReturn(okJson("{\"refundId\": \"R-7731\"}").withStatus(201)));
-    }
-
-    @AfterEach
-    void stop() {
-        provider.stop();
+    void stubTheProvider() {
+        PROVIDER.stubFor(post(urlEqualTo("/refunds")).willReturn(okJson("{\"refundId\": \"R-7731\"}").withStatus(201)));
     }
 
     @Test
     void eachRefundHasItsOwnKeyAndARetryRepeatsIt() {
-        final Refunds refunds = Clients.at(provider.baseUrl());
+        final Refunds refunds = Clients.at(PROVIDER.baseUrl());
         refunds.send(new Refund("RF-5501", "A-1001", 500));
         refunds.send(new Refund("RF-5502", "A-1001", 750));
         refunds.send(new Refund("RF-5502", "A-1001", 750));
 
-        assertThat(provider.findAll(postRequestedFor(urlEqualTo("/refunds"))).stream()
+        assertThat(PROVIDER.findAll(postRequestedFor(urlEqualTo("/refunds"))).stream()
                 .map(RefundKeyTest::key).toList())
                 .as("the Idempotency-Key of each refund sent")
                 .isEqualTo(List.of("RF-5501", "RF-5502", "RF-5502"));

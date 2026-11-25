@@ -24,8 +24,8 @@ public final class BusyOnceBook implements PaymentBook {
     }
 
     @Override
-    public boolean has(final String order) {
-        return payments.stream().anyMatch(payment -> payment.order().equals(order));
+    public boolean has(final String id) {
+        return payments.stream().anyMatch(payment -> payment.id().equals(id));
     }
 
     List<Payment> recorded() {

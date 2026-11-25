@@ -6,12 +6,12 @@ Caught - a test failed, as it should:
   line 14  if (quantity >= LARGE_BULK) {            condition reversed     failed: exactTotalsEachSideOfEachBoundary
   line 15  return 10;                               result replaced with 0 failed: exactTotalsEachSideOfEachBoundary and 1 more
   line 17  if (quantity >= SMALL_BULK) {            boundary moved by one  failed: exactTotalsEachSideOfEachBoundary
-  line 17  if (quantity >= SMALL_BULK) {            condition reversed     failed: exactTotalsEachSideOfEachBoundary and 1 more
-  line 18  return 5;                                result replaced with 0 failed: exactTotalsEachSideOfEachBoundary and 1 more
+  line 17  if (quantity >= SMALL_BULK) {            condition reversed     failed: bulkLineIsCheaper and 1 more
+  line 18  return 5;                                result replaced with 0 failed: bulkLineIsCheaper and 1 more
   line 25  final int fullPrice = unitPrice * quanti * became /             failed: exactTotalsEachSideOfEachBoundary
   line 26  return fullPrice - fullPrice * percentOf * became /             failed: smallLinePaysSomething and 1 more
   line 26  return fullPrice - fullPrice * percentOf / became *             failed: exactTotalsEachSideOfEachBoundary
-  line 26  return fullPrice - fullPrice * percentOf - became +             failed: exactTotalsEachSideOfEachBoundary and 2 more
+  line 26  return fullPrice - fullPrice * percentOf - became +             failed: bulkLineIsCheaper and 2 more
   line 26  return fullPrice - fullPrice * percentOf result replaced with 0 failed: smallLinePaysSomething and 1 more
 Result: the tests caught 11 of 11 planted bugs (100%).
 Gate passed: every planted bug in the changed classes was caught.

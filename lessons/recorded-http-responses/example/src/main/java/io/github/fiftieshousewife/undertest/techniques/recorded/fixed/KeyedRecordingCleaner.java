@@ -22,13 +22,15 @@ import tools.jackson.databind.node.ObjectNode;
 public final class KeyedRecordingCleaner implements RecordingCleaner {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();
-    /* The fields that hold personal data, and what follows the substitute for each. */
-    private static final Map<String, String> PERSONAL_FIELDS = Map.of("name", "", "email", "@example.invalid");
-    /* Headers that carry a password, a session or a key, in either direction. */
+    private static final Map<String, String> PERSONAL_FIELDS =
+            // The fields that hold personal data, and what follows the substitute for each.
+            Map.of("name", "", "email", "@example.invalid");
     private static final List<String> CREDENTIALS =
+            // Headers that carry a password, a session or a key, in either direction.
             List.of("authorization", "proxy-authorization", "cookie", "set-cookie", "x-api-key");
-    /* Query parameters that carry a token or a key, in the recorded address. */
-    private static final Pattern TOKEN_IN_ADDRESS = Pattern.compile(
+    private static final Pattern TOKEN_IN_ADDRESS =
+            // Query parameters that carry a token or a key, in the recorded address.
+            Pattern.compile(
             "[?&](?:access_token|token|api_key|apikey|key|sig|signature)=[^&]*", Pattern.CASE_INSENSITIVE);
     private static final int SUBSTITUTE_HEX_DIGITS = 16;
 
@@ -44,10 +46,7 @@ public final class KeyedRecordingCleaner implements RecordingCleaner {
         removeCredentials(mapping.at("/request/headers"));
         removeCredentials(mapping.at("/response/headers"));
         removeTokens(mapping.path("request"));
-        final ObjectNode response = (ObjectNode) mapping.get("response");
-        final JsonNode body = JSON.readTree(response.path("body").asString());
-        replacePersonalData(body);
-        response.put("body", JSON.writeValueAsString(body));
+        maskBody((ObjectNode) mapping.get("response"));
         return JSON.writerWithDefaultPrettyPrinter().writeValueAsString(mapping);
     }
 
@@ -60,6 +59,20 @@ public final class KeyedRecordingCleaner implements RecordingCleaner {
             });
         }
         node.forEach(this::replacePersonalData);
+    }
+
+    /* Masks the body only where it is JSON: an outage page in HTML holds no personal fields, and is kept as it is. */
+    private void maskBody(final ObjectNode response) {
+        if (response.path("jsonBody").isContainer()) {
+            replacePersonalData(response.get("jsonBody"));
+            return;
+        }
+        final String body = response.path("body").asString().strip();
+        if (body.startsWith("{") || body.startsWith("[")) {
+            final JsonNode json = JSON.readTree(body);
+            replacePersonalData(json);
+            response.put("body", JSON.writeValueAsString(json));
+        }
     }
 
     private static void removeCredentials(final JsonNode headers) {

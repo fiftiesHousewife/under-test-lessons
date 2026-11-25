@@ -16,8 +16,10 @@ inside a JUnit test in seconds with [weld-junit](https://github.com/weld/weld-te
 ```
 
 The example adds VAT at the checkout. [`StandardRate`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/StandardRate.java)
-is marked `@Standard`; [`ReducedRate`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/ReducedRate.java),
-added later, has no mark.
+is marked `@Standard`; [`ReducedRate`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/ReducedRate.java)
+has no mark. The standard rate was the only rate, with no mark, until the reduced rate arrived. Then the team marked the
+standard rate to tell the two apart, but the checkout still asks for a `TaxRate` with no mark, and CDI gives it the
+only one left unmarked: the reduced rate.
 
 - [`TodaysCheckout`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/today/TodaysCheckout.java)
   asks for any tax rate, so the container gives it the reduced one.
@@ -28,7 +30,7 @@ added later, has no mark.
 
 ## Exercise
 
-The reduced rate arrived with no mark, and today's checkout quietly took it. What happens when one more rate
+The reduced rate arrived with no mark, and today's checkout quietly took it once the standard rate was marked. What happens when one more rate
 arrives the same way: a zero rate, 0%, for things like books?
 
 1. Add a test class beside [`CheckoutInContainerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/CheckoutInContainerTest.java)

@@ -15,8 +15,7 @@ import java.util.stream.Collectors;
 /** The database's tables, from the one schema file the application applies to production, and tests apply too. */
 public final class Schema {
 
-    /** The schema file, on the classpath. */
-    public static final String FILE = "/db/schema.sql";
+    public static final String FILE = "/db/schema.sql"; // The schema file, on the classpath.
 
     private Schema() {
     }

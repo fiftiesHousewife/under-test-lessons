@@ -22,7 +22,7 @@ class PaymentImportTest {
     private final SystemIn input = new SystemIn();
     @SystemStub
     private final SystemOut output = new SystemOut();
-    private final AtomicInteger exitCode = new AtomicInteger(); // stands in for System.exit: it only records the code
+    private final AtomicInteger exitCode = new AtomicInteger(-1); // stands in for System.exit: -1 until it exits
 
     @Test
     void acceptsPaymentsUpToTheLimitAndEndsWithZero() throws Throwable {

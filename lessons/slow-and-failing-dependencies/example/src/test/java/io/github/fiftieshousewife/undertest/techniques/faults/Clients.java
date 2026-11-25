@@ -13,8 +13,9 @@ import java.util.Set;
 /** The code the tests run against: the fix, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
 public final class Clients {
 
-    /* How long the fixed client waits to connect, and then for an answer. */
-    static final Duration TIMEOUT = Duration.ofMillis(500);
+    static final Duration TIMEOUT =
+            // How long the fixed client waits to connect, and then for an answer.
+            Duration.ofMillis(500);
 
     private Clients() {
     }

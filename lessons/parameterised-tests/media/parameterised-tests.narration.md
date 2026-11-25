@@ -3,9 +3,9 @@
 One item per scene of [parameterised-tests.tape](parameterised-tests.tape). The intro and closing slides have their own
 narration, in [parameterised-tests.slides.md](parameterised-tests.slides.md). Written to be spoken.
 
-1. JUnit comes with the shared build logic, and parameterised tests come with
-   JUnit, so there is nothing to add. The lesson's build file adds one switch, to choose the calculator in use today
-   or the fixed one, and always reruns the tests.
+1. JUnit comes with the shared code-quality plugin, which every project applies, and parameterised tests come with
+   JUnit, so there is nothing to add. The lesson's build file adds one switch, to choose the calculator in use today or
+   the fixed one, and always reruns the tests.
 2. Here is the code under test. It works out VAT at 20 percent. Twenty percent is a fifth, so it divides by five.
 3. These are copy-pasted tests, one method per case. Every amount is a round number.
 4. Now, the parameterised test. The cases are a table, one row per case, including every way a fifth of a penny can

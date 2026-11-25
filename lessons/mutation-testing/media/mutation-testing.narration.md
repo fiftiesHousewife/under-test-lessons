@@ -5,9 +5,11 @@ narration, in [mutation-testing.slides.md](mutation-testing.slides.md). Written 
 commands read aloud. Captions use this text as written; the voice also applies
 [the pronunciation list](../../_shared/pronunciations.txt), so "PIT" is said "pit".
 
-1. Step one. Add PIT's versions to the version catalogue, with the PIT Gradle plugin, so the build logic can use it.
-2. Step two. Add the plugin to the shared build logic, and apply it in the convention plugin.
-3. Step three. Configure PIT once, in the convention plugin. This lesson adds one switch, to choose whether PIT uses the
+1. Step one. PIT comes with the shared code-quality plugin, which every project here applies. Its version is one line of
+   the version catalogue.
+2. Step two. The lesson's build file applies it, through the lesson plugin. So the build already has a task called pit
+   test.
+3. Step three. This lesson adds one switch, to choose whether PIT uses the
    weak tests or the strong tests.
 4. Here is the code under test. The discount percent method takes an order total, and whether the customer is loyal.
    It rejects a negative total. From 100 pounds, the discount is 10 percent. From 50 pounds, it is 5 percent.

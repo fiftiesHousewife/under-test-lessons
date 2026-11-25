@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: the *rewrite*. It reads the same prices from a price list."`
 Enter
 Sleep 300ms
-Type@1ms `show RewrittenPostage 17 29 "the rewrite" --zoom 22-24`
+Type@1ms `show RewrittenPostage 17 30 "the rewrite" --zoom 22-23`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "A *differential* test: ask both calculators about every weight, and list where they disagree."`
 Enter
 Sleep 300ms
-Type@1ms `show OldAndNewAgreeTest 14 34 "the differential test" --zoom 23-24`
+Type@1ms `show OldAndNewAgreeTest 19 43 "the differential test" --zoom 41-42`
 Enter
 Sleep 300ms
 Show
@@ -107,7 +107,7 @@ Sleep 300ms
 Type@1ms `note "The price list, checked against the printed one:"`
 Enter
 Sleep 300ms
-Type@1ms `show PriceList 8 14 "the price list" --zoom 10-14`
+Type@1ms `show PriceList 8 12 "the price list" --zoom 9-12`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:differential-testing:test"`

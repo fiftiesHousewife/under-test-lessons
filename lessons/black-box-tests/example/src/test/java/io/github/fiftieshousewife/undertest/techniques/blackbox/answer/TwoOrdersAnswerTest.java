@@ -7,6 +7,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import io.github.fiftieshousewife.undertest.techniques.blackbox.Settings;
@@ -43,9 +44,7 @@ class TwoOrdersAnswerTest {
         warehouse.stubFor(post(urlEqualTo("/reservations"))
                 .willReturn(okJson("{\"reservationId\": \"W-881\"}").withStatus(201)));
         final String database = "jdbc:h2:" + folder.resolve("shop").toString().replace('\\', '/');
-        final Path settings = Files.write(folder.resolve("order-service.properties"),
-                List.of("port=0", "database.url=" + database, "warehouse.url=" + warehouse.baseUrl()));
-        try (ShopApplication service = start(Settings.load(settings))) {
+        try (ShopApplication service = start(settings(database, warehouse))) {
             for (final String customer : List.of("C-42", "C-43")) {
                 given().port(service.port()).contentType("application/json")
                         .body("{\"customer\": \"" + customer + "\", \"sku\": \"PEN-01\", \"quantity\": 1}")
@@ -54,8 +53,14 @@ class TwoOrdersAnswerTest {
         } finally {
             warehouse.stop();
         }
-        warehouse.verify(2, postRequestedFor(urlEqualTo("/reservations")));
-        assertThat(ordersKept(database)).as("orders kept").containsExactly("O-1001 C-42", "O-1002 C-43");
+        assertAll(
+                () -> warehouse.verify(2, postRequestedFor(urlEqualTo("/reservations"))),
+                () -> assertThat(ordersKept(database)).as("orders kept").containsExactly("O-1001 C-42", "O-1002 C-43"));
+    }
+
+    private Settings settings(final String database, final WireMockServer warehouse) throws IOException {
+        return Settings.load(Files.write(folder.resolve("order-service.properties"),
+                List.of("port=0", "database.url=" + database, "warehouse.url=" + warehouse.baseUrl())));
     }
 
     private static ShopApplication start(final Settings settings) {

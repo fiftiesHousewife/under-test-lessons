@@ -1,6 +1,7 @@
 # Who or what made each voice clip: "voice <key> <engine>" is the machine voice, from what it was given; "person <name>", or no line, a person's recording.
 179eec43fe98617b.m4a voice 1c6dbf9b3ae09e3a kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 3b6e0f0a8cbfea2c.m4a voice c2056b41f931fc9b kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+423f842494317326.m4a voice af29eb0770d4627a kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 6392c9561728c4c9.m4a voice 1646c24efc98d192 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 671333a20ea20916.m4a voice 6116e31603222799 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 6752752dc3eb073a.m4a voice 0395be17b2b430fc kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
@@ -9,7 +10,6 @@
 8b099b082a19a146.m4a voice ac360166836b0f4b kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 92e8143eb65c3c82.m4a voice ebbcae83caaf605e kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 c279378180f30f02.m4a voice 43cf4914b584e137 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
-c28d43fa7de79cbc.m4a voice 05a65070157ec913 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 ce3a5eb4495eb86d.m4a voice 02b1aaee4bd86209 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 d6526c348f2500c5.m4a voice 06cd6c3f2890deb1 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 ef9148614ef32643.m4a voice 8e0e0204c73a3257 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47

@@ -163,7 +163,7 @@ Sleep 300ms
 Type@1ms `note "The cleaner: drop the token, and swap each name and email address for a *keyed* substitute."`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedRecordingCleaner 41 64 "the cleaner" --zoom 58`
+Type@1ms `show KeyedRecordingCleaner 43 63 "the cleaner" --zoom 57`
 Enter
 Sleep 300ms
 Show
@@ -184,7 +184,7 @@ Type@1ms `run_live "./gradlew :lessons:recorded-http-responses:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests that ran passed/
+Wait+Screen@300s /tests passed; .* run/
 Sleep 9s
 Hide
 Type@1ms `callout "Every recorded answer is handled, and no personal data is saved, with no network and no account."`

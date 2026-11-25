@@ -14,7 +14,7 @@ val unusedTests = if (code == "today") "*StrongTest" else "*WeakTest"
 // PIT plants bugs only in the changed classes: it leaves every other class alone.
 tasks.named<JavaExec>("pitest") {
     val unchanged = fileTree("src/main/java") { include("**/*.java") }.files.map { it.nameWithoutExtension }
-        .filter { it !in changedClasses }.map { "*.$it" }
+        .filter { it !in changedClasses }.flatMap { listOf("*.$it", "*.$it\$*") }
     args("--excludedClasses=" + unchanged.joinToString(","))
 }
 

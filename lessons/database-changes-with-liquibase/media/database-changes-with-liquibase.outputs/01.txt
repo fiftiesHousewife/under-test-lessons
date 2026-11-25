@@ -2,5 +2,6 @@ $ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-chan
 FailedChangeTest > aRefusedChangeSaysWhy() PASSED
 InMemoryChangesTest > everyChangeApplies() PASSED
 All 2 tests passed.
-RealPostgresChangesTest > everyChangeApplies() SKIPPED
-No tests ran; 1 skipped.
+RealPostgresChangesTest > everyChangeApplies() FAILED
+    java.sql.SQLException: a database change failed: ERROR: type "tinyint" does not exist
+1 test completed, 1 failed

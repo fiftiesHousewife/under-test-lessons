@@ -20,13 +20,12 @@ import org.springframework.core.io.FileSystemResource;
 /**
  * The nightly Spring Batch job, apart from its writer: it reads the payments file named by the job's "payments"
  * parameter, turns each payment into its settlement line, and writes the file named by "settlement". Today's job and
- * the fixed one each add the writer.
+ * the fixed one each add the writer. Every settlement file starts with the line {@code HEADER}.
  */
 @Configuration(proxyBeanMethods = false)
 @EnableBatchProcessing
 public class SettlementBatch {
 
-    /** The first line of every settlement file. */
     public static final String HEADER = "HEADER,SETTLEMENT";
 
     private static final int PAYMENTS_PER_CHUNK = 100;

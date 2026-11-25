@@ -31,8 +31,8 @@ gives pounds instead of pence and can never be read.
   uses a transacted session: it commits after recording and rolls back on failure, so the broker delivers again.
   That gives every message at least once, not exactly once: if recording succeeds and the commit then fails, for
   example because the connection drops, the broker delivers the message again. So recording must tolerate a message
-  seen twice: the fixed consumer skips a payment the book already has, and `aMessageDeliveredAgainIsRecordedOnce`
-  sends one payment twice. In a real database, a unique key on the order does the same job.
+  seen twice: the fixed consumer skips a payment the book already has, and `theSamePaymentSentTwiceIsRecordedOnce` sends one payment twice. Each payment has its own id, because one order can
+  have several payments; in a real database, a unique key on the payment id does the same job.
 
 ## Where example messages come from
 

@@ -13,8 +13,8 @@ Needs a container runtime, such as Docker Desktop, Colima or Podman. Inside a co
 with `postgresImage`; see [Using the lessons inside a company](../../docs/using-inside-a-company.md).
 
 ```bash
-./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today
-./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest
+./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today   # H2 applies it; PostgreSQL refuses it: type "tinyint" does not exist
+./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest                # the Liquibase change applies on both databases
 ```
 
 The example adds a loyalty level to each customer.
@@ -27,6 +27,9 @@ The example adds a loyalty level to each customer.
   is the "before": every change applies on H2.
 - [`RealPostgresChangesTest`](example/src/integrationTest/java/io/github/fiftieshousewife/undertest/techniques/liquibase/RealPostgresChangesTest.java)
   is the "after": PostgreSQL refuses today's change.
+- The lesson changes the change set in place, so today's and the fixed version can be compared. On a
+  database that already ran today's version, Liquibase would refuse the edited change set (its checksum
+  differs): ship a fix as a new change set instead.
 
 ## Exercise
 

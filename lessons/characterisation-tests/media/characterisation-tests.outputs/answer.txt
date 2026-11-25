@@ -5,7 +5,7 @@ RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASS
 RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
 StatementWeakTest > printsSomething() PASSED
 ZeroBalanceStatementAnswerTest > chargesTheFeeWhenTheBalanceReachesExactlyZero() FAILED
-    java.lang.Error at ZeroBalanceStatementAnswerTest.java:27
+    java.lang.Error at ZeroBalanceStatementAnswerTest.java:28
 5 tests completed, 2 failed
 Approvals: the output differs from its approved file (- approved, + received):
   - 02 Mar  Overdraft fee               -25  balance    -25

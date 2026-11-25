@@ -9,8 +9,9 @@ public interface PaymentConsumer {
 
     String QUEUE = "payments";
 
-    /** How long to wait for the next message before deciding the queue is empty. */
-    Duration QUIET = Duration.ofMillis(500);
+    Duration QUIET =
+            // How long to wait for the next message before deciding the queue is empty.
+            Duration.ofMillis(500);
 
     /** Takes every message waiting on the payments queue. */
     void takeWaiting() throws JMSException;

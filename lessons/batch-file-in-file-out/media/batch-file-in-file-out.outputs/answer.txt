@@ -1,7 +1,7 @@
 $ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=answer
 KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
 PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
-WholeJobTest > aCleanedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
+WholeJobTest > aMaskedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=6, total=427.14]

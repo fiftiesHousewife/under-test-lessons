@@ -12,11 +12,13 @@ import java.util.List;
 /** Customers and the date of their last order, kept in a SQL database. */
 public final class CustomerRepository {
 
-    /** TODAY: oldest order first. On some databases, customers who never ordered come first; on others, last. */
-    public static final String TODAYS_QUERY = "SELECT name FROM customers ORDER BY last_order";
+    public static final String TODAYS_QUERY =
+            // TODAY: oldest order first. On some databases, customers who never ordered come first; on others, last.
+            "SELECT name FROM customers ORDER BY last_order";
 
-    /** FIXED: customers who never ordered come first, on every database. */
-    public static final String FIXED_QUERY = "SELECT name FROM customers ORDER BY last_order NULLS FIRST";
+    public static final String FIXED_QUERY =
+            // FIXED: customers who never ordered come first (NULLS FIRST: PostgreSQL, H2, Oracle; not MySQL).
+            "SELECT name FROM customers ORDER BY last_order NULLS FIRST";
 
     /** Where connections come from: the database's own data source, in production and in tests. */
     @FunctionalInterface

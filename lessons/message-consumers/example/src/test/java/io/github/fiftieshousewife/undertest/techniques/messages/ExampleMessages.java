@@ -25,6 +25,6 @@ final class ExampleMessages {
     }
 
     static String forOrder(final String order) {
-        return payments().stream().filter(text -> text.startsWith("order=" + order + ";")).findFirst().orElseThrow();
+        return payments().stream().filter(text -> text.contains(";order=" + order + ";")).findFirst().orElseThrow();
     }
 }

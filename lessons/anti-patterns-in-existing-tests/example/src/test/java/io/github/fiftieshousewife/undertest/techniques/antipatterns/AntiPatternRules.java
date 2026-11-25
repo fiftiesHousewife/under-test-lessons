@@ -32,8 +32,9 @@ public final class AntiPatternRules {
             "order-dependent", test -> test.getOwner().isAnnotatedWith(TestMethodOrder.class),
             "sleeps", test -> sleeps(test) || setUpMethods(test.getOwner()).anyMatch(AntiPatternRules::sleeps));
 
-    /* Assertions that check only that something exists: they pass whatever the code does. */
-    private static final Set<String> NOT_REAL = Set.of("assertNotNull", "assertNull", "assertThat", "isNotNull");
+    private static final Set<String> NOT_REAL =
+            // Assertions that check only that something exists: they pass whatever the code does.
+            Set.of("assertNotNull", "assertThat", "isNotNull");
 
     private AntiPatternRules() {
     }

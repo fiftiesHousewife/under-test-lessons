@@ -5,8 +5,8 @@
 Tests against a real web service are slow, need accounts on every machine, and fail when the service is down. Worse,
 the real service won't fail on demand, so error handling goes untested. [WireMock](https://wiremock.org) runs a small
 web server inside the test and replays recorded answers: the happy ones, and the errors you add by hand. It can also
-make the recordings, and since a recording is a copy of a real answer, each one has its personal data masked, and is
-passwords before it is saved.
+make the recordings, and since a recording is a copy of a real answer, each one has its personal data masked, and its
+passwords and tokens removed, before it is saved. Only JSON bodies are masked: an outage page in HTML is kept as it is.
 
 ## Run the example
 

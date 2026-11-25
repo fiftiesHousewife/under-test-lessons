@@ -20,8 +20,9 @@ import org.zalando.logbook.Logbook;
  */
 public final class OldService implements AutoCloseable {
 
-    /** The token a caller sends the old service, and the key the old service sends the loyalty provider. */
-    public static final String CALLER_TOKEN = "Bearer caller-7f3a9c";
+    public static final String CALLER_TOKEN =
+            // The token a caller sends the old service, and the key the old service sends the loyalty provider.
+            "Bearer caller-7f3a9c";
     static final String LOYALTY_KEY = "loyalty-51d2";
     static final String EMAIL = "jo.bloggs@example.com";
 

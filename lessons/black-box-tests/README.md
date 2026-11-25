@@ -29,7 +29,7 @@ order in its database as 2 rows (the order, and its line), and answers `201 Crea
 the test writes its own settings file and starts the service through the same entry point.
 
 - [`TodaysOrderTables`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/blackbox/today/TodaysOrderTables.java) writes both rows in one transaction and never commits it,
-  so the database throws them away when the connection closes. [`OrderTables`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/blackbox/fixed/OrderTables.java) commits.
+  so H2 throws them away when the connection closes. JDBC leaves an uncommitted transaction at close to the driver, and some databases (Oracle) commit it, so a real database can behave differently here. [`OrderTables`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/blackbox/fixed/OrderTables.java) commits.
 - [`OrderTakingTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/blackbox/OrderTakingTest.java) is the "before": unit tests of the order rules, with a stand-in
   warehouse and a list in place of the database. They pass on both versions.
 - [`OrderServiceTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/blackbox/OrderServiceTest.java) is the "after": WireMock as the warehouse, the service started from

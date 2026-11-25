@@ -14,9 +14,10 @@ import java.util.stream.Stream;
 /* Finds SQL that only one database runs, or that depends on the database's own behaviour. */
 final class PortableSql {
 
-    /* PostgreSQL's own SQL, and SQL whose answer depends on the database: the order of nulls, the time of day. */
-    private static final Pattern VENDOR_ONLY = Pattern.compile(
-            "\\b(ILIKE|NULLS FIRST|NULLS LAST|ON CONFLICT|RETURNING|DISTINCT ON|JSONB|SERIAL|NOW\\(\\))|::",
+    private static final Pattern VENDOR_ONLY =
+            // PostgreSQL's own SQL, and SQL whose answer depends on the database: the order of nulls, the time of day.
+            Pattern.compile(
+            "\\b(ILIKE|NULLS FIRST|NULLS LAST|ON CONFLICT|RETURNING|DISTINCT ON|JSONB|SERIAL)\\b|\\bNOW\\(\\)|::",
             Pattern.CASE_INSENSITIVE);
     private static final Pattern JAVA_TEXT = Pattern.compile("\"(?:[^\"\\\\]|\\\\.)*\"");
 

@@ -13,8 +13,9 @@ import java.util.List;
 /** The day's data kept with the tests (made up, as if captured), and the masking the tests use. */
 public final class Captures {
 
-    /* A fixed key for the lesson. A real key is kept out of the repository, apart from the masked files. */
-    static final byte[] TEST_KEY = "lessons: a fixed test key, never a real one".getBytes(StandardCharsets.UTF_8);
+    static final byte[] TEST_KEY =
+            // A fixed key for the lesson. A real key is kept out of the repository, apart from the masked files.
+            "lessons: a fixed test key, never a real one".getBytes(StandardCharsets.UTF_8);
 
     private Captures() {
     }

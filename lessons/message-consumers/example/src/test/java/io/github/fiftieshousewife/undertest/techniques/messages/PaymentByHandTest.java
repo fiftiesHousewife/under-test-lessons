@@ -20,10 +20,10 @@ class PaymentByHandTest {
     @Test
     void recordsThePaymentInAMessage() throws JMSException {
         final TextMessage message = mock(TextMessage.class);
-        when(message.getText()).thenReturn("order=A-1001;customer=customer-7f3a;pence=2599");
+        when(message.getText()).thenReturn("payment=P-501;order=A-1001;customer=customer-7f3a;pence=2599");
 
         Consumers.using(mock(ConnectionFactory.class), book).handle(message);
 
-        assertThat(book.recorded()).as("payments recorded").containsExactly(new Payment("A-1001", 2599));
+        assertThat(book.recorded()).as("payments recorded").containsExactly(new Payment("P-501", "A-1001", 2599));
     }
 }

@@ -1,5 +1,5 @@
 $ ./gradlew :lessons:message-consumers:test
-PaymentsOnABrokerTest > aMessageDeliveredAgainIsRecordedOnce() PASSED
+PaymentsOnABrokerTest > theSamePaymentSentTwiceIsRecordedOnce() PASSED
 PaymentsOnABrokerTest > aMessageNoOneCanReadEndsInTheDeadLetterQueue() PASSED
 PaymentsOnABrokerTest > aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() PASSED
 BrowsingTest > browsingReadsEveryMessageWithoutTakingAny() PASSED

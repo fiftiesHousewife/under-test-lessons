@@ -25,8 +25,8 @@ class SplitterPropertyTest {
     private final BillSplitter splitter = Splitters.current();
 
     // jetCheck deprecates a fixed seed to steer real projects towards random seeds, which find more over time. A lesson
-    // must give the same result every run, so this one keeps a fixed seed.
-    @SuppressWarnings("deprecation")
+    // must give the same result every run, so this one keeps a fixed seed. Its assertion is the fail() in the catch.
+    @SuppressWarnings({"deprecation", "PMD.TestMustAssert"})
     @Test
     void sharesAddUpToTheTotalAndDifferByAtMostOnePenny() {
         try {

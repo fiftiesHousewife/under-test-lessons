@@ -32,7 +32,7 @@ published as [`openapi.yaml`](example/src/main/resources/openapi.yaml).
   is the "after": the same tests, with every answer checked against the schema by
   [`SchemaCheck`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/SchemaCheck.java).
   It works as the validator's own `OpenApiValidationFilter` does, but reports each problem on one line rather than as
-  a block of JSON. By default the validator also refuses fields the schema doesn't name.
+  a block of JSON. By default the validator also refuses fields the schema doesn't name. That is stricter than OpenAPI itself, whose objects allow extra fields unless `additionalProperties: false` says otherwise; it also stops a provider adding a new field beside an old one while callers move over, so loosen it where the schema allows extras.
 
 ## Exercise
 
