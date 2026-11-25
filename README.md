@@ -131,9 +131,12 @@ in every new test, and when reviewing tests written by people or by AI.
 
 ## Coming next
 
-The lessons in italics above, in the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
+In the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
-1. **Message consumers on Kafka,** and **AI-written tests that pass the acceptance check.**
+1. **Fuzzing,** with Jazzer.
+2. **Concurrency tests,** with Lincheck or jcstress.
+3. **AI-drafted tests, judged by mutation testing,** with no AI tool needed.
+4. **Message consumers on Kafka,** **metamorphic tests** and **load tests**.
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

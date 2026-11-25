@@ -94,7 +94,12 @@ The first step with any old repo: see what its existing tests really check.
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
 | [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
 | [Spring tests in slices](spring-tests-in-slices/README.md): each layer of a Spring Boot 4 service tested on its own (web, data, JSON), and one test of the whole application kept for the wiring | Spring Boot test, H2, WireMock standalone | Java only | built |
-| AI-written tests that pass an acceptance check | PIT, the toolkit's checks | Java only | later: needs containers or more set-up |
+| Fuzzing: a coverage-guided fuzzer feeds an old parser inputs nobody wrote a test for, and finds the one that crashes it | Jazzer | Java only | next |
+| Concurrency tests: run a class from many threads at once, and find the state it shares unsafely | Lincheck or jcstress | Java only | next |
+| AI-drafted tests, judged by mutation testing: drafted tests kept as files, and PIT decides which are worth keeping | PIT | Java only | next |
+| Metamorphic tests: where there is no exact expected answer, check how the answers relate across related inputs | JUnit 6 | Java only | later |
+| Load tests: how an old service behaves under many callers at once | Gatling or JMeter | Java only | later |
+| Proving one function correct: a specification of a pure function, checked by a verifier | OpenJML or KeY, once their support for current Java is checked | Java only | later: to decide |
 
 ## Every toolkit technique, and its lesson
 
@@ -187,7 +192,10 @@ adding its row first.
 
 The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
-1. **AI-written tests that pass the acceptance check,** once the toolkit's acceptance check exists.
+1. **Fuzzing,** with Jazzer: inputs nobody wrote a test for, found automatically.
+2. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
+3. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
+4. **Metamorphic tests and load tests,** then a decision on formal verification.
 
 ## Plan
 
