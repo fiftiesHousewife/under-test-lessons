@@ -12,7 +12,7 @@ import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
 import uk.org.webcompere.systemstubs.stream.SystemIn;
 import uk.org.webcompere.systemstubs.stream.SystemOut;
 
-/** AFTER: runs the whole program, with its environment variable, input and output stubbed by System Stubs. */
+/* AFTER: runs the whole program, with its environment variable, input and output stubbed by System Stubs. */
 @ExtendWith(SystemStubsExtension.class)
 class PaymentImportTest {
 

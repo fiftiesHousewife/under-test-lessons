@@ -9,7 +9,7 @@ import io.github.fiftieshousewife.undertest.techniques.outsidein.today.TodaysBoo
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: a caller who misspells the field, sending "night" instead of "nights", must be refused with
  * 400 Bad Request, not told 200 OK. Run it against today's service with {@code -Pcode=answer}.
  */

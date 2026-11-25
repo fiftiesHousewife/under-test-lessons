@@ -13,13 +13,13 @@ import java.util.List;
 /** The day's data kept with the tests (made up, as if captured), and the masking the tests use. */
 public final class Captures {
 
-    /** A fixed key for the lesson. A real key is kept out of the repository, apart from the masked files. */
+    /* A fixed key for the lesson. A real key is kept out of the repository, apart from the masked files. */
     static final byte[] TEST_KEY = "lessons: a fixed test key, never a real one".getBytes(StandardCharsets.UTF_8);
 
     private Captures() {
     }
 
-    /** The day's data, as it was captured. */
+    /* The day's data, as it was captured. */
     static Capture capturedDay() {
         return new Capture(file("orders.csv"), file("payments.csv"));
     }
@@ -31,7 +31,7 @@ public final class Captures {
                 : new KeyedMasking(new KeyedSubstitutes(TEST_KEY));
     }
 
-    /** The names in the day's data, for the detector to look for. */
+    /* The names in the day's data, for the detector to look for. */
     static List<String> customerNames() {
         return capturedDay().orders().column("customer");
     }

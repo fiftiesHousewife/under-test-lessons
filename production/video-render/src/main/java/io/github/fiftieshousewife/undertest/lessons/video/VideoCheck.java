@@ -20,7 +20,7 @@ public final class VideoCheck {
 
     static final Path TAPE = Path.of("production/video-render/video-check.tape");
     static final Path FOLDER = Path.of("build/video-check");
-    /** The tape zooms on lines 22 to 24: three lines, two rows apart. */
+    /* The tape zooms on lines 22 to 24: three lines, two rows apart. */
     private static final int ROWS_APART = 2;
     private static final double SLIDE_VOICE_SECONDS = 4;
 
@@ -50,7 +50,7 @@ public final class VideoCheck {
         log.info("Every video step works. Watch build/video-check/video-check.mp4 to see them.");
     }
 
-    /** The recording, zoomed on its key lines, with silent sound so it joins with slides. */
+    /* The recording, zoomed on its key lines, with silent sound so it joins with slides. */
     private static Path zoom(final Path root, final Zoom.Rows rows) {
         final Zoom.Geometry geometry = Zoom.geometry(root.resolve(TAPE));
         final String filter = Zoom.filter(geometry, TapeTimeline.zooms(root, root.resolve(TAPE), List.of()),
@@ -63,7 +63,7 @@ public final class VideoCheck {
         return folder.resolve("video-check.zoomed.mp4");
     }
 
-    /** A two-point slide, drawn stage by stage and built up over a silent voice. */
+    /* A two-point slide, drawn stage by stage and built up over a silent voice. */
     private static Path slide(final Media media, final Path folder) {
         final Slide slide = new Slide(new Slide.Heading("What this checks", "checklist"),
                 List.of("Slides build up one point at a time", "Code rolls in and zooms on the key lines"), "");
@@ -75,7 +75,7 @@ public final class VideoCheck {
         return video;
     }
 
-    /** What is wrong with the rows the check recording reported, if anything. */
+    /* What is wrong with the rows the check recording reported, if anything. */
     static Optional<String> problem(final List<Optional<Zoom.Rows>> rows) {
         if (rows.size() != 1) {
             return Optional.of("expected rows for 1 zoom, got " + rows.size()

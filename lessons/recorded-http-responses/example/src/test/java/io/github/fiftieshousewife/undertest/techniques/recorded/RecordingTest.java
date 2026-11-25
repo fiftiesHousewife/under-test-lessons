@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import tools.jackson.databind.json.JsonMapper;
 
-/**
+/*
  * BEFORE and AFTER for making recordings: WireMock records a stand-in supplier running on this machine. Saved as
  * recorded, the files hold a person's name, email address and password token. Masked first, they hold none of them.
  */
@@ -78,7 +78,7 @@ class RecordingTest {
                         .isEqualTo(List.of("person-ea08c4400378ace1", "person-ea08c4400378ace1")));
     }
 
-    /** Records two questions to the stand-in, then masks each recording and saves it to a file. */
+    /* Records two questions to the stand-in, then masks each recording and saves it to a file. */
     private List<String> recordAndSave(final RecordingCleaner cleaner) throws IOException, InterruptedException {
         recorder.startRecording(recordSpec().forTarget(standIn.baseUrl())
                 .captureHeader("Authorization").makeStubsPersistent(false));
@@ -99,13 +99,13 @@ class RecordingTest {
         HttpClient.newHttpClient().send(question, HttpResponse.BodyHandlers.discarding());
     }
 
-    /** Which of the person's name, email address and token appear anywhere in the saved files. */
+    /* Which of the person's name, email address and token appear anywhere in the saved files. */
     private static List<String> personalDataIn(final List<String> files) {
         return Stream.of(NAME, EMAIL, TOKEN).filter(value -> files.stream().anyMatch(file -> file.contains(value)))
                 .toList();
     }
 
-    /** The name in each saved answer, in the order the questions were asked. */
+    /* The name in each saved answer, in the order the questions were asked. */
     private static List<String> namesIn(final List<String> files) {
         final JsonMapper json = JsonMapper.builder().build();
         return files.stream()

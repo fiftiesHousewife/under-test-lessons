@@ -12,14 +12,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-/**
+/*
  * What one scene of a video script puts on screen, read from the script itself: the code panels it shows (the same
  * lines {@code show} prints), the commands it runs live with the output kept for each ({@link LiveOutputs}), and its
  * callouts. Slide decks draw these as text.
  */
 final class SceneContent {
 
-    /** A panel of code: its label, its lines (each with its line number), and the numbers of the lines marked. */
+    /* A panel of code: its label, its lines (each with its line number), and the numbers of the lines marked. */
     record Panel(String label, List<String> lines, Set<Integer> marked) {
 
         Panel {
@@ -47,7 +47,7 @@ final class SceneContent {
         return List.copyOf(liveCommands);
     }
 
-    /** For each live command, in the same order, the output kept for it (empty if none). */
+    /* For each live command, in the same order, the output kept for it (empty if none). */
     List<List<String>> outputs() {
         return List.copyOf(liveOutputs);
     }
@@ -56,12 +56,12 @@ final class SceneContent {
         return List.copyOf(calloutTexts);
     }
 
-    /** The scene's captions, as the video shows them at the top of the screen. */
+    /* The scene's captions, as the video shows them at the top of the screen. */
     List<String> notes() {
         return List.copyOf(noteTexts);
     }
 
-    /** Reads every scene of a script, in order; paths in {@code show} lines are relative to the repository root. */
+    /* Reads every scene of a script, in order; paths in {@code show} lines are relative to the repository root. */
     static List<SceneContent> read(final Path root, final Path tape) {
         final Path lesson = tape.toAbsolutePath().resolveSibling("..").normalize();
         final List<Path> places = List.of(lesson, root.resolve("lessons/_shared"), root.resolve("build-logic"),
@@ -113,7 +113,7 @@ final class SceneContent {
         return words;
     }
 
-    /**
+    /*
      * The lines {@code show <file> <from> <to> [label]} or {@code show <file> /pattern/ [label]} prints, with any
      * {@code --mark 22,24} (or {@code 22-24}) lines marked; {@code --zoom 22-24} marks its lines too.
      */
@@ -131,13 +131,13 @@ final class SceneContent {
         return new Panel(plain.label(), plain.lines(), marked);
     }
 
-    /** The lines a {@code show} line zooms in on ({@code --zoom 22-24}), or none. */
+    /* The lines a {@code show} line zooms in on ({@code --zoom 22-24}), or none. */
     static Set<Integer> zoomed(final List<String> words) {
         final int zoom = words.indexOf("--zoom");
         return zoom >= 0 && zoom + 1 < words.size() ? marks(words.get(zoom + 1)) : Set.of();
     }
 
-    /** The line numbers in a list such as {@code 18,22-24}. */
+    /* The line numbers in a list such as {@code 18,22-24}. */
     static Set<Integer> marks(final String list) {
         final Set<Integer> numbers = new TreeSet<>();
         for (final String part : list.split(",")) {
@@ -174,7 +174,7 @@ final class SceneContent {
         return arg.length() > 1 && arg.startsWith("/") && arg.endsWith("/");
     }
 
-    /**
+    /*
      * The file a {@code show} line names: a path, an exact file name, or part of a name, as the helper finds it,
      * searching the lesson's own folder before the shared ones, so a name used in two lessons finds this lesson's file.
      */
@@ -207,7 +207,7 @@ final class SceneContent {
         return files;
     }
 
-    /** True for generated files: anything under a folder named build, inside the repository. */
+    /* True for generated files: anything under a folder named build, inside the repository. */
     private static boolean insideBuildFolder(final Path relative) {
         for (final Path part : relative) {
             if ("build".equals(part.toString())) {

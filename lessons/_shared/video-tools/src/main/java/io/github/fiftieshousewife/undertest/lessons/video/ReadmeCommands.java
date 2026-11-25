@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
+/*
  * Holds a lesson's README to what its commands really print. Each {@code ./gradlew :lessons:...} line in the README
  * must be one of the video's live commands, whose output is kept ({@link LiveOutputs}); and what its comment says must
  * match that output: every number it gives appears there, "only ... fails" means exactly one test failed, "fails" that
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  */
 final class ReadmeCommands {
 
-    /** How a README runs a lesson's exercise answer. */
+    /* How a README runs a lesson's exercise answer. */
     static final String ANSWER_SWITCH = "-Pcode=answer";
     private static final Pattern COMMAND = Pattern.compile("^(\\./gradlew :lessons:[^#]*?)\\s*(?:#\\s*(.*))?$");
     private static final Pattern NUMBER = Pattern.compile("\\b\\d+\\b");
@@ -30,7 +30,7 @@ final class ReadmeCommands {
     private ReadmeCommands() {
     }
 
-    /** What the README says that its commands' outputs don't bear out. */
+    /* What the README says that its commands' outputs don't bear out. */
     static List<Problem> problems(final Media media) {
         final Path readme = media.folder().resolveSibling("README.md");
         if (!Files.isRegularFile(readme) || !Files.isRegularFile(media.file(".tape"))) {
@@ -49,7 +49,7 @@ final class ReadmeCommands {
         return problems;
     }
 
-    /** What is wrong with one README command and what it says: a live command, or the exercise's answer. */
+    /* What is wrong with one README command and what it says: a live command, or the exercise's answer. */
     private static List<Problem> checked(final Media media, final List<String> live, final Claim claim) {
         final int index = live.indexOf(claim.command());
         if (index < 0 && claim.command().endsWith(ANSWER_SWITCH)) {
@@ -64,7 +64,7 @@ final class ReadmeCommands {
         return claim.says().isEmpty() || output.isEmpty() ? List.of() : contradictions(claim, output);
     }
 
-    /**
+    /*
      * The exercise's answer command, which no video runs: its output is kept as {@code answer.txt} with the live ones
      * ({@link LiveOutputs#readAnswer}), and what the README says about it is held to that.
      */
@@ -77,7 +77,7 @@ final class ReadmeCommands {
         return contradictions(claim, output);
     }
 
-    /** A README line's command and what its comment says it shows. */
+    /* A README line's command and what its comment says it shows. */
     private record Claim(Path readme, String command, String says) {
     }
 
@@ -88,7 +88,7 @@ final class ReadmeCommands {
         return problems;
     }
 
-    /** Every number the comment gives appears in the output. */
+    /* Every number the comment gives appears in the output. */
     private static List<Problem> numbers(final Claim claim, final String printed) {
         final List<Problem> problems = new ArrayList<>();
         final Matcher number = NUMBER.matcher(claim.says());
@@ -101,7 +101,7 @@ final class ReadmeCommands {
         return problems;
     }
 
-    /** What the comment says failed or passed matches how many tests failed. */
+    /* What the comment says failed or passed matches how many tests failed. */
     private static java.util.Optional<Problem> failures(final Claim claim, final long failed) {
         final String words = claim.says().toLowerCase(Locale.ROOT);
         final boolean only = words.contains("only") && words.contains("fail");

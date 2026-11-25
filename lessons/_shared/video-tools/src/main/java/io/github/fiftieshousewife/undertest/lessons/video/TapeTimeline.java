@@ -124,7 +124,7 @@ public final class TapeTimeline {
         zoomStarts.clear();
     }
 
-    /** Time to type a {@code Type} line's text: its length times its own speed ({@code Type@40ms}) or the default. */
+    /* Time to type a {@code Type} line's text: its length times its own speed ({@code Type@40ms}) or the default. */
     double typingTime(final String line) {
         final int space = line.indexOf(' ');
         final String rest = space < 0 ? "" : line.substring(space + 1).strip();
@@ -139,7 +139,7 @@ public final class TapeTimeline {
         return perCharacter * (rest.length() - 2);
     }
 
-    /** A VHS duration such as {@code 40ms} or {@code 1.5s}, in seconds. */
+    /* A VHS duration such as {@code 40ms} or {@code 1.5s}, in seconds. */
     static double duration(final String text) {
         return text.endsWith("ms") ? seconds(text.substring(0, text.length() - 2), "ms")
                 : seconds(text.substring(0, text.length() - 1), "s");

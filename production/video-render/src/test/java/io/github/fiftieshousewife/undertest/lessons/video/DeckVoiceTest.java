@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Tests the deck's voice with stand-ins for the voice and ffmpeg. */
+/* Tests the deck's voice with stand-ins for the voice and ffmpeg. */
 class DeckVoiceTest {
 
     @TempDir

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import org.h2.jdbcx.JdbcDataSource;
 
-/** The team's long-lived test database: one file on disk that every test shares, set up by hand, never emptied. */
+/* The team's long-lived test database: one file on disk that every test shares, set up by hand, never emptied. */
 final class SharedTestDatabase {
 
     private static final JdbcDataSource DATABASE = new JdbcDataSource();
@@ -24,7 +24,7 @@ final class SharedTestDatabase {
         return DATABASE::getConnection;
     }
 
-    /** A copy of the table typed in by hand, and the test data someone loaded once. */
+    /* A copy of the table typed in by hand, and the test data someone loaded once. */
     private static void setUpByHand() throws SQLException {
         try (Connection connection = DATABASE.getConnection(); Statement statement = connection.createStatement()) {
             statement.execute("CREATE TABLE IF NOT EXISTS invoices "

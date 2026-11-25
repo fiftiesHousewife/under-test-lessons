@@ -11,10 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-/** Finds SQL that only one database runs, or that depends on the database's own behaviour. */
+/* Finds SQL that only one database runs, or that depends on the database's own behaviour. */
 final class PortableSql {
 
-    /** PostgreSQL's own SQL, and SQL whose answer depends on the database: the order of nulls, the time of day. */
+    /* PostgreSQL's own SQL, and SQL whose answer depends on the database: the order of nulls, the time of day. */
     private static final Pattern VENDOR_ONLY = Pattern.compile(
             "\\b(ILIKE|NULLS FIRST|NULLS LAST|ON CONFLICT|RETURNING|DISTINCT ON|JSONB|SERIAL|NOW\\(\\))|::",
             Pattern.CASE_INSENSITIVE);
@@ -23,7 +23,7 @@ final class PortableSql {
     private PortableSql() {
     }
 
-    /** Each vendor-only piece of SQL in the folder's SQL files and in its Java code's text, as "file: SQL". */
+    /* Each vendor-only piece of SQL in the folder's SQL files and in its Java code's text, as "file: SQL". */
     static List<String> vendorOnlySqlIn(final Path folder) throws IOException {
         final List<String> found = new ArrayList<>();
         try (Stream<Path> files = Files.walk(folder)) {
@@ -36,7 +36,7 @@ final class PortableSql {
         return found;
     }
 
-    /** The vendor-only pieces of one piece of SQL. */
+    /* The vendor-only pieces of one piece of SQL. */
     static List<String> vendorOnly(final String sql) {
         final List<String> found = new ArrayList<>();
         final Matcher matcher = VENDOR_ONLY.matcher(sql);

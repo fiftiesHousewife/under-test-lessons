@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-/** AFTER: the same requests and checks, and every answer is also checked against the OpenAPI schema, openapi.yaml. */
+/* AFTER: the same requests and checks, and every answer is also checked against the OpenAPI schema, openapi.yaml. */
 class ParcelSchemaTest {
 
     private static final SchemaCheck THE_SCHEMA = new SchemaCheck("openapi.yaml");

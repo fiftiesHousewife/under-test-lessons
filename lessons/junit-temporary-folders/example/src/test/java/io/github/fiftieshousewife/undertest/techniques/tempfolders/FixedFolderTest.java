@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-/** BEFORE: every test writes to the same fixed folder, and nothing ever cleans it up. */
+/* BEFORE: every test writes to the same fixed folder, and nothing ever cleans it up. */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FixedFolderTest {
 

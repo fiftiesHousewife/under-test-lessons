@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-/**
+/*
  * How the voice should say words it would otherwise get wrong, such as "PIT" read as letters. Applied only to the
  * spoken narration; captions keep the written form. The file has one {@code word = how to say it} per line, and lines
  * starting with {@code #} are comments. A word may be a phrase, and may start or end with a sign, as in C++. All the
@@ -34,7 +34,7 @@ final class Pronunciation {
                 .collect(Collectors.joining("|")) + ")(?![\\w])");
     }
 
-    /** Reads the pronunciation file, or returns one that changes nothing if there is no file. */
+    /* Reads the pronunciation file, or returns one that changes nothing if there is no file. */
     static Pronunciation read(final Path file) {
         final Map<String, String> spoken = new LinkedHashMap<>();
         if (Files.isRegularFile(file)) {
@@ -48,7 +48,7 @@ final class Pronunciation {
         return new Pronunciation(spoken);
     }
 
-    /**
+    /*
      * The text with each listed word (whole words only, matching case) replaced by how to say it, and sums of money
      * said as a person says them: "£12.50" as "12 pounds 50", "£1" as "1 pound".
      */
@@ -60,7 +60,7 @@ final class Pronunciation {
         return words.matcher(money).replaceAll(found -> Matcher.quoteReplacement(spoken.get(found.group())));
     }
 
-    /** Each listed word or phrase the text uses, once, in the order it first appears, with how to say it. */
+    /* Each listed word or phrase the text uses, once, in the order it first appears, with how to say it. */
     Map<String, String> used(final String text) {
         final Map<String, String> found = new LinkedHashMap<>();
         if (words != null) {
@@ -72,7 +72,7 @@ final class Pronunciation {
         return found;
     }
 
-    /** "£12.50" as "12 pounds 50", "£1.00" as "1 pound", "£0.50" as "50 pence". */
+    /* "£12.50" as "12 pounds 50", "£1.00" as "1 pound", "£0.50" as "50 pence". */
     private static String pounds(final MatchResult money) {
         final String whole = money.group(1).replace(",", "");
         final String pence = money.group(2);

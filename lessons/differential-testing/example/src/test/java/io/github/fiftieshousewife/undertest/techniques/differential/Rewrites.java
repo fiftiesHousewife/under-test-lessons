@@ -4,7 +4,7 @@ import io.github.fiftieshousewife.undertest.techniques.differential.rewrite.Pric
 import io.github.fiftieshousewife.undertest.techniques.differential.rewrite.RewrittenPostage;
 import java.util.Set;
 
-/**
+/*
  * The rewrite the tests run against: with the corrected price list, or as typed today with -Pcode=today (and with
  * -Pcode=answer, which adds the exercise's answer).
  */

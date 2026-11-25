@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 
-/** AFTER: waits until the confirmation has gone, checking every 50 ms for up to 2 seconds, and goes on at once. */
+/* AFTER: waits until the confirmation has gone, checking every 50 ms for up to 2 seconds, and goes on at once. */
 class WaitingTest {
 
     private static final MailServer MAIL = MailServers.chosen();

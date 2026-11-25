@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** A video's length, estimated before recording, and the ten-minute limit. */
+/* A video's length, estimated before recording, and the ten-minute limit. */
 class VideoLengthTest {
 
     @TempDir

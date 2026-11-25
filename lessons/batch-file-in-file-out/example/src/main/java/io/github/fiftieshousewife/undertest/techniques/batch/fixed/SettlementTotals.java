@@ -10,7 +10,7 @@ import org.springframework.batch.infrastructure.item.ItemStream;
 import org.springframework.batch.infrastructure.item.ItemWriter;
 import org.springframework.batch.infrastructure.item.file.FlatFileFooterCallback;
 
-/**
+/*
  * FIXED: counts and adds up the lines as they are written, then writes the closing line: {@code TRAILER,3,121.49}.
  * The count and total are saved with each committed chunk and given back when a failed step restarts, so the closing
  * line covers every line in the file, not only those written since the restart.

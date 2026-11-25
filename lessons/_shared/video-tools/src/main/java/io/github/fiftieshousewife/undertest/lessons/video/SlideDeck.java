@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 
-/**
+/*
  * A lesson as one self-contained HTML slide deck: the intro slides, one slide per scene of the example (its narration
  * as the text), and the closing slides. Arrow keys move between slides; N shows the speaker notes; printing gives one
  * slide per page. Styled by the shared slide stylesheet, the deck stylesheet, then any user stylesheet.
@@ -27,7 +27,7 @@ final class SlideDeck {
     private SlideDeck() {
     }
 
-    /** The lesson named, or every lesson with a slides file when the name is "all". */
+    /* The lesson named, or every lesson with a slides file when the name is "all". */
     static List<Media> lessons(final Path root, final String lesson) {
         if (!"all".equals(lesson)) {
             return List.of(new Media(root, lesson));
@@ -41,7 +41,7 @@ final class SlideDeck {
         }
     }
 
-    /** Writes {@code <id>.deck.html} next to the lesson's video script, and the PDF too if asked. */
+    /* Writes {@code <id>.deck.html} next to the lesson's video script, and the PDF too if asked. */
     static Path write(final Media media, final boolean pdf) {
         final Path deck = media.file(".deck.html");
         try {
@@ -86,7 +86,7 @@ final class SlideDeck {
                 .append("</script></body></html>\n").toString();
     }
 
-    /** The slide's section with its spoken clip, if it has one, played by the deck's Listen control. */
+    /* The slide's section with its spoken clip, if it has one, played by the deck's Listen control. */
     static String withVoice(final String section, final String source) {
         if (source.isEmpty()) {
             return section;
@@ -96,7 +96,7 @@ final class SlideDeck {
                 + SlideHtml.escape(source) + "\"></audio>" + section.substring(end);
     }
 
-    /**
+    /*
      * A scene of the example: its caption as points, and its callouts, beside the code panels and commands it shows;
      * the narration, which the voice reads, is in the speaker notes. A scene with no caption shows its narration.
      */
@@ -139,7 +139,7 @@ final class SlideDeck {
                 .append("</aside></section>\n").toString();
     }
 
-    /**
+    /*
      * A scene's captions as points: each sentence or clause after a colon its own point, without the emphasis marks,
      * and without a first clause that only repeats the slide's title ("The code under test: ...").
      */
@@ -161,12 +161,12 @@ final class SlideDeck {
         return text.isEmpty() ? text : Character.toUpperCase(text.charAt(0)) + text.substring(1);
     }
 
-    /** One line of a panel or output, escaped, and highlighted when it is one the scene is about. */
+    /* One line of a panel or output, escaped, and highlighted when it is one the scene is about. */
     static String marked(final String line, final boolean key) {
         return key ? "<mark>" + SlideHtml.escape(line) + "</mark>" : SlideHtml.escape(line);
     }
 
-    /** A font size, in pixels, that fits every panel's lines on the slide: at most 22, at least 12. */
+    /* A font size, in pixels, that fits every panel's lines on the slide: at most 22, at least 12. */
     static int codeSize(final SceneContent content) {
         final List<String> lines = new ArrayList<>();
         content.panels().forEach(panel -> lines.addAll(panel.lines()));
@@ -185,7 +185,7 @@ final class SlideDeck {
                 + "</aside></section>\n";
     }
 
-    /** One slide per scene of the video script, titled by the scene, with its narration as the text. */
+    /* One slide per scene of the video script, titled by the scene, with its narration as the text. */
     static List<Slide> scenes(final Media media) {
         final Path tape = media.file(".tape");
         final Path narration = media.file(".narration.md");
@@ -203,7 +203,7 @@ final class SlideDeck {
         return scenes;
     }
 
-    /** Each scene's narration as spoken, pause markers kept: one per scene that has both a title and narration. */
+    /* Each scene's narration as spoken, pause markers kept: one per scene that has both a title and narration. */
     static List<String> sceneNarrations(final Media media) {
         final Path tape = media.file(".tape");
         final Path narration = media.file(".narration.md");
@@ -214,7 +214,7 @@ final class SlideDeck {
         return paragraphs.subList(0, Math.min(matches(tape, SCENE).size(), paragraphs.size()));
     }
 
-    /** The lesson's name, from the first heading of its README. */
+    /* The lesson's name, from the first heading of its README. */
     static String title(final Media media) {
         final Path readme = media.file(".tape").resolveSibling("../README.md").normalize();
         final List<String> headings = Files.isRegularFile(readme) ? matches(readme, HEADING) : List.of();

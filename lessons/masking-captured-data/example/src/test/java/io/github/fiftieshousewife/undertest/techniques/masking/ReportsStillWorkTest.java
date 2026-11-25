@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Test;
 
-/** AFTER: the shop's reports give the same answers on the masked capture as on the capture before masking. */
+/* AFTER: the shop's reports give the same answers on the masked capture as on the capture before masking. */
 class ReportsStillWorkTest {
 
     private final Capture captured = Captures.capturedDay();

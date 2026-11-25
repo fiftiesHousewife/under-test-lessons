@@ -7,7 +7,7 @@ import org.approvaltests.core.Options;
 import org.approvaltests.reporters.QuietReporter;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: a second approved capture, for a caller who asks for a customer nobody has. The service
  * answers 404 without calling the loyalty provider, and the caller's token must still be hidden. Run it with today's
  * capture with {@code -Pcode=answer}.

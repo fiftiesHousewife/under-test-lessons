@@ -58,7 +58,7 @@ public final class VideoScriptChecker {
         return problems;
     }
 
-    /** Lessons made of slides alone (no video script) still have their slides checked. */
+    /* Lessons made of slides alone (no video script) still have their slides checked. */
     private static List<Problem> slidesOnlyLessons(final Path root) {
         final List<Problem> problems = new ArrayList<>();
         if (!Files.isDirectory(root.resolve("lessons"))) {
@@ -82,7 +82,7 @@ public final class VideoScriptChecker {
         return String.valueOf(tape.getFileName()).replace(".tape", "");
     }
 
-    /** Captions and voice pair each scene with one narration item, so the counts must match. */
+    /* Captions and voice pair each scene with one narration item, so the counts must match. */
     static Optional<Problem> checkSceneCount(final Path tape, final Path narration) {
         final long scenes = readLines(tape).stream().filter(line -> SCENE.matcher(line).matches()).count();
         final int items = Narration.rawParagraphs(narration).size();
@@ -90,7 +90,7 @@ public final class VideoScriptChecker {
                 + " narration items; each scene needs exactly one item (look for a repeated scene line)"));
     }
 
-    /**
+    /*
      * Narration is spoken, so it must never contain a command (say what happens instead), nor a semicolon, which the
      * voice reads as a run-on sentence (use a full stop).
      */
@@ -128,7 +128,7 @@ public final class VideoScriptChecker {
         return problems;
     }
 
-    /** After Type then Enter, a command runs until a Sleep or Wait gives it time to finish. */
+    /* After Type then Enter, a command runs until a Sleep or Wait gives it time to finish. */
     private static boolean nextCommandRunning(final boolean running, final String line) {
         if (line.startsWith("Sleep") || line.startsWith("Wait")) {
             return false;
@@ -211,14 +211,14 @@ public final class VideoScriptChecker {
         }
     }
 
-    /** One line of a script, so problems can say where they are. */
+    /* One line of a script, so problems can say where they are. */
     record Line(Path tape, int number, String text) {
         Problem problem(final String message) {
             return new Problem(tape, "line " + number + ": " + message);
         }
     }
 
-    /** True for generated files: anything under a folder named build, inside the folder searched. */
+    /* True for generated files: anything under a folder named build, inside the folder searched. */
     private static boolean insideBuildFolder(final Path relative) {
         for (final Path part : relative) {
             if ("build".equals(part.toString())) {

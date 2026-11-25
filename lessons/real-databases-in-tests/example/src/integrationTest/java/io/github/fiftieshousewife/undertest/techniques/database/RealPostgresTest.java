@@ -11,7 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-/**
+/*
  * AFTER: the same test on real PostgreSQL, the database production uses, started in a container for this test and
  * thrown away afterwards. Skipped where there is no container runtime.
  */

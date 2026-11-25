@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-/**
+/*
  * Takes a full HD screenshot of an HTML page with a headless browser: the system property {@code video.browser}
  * (the build sets it to Google Chrome where installed, or -PlessonBrowser), or {@code google-chrome} on the path.
  */
@@ -20,7 +20,7 @@ final class Browser {
         return chosen.isEmpty() ? "google-chrome" : chosen;
     }
 
-    /** Screenshots the page at the size of a slide, using a throwaway browser profile. */
+    /* Screenshots the page at the size of a slide, using a throwaway browser profile. */
     static void screenshot(final Path page, final Path png) {
         try {
             final Path profile = Files.createTempDirectory("slide-browser");
@@ -33,7 +33,7 @@ final class Browser {
         }
     }
 
-    /** Prints the page to a PDF, one slide to a page, using a throwaway browser profile. */
+    /* Prints the page to a PDF, one slide to a page, using a throwaway browser profile. */
     static void printToPdf(final Path page, final Path pdf) {
         try {
             final Path profile = Files.createTempDirectory("deck-browser");

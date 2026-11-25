@@ -10,7 +10,7 @@ import io.github.fiftieshousewife.undertest.techniques.openapi.Services;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: a parcel whose status is LOST, which the schema's list of statuses doesn't include. A test
  * that checks a few fields would pass it; the schema check refuses the answer and names the status field. Run it
  * against today's service with {@code -Pcode=answer}.

@@ -26,7 +26,7 @@ class DispatcherTest {
         assertEquals(List.of(42L), sent);
     }
 
-    /** A warehouse that refuses its first few sends, then records each order it is sent. */
+    /* A warehouse that refuses its first few sends, then records each order it is sent. */
     private static final class RecordingWarehouse implements Warehouse {
 
         private final List<Long> sent;

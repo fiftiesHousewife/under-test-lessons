@@ -8,6 +8,14 @@ plugins {
 }
 
 val libs = the<VersionCatalogsExtension>().named("libs")
+
+// ---------- Code a lesson shows as it really is ----------
+// Today's code, old code and the weak tests are deliberately complex, copied or untested: that is what a lesson
+// shows. The code-quality checks leave them out (SpotBugs through underTest.spotbugsExcludeFilter, in
+// gradle.properties); the fixed code and the strong tests meet every standard.
+val shownAsItIs = listOf("**/today/**", "**/legacy/**", "**/*WeakTest.java")
+tasks.withType<Checkstyle>().configureEach { exclude(shownAsItIs) }
+tasks.withType<Pmd>().configureEach { exclude(shownAsItIs) }
 fun library(alias: String) = libs.findLibrary(alias).get()
 
 // ---------- Tests that read well in a recording ----------

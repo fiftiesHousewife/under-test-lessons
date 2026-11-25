@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/** AFTER: an extension sets the shop's settings before each test, puts them back after, and fails a test that leaks. */
+/* AFTER: an extension sets the shop's settings before each test, puts them back after, and fails a test that leaks. */
 @ExtendWith(StandardShopSettings.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class GuardedSettingsTest {

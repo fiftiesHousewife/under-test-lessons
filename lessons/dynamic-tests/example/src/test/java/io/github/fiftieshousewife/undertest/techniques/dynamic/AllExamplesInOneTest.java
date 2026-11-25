@@ -6,7 +6,7 @@ import java.nio.file.Path;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: one test loops over every example. It stops at the first wrong one, and its name never says which. */
+/* BEFORE: one test loops over every example. It stops at the first wrong one, and its name never says which. */
 class AllExamplesInOneTest {
 
     @Test

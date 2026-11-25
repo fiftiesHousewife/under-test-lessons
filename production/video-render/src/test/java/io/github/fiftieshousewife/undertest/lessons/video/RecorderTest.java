@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Tests the recording step with a stand-in for VHS. */
+/* Tests the recording step with a stand-in for VHS. */
 class RecorderTest {
 
     @TempDir

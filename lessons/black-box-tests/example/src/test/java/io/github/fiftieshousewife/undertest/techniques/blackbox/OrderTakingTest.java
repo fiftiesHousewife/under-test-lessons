@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: unit tests of the order rules, with stand-ins for the warehouse and the database. They pass, and never run
  * the web server, the warehouse call or the SQL the application really uses.
  */

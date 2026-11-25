@@ -63,7 +63,7 @@ public final class CaptionFile {
         return chunks;
     }
 
-    /** Breaks a cue into two lines at the space nearest the middle, if it is too long for one. */
+    /* Breaks a cue into two lines at the space nearest the middle, if it is too long for one. */
     static String wrap(final String cue) {
         if (cue.length() <= MAX_LINE_CHARACTERS) {
             return cue;

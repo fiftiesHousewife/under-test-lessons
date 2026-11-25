@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one more message no one can read, of another kind: it names no order at all. Like the
  * pounds-not-pence one, it must be kept in the dead-letter queue, not skipped. Run it against today's consumer with
  * {@code -Pcode=answer}.

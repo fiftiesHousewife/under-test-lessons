@@ -3,7 +3,7 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Captions for the whole spliced video: intro slides, then the recording's scenes, then closing slides. */
+/* Captions for the whole spliced video: intro slides, then the recording's scenes, then closing slides. */
 final class SpliceCaptions {
 
     private SpliceCaptions() {
@@ -20,7 +20,7 @@ final class SpliceCaptions {
         return cues;
     }
 
-    /** Each slide's narration as cues across its segment, starting at the given time. */
+    /* Each slide's narration as cues across its segment, starting at the given time. */
     static List<Cue> slideCues(final List<Slide> slides, final List<Splicer.Segment> segments, final double start) {
         final List<Cue> cues = new ArrayList<>();
         double time = start;

@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Slides build up one point at a time through the narration, the picture easing in with the first point. */
+/* Slides build up one point at a time through the narration, the picture easing in with the first point. */
 class SlideBuildUpTest {
 
     private static final String PAGE = "<body class=\"frame-soft\"><main class=\"slide\"><ul>"
@@ -72,7 +72,7 @@ class SlideBuildUpTest {
         return picture;
     }
 
-    /** Which of red, green or blue the frame at that moment mostly is. */
+    /* Which of red, green or blue the frame at that moment mostly is. */
     @SuppressFBWarnings(value = "COMMAND_INJECTION", justification = "Runs ffmpeg on a video this test made itself")
     private String rgb(final Path video, final double seconds) {
         try {

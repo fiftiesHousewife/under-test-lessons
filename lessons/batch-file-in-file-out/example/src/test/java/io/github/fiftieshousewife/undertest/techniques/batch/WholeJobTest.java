@@ -14,7 +14,7 @@ import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-/**
+/*
  * AFTER: the whole job, file in and file out, run by Spring Batch's test library. Each test writes into a fresh
  * temporary folder that JUnit deletes afterwards, reads the settlement file back as records, and compares their fields.
  */

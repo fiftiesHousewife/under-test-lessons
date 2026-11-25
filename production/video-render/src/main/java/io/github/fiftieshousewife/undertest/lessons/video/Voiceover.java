@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 public final class Voiceover {
 
-    /** Time left at the end of each scene after its narration, so speech never runs into the next scene. */
+    /* Time left at the end of each scene after its narration, so speech never runs into the next scene. */
     static final double BREATH_SECONDS = 1.0;
 
     private Voiceover() {

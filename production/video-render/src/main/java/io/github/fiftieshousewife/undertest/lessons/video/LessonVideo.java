@@ -118,12 +118,12 @@ public final class LessonVideo {
                 LogSafe.lesson(media), intro.size(), closing.size());
     }
 
-    /** Captions are burned into the picture unless {@code lessonBurnCaptions} is false. */
+    /* Captions are burned into the picture unless {@code lessonBurnCaptions} is false. */
     private static boolean burnCaptions() {
         return Boolean.parseBoolean(System.getProperty("video.burnCaptions", "true"));
     }
 
-    /** The joined video with its captions burned in, as {@code <id>.captioned.mp4}; returns its file name. */
+    /* The joined video with its captions burned in, as {@code <id>.captioned.mp4}; returns its file name. */
     private static String burned(final Media media, final List<Cue> cues) {
         BurnedCaptions.burn(media.file(".joined.mp4"), cues, media.file(".captioned.mp4"));
         return media.name(".captioned.mp4");
@@ -137,11 +137,11 @@ public final class LessonVideo {
         return segments;
     }
 
-    /** The lesson, the voice command and how it should say awkward words. */
+    /* The lesson, the voice command and how it should say awkward words. */
     private record Voice(Media media, List<String> command, Pronunciation pronunciation) {
     }
 
-    /** Each slide's clip, from the lesson's store of spoken clips, kept as {@code <kind>-<n>.wav} for the splicer. */
+    /* Each slide's clip, from the lesson's store of spoken clips, kept as {@code <kind>-<n>.wav} for the splicer. */
     private static void speakSlides(final Voice voice, final List<Slide> slides, final String kind) {
         for (int i = 0; i < slides.size(); i++) {
             VoiceClips.wav(voice.media(), voice.command(), Spoken.of(slides.get(i).narration(), voice.pronunciation()))
@@ -157,7 +157,7 @@ public final class LessonVideo {
         }
     }
 
-    /** Speaks one piece of narration: each part between pause markers, joined with the pauses' silence. */
+    /* Speaks one piece of narration: each part between pause markers, joined with the pauses' silence. */
     static WavFile speak(final List<String> command, final String narration, final Path clip) {
         return Speech.readAll(command, List.of(Speech.of(narration, clip))).getFirst();
     }

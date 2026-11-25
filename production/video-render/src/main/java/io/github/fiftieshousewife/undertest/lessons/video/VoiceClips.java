@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
+/*
  * One store of spoken clips for a lesson's video and its deck, in {@code <id>.voice/clips/}, each named by what the
  * voice is given. The video and the deck say the same narration, so each piece is read aloud once: whichever is voiced
  * first reads it, and the other takes the clip from here. Where the store has no clip but the deck has one the voice
@@ -21,7 +21,7 @@ final class VoiceClips {
     private VoiceClips() {
     }
 
-    /**
+    /*
      * The clip of what is said: from the store, else decoded from the deck's clip if the voice read it from the same
      * words, else read aloud now.
      */
@@ -40,7 +40,7 @@ final class VoiceClips {
         return LessonVideo.speak(command, spoken.said(), folder(media).resolve(key(spoken)));
     }
 
-    /**
+    /*
      * Has the voice read, in one go, every piece the store has no clip of and the deck can't give: a voice that reads
      * lists then loads its model once for the lesson, not once a clip. {@link #wav} then finds each in the store.
      */
@@ -56,19 +56,19 @@ final class VoiceClips {
                 .map(piece -> Speech.of(piece.said(), folder(media).resolve(key(piece)))).toList());
     }
 
-    /** Whether the deck has a clip the voice read from the same words, to decode rather than read again. */
+    /* Whether the deck has a clip the voice read from the same words, to decode rather than read again. */
     private static boolean decodable(final Media media, final Spoken spoken) {
         final Path deckClips = media.file(DeckVoice.FOLDER);
         return Files.isRegularFile(deckClips.resolve(spoken.clipName()))
                 && ClipLedger.read(deckClips).readFrom(spoken.clipName(), spoken.saidKey(), Speech.engine());
     }
 
-    /** Where the store keeps the clip of what is said. */
+    /* Where the store keeps the clip of what is said. */
     static Path file(final Media media, final Spoken spoken) {
         return folder(media).resolve(key(spoken) + ".wav");
     }
 
-    /**
+    /*
      * The store's name for a clip: what the voice is given, and the engine that read it (see {@link Speech#engine}), so
      * a new engine never takes an old engine's clip.
      */

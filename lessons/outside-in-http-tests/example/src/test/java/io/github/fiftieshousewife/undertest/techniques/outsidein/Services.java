@@ -5,7 +5,7 @@ import io.github.fiftieshousewife.undertest.techniques.outsidein.fixed.BookingHa
 import io.github.fiftieshousewife.undertest.techniques.outsidein.today.TodaysBookingHandler;
 import java.util.Set;
 
-/** The service the tests start: the fixed one, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
+/* The service the tests start: the fixed one, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
 final class Services {
 
     private Services() {

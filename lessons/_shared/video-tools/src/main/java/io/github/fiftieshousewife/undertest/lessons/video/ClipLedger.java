@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
+/*
  * Who or what made each of a deck's voice clips, kept beside them in {@code voices.txt}: one line per clip, its name
  * then {@code voice <key> <engine>} for a clip the machine voice read (the key of what it was given, and the voice
  * engine: its program, voice, speed, model and packages), or {@code person <name>} for a person's recording. A clip
@@ -47,7 +47,7 @@ final class ClipLedger {
         return new ClipLedger(file, madeBy, !Files.isRegularFile(file));
     }
 
-    /**
+    /*
      * Whether the machine voice read this clip from exactly what it would be given now, with this engine. A line from
      * before engines were recorded counts as this engine's.
      */
@@ -56,7 +56,7 @@ final class ClipLedger {
         return by.equals(VOICE + saidKey) || by.equals(VOICE + saidKey + " " + engine);
     }
 
-    /** Records the engine on a line from before engines were recorded, which was this engine's. */
+    /* Records the engine on a line from before engines were recorded, which was this engine's. */
     void stampEngine(final String clip, final String engine) {
         final String by = madeBy.getOrDefault(clip, "");
         if (by.startsWith(VOICE) && by.indexOf(' ', VOICE.length()) < 0) {
@@ -64,7 +64,7 @@ final class ClipLedger {
         }
     }
 
-    /**
+    /*
      * Who made each of these clips, for a deck's mix of voices: the machine voice's engine ("unrecorded" on a line from
      * before engines were), a person's name, or "a person" for a clip with no line.
      */
@@ -84,12 +84,12 @@ final class ClipLedger {
         return mix;
     }
 
-    /** Whether the machine voice made this clip: true unless a person put it there. */
+    /* Whether the machine voice made this clip: true unless a person put it there. */
     boolean byTheVoice(final String clip) {
         return madeBy.getOrDefault(clip, "").startsWith(VOICE);
     }
 
-    /**
+    /*
      * Whether this is the folder's first ledger: its clips came before ledgers, when the machine voice made every
      * clip, so they are the voice's.
      */

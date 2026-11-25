@@ -9,7 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: WireMock replays the supplier's recorded answers (src/test/resources/supplier/mappings) on a local port,
  * including the ones the real service rarely gives: an unknown postcode, and an outage.
  */
@@ -52,7 +52,7 @@ class RecordedSupplierTest {
         assertThat(describe(error)).isEqualTo("SupplierUnavailableException: the postcode supplier can't be reached");
     }
 
-    /** The error's type and the first line of its message, so a failure reads in one line. */
+    /* The error's type and the first line of its message, so a failure reads in one line. */
     private static String describe(final Throwable error) {
         return error == null ? "no error"
                 : error.getClass().getSimpleName() + ": " + error.getMessage().lines().findFirst().orElse("");

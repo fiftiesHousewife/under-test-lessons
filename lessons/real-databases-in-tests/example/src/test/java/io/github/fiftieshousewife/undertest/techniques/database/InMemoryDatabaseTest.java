@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: the repository on H2, a database held in memory. Quick, and not the database production uses. */
+/* BEFORE: the repository on H2, a database held in memory. Quick, and not the database production uses. */
 class InMemoryDatabaseTest {
 
     @Test

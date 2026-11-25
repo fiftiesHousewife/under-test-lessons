@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * No credential is saved, in either direction: password tokens, cookies, API keys, or tokens in the address. Checked
  * on a recording that holds every kind, and on every recording kept with the tests.
  */

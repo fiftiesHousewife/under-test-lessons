@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-/** The detector is only worth trusting if it finds what is in the capture before masking. */
+/* The detector is only worth trusting if it finds what is in the capture before masking. */
 class DetectorFindsTest {
 
     @Test

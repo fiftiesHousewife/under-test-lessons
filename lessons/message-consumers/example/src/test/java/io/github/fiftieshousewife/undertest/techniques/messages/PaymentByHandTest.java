@@ -9,7 +9,7 @@ import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: a unit test with a hand-built message. It checks that a payment is read and recorded, and passes, but no
  * broker is involved: it can't see when the message is acknowledged, or what happens to one that fails.
  */

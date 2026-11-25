@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-/** AFTER: one nested class per situation, each with the same two questions: can it be approved, can it be repaid? */
+/* AFTER: one nested class per situation, each with the same two questions: can it be approved, can it be repaid? */
 @DisplayName("A loan")
 class LoanTest {
 

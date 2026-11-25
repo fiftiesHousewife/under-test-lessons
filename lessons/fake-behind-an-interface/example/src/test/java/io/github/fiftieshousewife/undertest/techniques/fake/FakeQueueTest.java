@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/** AFTER: a fake queue that behaves like the real one. The test checks what was delivered, not the calls made. */
+/* AFTER: a fake queue that behaves like the real one. The test checks what was delivered, not the calls made. */
 class FakeQueueTest {
 
     private final InMemoryMessageQueue queue = new InMemoryMessageQueue();

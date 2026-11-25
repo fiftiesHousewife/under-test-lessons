@@ -66,7 +66,7 @@ class WavFileTest {
                         .isCloseTo(1.5, within(1e-9)));
     }
 
-    /** At 100 samples a second: a positive length is quiet for that long, a negative one sound. */
+    /* At 100 samples a second: a positive length is quiet for that long, a negative one sound. */
     static WavFile sounds(final double... lengths) {
         final java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
         for (final double length : lengths) {

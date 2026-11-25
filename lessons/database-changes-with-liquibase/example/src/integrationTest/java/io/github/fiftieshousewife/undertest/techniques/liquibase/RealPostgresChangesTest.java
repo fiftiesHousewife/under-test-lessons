@@ -11,7 +11,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
-/** AFTER: the same changes applied to real PostgreSQL, the database production uses, in a throwaway container. */
+/* AFTER: the same changes applied to real PostgreSQL, the database production uses, in a throwaway container. */
 @Testcontainers(disabledWithoutDocker = true)
 class RealPostgresChangesTest {
 

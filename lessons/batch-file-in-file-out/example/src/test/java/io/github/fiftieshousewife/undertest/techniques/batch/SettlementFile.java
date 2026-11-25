@@ -7,17 +7,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-/**
+/*
  * A settlement file read back as records, the way the bank reads it: the header must be the first line and the
  * closing line the last, so a header or closing line missing or out of place reads as {@code null}.
  */
 record SettlementFile(String header, List<PaymentRecord> payments, ClosingRecord closing) {
 
-    /** One payment's line: {@code PAY,12345678,12.50}. */
+    /* One payment's line: {@code PAY,12345678,12.50}. */
     record PaymentRecord(String account, BigDecimal amount) {
     }
 
-    /** The closing line: {@code TRAILER,3,121.49}, the number of payments and their total. */
+    /* The closing line: {@code TRAILER,3,121.49}, the number of payments and their total. */
     record ClosingRecord(int count, BigDecimal total) {
     }
 
@@ -34,7 +34,7 @@ record SettlementFile(String header, List<PaymentRecord> payments, ClosingRecord
                         ? new ClosingRecord(Integer.parseInt(last[1]), new BigDecimal(last[2])) : null);
     }
 
-    /** What the bank expects for these payments: each one in pounds, in order, then their count and total. */
+    /* What the bank expects for these payments: each one in pounds, in order, then their count and total. */
     static SettlementFile expectedFor(final List<Payment> payments) {
         final List<PaymentRecord> records = payments.stream()
                 .map(payment -> new PaymentRecord(payment.account(), BigDecimal.valueOf(payment.pence(), 2))).toList();

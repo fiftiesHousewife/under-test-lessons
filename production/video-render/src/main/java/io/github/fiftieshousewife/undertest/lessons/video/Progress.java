@@ -2,7 +2,7 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 
 import java.util.Optional;
 
-/**
+/*
  * Turns VHS's step-by-step log into a few readable progress messages: setting up, recording, each scene, PIT runs,
  * callouts and the files being written. Everything else VHS prints is kept only for the error report.
  */
@@ -10,7 +10,7 @@ final class Progress {
 
     private boolean recording;
 
-    /** A message for this log line, if it marks a step worth reporting. */
+    /* A message for this log line, if it marks a step worth reporting. */
     Optional<String> message(final String line) {
         if (line.startsWith("Hide") && !recording) {
             return Optional.of("setting up off-camera (Gradle, plugins, compiling)");
@@ -47,7 +47,7 @@ final class Progress {
         return line.substring(from + start.length(), to < 0 ? line.length() : to);
     }
 
-    /** What to say when VHS has been quiet: every 20 seconds, how long it has been. */
+    /* What to say when VHS has been quiet: every 20 seconds, how long it has been. */
     static Optional<String> heartbeat(final long quietSeconds) {
         return quietSeconds > 0 && quietSeconds % 20 == 0
                 ? Optional.of("    ...still working (" + quietSeconds + "s since the last step)")

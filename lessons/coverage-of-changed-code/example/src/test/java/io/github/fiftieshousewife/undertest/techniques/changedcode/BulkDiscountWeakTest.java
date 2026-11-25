@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
+/*
  * BEFORE: the change's own test, run with -Pcode=today. It runs every new line, so the changed code's line coverage
  * is 100%, but it checks nothing exact: no quantity at a boundary, and no exact price.
  */

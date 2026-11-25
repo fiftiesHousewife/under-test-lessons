@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import io.github.fiftieshousewife.undertest.techniques.changedcode.BulkDiscount;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one test, added to the change's weak test, that gets the gate to pass. Exact line totals at
  * £2 an item, on both sides of each boundary, catch all 5 planted bugs the weak test missed: the two boundaries
  * moved by one, the first condition reversed, and the two sums with an operator swapped. Run it with

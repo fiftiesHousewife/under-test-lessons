@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** The zoom on key code: where the window goes, how it eases, when it runs, and the ffmpeg filter that does it. */
+/* The zoom on key code: where the window goes, how it eases, when it runs, and the ffmpeg filter that does it. */
 class ZoomTest {
 
     private static final Zoom.Geometry FRAME = new Zoom.Geometry(new Zoom.Size(1920, 1080), 24, 30);
@@ -146,7 +146,7 @@ class ZoomTest {
 
 
 
-    /** True if the two videos' frames at that moment differ by more than encoding noise (PSNR below 40 dB). */
+    /* True if the two videos' frames at that moment differ by more than encoding noise (PSNR below 40 dB). */
     private boolean frameDiffers(final Path first, final Path second, final double seconds) {
         final String at = String.format(java.util.Locale.ROOT, "%.2f", seconds);
         final String report = ExternalCommand.run(List.of("ffmpeg", "-ss", at, "-i", first.toString(), "-ss", at,

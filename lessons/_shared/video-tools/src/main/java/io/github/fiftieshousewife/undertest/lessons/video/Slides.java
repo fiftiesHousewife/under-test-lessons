@@ -43,7 +43,7 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
         return new Slides(intro, closing);
     }
 
-    /** The file's lines, with each {@code Include: <name>} line replaced by that shared file's lines. */
+    /* The file's lines, with each {@code Include: <name>} line replaced by that shared file's lines. */
     static List<String> withIncludes(final List<String> lines, final Path shared) {
         final List<String> out = new ArrayList<>();
         for (final String line : lines) {
@@ -66,7 +66,7 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
         }
     }
 
-    /** Collects one slide's lines while reading. */
+    /* Collects one slide's lines while reading. */
     private static final class Builder {
         private final boolean closing;
         private final String title;

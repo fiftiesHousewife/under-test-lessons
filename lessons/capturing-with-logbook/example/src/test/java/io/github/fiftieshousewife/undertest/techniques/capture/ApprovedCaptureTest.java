@@ -9,7 +9,7 @@ import org.approvaltests.core.Options;
 import org.approvaltests.reporters.QuietReporter;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: reads what the capture wrote. One test fails if a secret is in it; the other keeps the whole captured
  * exchange as an approved file next to this test, and fails if a capture ever differs from it, line for line.
  */
@@ -34,15 +34,15 @@ class ApprovedCaptureTest {
     void matchesTheApprovedCapture() throws IOException, InterruptedException {
         try (OldService service = new OldService()) {
             service.customer("C-1001");
-            approve(service.captured());
+            verifyApproved(service.captured());
         }
     }
 
-    /**
+    /*
      * Compares the capture with its approved file. ApprovalTests' own message lists full file paths, so a failure says
      * what failed in one line, and the build's approval summary shows the lines that differ.
      */
-    private static void approve(final String capture) {
+    private static void verifyApproved(final String capture) {
         try {
             Approvals.verify(capture, new Options().withReporter(new QuietReporter()));
         } catch (Error difference) {

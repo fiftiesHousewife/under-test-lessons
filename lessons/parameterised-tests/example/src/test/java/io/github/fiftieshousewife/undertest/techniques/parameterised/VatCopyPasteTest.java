@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: one test per case, copied and pasted. Each new case costs a whole method, so there are few, and they are
  * all round numbers: every amount here divides by five, so rounding never comes into it.
  */

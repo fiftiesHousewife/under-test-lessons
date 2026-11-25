@@ -10,7 +10,7 @@ import io.github.fiftieshousewife.undertest.techniques.architecture.web.fixed.Su
 import io.github.fiftieshousewife.undertest.techniques.architecture.web.today.TodaysSummaryPage;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: ordinary unit tests. Both versions of the admin page give the right answer, so these pass for both: they
  * check what the code does, and can't see that today's page skips the service layer.
  */

@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * A deck's voice: each slide's narration read aloud once and kept as a small sound file in {@code <id>.deck-voice/},
  * beside the deck, so the slides can be heard without making the video. A clip is named by its written words
  * ({@link Spoken#clipName}), so a deck plays only clips that match it and a person's recording survives a pronunciation
@@ -18,7 +18,7 @@ final class DeckVoice {
     private DeckVoice() {
     }
 
-    /** What each slide of the deck says, written and as the voice is given it, in deck order. */
+    /* What each slide of the deck says, written and as the voice is given it, in deck order. */
     static List<Spoken> spoken(final Media media) {
         final Pronunciation pronunciation = pronunciation(media);
         final Slides slides = media.slides();
@@ -29,7 +29,7 @@ final class DeckVoice {
         return written.stream().map(text -> Spoken.of(text, pronunciation)).toList();
     }
 
-    /** Each slide's title, in the order of {@link #spoken}. */
+    /* Each slide's title, in the order of {@link #spoken}. */
     static List<String> titles(final Media media) {
         final Slides slides = media.slides();
         final List<String> titles = new ArrayList<>();
@@ -39,13 +39,13 @@ final class DeckVoice {
         return titles;
     }
 
-    /**
+    /*
      * The formats a clip may have, in the order the deck looks for them: the voice makes {@code .m4a}; a person may
      * record any of them (Windows' Sound Recorder saves {@code .m4a}).
      */
     static final List<String> FORMATS = List.of(".m4a", ".wav", ".mp3");
 
-    /** For each slide, the clip's address relative to the deck, or empty when that slide has no clip yet. */
+    /* For each slide, the clip's address relative to the deck, or empty when that slide has no clip yet. */
     static List<String> sources(final Media media) {
         final Path folder = media.file(FOLDER);
         return spoken(media).stream()
@@ -54,7 +54,7 @@ final class DeckVoice {
                 .toList();
     }
 
-    /** The slide's clips in the folder, in every format there is one, in {@link #FORMATS} order. */
+    /* The slide's clips in the folder, in every format there is one, in {@link #FORMATS} order. */
     static List<Path> clips(final Path folder, final Spoken slide) {
         return FORMATS.stream().map(format -> folder.resolve(slide.clipStem() + format)).filter(Files::isRegularFile)
                 .toList();

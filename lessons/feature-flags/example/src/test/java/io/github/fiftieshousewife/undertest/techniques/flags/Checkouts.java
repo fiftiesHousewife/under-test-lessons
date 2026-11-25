@@ -17,7 +17,7 @@ public final class Checkouts {
     private Checkouts() {
     }
 
-    /** A checkout with no flag set anywhere, so the flag's default applies. */
+    /* A checkout with no flag set anywhere, so the flag's default applies. */
     static Checkout withDefaultFlags() {
         OpenFeatureAPI.getInstance().setProviderAndWait(new InMemoryProvider(Map.of()));
         return checkout();

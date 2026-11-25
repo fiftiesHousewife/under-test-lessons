@@ -2,7 +2,7 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 
 import java.util.Map;
 
-/**
+/*
  * Fills in the addresses of the lessons and toolkit repositories on slides, from the system properties
  * {@code video.lessonsRepo} and {@code video.toolkitRepo} (the build's lessonsRepoUrl and toolkitRepoUrl). Where one is
  * not set, the placeholder and its dash are left out, so the point just describes the repository and no address is

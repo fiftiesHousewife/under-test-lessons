@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 
-/**
+/*
  * Runs an outside program, such as the installed browser that draws slides, and returns what it printed. The tools
  * that make videos run ffmpeg and the voice through it too ({@code Ffmpeg}).
  */
@@ -18,7 +18,7 @@ final class ExternalCommand {
     private ExternalCommand() {
     }
 
-    /** Runs a command in a folder and returns everything it printed; fails with the end of its output if it fails. */
+    /* Runs a command in a folder and returns everything it printed; fails with the end of its output if it fails. */
     @SuppressFBWarnings(value = "COMMAND_INJECTION",
             justification = "Runs the maintainer's own configured tools on files these tools name themselves")
     static String run(final List<String> command, final Path folder) {

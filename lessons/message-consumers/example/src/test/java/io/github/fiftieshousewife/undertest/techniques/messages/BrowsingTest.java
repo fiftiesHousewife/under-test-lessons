@@ -6,7 +6,7 @@ import jakarta.jms.JMSException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-/** How the examples were collected: a queue browser reads every message, and leaves them all on the queue. */
+/* How the examples were collected: a queue browser reads every message, and leaves them all on the queue. */
 class BrowsingTest {
 
     @RegisterExtension

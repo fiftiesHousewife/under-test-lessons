@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-/**
+/*
  * The two hand-kept tables that repeat what lesson.yaml files say: the catalogue's table of every toolkit technique and
  * its lessons, and the lessons index's table of every lesson and its techniques.
  */
@@ -28,7 +28,7 @@ final class LessonTables {
     private LessonTables() {
     }
 
-    /** Each technique row links exactly the lessons that name it; with the toolkit, every technique has a row. */
+    /* Each technique row links exactly the lessons that name it; with the toolkit, every technique has a row. */
     static List<Problem> catalogue(final Path root, final List<Lesson> lessons, final Optional<Set<String>> toolkit) {
         final Path file = root.resolve(CATALOGUE_PAGE);
         final Map<String, Set<String>> taught = lessonsByTechnique(lessons);
@@ -54,7 +54,7 @@ final class LessonTables {
         return problems;
     }
 
-    /** Each lesson has a row, and the row links exactly the techniques its lesson.yaml names. */
+    /* Each lesson has a row, and the row links exactly the techniques its lesson.yaml names. */
     static List<Problem> index(final Path root, final List<Lesson> lessons) {
         final Path file = root.resolve(INDEX_PAGE);
         final Map<String, Set<String>> rows = new TreeMap<>();
@@ -75,7 +75,7 @@ final class LessonTables {
         return problems;
     }
 
-    /** The cells of each row of the first table under a heading, without its header and divider rows. */
+    /* The cells of each row of the first table under a heading, without its header and divider rows. */
     static List<List<String>> rows(final Path file, final String heading) {
         final List<String> lines = Text.read(file).lines().toList();
         final int start = lines.indexOf(heading);

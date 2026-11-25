@@ -13,7 +13,7 @@ public record WavFile(int sampleRate, int channels, byte[] samples) {
     private static final int BYTES_PER_SAMPLE = 2;
     private static final int HEADER_BYTES = 44;
     private static final int PCM = 1;
-    /** About -45 dB below a full-scale 16-bit sample. */
+    /* About -45 dB below a full-scale 16-bit sample. */
     private static final int QUIET = 184;
 
     /** Keeps its own copy of the sound, so callers can't change it afterwards. */

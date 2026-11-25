@@ -36,7 +36,7 @@ public final class RecordingScript {
                 entries, media.safeLesson());
     }
 
-    /** Writes the script to {@code page}; returns how many clips it lists. */
+    /* Writes the script to {@code page}; returns how many clips it lists. */
     static int write(final Media media, final boolean missingOnly, final Path page) {
         final List<Spoken> slides = DeckVoice.spoken(media);
         final List<String> titles = DeckVoice.titles(media);
@@ -65,7 +65,7 @@ public final class RecordingScript {
         return entries;
     }
 
-    /** The page's head, title and how to record. */
+    /* The page's head, title and how to record. */
     private static String heading(final Media media) {
         final String title = SlideHtml.escape(SlideDeck.title(media));
         return "<!doctype html><html lang=\"en\"><head><meta charset=\"utf-8\"><title>Recording script: " + title
@@ -79,7 +79,7 @@ public final class RecordingScript {
                 + " .mp3.</p>";
     }
 
-    /** One clip to record: its number and title, its file name, its words, and its reading hints (already HTML). */
+    /* One clip to record: its number and title, its file name, its words, and its reading hints (already HTML). */
     private static String entry(final String label, final Spoken slide, final List<String> hints) {
         return "<div class=\"clip\"><p><b>" + SlideHtml.escape(label) + "</b> · save as <span"
                 + " class=\"file\">" + slide.clipStem() + ".m4a</span></p><p class=\"words\">" + words(slide.written())
@@ -87,7 +87,7 @@ public final class RecordingScript {
                 + "</div>";
     }
 
-    /** The words, with each pause marker written as a direction: "(pause 1.6 s)". */
+    /* The words, with each pause marker written as a direction: "(pause 1.6 s)". */
     static String words(final String written) {
         final StringBuilder out = new StringBuilder();
         for (final Pauses.Part part : Pauses.parts(written)) {
@@ -101,7 +101,7 @@ public final class RecordingScript {
         return out.toString().strip();
     }
 
-    /**
+    /*
      * A reading hint for each listed word the slide uses: "PIT: say <i>pit</i>"; for a phrase given as sounds, the word
      * to stress ("version catalogue: stress <i>version</i>"); for one word given as sounds, the sounds themselves.
      */

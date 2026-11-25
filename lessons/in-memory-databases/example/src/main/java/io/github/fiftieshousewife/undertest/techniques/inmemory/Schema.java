@@ -21,7 +21,7 @@ public final class Schema {
     private Schema() {
     }
 
-    /** Creates every table and index in the schema file. */
+    /* Creates every table and index in the schema file. */
     @SuppressFBWarnings(value = {"SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE", "SQL_INJECTION_JDBC"},
             justification = "The statements come from the application's own schema file, never from users")
     public static void apply(final Connection connection) throws SQLException {

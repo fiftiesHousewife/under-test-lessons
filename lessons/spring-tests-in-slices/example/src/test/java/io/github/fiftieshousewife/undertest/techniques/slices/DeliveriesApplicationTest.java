@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: every test starts the whole application, so each needs the database, the courier's stand-in and every
  * setting. They pass, but none of them looks at how the due date is written.
  */

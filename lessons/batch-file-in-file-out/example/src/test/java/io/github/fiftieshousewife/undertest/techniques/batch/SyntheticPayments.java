@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 import net.datafaker.Faker;
 
-/** A day's payments made up by Datafaker: realistic, never real, and the same on every run, from a fixed seed. */
+/* A day's payments made up by Datafaker: realistic, never real, and the same on every run, from a fixed seed. */
 final class SyntheticPayments {
 
     private static final long SEED = 42L;
@@ -26,7 +26,7 @@ final class SyntheticPayments {
                 .limit(count).toList();
     }
 
-    /** Writes the payments as the job's input file, one {@code account,pence} line each. */
+    /* Writes the payments as the job's input file, one {@code account,pence} line each. */
     static Path write(final List<Payment> payments, final Path file) throws IOException {
         return Files.write(file, payments.stream().map(payment -> payment.account() + "," + payment.pence()).toList(),
                 StandardCharsets.UTF_8);

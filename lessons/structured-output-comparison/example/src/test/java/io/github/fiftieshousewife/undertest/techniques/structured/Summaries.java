@@ -6,7 +6,7 @@ import java.time.Clock;
 import java.util.List;
 import java.util.Set;
 
-/**
+/*
  * The summary the tests run against: the fixed one, or today's with -Pcode=today (and with -Pcode=answer, which adds
  * the exercise's answer). Both use the real clock.
  */

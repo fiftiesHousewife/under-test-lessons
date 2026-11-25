@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** The exercise's answer: on a day when every order was cancelled, the accounts system still gets a file. */
+/* The exercise's answer: on a day when every order was cancelled, the accounts system still gets a file. */
 class AllCancelledAnswerTest {
 
     @Test

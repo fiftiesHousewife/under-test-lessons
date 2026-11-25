@@ -12,25 +12,25 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/**
+/*
  * Checks a deck's voice clips against its slides: a slide with no clip, a clip no slide uses, and a clip much longer
  * or shorter than its words take to say, as when it was read from other words or cut short. Unused clips are removed
  * only when asked, since each may be someone's recording.
  */
 final class DeckClips {
 
-    /** A clip this much shorter or longer than its words take at the voice's speed is reported. */
+    /* A clip this much shorter or longer than its words take at the voice's speed is reported. */
     static final double TOO_SHORT = 0.5;
     static final double TOO_LONG = 1.6;
 
-    /** What is wrong (missing clips, where the voice can be run) and what is only worth a look. */
+    /* What is wrong (missing clips, where the voice can be run) and what is only worth a look. */
     record Findings(List<Problem> problems, List<Problem> warnings) {
     }
 
     private DeckClips() {
     }
 
-    /**
+    /*
      * The lesson's clips checked against its slides. A missing clip is a problem where {@code missingFails}, else a
      * warning, as in a company's copy, where a person records it. Unused clips are removed if {@code removeUnused}.
      */
@@ -64,7 +64,7 @@ final class DeckClips {
                 + slide.clipName() + "; voice the deck, or record it");
     }
 
-    /** A slide with clips in two formats, and a clip far longer or shorter than its words. */
+    /* A slide with clips in two formats, and a clip far longer or shorter than its words. */
     private static List<Problem> clipWarnings(final int number, final Spoken slide, final List<Path> found) {
         final List<Problem> warnings = new ArrayList<>();
         final Path clip = found.getFirst();
@@ -83,7 +83,7 @@ final class DeckClips {
         return warnings;
     }
 
-    /**
+    /*
      * Who made the clips the deck plays, as one line: "15 by the voice kokoro-onnx-…", "2 by Jane Smith", "1 by a
      * person". Empty where the deck has no clips.
      */
@@ -96,7 +96,7 @@ final class DeckClips {
                 .map(by -> by.getValue() + " by " + by.getKey()).collect(Collectors.joining(", "));
     }
 
-    /** The first few words, to name a slide by. */
+    /* The first few words, to name a slide by. */
     private static String opening(final String written) {
         final String[] words = Pauses.withoutMarkers(written).strip().split("\\s+");
         final String start = String.join(" ", List.of(words).subList(0, Math.min(6, words.length)));
@@ -128,7 +128,7 @@ final class DeckClips {
         ledger.write();
     }
 
-    /** A clip's length in seconds, from its header; -1 for an MP3, which has no length in its header. */
+    /* A clip's length in seconds, from its header; -1 for an MP3, which has no length in its header. */
     private static double seconds(final Path clip) {
         final String name = String.valueOf(clip.getFileName());
         if (name.endsWith(".wav")) {
@@ -137,7 +137,7 @@ final class DeckClips {
         return name.endsWith(".m4a") ? Mp4Length.seconds(clip) : -1;
     }
 
-    /** A WAV clip's length: its data's size over its bytes a second, both from its header. */
+    /* A WAV clip's length: its data's size over its bytes a second, both from its header. */
     static final class WavLength {
 
         private WavLength() {
@@ -169,16 +169,16 @@ final class DeckClips {
         }
     }
 
-    /** The four letters at {@code at}: a WAV chunk's name, or an MP4 box's type (four bytes after its start). */
+    /* The four letters at {@code at}: a WAV chunk's name, or an MP4 box's type (four bytes after its start). */
     private static String fourLetters(final ByteBuffer data, final int at) {
         return new String(new byte[] {data.get(at), data.get(at + 1), data.get(at + 2), data.get(at + 3)},
                 java.nio.charset.StandardCharsets.US_ASCII);
     }
 
-    /** A clip's length, read from its MP4 header ({@code moov/mvhd}), so no player or ffmpeg is needed. */
+    /* A clip's length, read from its MP4 header ({@code moov/mvhd}), so no player or ffmpeg is needed. */
     static final class Mp4Length {
 
-        /** Where {@link #box} looks when it looks at the file's top-level boxes, not inside one. */
+        /* Where {@link #box} looks when it looks at the file's top-level boxes, not inside one. */
         private static final int WHOLE_FILE = -1;
 
         private Mp4Length() {
@@ -198,7 +198,7 @@ final class DeckClips {
             return (double) duration / timescale;
         }
 
-        /** Where the box of this type starts, among those inside the box at {@code parent} or the file's, or -1. */
+        /* Where the box of this type starts, among those inside the box at {@code parent} or the file's, or -1. */
         private static int box(final ByteBuffer data, final int parent, final String type) {
             final int end = parent == WHOLE_FILE ? data.limit() : parent + (int) size(data, parent);
             int at = parent == WHOLE_FILE ? 0 : parent + 8;

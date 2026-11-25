@@ -10,7 +10,7 @@ import org.approvaltests.core.Options;
 import org.approvaltests.reporters.QuietReporter;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: a second, smaller approval that pins down one behaviour, the overdraft fee charged when the
  * balance reaches exactly zero. When the rewrite changes that rule, this approval's difference is two lines, the fee
  * and the closing balance, rather than every balance after it. Run it against the rewrite with {@code -Pcode=answer}.

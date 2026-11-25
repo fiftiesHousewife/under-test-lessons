@@ -25,7 +25,7 @@ public final class Formatters {
                 ? new TodaysNameFormatter() : new LetterNameFormatter();
     }
 
-    /** Every example file: its first line is a record, its second the name expected on a letter. */
+    /* Every example file: its first line is a record, its second the name expected on a letter. */
     static List<Path> examples() {
         return examples("/examples");
     }

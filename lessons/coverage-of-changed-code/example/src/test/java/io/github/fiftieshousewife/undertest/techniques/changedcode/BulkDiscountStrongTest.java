@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-/**
+/*
  * AFTER: the stronger test for the same change. Exact percentages on both sides of each boundary, and exact prices,
  * so every planted bug in the changed class makes a test fail.
  */

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: a unit test that builds the checkout by hand and hands it the standard rate itself. */
+/* BEFORE: a unit test that builds the checkout by hand and hands it the standard rate itself. */
 class CheckoutByHandTest {
 
     @Test

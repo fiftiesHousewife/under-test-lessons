@@ -9,7 +9,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one more rule, written as a list of what the web layer may use (itself, the service layer and
  * Java's own classes) rather than what it may not. Anything else, storage or a library nobody agreed to, breaks it.
  * Run it against today's admin page with {@code -Pcode=answer}.

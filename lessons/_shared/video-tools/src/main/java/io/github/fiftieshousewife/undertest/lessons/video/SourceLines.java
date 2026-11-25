@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/** Picks lines of a source file the way the {@code show} helper does, each prefixed with its line number. */
+/* Picks lines of a source file the way the {@code show} helper does, each prefixed with its line number. */
 final class SourceLines {
 
     static final String GAP = "   ⋮";
@@ -16,7 +16,7 @@ final class SourceLines {
         return "%3d  %s".formatted(number, line);
     }
 
-    /** Lines {@code from} to {@code to}, counting from 1. */
+    /* Lines {@code from} to {@code to}, counting from 1. */
     static List<String> range(final List<String> lines, final int from, final int to) {
         final List<String> out = new ArrayList<>();
         for (int i = Math.max(1, from); i <= Math.min(to, lines.size()); i++) {
@@ -25,7 +25,7 @@ final class SourceLines {
         return out;
     }
 
-    /** In a TOML file: each matching line under its [section] header, with a gap marker between runs. */
+    /* In a TOML file: each matching line under its [section] header, with a gap marker between runs. */
     static List<String> tomlMatches(final List<String> lines, final String pattern) {
         final Pattern match = Pattern.compile(pattern);
         final List<String> out = new ArrayList<>();
@@ -57,7 +57,7 @@ final class SourceLines {
         }
     }
 
-    /** The whole { ... } block the first matching line opens, or else the nearest block around it. */
+    /* The whole { ... } block the first matching line opens, or else the nearest block around it. */
     static List<String> blockAround(final List<String> lines, final String pattern) {
         final Pattern match = Pattern.compile(pattern);
         int found = -1;

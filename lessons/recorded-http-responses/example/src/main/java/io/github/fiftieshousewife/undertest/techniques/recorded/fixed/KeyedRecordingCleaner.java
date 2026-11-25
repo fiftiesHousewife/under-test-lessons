@@ -22,12 +22,12 @@ import tools.jackson.databind.node.ObjectNode;
 public final class KeyedRecordingCleaner implements RecordingCleaner {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();
-    /** The fields that hold personal data, and what follows the substitute for each. */
+    /* The fields that hold personal data, and what follows the substitute for each. */
     private static final Map<String, String> PERSONAL_FIELDS = Map.of("name", "", "email", "@example.invalid");
-    /** Headers that carry a password, a session or a key, in either direction. */
+    /* Headers that carry a password, a session or a key, in either direction. */
     private static final List<String> CREDENTIALS =
             List.of("authorization", "proxy-authorization", "cookie", "set-cookie", "x-api-key");
-    /** Query parameters that carry a token or a key, in the recorded address. */
+    /* Query parameters that carry a token or a key, in the recorded address. */
     private static final Pattern TOKEN_IN_ADDRESS = Pattern.compile(
             "[?&](?:access_token|token|api_key|apikey|key|sig|signature)=[^&]*", Pattern.CASE_INSENSITIVE);
     private static final int SUBSTITUTE_HEX_DIGITS = 16;
@@ -69,7 +69,7 @@ public final class KeyedRecordingCleaner implements RecordingCleaner {
         }
     }
 
-    /** Removes tokens from the recorded address, written as a whole url or as separate query parameters. */
+    /* Removes tokens from the recorded address, written as a whole url or as separate query parameters. */
     private static void removeTokens(final JsonNode request) {
         if (request instanceof ObjectNode asked) {
             if (asked.path("url").isString()) {
@@ -84,7 +84,7 @@ public final class KeyedRecordingCleaner implements RecordingCleaner {
         }
     }
 
-    /** The first 64 bits of the value's HMAC-SHA256 under the key: the same for the same value, never reversed. */
+    /* The first 64 bits of the value's HMAC-SHA256 under the key: the same for the same value, never reversed. */
     private String keyed(final String value) {
         try {
             final Mac mac = Mac.getInstance("HmacSHA256");

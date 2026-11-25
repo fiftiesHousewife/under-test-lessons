@@ -14,7 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: a stand-in provider gives its answer, and the tests check the code handled it. Nothing checks the request
  * the code sent, so a wrong amount or a missing header goes unnoticed.
  */
@@ -52,7 +52,7 @@ class RefundAnswerTest {
                         .isEqualTo("ProviderUnavailableException: the payment provider can't be reached"));
     }
 
-    /** The error's type and message, so a failure reads in one line. */
+    /* The error's type and message, so a failure reads in one line. */
     private static String describe(final Throwable error) {
         return error == null ? "no error" : error.getClass().getSimpleName() + ": " + error.getMessage();
     }

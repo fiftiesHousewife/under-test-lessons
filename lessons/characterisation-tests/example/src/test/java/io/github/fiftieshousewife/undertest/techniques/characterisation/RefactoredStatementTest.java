@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * Pins down the one rule the rewrite changed, so the difference is written down while the Application Owner decides:
  * at a balance of exactly zero, the legacy printer charges an overdraft fee and the rewrite doesn't.
  */

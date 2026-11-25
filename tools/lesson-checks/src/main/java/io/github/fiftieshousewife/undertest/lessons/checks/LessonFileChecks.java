@@ -49,7 +49,7 @@ public final class LessonFileChecks {
         return problems;
     }
 
-    /**
+    /*
      * Every lesson with an example teaches at least one of the toolkit's techniques, so the two repositories match
      * both ways. A lesson without an example, such as the overview, which maps the others, needn't name one.
      */
@@ -65,7 +65,7 @@ public final class LessonFileChecks {
         return problems;
     }
 
-    /**
+    /*
      * Every lesson with an example has an exercise whose answer the build checks: an {@code answer} package in its
      * example, and an "Exercise" section in its README (docs/decisions/0029). Its README also says what to use on
      * older Java (docs/decisions/0028).
@@ -84,7 +84,7 @@ public final class LessonFileChecks {
         return problems;
     }
 
-    /** The sections every lesson's README with an example must have. */
+    /* The sections every lesson's README with an example must have. */
     private static final List<String> SECTIONS = List.of("## Exercise", "## On older Java");
 
     private static List<Problem> missingSections(final Path readme) {

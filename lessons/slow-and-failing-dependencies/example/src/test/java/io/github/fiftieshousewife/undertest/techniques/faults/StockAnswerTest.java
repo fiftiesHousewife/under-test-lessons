@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: a stand-in supplier answers at once, with stock or with an error status. The tests check both are handled,
  * and never try a supplier that answers late, drops the connection or sends a broken answer.
  */

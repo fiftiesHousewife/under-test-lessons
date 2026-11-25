@@ -12,7 +12,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
+/*
  * What each live command in a lesson's video script printed, kept in {@code <id>.outputs/01.txt}, {@code 02.txt} and
  * so on (one per live command, in script order; the first line is the command), so decks can show the output the
  * video shows. tools/capture-lesson-outputs.py runs the commands as a recording does and writes the files. The checks
@@ -22,12 +22,12 @@ import java.util.regex.Pattern;
 final class LiveOutputs {
 
     static final String FOLDER = ".outputs";
-    /** The kept output of the lesson's exercise answer, which no video runs. */
+    /* The kept output of the lesson's exercise answer, which no video runs. */
     static final String ANSWER_FILE = "answer.txt";
-    /** What the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar. */
+    /* What the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar. */
     static final int SCREEN_ROWS = 36;
     static final int SCREEN_COLUMNS = 150;
-    /** A home folder in a path: a person's name or account, which must never be shown. */
+    /* A home folder in a path: a person's name or account, which must never be shown. */
     private static final Pattern PERSONAL_PATH = Pattern.compile("/Users/[^/\\s]+|/home/[^/\\s]+|[A-Z]:\\\\Users\\\\");
     private static final Pattern LINE_NAMED = Pattern.compile("(?i)\\blines?\\s+(\\d+)\\b");
     private static final Pattern NUMBERED = Pattern.compile("\\s*(\\d+)\\s");
@@ -39,12 +39,12 @@ final class LiveOutputs {
         return String.format(Locale.ROOT, "%02d.txt", index + 1);
     }
 
-    /** Every live command in the script, in order. */
+    /* Every live command in the script, in order. */
     static List<String> commands(final List<SceneContent> scenes) {
         return scenes.stream().flatMap(scene -> scene.commands().stream()).toList();
     }
 
-    /** The output kept for the live command at this place in the script, or none if it is missing or out of date. */
+    /* The output kept for the live command at this place in the script, or none if it is missing or out of date. */
     static List<String> read(final Media media, final int index, final String command) {
         final Path file = media.file(FOLDER).resolve(fileName(index));
         if (!Files.isRegularFile(file)) {
@@ -54,7 +54,7 @@ final class LiveOutputs {
         return !lines.isEmpty() && lines.getFirst().equals("$ " + command) ? lines.subList(1, lines.size()) : List.of();
     }
 
-    /** What the lesson's exercise answer command printed, kept as {@code answer.txt}; empty if not kept for it. */
+    /* What the lesson's exercise answer command printed, kept as {@code answer.txt}; empty if not kept for it. */
     static List<String> readAnswer(final Media media, final String command) {
         final Path file = media.file(FOLDER).resolve(ANSWER_FILE);
         if (!Files.isRegularFile(file)) {
@@ -64,7 +64,7 @@ final class LiveOutputs {
         return !lines.isEmpty() && lines.getFirst().equals("$ " + command) ? lines.subList(1, lines.size()) : List.of();
     }
 
-    /** Problems in a lesson: live commands without kept output, and lines the narration names that aren't shown. */
+    /* Problems in a lesson: live commands without kept output, and lines the narration names that aren't shown. */
     static List<Problem> problems(final Media media) {
         final Path tape = media.file(".tape");
         if (!Files.isRegularFile(tape)) {
@@ -88,7 +88,7 @@ final class LiveOutputs {
         return problems;
     }
 
-    /**
+    /*
      * The rows a kept output takes in the video's terminal: its command's line, then each line, a long one wrapping
      * onto more rows.
      */
@@ -97,7 +97,7 @@ final class LiveOutputs {
                 .sum();
     }
 
-    /** Each live command has its output kept, fitting one screen, and no kept output shows a personal path. */
+    /* Each live command has its output kept, fitting one screen, and no kept output shows a personal path. */
     private static List<Problem> keptOutputs(final Media media, final List<String> commands) {
         final Path tape = media.file(".tape");
         final List<Problem> problems = new ArrayList<>();
@@ -121,7 +121,7 @@ final class LiveOutputs {
         return problems;
     }
 
-    /** What a scene's narration and callouts say, and the scene's number. */
+    /* What a scene's narration and callouts say, and the scene's number. */
     private record Said(int scene, String text) {
     }
 
@@ -142,26 +142,26 @@ final class LiveOutputs {
         return problems;
     }
 
-    /** True if a code panel in the scene shows the line, marked ({@code show ... --mark N}). */
+    /* True if a code panel in the scene shows the line, marked ({@code show ... --mark N}). */
     static boolean shows(final SceneContent content, final int line) {
         return content.panels().stream().anyMatch(panel -> panel.marked().contains(line)
                 && panel.lines().stream().anyMatch(shown -> lineNumber(shown) == line));
     }
 
-    /** Every line marked in the scene's code panels. */
+    /* Every line marked in the scene's code panels. */
     static Set<Integer> marked(final SceneContent content) {
         final Set<Integer> marked = new TreeSet<>();
         content.panels().forEach(panel -> marked.addAll(panel.marked()));
         return marked;
     }
 
-    /** The number at the start of a panel line ({@code " 24  code"}), or -1 for a gap or a line without one. */
+    /* The number at the start of a panel line ({@code " 24  code"}), or -1 for a gap or a line without one. */
     static int lineNumber(final String panelLine) {
         final Matcher number = NUMBERED.matcher(panelLine);
         return number.lookingAt() ? Integer.parseInt(number.group(1)) : -1;
     }
 
-    /** True if a line of output names one of these line numbers ("line 24"). */
+    /* True if a line of output names one of these line numbers ("line 24"). */
     static boolean namesAny(final String outputLine, final Set<Integer> lines) {
         final Matcher named = LINE_NAMED.matcher(outputLine);
         while (named.find()) {

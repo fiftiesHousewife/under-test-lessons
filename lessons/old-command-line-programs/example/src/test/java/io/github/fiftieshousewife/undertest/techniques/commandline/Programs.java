@@ -8,13 +8,13 @@ import java.util.function.IntConsumer;
 import org.junit.jupiter.api.function.Executable;
 import uk.org.webcompere.systemstubs.stream.SystemOut;
 
-/** The program the tests run: the one given its exit, or today's with -Pcode=today. */
+/* The program the tests run: the one given its exit, or today's with -Pcode=today. */
 final class Programs {
 
     private Programs() {
     }
 
-    /**
+    /*
      * Today's program has nowhere to take the exit, so it ignores it, and prints to System.out, which System Stubs
      * captures. The fixed one is given the same captured output to print to.
      */

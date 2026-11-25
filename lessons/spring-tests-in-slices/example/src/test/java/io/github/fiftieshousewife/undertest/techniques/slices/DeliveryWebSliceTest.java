@@ -10,7 +10,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.assertj.MockMvcTester;
 
-/**
+/*
  * AFTER: the web slice. Only the controller and Spring's web layer start; the service is replaced with a Mockito
  * stand-in, so there is no database, no courier and no setting to give. It checks the address, the status and the list.
  */

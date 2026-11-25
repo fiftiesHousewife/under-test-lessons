@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: tests of the pieces: one line read, one line processed and written. They pass, and never see the file. */
+/* BEFORE: tests of the pieces: one line read, one line processed and written. They pass, and never see the file. */
 class PaymentLineTest {
 
     @Test

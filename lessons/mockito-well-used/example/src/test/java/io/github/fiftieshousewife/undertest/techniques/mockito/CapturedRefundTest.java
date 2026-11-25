@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-/**
+/*
  * AFTER: the order book is a fake, a map of real orders. The only mock is the card payments, where money leaves the
  * shop, and an argument captor catches the refund the code really sent, so the test can check its amount.
  */

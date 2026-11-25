@@ -18,7 +18,7 @@ public final class Checkouts {
         return today() ? TodaysCheckout.class : StandardCheckout.class;
     }
 
-    /** Built by hand, the way a unit test does it: the test picks the rate. */
+    /* Built by hand, the way a unit test does it: the test picks the rate. */
     static Checkout byHand(final TaxRate rate) {
         return today() ? new TodaysCheckout(rate) : new StandardCheckout(rate);
     }

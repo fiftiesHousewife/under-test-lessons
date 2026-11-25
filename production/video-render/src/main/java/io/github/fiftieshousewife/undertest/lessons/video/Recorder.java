@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import lombok.extern.slf4j.Slf4j;
 
-/**
+/*
  * Records a lesson's silent video with VHS, reporting brief progress with the elapsed time, and saying when a step is
  * taking a while. On failure it shows the end of VHS's log. The program can be replaced with the system property
  * {@code video.vhs}, which tests use to put a stand-in in its place.
@@ -65,7 +65,7 @@ final class Recorder {
         }
     }
 
-    /** What following VHS's log needs: when recording started, when the last line came, and the last lines seen. */
+    /* What following VHS's log needs: when recording started, when the last line came, and the last lines seen. */
     private record Follow(long start, AtomicLong lastLine, Deque<String> tail) {
     }
 

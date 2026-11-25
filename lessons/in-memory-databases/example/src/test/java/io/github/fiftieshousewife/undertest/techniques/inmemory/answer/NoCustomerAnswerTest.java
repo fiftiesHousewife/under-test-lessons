@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the real schema says every invoice has a customer (NOT NULL). The shared test database's
  * table, typed in by hand, left that rule out; a fresh database has it, so an invoice with no customer is refused.
  * Run it with today's invoice book with {@code -Pcode=answer}.

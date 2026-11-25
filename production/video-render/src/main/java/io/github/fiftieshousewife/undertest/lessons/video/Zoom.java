@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 
-/**
+/*
  * The zoom on key code: {@code show <file> <from> <to> --zoom 22-24} marks those lines, and while the scene is on
  * screen the picture eases in on them, holds, and eases back out. The terminal helper reports which screen rows the
  * lines landed on ({@code <id>.zooms}, one line per zoom: first row, last row, rows on screen); the script says when
@@ -22,35 +22,35 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 final class Zoom {
 
-    /** The furthest the picture zooms in. */
+    /* The furthest the picture zooms in. */
     static final double MAX_ZOOM = 1.8;
-    /** Less magnification than this isn't worth the movement, so the picture stays as it is. */
+    /* Less magnification than this isn't worth the movement, so the picture stays as it is. */
     static final double SMALLEST_ZOOM = 1.15;
     private static final Pattern SET = Pattern.compile("^Set\\s+(Width|Height|Padding|WindowBar)\\s+(\\S+)\\s*$");
     private static final Pattern REPORTED_ROWS = Pattern.compile("^\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*$");
-    /** VHS's defaults, and the height of its window bar. */
+    /* VHS's defaults, and the height of its window bar. */
     private static final int VHS_WIDTH = 1200;
     private static final int VHS_HEIGHT = 600;
     private static final int VHS_PADDING = 60;
     private static final int WINDOW_BAR = 30;
 
-    /** A picture's width and height in pixels. */
+    /* A picture's width and height in pixels. */
     record Size(int width, int height) {
     }
 
-    /** The recorded frame: its size, the padding around the terminal, and the window bar's height (0 for none). */
+    /* The recorded frame: its size, the padding around the terminal, and the window bar's height (0 for none). */
     record Geometry(Size frame, int padding, int bar) {
     }
 
-    /** Where the helper printed the key lines: the first and last screen row (from 1), and the rows on screen. */
+    /* Where the helper printed the key lines: the first and last screen row (from 1), and the rows on screen. */
     record Rows(int first, int last, int screenRows) {
     }
 
-    /** A point in the frame, in pixels from its top-left corner. */
+    /* A point in the frame, in pixels from its top-left corner. */
     record Corner(double left, double top) {
     }
 
-    /** The part of the frame to show at full zoom, in the frame's pixels: its top-left corner, width and height. */
+    /* The part of the frame to show at full zoom, in the frame's pixels: its top-left corner, width and height. */
     record Window(Corner corner, double width, double height) {
 
         double left() {
@@ -65,7 +65,7 @@ final class Zoom {
     private Zoom() {
     }
 
-    /** The frame a script records, from its {@code Set Width}, {@code Height}, {@code Padding}, {@code WindowBar}. */
+    /* The frame a script records, from its {@code Set Width}, {@code Height}, {@code Padding}, {@code WindowBar}. */
     static Geometry geometry(final Path tape) {
         int width = VHS_WIDTH;
         int height = VHS_HEIGHT;
@@ -85,7 +85,7 @@ final class Zoom {
         return new Geometry(new Size(width, height), padding, bar);
     }
 
-    /**
+    /*
      * The window at full zoom: the key rows with a row of room above and below, as large as {@link #MAX_ZOOM} allows,
      * kept inside the frame and against its left edge, where code starts. The whole frame if zooming isn't worth it.
      */
@@ -104,7 +104,7 @@ final class Zoom {
                 height * frame.width() / frame.height(), height);
     }
 
-    /** The rows the helper reported, one zoom a line, in order; empty where it couldn't find them ("unknown"). */
+    /* The rows the helper reported, one zoom a line, in order; empty where it couldn't find them ("unknown"). */
     static List<Optional<Rows>> rows(final Path zooms) {
         if (!Files.isRegularFile(zooms)) {
             return List.of();
@@ -118,7 +118,7 @@ final class Zoom {
         return rows;
     }
 
-    /**
+    /*
      * The silent recording with its zooms, as {@code <id>.zoomed.mp4}; the silent recording itself when the script
      * has no zooms, or when the rows the recording reported don't pair up with them (said in the log).
      */
@@ -156,7 +156,7 @@ final class Zoom {
         return zoomed;
     }
 
-    /**
+    /*
      * The ffmpeg filter for the zooms: scale each frame up by the zoom at that moment, then crop it back to the frame's
      * size at the window. Empty when there is nothing to zoom. Spans and windows pair up in order.
      */
@@ -185,7 +185,7 @@ final class Zoom {
                 String.join("+", left), String.join("+", top));
     }
 
-    /** {@link ZoomTiming.Span#amount} as an ffmpeg expression of the frame's time, {@code t}. */
+    /* {@link ZoomTiming.Span#amount} as an ffmpeg expression of the frame's time, {@code t}. */
     private static String amount(final ZoomTiming.Span span) {
         if (span.end() - span.start() < 2 * (ZoomTiming.DELAY + ZoomTiming.EASE) + ZoomTiming.SHORTEST_HOLD) {
             return "0";

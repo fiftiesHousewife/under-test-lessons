@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestClient;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the courier's client is the one layer with no test of its own, and no test reaches its "Not
  * known" answer. Spring's MockRestServiceServer stands in for the courier behind the client's RestClient, so only
  * the client runs: no application, no WireMock, no database.

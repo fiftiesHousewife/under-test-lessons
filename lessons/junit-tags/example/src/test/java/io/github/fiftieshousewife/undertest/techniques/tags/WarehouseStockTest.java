@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/** Slow: each test starts the warehouse's test system, which takes 2 seconds. Tagged slow, with @Slow. */
+/* Slow: each test starts the warehouse's test system, which takes 2 seconds. Tagged slow, with @Slow. */
 @Slow
 class WarehouseStockTest {
 

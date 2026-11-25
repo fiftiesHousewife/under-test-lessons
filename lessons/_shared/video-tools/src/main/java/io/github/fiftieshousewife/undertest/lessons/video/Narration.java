@@ -24,7 +24,7 @@ public final class Narration {
         return rawParagraphs(file).stream().map(Narration::plain).toList();
     }
 
-    /** One paragraph per scene, exactly as written (Markdown marks kept). */
+    /* One paragraph per scene, exactly as written (Markdown marks kept). */
     static List<String> rawParagraphs(final Path file) {
         final List<StringBuilder> items = new ArrayList<>();
         for (final String line : readLines(file)) {

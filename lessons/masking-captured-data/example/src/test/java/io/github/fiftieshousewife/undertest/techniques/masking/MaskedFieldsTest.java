@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: checks that each field the masking was told about has changed, and that no row was lost. */
+/* BEFORE: checks that each field the masking was told about has changed, and that no row was lost. */
 class MaskedFieldsTest {
 
     @Test

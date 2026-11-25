@@ -27,7 +27,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/**
+/*
  * AFTER: the order service started as it ships, from a settings file, with WireMock as the warehouse and its own
  * database in a temporary folder. The test checks only what comes out: the answer, the call, and the rows written.
  */
@@ -75,7 +75,7 @@ class OrderServiceTest {
         assertThat(rowsWritten()).as("rows written").isEmpty();
     }
 
-    /** Every order and its line, read straight from the service's database, one line each. */
+    /* Every order and its line, read straight from the service's database, one line each. */
     private List<String> rowsWritten() throws SQLException {
         final List<String> rows = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(database);

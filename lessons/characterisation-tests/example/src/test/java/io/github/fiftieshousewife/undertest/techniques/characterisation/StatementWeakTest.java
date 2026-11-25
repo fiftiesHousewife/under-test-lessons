@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: the kind of test legacy code often has. It runs every line, but checks only that something came back, so a
  * change to any amount, fee or balance would pass unnoticed.
  */

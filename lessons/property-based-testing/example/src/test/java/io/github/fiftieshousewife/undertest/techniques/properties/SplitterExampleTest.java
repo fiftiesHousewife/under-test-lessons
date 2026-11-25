@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: example tests. Each checks one case the author thought of. The cases all leave a remainder of 0 or 1 penny,
  * so the splitter in use today passes them all, even though it is unfair whenever more is left over.
  */

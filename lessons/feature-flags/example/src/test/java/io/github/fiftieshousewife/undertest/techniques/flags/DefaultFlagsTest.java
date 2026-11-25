@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: tests that never set the flag. They only ever run the old rules, which is what customers get today. */
+/* BEFORE: tests that never set the flag. They only ever run the old rules, which is what customers get today. */
 class DefaultFlagsTest {
 
     @Test

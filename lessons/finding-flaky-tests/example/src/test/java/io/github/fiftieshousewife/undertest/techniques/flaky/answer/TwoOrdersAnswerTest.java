@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 
-/**
+/*
  * The exercise's answer: two orders at once, and a wait for both confirmations. Awaitility retries the AssertJ check
  * until it passes, so if time runs out the failure names the confirmations that were missing.
  */

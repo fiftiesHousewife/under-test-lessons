@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/** The register: rows read with their decisions, new findings refused, and rows for fixed tests noticed. */
+/* The register: rows read with their decisions, new findings refused, and rows for fixed tests noticed. */
 class RegisterTest {
 
     private final Register register = Register.of(List.of(

@@ -8,7 +8,7 @@ import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.lang.ArchRule;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * Keeps the fake honest: only the connection code may use the queue's client library. Everything else goes through
  * the shop's own interface, so a test can always hand it the fake. It reads the compiled classes, today's and fixed.
  */

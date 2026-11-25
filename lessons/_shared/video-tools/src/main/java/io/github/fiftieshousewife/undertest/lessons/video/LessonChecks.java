@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
+/*
  * Checks that catch what reviews found by hand: code panels that would show the wrong file or lines, scenes too short
  * for their narration, and slides without sources or repository links.
  */
 final class LessonChecks {
 
-    /** Spoken words per second, and the room a scene leaves around its narration. */
+    /* Spoken words per second, and the room a scene leaves around its narration. */
     static final double WORDS_PER_SECOND = 2.6;
     static final double ROOM = 1.35;
     static final double EXTRA_SECONDS = 1.5;
@@ -30,7 +30,7 @@ final class LessonChecks {
     private LessonChecks() {
     }
 
-    /** Each {@code show} line finds a file (in its lesson first) and any line range fits inside it. */
+    /* Each {@code show} line finds a file (in its lesson first) and any line range fits inside it. */
     static List<Problem> shows(final Path root, final Path tape) {
         final Path lesson = tape.toAbsolutePath().resolveSibling("..").normalize();
         final List<Path> places = List.of(lesson, root.resolve("lessons/_shared"), root.resolve("build-logic"),
@@ -63,7 +63,7 @@ final class LessonChecks {
         return List.of();
     }
 
-    /** Each scene without a live run shows for at least its narration's spoken length, with room. */
+    /* Each scene without a live run shows for at least its narration's spoken length, with room. */
     static List<Problem> sceneTimes(final Path tape, final Path narration) {
         final List<List<String>> scenes = scenes(lines(tape));
         final List<String> paragraphs = Narration.rawParagraphs(narration);
@@ -86,7 +86,7 @@ final class LessonChecks {
         return problems;
     }
 
-    /** Seconds a narration paragraph needs on screen: spoken words, pauses, and room. */
+    /* Seconds a narration paragraph needs on screen: spoken words, pauses, and room. */
     static double needed(final String paragraph) {
         double pauses = 0;
         final Matcher pause = PAUSE.matcher(paragraph);
@@ -114,10 +114,10 @@ final class LessonChecks {
         return shown;
     }
 
-    /** What is wrong with spoken text that has a semicolon. */
+    /* What is wrong with spoken text that has a semicolon. */
     static final String SEMICOLON = "has a semicolon, which the voice runs on through; use a full stop";
 
-    /**
+    /*
      * A slides file names its sources, its closing slides link the lessons repository by placeholder, and what its
      * slides say has no semicolon.
      */
@@ -142,7 +142,7 @@ final class LessonChecks {
         return problems;
     }
 
-    /** Each line of a slide's Say: text with a semicolon, which the voice runs on through. */
+    /* Each line of a slide's Say: text with a semicolon, which the voice runs on through. */
     private static List<Problem> semicolonsSaid(final Path slidesFile, final List<String> lines) {
         final List<Problem> problems = new ArrayList<>();
         boolean saying = false;

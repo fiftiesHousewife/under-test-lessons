@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import io.github.fiftieshousewife.undertest.techniques.masking.fixed.SyntheticMasking;
 import org.junit.jupiter.api.Test;
 
-/** Seeded synthetic values keep the reports working too, and the same seed gives the same values on every run. */
+/* Seeded synthetic values keep the reports working too, and the same seed gives the same values on every run. */
 class SyntheticMaskingTest {
 
     private static final long SEED = 42L;

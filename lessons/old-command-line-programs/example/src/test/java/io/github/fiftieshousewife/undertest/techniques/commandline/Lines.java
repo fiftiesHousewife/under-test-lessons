@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-/** Standard input for a test: the lines of a payments file. */
+/* Standard input for a test: the lines of a payments file. */
 final class Lines {
 
     private Lines() {

@@ -10,7 +10,7 @@ import io.github.fiftieshousewife.undertest.techniques.dependencies.rates.Exchan
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the stand-in plays the bank's service timing out, which the real service can't be made to do
  * on demand, and the test checks the invoice passes that error on rather than charging a wrong amount. Today's invoice
  * never asks the stand-in, so with {@code -Pcode=answer} it fails with the live service's error instead.

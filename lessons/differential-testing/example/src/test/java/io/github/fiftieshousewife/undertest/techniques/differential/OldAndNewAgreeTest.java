@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: a differential test. It asks the old calculator and the rewrite about every weight, from 1 g to 5 kg, and
  * lists each run of weights where they disagree. The old calculator is the reference: no expected values to write.
  */

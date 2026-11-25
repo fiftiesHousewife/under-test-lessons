@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Captions burned into the picture: drawn in the look's colours, shown only while each one is spoken. */
+/* Captions burned into the picture: drawn in the look's colours, shown only while each one is spoken. */
 class BurnedCaptionsTest {
 
     @TempDir

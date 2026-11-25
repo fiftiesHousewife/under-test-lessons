@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Tests the voice and assembly steps with stand-ins for the voice, ffmpeg and ffprobe. */
+/* Tests the voice and assembly steps with stand-ins for the voice, ffmpeg and ffprobe. */
 class LessonVideoTest {
 
     @TempDir

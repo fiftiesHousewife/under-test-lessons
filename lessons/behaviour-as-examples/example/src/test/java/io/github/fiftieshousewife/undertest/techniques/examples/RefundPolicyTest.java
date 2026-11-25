@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: tests a developer wrote by reading the code. They check what the code does, in the code's own terms, on days
  * far from any boundary, so they agree with it whatever it does.
  */

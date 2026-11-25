@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** What the short check recording must report before any lesson is recorded. */
+/* What the short check recording must report before any lesson is recorded. */
 class VideoCheckTest {
 
     @TempDir

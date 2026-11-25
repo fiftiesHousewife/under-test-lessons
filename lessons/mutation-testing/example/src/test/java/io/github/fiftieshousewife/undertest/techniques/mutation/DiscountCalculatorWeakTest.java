@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
+/*
  * BEFORE: every line runs (100% line coverage), yet PIT kills only 5 of 13 mutants.
  * Each test shows a common weakness; the comment names the mutant that survives because of it.
  */

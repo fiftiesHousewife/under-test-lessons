@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-/**
+/*
  * AFTER: the example messages are sent to a real broker, started inside the test, and the test checks what the
  * consumer did: every payment recorded, even when the book is busy once, and the unreadable message kept.
  */

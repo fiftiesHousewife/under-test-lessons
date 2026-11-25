@@ -27,7 +27,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: two customers order one after the other. Each gets its own order id, the warehouse is asked
  * twice, and both orders are kept. Run it against today's order service with {@code -Pcode=answer}.
  */

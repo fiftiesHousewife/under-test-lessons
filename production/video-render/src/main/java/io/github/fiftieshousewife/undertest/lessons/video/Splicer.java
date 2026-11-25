@@ -5,29 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-/**
+/*
  * Turns slides into short video segments (the slide image with its narration) and joins segments into one video. All
  * inputs are brought to the same size, frame rate and sound format first, so any mix of slides and recordings joins.
  */
 final class Splicer {
 
-    /** How long a slide takes to fade up from black, and back down to black. */
+    /* How long a slide takes to fade up from black, and back down to black. */
     static final double FADE_SECONDS = 1.0 / 3;
-    /** The share of a slide's narration over which its points appear, one after another. */
+    /* The share of a slide's narration over which its points appear, one after another. */
     static final double BUILD_UP = 0.8;
-    /** How long each point takes to fade in. */
+    /* How long each point takes to fade in. */
     static final double CROSSFADE_SECONDS = 0.3;
-    /** How much a slide grows over the time it shows: a slow, gentle zoom towards its centre. */
+    /* How much a slide grows over the time it shows: a slow, gentle zoom towards its centre. */
     static final double SLIDE_ZOOM = 0.04;
 
-    /** A video file and its length in seconds. */
+    /* A video file and its length in seconds. */
     record Segment(Path video, double seconds) {
     }
 
-    /** The intro and closing slide segments around the recording. */
+    /* The intro and closing slide segments around the recording. */
     record Timings(List<Segment> intro, List<Segment> closing) {
 
-        /** Keeps its own copies of the lists. */
+        /* Keeps its own copies of the lists. */
         Timings {
             intro = List.copyOf(intro);
             closing = List.copyOf(closing);
@@ -41,10 +41,10 @@ final class Splicer {
     private Splicer() {
     }
 
-    /** A slide's stages (one picture each), its spoken clip, and how long the clip speaks for, in seconds. */
+    /* A slide's stages (one picture each), its spoken clip, and how long the clip speaks for, in seconds. */
     record Cut(List<Path> stages, Path voice, double spoken) {
 
-        /** Keeps its own copy of the stages. */
+        /* Keeps its own copy of the stages. */
         Cut {
             stages = List.copyOf(stages);
         }
@@ -54,7 +54,7 @@ final class Splicer {
         }
     }
 
-    /** Draws a slide, stage by stage, and joins it to its spoken clip ({@code <name>.wav}) as a segment. */
+    /* Draws a slide, stage by stage, and joins it to its spoken clip ({@code <name>.wav}) as a segment. */
     static Segment slide(final Media media, final String name, final Slide slide) {
         final Path voice = media.file(".voice");
         final Path wav = voice.resolve(name + ".wav");
@@ -64,7 +64,7 @@ final class Splicer {
         return new Segment(video, cut.seconds());
     }
 
-    /**
+    /*
      * The ffmpeg command that makes a slide's segment: each stage in turn, crossfading into the next as its point
      * appears ({@link #appearances}), with the slide's {@link #motion} over the whole, and its voice. The segment lasts
      * exactly {@link Cut#seconds()}.
@@ -94,7 +94,7 @@ final class Splicer {
         return command;
     }
 
-    /** When each of a slide's points appears: evenly through the first {@link #BUILD_UP} of its narration. */
+    /* When each of a slide's points appears: evenly through the first {@link #BUILD_UP} of its narration. */
     static List<Double> appearances(final int points, final double spoken) {
         final List<Double> times = new ArrayList<>();
         for (int point = 1; point <= points; point++) {
@@ -103,12 +103,12 @@ final class Splicer {
         return times;
     }
 
-    /** Where a crossfade starts, so it is half done when its point appears. */
+    /* Where a crossfade starts, so it is half done when its point appears. */
     private static double offset(final double appears) {
         return Math.max(0.01, appears - CROSSFADE_SECONDS / 2);
     }
 
-    /**
+    /*
      * The movement on a slide that shows for this long: a slow zoom of {@link #SLIDE_ZOOM} towards its centre, and a
      * fade up from black at the start and down to black at the end. Every frame stays the slide's size, and the
      * length doesn't change, so captions and voice stay in time. Too short a slide gets the zoom without the fades.
@@ -129,7 +129,7 @@ final class Splicer {
         return String.format(Locale.ROOT, "%.3f", value);
     }
 
-    /** Joins videos, each with sound, end to end into one. */
+    /* Joins videos, each with sound, end to end into one. */
     static void join(final List<Path> videos, final Path out) {
         final List<String> command = new ArrayList<>(List.of(Ffmpeg.program(), "-y", "-loglevel", "error"));
         final StringBuilder filter = new StringBuilder();

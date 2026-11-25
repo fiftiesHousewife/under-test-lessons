@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.imageio.ImageIO;
 
-/**
+/*
  * Captions burned into the picture, for players that hide a video's captions track until it is switched on. Each
  * caption is drawn, in the look's colours, as a see-through picture the size of the frame with the text on a band near
  * the bottom; ffmpeg lays each over the video only while it is spoken. Drawn here rather than by ffmpeg's subtitles
@@ -32,26 +32,26 @@ final class BurnedCaptions {
     private static final int BOTTOM_MARGIN = 56;
     private static final int CORNER = 18;
 
-    /** The colours of the caption text and of the band behind it. */
+    /* The colours of the caption text and of the band behind it. */
     record Look(Color text, Color band) {
     }
 
     private BurnedCaptions() {
     }
 
-    /** Black ink on a newsprint band in the newspaper look; white on a dark band otherwise. */
+    /* Black ink on a newsprint band in the newspaper look; white on a dark band otherwise. */
     static Look look() {
         return System.getProperty("video.slideCss", "").contains("newspaper")
                 ? new Look(new Color(0x11, 0x11, 0x11), new Color(0xF3, 0xEF, 0xE4, 235))
                 : new Look(Color.WHITE, new Color(0, 0, 0, 185));
     }
 
-    /** Where the band's top edge is for a caption of that many lines. */
+    /* Where the band's top edge is for a caption of that many lines. */
     static int bandTop(final int lines) {
         return HEIGHT - BOTTOM_MARGIN - lines * LINE_HEIGHT - 2 * PADDING_Y;
     }
 
-    /** A caption drawn as a see-through picture the size of the frame: its text, wrapped, on a band near the bottom. */
+    /* A caption drawn as a see-through picture the size of the frame: its text, wrapped, on a band near the bottom. */
     static BufferedImage picture(final String text, final Look look) {
         final List<String> lines = CaptionFile.wrap(text).lines().toList();
         final BufferedImage picture = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -78,7 +78,7 @@ final class BurnedCaptions {
         return picture;
     }
 
-    /** Writes {@code out}: the video with each cue's caption burned in while it is spoken, and its sound unchanged. */
+    /* Writes {@code out}: the video with each cue's caption burned in while it is spoken, and its sound unchanged. */
     static void burn(final Path video, final List<Cue> cues, final Path out) {
         final Path folder = out.resolveSibling(out.getFileName() + ".captions");
         createFolder(folder);
