@@ -26,8 +26,7 @@ class OneMorePennyAnswerTest {
 
     private final BillSplitter splitter = Splitters.current();
 
-    // A fixed seed, so every run tries the same bills, as in SplitterPropertyTest; the assertion is the fail() below.
-    @SuppressWarnings({"deprecation", "PMD.TestMustAssert"})
+    @SuppressWarnings("deprecation") // a fixed seed, so every run tries the same bills, as in SplitterPropertyTest
     @Test
     void oneMorePennyChangesOneShareByOnePenny() {
         final Generator<Before> bills = Generator.zipWith(Generator.integers(1, 12), Generator.integers(0, 1_000),

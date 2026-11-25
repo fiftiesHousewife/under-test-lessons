@@ -12,10 +12,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/** The database's tables, from the one schema file the application applies to production, and tests apply too. */
+/**
+ * The database's tables, from the one schema file the application applies to production, and tests apply too. The
+ * file is on the classpath.
+ */
 public final class Schema {
 
-    public static final String FILE = "/db/schema.sql"; // The schema file, on the classpath.
+    public static final String FILE = "/db/schema.sql";
 
     private Schema() {
     }

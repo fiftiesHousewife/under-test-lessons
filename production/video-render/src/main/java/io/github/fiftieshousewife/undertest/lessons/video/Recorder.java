@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.time.Clock;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -37,13 +38,18 @@ final class Recorder {
     }
 
     void record(final Media media) {
+        record(media, media.file(".tape"));
+    }
+
+    /* Records the given script, run from the repository root, as the lesson's own script is. */
+    void record(final Media media, final Path tape) {
         final long start = clock.millis();
         final AtomicLong lastLine = new AtomicLong(start);
         final ScheduledExecutorService heartbeat = Executors.newSingleThreadScheduledExecutor();
         heartbeat.scheduleAtFixedRate(() -> Progress.heartbeat((clock.millis() - lastLine.get()) / 1000)
                 .ifPresent(message -> say(start, message)), 1, 1, TimeUnit.SECONDS);
         try {
-            runVhs(media, new Follow(start, lastLine, new ArrayDeque<>()));
+            runVhs(media, tape, new Follow(start, lastLine, new ArrayDeque<>()));
             say(start, "done");
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -57,8 +63,9 @@ final class Recorder {
 
     @SuppressFBWarnings(value = "COMMAND_INJECTION",
             justification = "Runs VHS on the lesson's own script, named by the toolkit itself")
-    private void runVhs(final Media media, final Follow follow) throws IOException, InterruptedException {
-        final Process vhs = new ProcessBuilder(List.of(vhs(), media.file(".tape").toString()))
+    private void runVhs(final Media media, final Path tape, final Follow follow)
+            throws IOException, InterruptedException {
+        final Process vhs = new ProcessBuilder(List.of(vhs(), tape.toString()))
                 .directory(media.root().toFile()).redirectErrorStream(true).start();
         follow(vhs, follow);
         final int exit = vhs.waitFor();

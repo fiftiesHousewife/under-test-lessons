@@ -25,6 +25,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
 /*
@@ -108,9 +109,13 @@ class RecordingTest {
     /* The name in each saved answer, in the order the questions were asked. */
     private static List<String> namesIn(final List<String> files) {
         final JsonMapper json = JsonMapper.builder().build();
-        return files.stream()
-                .map(file -> json.readTree(json.readTree(file).at("/response/body").asString()))
+        return files.stream().map(file -> body(json, json.readTree(file).path("response")))
                 .map(body -> body.at("/requestedBy/name").asString())
                 .toList();
+    }
+
+    /* A saved answer's body: WireMock keeps a JSON answer as text ("body") or as JSON itself ("jsonBody"). */
+    private static JsonNode body(final JsonMapper json, final JsonNode response) {
+        return response.has("jsonBody") ? response.get("jsonBody") : json.readTree(response.path("body").asString());
     }
 }

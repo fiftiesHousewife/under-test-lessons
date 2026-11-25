@@ -10,13 +10,14 @@ import org.springframework.boot.test.json.JacksonTester;
 
 /*
  * AFTER: the JSON slice. Only Jackson starts, set up as the application sets it up. It checks the JSON written for one
- * delivery, field by field, as the service's description promises it.
+ * delivery, field by field, as the service's description gives it. The tester takes Object, so Jackson writes the
+ * record the answer really is.
  */
 @JsonTest
 class DeliveryJsonSliceTest {
 
     @Autowired
-    private JacksonTester<Object> json; // Object, so Jackson writes the record the answer really is
+    private JacksonTester<Object> json;
 
     @Test
     void writesTheFieldsTheDescriptionPromises() throws IOException {

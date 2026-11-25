@@ -100,7 +100,7 @@ Sleep 300ms
 Type@1ms `note "The *strong* test runs the whole program. System Stubs sets the environment, the input and the output."`
 Enter
 Sleep 300ms
-Type@1ms `show PaymentImportTest 16 25 "the strong test" --zoom 19-24`
+Type@1ms `show PaymentImportTest 19 28 "the strong test" --zoom 22-27`
 Enter
 Sleep 300ms
 Show
@@ -114,7 +114,7 @@ Sleep 300ms
 Type@1ms `note "One test: a limit of 2000 pence, and three payments. The second is over the limit."`
 Enter
 Sleep 300ms
-Type@1ms `show PaymentImportTest 37 45 "one strong test" --zoom 39-41`
+Type@1ms `show PaymentImportTest 40 48 "one strong test" --zoom 42-44`
 Enter
 Sleep 300ms
 Show

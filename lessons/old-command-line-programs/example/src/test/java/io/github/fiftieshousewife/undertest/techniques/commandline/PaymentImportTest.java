@@ -12,7 +12,10 @@ import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
 import uk.org.webcompere.systemstubs.stream.SystemIn;
 import uk.org.webcompere.systemstubs.stream.SystemOut;
 
-/* AFTER: runs the whole program, with its environment variable, input and output stubbed by System Stubs. */
+/*
+ * AFTER: runs the whole program, with its environment variable, input and output stubbed by System Stubs. The exit code
+ * stands in for System.exit: -1 until the program ends.
+ */
 @ExtendWith(SystemStubsExtension.class)
 class PaymentImportTest {
 
@@ -22,7 +25,7 @@ class PaymentImportTest {
     private final SystemIn input = new SystemIn();
     @SystemStub
     private final SystemOut output = new SystemOut();
-    private final AtomicInteger exitCode = new AtomicInteger(-1); // stands in for System.exit: -1 until it exits
+    private final AtomicInteger exitCode = new AtomicInteger(-1);
 
     @Test
     void acceptsPaymentsUpToTheLimitAndEndsWithZero() throws Throwable {

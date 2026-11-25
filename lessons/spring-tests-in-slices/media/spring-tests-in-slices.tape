@@ -114,7 +114,7 @@ Sleep 300ms
 Type@1ms `note "The *JSON* slice: only Jackson, checking the answer field by field."`
 Enter
 Sleep 300ms
-Type@1ms `show DeliveryJsonSliceTest 15 27 "the JSON slice" --zoom 25-26`
+Type@1ms `show DeliveryJsonSliceTest 16 28 "the JSON slice" --zoom 26-27`
 Enter
 Sleep 300ms
 Show
