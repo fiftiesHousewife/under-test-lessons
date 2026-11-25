@@ -6,7 +6,7 @@ Old suites often mix quick unit tests with slow ones that start a database, a se
 run is then as slow as the slowest tests, so people stop running them. JUnit's `@Tag` labels a test or a test class;
 Gradle's test task can leave out tests with a tag (`excludeTags`) or run only those (`includeTags`). So one task runs
 the quick tests on every change, and a second task, which `check` depends on, runs the slow ones in continuous
-integration (CI: the shared build that runs every test whenever a developer pushes a change). Tags come with JUnit,
+integration. Tags come with JUnit,
 and the filters with Gradle.
 
 ## Run the example

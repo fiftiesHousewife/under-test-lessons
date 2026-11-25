@@ -14,13 +14,13 @@ their own narration, in [capturing-with-logbook.slides.md](capturing-with-logboo
    It has one header filter of its own, to remove the headers that change on every run, such as the date. That filter
    replaces Logbook's default, the one that hides the Authorization header. And nothing touches the email address in
    the bodies.
-5. This is the weak test. It asks the old service for a customer, then checks that the capture recorded
+5. This is the weak test. It asks the old service for a customer, then checks that the recording recorded
    what the service received, what it sent, and both answers. It never reads what was written. So a token, or an
-   email address, in the capture doesn't fail it.
-6. Now, the strong tests. The first lists every secret the capture holds: the caller's token, the
-   loyalty provider's key, and the customer's email. The list must be empty. The second compares the whole capture
+   email address, in the recording doesn't fail it.
+6. Now, the strong tests. The first lists every secret the recording holds: the caller's token, the
+   loyalty provider's key, and the customer's email. The list must be empty. The second compares the whole recording
    with its approved file, line for line.
-7. We run the tests against today's capture. The weak test passes. Both strong tests fail. The capture holds all 3
+7. We run the tests against today's capture. The weak test passes. Both strong tests fail. The recording holds all 3
    secrets, and the approval summary shows where. Both Authorization headers carry the real tokens, and both bodies
    carry the customer's real email address.
 8. Now the filtered capture. It keeps Logbook's Authorization filter beside its own, and a JSON body filter replaces

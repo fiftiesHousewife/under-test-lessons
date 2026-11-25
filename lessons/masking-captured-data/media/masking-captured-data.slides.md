@@ -74,7 +74,8 @@ Say: Here is how a keyed substitute looks. HMAC is a keyed hash that comes with 
 
 ## closing: When to mask a copy of real data
 - Whenever a copy of real data is kept for tests: files, recorded requests, database copies
-- Keyed substitutes for anything that joins or repeats; fixed text for the rest
+- Keyed substitutes for anything that joins or repeats
+- Fixed text for the rest
 - Run the detector on every masked copy, as a test, before it is kept
 Picture: map
 Say: When should you do this? [pause 1s] Whenever you keep a copy of real data for tests. [pause 600ms] Use keyed

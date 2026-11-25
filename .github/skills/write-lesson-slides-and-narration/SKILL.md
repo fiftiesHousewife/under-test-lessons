@@ -142,6 +142,13 @@ What a full review of every deck with its voice found, so each new lesson gets i
 
 - **Opening:** the first narration says what the lesson covers, then the problem. Each tool is introduced by what it
   does, in a sentence of its own.
+- **Names aloud:** a slide whose heading names a technique or tool says that name in its narration too ("The answer
+  is characterisation tests"): the listener may not be looking.
+- **One item to a bullet:** never two ideas joined by a semicolon on one bullet; give each its own.
+- **Overview slides:** a slide about a technique opens with its name and what it is ("Now we talk about differential
+  testing. Differential testing runs the old code and its rewrite on the same inputs..."), then the question it
+  answers. Name the established term the code shows, such as dependency injection for passing dependencies in.
+- **Known terms:** don't explain what engineers already know, such as continuous integration.
 - **Story:** contrast the outcomes before the problem; a boundary gets its own slide, with the values on each side; one
   idea to a slide, three or four points, a heading of 40 characters or less.
 - **Sentences:** short and simple (the breath test), active voice, no invented "someone" or "nobody", no "that shop",

@@ -64,7 +64,8 @@ Say: When should you use them? [pause 1600ms] Whenever a team agrees how the cod
 
 ## closing: Where ArchUnit came from
 - Written by TNG Technology Consulting, free under the Apache licence
-- Published since 2017; version 1.0 came out in 2022
+- Published since 2017
+- Version 1.0 came out in 2022
 - Works with JUnit, and with any Java or Kotlin code
 Picture: book
 Say: ArchUnit was written at TNG Technology Consulting, and is free to use under the Apache licence. It has been

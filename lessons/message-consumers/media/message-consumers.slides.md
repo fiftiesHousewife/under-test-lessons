@@ -87,7 +87,8 @@ Say: When should you use it? [pause 1600ms] Whenever code takes messages from a 
 
 ## closing: Next: Kafka
 - Kafka consumers save their position in the topic, instead of acknowledging each message
-- Save it before processing and a failure loses messages; save it after, and they are read again
+- Save it before processing and a failure loses messages
+- Save it after, and they are read again
 - The same test: example messages in, then what was recorded, on a real Kafka broker
 Picture: queue
 Say: The next step is Kafka. A Kafka consumer saves its position in the topic, instead of acknowledging each message.

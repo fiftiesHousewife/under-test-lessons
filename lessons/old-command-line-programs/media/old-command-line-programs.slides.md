@@ -73,7 +73,8 @@ Say: When should you do this? [pause 1600ms] Before changing an old program that
 ## closing: Where System Stubs came from
 - Stefan Birkner's System Rules, JUnit 4 rules for code that uses System
 - Then his System Lambda, and System Stubs, a fork made with his agreement
-- Free under the MIT licence; needs Java 11 or later
+- Free under the MIT licence
+- Needs Java 11 or later
 Picture: book
 Say: System Stubs grew from Stefan Birkner's System Rules, a set of JUnit 4 rules for code that uses Java's System
   class, and then from his System Lambda. System Stubs is a fork of System Lambda, made with his agreement, and adds

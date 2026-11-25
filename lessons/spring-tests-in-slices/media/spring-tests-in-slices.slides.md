@@ -48,7 +48,8 @@ Say: The fix is to test one layer at a time. The service is built on Spring. Spr
   due date field by field. And one test of the whole application stays, for the wiring between the layers.
 
 ## intro: How the slices look
-- @WebMvcTest starts the controllers; @MockitoBean stands in for the service
+- @WebMvcTest starts the controllers
+- @MockitoBean stands in for the service
 - @DataJpaTest starts the repositories, with an in-memory database, rolled back after each test
 - @JsonTest starts Jackson: dueOn Expected: 2026-11-23 got: 23/11/2026
 - One @SpringBootTest is kept, for the wiring between the layers

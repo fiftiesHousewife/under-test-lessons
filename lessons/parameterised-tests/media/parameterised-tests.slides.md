@@ -53,7 +53,8 @@ Include: how-we-build
 ## closing: When to use parameterised tests
 - Whenever the same check runs on several inputs: boundaries, rounding, conversions, validation
 - Give every row a readable name, so a failure says which case broke
-- Keep one idea per test; rows that need different checks belong in different tests
+- Keep one idea per test
+- Rows that need different checks belong in different tests
 Picture: map
 Say: When should you use them? [pause 1600ms] Whenever the same check runs on several inputs, like boundaries, rounding,
   conversions, and validation rules. Give every row a readable name, so a failure tells you which case broke. And keep

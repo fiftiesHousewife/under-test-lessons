@@ -72,7 +72,8 @@ Say: When should you use it? [pause 1600ms] First, in discovery, when you are ju
 ## closing: Where PIT came from
 - The idea goes back to a student paper by Richard Lipton in 1971, and a 1978 paper made it widely known
 - PIT is largely the work of Henry Coles, in Edinburgh, with many contributors
-- First released in 2011; the name first stood for Parallel Isolated Test
+- First released in 2011
+- The name first stood for Parallel Isolated Test
 Picture: book
 Say: The idea of mutation testing goes back to a student paper by Richard Lipton in 1971, and a 1978 paper by DeMillo,
   Lipton and Sayward made it widely known. PIT itself is largely the

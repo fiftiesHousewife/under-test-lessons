@@ -13,7 +13,7 @@ characterisation tests.
 
 ## intro: Capturing an old service's traffic
 - The problem: the recording keeps the secrets
-- The fix: filter the capture, then approve it
+- The fix: filter the recording, then approve it
 - The tools: Logbook and ApprovalTests
 Picture: road
 Say: This lesson is about capturing what an old service receives and sends, so it can become a test. Logbook is a
@@ -43,46 +43,48 @@ Say: Our example is an old customer service. Callers ask it for a customer, and 
   customer's email address, with its own key. Then it answers with the customer's email, loyalty tier and points, as
   JSON. There is no record of what it receives and sends, so we capture it.
 
-## intro: The fix: filter the capture, then approve it
+## intro: The fix: filter the recording, then approve it
 - Logbook captures from inside the service: a servlet filter, and a hook in its HTTP client
 - Its filters remove secrets before anything is written
-- A person checks the capture once, and it's kept as an approved file
+- A person checks the recording once, and it's kept as an approved file
 - Later tests compare against it, line by line, and fail on any secret
 Picture: camera
-Say: The fix is to filter the capture, then approve it. Logbook, a small Java library, captures from inside the
+Say: The fix is to filter the recording, then approve it. Logbook, a small Java library, captures from inside the
   service. A servlet filter, a hook in the web server, records what comes in, and a hook in its HTTP client records what
-  goes out. Its filters remove secrets before anything is written. A person checks the capture once, and we keep it as
+  goes out. Its filters remove secrets before anything is written. A person checks the recording once, and we keep it as
   the approved file. Later tests compare each new capture with it, line by line, and fail if any secret is there.
 
 ## intro: How Logbook's filters look
 - Our one header filter replaced Logbook's default, which hides the Authorization header
 - Put it back: .headerFilter(HeaderFilters.authorization())
 - Mask the bodies: every "email" becomes customer@example.invalid
-- Today: the approved file has XXX, the capture the real token
+- Today: the approved file has XXX, the recording the real token
 Picture: plug
 Say: Here is how the filters look. Logbook hides the Authorization header by default. But today's set-up gives it one
   header filter of its own, to drop the headers that change on every run, and that replaces the default. So we put
   Logbook's authorization filter back. It writes 3 Xs in place of the token. A body filter replaces every email field
   with a made-up address that no real person uses. Today the approved file and the new capture differ: the approved file
-  has the Xs, and the capture has the caller's real token.
+  has the Xs, and the recording has the caller's real token.
 
 Include: how-we-build
 
 ## closing: When to capture with Logbook
 - Before changing an old service with no record of what it receives and sends
 - In a test environment first, where a proxy can't sit in front of the service
-- Filter secrets and personal data at source, and check the capture holds none
+- Filter secrets and personal data at source, and check the recording holds none
 - Keep the examples a person has checked as approved files, and change them only on purpose
 Picture: map
 Say: When should you capture with Logbook? [pause 1600ms] Before you change an old service with no record of what it
   receives and sends. Start in a test environment, especially where a proxy can't sit in front of the service.
-  Filter secrets and personal data at source, and have a test check that the capture holds none. Keep the examples a
+  Filter secrets and personal data at source, and have a test check that the recording holds none. Keep the examples a
   person has checked as approved files, and change them only on purpose, in a pull request a reviewer checks.
 
 ## closing: Where Logbook came from
 - Written at Zalando, free under the MIT licence
-- Published on Maven Central since 2015; its current line needs Java 17
-- Approved files come from ApprovalTests; Michael Feathers named characterisation tests in 2004
+- Published on Maven Central since 2015
+- Its current line needs Java 17
+- Approved files come from ApprovalTests
+- Michael Feathers named characterisation tests in 2004
 Picture: book
 Say: Logbook was written at Zalando, and is free under the MIT licence. It has been published since 2015, and its
   current line needs Java 17 or later. The approved files come from ApprovalTests. Recording what code does today, so
@@ -94,8 +96,8 @@ Say: Logbook was written at Zalando, and is free under the MIT licence. It has b
 - https://approvaltests.com — ApprovalTests, for approved files
 - {toolkit-repo} — the toolkit, with its characterisation tests technique
 - {lessons-repo} — run this lesson yourself: its test code and examples
-- Exercise: approve the capture for a customer the service doesn't know; the README has the steps and the answer
+- Exercise: approve the recording for a customer the service doesn't know; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Logbook's guide, which lists its integrations, filters, formatters and writers. The
   links on screen also take you to ApprovalTests, to the toolkit, and to this lesson's test code and examples, to run
-  yourself. And try the exercise in the README: approve the capture for a customer the service doesn't know.
+  yourself. And try the exercise in the README: approve the recording for a customer the service doesn't know.

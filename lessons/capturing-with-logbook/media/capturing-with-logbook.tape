@@ -100,7 +100,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *strong* tests: no secret in the capture, and the whole capture matches its approved file."`
+Type@1ms `note "The *strong* tests: no secret in the recording, and the whole recording matches its approved file."`
 Enter
 Sleep 300ms
 Type@1ms `show ApprovedCaptureTest 18 39 "the strong tests" --zoom 28-29`
@@ -109,7 +109,7 @@ Sleep 300ms
 Show
 Sleep 25s
 
-# ---- Scene 7: the capture holds the secrets ----
+# ---- Scene 7: the recording holds the secrets ----
 Hide
 Type@1ms "scene"
 Enter
@@ -135,7 +135,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The capture with Logbook's filters: the Authorization header hidden, and every email replaced."`
+Type@1ms `note "The recording with Logbook's filters: the Authorization header hidden, and every email replaced."`
 Enter
 Sleep 300ms
 Type@1ms `show FilteredCapture 19 26 "the filtered capture" --zoom 22-23`
@@ -148,7 +148,7 @@ Show
 Wait+Screen@300s /All \d+ tests passed/
 Sleep 16s
 Hide
-Type@1ms `callout "Logbook's filters mask each message before it is written, and the capture matches its approved file."`
+Type@1ms `callout "Logbook's filters mask each message before it is written, and the recording matches its approved file."`
 Enter
 Sleep 300ms
 Show

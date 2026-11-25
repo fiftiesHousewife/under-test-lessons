@@ -10,7 +10,7 @@ the words the lessons themselves use.
 | Word or phrase | Meaning | Replaces (don't use) |
 |---|---|---|
 | **lesson** | One technique taught with a runnable example, a narrated video and a slide deck. | module, unit, course |
-| **continuous integration (CI)** | The shared build that runs every test whenever a developer pushes a change. Said in full on a slide, and explained the first time a lesson or deck uses it. | build machine, build server, the pipeline |
+| **continuous integration (CI)** | The shared build that runs every test whenever a developer pushes a change. Said in full on a slide. Engineers know it, so it needs no explanation. | build machine, build server, the pipeline |
 | **today's code** | The example code as it is before the lesson's fix, chosen with `-Pcode=today` (or the lesson's own switch). | legacy version, broken version |
 | **the fix** | The example code after the change the lesson teaches. The default, so the build passes. | fixed version, solution |
 | **weak test** | A test that looks reasonable and passes, but would miss the bug the lesson shows. | bad test |
@@ -96,6 +96,9 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
 | identifies someone | identifies a real person | Says whose data it is |
 | the report sees, the test sees, the filter sees | the report counts, the test gets, the filter records or checks | Only people see |
 | no column name says so | you won't expect it from the column name | Says it the way people do |
+| a capture, captures (as nouns) | a recording, recordings | Natural English; "capture" stays a verb |
+| two ideas on one bullet, joined by a semicolon | two bullets | One item to a bullet |
+| continuous integration, the shared build that... | continuous integration | Engineers know it |
 | someone (anywhere) | a developer, the shop, the team, a reviewer, one person | Name who it is |
 | before we start | before we get to the code | Says where we are going |
 | UK law on its own | US law first (the FTC, state privacy laws, HIPAA, PCI DSS), with UK and EU law alongside | The lessons are used by a US company |

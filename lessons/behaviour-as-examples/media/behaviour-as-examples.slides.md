@@ -80,7 +80,8 @@ Include: how-we-build
 
 ## closing: When to use it
 - For rules the business owns: prices, refunds, eligibility, deadlines
-- Start with a JUnit table; when an example fails, ask the experts, don't delete it
+- Start with a JUnit table
+- When an example fails, ask the experts, don't delete it
 - Choose Cucumber only when business people read or write the examples themselves
 Picture: map
 Say: When should you write behaviour down as examples? [pause 1600ms] For rules the business owns, such as prices,
