@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# This repo's backlog sync: on each push to main that changes the backlog, and by hand (with relink to post every
+# link again). The work is done by the toolkit's shared backlog-sync.yml, which every repo of ours calls the same way:
+# it brings the GitHub issues up to date with plan/lessons-backlog.yaml and commits docs/BACKLOG.md.
+name: Backlog sync
+
+on:
+  push:
+    branches: [main]
+    paths: [plan/lessons-backlog.yaml]
+  workflow_dispatch:
+    inputs:
+      relink:
+        description: Post every issue link again
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  sync:
+    uses: fiftiesHousewife/under-test/.github/workflows/backlog-sync.yml@main
+    with:
+      backlog-file: plan/lessons-backlog.yaml
+      relink: ${{ inputs.relink == true }}
