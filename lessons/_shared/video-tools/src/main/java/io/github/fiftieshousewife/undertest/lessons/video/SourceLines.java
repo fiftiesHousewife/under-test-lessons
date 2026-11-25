@@ -28,27 +28,42 @@ final class SourceLines {
     /* In a TOML file: each matching line under its [section] header, with a gap marker between runs. */
     static List<String> tomlMatches(final List<String> lines, final String pattern) {
         final Pattern match = Pattern.compile(pattern);
-        final List<String> out = new ArrayList<>();
-        int section = 0;
-        int shownSection = 0;
-        int last = 0;
+        final TomlRuns runs = new TomlRuns(lines);
         for (int i = 1; i <= lines.size(); i++) {
             final String line = lines.get(i - 1);
             if (line.startsWith("[")) {
-                section = i;
+                runs.section = i;
             } else if (match.matcher(line).find()) {
-                if (section != shownSection) {
-                    addGapIf(out, !out.isEmpty());
-                    out.add(numbered(section, lines.get(section - 1)));
-                    shownSection = section;
-                    last = section;
-                }
-                addGapIf(out, i > last + 1);
-                out.add(numbered(i, line));
-                last = i;
+                runs.add(i);
             }
         }
-        return out;
+        return runs.out;
+    }
+
+    /* The lines picked so far from a TOML file, the section the reader is in, and the last line shown. */
+    private static final class TomlRuns {
+
+        private final List<String> lines;
+        private final List<String> out = new ArrayList<>();
+        private int section;
+        private int shownSection;
+        private int last;
+
+        TomlRuns(final List<String> lines) {
+            this.lines = lines;
+        }
+
+        void add(final int number) {
+            if (section != shownSection) {
+                addGapIf(out, !out.isEmpty());
+                out.add(numbered(section, lines.get(section - 1)));
+                shownSection = section;
+                last = section;
+            }
+            addGapIf(out, number > last + 1);
+            out.add(numbered(number, lines.get(number - 1)));
+            last = number;
+        }
     }
 
     private static void addGapIf(final List<String> out, final boolean gap) {
@@ -59,27 +74,39 @@ final class SourceLines {
 
     /* The whole { ... } block the first matching line opens, or else the nearest block around it. */
     static List<String> blockAround(final List<String> lines, final String pattern) {
-        final Pattern match = Pattern.compile(pattern);
-        int found = -1;
-        for (int i = 0; i < lines.size() && found < 0; i++) {
-            if (match.matcher(lines.get(i)).find()) {
-                found = i;
-            }
-        }
+        final int found = firstMatch(lines, Pattern.compile(pattern));
         if (found < 0) {
             return List.of();
         }
+        final int start = blockStart(lines, found);
+        return range(lines, start + 1, blockEnd(lines, start));
+    }
+
+    private static int firstMatch(final List<String> lines, final Pattern match) {
+        for (int i = 0; i < lines.size(); i++) {
+            if (match.matcher(lines.get(i)).find()) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private static int blockStart(final List<String> lines, final int found) {
         int start = found;
         while (start > 0 && depthChange(lines.get(start)) <= 0) {
             start--;
         }
+        return start;
+    }
+
+    private static int blockEnd(final List<String> lines, final int start) {
         int depth = 0;
         int end = start;
         do {
             depth += depthChange(lines.get(end));
             end++;
         } while (end < lines.size() && depth > 0);
-        return range(lines, start + 1, end);
+        return end;
     }
 
     private static int depthChange(final String line) {

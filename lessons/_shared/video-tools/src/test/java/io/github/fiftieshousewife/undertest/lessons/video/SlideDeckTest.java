@@ -20,8 +20,7 @@ class SlideDeckTest {
         System.clearProperty("video.browser");
     }
 
-    @Test
-    void writesADeckWithIntroSceneAndClosingSlidesAndItsNotes() throws IOException {
+    private Path writeALesson() throws IOException {
         final Path shared = Files.createDirectories(root.resolve("lessons/_shared/slides/pictures"));
         Files.writeString(shared.resolveSibling("slides.css"), "h1 { color: teal; }");
         Files.writeString(shared.resolveSibling("deck.css"), ".deck-slide { }");
@@ -39,10 +38,23 @@ class SlideDeckTest {
                 + "Type@1ms `show Thing 1 2 \"the thing\"`\nType@1ms `run_live \"./gradlew test\"`\n"
                 + "Type@1ms `callout \"It passes.\"`\nSleep 1s\n");
         Files.writeString(media.resolve("demo.narration.md"), "1. Here is the code & its tests.\n");
+        return media;
+    }
+
+    /* A browser that only "prints" a PDF, by making an empty file where asked. */
+    private void useAStandInBrowser() throws IOException {
         final Path browser = Files.writeString(root.resolve("browser"), "#!/bin/sh\nfor a; do case \"$a\" in"
                 + " --print-to-pdf=*) touch \"${a#--print-to-pdf=}\";; esac; done\n");
-        assertThat(browser.toFile().setExecutable(true)).isTrue();
+        if (!browser.toFile().setExecutable(true)) {
+            throw new IOException("can't make the stand-in browser executable");
+        }
         System.setProperty("video.browser", browser.toString());
+    }
+
+    @Test
+    void writesADeckWithIntroSceneAndClosingSlidesAndItsNotes() throws IOException {
+        final Path media = writeALesson();
+        useAStandInBrowser();
 
         LessonDecks.main("deck", root.toString(), "all", "pdf");
         final String deck = Files.readString(media.resolve("demo.deck.html"));
@@ -58,6 +70,6 @@ class SlideDeckTest {
                         "<aside class=\"notes\">Here is the code &amp; its tests."),
                 () -> assertThat(deck).doesNotContain("<li class=\"point\">The code under test</li>"),
                 () -> assertThat(media.resolve("demo.deck.pdf")).exists(),
-                () -> assertThat(SlideDeck.lessons(root, "demo")).hasSize(1));
+                () -> assertThat(Media.lessons(root, "demo")).hasSize(1));
     }
 }

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.awt.image.BufferedImage;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.jupiter.api.AfterEach;
@@ -85,10 +84,8 @@ class BurnedCaptionsTest {
 
 
     private boolean bottomDiffers(final Path first, final Path second, final double seconds) {
-        final String at = String.format(Locale.ROOT, "%.2f", seconds);
-        final String report = ExternalCommand.run(List.of("ffmpeg", "-ss", at, "-i", first.toString(), "-ss", at,
-                "-i", second.toString(), "-frames:v", "1", "-lavfi",
-                "[0:v]crop=1920:300:0:780[a];[1:v]crop=1920:300:0:780[b];[a][b]psnr", "-f", "null", "-"), root);
+        final String report = RealFfmpeg.psnr(root, new RealFfmpeg.Frames(first, second, seconds),
+                "[0:v]crop=1920:300:0:780[a];[1:v]crop=1920:300:0:780[b];[a][b]psnr");
         final Matcher average = Pattern.compile("average:(\\S+)").matcher(report);
         return average.find() && !"inf".equals(average.group(1)) && Double.parseDouble(average.group(1)) < 40;
     }

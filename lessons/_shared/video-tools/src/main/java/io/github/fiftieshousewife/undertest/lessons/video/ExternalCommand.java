@@ -26,17 +26,20 @@ final class ExternalCommand {
             final Process process = new ProcessBuilder(command).directory(folder.toFile()).redirectErrorStream(true)
                     .start();
             final String output = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            final int exit = process.waitFor();
-            if (exit != 0) {
-                throw new IllegalStateException(command.getFirst() + " failed with exit code " + exit + ":\n"
-                        + output.substring(Math.max(0, output.length() - TAIL_CHARACTERS)));
-            }
+            requireSuccess(command, process.waitFor(), output);
             return output;
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("interrupted while running " + command.getFirst(), e);
+        }
+    }
+
+    private static void requireSuccess(final List<String> command, final int exit, final String output) {
+        if (exit != 0) {
+            throw new IllegalStateException(command.getFirst() + " failed with exit code " + exit + ":\n"
+                    + output.substring(Math.max(0, output.length() - TAIL_CHARACTERS)));
         }
     }
 }

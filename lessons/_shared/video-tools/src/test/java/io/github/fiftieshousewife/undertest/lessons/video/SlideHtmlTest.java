@@ -60,6 +60,16 @@ class SlideHtmlTest {
 
     @Test
     void drawsSlidesWithTheBrowserAndAddsTheUserStylesheet() throws IOException {
+        final Media demo = writeALessonAndAStandInBrowser();
+
+        assertAll(
+                () -> assertThat(SlideDrawing.drawAll(demo)).hasSize(2).allSatisfy(png -> assertThat(png).exists()),
+                () -> assertThat(SlideDrawing.stylesheets(demo)).last().isEqualTo(root.resolve("brand.css")),
+                () -> assertThat(Browser.program()).isEqualTo(root.resolve("browser").toString()),
+                () -> assertThat(withoutBrowserSetting()).isEqualTo("google-chrome"));
+    }
+
+    private Media writeALessonAndAStandInBrowser() throws IOException {
         final Path shared = Files.createDirectories(root.resolve("lessons/_shared/slides/pictures"));
         Files.writeString(shared.resolveSibling("slides.css"), "body { }");
         Files.writeString(shared.resolve("globe.svg"), "<svg></svg>");
@@ -69,16 +79,12 @@ class SlideHtmlTest {
         final Path browser = root.resolve("browser");
         Files.writeString(browser, "#!/bin/sh\nfor a; do case \"$a\" in --screenshot=*) touch \"${a#--screenshot=}\";;"
                 + " esac; done\n");
-        assertThat(browser.toFile().setExecutable(true)).isTrue();
+        if (!browser.toFile().setExecutable(true)) {
+            throw new IOException("can't make the stand-in browser executable");
+        }
         System.setProperty("video.browser", browser.toString());
         System.setProperty("video.slideCss", Files.writeString(root.resolve("brand.css"), "h1 { }").toString());
-        final Media demo = new Media(root, "demo");
-
-        assertAll(
-                () -> assertThat(SlideDrawing.drawAll(demo)).hasSize(2).allSatisfy(png -> assertThat(png).exists()),
-                () -> assertThat(SlideDrawing.stylesheets(demo)).last().isEqualTo(root.resolve("brand.css")),
-                () -> assertThat(Browser.program()).isEqualTo(browser.toString()),
-                () -> assertThat(withoutBrowserSetting()).isEqualTo("google-chrome"));
+        return new Media(root, "demo");
     }
 
     private static String withoutBrowserSetting() {

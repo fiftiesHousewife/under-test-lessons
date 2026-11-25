@@ -72,6 +72,13 @@ class SlideBuildUpTest {
         return picture;
     }
 
+    private static String strongest(final int red, final int green, final int blue) {
+        if (red > green && red > blue) {
+            return "red";
+        }
+        return green > blue ? "green" : "blue";
+    }
+
     /* Which of red, green or blue the frame at that moment mostly is. */
     @SuppressFBWarnings(value = "COMMAND_INJECTION", justification = "Runs ffmpeg on a video this test made itself")
     private String rgb(final Path video, final double seconds) {
@@ -81,10 +88,7 @@ class SlideBuildUpTest {
                     "scale=1:1", "-f", "rawvideo", "-pix_fmt", "rgb24", "-").start();
             final byte[] pixel = ffmpeg.getInputStream().readAllBytes();
             ffmpeg.waitFor();
-            final int red = pixel[0] & 0xFF;
-            final int green = pixel[1] & 0xFF;
-            final int blue = pixel[2] & 0xFF;
-            return red > green && red > blue ? "red" : green > blue ? "green" : "blue";
+            return strongest(pixel[0] & 0xFF, pixel[1] & 0xFF, pixel[2] & 0xFF);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         } catch (InterruptedException e) {

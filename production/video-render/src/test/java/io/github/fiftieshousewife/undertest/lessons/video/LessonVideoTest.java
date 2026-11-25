@@ -46,10 +46,7 @@ class LessonVideoTest {
     }
 
     private Path standIn(final String name, final String body) throws IOException {
-        final Path script = root.resolve(name);
-        Files.writeString(script, "#!/bin/sh\n" + body + "\n");
-        assertThat(script.toFile().setExecutable(true)).isTrue();
-        return script;
+        return DeckVoiceLesson.standIn(root, name, body);
     }
 
     @Test
@@ -127,9 +124,9 @@ class LessonVideoTest {
         Files.writeString(media.resolve("demo.zooms"), "10 12 40\n");
         final Media demo = new Media(root, "demo");
 
-        final Path zoomed = Zoom.zoomed(demo);
+        final Path zoomed = ZoomedRecording.zoomed(demo);
         Files.writeString(media.resolve("demo.zooms"), "10 12 40\n10 12 40\n");
-        final Path unpaired = Zoom.zoomed(demo);
+        final Path unpaired = ZoomedRecording.zoomed(demo);
 
         assertAll(
                 () -> assertThat(zoomed).isEqualTo(media.resolve("demo.zoomed.mp4")),

@@ -23,10 +23,7 @@ class TapeTimelineTest {
         return TapeTimeline.scenes(root, tape);
     }
 
-    @Test
-    void countsOnlyTimeOnCamera() throws IOException {
-        Files.writeString(root.resolve("setup.tape"), "Hide\nSleep 30s\nShow\n");
-        final List<Scene> scenes = scenesOf("""
+    private static final String ON_AND_OFF_CAMERA = """
                 Set TypingSpeed 100ms
                 Source setup.tape
                 # ---- Scene 1: why ----
@@ -39,7 +36,12 @@ class TapeTimelineTest {
                 # ---- Scene 2: the build ----
                 Type@10ms `ab`
                 Sleep 500ms
-                """);
+                """;
+
+    @Test
+    void countsOnlyTimeOnCamera() throws IOException {
+        Files.writeString(root.resolve("setup.tape"), "Hide\nSleep 30s\nShow\n");
+        final List<Scene> scenes = scenesOf(ON_AND_OFF_CAMERA);
 
         assertAll(
                 () -> assertThat(scenes).extracting(Scene::title).containsExactly("why", "the build"),
@@ -68,9 +70,9 @@ class TapeTimelineTest {
     @Test
     void convertsUnits() {
         assertAll(
-                () -> assertThat(TapeTimeline.seconds("1.5", "s")).isEqualTo(1.5),
-                () -> assertThat(TapeTimeline.duration("250ms")).isEqualTo(0.25),
-                () -> assertThat(TapeTimeline.duration("2s")).isEqualTo(2));
+                () -> assertThat(VhsTime.seconds("1.5", "s")).isEqualTo(1.5),
+                () -> assertThat(VhsTime.duration("250ms")).isEqualTo(0.25),
+                () -> assertThat(VhsTime.duration("2s")).isEqualTo(2));
     }
 
     @Test

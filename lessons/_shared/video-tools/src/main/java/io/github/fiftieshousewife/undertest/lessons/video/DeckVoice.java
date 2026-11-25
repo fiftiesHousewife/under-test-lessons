@@ -9,7 +9,9 @@ import java.util.List;
  * A deck's voice: each slide's narration read aloud once and kept as a small sound file in {@code <id>.deck-voice/},
  * beside the deck, so the slides can be heard without making the video. A clip is named by its written words
  * ({@link Spoken#clipName}), so a deck plays only clips that match it and a person's recording survives a pronunciation
- * fix. Reading the clips aloud is {@code DeckReader}'s job, on the machine that makes the videos.
+ * fix. Reading the clips aloud is {@code DeckReader}'s job, on the machine that makes the videos. The voice makes
+ * {@code .m4a} clips; a person may record any of the {@code FORMATS} (Windows' Sound Recorder saves {@code .m4a}),
+ * which the deck looks for in that order.
  */
 final class DeckVoice {
 
@@ -39,10 +41,6 @@ final class DeckVoice {
         return titles;
     }
 
-    /*
-     * The formats a clip may have, in the order the deck looks for them: the voice makes {@code .m4a}; a person may
-     * record any of them (Windows' Sound Recorder saves {@code .m4a}).
-     */
     static final List<String> FORMATS = List.of(".m4a", ".wav", ".mp3");
 
     /* For each slide, the clip's address relative to the deck, or empty when that slide has no clip yet. */
@@ -62,5 +60,15 @@ final class DeckVoice {
 
     static Pronunciation pronunciation(final Media media) {
         return Pronunciation.read(media.root().resolve("lessons/_shared/pronunciations.txt"));
+    }
+
+    /* The slide's section with its spoken clip, if it has one, played by the deck's Listen control. */
+    static String withVoice(final String section, final String source) {
+        if (source.isEmpty()) {
+            return section;
+        }
+        final int end = section.lastIndexOf("</section>");
+        return section.substring(0, end) + "<audio class=\"voice\" preload=\"none\" src=\""
+                + SlideHtml.escape(source) + "\"></audio>" + section.substring(end);
     }
 }

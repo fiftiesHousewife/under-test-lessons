@@ -7,17 +7,16 @@ import java.util.Locale;
 
 /*
  * Turns slides into short video segments (the slide image with its narration) and joins segments into one video. All
- * inputs are brought to the same size, frame rate and sound format first, so any mix of slides and recordings joins.
+ * inputs are brought to the same size, frame rate and sound format first, so any mix of slides and recordings joins. A
+ * slide fades up from black, and back down, over {@code FADE_SECONDS}; its points appear one after another over the
+ * first {@code BUILD_UP} share of its narration, each fading in over {@code CROSSFADE_SECONDS}; and it grows by
+ * {@code SLIDE_ZOOM} as it shows, a slow, gentle zoom towards its centre.
  */
 final class Splicer {
 
-    /* How long a slide takes to fade up from black, and back down to black. */
     static final double FADE_SECONDS = 1.0 / 3;
-    /* The share of a slide's narration over which its points appear, one after another. */
     static final double BUILD_UP = 0.8;
-    /* How long each point takes to fade in. */
     static final double CROSSFADE_SECONDS = 0.3;
-    /* How much a slide grows over the time it shows: a slow, gentle zoom towards its centre. */
     static final double SLIDE_ZOOM = 0.04;
 
     /* A video file and its length in seconds. */
@@ -75,23 +74,34 @@ final class Splicer {
         final List<String> command = new ArrayList<>(List.of(Ffmpeg.program(), "-y", "-loglevel", "error"));
         final StringBuilder filter = new StringBuilder();
         for (int i = 0; i < cut.stages().size(); i++) {
-            final double offset = i == 0 ? 0 : offset(appear.get(i - 1));
-            final double length = i == cut.stages().size() - 1 ? seconds - offset : seconds;
-            command.addAll(List.of("-loop", "1", "-framerate", "30", "-t", number(length), "-i",
-                    cut.stages().get(i).toString()));
+            command.addAll(stageInput(cut, appear, i));
             filter.append(String.format(Locale.ROOT, "[%d:v]fps=30,format=yuv420p,settb=AVTB[s%d];", i, i));
         }
+        filter.append(crossfades(cut, appear)).append(motion(seconds)).append("[v]");
+        command.addAll(List.of("-i", cut.voice().toString(), "-filter_complex", filter.toString(), "-map", "[v]",
+                "-map", cut.stages().size() + ":a", "-af", "apad", "-t", number(seconds), "-c:v", "libx264",
+                "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "2", video.toString()));
+        return command;
+    }
+
+    /* The input for one stage: its picture, shown from when its point appears to the end. */
+    private static List<String> stageInput(final Cut cut, final List<Double> appear, final int stage) {
+        final double offset = stage == 0 ? 0 : offset(appear.get(stage - 1));
+        final double length = stage == cut.stages().size() - 1 ? cut.seconds() - offset : cut.seconds();
+        return List.of("-loop", "1", "-framerate", "30", "-t", number(length), "-i",
+                cut.stages().get(stage).toString());
+    }
+
+    /* Each stage crossfading into the next as its point appears, then the name of the last: {@code ...[x2]}. */
+    private static String crossfades(final Cut cut, final List<Double> appear) {
+        final StringBuilder filter = new StringBuilder();
         String last = "s0";
         for (int i = 1; i < cut.stages().size(); i++) {
             filter.append(String.format(Locale.ROOT, "[%s][s%d]xfade=transition=fade:duration=%s:offset=%s[x%d];",
                     last, i, number(CROSSFADE_SECONDS), number(offset(appear.get(i - 1))), i));
             last = "x" + i;
         }
-        filter.append('[').append(last).append(']').append(motion(seconds)).append("[v]");
-        command.addAll(List.of("-i", cut.voice().toString(), "-filter_complex", filter.toString(), "-map", "[v]",
-                "-map", cut.stages().size() + ":a", "-af", "apad", "-t", number(seconds), "-c:v", "libx264",
-                "-pix_fmt", "yuv420p", "-c:a", "aac", "-ar", "48000", "-ac", "2", video.toString()));
-        return command;
+        return filter.append('[').append(last).append(']').toString();
     }
 
     /* When each of a slide's points appears: evenly through the first {@link #BUILD_UP} of its narration. */
@@ -127,25 +137,5 @@ final class Splicer {
 
     private static String number(final double value) {
         return String.format(Locale.ROOT, "%.3f", value);
-    }
-
-    /* Joins videos, each with sound, end to end into one. */
-    static void join(final List<Path> videos, final Path out) {
-        final List<String> command = new ArrayList<>(List.of(Ffmpeg.program(), "-y", "-loglevel", "error"));
-        final StringBuilder filter = new StringBuilder();
-        for (int i = 0; i < videos.size(); i++) {
-            command.add("-i");
-            command.add(videos.get(i).toString());
-            filter.append(String.format(Locale.ROOT, "[%d:v]scale=%d:%d,setsar=1,fps=30,format=yuv420p[v%d];"
-                    + "[%d:a]aformat=sample_rates=48000:channel_layouts=stereo[a%d];",
-                    i, SlideHtml.WIDTH, SlideHtml.HEIGHT, i, i, i));
-        }
-        for (int i = 0; i < videos.size(); i++) {
-            filter.append(String.format(Locale.ROOT, "[v%d][a%d]", i, i));
-        }
-        filter.append(String.format(Locale.ROOT, "concat=n=%d:v=1:a=1[v][a]", videos.size()));
-        command.addAll(List.of("-filter_complex", filter.toString(), "-map", "[v]", "-map", "[a]",
-                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", out.toString()));
-        ExternalCommand.run(command, Path.of("").toAbsolutePath());
     }
 }

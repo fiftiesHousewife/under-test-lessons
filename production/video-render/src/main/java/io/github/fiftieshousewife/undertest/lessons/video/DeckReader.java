@@ -53,18 +53,28 @@ final class DeckReader {
         if (DeckVoice.clips(folder, slide).stream().anyMatch(found -> !found.equals(clip))) {
             return true; // a person's recording, as .wav or .mp3: the voice never makes one over it
         }
-        if (Files.isRegularFile(clip) && ledger.first() && slide.clipName().equals(slide.earlierClipName())) {
+        if (Files.isRegularFile(clip)) {
+            return keptAsItIs(ledger, slide);
+        }
+        return renamedFromItsEarlierName(folder, ledger, slide);
+    }
+
+    /* Whether the clip the slide needs, which is there, is still what it should say. */
+    private static boolean keptAsItIs(final ClipLedger ledger, final Spoken slide) {
+        if (ledger.first() && slide.clipName().equals(slide.earlierClipName())) {
             // made before ledgers, by the voice, from these words
             ledger.voiceRead(slide.clipName(), slide.saidKey(), Speech.engine());
             return true;
         }
-        if (Files.isRegularFile(clip)) {
-            final boolean current = ledger.readFrom(slide.clipName(), slide.saidKey(), Speech.engine());
-            if (current) {
-                ledger.stampEngine(slide.clipName(), Speech.engine());
-            }
-            return current || !ledger.byTheVoice(slide.clipName());
+        final boolean current = ledger.readFrom(slide.clipName(), slide.saidKey(), Speech.engine());
+        if (current) {
+            ledger.stampEngine(slide.clipName(), Speech.engine());
         }
+        return current || !ledger.byTheVoice(slide.clipName());
+    }
+
+    private static boolean renamedFromItsEarlierName(final Path folder, final ClipLedger ledger, final Spoken slide) {
+        final Path clip = folder.resolve(slide.clipName());
         final Path earlier = folder.resolve(slide.earlierClipName());
         if (Files.isRegularFile(earlier)) {
             move(earlier, clip);

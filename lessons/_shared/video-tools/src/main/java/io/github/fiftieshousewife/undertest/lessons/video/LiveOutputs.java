@@ -7,30 +7,26 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- * What each live command in a lesson's video script printed, kept in {@code <id>.outputs/01.txt}, {@code 02.txt} and
- * so on (one per live command, in script order; the first line is the command), so decks can show the output the
- * video shows. tools/capture-lesson-outputs.py runs the commands as a recording does and writes the files. The checks
- * here fail a live command without its output, and a scene that names a line (in its narration, a callout or a live
- * command's output) without showing that line of code marked ({@code show ... --mark N}).
+ * What each live command in a lesson's video script printed, kept in {@code <id>.outputs/01.txt}, {@code 02.txt} and so
+ * on (one per live command, in script order; the first line is the command), so decks can show the output the video
+ * shows. tools/capture-lesson-outputs.py runs the commands as a recording does and writes the files. The checks here
+ * fail a live command without its output, and a scene that names a line (in its narration, a callout or a live
+ * command's output) without showing that line of code marked ({@code show ... --mark N}), and kept output that shows a
+ * personal path: a home folder, with a person's name or account, which must never be shown. {@code ANSWER_FILE} keeps
+ * the output of the lesson's exercise answer, which no video runs. {@code SCREEN_ROWS} and {@code SCREEN_COLUMNS} are
+ * what the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar.
  */
 final class LiveOutputs {
 
     static final String FOLDER = ".outputs";
-    /* The kept output of the lesson's exercise answer, which no video runs. */
     static final String ANSWER_FILE = "answer.txt";
-    /* What the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar. */
     static final int SCREEN_ROWS = 36;
     static final int SCREEN_COLUMNS = 150;
-    /* A home folder in a path: a person's name or account, which must never be shown. */
-    private static final Pattern PERSONAL_PATH = Pattern.compile("/Users/[^/\\s]+|/home/[^/\\s]+|[A-Z]:\\\\Users\\\\");
-    private static final Pattern LINE_NAMED = Pattern.compile("(?i)\\blines?\\s+(\\d+)\\b");
-    private static final Pattern NUMBERED = Pattern.compile("\\s*(\\d+)\\s");
+    private static final Pattern PERSONAL_PATH = Pattern.compile(
+            "/Users/[^/\\s]+|/home/[^/\\s]+|[A-Z]:\\\\Users\\\\");
 
     private LiveOutputs() {
     }
@@ -46,17 +42,15 @@ final class LiveOutputs {
 
     /* The output kept for the live command at this place in the script, or none if it is missing or out of date. */
     static List<String> read(final Media media, final int index, final String command) {
-        final Path file = media.file(FOLDER).resolve(fileName(index));
-        if (!Files.isRegularFile(file)) {
-            return List.of();
-        }
-        final List<String> lines = lines(file);
-        return !lines.isEmpty() && lines.getFirst().equals("$ " + command) ? lines.subList(1, lines.size()) : List.of();
+        return kept(media.file(FOLDER).resolve(fileName(index)), command);
     }
 
     /* What the lesson's exercise answer command printed, kept as {@code answer.txt}; empty if not kept for it. */
     static List<String> readAnswer(final Media media, final String command) {
-        final Path file = media.file(FOLDER).resolve(ANSWER_FILE);
+        return kept(media.file(FOLDER).resolve(ANSWER_FILE), command);
+    }
+
+    private static List<String> kept(final Path file, final String command) {
         if (!Files.isRegularFile(file)) {
             return List.of();
         }
@@ -80,12 +74,20 @@ final class LiveOutputs {
         final Path narration = media.file(".narration.md");
         final List<String> paragraphs = Files.isRegularFile(narration) ? Narration.paragraphs(narration) : List.of();
         for (int i = 0; i < scenes.size(); i++) {
-            final List<String> printed = scenes.get(i).outputs().stream().flatMap(List::stream).toList();
-            final String said = (i < paragraphs.size() ? paragraphs.get(i) : "") + " "
-                    + String.join(" ", scenes.get(i).callouts()) + " " + String.join(" ", printed);
-            problems.addAll(unshownLines(tape, new Said(i + 1, said), scenes.get(i)));
+            final String said = paragraph(paragraphs, i) + " " + shownText(scenes.get(i));
+            problems.addAll(MarkedLines.unshown(tape, new MarkedLines.Said(i + 1, said), scenes.get(i)));
         }
         return problems;
+    }
+
+    private static String paragraph(final List<String> paragraphs, final int index) {
+        return index < paragraphs.size() ? paragraphs.get(index) : "";
+    }
+
+    /* What a scene's callouts and live commands' output say. */
+    private static String shownText(final SceneContent scene) {
+        final List<String> printed = scene.outputs().stream().flatMap(List::stream).toList();
+        return String.join(" ", scene.callouts()) + " " + String.join(" ", printed);
     }
 
     /*
@@ -99,77 +101,32 @@ final class LiveOutputs {
 
     /* Each live command has its output kept, fitting one screen, and no kept output shows a personal path. */
     private static List<Problem> keptOutputs(final Media media, final List<String> commands) {
-        final Path tape = media.file(".tape");
         final List<Problem> problems = new ArrayList<>();
         for (int i = 0; i < commands.size(); i++) {
-            final List<String> output = read(media, i, commands.get(i));
-            if (output.stream().anyMatch(line -> PERSONAL_PATH.matcher(line).find())) {
-                problems.add(new Problem(tape, "live command " + (i + 1) + "'s kept output shows a personal path;"
-                        + " capture it again with tools/capture-lesson-outputs.py"));
-            }
-            if (output.isEmpty()) {
-                problems.add(new Problem(tape, "live command " + (i + 1) + " (" + commands.get(i) + ") has no kept"
-                        + " output for decks; run python3 tools/capture-lesson-outputs.py " + media.safeLesson()));
-            }
-            final int rows = rowsOnScreen(output);
-            if (rows > SCREEN_ROWS) {
-                problems.add(new Problem(tape, "live command " + (i + 1) + " (" + commands.get(i) + ") prints " + rows
-                        + " rows, counting its command and lines that wrap, but one screen holds " + SCREEN_ROWS
-                        + "; make it print less: fewer tests in the run, or shorter failure messages"));
-            }
+            problems.addAll(keptOutput(media, i, commands.get(i)));
         }
         return problems;
     }
 
-    /* What a scene's narration and callouts say, and the scene's number. */
-    private record Said(int scene, String text) {
-    }
-
-    private static List<Problem> unshownLines(final Path tape, final Said said, final SceneContent content) {
+    private static List<Problem> keptOutput(final Media media, final int index, final String command) {
+        final Path tape = media.file(".tape");
+        final List<String> output = read(media, index, command);
         final List<Problem> problems = new ArrayList<>();
-        final Set<Integer> lines = new TreeSet<>();
-        final Matcher named = LINE_NAMED.matcher(said.text());
-        while (named.find()) {
-            lines.add(Integer.parseInt(named.group(1)));
+        if (output.stream().anyMatch(line -> PERSONAL_PATH.matcher(line).find())) {
+            problems.add(new Problem(tape, "live command " + (index + 1) + "'s kept output shows a personal path;"
+                    + " capture it again with tools/capture-lesson-outputs.py"));
         }
-        for (final int line : lines) {
-            if (!shows(content, line)) {
-                problems.add(new Problem(tape, "scene " + said.scene() + " names line " + line + " (in its"
-                        + " narration, a callout or a live command's output), but doesn't show it marked; show the"
-                        + " code in the scene with --mark " + line));
-            }
+        if (output.isEmpty()) {
+            problems.add(new Problem(tape, "live command " + (index + 1) + " (" + command + ") has no kept"
+                    + " output for decks; run python3 tools/capture-lesson-outputs.py " + media.safeLesson()));
+        }
+        final int rows = rowsOnScreen(output);
+        if (rows > SCREEN_ROWS) {
+            problems.add(new Problem(tape, "live command " + (index + 1) + " (" + command + ") prints " + rows
+                    + " rows, counting its command and lines that wrap, but one screen holds " + SCREEN_ROWS
+                    + "; make it print less: fewer tests in the run, or shorter failure messages"));
         }
         return problems;
-    }
-
-    /* True if a code panel in the scene shows the line, marked ({@code show ... --mark N}). */
-    static boolean shows(final SceneContent content, final int line) {
-        return content.panels().stream().anyMatch(panel -> panel.marked().contains(line)
-                && panel.lines().stream().anyMatch(shown -> lineNumber(shown) == line));
-    }
-
-    /* Every line marked in the scene's code panels. */
-    static Set<Integer> marked(final SceneContent content) {
-        final Set<Integer> marked = new TreeSet<>();
-        content.panels().forEach(panel -> marked.addAll(panel.marked()));
-        return marked;
-    }
-
-    /* The number at the start of a panel line ({@code " 24  code"}), or -1 for a gap or a line without one. */
-    static int lineNumber(final String panelLine) {
-        final Matcher number = NUMBERED.matcher(panelLine);
-        return number.lookingAt() ? Integer.parseInt(number.group(1)) : -1;
-    }
-
-    /* True if a line of output names one of these line numbers ("line 24"). */
-    static boolean namesAny(final String outputLine, final Set<Integer> lines) {
-        final Matcher named = LINE_NAMED.matcher(outputLine);
-        while (named.find()) {
-            if (lines.contains(Integer.parseInt(named.group(1)))) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private static List<String> lines(final Path file) {

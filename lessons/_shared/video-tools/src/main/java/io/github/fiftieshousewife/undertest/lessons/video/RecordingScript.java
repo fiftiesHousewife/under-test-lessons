@@ -6,8 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -38,21 +38,34 @@ public final class RecordingScript {
 
     /* Writes the script to {@code page}; returns how many clips it lists. */
     static int write(final Media media, final boolean missingOnly, final Path page) {
+        final StringBuilder html = new StringBuilder(heading(media));
+        final int entries = appendEntries(html, media, missingOnly);
+        html.append(entries == 0 ? "<p>Every slide has its clip: there is nothing to record.</p>" : "")
+                .append("</body></html>\n");
+        save(page, html);
+        return entries;
+    }
+
+    private static int appendEntries(final StringBuilder html, final Media media, final boolean missingOnly) {
         final List<Spoken> slides = DeckVoice.spoken(media);
         final List<String> titles = DeckVoice.titles(media);
         final Pronunciation pronunciation = DeckVoice.pronunciation(media);
         final Path clips = media.file(DeckVoice.FOLDER);
-        final StringBuilder html = new StringBuilder(heading(media));
         int entries = 0;
         for (int i = 0; i < slides.size(); i++) {
             if (!missingOnly || DeckVoice.clips(clips, slides.get(i)).isEmpty()) {
-                final String label = (i + 1) + ". " + (i < titles.size() ? titles.get(i) : "");
-                html.append(entry(label, slides.get(i), hints(pronunciation.used(slides.get(i).written()))));
+                html.append(entry(label(i, titles), slides.get(i), hints(pronunciation.used(slides.get(i).written()))));
                 entries++;
             }
         }
-        html.append(entries == 0 ? "<p>Every slide has its clip: there is nothing to record.</p>" : "")
-                .append("</body></html>\n");
+        return entries;
+    }
+
+    private static String label(final int index, final List<String> titles) {
+        return (index + 1) + ". " + (index < titles.size() ? titles.get(index) : "");
+    }
+
+    private static void save(final Path page, final CharSequence html) {
         try {
             final Path pages = page.toAbsolutePath().getParent();
             if (pages != null) {
@@ -62,7 +75,6 @@ public final class RecordingScript {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        return entries;
     }
 
     /* The page's head, title and how to record. */
@@ -82,23 +94,10 @@ public final class RecordingScript {
     /* One clip to record: its number and title, its file name, its words, and its reading hints (already HTML). */
     private static String entry(final String label, final Spoken slide, final List<String> hints) {
         return "<div class=\"clip\"><p><b>" + SlideHtml.escape(label) + "</b> · save as <span"
-                + " class=\"file\">" + slide.clipStem() + ".m4a</span></p><p class=\"words\">" + words(slide.written())
-                + "</p>" + (hints.isEmpty() ? "" : "<p class=\"hints\">" + String.join(" · ", hints) + "</p>")
+                + " class=\"file\">" + slide.clipStem() + ".m4a</span></p><p class=\"words\">"
+                + SlideHtml.withPauseDirections(slide.written()) + "</p>"
+                + (hints.isEmpty() ? "" : "<p class=\"hints\">" + String.join(" · ", hints) + "</p>")
                 + "</div>";
-    }
-
-    /* The words, with each pause marker written as a direction: "(pause 1.6 s)". */
-    static String words(final String written) {
-        final StringBuilder out = new StringBuilder();
-        for (final Pauses.Part part : Pauses.parts(written)) {
-            out.append(SlideHtml.escape(part.text()));
-            if (part.pauseAfter() > 0) {
-                out.append(" <span class=\"pause\">(pause ")
-                        .append(String.format(Locale.ROOT, "%.1f", part.pauseAfter()).replace(".0", ""))
-                        .append(" s)</span> ");
-            }
-        }
-        return out.toString().strip();
     }
 
     /*
@@ -115,17 +114,30 @@ public final class RecordingScript {
         if (!said.contains("/")) {
             return "say <i>" + SlideHtml.escape(said) + "</i>";
         }
+        return stressed(written, said).map(word -> "stress <i>" + SlideHtml.escape(word) + "</i>")
+                .orElse("say it as <i>" + SlideHtml.escape(said) + "</i>");
+    }
+
+    /* For a phrase given as one run of sounds, a sound to a word, the word whose sounds are stressed. */
+    private static Optional<String> stressed(final String written, final String said) {
         final String[] words = written.split("\\s+");
         final String[] sounds = said.replace("/", "").strip().split("\\s+");
-        final boolean oneRunOfSounds = said.chars().filter(c -> c == '/').count() == 2
-                && said.startsWith("/") && said.endsWith("/");
-        if (oneRunOfSounds && sounds.length > 1 && words.length == sounds.length) {
-            for (int i = 0; i < sounds.length; i++) {
-                if (sounds[i].contains("ˈ")) {
-                    return "stress <i>" + SlideHtml.escape(words[i]) + "</i>";
-                }
+        if (!oneRunOfSounds(said) || !aSoundToEachWord(words, sounds)) {
+            return Optional.empty();
+        }
+        for (int i = 0; i < sounds.length; i++) {
+            if (sounds[i].contains("ˈ")) {
+                return Optional.of(words[i]);
             }
         }
-        return "say it as <i>" + SlideHtml.escape(said) + "</i>";
+        return Optional.empty();
+    }
+
+    private static boolean oneRunOfSounds(final String said) {
+        return said.chars().filter(c -> c == '/').count() == 2 && said.startsWith("/") && said.endsWith("/");
+    }
+
+    private static boolean aSoundToEachWord(final String[] words, final String[] sounds) {
+        return sounds.length > 1 && words.length == sounds.length;
     }
 }

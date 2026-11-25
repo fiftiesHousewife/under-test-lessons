@@ -20,14 +20,20 @@ final class RepoLinks {
     static String fill(final String point) {
         String filled = point;
         for (final Map.Entry<String, String> placeholder : PLACEHOLDERS.entrySet()) {
-            final String address = System.getProperty(placeholder.getValue(), "").strip();
-            if (!address.isEmpty()) {
-                filled = filled.replace(placeholder.getKey(), address);
-            } else if (filled.contains(placeholder.getKey())) {
-                final String rest = filled.replace(placeholder.getKey(), "").replaceFirst("^\\s*—\\s*", "").strip();
-                filled = rest.isEmpty() ? rest : Character.toUpperCase(rest.charAt(0)) + rest.substring(1);
-            }
+            filled = filled(filled, placeholder.getKey(), System.getProperty(placeholder.getValue(), "").strip());
         }
         return filled;
+    }
+
+    /* The point with the placeholder replaced by its address, or, with no address set, left out with its dash. */
+    private static String filled(final String point, final String placeholder, final String address) {
+        if (!address.isEmpty()) {
+            return point.replace(placeholder, address);
+        }
+        if (!point.contains(placeholder)) {
+            return point;
+        }
+        final String rest = point.replace(placeholder, "").replaceFirst("^\\s*—\\s*", "").strip();
+        return rest.isEmpty() ? rest : Character.toUpperCase(rest.charAt(0)) + rest.substring(1);
     }
 }

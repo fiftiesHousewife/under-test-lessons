@@ -10,11 +10,9 @@ import java.nio.file.Path;
 /** A 16-bit PCM WAV sound: enough to measure speech clips, join them with silence, and write the result. */
 public record WavFile(int sampleRate, int channels, byte[] samples) {
 
-    private static final int BYTES_PER_SAMPLE = 2;
+    static final int BYTES_PER_SAMPLE = 2;
     private static final int HEADER_BYTES = 44;
     private static final int PCM = 1;
-    /* About -45 dB below a full-scale 16-bit sample. */
-    private static final int QUIET = 184;
 
     /** Keeps its own copy of the sound, so callers can't change it afterwards. */
     public WavFile {
@@ -29,9 +27,7 @@ public record WavFile(int sampleRate, int channels, byte[] samples) {
 
     public static WavFile read(final Path file) {
         final ByteBuffer data = ByteBuffer.wrap(bytes(file)).order(ByteOrder.LITTLE_ENDIAN);
-        if (data.remaining() < 12 || data.getInt(0) != tag("RIFF") || data.getInt(8) != tag("WAVE")) {
-            throw new IllegalArgumentException(file + " is not a WAV file");
-        }
+        requireWav(file, data);
         int rate = 0;
         int channels = 0;
         int position = 12;
@@ -43,9 +39,7 @@ public record WavFile(int sampleRate, int channels, byte[] samples) {
                 channels = data.getShort(position + 10);
                 rate = data.getInt(position + 12);
             } else if (id == tag("data")) {
-                final byte[] samples = new byte[Math.min(size, data.limit() - position - 8)];
-                data.get(position + 8, samples);
-                return new WavFile(rate, channels, samples);
+                return new WavFile(rate, channels, samples(data, position, size));
             }
             position += 8 + size + (size & 1);
         }
@@ -63,39 +57,7 @@ public record WavFile(int sampleRate, int channels, byte[] samples) {
      * sentences.
      */
     public WavFile withShorterGaps(final double longest) {
-        final int frameBytes = channels * BYTES_PER_SAMPLE;
-        final int frameCount = samples.length / frameBytes;
-        final int keep = frames(longest);
-        final java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream(samples.length);
-        int written = 0;
-        int frame = 0;
-        while (frame < frameCount) {
-            if (!quiet(frame, frameBytes)) {
-                frame++;
-                continue;
-            }
-            final int start = frame;
-            while (frame < frameCount && quiet(frame, frameBytes)) {
-                frame++;
-            }
-            if (start > 0 && frame < frameCount && frame - start > keep) {
-                out.write(samples, written * frameBytes, (start + keep / 2 - written) * frameBytes);
-                written = frame - (keep - keep / 2);
-            }
-        }
-        out.write(samples, written * frameBytes, samples.length - written * frameBytes);
-        return new WavFile(sampleRate, channels, out.toByteArray());
-    }
-
-    private boolean quiet(final int frame, final int frameBytes) {
-        for (int channel = 0; channel < channels; channel++) {
-            final int at = frame * frameBytes + channel * BYTES_PER_SAMPLE;
-            final int sample = (short) ((samples[at] & 0xff) | (samples[at + 1] << 8));
-            if (Math.abs(sample) > QUIET) {
-                return false;
-            }
-        }
-        return true;
+        return ShorterGaps.of(this, frames(longest));
     }
 
     public double seconds() {
@@ -117,6 +79,19 @@ public record WavFile(int sampleRate, int channels, byte[] samples) {
             Files.write(file, out.array());
         } catch (IOException e) {
             throw new UncheckedIOException(e);
+        }
+    }
+
+    /* The sound data of the chunk at {@code position}, as much of it as the file holds. */
+    private static byte[] samples(final ByteBuffer data, final int position, final int size) {
+        final byte[] samples = new byte[Math.min(size, data.limit() - position - 8)];
+        data.get(position + 8, samples);
+        return samples;
+    }
+
+    private static void requireWav(final Path file, final ByteBuffer data) {
+        if (data.remaining() < 12 || data.getInt(0) != tag("RIFF") || data.getInt(8) != tag("WAVE")) {
+            throw new IllegalArgumentException(file + " is not a WAV file");
         }
     }
 

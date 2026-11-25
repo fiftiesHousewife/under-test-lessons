@@ -82,7 +82,7 @@ class DeckClipsTest {
 
     @Test
     void readsAClipsLengthFromItsMp4Header() throws IOException {
-        assertThat(DeckClips.Mp4Length.seconds(clip(BYE, 2.5))).isCloseTo(2.5, within(1e-9));
+        assertThat(ClipLength.mp4(clip(BYE, 2.5))).isCloseTo(2.5, within(1e-9));
     }
 
     @Test
@@ -93,7 +93,7 @@ class DeckClipsTest {
         assertAll(
                 () -> assertThat(check(true, false).problems()).isEmpty(),
                 () -> assertThat(check(true, false).warnings()).isEmpty(),
-                () -> assertThat(DeckClips.WavLength.seconds(wav)).isCloseTo(3, within(1e-9)),
+                () -> assertThat(ClipLength.wav(wav)).isCloseTo(3, within(1e-9)),
                 () -> assertThat(DeckVoice.sources(new Media(root, "demo"))).containsExactly(
                         "demo.deck-voice/" + wav.getFileName(),
                         "demo.deck-voice/" + new Spoken(BYE, BYE).clipStem() + ".mp3"));

@@ -12,12 +12,12 @@ import java.util.Locale;
 /*
  * A lesson video's length, estimated before anything is recorded: each intro and closing slide for its narration's
  * spoken length plus the time it stays up afterwards, and the script's time on camera, with each live run's measured
- * time, or a guess for a run not yet timed. A video over ten minutes is too long.
+ * time, or a guess for a run not yet timed. A video over ten minutes is too long. A live run not yet timed is taken to
+ * last {@code UNTIMED_RUN_SECONDS}.
  */
 final class VideoLength {
 
     static final double LIMIT_SECONDS = 600;
-    /* What a live run is taken to last until a recording has measured it. */
     static final double UNTIMED_RUN_SECONDS = 30;
 
     private VideoLength() {

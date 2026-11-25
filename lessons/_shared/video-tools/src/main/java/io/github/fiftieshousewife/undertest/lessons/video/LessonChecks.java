@@ -11,16 +11,15 @@ import java.util.regex.Pattern;
 
 /*
  * Checks that catch what reviews found by hand: code panels that would show the wrong file or lines, scenes too short
- * for their narration, and slides without sources or repository links.
+ * for their narration, and slides without sources or repository links. A scene needs its narration at
+ * {@code WORDS_PER_SECOND} spoken words a second, times {@code ROOM}, and {@code EXTRA_SECONDS} more.
  */
 final class LessonChecks {
 
-    /* Spoken words per second, and the room a scene leaves around its narration. */
     static final double WORDS_PER_SECOND = 2.6;
     static final double ROOM = 1.35;
     static final double EXTRA_SECONDS = 1.5;
 
-    private static final Pattern LESSON_LINK = Pattern.compile("(?m)^- lesson:.*\\(([a-z0-9-]+)\\)\\s*$");
     private static final Pattern SCENE = Pattern.compile("^#\\s*-+\\s*Scene\\s+\\d+:.*");
     private static final Pattern TYPED = Pattern.compile("^Type(?:@\\S+)?\\s+([\"`])(.*)\\1\\s*$");
     private static final Pattern SHOWN_FOR = Pattern.compile("^Show\\s*$");
@@ -32,9 +31,7 @@ final class LessonChecks {
 
     /* Each {@code show} line finds a file (in its lesson first) and any line range fits inside it. */
     static List<Problem> shows(final Path root, final Path tape) {
-        final Path lesson = tape.toAbsolutePath().resolveSibling("..").normalize();
-        final List<Path> places = List.of(lesson, root.resolve("lessons/_shared"), root.resolve("build-logic"),
-                root.resolve("gradle"));
+        final List<Path> places = ShownCode.places(root, tape);
         final List<Problem> problems = new ArrayList<>();
         for (final String line : lines(tape)) {
             final Matcher typed = TYPED.matcher(line);
@@ -49,11 +46,11 @@ final class LessonChecks {
     private static List<Problem> show(final Path root, final List<Path> places, final List<String> words) {
         final Path file;
         try {
-            file = SceneContent.find(root, places, words.get(1));
+            file = ShownCode.find(root, places, words.get(1));
         } catch (IllegalArgumentException e) {
             return List.of(new Problem(root, e.getMessage()));
         }
-        if (words.size() > 3 && words.get(2).matches("\\d+") && words.get(3).matches("\\d+")) {
+        if (asksForLines(words)) {
             final int length = lines(file).size();
             if (Integer.parseInt(words.get(3)) > length) {
                 return List.of(new Problem(root, "show " + words.get(1) + " asks for lines up to " + words.get(3)
@@ -63,6 +60,10 @@ final class LessonChecks {
         return List.of();
     }
 
+    private static boolean asksForLines(final List<String> words) {
+        return words.size() > 3 && words.get(2).matches("\\d+") && words.get(3).matches("\\d+");
+    }
+
     /* Each scene without a live run shows for at least its narration's spoken length, with room. */
     static List<Problem> sceneTimes(final Path tape, final Path narration) {
         final List<List<String>> scenes = scenes(lines(tape));
@@ -70,10 +71,7 @@ final class LessonChecks {
         final List<Problem> problems = new ArrayList<>();
         for (int i = 0; i < Math.min(scenes.size(), paragraphs.size()); i++) {
             final List<String> scene = scenes.get(i);
-            final boolean live = scene.stream()
-                    .anyMatch(line -> line.contains("run_live") || line.contains("run_with_notes"));
-            final boolean shown = scene.stream().anyMatch(line -> SHOWN_FOR.matcher(line).matches());
-            if (live || !shown) {
+            if (!shownWithoutALiveRun(scene)) {
                 continue;
             }
             final double needed = needed(paragraphs.get(i));
@@ -84,6 +82,12 @@ final class LessonChecks {
             }
         }
         return problems;
+    }
+
+    private static boolean shownWithoutALiveRun(final List<String> scene) {
+        final boolean live = scene.stream()
+                .anyMatch(line -> line.contains("run_live") || line.contains("run_with_notes"));
+        return !live && scene.stream().anyMatch(line -> SHOWN_FOR.matcher(line).matches());
     }
 
     /* Seconds a narration paragraph needs on screen: spoken words, pauses, and room. */
@@ -101,59 +105,19 @@ final class LessonChecks {
         double shown = 0;
         boolean afterShow = false;
         for (final String line : scene) {
-            if (SHOWN_FOR.matcher(line).matches()) {
-                afterShow = true;
-            } else {
-                final Matcher sleep = SLEEP.matcher(line);
-                if (afterShow && sleep.matches()) {
-                    shown = seconds(sleep.group(1), sleep.group(2));
-                }
-                afterShow = false;
+            final boolean show = SHOWN_FOR.matcher(line).matches();
+            if (afterShow && !show) {
+                shown = sleepSeconds(line, shown);
             }
+            afterShow = show;
         }
         return shown;
     }
 
-    /* What is wrong with spoken text that has a semicolon. */
-    static final String SEMICOLON = "has a semicolon, which the voice runs on through; use a full stop";
-
-    /*
-     * A slides file names its sources, its closing slides link the lessons repository by placeholder, and what its
-     * slides say has no semicolon.
-     */
-    static List<Problem> slides(final Path slidesFile) {
-        final List<String> lines = lines(slidesFile);
-        final String text = String.join("\n", lines);
-        final List<Problem> problems = new ArrayList<>(semicolonsSaid(slidesFile, lines));
-        if (!text.contains("Sources:")) {
-            problems.add(new Problem(slidesFile, "no Sources: line; name where each fact on the slides comes from"));
-        }
-        if (!text.contains("{lessons-repo}")) {
-            problems.add(new Problem(slidesFile, "no {lessons-repo} link on the closing slides"));
-        }
-        final Path lessons = slidesFile.toAbsolutePath().resolveSibling("../..").normalize();
-        final Matcher link = LESSON_LINK.matcher(text);
-        while (link.find()) {
-            if (!Files.isRegularFile(lessons.resolve(link.group(1)).resolve("README.md"))) {
-                problems.add(new Problem(slidesFile, "a slide links lesson " + link.group(1)
-                        + ", which doesn't exist"));
-            }
-        }
-        return problems;
-    }
-
-    /* Each line of a slide's Say: text with a semicolon, which the voice runs on through. */
-    private static List<Problem> semicolonsSaid(final Path slidesFile, final List<String> lines) {
-        final List<Problem> problems = new ArrayList<>();
-        boolean saying = false;
-        for (int i = 0; i < lines.size(); i++) {
-            final String line = lines.get(i);
-            saying = line.startsWith("Say:") || saying && line.startsWith(" ") && !line.isBlank();
-            if (saying && line.contains(";")) {
-                problems.add(new Problem(slidesFile, "line " + (i + 1) + ": what the slide says " + SEMICOLON));
-            }
-        }
-        return problems;
+    /* The seconds a {@code Sleep} line waits, or {@code otherwise} for any other line. */
+    private static double sleepSeconds(final String line, final double otherwise) {
+        final Matcher sleep = SLEEP.matcher(line);
+        return sleep.matches() ? seconds(sleep.group(1), sleep.group(2)) : otherwise;
     }
 
     private static List<List<String>> scenes(final List<String> lines) {

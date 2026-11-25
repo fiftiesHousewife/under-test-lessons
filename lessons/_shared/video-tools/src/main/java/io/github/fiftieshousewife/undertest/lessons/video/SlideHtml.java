@@ -6,17 +6,18 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * Builds a slide as a small HTML page: the title and points on the left, the slide's picture (an SVG file, placed
  * inline so stylesheets can colour it) on the right. The look comes from stylesheets: the shared default, then any the
- * user supplies, so an organisation can restyle every slide without touching the slides themselves.
+ * user supplies, so an organisation can restyle every slide without touching the slides themselves. A point that links
+ * a lesson's deck is written {@code lesson: Its name (its-id)}, with no address, so none is assumed.
  */
 final class SlideHtml {
 
     static final int WIDTH = 1920;
     static final int HEIGHT = 1080;
-    /* A point that links a lesson's deck: {@code lesson: Its name (its-id)}, with no address, so none is assumed. */
     private static final java.util.regex.Pattern LESSON_LINK =
             java.util.regex.Pattern.compile("^lesson:\\s*(.+?)\\s*\\(([a-z0-9-]+)\\)$");
     private static final java.util.regex.Pattern POINT =
@@ -63,24 +64,24 @@ final class SlideHtml {
     static String body(final Slide slide, final List<Path> pictures, final String paragraph) {
         final StringBuilder html = new StringBuilder("<main class=\"slide\"><section class=\"text\"><h1>")
                 .append(escape(slide.title())).append("</h1><div class=\"rule\"></div><ul>");
-        for (final String point : slide.points()) {
-            final java.util.regex.Matcher lesson = LESSON_LINK.matcher(point);
-            if (lesson.matches()) {
-                html.append("<li class=\"link lesson\"><a href=\"../../").append(lesson.group(2)).append("/media/")
-                        .append(lesson.group(2)).append(".deck.html#1\">").append(escape(lesson.group(1)))
-                        .append("</a></li>");
-                continue;
-            }
-            final boolean link = point.startsWith("https://") || point.startsWith("http://");
-            html.append("<li class=\"").append(link ? "link" : "point").append("\">")
-                    .append(link ? linked(point) : escape(point)).append("</li>");
-        }
+        slide.points().forEach(point -> html.append(item(point)));
         html.append("</ul>").append(paragraph).append("</section>");
         if (!slide.heading().picture().isEmpty()) {
             html.append("<figure class=\"picture\">")
                     .append(read(picture(pictures, slide.heading().picture()))).append("</figure>");
         }
         return html.append("</main>").toString();
+    }
+
+    /* One point as a list item: a link to another lesson's deck, an address as a link, or plain text. */
+    private static String item(final String point) {
+        final java.util.regex.Matcher lesson = LESSON_LINK.matcher(point);
+        if (lesson.matches()) {
+            return "<li class=\"link lesson\"><a href=\"../../" + lesson.group(2) + "/media/" + lesson.group(2)
+                    + ".deck.html#1\">" + escape(lesson.group(1)) + "</a></li>";
+        }
+        final boolean link = point.startsWith("https://") || point.startsWith("http://");
+        return "<li class=\"" + (link ? "link" : "point") + "\">" + (link ? linked(point) : escape(point)) + "</li>";
     }
 
     /*
@@ -129,5 +130,19 @@ final class SlideHtml {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    /* The words, with each pause marker written as a direction: "(pause 1.6 s)". */
+    static String withPauseDirections(final String written) {
+        final StringBuilder out = new StringBuilder();
+        for (final Pauses.Part part : Pauses.parts(written)) {
+            out.append(escape(part.text()));
+            if (part.pauseAfter() > 0) {
+                out.append(" <span class=\"pause\">(pause ")
+                        .append(String.format(Locale.ROOT, "%.1f", part.pauseAfter()).replace(".0", ""))
+                        .append(" s)</span> ");
+            }
+        }
+        return out.toString().strip();
     }
 }

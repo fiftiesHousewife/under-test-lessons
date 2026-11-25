@@ -27,7 +27,7 @@ final class Pauses {
         int start = 0;
         while (marker.find()) {
             parts.add(new Part(narration.substring(start, marker.start()).strip(),
-                    TapeTimeline.seconds(marker.group(1), marker.group(2))));
+                    VhsTime.seconds(marker.group(1), marker.group(2))));
             start = marker.end();
         }
         parts.add(new Part(narration.substring(start).strip(), 0));

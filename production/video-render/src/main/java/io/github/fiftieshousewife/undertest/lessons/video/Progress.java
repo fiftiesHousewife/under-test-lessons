@@ -12,14 +12,18 @@ final class Progress {
 
     /* A message for this log line, if it marks a step worth reporting. */
     Optional<String> message(final String line) {
-        if (line.startsWith("Hide") && !recording) {
+        return recording ? duringRecording(line) : beforeRecording(line);
+    }
+
+    private Optional<String> beforeRecording(final String line) {
+        if (line.startsWith("Hide")) {
             return Optional.of("setting up off-camera (Gradle, plugins, compiling)");
         }
-        if (line.startsWith("Show") && !recording) {
+        if (line.startsWith("Show")) {
             recording = true;
             return Optional.of("recording");
         }
-        return recording ? duringRecording(line) : Optional.empty();
+        return Optional.empty();
     }
 
     private static Optional<String> duringRecording(final String line) {
@@ -29,6 +33,10 @@ final class Progress {
         if (line.contains("callout ")) {
             return Optional.of("  callout");
         }
+        return runOrFile(line);
+    }
+
+    private static Optional<String> runOrFile(final String line) {
         if (line.startsWith("Type") && line.contains("pitest")) {
             return Optional.of("  running PIT");
         }

@@ -48,16 +48,19 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
         final List<String> out = new ArrayList<>();
         for (final String line : lines) {
             if (line.startsWith("Include:")) {
-                final Path included = shared.resolve(line.substring("Include:".length()).strip() + ".md");
-                if (!Files.isRegularFile(included)) {
-                    throw new IllegalArgumentException("no shared slides file " + included);
-                }
-                out.addAll(lines(included));
+                out.addAll(included(shared.resolve(line.substring("Include:".length()).strip() + ".md")));
             } else {
                 out.add(line);
             }
         }
         return out;
+    }
+
+    private static List<String> included(final Path file) {
+        if (!Files.isRegularFile(file)) {
+            throw new IllegalArgumentException("no shared slides file " + file);
+        }
+        return lines(file);
     }
 
     private static void add(final Builder slide, final List<Slide> intro, final List<Slide> closing) {
@@ -98,9 +101,13 @@ public record Slides(List<Slide> intro, List<Slide> closing) {
             } else if (line.startsWith("Say:")) {
                 narration.append(line.substring(4).strip());
                 saying = true;
-            } else if (saying && line.startsWith(" ") && !line.isBlank()) {
+            } else if (continuesSaying(line)) {
                 narration.append(' ').append(line.strip());
             }
+        }
+
+        private boolean continuesSaying(final String line) {
+            return saying && line.startsWith(" ") && !line.isBlank();
         }
 
         Slide build() {

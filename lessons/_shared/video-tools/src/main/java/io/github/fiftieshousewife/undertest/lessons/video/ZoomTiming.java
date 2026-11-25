@@ -2,15 +2,15 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 
 /*
  * When a zoom on key code happens, worked out from the video script alone: the timings the checks and the recording
- * share. Drawing the zoom into the recorded frames is {@code Zoom}'s job, in production.
+ * share. Drawing the zoom into the recorded frames is {@code Zoom}'s job, in production. All in seconds. {@code DELAY}
+ * is the time after the code appears before the zoom starts, and before the scene ends that it is back out;
+ * {@code EASE} the time it takes to ease in, and to ease out; {@code SHORTEST_HOLD} the shortest hold worth zooming
+ * for.
  */
 final class ZoomTiming {
 
-    /* Seconds after the code appears before the zoom starts, and before the scene ends that it is back out. */
     static final double DELAY = 1.0;
-    /* Seconds the zoom takes to ease in, and to ease out. */
     static final double EASE = 0.8;
-    /* The shortest hold worth zooming for, in seconds. */
     static final double SHORTEST_HOLD = 1.0;
 
     private ZoomTiming() {

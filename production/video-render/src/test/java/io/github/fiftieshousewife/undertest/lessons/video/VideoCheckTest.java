@@ -24,10 +24,7 @@ class VideoCheckTest {
     }
 
     private Path standIn(final String name, final String body) throws IOException {
-        final Path script = root.resolve(name);
-        Files.writeString(script, "#!/bin/sh\n" + body + "\n");
-        assertThat(script.toFile().setExecutable(true)).isTrue();
-        return script;
+        return DeckVoiceLesson.standIn(root, name, body);
     }
 
     @Test

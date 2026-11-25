@@ -1,10 +1,29 @@
 package io.github.fiftieshousewife.undertest.lessons.video;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Stream;
 
 /* Where a lesson's video files live (lessons/<id>/media/<id>.*), and its scenes as its script plans them. */
 record Media(Path root, String lesson) {
+
+    /* The lesson named, or every lesson with a slides file when the name is "all". */
+    static List<Media> lessons(final Path root, final String lesson) {
+        if (!"all".equals(lesson)) {
+            return List.of(new Media(root, lesson));
+        }
+        try (Stream<Path> folders = Files.list(root.resolve("lessons"))) {
+            return folders.map(folder -> new Media(root, String.valueOf(folder.getFileName())))
+                    .filter(media -> Files.isRegularFile(media.file(".slides.md")))
+                    .sorted(Comparator.comparing(Media::safeLesson)).toList();
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
 
     Path folder() {
         return root.resolve("lessons").resolve(lesson).resolve("media");

@@ -55,9 +55,9 @@ class LiveOutputsTest {
     @Test
     void readsMarkedLinesAndRanges() {
         assertAll(
-                () -> assertThat(SceneContent.marks("18,22-24")).containsExactly(18, 22, 23, 24),
-                () -> assertThat(LiveOutputs.lineNumber(" 24  code")).isEqualTo(24),
-                () -> assertThat(LiveOutputs.lineNumber("   \u22ee")).isEqualTo(-1));
+                () -> assertThat(MarkedLines.marks("18,22-24")).containsExactly(18, 22, 23, 24),
+                () -> assertThat(MarkedLines.lineNumber(" 24  code")).isEqualTo(24),
+                () -> assertThat(MarkedLines.lineNumber("   \u22ee")).isEqualTo(-1));
     }
 
     @Test

@@ -40,12 +40,17 @@ final class Pronunciation {
         if (Files.isRegularFile(file)) {
             for (final String line : lines(file)) {
                 final int equals = line.indexOf('=');
-                if (!line.isBlank() && !line.strip().startsWith("#") && equals > 0) {
+                if (isEntry(line)) {
                     spoken.put(line.substring(0, equals).strip(), line.substring(equals + 1).strip());
                 }
             }
         }
         return new Pronunciation(spoken);
+    }
+
+    /* A line that says how to say a word ({@code word = how}), not a blank line or a comment. */
+    private static boolean isEntry(final String line) {
+        return !line.isBlank() && !line.strip().startsWith("#") && line.indexOf('=') > 0;
     }
 
     /*
@@ -80,7 +85,11 @@ final class Pronunciation {
             return Integer.parseInt(pence) + " pence";
         }
         final String unit = "1".equals(whole) ? "pound" : "pounds";
-        return pence == null || "00".equals(pence) ? whole + " " + unit : whole + " " + unit + " " + pence;
+        return whole + " " + unit + andPence(pence);
+    }
+
+    private static String andPence(final String pence) {
+        return pence == null || "00".equals(pence) ? "" : " " + pence;
     }
 
     private static java.util.List<String> lines(final Path file) {

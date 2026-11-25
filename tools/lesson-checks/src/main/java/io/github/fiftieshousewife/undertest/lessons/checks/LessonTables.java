@@ -36,6 +36,19 @@ final class LessonTables {
         for (final List<String> row : rows(file, CATALOGUE_HEADING)) {
             rows.put(row.getFirst(), Text.matches(LESSON_LINK, row.get(1)));
         }
+        final List<Problem> problems = new ArrayList<>(rowsThatDisagree(file, rows, taught));
+        final Set<String> needed = new TreeSet<>(taught.keySet());
+        toolkit.ifPresent(needed::addAll);
+        needed.stream().filter(technique -> !rows.containsKey(technique))
+                .forEach(technique -> problems.add(new Problem(file, "no row for the technique " + technique)));
+        toolkit.ifPresent(ids -> rows.keySet().stream().filter(technique -> !ids.contains(technique))
+                .forEach(technique -> problems.add(new Problem(file, "a row for " + technique
+                        + ", which the toolkit doesn't have"))));
+        return problems;
+    }
+
+    private static List<Problem> rowsThatDisagree(final Path file, final Map<String, Set<String>> rows,
+            final Map<String, Set<String>> taught) {
         final List<Problem> problems = new ArrayList<>();
         rows.forEach((technique, linked) -> {
             final Set<String> expected = taught.getOrDefault(technique, Set.of());
@@ -44,13 +57,6 @@ final class LessonTables {
                         + ", but the lessons that name it in lesson.yaml are " + expected));
             }
         });
-        final Set<String> needed = new TreeSet<>(taught.keySet());
-        toolkit.ifPresent(needed::addAll);
-        needed.stream().filter(technique -> !rows.containsKey(technique))
-                .forEach(technique -> problems.add(new Problem(file, "no row for the technique " + technique)));
-        toolkit.ifPresent(ids -> rows.keySet().stream().filter(technique -> !ids.contains(technique))
-                .forEach(technique -> problems.add(new Problem(file, "a row for " + technique
-                        + ", which the toolkit doesn't have"))));
         return problems;
     }
 
@@ -82,16 +88,23 @@ final class LessonTables {
         if (start < 0) {
             throw new IllegalArgumentException(file + " has no heading " + heading);
         }
-        final List<List<String>> rows = new ArrayList<>();
-        for (final String line : lines.subList(start + 1, lines.size())) {
+        final List<List<String>> rows = tableLines(lines.subList(start + 1, lines.size())).stream()
+                .map(LessonTables::cells).toList();
+        return rows.isEmpty() ? rows : rows.subList(1, rows.size());
+    }
+
+    /* The table lines up to the next heading, leaving out divider rows. */
+    private static List<String> tableLines(final List<String> lines) {
+        final List<String> table = new ArrayList<>();
+        for (final String line : lines) {
             if (line.startsWith("## ")) {
                 break;
             }
             if (line.startsWith("|") && !DIVIDER.matcher(line).matches()) {
-                rows.add(cells(line));
+                table.add(line);
             }
         }
-        return rows.isEmpty() ? rows : rows.subList(1, rows.size());
+        return table;
     }
 
     private static List<String> cells(final String line) {

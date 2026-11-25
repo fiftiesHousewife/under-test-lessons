@@ -36,24 +36,14 @@ final class Recorder {
         return System.getProperty("video.vhs", "vhs");
     }
 
-    @SuppressFBWarnings(value = "COMMAND_INJECTION",
-            justification = "Runs VHS on the lesson's own script, named by the toolkit itself")
     void record(final Media media) {
         final long start = clock.millis();
         final AtomicLong lastLine = new AtomicLong(start);
-        final Deque<String> tail = new ArrayDeque<>();
         final ScheduledExecutorService heartbeat = Executors.newSingleThreadScheduledExecutor();
         heartbeat.scheduleAtFixedRate(() -> Progress.heartbeat((clock.millis() - lastLine.get()) / 1000)
                 .ifPresent(message -> say(start, message)), 1, 1, TimeUnit.SECONDS);
         try {
-            final Process vhs = new ProcessBuilder(List.of(vhs(), media.file(".tape").toString()))
-                    .directory(media.root().toFile()).redirectErrorStream(true).start();
-            follow(vhs, new Follow(start, lastLine, tail));
-            final int exit = vhs.waitFor();
-            if (exit != 0) {
-                throw new IllegalStateException("Recording failed. Last lines of the VHS log:\n"
-                        + String.join("\n", tail));
-            }
+            runVhs(media, new Follow(start, lastLine, new ArrayDeque<>()));
             say(start, "done");
         } catch (IOException e) {
             throw new UncheckedIOException(e);
@@ -62,6 +52,19 @@ final class Recorder {
             throw new IllegalStateException("interrupted while recording", e);
         } finally {
             heartbeat.shutdownNow();
+        }
+    }
+
+    @SuppressFBWarnings(value = "COMMAND_INJECTION",
+            justification = "Runs VHS on the lesson's own script, named by the toolkit itself")
+    private void runVhs(final Media media, final Follow follow) throws IOException, InterruptedException {
+        final Process vhs = new ProcessBuilder(List.of(vhs(), media.file(".tape").toString()))
+                .directory(media.root().toFile()).redirectErrorStream(true).start();
+        follow(vhs, follow);
+        final int exit = vhs.waitFor();
+        if (exit != 0) {
+            throw new IllegalStateException("Recording failed. Last lines of the VHS log:\n"
+                    + String.join("\n", follow.tail()));
         }
     }
 
