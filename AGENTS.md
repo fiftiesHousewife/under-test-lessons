@@ -46,8 +46,7 @@ Every step belongs to one of three groups ([decision](docs/decisions/0026-what-r
 | Voice a deck | `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` | Production |
 | Make a video | `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` | Production |
 | Set up the voice, check the video tools | `setUpLessonVoice`, `checkVideoInRecording` (in `:production:video-render`) | Production |
-| Push, syncing the backlog into issues | `maintainer-tools/sync/sync.sh "What changed"` | Maintainer |
-| Import the backlog alone | `python3 tools/backlog-import/import_to_github.py` | Maintainer |
+| Sync the backlog into issues and `docs/BACKLOG.md` | The Backlog sync workflow, after a push that changes `plan/lessons-backlog.yaml` (or run it by hand in Actions) | Maintainer |
 | Install external skills | `python3 tools/install-skills.py` | Maintainer |
 
 ## Adding a lesson
@@ -93,9 +92,10 @@ is missing; with other assistants, run it once after cloning.
 Tests that need a container go in the `integrationTest` source set, and skip themselves where there's no container runtime.
 
 ## Before you finish
-Run `./gradlew check`. It must pass. Where Gradle's worker processes can't run, as in some sandboxes, run PMD and
-Checkstyle with `./gradlew --init-script tools/quality-cli.init.gradle --no-configuration-cache pmdCli checkstyleCli`.
-Rebuild the decks (`./gradlew :lessons:video-tools:buildLessonSlides`) when slides, narration or a lesson's code change.
-Push only with `maintainer-tools/sync/sync.sh "What changed"`, which checks the build, syncs the backlog into the
-GitHub issues and refreshes the backlog page before pushing (it needs a token that can write issues, in
-`UNDERTEST_GITHUB_TOKEN`). Where it can't run, as in a sandbox without the token, say so and leave the sync to a person.
+Check every slide and narration you changed against [GLOSSARY.md](GLOSSARY.md), its word list and its "Writing
+for the voice" rules. Run `./gradlew check`. It must pass. In a Claude Code sandbox, run it as a bare command (`./gradlew check --no-daemon`,
+with no `cd` before it or pipe after it), so it runs outside the sandbox and PMD and Checkstyle can start their
+workers. Rebuild the decks (`./gradlew :lessons:video-tools:buildLessonSlides`) when slides, narration or a lesson's
+code change. Then commit, and push with a plain `git push` when the person says. After a push that changes
+`plan/lessons-backlog.yaml`, the Backlog sync workflow updates the issues and commits `docs/BACKLOG.md`, so pull before
+the next change.

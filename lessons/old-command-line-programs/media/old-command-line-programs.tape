@@ -104,7 +104,7 @@ Type@1ms `show PaymentImportTest 16 25 "the strong test" --zoom 19-24`
 Enter
 Sleep 300ms
 Show
-Sleep 35s
+Sleep 37s
 
 # ---- Scene 7: the strong test, one test ----
 Hide

@@ -36,7 +36,7 @@ gives pounds instead of pence and can never be read.
 
 ## Where example messages come from
 
-Collect them in a test environment first, with the queue owner's agreement, then clean them before they are saved.
+Collect them in a test environment first, with the queue owner's agreement, then mask them before they are saved.
 
 - **A JMS queue:** a queue browser reads every message without taking any off it
   ([`QueueBrowsing`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/messages/QueueBrowsing.java);
@@ -44,8 +44,8 @@ Collect them in a test environment first, with the queue owner's agreement, then
   shows the messages are still there afterwards). A browse is not a fixed snapshot: it can miss messages while other
   consumers are taking them.
 - **A Kafka topic:** a consumer with its own consumer group reads every record and leaves the other groups alone.
-- **Cleaning:** drop secrets and free text, and replace identifiers with keyed substitutes, so the same customer always
-  gets the same substitute and the messages still fit together. The example messages here have been cleaned that way.
+- **Masking:** drop secrets and free text, and replace identifiers with keyed substitutes, so the same customer always
+  gets the same substitute and the messages still fit together. The example messages here have been masked that way.
 
 ## Exercise
 
@@ -75,7 +75,7 @@ ways, and each must be kept in the dead-letter queue, not skipped. Try one that 
 ## When to use it
 
 - **Whenever code takes messages from a queue:** acknowledgement, redelivery and dead letters only show on a broker.
-- **In discovery,** with browsed and cleaned messages, to record what a consumer does today.
+- **In discovery,** with browsed and masked messages, to record what a consumer does today.
 - **Next, Kafka:** a consumer that saves its position before processing loses messages on a failure; one that saves it
   after reads them again. The same test, on a real Kafka broker, finds the difference.
 

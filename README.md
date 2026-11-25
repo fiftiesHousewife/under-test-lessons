@@ -1,12 +1,11 @@
 # under-test-lessons
 
-[![Build](https://github.com/fiftiesHousewife/under-test-lessons/actions/workflows/build.yml/badge.svg)](https://github.com/fiftiesHousewife/under-test-lessons/actions/workflows/build.yml)
-[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](LICENSE)
-![Java 25](https://img.shields.io/badge/Java-25-blue)
-![Gradle 9.9](https://img.shields.io/badge/Gradle-9.9-blue)
-![JUnit 6](https://img.shields.io/badge/JUnit-6-blue)
-[![Lessons: 18](https://img.shields.io/badge/lessons-18-brightgreen)](lessons/CATALOGUE.md)
-[![Slide decks: HTML](https://img.shields.io/badge/slide%20decks-HTML%20%2B%20CSS-lightgrey)](docs/decisions/0003-the-look-is-set-by-css-and-the-newspaper-style-is-the-default.md)
+[![build](https://img.shields.io/github/actions/workflow/status/fiftiesHousewife/under-test-lessons/build.yml?branch=main&label=build)](https://github.com/fiftiesHousewife/under-test-lessons/actions/workflows/build.yml)
+[![runs on: Java 25](https://img.shields.io/badge/runs%20on-Java%2025-blue)](#try-it)
+[![licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](LICENSE)
+[![decisions: MADR](https://img.shields.io/badge/decisions-MADR-informational)](docs/decisions/README.md)
+[![lessons: 38](https://img.shields.io/badge/lessons-38-brightgreen)](lessons/CATALOGUE.md)
+[![slide decks: HTML](https://img.shields.io/badge/slide%20decks-HTML%20%2B%20CSS-lightgrey)](docs/decisions/0003-the-look-is-set-by-css-and-the-newspaper-style-is-the-default.md)
 
 **Short, practical lessons on testing old code: each one a runnable before-and-after example, a narrated video and a
 slide deck.**
@@ -60,8 +59,8 @@ which is not always what it *should* do; differences found later are questions f
 | [Batch file-in, file-out](lessons/batch-file-in-file-out/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) | [JUnit](https://junit.org/) temporary folders | A nightly settlement file compared line by line finds a missing closing line |
 | [Differential testing](lessons/differential-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) | [JUnit](https://junit.org/) (no extra library) | An old calculator and its rewrite compared on all 5,000 weights find a mistyped price |
 | [Black-box tests of a whole application](lessons/black-box-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/black-box-tests.html) | [WireMock](https://wiremock.org/), [REST Assured](https://rest-assured.io/), [H2](https://h2database.com) | The order service, started as it ships, answers and calls its warehouse correctly but never keeps the order; only checking the rows written finds it |
-| [Capturing what an old service receives and sends](lessons/capturing-with-logbook/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/capturing-with-logbook.html) | [Logbook](https://github.com/zalando/logbook), [ApprovalTests](https://approvaltests.com/) | One header filter silently drops Logbook's default, and a token and an email are captured; its filters clean them at source and the capture is approved |
-| [Cleaning captured data so tests still work](lessons/cleaning-captured-data/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/cleaning-captured-data.html) | the JDK's HMAC, [Datafaker](https://www.datafaker.net) | Fixed text merges every customer, so the reports go wrong; keyed substitutes keep them right, and a detector finds the email left in a note |
+| [Capturing what an old service receives and sends](lessons/capturing-with-logbook/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/capturing-with-logbook.html) | [Logbook](https://github.com/zalando/logbook), [ApprovalTests](https://approvaltests.com/) | One header filter silently drops Logbook's default, and a token and an email are captured; its filters mask them at source and the capture is approved |
+| [Masking captured data so tests still work](lessons/masking-captured-data/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/masking-captured-data.html) | the JDK's HMAC, [Datafaker](https://www.datafaker.net) | Fixed text merges every customer, so the reports go wrong; keyed substitutes keep them right, and a detector finds the email left in a note |
 
 ### 3. Agree what the code should do
 
@@ -73,7 +72,7 @@ behaviour is disputed, before changing business rules, and where other teams dep
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Behaviour written down as examples](lessons/behaviour-as-examples/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) | [JUnit](https://junit.org/), [Cucumber](https://cucumber.io/) where business people use the examples | The returns team's named examples find the 30th-day refund the code gets wrong |
-| [Responses checked against the OpenAPI document](lessons/openapi-response-checks/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) | [OpenAPI request validator](https://github.com/atlassian/openapi-request-validator) | A parcel service's tests pass while it sends the weight as text; checking against its OpenAPI document names the field and the rule |
+| [Responses checked against the OpenAPI schema](lessons/openapi-response-checks/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) | [OpenAPI request validator](https://github.com/atlassian/openapi-request-validator) | A parcel service's tests pass while it sends the weight as text; checking against its OpenAPI schema names the field and the rule |
 
 ### 4. Stand in for the systems around it
 
@@ -140,7 +139,7 @@ Some built lessons also have fixes to come; they are listed in [the backlog](doc
 
 ## Try it
 
-You need JDK 25. The Gradle wrapper fetches everything else.
+You need JDK 25. The Gradle wrapper fetches everything else: Gradle 9.9 itself, and the libraries, JUnit 6 among them.
 
 ```bash
 ./gradlew check                                             # every lesson's tests, plus the quality checks

@@ -14,10 +14,12 @@ html, body.deck { width: auto; height: auto; min-height: 100vh; overflow: hidden
   background: rgba(0, 0, 0, 0.85); color: var(--text); font: 18px/1.5 var(--font); border-top: 3px solid var(--accent);
 }
 body.show-notes .current .notes { display: block; }
-.deck-counter { position: fixed; right: 16px; bottom: 12px; color: var(--grey); font: 14px var(--font); }
+.deck-counter {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 12px; color: var(--grey); font: 14px var(--font);
+}
 body.show-notes .deck-counter { display: none; }
 .deck-listen {
-  position: fixed; right: 90px; bottom: 8px; padding: 4px 14px; font: 14px var(--font); color: var(--grey);
+  position: fixed; right: 16px; bottom: 8px; padding: 4px 14px; font: 14px var(--font); color: var(--grey);
   background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
 }
 .deck-listen[aria-pressed="true"] { color: inherit; border-color: currentColor; }
@@ -28,19 +30,27 @@ body.show-notes .deck-listen { display: none; }
   background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
 }
 .deck-move:hover, .deck-listen:hover { color: inherit; border-color: currentColor; }
-.deck-back { right: calc(50% + 6px); }
-.deck-next { left: calc(50% + 6px); }
+.deck-back { right: calc(50% + 40px); }
+.deck-next { left: calc(50% + 40px); }
+/* The published series' links: where this lesson sits on the left, the lessons around it on the right. */
+.series-place { position: fixed; left: 16px; bottom: 12px; font: 14px var(--font); color: var(--grey); }
+.series-links { position: fixed; right: 110px; bottom: 12px; font: 14px var(--font); }
+.series-links a { color: var(--grey); text-decoration: none; margin-left: 16px; }
+.series-links a:hover { color: inherit; text-decoration: underline; }
+body.show-notes .series-place, body.show-notes .series-links { display: none; }
 @media print {
   @page { size: 1920px 1080px; margin: 0; }
   html, body.deck { overflow: visible; }
   .deck-slide { display: block; position: static; width: 1920px; height: 1080px; page-break-after: always; break-after: page; }
   .deck .slide { position: static; transform: none; }
-  .notes, .deck-counter, .deck-listen, .deck-move { display: none !important; }
+  .notes, .deck-counter, .deck-listen, .deck-move, .series-place, .series-links { display: none !important; }
 }
 
 /* Scene slides: what the video shows at each step, as text: narration and callouts beside the code. */
 .deck .slide.scene { grid-template-columns: 600px 1fr; gap: 60px; padding: 0 90px; }
 .scene .scene-text { font-size: 30px; line-height: 1.45; }
+.scene .scene-points li { font-size: 32px; line-height: 1.35; margin: 0 0 22px; }
+.scene .scene-points li.point::before { top: 14px; width: 16px; height: 16px; }
 .scene .callout {
   font-size: 26px; line-height: 1.4; margin: 28px 0 0; padding: 14px 18px; border: 3px solid var(--yellow);
   border-radius: 10px; color: var(--yellow);
@@ -55,3 +65,22 @@ body.show-notes .deck-listen { display: none; }
 .code pre.command { color: var(--green); }
 .code pre.output { opacity: 0.85; margin-top: 4px; }
 .code mark { display: inline-block; min-width: 100%; background: var(--yellow); color: #000; }
+
+/* Each slide's content fades in, a piece at a time: the title, then each point, the picture and the code. Printing,
+   and anyone who has asked for less motion, get the slide as it is. */
+@keyframes deck-fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .deck-slide.current h1, .deck-slide.current li, .deck-slide.current .callout, .deck-slide.current .scene-text,
+  .deck-slide.current .picture, .deck-slide.current figure.code {
+    animation: deck-fade-in 700ms ease-out both;
+  }
+  .deck-slide.current .picture { animation-delay: 300ms; }
+  .deck-slide.current figure.code { animation-delay: 500ms; }
+  .deck-slide.current li:nth-child(1), .deck-slide.current .scene-text { animation-delay: 400ms; }
+  .deck-slide.current li:nth-child(2) { animation-delay: 1000ms; }
+  .deck-slide.current li:nth-child(3) { animation-delay: 1600ms; }
+  .deck-slide.current li:nth-child(4) { animation-delay: 2200ms; }
+  .deck-slide.current li:nth-child(5) { animation-delay: 2800ms; }
+  .deck-slide.current li:nth-child(n+6) { animation-delay: 3400ms; }
+  .deck-slide.current .callout { animation-delay: 2400ms; }
+}

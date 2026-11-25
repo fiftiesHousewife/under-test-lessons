@@ -3,16 +3,22 @@
 Sources: junit.org, the JUnit user guide (dynamic tests with @TestFactory, part of JUnit Jupiter since JUnit 5 in 2017;
 JUnit 6 is the current generation).
 
+## intro: Dynamic tests
+- The problem: letters go out to Mr Patrick O'brien
+- The fix: one test for each example file
+- The tool: JUnit
+Picture: road
+Say: This lesson is about dynamic tests: tests that JUnit makes while it runs, one for each example in a folder. We'll
+  see names printed wrong on letters, and how one test for each example file finds every name that goes wrong.
+
 ## intro: Letters go out to Mr Patrick O'brien
 - 3 of 5 example names come out wrong: O'brien, Smith-jones, Mary-ann
 - The test loops over all 5, and stops at the first wrong one
 - It reports 1 failure, with no example's name: the other 2 stay hidden
 Picture: bug
-Say: This lesson is about dynamic tests: tests that JUnit makes while it runs, one for each example in a folder. We'll
-  see names printed wrong on letters, and how one test for each example file finds every name that goes wrong.
-  [pause 1s] Here is the problem. Letters go out to Mister Patrick O'brien, with a small b. 3 of the 5 example names
-  come out wrong: O'brien, Smith-jones, and Mary-ann. The test loops over all 5 examples, and stops at the first wrong
-  one. So it reports a single failure, and its name doesn't say which example broke. The other 2 stay hidden.
+Say: Here is the problem. Letters go out to Mister Patrick O'brien, with a small b. 3 of the 5 example names come out
+  wrong: O'brien, Smith-jones, and Mary-ann. The test loops over all 5 examples, and stops at the first wrong one. So it
+  reports a single failure, and its name doesn't say which example broke. The other 2 stay hidden.
 
 ## intro: Our example: names on letters
 - Customer records are stored as SURNAME,FIRST NAME,TITLE, in capitals
@@ -47,9 +53,9 @@ Say: How does JUnit make them? You mark a method as a test factory, and it retur
 - Name each test after its file, so a failure points straight at it
 - For cases written in the test itself, parameterised tests are simpler
 Picture: map
-Say: When should you use dynamic tests? [pause 1600ms] When the cases live in files: regression packs, sample messages, and
-  old bug reports. Name each test after its file, so a failure points straight at it. And for cases written in the test
-  itself, parameterised tests are simpler.
+Say: When should you use dynamic tests? [pause 1600ms] When the cases live in files: regression packs, sample messages,
+  and old bug reports. Name each test after its file, so a failure points straight at it. And for cases written in the
+  test itself, parameterised tests are simpler.
 
 ## closing: Where they came from
 - Part of JUnit since JUnit 5, in 2017

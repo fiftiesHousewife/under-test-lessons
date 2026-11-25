@@ -10,8 +10,9 @@ import org.zalando.logbook.core.HeaderFilters;
 import org.zalando.logbook.json.JsonBodyFilters;
 
 /**
- * FIXED: the same capture, with Logbook's filters doing the cleaning before anything is written. The Authorization
- * header's value is replaced with XXX, and every "email" field in a JSON body with an address that can't be anyone's.
+ * FIXED: the same capture, with Logbook's filters doing the masking before anything is written. The Authorization
+ * header's value is replaced with XXX, and every "email" field in a JSON body with a made-up
+ * address that no real person uses.
  */
 public final class FilteredCapture implements Capture {
 

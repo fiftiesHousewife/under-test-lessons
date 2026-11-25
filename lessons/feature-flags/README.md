@@ -4,7 +4,7 @@
 
 A feature flag lets new code ship switched off, next to the old code, and be switched on when ready. It is the safest
 way to change old code in small steps (branch by abstraction). But tests usually run with flags at their defaults, so
-the new code goes untested until someone switches it on in production. Run every check both ways while both paths
+the new code goes untested until the shop switches it on in production. Run every check both ways while both paths
 exist. [OpenFeature](https://openfeature.dev) is an open standard for flags, with an in-memory provider for tests.
 
 ## Run the example

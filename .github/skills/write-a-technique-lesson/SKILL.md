@@ -60,8 +60,7 @@ tasks.jacocoTestCoverageVerification {
   fully qualified names are needed; avoid fields with the same name as a method (PMD).
 - **Repeatable:** no real clock, randomness only where the lesson needs it, no network beyond `localhost`, no sleeps.
 - **Check both versions:** run `./gradlew :lessons:<id>:test -Pcode=today -Dorg.gradle.logging.level=quiet` and read
-  the output as viewers will see it; then `./gradlew :lessons:<id>:check`, and PMD and Checkstyle (in a sandbox, with
-  `tools/quality-cli.init.gradle`).
+  the output as viewers will see it; then `./gradlew :lessons:<id>:check`, which runs PMD and Checkstyle too.
 
 ## 3. The README (`lessons/<id>/README.md`)
 
@@ -115,4 +114,5 @@ Every lesson has one exercise whose answer the build checks
 - [ ] The exercise: an `answer` package run by `-Pcode=answer` and by `check`; the README's Exercise section, whose
   answer command's output is kept; one point and one sentence on the deck's last slide.
 - [ ] Deck rebuilt and committed; lesson listed in `lessons/README.md`, the catalogue and the README.
-- [ ] No account names, personal paths or package names on screen; checked against the glossary.
+- [ ] No account names, personal paths or package names on screen; every slide and narration item checked against
+  the glossary's words, its "Don't say" table and its rules for the voice.

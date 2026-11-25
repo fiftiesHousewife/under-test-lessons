@@ -4,7 +4,7 @@ import io.github.fiftieshousewife.undertest.techniques.openapi.Parcel;
 import io.github.fiftieshousewife.undertest.techniques.openapi.ParcelBodies;
 import java.util.Map;
 
-/** TODAY: sends the weight as text, and the error under "message", which the published document doesn't allow. */
+/** TODAY: sends the weight as text, and the error under "message", which the published schema doesn't allow. */
 public final class TodaysParcelBodies implements ParcelBodies {
 
     @Override

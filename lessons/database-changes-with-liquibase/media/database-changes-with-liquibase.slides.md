@@ -4,18 +4,25 @@ Sources: liquibase.org and github.com/liquibase/liquibase (changelogs and change
 FSL-1.1-ALv2, which becomes Apache 2.0 after two years, per the licence in its Maven Central POM); postgresql.org
 data types (no TINYINT; SMALLINT is the smallest integer type).
 
-## intro: The change works on H2, and fails on production
+## intro: Database changes with Liquibase
+- The problem: it works on H2, and fails in production
+- The fix: test the changelog for real
+- The tools: Liquibase and Testcontainers
+Picture: road
+Say: This lesson is about testing database changes on the real database, inside a test. Liquibase is a tool that applies
+  database changes in order, from a changelog. Testcontainers starts a real database for the test. We'll see a change
+  that works on H2 and fails in production, and catch it before it ships.
+
+## intro: It works on H2, and fails in production
 - A new change adds a loyalty level to each customer, as a TINYINT column
 - H2, the developers' in-memory database, accepts it, and the test passes
 - PostgreSQL, the database production uses, has no TINYINT, and refuses it
 - A failed change stops a release part way through, on production data
 Picture: bug
-Say: This lesson is about testing database changes, written as a Liquibase changelog and run on the real database inside
-  a test. We'll see a change that works on H2 and fails on production, and how Liquibase and Testcontainers catch it
-  before it ships. [pause 1s] Here is the problem. A shop adds a loyalty level to each customer. The change asks for a
-  column of a very small number type, called tiny int. The developers' in-memory database, H2, accepts it, and the test
-  passes. But production runs PostgreSQL, which has no such type, and refuses the change. A failed change stops a
-  release part way through, on production data. And changes are hard to undo once they've run.
+Say: Here is the problem. A shop adds a loyalty level to each customer. The change asks for a column of a very small
+  number type, called tiny int. The developers' in-memory database, H2, accepts it, and the test passes. But production
+  runs PostgreSQL, which has no such type, and refuses the change. A failed change stops a release part way through, on
+  production data. And changes are hard to undo once they've run.
 
 ## intro: Our example: a loyalty level
 - Customers are stored in a customers table
@@ -25,12 +32,12 @@ Picture: statement
 Say: Our example stores customers in a customers table. A new change adds a loyalty level to each customer. And that
   change was only ever tried on the developers' in-memory database.
 
-## intro: The fix: a changelog, tested on the real database
+## intro: The fix: test the changelog for real
 - A changelog is the database's history, written down: one change at a time, in order
 - Liquibase applies the changes a database hasn't had yet, so one changelog builds every database
 - Write the change as a Liquibase change, not raw SQL, and apply every change to PostgreSQL in a test
 Picture: changelog
-Say: The fix comes in 2 parts. The changes are kept in a changelog: the database's history, written down, one change
+Say: The fix comes in 2 parts. We keep the changes in a changelog: the database's history, written down, one change
   at a time, in order. Liquibase applies the changes a database hasn't had yet. So the same changelog builds every
   database: the developers', the test ones, and production. First, write the change as a Liquibase change, not raw
   SQL, so it becomes the right SQL for each database. Then apply every change to real PostgreSQL, in a test.
@@ -53,9 +60,9 @@ Include: how-we-build
 - Prefer Liquibase changes to raw SQL; when raw SQL is needed, test it on every database you run
 - Check the licence: Liquibase 5 uses the Functional Source License; Flyway is an alternative
 Picture: map
-Say: When should you test database changes? [pause 1600ms] Every change, every time: apply the whole changelog to a fresh,
-  real database in the build. Prefer Liquibase changes to raw SQL, and when you need raw SQL, test it on every database
-  you run. And check the licence: Liquibase five uses the Functional Source License, so confirm your company
+Say: When should you test database changes? [pause 1600ms] Every change, every time: apply the whole changelog to a
+  fresh, real database in the build. Prefer Liquibase changes to raw SQL, and when you need raw SQL, test it on every
+  database you run. And check the licence: Liquibase five uses the Functional Source License, so confirm your company
   accepts it. Flyway is another choice, with the same idea.
 
 ## closing: Where Liquibase came from

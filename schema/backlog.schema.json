@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/fiftieshousewife/under-test-lessons/schema/backlog.schema.json",
   "title": "Backlog",
-  "description": "The lessons backlog, plan/lessons-backlog.yaml, imported into this repo's GitHub issues by tools/backlog-import (copied from the toolkit's backlog-seed schema). Items refer to each other by key, a descriptive kebab-case name, never a code.",
+  "description": "The lessons backlog, plan/lessons-backlog.yaml, imported into this repo's GitHub issues by the toolkit's shared Backlog sync workflow (copied from the toolkit's backlog-seed schema). Items refer to each other by key, a descriptive kebab-case name, never a code.",
   "type": "object",
   "additionalProperties": false,
   "required": [

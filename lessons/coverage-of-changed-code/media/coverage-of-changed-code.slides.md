@@ -12,14 +12,21 @@ view from Google", IEEE Transactions on Software Engineering, 2021 (mutation tes
 changed code during code review, rather than the entire code base"); JaCoCo's Gradle report and coverage check, as set
 up in this repository's build conventions.
 
-## intro: Old code fails every gate, so nothing checks the new code
+## intro: Coverage of changed code
+- The problem: old code fails every coverage gate
+- The fix: check only what the change touched
+- The tools: PIT and JaCoCo
+Picture: road
+Say: This lesson is about measuring tests against only the code a change touched, so old code with no tests doesn't
+  block every change. PIT is a tool that plants small bugs, and runs the tests against each. We'll see a coverage rule
+  that every change fails. Then PIT checks just the changed class instead.
+
+## intro: Old code fails every coverage gate
 - A shop's old pricing module has no tests: an 80% coverage gate can never pass, so it's off
 - A change adds a bulk discount, and its own test runs all 8 new lines
 - Yet 5 of 11 small bugs planted in those lines go unnoticed
 Picture: bug
-Say: This lesson is about measuring the tests of only the code a change touched, so old code with no tests doesn't block
-  every change. We'll see a coverage rule that every change fails, and how PIT checks just the changed class instead.
-  [pause 1s] Here is the problem. A shop's old pricing module has no tests. A rule that the module needs 80 percent line
+Say: Here is the problem. A shop's old pricing module has no tests. A rule that the module needs 80 percent line
   coverage can never pass, so the team turned it off. Now a change adds a bulk discount, and its own test runs all 8 of
   the new lines. But when we plant 11 small bugs in those lines, one at a time, the test misses 5 of them. And nothing
   in the build stops the change.
@@ -48,11 +55,10 @@ Say: The fix is to check only what the change touched. Git lists the classes a b
 - PIT plants bugs only there: targetClasses = changedClasses
 - A gate after PIT: "5 of 11 planted bugs in the changed classes survived"
 Picture: robot
-Say: How is the build told? A short file lists the changed classes, and in continuous integration, the shared build that
-  runs on every push, git writes it. PIT, the
-  mutation testing tool, is set to plant bugs only in the classes on that list, so it stays quick. JaCoCo's coverage
-  check counts only those classes too. And a gate after PIT fails the build. Today it says 5 of 11 planted bugs in
-  the changed classes survived.
+Say: How does the build know? A short file lists the changed classes, and in continuous integration, the shared build
+  that runs on every push, git writes it. PIT, the mutation testing tool, plants bugs only in the classes on that list,
+  so it stays quick. JaCoCo's coverage check counts only those classes too. And a gate after PIT fails the build. Today
+  it says 5 of 11 planted bugs in the changed classes survived.
 
 Include: how-we-build
 

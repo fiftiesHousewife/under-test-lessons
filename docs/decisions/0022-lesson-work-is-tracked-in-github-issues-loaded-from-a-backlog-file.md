@@ -22,7 +22,7 @@ already tracks its own work in GitHub issues loaded from a backlog file.
 
 ## Considered Options
 
-* `plan/lessons-backlog.yaml` is the source; `tools/backlog-import` loads it into this repo's GitHub issues and writes `docs/BACKLOG.md`; maintainers push with `maintainer-tools/sync/sync.sh`, which does both before pushing
+* `plan/lessons-backlog.yaml` is the source; the toolkit's shared Backlog sync workflow loads it into this repo's GitHub issues and writes `docs/BACKLOG.md` after each push that changes it
 * Issues for work, with planned lessons kept only in the catalogue until started
 * Keep `docs/next-steps.md` as the list, mirrored into issues
 
@@ -40,13 +40,13 @@ new lessons "next", and rendering waits on the video features.
 * Good, because the backlog page always shows what to do now, and what each item waits on.
 * Good, because the toolkit and the lessons are worked the same way, with the [work-on-an-item](../../.github/skills/work-on-an-item/SKILL.md) skill.
 * Bad, because syncing needs a token that can write issues, so an AI session in a sandbox can change the file but not the issues.
-* Bad, because the importer and sync are copies of the toolkit's, kept in step by hand.
+* Good, because the sync is the toolkit's shared Backlog sync workflow (under-test's decision 0101), run by GitHub
+  Actions after a push that changes the backlog file, so no copy is kept in step by hand, and no person needs a token.
 
 ### Confirmation
 
-`python3 tools/backlog-import/import_to_github.py OWNER/REPO` reads the file strictly and fails on a line it doesn't
-understand; the sync script imports before every push. The git hook in `maintainer-tools/git-hooks` refuses a plain
-`git push` once turned on.
+The Backlog sync workflow (`.github/workflows/sync-backlog.yml`, calling the toolkit's shared workflow) reads the file
+strictly and fails on a line it doesn't understand, updates the issues, and commits `docs/BACKLOG.md`.
 
 ## Pros and Cons of the Options
 

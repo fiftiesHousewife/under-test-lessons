@@ -6,7 +6,7 @@ keeping what was captured as an approved file the tests compare against.**
 Before changing an old service, you need to know what it really receives and sends, and often nobody has written it
 down. [Logbook](https://github.com/zalando/logbook) records it from inside the service: a servlet filter for the
 requests it receives and its answers, and a hook in its HTTP client for the calls it makes. A capture holds whatever
-crossed the wire, tokens and customers' details included, so Logbook's header and body filters clean each message
+crossed the wire, tokens and customers' details included, so Logbook's header and body filters mask each message
 before it is formatted and written. Once a person has checked a capture, [ApprovalTests](https://approvaltests.com)
 keeps it as an approved file, and a later capture that differs fails the test, line by line, as in
 [characterisation tests](../characterisation-tests/README.md).
@@ -81,7 +81,7 @@ path: the service answers 404 and never calls the loyalty provider, and the call
   Giving Logbook any header or body filter replaces its default one, so name `authorization()` yourself, and have a
   test check that the capture holds no secrets.
 - **Keep checked captures as approved files,** and change them only on purpose, in a reviewed pull request. Captures of
-  real traffic need cleaning of personal data before they leave the environment they were made in.
+  real traffic need their personal data masked before they leave the environment they were made in.
 
 ## On older Java
 

@@ -31,5 +31,5 @@ Copied from the toolkit's skill of the same name, for the lessons.
 
 ## 4. Finish
 1. **[inside]** Run `./gradlew check` and include the result.
-2. **[maintainer]** Mark the item done in the backlog file, and push with `maintainer-tools/sync/sync.sh "What changed"`, which closes
-   its issue. Where the sync can't run (no token, or a sandbox), say so and leave the push to the person.
+2. **[maintainer]** Mark the item done in the backlog file, commit, and `git push` when the person says. The Backlog
+   sync workflow then closes its issue and commits `docs/BACKLOG.md`, so pull before the next change.

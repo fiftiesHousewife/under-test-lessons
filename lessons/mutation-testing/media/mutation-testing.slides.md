@@ -9,17 +9,24 @@ Help for the Practicing Programmer", IEEE Computer, 1978; Y. Jia and M. Harman, 
 Development of Mutation Testing", IEEE Transactions on Software Engineering, 2011 (the idea traced to Richard Lipton's
 1971 student paper).
 
+## intro: Mutation testing
+- The problem: every line runs, and most bugs slip through
+- The fix: plant bugs, count the catches
+- The tool: PIT
+Picture: road
+Say: This lesson is about mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
+  whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
+  bugs and counts the ones caught.
+
 ## intro: Every line runs, and most bugs slip through
 - A shop's tests run all 13 lines of its discount rules: 100% line coverage
 - Plant 13 small bugs in those lines, one at a time: the tests catch 5
 - The other 8 pass unnoticed: an order of exactly £50 could lose its discount
 Picture: coverage
-Say: This lesson is about mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
-  whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
-  bugs and counts the ones caught. [pause 1s] Here is the problem. A shop's tests run every one of the 13 lines in its
-  discount rules, so line coverage is 100 percent. Line coverage only counts the lines the tests ran. So we plant 13
-  small bugs in those lines, one at a time, and run the tests against each. They catch 5. The other 8 slip through. One
-  of them means an order of exactly 50 pounds loses its discount, and every test still passes.
+Say: Here is the problem. A shop's tests run every one of the 13 lines in its discount rules, so line coverage is 100
+  percent. Line coverage only counts the lines the tests ran. So we plant 13 small bugs in those lines, one at a time,
+  and run the tests against each. They catch 5. The other 8 slip through. One of them means an order of exactly 50
+  pounds loses its discount, and every test still passes.
 
 ## intro: Our example: a shop's discount rules
 - Orders of £50 or more get 5% off
@@ -30,7 +37,7 @@ Say: Our example is a small piece of code from an online shop. It works out the 
   pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
   more on top.
 
-## intro: The fix: plant bugs, and count the ones caught
+## intro: The fix: plant bugs, count the catches
 - Change one small thing, a mutation: "£50 or more" becomes "more than £50"
 - A test fails: the bug is caught. Every test passes: it survived
 - Bugs hide at a boundary, where a rule changes: test exactly £50, and £49.99

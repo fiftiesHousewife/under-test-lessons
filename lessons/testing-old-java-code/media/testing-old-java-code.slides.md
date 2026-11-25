@@ -11,19 +11,19 @@ them "coming".
 
 ## intro: Old code is hard to change safely
 - It works, and people rely on it
-- Nobody is sure what a change will break
+- It's hard to know what a change will break
 - Old code usually has no tests, or none it can trust
 Picture: road
 Say: Welcome to this series on testing old Java code. [pause 800ms] Over these lessons, we'll take a journey, from
-  code that nobody dares to change, [pause 300ms] to code a team can change safely. [pause 1s] Old code works, and
-  people rely on it every day. [pause 600ms] But nobody is quite sure what a change will break. [pause 600ms] And old
-  code usually has no tests, or tests that nobody can trust.
+  code a team is afraid to change, [pause 300ms] to code a team can change safely. [pause 1s] Old code works, and
+  people rely on it every day. [pause 600ms] But it's hard to know what a change will break. [pause 600ms] And old
+  code usually has no tests, or tests that can't be trusted.
 
 ## intro: Tests are a software vice
 - A vice holds the work still, so it can't move while you work on it
 - Tests hold the code's behaviour still the same way: a change that moves it fails a test
 - Legacy code is code without tests (Michael Feathers, Working Effectively with Legacy Code)
-Picture: braces
+Picture: vice
 Say: Michael Feathers has a picture for what tests do for old code. [pause 300ms] In a workshop, a vice clamps the
   work, so it can't move while you cut and file it. Tests are a software vice. They clamp the code's behaviour in
   place, so that while you change the inside, anything that moves makes a test fail. Feathers goes further: legacy code
@@ -37,7 +37,7 @@ Say: Michael Feathers has a picture for what tests do for old code. [pause 300ms
 Picture: scales
 Say: Tests do two different jobs. Some record what the code does today, right or wrong, so that any change to it is
   noticed. Others check what the code should do, as agreed with the people who know the rules. Old code needs the
-  first kind before the second, because nobody can safely fix a rule until they know what the code does now.
+  first kind before the second, because you can't safely fix a rule until you know what the code does now.
 
 ## intro: The route through this series
 - Make it safe to run, and see what its tests really check
@@ -60,14 +60,14 @@ Say: Tests come in sizes. A unit test checks one class on its own. A slice test 
 
 ## intro: The mix for old code starts with large tests
 - At first, a few large tests protect the most for the least effort
-- As the code is made testable, the mix moves to many small tests
+- As we make the code testable, the mix moves to many small tests
 - Large tests stay, fewer of them, for the wiring
 Picture: blocks
 Say: For old code, the mix starts the other way round from new code. At first, a few large tests from the outside
   protect the most behaviour for the least effort, because the code inside can't yet be tested in small pieces. As the
   code is made testable, the mix moves to many small, fast tests. A few large tests stay, to check the wiring.
 
-## intro: Safe to run? Find the risks, then run it unplugged
+## intro: Safe to run? Find risks, run unplugged
 - Find what could reach production or leak a secret, before anything runs
 - Run it unplugged, so every call outside is refused and reported
 Picture: plug
@@ -103,12 +103,12 @@ Say: What does the code do today? [pause 1.6s] Treat the application as a black 
 
 ## intro: What it sends: capturing with Logbook
 - Capture real requests and answers, with secrets filtered at the source
-- Clean captured data so the tests still work
+- Mask captured data so the tests still work
 - lesson: Capturing what an old service receives and sends (capturing-with-logbook)
-- lesson: Cleaning captured data so tests still work (cleaning-captured-data)
+- lesson: Masking captured data so tests still work (masking-captured-data)
 Picture: tag
 Say: What does an old service receive, and what does it send? [pause 1.6s] Capturing real requests and answers gives
-  realistic examples to test with. But captures hold personal data, so they're cleaned first, in a way that keeps the
+  realistic examples to test with. But captures hold personal data, so we mask them first, in a way that keeps the
   tests working: the same name always gets the same stand-in.
 
 ## intro: Same answers? Differential testing
@@ -117,21 +117,21 @@ Say: What does an old service receive, and what does it send? [pause 1.6s] Captu
 - lesson: Differential testing (differential-testing)
 Picture: twins
 Say: Does the rewrite still give the same answers? [pause 1.6s] Run the old code and the new code on the same inputs,
-  thousands of them, and compare. Every difference is either a bug in the rewrite, or a decision someone has to make.
+  thousands of them, and compare. Every difference is either a bug in the rewrite, or a decision the team has to make.
   The lesson finds a mistyped price that no example test noticed.
 
 ## intro: What it should do: examples and OpenAPI
 - Write the rules down as examples, with the people who know them
-- Check the code against each example, and each answer against the published document
+- Check the code against each example, and each answer against the published schema
 - lesson: Behaviour written down as examples (behaviour-as-examples)
-- lesson: Responses checked against the OpenAPI document (openapi-response-checks)
+- lesson: Responses checked against the OpenAPI schema (openapi-response-checks)
 Picture: book
 Say: What should the code do? [pause 1.6s] Write the rules down as examples, with the people who know them, and check
   the code against each of them. Where today's code and the examples disagree, that's a question for the experts, not
-  a test to delete. And where other teams build against a published document of the service's interface, check every
-  answer against that document.
+  a test to delete. And where other teams build against a published schema of the service's interface, check every
+  answer against that schema.
 
-## intro: No real systems: WireMock, H2, Testcontainers
+## intro: Stand-ins: WireMock, H2, Testcontainers
 - Recorded answers for services you don't own; a fake for what you talk to a lot
 - An in-memory database where plain SQL is all the code uses; a real one where the database's own behaviour matters
 - lesson: Recorded HTTP responses (recorded-http-responses)
@@ -143,11 +143,11 @@ Say: What should the code do? [pause 1.6s] Write the rules down as examples, wit
 - lesson: Slow and failing dependencies (slow-and-failing-dependencies)
 - lesson: Message consumers (message-consumers)
 Picture: server
-Say: How do we test without the real systems? [pause 1.6s] Use recorded answers for services you don't own, and a
-  small, fake version of anything you talk to a lot. An in-memory database is quick, needs nothing installed, and is
-  the right choice where the code uses only plain SQL. Where the database's own behaviour matters, its sorting, dates
-  or locking, start a real one in a throwaway container. These lessons show how to tell which you need. Others check the requests the
-  code sends, make a service slow or broken on demand, and run a real message broker inside the test.
+Say: How do we test without the real systems? [pause 1.6s] Use recorded answers for services you don't own, and a small,
+  fake version of anything you talk to a lot. An in-memory database is quick, needs nothing installed, and is the right
+  choice where the code uses only plain SQL. Where the database's own behaviour matters, its sorting, dates or locking,
+  start a real one in a throwaway container. These lessons show how to tell which you need. Others check the requests
+  the code sends, make a service slow or broken on demand, and run a real message broker inside the test.
 
 ## intro: Untestable classes: pass dependencies in
 - It reaches out for what it needs: the clock, a static, a hard-wired service
@@ -156,7 +156,7 @@ Say: How do we test without the real systems? [pause 1.6s] Use recorded answers 
 Picture: braces
 Say: Why can't this class be tested at all? [pause 1.6s] Usually because it reaches out for what it needs: the clock,
   a static method, a service it creates itself. Pass those things in instead, starting with the smallest change. Then
-  a test can hand over a stand-in.
+  a test can hand it a stand-in.
 
 ## intro: No big bang: feature flags with OpenFeature
 - Put the new code behind a switch
@@ -166,7 +166,7 @@ Picture: switch
 Say: How do we change it without a big bang? [pause 1.6s] Put the new code behind a switch, test it with the switch
   both off and on, and only remove the old code once the new code has proved itself.
 
-## intro: Fewer tests, more cases: tables and properties
+## intro: More cases: tables and properties
 - One test, many cases: a table of inputs and the answers expected
 - Let the computer find the cases: generated inputs, checked against a rule
 - Group tests by situation, so a missing case is easy to see
@@ -178,9 +178,9 @@ Picture: table
 Say: How do we write fewer tests that check more? [pause 1.6s] First, instead of copying a test for each case, write
   it once, with a table of inputs and the answers expected. Second, let the computer find the cases: it generates
   hundreds of inputs, and checks each one against a rule that must always hold, such as "the shares add up to the
-  bill". Third, group the tests by situation, so a case nobody wrote stands out. Each lesson takes one of these ideas.
+  bill". Third, group the tests by situation, so a missing case stands out. Each lesson takes one of these ideas.
 
-## intro: Trustworthy tests: Mockito, Awaitility, ArchUnit
+## intro: Keep tests trustworthy: Mockito, ArchUnit
 - Stand-ins only where they help, and checks of what the code really did
 - Shared settings put back after every test, so one test can't break another
 - Wait for slow work instead of sleeping, so a test doesn't pass on one machine and fail on another
@@ -212,7 +212,7 @@ Say: So where do you start? If there are no tests, record what the code does, fr
 Picture: robot
 Say: Where your company has approved one, an AI assistant can draft many of these tests quickly, especially tests
   that record what the code does today. But a drafted test is only a start. Mutation testing, and a person's review,
-  decide which tests are kept. Nothing in these lessons needs an AI tool: every technique works by hand.
+  decide which tests we keep. Nothing in these lessons needs an AI tool: every technique works by hand.
 
 ## closing: Find out more
 - {lessons-repo} — every lesson to run yourself: its test code and examples

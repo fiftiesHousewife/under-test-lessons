@@ -35,6 +35,7 @@ class SlideDeckTest {
         final Path other = Files.createDirectories(root.resolve("lessons/another/media"));
         Files.writeString(other.resolveSibling("Thing.java"), "class SomeoneElsesThing {\n}\n");
         Files.writeString(media.resolve("demo.tape"), "# ---- Scene 1: the code under test ----\n"
+                + "Type@1ms `note \"The code under test: the thing & its *size*.\"`\n"
                 + "Type@1ms `show Thing 1 2 \"the thing\"`\nType@1ms `run_live \"./gradlew test\"`\n"
                 + "Type@1ms `callout \"It passes.\"`\nSleep 1s\n");
         Files.writeString(media.resolve("demo.narration.md"), "1. Here is the code & its tests.\n");
@@ -50,10 +51,12 @@ class SlideDeckTest {
                 () -> assertThat(deck).contains("<title>Demo lesson</title>", "h1 { color: teal; }", "// controls"),
                 () -> assertThat(deck.indexOf("<h1>Hello</h1>")).isLessThan(deck.indexOf("<h1>The code under test"))
                         .isLessThan(deck.indexOf("<h1>Bye</h1>")),
-                () -> assertThat(deck).contains("<p class=\"scene-text\">Here is the code &amp; its tests.</p>",
+                () -> assertThat(deck).contains("<li class=\"point\">The thing &amp; its size</li>",
                         "<figcaption>the thing</figcaption><pre>  1  class Thing {\n  2      int size()",
                         "<pre class=\"command\">$ ./gradlew test</pre>", "<p class=\"callout\">It passes.</p>",
-                        "<aside class=\"notes\">Hi there.</aside>"),
+                        "<aside class=\"notes\">Hi there.</aside>",
+                        "<aside class=\"notes\">Here is the code &amp; its tests."),
+                () -> assertThat(deck).doesNotContain("<li class=\"point\">The code under test</li>"),
                 () -> assertThat(media.resolve("demo.deck.pdf")).exists(),
                 () -> assertThat(SlideDeck.lessons(root, "demo")).hasSize(1));
     }

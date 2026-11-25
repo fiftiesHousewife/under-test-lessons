@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: checks the status code and a few known fields. It passes, and never compares answers with the document. */
+/** BEFORE: checks the status code and a few known fields. It passes, and never compares answers with the schema. */
 class ParcelFieldsTest {
 
     private final ParcelServer service = Services.start();

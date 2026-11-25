@@ -12,13 +12,13 @@ Written to be spoken.
 3. Here is the code under test, starting with the consumer. The order screen asks the stock service how many of an
    item are available, by the item's code. It reads two fields from the answer: the code, and a whole number called
    available. When the answer is 404, there is no such item.
-4. And the provider: today's stock service. A tidy-up renamed the field available to quantity in stock. Nobody told
-   the order screen's team.
-5. These are [pause 300ms] the order screen's weak tests. They run against a stand-in its own team wrote, which
+4. And the provider: today's stock service. A tidy-up renamed the field available to quantity in stock. The order
+   screen's team never heard about it.
+5. These are the order screen's weak tests. They run against a stand-in its own team wrote, which
    answers exactly what they expect: a field called available. So they pass, whatever the real stock service sends.
 6. And the stock service's own weak tests. They check the status code and the item's code. Nothing in them says which
    fields the order screen reads, so they pass after the rename too.
-7. Now, [pause 300ms] the strong tests, starting with the consumer. The order screen's team writes down each answer it
+7. Now, the strong tests, starting with the consumer. The order screen's team writes down each answer it
    relies on, as an interaction in a pact. Given three kettles in stock, a request for the kettle gets 200, with the
    code, and any whole number called available. Pact stands in for the stock service with exactly these answers, runs
    the client against them, and writes the pact file.

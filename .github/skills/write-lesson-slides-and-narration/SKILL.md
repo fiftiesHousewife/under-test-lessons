@@ -81,7 +81,30 @@ a link and never spoken.
 
 ## Writing for the voice
 
+Before finishing, check every slide and narration item against [GLOSSARY.md](../../../GLOSSARY.md): its words, its
+"Don't say" table, and its rules for the voice.
+
+- Introduce each library or tool by what it does, where it is first named, before its history: "WireMock,
+  a library that stands in for another web service", not just "WireMock".
 - Short sentences. No semicolons: the voice runs straight through them.
+- Keep sentences short and simple, with judgement: if you would run out of breath reading one aloud, it's too long.
+  A library gets a sentence of its own to say what it does:
+  "Logbook is a library that writes down every request and answer."
+- Fewer words, more slides: three or four short points a slide, a heading of 40 characters or less, and a slide of its
+  own for each idea. Where a rule has a boundary, give it a slide, with the days or values on each side of it
+  ("Day 29: a refund. Day 31: store credit. Day 30: which?"), and contrast the two outcomes before the problem.
+- Pauses: `[pause 600ms]` to `[pause 1s]` between sentences on a slide that sets up the problem. Never a pause inside a
+  phrase ("This is [pause] the weak test"), and give lists of words such as given, when, then a short pause each.
+- Active voice, not passive: "we tidy the printer up", not "the printer is tidied up".
+- Say what happened, never invent a person: "we tidy the printer up", not "someone tidies the printer up"; "there's
+  no rule for the note", not "nobody wrote a rule". Say "the shop", or "a shop", never "that shop".
+- Words to avoid: "promises" (say "says" or "gives"), "plainly", "cleaning" for personal data, or "masking" on its own
+  (say "data masking", or "masked data"), and "document" for an OpenAPI or AsyncAPI file (say "schema").
+- Law and regulation: a US company's view first (the FTC, state privacy laws such as California's, HIPAA, PCI DSS),
+  with UK and EU law alongside it, never on its own. Check each at its primary source.
+- Add every name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`: compound nouns stressed on the
+  first word ("card number", "stand-in"), tool names said as one name ("WireMock"), and numbers said as people say
+  them ("404 = four oh four").
 - Describe things in full, never in shorthand: "no test checks what happens when an order comes to exactly £50", not
   "no test tries 50". The viewer doesn't know what the number refers to. The same goes for captions and callouts.
 - Never read a command aloud. Say what happens: "Now we run the strong tests". (The video checks fail on narration
@@ -112,3 +135,23 @@ a link and never spoken.
   original paper) and name the sources at the top of the slides file. Leave out anything you can't confirm, such as
   people's names a source doesn't give.
 - Years of historical events are facts about the subject, and are fine; dates on the document itself are not.
+
+## Before you finish: the review checklist
+
+What a full review of every deck with its voice found, so each new lesson gets it right the first time:
+
+- **Opening:** the first narration says what the lesson covers, then the problem. Each tool is introduced by what it
+  does, in a sentence of its own.
+- **Story:** contrast the outcomes before the problem; a boundary gets its own slide, with the values on each side; one
+  idea to a slide, three or four points, a heading of 40 characters or less.
+- **Sentences:** short and simple (the breath test), active voice, no invented "someone" or "nobody", no "that shop",
+  and only people see: reports count, tests get, filters record.
+- **Words:** checked against [GLOSSARY.md](../../../GLOSSARY.md) and its "Don't say" table, including data masking (not
+  cleaning, not masking alone), schema (not document), and "the series is a journey", never a map.
+- **Subjects:** established external frameworks only; never this repository's or the toolkit's own tools or process.
+  Law: US first, UK and EU alongside, each checked at its primary source.
+- **Voice:** every name, compound noun and number the voice gets wrong goes in the pronunciation list; listen to each
+  changed slide.
+- **Fit:** `./gradlew :lessons:video-tools:checkVideoScripts` passes: every scene's pause covers its narration, the
+  video stays under ten minutes, every slide has its clip, and every live command its kept output. Code highlights
+  (`--mark`) land on the lines the narration talks about, not on a brace or a blank line.

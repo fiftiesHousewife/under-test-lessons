@@ -3,24 +3,31 @@
 Sources: rest-assured.io and github.com/rest-assured/rest-assured (Apache 2.0 licence; created by Johan Haleby; earliest
 versions on Maven Central, as com.jayway.restassured, published December 2010); RFC 9110, HTTP Semantics (201 Created, 400 Bad Request, Location).
 
+## intro: Outside-in HTTP tests
+- The problem: the service says yes, even when it refuses
+- The fix: test from outside, as a caller does
+- The tool: REST Assured
+Picture: road
+Say: This lesson is about outside-in tests of an HTTP service: tests that call it the way a real caller does. REST
+  Assured is a test library that sends web requests. We'll see a service that says yes when it has refused. Then REST
+  Assured checks both the status and the body.
+
 ## intro: The service says yes, even when it refuses
 - Book a hotel room for no nights: the service answers 200 OK, meaning "done"
 - The refusal is hidden in the body, so a caller thinks the room is booked
 - Its tests call the price rules directly, and all pass
 Picture: bug
-Say: This lesson is about outside-in tests of an HTTP service: tests that call it the way a real caller does. We'll see
-  a service that says yes when it has refused, and how REST Assured checks both the status and the body. [pause 1s] Here
-  is the problem. A hotel's booking service is asked to book a room for no nights. It refuses, but it answers with the
-  status code 200 OK, which tells the caller all is well. The refusal is hidden in the body of the answer, so a caller
-  may think the room is booked. And the service's tests pass, because they call its price rules directly and never see
-  the answer a caller gets.
+Say: Here is the problem. A hotel's booking service is asked to book a room for no nights. It refuses, but it answers
+  with the status code 200 OK, which tells the caller all is well. The refusal is hidden in the body of the answer, so a
+  caller may think the room is booked. And the service's tests pass, because they call its price rules directly and
+  never check the answer a caller gets.
 
 ## intro: Our example: a hotel booking service
 - Callers book a room for some nights: a night costs £90, so 2 nights cost £180
 - A booking for no nights must be refused
 - The answer's status code tells the caller what happened: 201 for booked, 400 for refused
 Picture: statement
-Say: Our example is that hotel booking service. Callers book a room for a number of nights, and a night costs 90
+Say: Our example is the hotel booking service. Callers book a room for a number of nights, and a night costs 90
   pounds, so 2 nights cost 180. A booking for no nights must be refused. The status code of the answer tells the
   caller what happened. 201 means created, so the room is booked. 400 means the request was refused.
 
@@ -32,15 +39,15 @@ Picture: door
 Say: The fix is to test the service from outside, as a caller does. Start it, and send it real requests over the
   web. Then check what a caller sees: the status code, the headers, and the body. This is called an outside-in test.
   It goes through the service's API only, the interface it offers other systems. And because it knows nothing about
-  the classes inside, it keeps working while an old service is rewritten underneath it.
+  the classes inside, it keeps working while we rewrite an old service underneath it.
 
 ## intro: How REST Assured reads
 - given().port(service.port()).body(...): room 101, "nights": 0
 - .when().post("/bookings")
 - .then().statusCode(400): "Expected status code 400 but was 200"
 Picture: robot
-Say: REST Assured is a library for this, and a test reads like a sentence. Given a request for room 101, for no
-  nights. When it is posted to the bookings address. Then the status code must be 400. Today the message says
+Say: REST Assured is a test library for this, and a test reads like a sentence. Given a request for room 101, for no
+  nights. When we post it to the bookings address. Then the status code must be 400. Today the message says
   exactly what came back instead: it expected 400, but was 200.
 
 Include: how-we-build
@@ -59,7 +66,7 @@ Say: When should you test from outside? [pause 1600ms] For every service that ot
 - Brings the readable style of dynamic languages to testing web services in Java
 - Works with any web service, in any language, over HTTP
 Picture: book
-Say: REST Assured was created by Johan Haleby, and is free under the Apache licence. It brings the easy, readable style
+Say: Johan Haleby created REST Assured. It's free under the Apache licence. It brings the easy, readable style
   of dynamic languages to testing web services from Java. And it works with any web service, written in any language.
 
 ## closing: Find out more

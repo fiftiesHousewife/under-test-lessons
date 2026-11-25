@@ -39,7 +39,7 @@ public final class KeyedRecordingCleaner implements RecordingCleaner {
     }
 
     @Override
-    public String clean(final String recording) {
+    public String mask(final String recording) {
         final JsonNode mapping = JSON.readTree(recording);
         removeCredentials(mapping.at("/request/headers"));
         removeCredentials(mapping.at("/response/headers"));

@@ -1,6 +1,6 @@
 package io.github.fiftieshousewife.undertest.techniques.openapi;
 
-import io.github.fiftieshousewife.undertest.techniques.openapi.fixed.DocumentedParcelBodies;
+import io.github.fiftieshousewife.undertest.techniques.openapi.fixed.SchemaParcelBodies;
 import io.github.fiftieshousewife.undertest.techniques.openapi.today.TodaysParcelBodies;
 import java.util.List;
 
@@ -18,6 +18,6 @@ public final class Services {
 
     /** The answers under test: the fixed ones, or today's with -Pcode=today. */
     public static ParcelBodies bodies() {
-        return "today".equals(System.getProperty("code")) ? new TodaysParcelBodies() : new DocumentedParcelBodies();
+        return "today".equals(System.getProperty("code")) ? new TodaysParcelBodies() : new SchemaParcelBodies();
     }
 }

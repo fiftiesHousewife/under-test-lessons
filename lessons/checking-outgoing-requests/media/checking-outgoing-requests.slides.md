@@ -8,16 +8,23 @@ github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst); Mave
 (com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); the IETF's Internet-Draft "The Idempotency-Key
 HTTP Header Field" (a request header that makes a POST safe to repeat).
 
+## intro: Checking the requests your code sends
+- The problem: the refund is sent wrong, and the tests pass
+- The fix: check the request that was sent
+- The tool: WireMock
+Picture: road
+Say: This lesson is about checking the requests your code sends to other services, not just the answers it gets back.
+  WireMock is a library that stands in for another web service. We'll see a refund sent wrong while every test passes.
+  Then WireMock checks the request itself.
+
 ## intro: The refund is sent wrong, and the tests pass
 - A refund of £12.50 goes to the payment provider as 12.5, not 1250 pence
 - It goes with no Idempotency-Key, so a refund sent twice could be paid twice
 - The tests pass: the stand-in provider answers "created" whatever it is sent
 Picture: bug
-Say: This lesson is about checking the requests your code sends to other services, not just the answers it gets back.
-  We'll see a refund sent wrong while every test passes, and how WireMock's verify checks the request itself. [pause 1s]
-  Here is the problem. A shop refunds a customer £12.50. The payment provider expects the amount in pence, 1250. The
+Say: Here is the problem. A shop refunds a customer £12.50. The payment provider expects the amount in pence, 1250. The
   shop sends 12.5. It also leaves out the header that names the refund, so a refund sent twice could be paid twice. And
-  the tests pass. The stand-in provider in the tests answers that the refund is created, whatever it is sent. So the
+  the tests pass. The stand-in provider in the tests answers that the refund is created, whatever the shop sends. So the
   mistakes only show up at the real provider, when a customer gets the wrong amount back.
 
 ## intro: Our example: refunds to a payment provider
@@ -28,7 +35,7 @@ Say: This lesson is about checking the requests your code sends to other service
 Picture: basket
 Say: Our example is a shop that gives money back to customers. For each refund, it posts a request to a payment
   provider: the order's number, and the amount in pence, as JSON. It also sends a header called Idempotency-Key, which
-  names the refund. If the same refund arrives twice, perhaps because the shop tried again after a timeout, the
+  names the refund. If the same refund arrives twice, say after a timeout and a retry, the
   provider pays it only once. The provider answers 201 Created, with an id for the refund.
 
 ## intro: The fix: check the request that was sent

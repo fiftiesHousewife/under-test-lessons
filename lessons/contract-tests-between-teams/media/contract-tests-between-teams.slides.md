@@ -13,28 +13,35 @@ au.com.dius.pact.provider:junit5, 4.7.7); martinfowler.com, Ian Robinson's "Cons
 Evolution Pattern", 12 June 2006; the toolkit's contract-testing technique and its decision guide "Contract tests share
 pacts as versioned artifacts through the package repository, without a broker".
 
+## intro: Contract tests between teams
+- The problem: A renamed field passes both teams' builds
+- The fix: one agreement, checked by both
+- The tool: Pact JVM
+Picture: road
+Say: This lesson is about contract tests between teams. Pact is a tool that writes down what one service expects of
+  another. Both teams' builds check that one agreement.
+
 ## intro: A renamed field passes both teams' builds
 - A tidy-up in the stock service renames available to quantityInStock
 - The order screen's tests pass: they run against a stand-in their own team wrote
 - The stock service's tests pass: they check the status code and the item's code
 - The break shows only when the two services meet
 Picture: bug
-Say: This lesson is about contract tests between teams, with Pact: one agreement, checked by both sides. [pause 1s] Here
-  is the problem. A tidy-up in a shop's stock service renames the field that says how many kettles are available. The
-  order screen, run by another team, still looks for the old name. Both teams' builds pass. The order screen's tests use
-  a stand-in that their own team wrote, so it always agrees with them. The stock service's tests check only the status
-  code and the item's code. So the break shows up only when the two services meet.
+Say: Here is the problem. A tidy-up in a shop's stock service renames the field that says how many kettles are
+  available. The order screen, run by another team, still looks for the old name. Both teams' builds pass. The order
+  screen's tests use a stand-in that their own team wrote, so it always agrees with them. The stock service's tests
+  check only the status code and the item's code. So the break shows up only when the two services meet.
 
-## intro: Our example: an order screen and a stock service
+## intro: Our example: two teams, two services
 - The order screen asks the stock service how many of an item are available, by the item's code
 - The answer has the code, and a whole number called available
-- An item nobody stocks gets 404
+- An item the shop doesn't stock gets 404
 Picture: basket
-Say: Our example is that shop. One team runs the order screen. Before it takes an order, it asks the stock service how
+Say: Our example is the shop. One team runs the order screen. Before it takes an order, it asks the stock service how
   many of an item are available, by the item's code. Another team runs the stock service. Its answer has the item's
-  code, and a whole number called available. And when nobody stocks the item, the answer is 404.
+  code, and a whole number called available. And when the shop doesn't stock the item, the answer is 404.
 
-## intro: The fix: one agreement, checked from both sides
+## intro: The fix: one agreement, checked by both
 - The order screen, the consumer, writes down each answer it relies on: the agreement, a pact
 - The stock service, the provider, checks the pact in its own build, on every change
 - The pact travels as a versioned artifact through the company's package repository
@@ -63,13 +70,13 @@ Include: how-we-build
 - Between services in one company, where both teams agree to run the checks
 - Pin each consumer version you support in the provider's build, and update the list by pull request
 - Before renaming or retyping a field: the pact says who still reads it
-- Not for a supplier's API or a public one: check those against recorded answers or a published OpenAPI document
+- Not for a supplier's API or a public one: check those against recorded answers or a published OpenAPI schema
 Picture: map
 Say: When should you use contract tests? [pause 1600ms] Between services in one company, where both teams agree to
   run the checks. Keep the list of consumer versions you support in the provider's build, and change it by pull
   request. Check the pacts before renaming or retyping a field, since they say who still reads it. They don't suit a
   supplier's API, or a public one, where the other side won't run them. Check those against recorded answers, or
-  against a published OpenAPI document.
+  against a published OpenAPI schema.
 
 ## closing: Where it came from
 - Ian Robinson described consumer-driven contracts in 2006
@@ -87,9 +94,8 @@ Say: Ian Robinson described consumer-driven contracts in 2006: the consumers say
 - https://martinfowler.com/articles/consumerDrivenContracts.html — consumer-driven contracts
 - https://github.com/fiftiesHousewife/under-test/blob/main/decision-guides/0037-contract-tests-share-pacts-as-versioned-artifacts-through-the-package-repository-without-a-broker.md — the toolkit's guide to sharing pacts without a broker
 - {lessons-repo} — run this lesson yourself: its test code and examples
-- Exercise: verify version 1.1.0 of the pact, which adds an item nobody stocks; the README has the steps and the answer
+- Exercise: verify version 1.1.0 of the pact, which adds an item the shop doesn't stock; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with Pact's own documentation, which also says when Pact is not a good fit. The links
-  on screen also take you to Pact JVM, to the original article on consumer-driven contracts, to the toolkit's guide to
-  sharing pacts without a broker, and to this lesson's test code and examples, to run yourself. And try the exercise
-  in the README: verify version 1.1.0 of the pact, which adds an item nobody stocks.
+Say: To find out more, start with Pact's own documentation, which also says when Pact is not a good fit. The links on
+  screen also take you to Pact JVM, and the original article on consumer-driven contracts. And try the exercise in the
+  README: verify version 1.1.0 of the pact, which adds an item the shop doesn't stock.

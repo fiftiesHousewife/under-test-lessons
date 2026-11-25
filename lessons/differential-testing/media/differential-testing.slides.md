@@ -4,17 +4,23 @@ Sources: William M. McKeeman, "Differential Testing for Software", Digital Techn
 1998; the toolkit's differential-testing technique (replaying recorded traffic with Keploy, or WireMock recordings
 with ApprovalTests; not Diffy, which is archived and whose only fork has a non-commercial licence).
 
+## intro: Differential testing
+- The problem: the rewrite overcharges, and its tests pass
+- The fix: ask the old calculator
+- The tool: JUnit, with no extra library
+Picture: road
+Say: This lesson is about differential testing: giving the old code and its rewrite the same inputs, thousands of them,
+  and comparing their answers. We'll see a rewrite with a mistyped price that its own tests miss, and how a test that
+  asks the old calculator finds it.
+
 ## intro: The rewrite overcharges, and its tests pass
-- A postage calculator is rewritten, and one row of its price list is mistyped
+- A team rewrites a postage calculator, and mistypes one row of its price list
 - Parcels from 451 g to 500 g now cost £3.15, not £1.95
 - The rewrite's 5 tests try one typical weight per row, and all pass
 Picture: bug
-Say: This lesson is about differential testing: the old code and its rewrite given the same inputs, thousands of them,
-  and their answers compared. We'll see a rewrite with a mistyped price that its own tests miss, and how a test that
-  asks the old calculator finds it. [pause 1s] Here is the problem. A postage calculator is rewritten, and one row of
-  its new price list is mistyped. Parcels weighing from 451 grams to 500 grams now cost 3 pounds 15, instead of 1 pound
-  95. The rewrite has 5 tests, one typical weight for each row of prices. None of them weighs between 451 and 500 grams,
-  so they all pass.
+Say: Here is the problem. A team rewrites a postage calculator, and mistypes one row of its new price list. Parcels
+  weighing from 451 grams to 500 grams now cost 3 pounds 15, instead of 1 pound 95. The rewrite has 5 tests, one typical
+  weight for each row of prices. None of them tries a weight between 451 and 500 grams, so they all pass.
 
 ## intro: Our example: postage prices
 - The price of posting a parcel, by weight, up to 5 kg
@@ -43,12 +49,12 @@ Say: It needs no library, just a loop. For every weight, the test asks both vers
   run: from 451 to 500 grams, the old price is 195 pence, and the new one is 315.
 
 ## closing: When to use differential testing
-- Whenever old code is rewritten, moved to a new platform, or upgraded
+- Whenever you rewrite old code, move it to a new platform, or upgrade it
 - Keep the old version running in tests until the new one agrees everywhere
 - For services, replay recorded traffic against both versions
 Picture: map
-Say: When should you use it? [pause 1600ms] Whenever old code is rewritten, moved to a new platform, or upgraded. Keep
-  the old version running in the tests until the new one agrees everywhere. And for whole services, replay recorded
+Say: When should you use it? [pause 1600ms] Whenever you rewrite old code, move it to a new platform, or upgrade it.
+  Keep the old version running in the tests until the new one agrees everywhere. And for whole services, replay recorded
   traffic against both versions.
 
 ## closing: Where the idea came from
@@ -56,9 +62,9 @@ Say: When should you use it? [pause 1600ms] Whenever old code is rewritten, move
 - For whole services, recorded traffic is replayed against both versions
 - It needs no library: two versions and a loop
 Picture: book
-Say: William McKeeman named differential testing in 1998, when comparing C compilers. For whole services, the same
-  idea replays recorded traffic against both the old version and the new. And for code like ours, it needs no library at all: two versions, and a
-  loop.
+Say: William McKeeman named differential testing in 1998, when comparing C compilers. For whole services, the same idea
+  replays recorded traffic against both the old version and the new. And for code like ours, it needs no library at all:
+  two versions, and a loop.
 
 ## closing: Find out more
 - {toolkit-repo} — the toolkit, with its differential testing technique

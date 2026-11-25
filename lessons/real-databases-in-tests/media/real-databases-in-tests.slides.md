@@ -1,28 +1,35 @@
 # Slides: real databases in tests
 
 Sources: testcontainers.org and github.com/testcontainers/testcontainers-java (MIT licence; started by Richard North in
-2015; now looked after by Docker); postgresql.org documentation, ORDER BY (nulls sort as if larger than any value, so
+2015; Docker now looks after it); postgresql.org documentation, ORDER BY (nulls sort as if larger than any value, so
 last in ascending order, unless NULLS FIRST is given); h2database.com (H2 sorts nulls first by default).
 
-## intro: The customer who never ordered is called last
+## intro: Real databases in tests
+- The problem: A customer with no orders is called last
+- The fix: test on the real database
+- The tools: Testcontainers and PostgreSQL
+Picture: road
+Say: This lesson is about using real databases in tests. Testcontainers is a library that runs real software, such as a
+  database, in a throwaway container. We'll see a query that sorts differently on the real database. Then Testcontainers
+  starts PostgreSQL for the test, and the test catches it.
+
+## intro: A customer with no orders is called last
 - Sales should call Bob first: he has never ordered
 - On H2, the in-memory database the tests use, Bob comes first, and the test passes
 - On PostgreSQL, the database production uses, a missing date sorts last, so Bob comes last
 Picture: bug
-Say: This lesson is about using real databases in tests, started in a throwaway container. We'll see a query that sorts
-  differently on the real database, and how Testcontainers starts PostgreSQL for the test. [pause 1s] Here is the
-  problem. A sales team calls customers who never ordered first. Bob has never ordered, so Bob should be first. The
-  tests run the query on H2, a database held in memory, and there Bob comes first, so the test passes. But production
-  runs PostgreSQL. There, a missing date sorts after every real one, so Bob comes last. The test checked a different
-  database, so it checked a different program.
+Say: Here is the problem. A sales team first calls the customers who have never ordered. Bob has never ordered, so Bob
+  should be first. The tests run the query on H2, a database held in memory, and there Bob comes first, so the test
+  passes. But production runs PostgreSQL. There, a missing date sorts after every real one, so Bob comes last. The test
+  checked a different database, so it checked a different program.
 
 ## intro: Our example: who to call first
 - Customers, and the date of their last order
-- Sales calls those who never ordered first, then those who ordered longest ago
+- Sales first calls those who have never ordered, then those who ordered longest ago
 - The order comes from a SQL query
 Picture: statement
-Say: Our example keeps customers, and the date of their last order. The sales team calls those who never ordered
-  first, then those who ordered longest ago. And that order comes from a SQL query.
+Say: Our example keeps customers, and the date of their last order. The sales team first calls those who have never
+  ordered, then those who ordered longest ago. And that order comes from a SQL query.
 
 ## intro: The fix: test on the real database
 - Run the test on PostgreSQL itself, started in a container
@@ -43,7 +50,7 @@ Picture: robot
 Say: Here is how Testcontainers looks. A label on the test class tells it to skip the tests where there is no
   container runtime. Another label marks the container, named by its image, here a small build of PostgreSQL
   version 17. Testcontainers starts it before the tests, on a free port, and gives the test its address and
-  password. When the tests finish, it removes it. And the fix to the query is to say, in so many words, that missing
+  password. When the tests finish, it removes the container. And the fix to the query is to say outright that missing
   dates come first.
 
 Include: how-we-build
@@ -60,12 +67,12 @@ Say: When should you use a real database? [pause 1600ms] For every query, stored
 
 ## closing: Where Testcontainers came from
 - Started by Richard North in 2015, free under the MIT licence
-- Now looked after by Docker, with versions for many languages
+- Docker now looks after it, with versions for many languages
 - It runs databases, message brokers, and almost anything with a container image
 Picture: book
-Say: Testcontainers was started by Richard North in 2015, and is free under the MIT licence. It's now looked after by
-  Docker, with versions for many languages. And it can run databases, message brokers, and almost anything else that
-  has a container image.
+Say: Richard North started Testcontainers in 2015. It's free under the MIT licence, and Docker now looks after it, with
+  versions for many languages. And it can run databases, message brokers, and almost anything else that has a container
+  image.
 
 ## closing: Find out more
 - https://testcontainers.com — Testcontainers, with guides for each language

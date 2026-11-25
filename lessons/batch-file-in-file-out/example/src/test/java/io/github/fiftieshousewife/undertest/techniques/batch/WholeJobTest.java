@@ -38,7 +38,7 @@ class WholeJobTest {
     }
 
     @Test
-    void aCleanedCaptureGivesTheSettlementFileTheBankAccepted() throws Exception {
+    void aMaskedCaptureGivesTheSettlementFileTheBankAccepted() throws Exception {
         final Path settlement = runJob(Jobs.knownFile("captured-payments.csv"));
 
         assertSameRecords(SettlementFile.read(settlement),

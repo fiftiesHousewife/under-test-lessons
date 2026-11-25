@@ -6,18 +6,25 @@ and checks every 100 milliseconds unless told otherwise); the JUnit user guide (
 "Eradicating Non-Determinism in Tests", martinfowler.com, April 2011; John Micco, "Flaky Tests at Google and How We
 Mitigate Them", Google Testing Blog, May 2016.
 
-## intro: It passes twice, fails once, then passes again
+## intro: Finding flaky tests
+- The problem: passes twice, fails once, passes again
+- The fix: wait for the email
+- The tool: Awaitility
+Picture: road
+Say: This lesson is about flaky tests: tests that pass on one run and fail on the next. Awaitility is a small test
+  library that waits for something to happen. We'll find a flaky test by running it many times. Then Awaitility waits
+  for the slow work, instead of sleeping for a fixed time.
+
+## intro: Passes twice, fails once, passes again
 - The test places an order, sleeps 200 milliseconds, then checks the email went
 - In busy continuous integration, every third email waits 600 milliseconds
 - Run 5 times, it fails on run 3 only: nothing changed, so people just rerun it
 Picture: bug
-Say: This lesson is about flaky tests: tests that pass on one run and fail on the next. We'll see how to find one by
-  running it many times, and how Awaitility waits for slow work instead of sleeping for a fixed time. [pause 1s] Here is
-  the problem. The test places an order, sleeps for 200 milliseconds, and then checks that the confirmation email went.
-  In continuous integration, the shared build that runs every test whenever someone pushes a change, the machines are
-  busy, and every third email waits 600 milliseconds. So, run 5 times, the test passes twice, fails on its third run,
-  and passes again. Nothing changed. A test like this is called flaky, and every flaky failure teaches people to rerun
-  the build, and then to ignore real failures too.
+Say: Here is the problem. The test places an order, sleeps for 200 milliseconds, and then checks that the confirmation
+  email went. Continuous integration is the shared build that runs every test whenever a developer pushes a change. Its
+  machines are busy, and every third email waits 600 milliseconds. So, run 5 times, the test passes twice, fails on its
+  third run, and passes again. Nothing changed. A test like this is called flaky, and every flaky failure teaches people
+  to rerun the build, and then to ignore real failures too.
 
 ## intro: Our example: order confirmations
 - A shop's order desk takes an order and returns at once
@@ -28,7 +35,7 @@ Say: Our example is a shop's order desk. It takes an order and returns at once. 
   later, on a background thread, so the customer is never kept waiting. In busy continuous integration, the mail
   server is sometimes slow.
 
-## intro: The fix: wait for the email, not for a fixed time
+## intro: The fix: wait for the email
 - Check again and again until the confirmation has gone, for at most 2 seconds
 - Go on the moment it has: no time wasted on a quiet machine
 - Run every new test 5 times before it goes in: one clean run proves little
@@ -55,17 +62,17 @@ Include: how-we-build
 - When a build fails and passes on a rerun: find the test, don't just rerun it
 - In tests of background work, messages or anything with a timeout: wait for the result, never sleep
 Picture: map
-Say: When should you look for flaky tests? [pause 1600ms] Before a new or changed test is merged, run it 5 times in a
+Say: When should you look for flaky tests? [pause 1600ms] Before you merge a new or changed test, run it 5 times in a
   row, in continuous integration, and let it in only if every run passes. When a build fails and then passes on a rerun,
   find the test that failed, rather than just rerunning it. And in tests of background work, messages, or anything
-  with a timeout, wait for the result. Never sleep for a guess.
+  with a timeout, wait for the result. Never sleep and hope.
 
 ## closing: Where the ideas came from
-- Awaitility was written by Johan Haleby, and first released in 2010
+- Johan Haleby wrote Awaitility, and first released it in 2010
 - Martin Fowler's article on non-deterministic tests, in 2011, called them a virulent infection
 - Google reported in 2016 that almost 16 percent of its tests were sometimes flaky
 Picture: book
-Say: Awaitility was written by Johan Haleby, and first released in 2010. Martin Fowler's article on non deterministic
+Say: Johan Haleby wrote Awaitility, and first released it in 2010. Martin Fowler's article on non deterministic
   tests, in 2011, warned that they spread like an infection, and advised waiting for a result instead of sleeping. And
   in 2016, Google reported that almost 16 percent of its tests were flaky some of the time.
 

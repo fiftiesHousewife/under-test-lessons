@@ -1,7 +1,8 @@
 // Slide deck controls: the Back and Next buttons, arrow keys, space or a click (on the left third of a slide to go
 // back) move between slides; N shows the speaker notes; the address remembers the slide (#3), so a link can point at
-// one. A deck with its voice (buildLessonDeckVoice) reads each slide's narration as you move to it, and has a Listen
-// button, or V, that plays the whole deck: each slide's narration, then the next slide when it ends.
+// one. A deck with its voice (buildLessonDeckVoice) plays itself when it opens: each slide's narration, then the next
+// slide when it ends. The Mute button, or V, stops the voice, and the deck then moves only when you move it; Unmute
+// carries on from the slide you are on. Muting is remembered, so the next deck opens muted too.
 (function () {
   var slides = Array.prototype.slice.call(document.querySelectorAll('.deck-slide'));
   var counter = document.createElement('div');
@@ -18,7 +19,7 @@
   // up GAP_MS after the narration ends, and its narration starts LEAD_MS after the slide appears, so its heading can be
   // read first. A slide with no narration stays SILENT_SLIDE_MS.
   var LEAD_MS = 800;
-  var GAP_MS = 700;
+  var GAP_MS = 3200;
   var SILENT_SLIDE_MS = 2500;
   var listening = false;
   var listen = null;
@@ -85,21 +86,31 @@
   function advance() {
     if (current < slides.length - 1) { show(current + 1); } else { setListening(false); }
   }
-  // A browser plays sound only after a click on the page. Arriving from the index's listen link, or from the end of the
-  // last lesson, there hasn't been one, so the deck asks for it rather than falling silent.
+  // A browser may refuse sound until there has been a click on the page, as on a first visit, so the deck then asks
+  // for one rather than falling silent: any click starts the voice.
   var waiting = false;
   function waitForClick() {
     setListening(false);
     waiting = true;
-    if (listen) { listen.textContent = 'Click to listen'; listen.classList.add('waiting'); }
+    if (listen) { listen.textContent = 'Click for sound'; listen.classList.add('waiting'); }
   }
   function setListening(on) {
     waiting = false;
     if (listen) { listen.classList.remove('waiting'); }
     listening = on;
     stopVoice();
-    if (listen) { listen.textContent = on ? 'Pause' : 'Listen'; listen.setAttribute('aria-pressed', String(on)); }
+    if (listen) { listen.textContent = on ? 'Mute' : 'Unmute'; listen.setAttribute('aria-pressed', String(!on)); }
     if (on) { playVoice(); }
+  }
+  // Muting by hand is remembered for the next deck; a browser without storage simply starts each deck with sound.
+  var MUTED = 'deck-voice-muted';
+  function remembered() {
+    try { return window.localStorage.getItem(MUTED) === '1'; } catch (e) { return false; }
+  }
+  function toggleSound() {
+    var muting = listening;
+    try { window.localStorage.setItem(MUTED, muting ? '1' : '0'); } catch (e) { /* not remembered, nothing more */ }
+    setListening(!muting);
   }
   function show(index, byHand) {
     current = Math.max(0, Math.min(slides.length - 1, index));
@@ -114,15 +125,17 @@
     button.className = className;
     button.type = 'button';
     button.textContent = text;
-    button.addEventListener('click', onClick);
+    // Each button gives up the focus once clicked, so a later space bar moves the slide on rather than pressing the
+    // button again.
+    button.addEventListener('click', function (event) { onClick(event); button.blur(); });
     document.body.appendChild(button);
     return button;
   }
   control('deck-move deck-back', '\u2039 Back', function () { move(-1); });
   control('deck-move deck-next', 'Next \u203a', function () { move(1); });
   if (document.querySelector('audio.voice')) {
-    listen = control('deck-listen', 'Listen', function () { setListening(!listening); });
-    listen.setAttribute('aria-pressed', 'false');
+    listen = control('deck-listen', 'Unmute', toggleSound);
+    listen.setAttribute('aria-pressed', 'true');
   }
   document.addEventListener('keydown', function (event) {
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].indexOf(event.key) >= 0) { move(1); event.preventDefault(); }
@@ -130,7 +143,7 @@
     if (event.key === 'Home') { show(0, true); }
     if (event.key === 'End') { show(slides.length - 1, true); }
     if (event.key === 'n' || event.key === 'N') { document.body.classList.toggle('show-notes'); }
-    if ((event.key === 'v' || event.key === 'V') && listen) { setListening(!listening); }
+    if ((event.key === 'v' || event.key === 'V') && listen) { toggleSound(); }
   });
   document.addEventListener('click', function (event) {
     if (waiting) { setListening(true); return; }
@@ -139,4 +152,5 @@
   window.addEventListener('resize', fit);
   fit();
   show(current);
+  if (listen && !remembered()) { setListening(true); }
 }());

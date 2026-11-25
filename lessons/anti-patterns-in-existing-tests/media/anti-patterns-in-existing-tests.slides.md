@@ -10,18 +10,25 @@ documentation (CPD, the copy-paste detector, with a minimum number of tokens; 75
 Deursen, Moonen, van den Bergh and Kok, Refactoring Test Code, XP2001, Cagliari, May 2001 (a catalogue of test
 smells); Gerard Meszaros, xUnit Test Patterns: Refactoring Test Code, Addison-Wesley, 2007; this lesson's runs.
 
+## intro: Anti-patterns in existing tests
+- The problem: the tests look better than they are
+- The fix: record them, refuse new ones
+- The tool: ArchUnit
+Picture: road
+Say: This lesson is about the tests you already have, and the habits that make them look stronger than they are.
+  ArchUnit is a library that reads compiled Java code and checks rules about it. We'll use it to find five kinds of
+  anti-pattern in an old shop's tests. Then we'll write each one down, and make the build refuse new ones.
+
 ## intro: The tests look better than they are
 - An old shop's 13 tests: coverage counts every one
 - One checks nothing, one checks only that an answer exists
 - One is switched off, two wait with fixed sleeps, two only pass in order
 - Deleting them would lose what they do pin down
 Picture: magnifier
-Say: This lesson is about the tests you already have, and the habits that make them look stronger than they are. We'll
-  find five kinds of anti-pattern in an old shop's tests with ArchUnit, write each one down, and then make the build
-  refuse new ones. [pause 1s] Here is the problem. We have been given an old shop's code, with 13 tests. Coverage counts
-  every one of them. But one test checks nothing at all, and another checks only that an answer exists. One has been
-  switched off. Two wait with fixed sleeps, and two only pass in a certain order. We can't trust them as they are. And
-  we can't just delete them, because some of them pin down behaviour that nothing else records.
+Say: Here is the problem. We've inherited an old shop's code, with 13 tests. Coverage counts every one of them. But one
+  test checks nothing at all, and another checks only that an answer exists. One has been switched off. Two wait with
+  fixed sleeps, and two only pass in a certain order. We can't trust them as they are. And we can't just delete them,
+  because some of them pin down behaviour that nothing else records.
 
 ## intro: Our example: an old shop's tests
 - A basket: 5% off orders of £50 or more
@@ -29,18 +36,18 @@ Say: This lesson is about the tests you already have, and the habits that make t
 - Order numbers, and sending paid orders to the warehouse
 - A checkout that reserves stock, adds VAT, takes payment and sends a receipt
 Picture: basket
-Say: Our example is that shop. Its basket takes 5 percent off orders of £50 or more. It refunds orders, numbers them,
+Say: Our example is the shop. Its basket takes 5 percent off orders of £50 or more. It refunds orders, numbers them,
   and sends paid ones to the warehouse. Its checkout reserves the stock, adds VAT, takes the payment and sends the
   receipt. Each part has its old tests, which we won't change.
 
-## intro: The fix: find each anti-pattern, write it down, then refuse new ones
+## intro: The fix: record them, refuse new ones
 - An anti-pattern: a habit that makes a test look stronger than it is
 - A check the build runs finds each one, with its test, file and line
 - The register: each one written down, with the decision taken on it
 - Then a ratchet: anything not in the register fails the build
 Picture: checklist
 Say: An anti-pattern is a habit that makes a test look stronger than it is, also called a test smell. First, a check
-  the build runs finds each one, with its test, file and line. Then each is written down in a register, with its
+  the build runs finds each one, with its test, file and line. Then we write each one down in a register, with its
   decision. Nothing is deleted. Then the register works as a ratchet, which turns one way only: old findings are
   allowed, and a new one fails the build.
 
@@ -52,7 +59,7 @@ Say: An anti-pattern is a habit that makes a test look stronger than it is, also
 Picture: terminal
 Say: How does it look? [pause 1600ms] Each kind is one rule, written with ArchUnit, a library that reads compiled Java
   classes. The register is a plain text file, one row for each finding, with its decision. And the ratchet's failure
-  says how many findings the register doesn't hold.
+  says how many findings are missing from the register.
 
 Include: how-we-build
 
@@ -62,7 +69,7 @@ Include: how-we-build
 - Coverage, reported with and without the tests in the register
 Picture: files
 Say: There are 7 common kinds. The lesson's checks find 5. Tests that reach shared systems show up when
-  they run on a machine with no route out. Copy-pasted tests are found by PMD's copy-paste detector, which this
+  they run on a machine with no route out. PMD's copy-paste detector finds copy-pasted tests, which this
   build runs already. And report coverage twice, with and without the tests in the register.
 
 ## closing: When to look for anti-patterns
@@ -73,7 +80,7 @@ Say: There are 7 common kinds. The lesson's checks find 5. Tests that reach shar
 Picture: map
 Say: When should you look for anti-patterns? [pause 1600ms] In discovery, before anyone trusts the coverage figure.
   Then triage each one. Disabled tests go to the application's owner, to switch back on or delete. Tests that wait or
-  depend on order are fixed with the flaky tests, and the rest are strengthened. And no test is deleted before the
+  depend on order get fixed with the flaky tests, and we strengthen the rest. And we delete no test before the
   approval tests exist, which record what the code does today, since an old test may be the only record of something.
 
 ## closing: Where it came from
@@ -95,4 +102,4 @@ Say: Test smells were first catalogued in 2001, in a paper called Refactoring Te
 Picture: globe
 Say: To find out more, start with ArchUnit's user guide, and PMD's copy-paste detector. The links on screen also take
   you to this lesson's test code, to run yourself. And try the exercise in the README: count the mocks a test class
-  makes with calls, as well as the marked fields.
+  makes by calling mock, as well as its annotated fields.

@@ -25,7 +25,7 @@ function element(tag) {
     setAttribute(k, v) { this.attributes[k] = v; }, getAttribute(k) { return this.attributes[k]; },
     addEventListener(n, fn) { (this.listeners[n] = this.listeners[n] || []).push(fn); },
     click() { clickInProgress = true; (this.listeners.click || []).forEach(fn => fn({ target: this })); clickInProgress = false; },
-    querySelector() { return null; }, closest() { return this; } };
+    querySelector() { return null; }, closest() { return this; }, blur() { this.blurred = true; } };
 }
 const clips = ['a.m4a', 'b.m4a', 'c.m4a'].map(src => new FakeAudio(src));
 const slides = clips.map(clip => Object.assign(element('section'), { querySelector: s => (s === 'audio.voice' ? clip : null) }));
@@ -59,9 +59,12 @@ global.CustomEvent = function (type) { this.type = type; };
 (async () => {
 eval(script);
 const listen = appended.find(el => el.className === 'deck-listen');
-check('a deck with voice has a Listen button', Boolean(listen));
+check('a deck with voice has a sound button', Boolean(listen));
+await settle(); // the deck's own start, with no click yet: refused
+check('a deck tries to play by itself, and asks for a click when the browser refuses', listen.textContent === 'Click for sound');
 listen.click();
-check('Listen plays the first slide', started[0] === 'a.m4a');
+check('the click starts it, and the button then mutes', listen.textContent === 'Mute');
+check('the click plays the first slide', started[0] === 'a.m4a');
 check('the next slide\'s clip is downloaded while this one plays', fetchedUrls.includes('b.m4a'));
 await settle();
 let finished = false;
@@ -74,9 +77,10 @@ for (let i = 0; i < 3; i++) {
 check('the second slide plays after the first, without another click', started[1] === 'b.m4a');
 check('the third slide plays after the second', started[2] === 'c.m4a');
 check('the deck says when its last slide has been read', finished);
-check('the next slide comes up 0.7 s after the narration ends', delays.includes(700));
+check('when the deck ends, the button offers sound again', listen.textContent === 'Unmute');
+check('the next slide comes up 3.2 s after the narration ends', delays.includes(3200));
 check('its narration starts 0.8 s after the slide appears, and no later', delays.some(ms => ms > 700 && ms <= 800)
-  && delays.every(ms => ms <= 800 || ms === 2500));
+  && delays.every(ms => ms <= 800 || ms === 3200 || ms === 2500));
 
 // Moving by hand, not listening: the Back and Next buttons are there, each move reads that slide's narration, and the
 // deck stays on it when the narration ends.
@@ -86,12 +90,18 @@ check('every deck has a Back and a Next button', Boolean(back) && Boolean(next))
 const counter = appended.find(el => el.className === 'deck-counter');
 back.click();
 check('Back goes to the slide before', counter.textContent === '2 / 3');
+check('Back gives up the focus, so the space bar moves on rather than pressing Back again', back.blurred === true);
 check('moving back reads that slide', started[started.length - 1] === 'b.m4a');
 everyAudio.find(a => !a.paused).finish();
 runTimers();
 check('a slide reached by hand stays when its narration ends', counter.textContent === '2 / 3');
 next.click();
 check('Next reads the next slide', counter.textContent === '3 / 3' && started[started.length - 1] === 'c.m4a');
+const press = key => (documentListeners.keydown || []).forEach(fn => fn({ key, preventDefault() {} }));
+press('ArrowLeft');
+check('the left arrow goes to the slide before', counter.textContent === '2 / 3');
+press('ArrowRight');
+check('the right arrow goes to the next slide', counter.textContent === '3 / 3');
 // Arriving with no click yet (the index's listen link, or the last lesson carrying on): the browser refuses to play,
 // so the deck asks for a click, and the next click on the page starts it. A fresh deck, as a newly opened page has.
 const freshClips = ['x.m4a', 'y.m4a'].map(src => new FakeAudio(src));
@@ -103,13 +113,24 @@ global.document.querySelector = s => (s === 'audio.voice' ? freshClips[0] : null
 eval(script);
 const freshListen = appended.find(el => el.className === 'deck-listen');
 const before = started.length;
-(documentListeners.keydown || []).forEach(fn => fn({ key: 'v', preventDefault() {} })); // no click: refused
-Promise.resolve().then(() => Promise.resolve()).then(() => {
-  check('a start the browser refuses asks for a click, rather than falling silent', freshListen.textContent === 'Click to listen');
+await settle(); // the deck's own start, with no click yet: refused
+{
+  check('a start the browser refuses asks for a click, rather than falling silent', freshListen.textContent === 'Click for sound');
   clickInProgress = true;
   (documentListeners.click || []).forEach(fn => fn({ target: { closest: () => null }, clientX: 1500 }));
   clickInProgress = false;
-  check('the next click on the page starts the voice', started.length > before && freshListen.textContent === 'Pause');
-  process.exit(failures ? 1 : 0);
-});
+  check('the next click on the page starts the voice', started.length > before && freshListen.textContent === 'Mute');
+}
+// Muting is remembered: a deck opened after a mute stays silent until unmuted.
+const store = {};
+global.window.localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); } };
+freshListen.click(); // mute
+check('Mute stops the voice and offers Unmute', freshListen.textContent === 'Unmute' && store['deck-voice-muted'] === '1');
+appended.length = 0;
+const startedBeforeMutedDeck = started.length;
+eval(script);
+await settle();
+const mutedListen = appended.find(el => el.className === 'deck-listen');
+check('a deck opened after a mute stays silent', started.length === startedBeforeMutedDeck && mutedListen.textContent === 'Unmute');
+process.exit(failures ? 1 : 0);
 })();

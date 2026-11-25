@@ -9,8 +9,8 @@ reads the output back as records rather than comparing lines of text, so a failu
 shows both values. The example job is written with [Spring Batch](https://spring.io/projects/spring-batch) (no Spring
 Boot needed) and run end to end by its test library,
 [spring-batch-test](https://docs.spring.io/spring-batch/reference/testing.html). Its input is made up by
-[Datafaker](https://www.datafaker.net), from a fixed seed so every run is the same, or is a captured day's files,
-cleaned with keyed substitutes.
+[Datafaker](https://www.datafaker.net), from a fixed seed so every run is the same, or is a day of real files,
+masked with keyed substitutes.
 
 ## Run the example
 
@@ -42,12 +42,12 @@ into a settlement line in pounds, and writes the line.
   [`SettlementFile`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/SettlementFile.java)
   reads the output back as records. One test runs on
   [payments made up by Datafaker](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/SyntheticPayments.java);
-  the other on [a captured day's payments](example/src/test/resources/settlement/captured-payments.csv) and
+  the other on [a day of real payments](example/src/test/resources/settlement/captured-payments.csv) and
   [the settlement file the bank accepted](example/src/test/resources/settlement/captured-settlement.csv).
 - [`KeyedSubstitutes`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/KeyedSubstitutes.java)
-  cleaned that capture before it was kept: each account number became a keyed substitute, made with the JDK's
+  masked that capture before it was kept: each account number became a keyed substitute, made with the JDK's
   HMAC-SHA256 (`javax.crypto.Mac`) and a fixed test key. The same number always gets the same substitute, so each
-  payment still matches its settlement line. (The lesson's capture is made up, and cleaned the same way.)
+  payment still matches its settlement line.
 
 The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
 field in quotes when it holds a comma or a line break, so read them with a CSV parser, such as
@@ -80,7 +80,7 @@ more, and the closing line must count and add up across every chunk.
 
 - **For every batch job** that reads or writes files other systems use.
 - **Compare records, not text,** so a failure names the field and both values, and never shows a machine's folders.
-- **Make input small and synthetic** with Datafaker and a fixed seed, or **capture a real day and clean it** with keyed
+- **Make input small and synthetic** with Datafaker and a fixed seed, or **take a day of real data and mask it** with keyed
   substitutes before it is kept. Never keep real customer data with the tests. In real use, keep the key out of the
   repository: anyone with the key can work back from a substitute by trying every account number.
 - **For Spring Batch jobs,** spring-batch-test runs a whole job, or a single step.
@@ -105,6 +105,6 @@ AssertJ runs on Java 8 as it is.
 - [Datafaker](https://www.datafaker.net), and its guide to repeatable results with a seed
 - [JUnit](https://junit.org/) and its user guide on temporary folders
 - [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC, the keyed hash behind the substitutes
-- [Recorded HTTP responses](../recorded-http-responses/README.md), which clean recordings with keyed substitutes too
+- [Recorded HTTP responses](../recorded-http-responses/README.md), which mask recordings with keyed substitutes too
 - [Characterisation tests](../characterisation-tests/README.md), to approve a whole output you haven't written down yet
 - The toolkit's [batch-file-in-file-out technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/batch-file-in-file-out/technique.yaml)

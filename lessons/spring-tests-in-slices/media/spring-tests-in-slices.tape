@@ -135,7 +135,7 @@ Show
 Wait+Screen@300s /tests failed\. Report/
 Sleep 16s
 Hide
-Type@1ms `callout "Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where 2026-11-23 was promised."`
+Type@1ms `callout "Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where the description says 2026-11-23."`
 Enter
 Sleep 300ms
 Show
@@ -146,7 +146,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The answer with the date as the description promises:"`
+Type@1ms `note "The answer with the date as the description gives it:"`
 Enter
 Sleep 300ms
 Type@1ms `show DeliveryView 7 12 "the fixed delivery answer" --zoom 8`

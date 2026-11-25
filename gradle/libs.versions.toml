@@ -54,7 +54,7 @@ system-stubs = "2.1.8"
 # The finding flaky tests lesson.
 awaitility = "4.3.0"
 
-# The responses checked against the OpenAPI document lesson. Formerly swagger-request-validator; renamed at 3.0.0.
+# The responses checked against the OpenAPI schema lesson. Formerly swagger-request-validator; renamed at 3.0.0.
 openapi-request-validator = "3.0.0"
 
 # The capturing with Logbook lesson. Logbook 4 needs Java 17 or later; Jetty 12's ee11 servlets match its Servlet 6.1 API.
@@ -118,7 +118,7 @@ system-stubs-jupiter = { module = "uk.org.webcompere:system-stubs-jupiter", vers
 # The finding flaky tests lesson
 awaitility = { module = "org.awaitility:awaitility", version.ref = "awaitility" }
 
-# The responses checked against the OpenAPI document lesson
+# The responses checked against the OpenAPI schema lesson
 openapi-request-validator-restassured = { module = "com.atlassian.oai:openapi-request-validator-restassured", version.ref = "openapi-request-validator" }
 
 # The capturing with Logbook lesson

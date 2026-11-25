@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
-/** The example messages: collected by browsing a real queue, cleaned, and kept one per line, after comment lines. */
+/** The example messages: collected by browsing a real queue, masked, and kept one per line, after comment lines. */
 final class ExampleMessages {
 
     private ExampleMessages() {

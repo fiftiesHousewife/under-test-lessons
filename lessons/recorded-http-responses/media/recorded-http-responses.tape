@@ -167,7 +167,7 @@ Type@1ms `show KeyedRecordingCleaner 41 64 "the cleaner" --zoom 58`
 Enter
 Sleep 300ms
 Show
-Sleep 37s
+Sleep 39s
 
 # ---- Scene 11: the fix ----
 Hide

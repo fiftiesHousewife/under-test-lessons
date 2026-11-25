@@ -14,27 +14,29 @@ import shutil
 import sys
 
 CATALOGUE = os.path.join("lessons", "CATALOGUE.md")
-SERIES_JS = """// Added to each published deck: links back to the index and on to the next lesson, and, while you listen (Listen,
-// or V), the next lesson carries on when this one's last slide has been read.
+SERIES_JS = """// Added to each published deck: links back to the index and on to the next lesson, and, unless muted, the next
+// lesson carries on when this one's last slide has been read.
 (function () {
   var me = document.currentScript;
+  var previous = me.getAttribute('data-previous');
   var next = me.getAttribute('data-next');
   var place = me.getAttribute('data-place');
+  if (place) {
+    var where = document.createElement('div');
+    where.className = 'series-place';
+    where.textContent = place;
+    document.body.appendChild(where);
+  }
   var nav = document.createElement('nav');
-  nav.className = 'series';
-  nav.setAttribute('style', 'position:fixed;left:16px;bottom:10px;font:14px Helvetica,Arial,sans-serif;z-index:5');
-  nav.innerHTML = (place ? '<span class="place"></span> · ' : '') + '<a href="index.html">All lessons</a>'
-    + (next ? ' · <a href="' + next + '.html#1">Next lesson</a>' : '');
-  if (place) { nav.querySelector('.place').textContent = place; }
+  nav.className = 'series-links';
+  nav.innerHTML = (previous ? '<a href="' + previous + '.html#1">\u2039 Previous lesson</a>' : '')
+    + '<a href="index.html">All lessons</a>'
+    + (next ? '<a href="' + next + '.html#1">Next lesson \u203a</a>' : '');
   document.body.appendChild(nav);
-  var listen = function () { return document.querySelector('.deck-listen'); };
   if (next) {
     document.addEventListener('deck-voice-finished', function () {
-      setTimeout(function () { location.href = next + '.html?listen=1#1'; }, 1500);
+      setTimeout(function () { location.href = next + '.html#1'; }, 1500);
     });
-  }
-  if (/[?&]listen=1/.test(location.search) && listen()) {
-    listen().click();
   }
 }());
 """
@@ -77,12 +79,15 @@ def place_label(number, total, group):
     return f"Lesson {number} of {total} · {group}"
 
 
-def publish_deck(lesson, following, out, place=""):
+def publish_deck(lesson, neighbours, out, place=""):
+    """Writes one deck with its series links; neighbours is (the lesson before it, the lesson after it), either None."""
+    before, following = neighbours
     with open(deck_of(lesson), encoding="utf-8") as f:
         page = f.read()
     # Links to other lessons point at their deck files in the repository; published, each deck is <id>.html.
     page = re.sub(r'href="\.\./\.\./([a-z0-9-]+)/media/\1\.deck\.html', r'href="\1.html', page)
-    tag = (f'<script src="series.js" data-next="{html.escape(following or "")}"'
+    tag = (f'<script src="series.js" data-previous="{html.escape(before or "")}"'
+           f' data-next="{html.escape(following or "")}"'
            f' data-place="{html.escape(place)}"></script>')
     page = page.replace("</body>", tag + "</body>", 1)
     with open(os.path.join(out, lesson + ".html"), "w", encoding="utf-8") as f:
@@ -97,7 +102,8 @@ def main(out):
     order = [lesson for _, lessons in groups for lesson, _ in lessons]
     group_of = {lesson: title for title, lessons in groups for lesson, _ in lessons}
     for i, lesson in enumerate(order):
-        publish_deck(lesson, order[i + 1] if i + 1 < len(order) else None, out,
+        neighbours = (order[i - 1] if i > 0 else None, order[i + 1] if i + 1 < len(order) else None)
+        publish_deck(lesson, neighbours, out,
                      place_label(i + 1, len(order), group_of[lesson]))
     with open(os.path.join(out, "series.js"), "w", encoding="utf-8") as f:
         f.write(SERIES_JS)
@@ -105,7 +111,6 @@ def main(out):
     for title, lessons in groups:
         items = "".join(
             f'<li><a href="{lesson}.html#1">{html.escape(name)}</a>'
-            + (f' <a class="listen" href="{lesson}.html?listen=1#1">listen</a>' if voice_of(lesson) else "")
             + "</li>" for lesson, name in lessons)
         sections.append(f"<h2>{html.escape(title)}</h2><ol>{items}</ol>")
     first = order[0] if order else ""
@@ -118,8 +123,9 @@ def main(out):
                 'margin-left:.5rem}.start{font:16px Helvetica,Arial,sans-serif}</style></head><body>'
                 '<h1>Lesson slide decks</h1>'
                 '<p>The lessons in the catalogue\'s order. Arrow keys move between slides, N shows the speaker notes, '
-                'and Listen (or V) reads each slide aloud; while you listen, each lesson carries on into the next.</p>'
-                + (f'<p class="start"><a href="{first}.html?listen=1#1">Listen to the whole series from the start</a>'
+                'and each deck reads its slides aloud as it plays, then carries on into the next lesson. Mute (or V) '
+                'stops the voice.</p>'
+                + (f'<p class="start"><a href="{first}.html#1">Start the series from the beginning</a>'
                    '</p>' if first else "")
                 + "".join(sections) + "</body></html>\n")
     print(f"{len(order)} decks gathered into {out}, in the catalogue's order")

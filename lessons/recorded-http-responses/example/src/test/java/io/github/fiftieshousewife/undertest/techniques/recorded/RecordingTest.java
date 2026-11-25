@@ -29,7 +29,7 @@ import tools.jackson.databind.json.JsonMapper;
 
 /**
  * BEFORE and AFTER for making recordings: WireMock records a stand-in supplier running on this machine. Saved as
- * recorded, the files hold a person's name, email address and password token. Cleaned first, they hold none of them.
+ * recorded, the files hold a person's name, email address and password token. Masked first, they hold none of them.
  */
 class RecordingTest {
 
@@ -70,7 +70,7 @@ class RecordingTest {
     }
 
     @Test
-    void cleanedFirstTheFilesHoldSubstitutes() throws IOException, InterruptedException {
+    void maskedFirstTheFilesHoldSubstitutes() throws IOException, InterruptedException {
         final List<String> files = recordAndSave(Clients.cleaner());
         assertAll(
                 () -> assertThat(personalDataIn(files)).as("personal data in the saved recordings").isEmpty(),
@@ -78,7 +78,7 @@ class RecordingTest {
                         .isEqualTo(List.of("person-ea08c4400378ace1", "person-ea08c4400378ace1")));
     }
 
-    /** Records two questions to the stand-in, then cleans each recording and saves it to a file. */
+    /** Records two questions to the stand-in, then masks each recording and saves it to a file. */
     private List<String> recordAndSave(final RecordingCleaner cleaner) throws IOException, InterruptedException {
         recorder.startRecording(recordSpec().forTarget(standIn.baseUrl())
                 .captureHeader("Authorization").makeStubsPersistent(false));
@@ -87,7 +87,7 @@ class RecordingTest {
         final List<String> files = new ArrayList<>();
         for (final StubMapping recording : recorder.stopRecording().getStubMappings()) {
             final Path file = saved.resolve(recording.getName() + ".json");
-            Files.writeString(file, cleaner.clean(Json.write(recording)));
+            Files.writeString(file, cleaner.mask(Json.write(recording)));
             files.add(Files.readString(file));
         }
         return files;

@@ -34,7 +34,7 @@ Type@1ms `show lessons/black-box-tests/example/build.gradle.kts "/^dependencies/
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 22s
 
 # ---- Scene 2: the application as it ships ----
 Hide

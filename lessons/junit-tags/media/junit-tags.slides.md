@@ -5,23 +5,29 @@ Sources: the JUnit user guide (tagging and filtering with @Tag; meta-annotations
 in 2017; JUnit 6 is the current generation), and Gradle's user guide on testing in Java projects (test grouping with
 includeTags and excludeTags in useJUnitPlatform; a test task of your own, given the test classes and class path).
 
+## intro: Tags: fast tests first
+- The problem: every change waits for the slow tests
+- The fix: label the slow tests
+- The tools: JUnit and Gradle
+Picture: road
+Say: This lesson is about JUnit tags: labels that let the build run the fast tests first, and the slow ones apart. We'll
+  see every change wait for the slow tests, and how one label and the build fix it.
+
 ## intro: Every change waits for the slow tests
 - An online shop's code has 4 quick tests, and 2 slow ones
 - The slow ones start the warehouse's test system, which takes 2 seconds
 - Every test run waits for them, so people stop running the tests
 Picture: bug
-Say: This lesson is about JUnit tags: labels that let the build run the fast tests first, and the slow ones apart. We'll
-  see every change wait for the slow tests, and how one label and the build fix it. [pause 1s] Here is the problem. The
-  code of an online shop has 4 quick tests, and 2 slow ones. The slow ones start the warehouse's test system first,
-  which takes 2 seconds. Every test run waits for them, even after the smallest change. And when every run is slow,
-  people stop running the tests.
+Say: Here is the problem. The code of an online shop has 4 quick tests, and 2 slow ones. The slow ones start the
+  warehouse's test system first, which takes 2 seconds. Every test run waits for them, even after the smallest change.
+  And when every run is slow, people stop running the tests.
 
 ## intro: Our example: a shop's stock check
-- Before promising an order, the shop asks the warehouse: is there enough?
+- Before taking an order, the shop asks the warehouse: is there enough?
 - The quick tests use a warehouse kept in memory, which answers at once
 - The slow tests use the warehouse's own test system: worth keeping, because it's the real thing
 Picture: basket
-Say: Our example is that online shop's stock check. Before it promises an order, the shop asks the warehouse whether
+Say: Our example is an online shop's stock check. Before it takes an order, the shop asks the warehouse whether
   there is enough of the item. The quick tests use a warehouse kept in memory, which answers at once. The slow tests
   use the warehouse's own test system. They're worth keeping, because they check the real thing.
 
@@ -30,9 +36,9 @@ Say: Our example is that online shop's stock check. Before it promises an order,
 - Every change runs only the quick tests: a moment, not 2 seconds
 - Continuous integration runs the slow ones too, so nothing goes untested
 Picture: tag
-Say: The fix is to label the slow tests. JUnit's word for the label is a tag. You write tag, slow, on each slow test,
-  or on its whole class. Then every change runs only the quick tests, which take a moment. And continuous integration,
-  the shared build that runs every test whenever someone pushes a change, runs the slow ones as well, so nothing goes
+Say: The fix is to label the slow tests. JUnit's word for the label is a tag. You write tag, slow, on each slow test, or
+  on its whole class. Then every change runs only the quick tests, which take a moment. And continuous integration, the
+  shared build that runs every test whenever a developer pushes a change, runs the slow ones as well, so nothing goes
   untested.
 
 ## intro: How the build uses the label
@@ -40,7 +46,7 @@ Say: The fix is to label the slow tests. JUnit's word for the label is a tag. Yo
 - A second task, slowTest, runs only them: includeTags("slow")
 - Continuous integration runs check, which runs both
 Picture: robot
-Say: How does the build use the label? The usual test task is told to leave out the tests tagged 'slow'. A second task,
+Say: How does the build use the label? We tell the usual test task to leave out the tests tagged 'slow'. A second task,
   called slow test, runs only those. And continuous integration runs the check task, which runs both, so the slow
   tests still run on every change that's pushed.
 

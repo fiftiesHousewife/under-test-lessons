@@ -3,7 +3,7 @@
 **Compare JSON as data, ignoring only the parts that must vary. (XMLUnit does the same for XML.)**
 
 Output with an id or a time in it differs on every run, so a test that compares the whole text fails every time.
-Someone then loosens it to check for a few words, and it passes whatever the numbers are.
+Then it gets loosened to check for a few words, and it passes whatever the numbers are.
 [JSONUnit](https://github.com/lukas-krecan/JsonUnit) compares JSON as a structure, field by field, in any order, with
 placeholders for the parts that may vary. [XMLUnit](https://www.xmlunit.org) does the same for XML.
 
@@ -24,11 +24,11 @@ forgets the quantities.
 - [`CompareJsonTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/CompareJsonTest.java)
   is the "after": a structured comparison that names the wrong field and both values.
 
-### Cleaned captures need no placeholder for what was cleaned
+### Masked captures need no placeholder for what was masked
 
-When the expected JSON comes from a captured real output, personal data in it is cleaned first, and how it is cleaned
+When the expected JSON comes from a captured real output, personal data in it is masked first, and how it is masked
 decides what the comparison must ignore. A keyed substitute, as in
-[Cleaning captured data so tests still work](../cleaning-captured-data/README.md), is the same every time for the
+[Masking captured data so tests still work](../masking-captured-data/README.md), is the same every time for the
 same value: the customer's email becomes the same made-up text in every capture and every run. So it is compared
 exactly, like any other field. Only what really varies, the id and the time, keeps a placeholder:
 
@@ -41,7 +41,7 @@ exactly, like any other field. Only what really varies, the id and the time, kee
 }
 ```
 
-Text that changes on every cleaning, such as a random replacement, would need a placeholder too, and the comparison
+Text that changes each time the data masking runs, such as a random replacement, would need a placeholder too, and the comparison
 would then pass whoever the customer was.
 
 ## Exercise

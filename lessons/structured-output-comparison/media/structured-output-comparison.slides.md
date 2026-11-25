@@ -3,16 +3,23 @@
 Sources: github.com/lukas-krecan/JsonUnit (Apache 2.0 licence, by Lukáš Křečan; AssertJ, Hamcrest and JUnit support in
 its README); xmlunit.org (XMLUnit, for Java and .NET).
 
+## intro: Comparing structured output
+- The problem: the total is wrong, and the test passes
+- The fix: compare the output as data
+- The tool: JSONUnit
+Picture: road
+Say: This lesson is about comparing structured output, such as JSON, as data rather than as text. JSONUnit is a library
+  that compares JSON that way. We'll see a wrong total that a loose test lets through. Then JSONUnit names the field,
+  and both values.
+
 ## intro: The total is wrong, and the test passes
 - 4 teas at £2.50 and 1 packet of biscuits at £1.20 should come to £11.20
 - Today's summary says £3.70: it forgets how many of each were bought
 - The test only checks that some words appear, so it passes
 Picture: bug
-Say: This lesson is about comparing structured output, such as JSON, as data rather than as text. We'll see a wrong
-  total that a loose test passes, and how JSONUnit names the field and both values. [pause 1s] Here is the problem. An
-  order has 4 teas at 2 pounds 50, and 1 packet of biscuits at 1 pound 20. That should come to 11 pounds 20. Today's
-  order summary says 3 pounds 70, because it forgets how many of each were bought. And its test passes. It only checks
-  that a few words appear, whatever the numbers are.
+Say: Here is the problem. An order has 4 teas at 2 pounds 50, and 1 packet of biscuits at 1 pound 20. That should come
+  to 11 pounds 20. Today's order summary says 3 pounds 70, because it forgets how many of each were bought. And its test
+  passes. It only checks that a few words appear, whatever the numbers are.
 
 ## intro: Our example: an order summary
 - An order goes to the warehouse as JSON, a common text format for data
@@ -21,7 +28,7 @@ Say: This lesson is about comparing structured output, such as JSON, as data rat
 Picture: basket
 Say: Our example is an order summary, sent to the warehouse as JSON, a common text format for data. It lists each
   item, its price, and how many were bought. And it has a total, a new id, and the time it was made. The id and the
-  time are different on every run. That's why the test was loosened. Comparing the whole text failed every time.
+  time are different on every run. That's why we loosened the test. Comparing the whole text failed every time.
 
 ## intro: The fix: compare the output as data
 - Check every field and value: the items, the quantities, the total
@@ -57,7 +64,7 @@ Say: When should you use it? [pause 1600ms] Whenever a test checks JSON or XML: 
 - Works with AssertJ, Hamcrest, and plain JUnit
 - XMLUnit does the same for XML, in Java and .NET
 Picture: book
-Say: JSONUnit was written by Lukáš Křečan, and is free under the Apache licence. It works with AssertJ, with Hamcrest,
+Say: Lukáš Křečan wrote JSONUnit, and it's free under the Apache licence. It works with AssertJ, with Hamcrest,
   and with plain JUnit. XMLUnit does the same for XML, in both Java and .NET.
 
 ## closing: Find out more
@@ -66,6 +73,6 @@ Say: JSONUnit was written by Lukáš Křečan, and is free under the Apache lice
 - {lessons-repo} — run this lesson yourself: its test code and examples
 - Exercise: stop the clock, and check the time exactly; the README has the steps and the answer
 Picture: globe
-Say: To find out more, JSONUnit's page has plenty of examples, and XMLUnit's site covers XML. The links on screen
+Say: To find out more, start with JSONUnit's page, full of examples, and XMLUnit's site for XML. The links on screen
   also take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: stop
   the clock, and check the time exactly, so only the id needs a placeholder.

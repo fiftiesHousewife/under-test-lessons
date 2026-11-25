@@ -7,9 +7,9 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Cleans a captured file before it is kept with the tests: each account number becomes a keyed substitute, made with
+ * Masks a captured file before it is kept with the tests: each account number becomes a keyed substitute, made with
  * the JDK's HMAC-SHA256 and a fixed test key. The same account always gets the same substitute, in every file, so a
- * payment and its settlement line still match after cleaning. The real number can't be worked out without the key.
+ * payment and its settlement line still match after masking. The real number can't be worked out without the key.
  */
 final class KeyedSubstitutes {
 

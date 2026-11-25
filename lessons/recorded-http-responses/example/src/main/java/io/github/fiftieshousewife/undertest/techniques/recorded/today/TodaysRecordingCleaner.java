@@ -6,7 +6,7 @@ import io.github.fiftieshousewife.undertest.techniques.recorded.RecordingCleaner
 public final class TodaysRecordingCleaner implements RecordingCleaner {
 
     @Override
-    public String clean(final String recording) {
+    public String mask(final String recording) {
         return recording;
     }
 }

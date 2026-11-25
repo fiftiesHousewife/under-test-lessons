@@ -4,17 +4,24 @@ Sources: Martin Fowler, "Mocks Aren't Stubs" (martinfowler.com, 2007) for the na
 xUnit Test Patterns (2007), which defines fakes; ArchUnit (archunit.org) for keeping connection code behind the
 interface.
 
+## intro: Fake behind an interface
+- The problem: A £150 order never reaches the fraud check
+- The fix: a fake queue
+- The tool: plain Java
+Picture: road
+Say: This lesson is about putting a fake behind an interface: a small, working stand-in for something the code talks to
+  a lot. We'll see an order that never reaches the fraud check, and a fake message queue that behaves the way the real
+  one does.
+
 ## intro: A £150 order never reaches the fraud check
 - An order of £150 should go to the warehouse, and for a fraud check
 - The code commits the queue too early, so the fraud check message is never delivered
 - The mock test passes: every call it lists was made
 Picture: bug
-Say: This lesson is about putting a fake behind an interface: a small, working stand-in for something the code talks to
-  a lot. We'll see an order that never reaches the fraud check, and a fake message queue that behaves the way the real
-  one does. [pause 1s] Here is the problem. A customer places an order of £150. It should go to the warehouse, and,
-  because it is £100 or more, for a fraud check as well. But the code commits the queue too early, before it sends the
-  fraud check message. So that message is never delivered. And the test passes. It uses a mock, a stand-in that only
-  records the calls made. Every call the test lists was made, so it can't see that the message never arrived.
+Say: Here is the problem. A customer places an order of £150. It should go to the warehouse, and, because it is £100 or
+  more, for a fraud check as well. But the code commits the queue too early, before it sends the fraud check message. So
+  that message is never delivered. And the test passes. It uses a mock, a stand-in that only records the calls made.
+  Every call the test lists was made, so it can't tell that the message never arrived.
 
 ## intro: Our example: orders on a message queue
 - Every order is sent to the warehouse
@@ -24,7 +31,7 @@ Picture: basket
 Say: Our example sends orders on a message queue. Every order goes to the warehouse. Orders of £100 or more also go
   for a fraud check. And the queue delivers messages only when they are committed.
 
-## intro: The fix: a fake queue that delivers on commit
+## intro: The fix: a fake queue
 - A fake is a small, working stand-in, kept in memory
 - It holds messages until commit, then delivers them, as the real queue does
 - The code reaches the queue through an interface, so a test can hand over the fake

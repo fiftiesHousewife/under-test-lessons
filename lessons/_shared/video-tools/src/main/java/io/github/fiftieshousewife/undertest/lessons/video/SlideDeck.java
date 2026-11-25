@@ -96,13 +96,24 @@ final class SlideDeck {
                 + SlideHtml.escape(source) + "\"></audio>" + section.substring(end);
     }
 
-    /** A scene of the example: its narration and callouts beside the code panels and commands it shows. */
+    /**
+     * A scene of the example: its caption as points, and its callouts, beside the code panels and commands it shows;
+     * the narration, which the voice reads, is in the speaker notes. A scene with no caption shows its narration.
+     */
     @SuppressFBWarnings(value = "POTENTIAL_XML_INJECTION", justification = "Every piece of text is escaped")
     static String sceneSection(final Slide scene, final SceneContent content) {
         final StringBuilder html = new StringBuilder("<section class=\"deck-slide\"><main class=\"slide scene\">"
                 + "<section class=\"text\"><h1>").append(SlideHtml.escape(scene.title()))
-                .append("</h1><div class=\"rule\"></div><p class=\"scene-text\">")
-                .append(SlideHtml.escape(scene.narration())).append("</p>");
+                .append("</h1><div class=\"rule\"></div>");
+        final List<String> points = points(scene.title(), content.notes());
+        if (points.isEmpty()) {
+            html.append("<p class=\"scene-text\">").append(SlideHtml.escape(scene.narration())).append("</p>");
+        } else {
+            html.append("<ul class=\"scene-points\">");
+            points.forEach(point -> html.append("<li class=\"point\">").append(SlideHtml.escape(point))
+                    .append("</li>"));
+            html.append("</ul>");
+        }
         content.callouts().forEach(callout -> html.append("<p class=\"callout\">").append(SlideHtml.escape(callout))
                 .append("</p>"));
         html.append("</section><figure class=\"code\" style=\"--code-size: ").append(codeSize(content))
@@ -126,6 +137,28 @@ final class SlideDeck {
         }
         return html.append("</figure></main><aside class=\"notes\">").append(SlideHtml.escape(scene.narration()))
                 .append("</aside></section>\n").toString();
+    }
+
+    /**
+     * A scene's captions as points: each sentence or clause after a colon its own point, without the emphasis marks,
+     * and without a first clause that only repeats the slide's title ("The code under test: ...").
+     */
+    static List<String> points(final String title, final List<String> notes) {
+        final String heading = capitalised(title.strip());
+        final List<String> points = new ArrayList<>();
+        for (final String note : notes) {
+            for (final String part : note.replace("*", "").split("(?<=[.:])\\s+")) {
+                final String point = part.strip().replaceAll("[.:]$", "").strip();
+                if (!point.isEmpty() && !capitalised(point).equals(heading)) {
+                    points.add(capitalised(point));
+                }
+            }
+        }
+        return points;
+    }
+
+    private static String capitalised(final String text) {
+        return text.isEmpty() ? text : Character.toUpperCase(text.charAt(0)) + text.substring(1);
     }
 
     /** One line of a panel or output, escaped, and highlighted when it is one the scene is about. */

@@ -9,10 +9,10 @@ closing slides have their own narration, in
    subclasses, so it never needs special access to the test's Java process.
 3. Here is the code under test, today's invoice. It adds up the lines in pence, and converts the total to euros. It
    gets the exchange rate from a hard-wired singleton, the live rates, which call the bank over the network.
-4. Now, [pause 300ms] the test. Mockito makes a stand-in for the exchange rates, which always says one euro seventeen
+4. Now, the test. Mockito makes a stand-in for the exchange rates, which always says one euro seventeen
    to the pound. The test checks the rounding, and that an empty invoice costs nothing.
 5. We run the test against today's invoice. Both tests fail. Today's invoice has nowhere to take the stand-in, so it
    calls the live service, which a test machine can't reach.
-6. Now the invoice after one small change. The rates are passed in, through the constructor. Production passes the
+6. Now the invoice after one small change. We pass the rates in, through the constructor. Production passes the
    live rates. A test passes the stand-in.
 7. We run the same test. [pause 1s] Every test passes, in about a second, with no network and no account.

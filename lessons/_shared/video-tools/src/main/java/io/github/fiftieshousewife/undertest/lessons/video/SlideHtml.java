@@ -72,8 +72,8 @@ final class SlideHtml {
                 continue;
             }
             final boolean link = point.startsWith("https://") || point.startsWith("http://");
-            html.append("<li class=\"").append(link ? "link" : "point").append("\">").append(escape(point))
-                    .append("</li>");
+            html.append("<li class=\"").append(link ? "link" : "point").append("\">")
+                    .append(link ? linked(point) : escape(point)).append("</li>");
         }
         html.append("</ul>").append(paragraph).append("</section>");
         if (!slide.heading().picture().isEmpty()) {
@@ -81,6 +81,17 @@ final class SlideHtml {
                     .append(read(picture(pictures, slide.heading().picture()))).append("</figure>");
         }
         return html.append("</main>").toString();
+    }
+
+    /**
+     * A point that starts with an address, escaped, with the address as a link that opens in a new tab: the deck can be
+     * clicked, and the video still shows the address.
+     */
+    static String linked(final String point) {
+        final int end = point.indexOf(' ');
+        final String address = end < 0 ? point : point.substring(0, end);
+        return "<a href=\"" + escape(address) + "\" target=\"_blank\" rel=\"noopener\">" + escape(address) + "</a>"
+                + escape(end < 0 ? "" : point.substring(end));
     }
 
     /** The ids of the lessons a slide links to. */

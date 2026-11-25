@@ -1,4 +1,4 @@
-# Terminal video for the responses checked against the OpenAPI document lesson. Make it from the repository root with:
+# Terminal video for the responses checked against the OpenAPI schema lesson. Make it from the repository root with:
 #   ./gradlew :production:video-render:renderLessonVideo -Plesson=openapi-response-checks
 # VHS: https://github.com/charmbracelet/vhs (MIT licence). Videos are regenerated from this script, never edited by hand.
 # Follows the make-a-lesson-video skill: one idea, short, only code, build files and real results on screen.
@@ -50,15 +50,15 @@ Sleep 300ms
 Show
 Sleep 12s
 
-# ---- Scene 3: the published document ----
+# ---- Scene 3: the published schema ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *published document*, openapi.yaml: what other teams build against."`
+Type@1ms `note "The *published schema*, openapi.yaml: what other teams build against."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/openapi-response-checks/example/src/main/resources/openapi.yaml 29 47 "the OpenAPI document" --zoom 40-41`
+Type@1ms `show lessons/openapi-response-checks/example/src/main/resources/openapi.yaml 29 47 "the OpenAPI schema" --zoom 40-41`
 Enter
 Sleep 300ms
 Show
@@ -97,16 +97,16 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *strong* tests: the same checks, and every answer compared with the document."`
+Type@1ms `note "The *strong* tests: the same checks, and every answer compared with the schema."`
 Enter
 Sleep 300ms
-Type@1ms `show ParcelDocumentTest 13 40 "the strong tests" --zoom 22-24`
+Type@1ms `show ParcelSchemaTest 13 40 "the strong tests" --zoom 22-24`
 Enter
 Sleep 300ms
 Show
 Sleep 20s
 
-# ---- Scene 7: the document check names each contradiction ----
+# ---- Scene 7: the schema check names each contradiction ----
 Hide
 Type@1ms "scene"
 Enter
@@ -121,7 +121,7 @@ Show
 Wait+Screen@300s /tests failed\. Report/
 Sleep 16s
 Hide
-Type@1ms `callout "The weak tests pass. The document check names the field and the rule each answer breaks."`
+Type@1ms `callout "The weak tests pass. The schema check names the field and the rule each answer breaks."`
 Enter
 Sleep 300ms
 Show
@@ -132,10 +132,10 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The service that answers as the document says:"`
+Type@1ms `note "The service that answers as the schema says:"`
 Enter
 Sleep 300ms
-Type@1ms `show DocumentedParcelBodies 10 21 "the fixed answers" --zoom 15-20`
+Type@1ms `show SchemaParcelBodies 10 21 "the fixed answers" --zoom 15-20`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:openapi-response-checks:test"`
@@ -145,7 +145,7 @@ Show
 Wait+Screen@300s /All \d+ tests passed/
 Sleep 9s
 Hide
-Type@1ms `callout "The service and its document agree, and every test that calls it keeps them that way."`
+Type@1ms `callout "The service and its schema agree, and every test that calls it keeps them that way."`
 Enter
 Sleep 300ms
 Show

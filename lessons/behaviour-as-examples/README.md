@@ -54,7 +54,7 @@ day, no receipt, the team's rules give store credit.
 
 ## When to use it
 
-- **For rules the business owns:** prices, refunds, eligibility, deadlines, and someone who knows them is available.
+- **For rules the business owns:** prices, refunds, eligibility, deadlines, and a person who knows them is available.
 - **Start with a JUnit table** in a file the experts can read, each row named in their words.
 - **When an example fails, ask the experts; don't delete it.** Either the code is wrong or the rule has changed, and
   only they can say which. With no expert and no written rules, record it as an open risk, and compare old code with

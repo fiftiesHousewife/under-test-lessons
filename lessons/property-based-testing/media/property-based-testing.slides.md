@@ -3,26 +3,33 @@
 Sources: the jetCheck README (what it is, its inspiration in QuickCheck and Hypothesis, automatic minimisation, use in
 IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
 
+## intro: Property-based testing
+- The problem: one person pays every penny left over
+- The fix: state rules, try 100 bills
+- The tool: jetCheck
+Picture: road
+Say: This lesson is about property-based testing: rules that must always hold, checked against hundreds of made-up
+  inputs. jetCheck is a library that makes up those inputs, and checks the rules against each. We'll see a bill split
+  where one person pays every penny left over. Then jetCheck finds it.
+
 ## intro: One person pays every penny left over
 - Split 3 pence between 4 people: the first pays 3, the others 0
 - The tests pass: £9 between 3, £1 between 3, £1.01 between 2
-- Each leaves at most a penny over, so nobody saw the bug
+- Each leaves at most a penny over, so the tests missed the bug
 Picture: bug
-Say: This lesson is about property-based testing: rules that must always hold, checked against hundreds of generated
-  inputs. We'll see a bill split where one person pays every penny left over, and how jetCheck finds it. [pause 1s] Here
-  is the problem. Split 3 pence between 4 people, and the first person pays all 3, while the others pay nothing. With a
-  bigger bill, one person pays several pence more than everyone else. Yet the tests pass. They split £9 between 3, £1
-  between 3, and £1.01 between 2. Each of those leaves at most a penny over, so nobody saw the bug.
+Say: Here is the problem. Split 3 pence between 4 people, and the first person pays all 3, while the others pay nothing.
+  With a bigger bill, one person pays several pence more than everyone else. Yet the tests pass. They split £9 between
+  3, £1 between 3, and £1.01 between 2. Each of those leaves at most a penny over, so the tests missed the bug.
 
 ## intro: Our example: splitting a bill
 - Share a bill, in pence, between several people
-- Everyone pays the same, and someone pays what's left over
+- Everyone pays the same, and one person pays what's left over
 - Fair means no two shares differ by more than a penny
 Picture: pizza
-Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and someone has to pay
-  the pennies left over. To be fair, no two people should pay more than a penny apart.
+Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and one person has to
+  pay the pennies left over. To be fair, no two people should pay more than a penny apart.
 
-## intro: The fix: state the rules, try a hundred bills
+## intro: The fix: state rules, try 100 bills
 - Write rules that hold for every bill, not one bill at a time
 - One share each, shares that add up to the bill, no two more than a penny apart
 - A library makes up a hundred bills, and looks for one that breaks a rule
@@ -39,7 +46,7 @@ Say: The fix is to state the rules that must hold for every bill, instead of che
 Picture: robot
 Say: Here is how jetCheck looks. It builds each bill from simple pieces: a number of pence up to 1,000, and between 1
   and 12 people. It checks the rules on every bill it makes. When a bill breaks a rule, jetCheck shrinks it, to the
-  smallest bill that still fails. Here that is 3 pence between 4 people, the clearest explanation of the bug.
+  smallest bill that still fails. Here that is 3 pence between 4 people, which shows the bug most clearly.
 
 Include: how-we-build
 
@@ -48,9 +55,9 @@ Include: how-we-build
 - Alongside example tests, not instead of them
 - Keep each smallest failing input as an example test too
 Picture: map
-Say: When should you use it? [pause 1600ms] For calculations, parsing and conversions, where a rule is easier to state than
-  every right answer. Use it alongside example tests, not instead of them. And when a property finds a bug, keep the
-  smallest failing input as an example test too.
+Say: When should you use it? [pause 1600ms] For calculations, parsing and conversions, where a rule is easier to state
+  than every right answer. Use it alongside example tests, not instead of them. And when a property finds a bug, keep
+  the smallest failing input as an example test too.
 
 ## closing: Where it came from
 - QuickCheck, by Koen Claessen and John Hughes, introduced the idea for Haskell in 2000

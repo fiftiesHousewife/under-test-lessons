@@ -36,6 +36,7 @@ final class SceneContent {
     private final List<Panel> shownPanels = new ArrayList<>();
     private final List<String> liveCommands = new ArrayList<>();
     private final List<String> calloutTexts = new ArrayList<>();
+    private final List<String> noteTexts = new ArrayList<>();
     private final List<List<String>> liveOutputs = new ArrayList<>();
 
     List<Panel> panels() {
@@ -53,6 +54,11 @@ final class SceneContent {
 
     List<String> callouts() {
         return List.copyOf(calloutTexts);
+    }
+
+    /** The scene's captions, as the video shows them at the top of the screen. */
+    List<String> notes() {
+        return List.copyOf(noteTexts);
     }
 
     /** Reads every scene of a script, in order; paths in {@code show} lines are relative to the repository root. */
@@ -91,8 +97,9 @@ final class SceneContent {
             case "show" -> shownPanels.add(panel(root, places, words.subList(1, words.size())));
             case "run_live", "run_with_notes" -> liveCommands.add(words.get(1));
             case "callout" -> calloutTexts.add(words.get(1));
+            case "note" -> noteTexts.add(words.get(1));
             default -> {
-                // notes become the slide's narration; other commands are set-up
+                // other commands are set-up
             }
         }
     }

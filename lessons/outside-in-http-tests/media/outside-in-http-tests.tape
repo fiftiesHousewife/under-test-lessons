@@ -34,7 +34,7 @@ Type@1ms `show libs.versions.toml "/rest-assured/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 8s
+Sleep 12s
 
 # ---- Scene 2: step 2, the test dependency ----
 Hide
@@ -92,7 +92,7 @@ Sleep 300ms
 Show
 Sleep 18s
 
-# ---- Scene 6: the outside tests see what callers see ----
+# ---- Scene 6: the outside tests get what callers get ----
 Hide
 Type@1ms "scene"
 Enter

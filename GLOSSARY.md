@@ -10,7 +10,7 @@ the words the lessons themselves use.
 | Word or phrase | Meaning | Replaces (don't use) |
 |---|---|---|
 | **lesson** | One technique taught with a runnable example, a narrated video and a slide deck. | module, unit, course |
-| **continuous integration (CI)** | The shared build that runs every test whenever someone pushes a change. Said in full on a slide, and explained the first time a lesson or deck uses it. | build machine, build server, the pipeline |
+| **continuous integration (CI)** | The shared build that runs every test whenever a developer pushes a change. Said in full on a slide, and explained the first time a lesson or deck uses it. | build machine, build server, the pipeline |
 | **today's code** | The example code as it is before the lesson's fix, chosen with `-Pcode=today` (or the lesson's own switch). | legacy version, broken version |
 | **the fix** | The example code after the change the lesson teaches. The default, so the build passes. | fixed version, solution |
 | **weak test** | A test that looks reasonable and passes, but would miss the bug the lesson shows. | bad test |
@@ -58,3 +58,45 @@ time it uses it.
 | **flaky test** | A test that sometimes passes and sometimes fails without any change, usually because of time, order or shared state. |
 | **property** | A rule that must hold for every input, such as "the shares always add up to the bill"; property-based tests check it on many generated inputs. |
 | **approved file** | A saved copy of an output a person has checked; later runs are compared with it. |
+| **data masking** | Replacing the personal data in a copy of real data before it is kept for tests: names, email addresses, phone, account and card numbers, addresses and free text. Industry name: data masking. | cleaning, scrubbing, sanitising |
+| **keyed substitute** | The stand-in data masking gives a value: made with a secret key, so the same value always gets the same one. Still personal data to whoever holds the key (pseudonymised, not anonymous). | anonymised value, hash |
+| **schema** | The published description of a service's interface, such as an OpenAPI or AsyncAPI file. | document, spec (in prose) |
+| **stand-in** | Anything a test uses in place of a real part, such as WireMock answering as a supplier. Said "stand-in", stressed on "stand". | dummy, double (in narration) |
+
+## Writing for the voice
+
+Lessons are listened to as well as read. These come from reviewing every deck with its voice.
+
+- **Keep sentences short and simple.** If you would run out of breath reading one aloud, it's too long. Introduce a
+  library in a sentence of its own, saying what it does, before its history: "WireMock is a library that stands in for
+  another web service."
+- **Say what the lesson covers first**, then the problem. Never open with a bare "Here is the problem".
+- **Contrast the outcomes before the problem**, and show a boundary with the values on each side of it: "Day 29: a
+  refund. Day 31: store credit. Day 30: which?"
+- **Fewer words, more slides:** three or four points a slide, and a heading of 40 characters or less.
+- **Active voice, not passive:** "we tidy the printer up", not "the printer is tidied up"; "the schema stayed the
+  same", not "the schema wasn't changed". The subject is the thing itself, or "we" for the lesson.
+- **Pauses** go between sentences, never inside a phrase ("This is [pause] the weak test").
+- **Pronunciation:** add each name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`, and check
+  it there before writing a new one.
+
+| Don't say | Say instead | Why |
+|---|---|---|
+| map (of the series) | journey | The series is a route a team takes |
+| nobody wrote a rule, nobody has written down, a customer nobody has | there's no rule for, there's no record of, a customer the service doesn't know | Says what is true, without an imagined person |
+| someone added, someone tidies, someone loosened it | it has, we tidy the printer up, we loosened it | The same: no invented actor, and no passive |
+| that shop, that service | the shop, a service | "That" points at something the listener can't see |
+| promises | says, gives | A schema or description states; it doesn't promise |
+| plainly, says plainly | (leave it out) | Filler |
+| cleaning, cleaned (of personal data) | data masking, masked | The industry's word, and accurate |
+| document (OpenAPI, AsyncAPI) | schema | The word teams use for it |
+| a captured day | a day of real data | Plain English |
+| an address that can't be anyone's | a made-up address that no real person uses | Says what it is |
+| this capture is made up | (leave it out) | Beside the point |
+| identifies someone | identifies a real person | Says whose data it is |
+| the report sees, the test sees, the filter sees | the report counts, the test gets, the filter records or checks | Only people see |
+| no column name says so | you won't expect it from the column name | Says it the way people do |
+| someone (anywhere) | a developer, the shop, the team, a reviewer, one person | Name who it is |
+| before we start | before we get to the code | Says where we are going |
+| UK law on its own | US law first (the FTC, state privacy laws, HIPAA, PCI DSS), with UK and EU law alongside | The lessons are used by a US company |
+| the toolkit's own process or tools, in a lesson | the technique, and the established framework that does it | Lessons teach established external frameworks |

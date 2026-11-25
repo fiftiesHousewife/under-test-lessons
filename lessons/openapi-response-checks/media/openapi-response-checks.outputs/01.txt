@@ -1,9 +1,9 @@
 $ ./gradlew :lessons:openapi-response-checks:test -Pcode=today
-ParcelDocumentTest > aParcelNobodySent() FAILED
-    java.lang.AssertionError: GET /parcels/P-0000 answered 404, body: required property 'error' not found
-    GET /parcels/P-0000 answered 404, body: property 'message' is not defined in the schema and the schema does not allow additional properties
-ParcelDocumentTest > aParcelOnItsWay() FAILED
-    java.lang.AssertionError: GET /parcels/P-1001 answered 200, field weightGrams: string found, integer expected
 ParcelFieldsTest > aParcelNobodySent() PASSED
 ParcelFieldsTest > aParcelOnItsWay() PASSED
+ParcelSchemaTest > aParcelNobodySent() FAILED
+    java.lang.AssertionError: GET /parcels/P-0000 answered 404, body: required property 'error' not found
+    GET /parcels/P-0000 answered 404, body: property 'message' is not defined in the schema and the schema does not allow additional properties
+ParcelSchemaTest > aParcelOnItsWay() FAILED
+    java.lang.AssertionError: GET /parcels/P-1001 answered 200, field weightGrams: string found, integer expected
 4 tests completed, 2 failed

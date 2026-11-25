@@ -34,7 +34,7 @@ Type@1ms `show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 21s
 
 # ---- Scene 2: step 2, the dependencies ----
 Hide

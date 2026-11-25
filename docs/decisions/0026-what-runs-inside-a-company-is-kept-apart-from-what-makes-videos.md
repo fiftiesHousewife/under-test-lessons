@@ -40,7 +40,7 @@ Chosen: **three groups, each in its own place, with the line checked by the buil
 |---|---|---|
 | **Inside**: safe in a company | JDK, Gradle, the company's Maven repository, the installed Chrome | Lesson examples, READMEs, narration, slides, `.tape` scripts as text, decks, deck voice clips, captured outputs, slide styles, pictures and `deck.js`, `build-logic/`, `config/quality/`, the video and lesson checks, deck building, slide drawing and PDFs through Chrome, captions made from the narration |
 | **Production**: outside only | VHS, ttyd, Python, Kokoro, ffmpeg, downloads from GitHub and PyPI | Recording, voicing, the fit check against a recording, zooms, splicing, burned-in captions, `speak-kokoro.py`, `setUpLessonVoice`, `video-check.tape`, `test-video-helpers.sh`, publishing videos and deck voice clips |
-| **Maintainer**: this repo's upkeep | GitHub's API and tokens | `maintainer-tools/`, `tools/backlog-import/`, `tools/install-skills.py`, `apm.yml`, `plan/`, the Pages workflow |
+| **Maintainer**: this repo's upkeep | GitHub's API and tokens | The Backlog sync workflow, `tools/install-skills.py`, `apm.yml`, `plan/`, the Pages workflow |
 
 Chrome counts as inside, because it is already installed and allowed on company machines.
 

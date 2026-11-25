@@ -1,12 +1,12 @@
-# Responses checked against the OpenAPI document
+# Responses checked against the OpenAPI schema
 
-**Check every answer your tests see against the service's published OpenAPI document.**
+**Check every answer your tests see against the service's published OpenAPI schema.**
 
-A service that publishes an [OpenAPI](https://www.openapis.org) document promises other teams every path, status code
-and field it answers with, and they build against that document rather than against the code. The service's own tests
+A service that publishes an [OpenAPI](https://www.openapis.org) schema promises other teams every path, status code
+and field it answers with, and they build against that schema rather than against the code. The service's own tests
 check only the fields their author thought of, so a renamed field or a number sent as text passes them and breaks
 everyone else. Atlassian's [OpenAPI request validator](https://github.com/atlassian/openapi-request-validator)
-(formerly swagger-request-validator) reads the document and, as a [REST Assured](https://rest-assured.io) filter,
+(formerly swagger-request-validator) reads the schema and, as a [REST Assured](https://rest-assured.io) filter,
 checks every request and answer the tests make, naming the request, the field and the rule each one breaks. It is
 the check to use where [contract tests](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/contract-testing/technique.yaml)
 can't reach: the other team won't verify them, or the callers are outside the company.
@@ -14,7 +14,7 @@ can't reach: the other team won't verify them, or the callers are outside the co
 ## Run the example
 
 ```bash
-./gradlew :lessons:openapi-response-checks:test -Pcode=today   # today's service: the weak tests pass, the document check names each contradiction
+./gradlew :lessons:openapi-response-checks:test -Pcode=today   # today's service: the weak tests pass, the schema check names each contradiction
 ./gradlew :lessons:openapi-response-checks:test                # the fixed service: every test passes
 ```
 
@@ -24,31 +24,31 @@ published as [`openapi.yaml`](example/src/main/resources/openapi.yaml).
 
 - [`TodaysParcelBodies`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/openapi/today/TodaysParcelBodies.java)
   sends the weight as text and the 404 reason under `message`;
-  [`DocumentedParcelBodies`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/openapi/fixed/DocumentedParcelBodies.java)
-  answers as the document says.
+  [`SchemaParcelBodies`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/openapi/fixed/SchemaParcelBodies.java)
+  answers as the schema says.
 - [`ParcelFieldsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelFieldsTest.java)
   is the "before": the status code and a few fields, which pass.
-- [`ParcelDocumentTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelDocumentTest.java)
-  is the "after": the same tests, with every answer checked against the document by
-  [`DocumentCheck`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/DocumentCheck.java).
+- [`ParcelSchemaTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelSchemaTest.java)
+  is the "after": the same tests, with every answer checked against the schema by
+  [`SchemaCheck`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/SchemaCheck.java).
   It works as the validator's own `OpenApiValidationFilter` does, but reports each problem on one line rather than as
-  a block of JSON. By default the validator also refuses fields the document doesn't name.
+  a block of JSON. By default the validator also refuses fields the schema doesn't name.
 
 ## Exercise
 
-The document lists the four statuses a parcel can have. Another team adds a fifth, `LOST`, and every screen built on
-the list breaks. A test that checks a few fields wouldn't notice; the document check should.
+The schema lists the four statuses a parcel can have. Another team adds a fifth, `LOST`, and every screen built on
+the list breaks. A test that checks a few fields wouldn't notice; the schema check should.
 
-1. Add a test class beside [`ParcelDocumentTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelDocumentTest.java)
+1. Add a test class beside [`ParcelSchemaTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelSchemaTest.java)
    that starts a [`ParcelServer`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/openapi/ParcelServer.java)
    knowing one parcel whose status is `LOST`, with the answers [`Services`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/Services.java) chooses.
-2. Ask for it through [`DocumentCheck`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/DocumentCheck.java),
+2. Ask for it through [`SchemaCheck`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/SchemaCheck.java),
    and expect the check to fail, naming the status field.
 3. Compare with the answer, [`UnlistedStatusAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/openapi/answer/UnlistedStatusAnswerTest.java),
    which runs against today's service with:
 
 ```bash
-./gradlew :lessons:openapi-response-checks:test -Pcode=answer   # today's service: 2 of 5 tests fail; the answer passes, as the check refuses a status the document doesn't list
+./gradlew :lessons:openapi-response-checks:test -Pcode=answer   # today's service: 2 of 5 tests fail; the answer passes, as the check refuses LOST, a status the schema doesn't allow
 ```
 
 ## Watch it, or present it
@@ -61,10 +61,10 @@ the list breaks. A test that checks a few fields wouldn't notice; the document c
 
 ## When to use it
 
-- **For every service with a published OpenAPI document,** before other teams rely on it, and before changing it.
+- **For every service with a published OpenAPI schema,** before other teams rely on it, and before changing it.
 - **Add the filter to the tests you already have:** every answer they see is checked, with no new tests to write.
 - **Where contract tests can't reach:** the other team won't run them, or the callers are outside the company.
-- **For messages,** the same idea applies with an [AsyncAPI](https://www.asyncapi.com) document.
+- **For messages,** the same idea applies with an [AsyncAPI](https://www.asyncapi.com) schema.
 
 ## On older Java
 

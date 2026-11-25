@@ -9,18 +9,25 @@ code with it); h2database.com licence page (MPL 2.0 or EPL 1.0); this repository
 inside a company (many company laptops, Windows ones especially, can't run containers); the toolkit's
 database-unit-tests technique (an in-memory database is not evidence of what a different database product does).
 
+## intro: When an in-memory database is enough
+- The problem: the shop's first invoice is number 0
+- The fix: a fresh database per test
+- The tool: H2
+Picture: road
+Say: This lesson is about in-memory databases: when one is enough, and when it isn't. H2 is a database that runs inside
+  the test. We'll see invoice numbers that go wrong between tests. Then H2 gives each test a fresh database. And we'll
+  see the signs that you need the real database instead.
+
 ## intro: The shop's first invoice is number 0
 - A new shop's first invoice should be number 1, but the code gives it 0
 - The tests pass: they share one test database that is never empty
 - It holds 2 old invoices, and every row earlier runs left behind
 - So the tests can only check "more than 0", and the bug hides
 Picture: bug
-Say: This lesson is about in-memory databases: when one is enough, and when it isn't. We'll see invoice numbers that go
-  wrong between tests, how H2 gives each test a fresh database, and the signs that you need the real database instead.
-  [pause 1s] Here is the problem. A new shop's first invoice should be number 1. The code gives it number 0. And the
-  tests pass. They share one test database, set up by hand long ago, and it is never empty. It holds 2 old invoices, and
-  every row that earlier runs left behind. So the tests can't know what the next number should be. They only check that
-  it's more than 0, and the bug hides behind the leftovers.
+Say: Here is the problem. A new shop's first invoice should be number 1. The code gives it number 0. And the tests pass.
+  They share one test database, set up by hand long ago, and it is never empty. It holds 2 old invoices, and every row
+  that earlier runs left behind. So the tests can't know what the next number should be. They only check that it's more
+  than 0, and the bug hides behind the leftovers.
 
 ## intro: Our example: a shop's invoice numbers
 - Every invoice the shop sends gets its own number
@@ -30,15 +37,15 @@ Picture: statement
 Say: Our example is a shop's invoices. Every invoice it sends gets its own number. Each new number is one more than
   the highest so far. And the shop's very first invoice should be number 1.
 
-## intro: The fix: a fresh in-memory database for each test
+## intro: The fix: a fresh database per test
 - An in-memory database runs inside the test, and keeps its data in memory
 - Each test gets a new one, empty, with the real schema, in milliseconds
 - So the tests check exact numbers: 1, then 2, then 3
 - No container needed, so it runs on any machine, even company laptops
 Picture: database
-Say: The fix is to give each test a fresh database of its own. An in-memory database runs inside the test, and keeps
-  its data in memory. Each test gets a new one, empty, with the real schema, the table definitions production uses.
-  It takes a few milliseconds. Starting empty, the tests can check exact numbers: 1, then 2, then 3. And there's no
+Say: The fix is to give each test a fresh database of its own. An in-memory database runs inside the test, and keeps its
+  data in memory. Each test gets a new, empty one, with the real schema: the table definitions production uses. It takes
+  a few milliseconds. Because each starts empty, the tests can check exact numbers: 1, then 2, then 3. And there's no
   container to run, so the tests work on any machine, even the many company laptops where containers can't run.
 
 ## intro: How H2 looks
@@ -47,11 +54,11 @@ Say: The fix is to give each test a fresh database of its own. An in-memory data
 - It lives while a connection is open: close it, and the rows are gone
 - Today: expected [1, 2, 3] but was [0, 1, 2]
 Picture: robot
-Say: Here is how H2 looks. H2 is a SQL database written in Java, one library for the tests. Each test names its own
-  database, held in memory. A compatibility mode brings it closer to PostgreSQL. But H2's own documentation says only
-  a small part of the differences are covered, so a mode narrows the gap, and doesn't close it. The database lives
-  while a connection to it is open. Close it, and the rows are gone. Today, the numbers expected were 1, 2 and 3.
-  The shop gave 0, 1 and 2.
+Say: Here is how H2 looks. H2 is a SQL database written in Java, added to the tests as one library. Each test names its
+  own database, held in memory. A compatibility mode brings it closer to PostgreSQL. But H2's own documentation says
+  only a small part of the differences are covered, so a mode narrows the gap, and doesn't close it. The database lives
+  while a connection to it is open. Close it, and the rows are gone. Today, the test expected 1, 2 and 3. The shop gave
+  0, 1 and 2.
 
 Include: how-we-build
 
@@ -80,8 +87,8 @@ Say: When do you need the real database? [pause 1600ms] When the test is about t
 - By the author of Hypersonic SQL: H2 stands for Hypersonic 2, built from scratch
 - Free under the Mozilla Public License 2.0 or the Eclipse Public License 1.0
 Picture: book
-Say: H2 was started in 2004, and first published in 2005, by the author of an earlier Java database, Hypersonic
-  SQL. The name stands for Hypersonic 2, but it was built from scratch. It's free, under the Mozilla or Eclipse
+Say: H2 was started in 2004, and first published in 2005, by the author of an earlier Java database, Hypersonic SQL. The
+  name stands for Hypersonic 2, but it's a fresh start, written from scratch. It's free, under the Mozilla or Eclipse
   public licences.
 
 ## closing: Find out more

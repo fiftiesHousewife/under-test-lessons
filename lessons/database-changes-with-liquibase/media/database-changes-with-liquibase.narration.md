@@ -8,12 +8,12 @@ closing slides have their own narration, in
    the Apache licence after two years. Check your company accepts it.
 2. Step two. The application applies its own database changes when it starts, so Liquibase is an ordinary dependency.
 3. Here is the code under test, today's changelog: the database's history, one change at a time. The second change
-   adds a loyalty level to each customer. It was written as raw SQL, and tried only on the developers' database.
-4. This is [pause 300ms] a test that applies every change to H2, the in-memory database the developers use, and checks
+   adds a loyalty level to each customer. It's raw SQL, and the team only tried it on the developers' database.
+4. This is a test that applies every change to H2, the in-memory database the developers use, and checks
    the new column is there.
-5. Now, [pause 300ms] the same changes, applied to real PostgreSQL, the database production uses, in a throwaway
+5. Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway
    container.
 6. We run both suites against today's changelog. H2 takes the change. PostgreSQL refuses it: it has no tiny int type.
    This release would have failed in production, part way through.
-7. Now the change written as a Liquibase change, which writes the right SQL for each database. We run both suites
+7. Now the change as a Liquibase change, so Liquibase writes the right SQL for each database. We run both suites
    again. [pause 1s] Both databases take every change.

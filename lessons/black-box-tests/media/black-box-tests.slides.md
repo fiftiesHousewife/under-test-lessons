@@ -8,17 +8,24 @@ with Legacy Code (2004), which named characterisation tests; RFC 9110, HTTP Sema
 Location); the JDBC documentation for Connection.setAutoCommit and commit (with automatic commits off, changes are
 kept only when commit is called).
 
+## intro: Black-box tests
+- The problem: the order is confirmed, then lost
+- The fix: test it whole, from outside
+- The tools: WireMock, REST Assured and H2
+Picture: road
+Say: This lesson is about black-box tests: the whole application started as it ships, and tested only through its edges.
+  We'll see an order that's confirmed and then lost. Three tools catch it. WireMock stands in for another web service.
+  REST Assured sends the test's requests. And H2 is a database that runs in memory.
+
 ## intro: The order is confirmed, then lost
 - A customer orders 3 pens: the warehouse puts them aside, and the shop answers "created"
 - But the order never reaches the database: it is written, and never committed
 - The unit tests pass: a list stands in for the database
 Picture: bug
-Say: This lesson is about black-box tests: the whole application started as it ships, and tested only through its edges.
-  We'll see an order that's confirmed and then lost, and how WireMock, REST Assured and H2 catch it from outside.
-  [pause 1s] Here is the problem. A customer orders 3 pens from a shop. The warehouse puts the pens aside, and the shop
-  answers that the order is created. But the order is never kept. The service writes it to the database, and never
-  commits it, the step that makes a change permanent. So the database throws it away. The unit tests all pass, because a
-  simple list stands in for the database.
+Say: Here is the problem. A customer orders 3 pens from a shop. The warehouse puts the pens aside, and the shop answers
+  that the order is created. But the order is never kept. The service writes it to the database, and never commits it.
+  Committing is the step that makes a change permanent. So the database throws it away. The unit tests all pass, because
+  a simple list stands in for the database.
 
 ## intro: Our example: a shop's order service
 - A customer orders a quantity of one product
@@ -26,11 +33,11 @@ Say: This lesson is about black-box tests: the whole application started as it s
 - It keeps the order in its database, as 2 rows: the order and its line
 - It answers 201 Created, or 409 Conflict when stock is short
 Picture: basket
-Say: Our example is that shop's order service. A customer orders a quantity of one product. The service asks the
+Say: Our example is the shop's order service. A customer orders a quantity of one product. The service asks the
   warehouse's web service to put that stock aside. Then it keeps the order in its own database, as 2 rows: the order,
   and its line. It answers 201 Created, with the order's id. Or, when the warehouse is short of stock, 409 Conflict.
 
-## intro: The fix: test the whole application, from outside
+## intro: The fix: test it whole, from outside
 - Start it as it ships, from its own entry point and a settings file
 - Send it only what it receives in real life: here, web requests
 - Stand in for what it calls, the warehouse, and check what comes out: the answer, the calls, the rows
@@ -39,7 +46,7 @@ Say: The fix is to test the whole application from outside. This is called a bla
   nothing about the classes inside. Start the service the way it ships, from its own entry point and a settings file.
   Send it only what it receives in real life, here web requests. Stand in for the warehouse it calls. Then check what
   comes out: the answer, the calls it made, and the rows it wrote. The requests can be examples the people who run it
-  know well, or real ones captured and cleaned of personal data.
+  know well, or real ones, recorded, with their personal data masked.
 
 ## intro: How the tools look
 - WireMock as the warehouse: stubFor(post(urlEqualTo("/reservations")))
@@ -49,7 +56,7 @@ Picture: server
 Say: Here is how the tools look. WireMock is a small web server that answers as the warehouse would, and keeps every
   request it receives, so the test can check them. REST Assured posts the order, and checks the answer. The service
   uses H2, a database that runs inside it, here in a temporary folder. And plain database code reads the rows the
-  service wrote. Today it expected the order's row, and found none.
+  service wrote. Today the test expected the order's row, and found none.
 
 Include: how-we-build
 
@@ -71,7 +78,7 @@ Say: When should you use it? [pause 1600ms] First, on an untested application, b
 Picture: book
 Say: A black-box test knows only the inputs and outputs, never the code inside. Michael Feathers named the tests that
   record what old code does today characterisation tests, in his 2004 book, Working Effectively with Legacy Code. A
-  black-box test of a whole application joins 3 other lessons: outside-in tests, batch file-in file-out, and
+  black-box test of a whole application goes with 3 other lessons: outside-in tests, batch file-in file-out, and
   characterisation tests.
 
 ## closing: Find out more

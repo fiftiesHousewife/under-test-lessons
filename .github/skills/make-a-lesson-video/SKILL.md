@@ -159,7 +159,9 @@ terminal recording and the closing slides after it, with their own captions.
   video shows. Run it again after changing the lesson's code or its live commands; `./gradlew check` fails a live
   command without its output. The database lessons need a container runtime for a true capture.
 - **[production] The deck's voice:** `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` reads each slide's
-  narration aloud into `media/<id>.deck-voice/` (commit it) and rebuilds the deck, which then plays it (Listen, or V).
+  narration aloud into `media/<id>.deck-voice/` (commit it) and rebuilds the deck, which then plays it by itself when
+  opened (Mute, or V, stops it). A deck waits 0.8 s after a slide appears before its voice, and 3.2 s after the voice
+  before the next slide (`LEAD_MS` and `GAP_MS` in `deck.js`).
   Only changed slides are read again. Run it after changing narration or slides; a slide without its clip is silent.
 - **[production] A quick look:** `./gradlew :production:video-render:renderLessonVideo -Plesson=<id> -PslidesOnly=true` draws just the
   slides (into `media/<id>.voice/`) in about a minute.

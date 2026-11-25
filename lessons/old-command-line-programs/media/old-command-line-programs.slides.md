@@ -9,38 +9,45 @@ environment variables); openjdk.org/jeps/486 (JEP 486, Permanently Disable the S
 one at run time throws UnsupportedOperationException); the lesson's own runs on Java 25 (System Stubs' environment
 variables, standard input and output work; its SystemExit fails with UnsupportedOperationException).
 
+## intro: Old command-line programs
+- The problem: the nightly program is never tested whole
+- The fix: run the whole program
+- The tool: System Stubs
+Picture: road
+Say: This lesson is about testing an old command-line program whole: its settings, its input, its output, and the code
+  it ends with. System Stubs is a test library that gives a program its own settings, input and output. We'll see a
+  nightly import that's never tested whole. Then System Stubs runs the whole program inside a test.
+
 ## intro: The nightly program is never tested whole
 - A script runs a payments import nightly: exit code 0 means done, 1 means look
 - Its 3 tests check pieces, such as reading one line, never the program
 - Run the program in a test, and its call to System.exit ends the whole test run
 Picture: bug
-Say: This lesson is about testing an old command-line program whole: its settings, its input, its output and the code it
-  ends with. We'll see a nightly import that's never tested whole, and how System Stubs runs the whole program inside a
-  test. [pause 1s] Here is the problem. Every night, a script runs a payments import, and reads the code the program
-  ends with, its exit code. 0 means done. 1 means a person must look. The program has 3 tests, but they check pieces,
-  such as reading one line. None runs the whole program, so nothing checks what it prints, or how it ends. And when a
-  test does run it, the program's call to end itself ends the whole test run, and the tests after it never run.
+Say: Here is the problem. Every night, a script runs a payments import, and reads the code the program ends with, its
+  exit code. 0 means done. 1 means a person must look. The program has 3 tests, but they check pieces, such as reading
+  one line. None runs the whole program, so nothing checks what it prints, or how it ends. And when a test does run it,
+  the program's call to end itself ends the whole test run, and the tests after it never run.
 
 ## intro: Our example: a nightly payments import
 - Payments arrive on standard input, one per line: an account and an amount in pence
 - The largest payment allowed comes from an environment variable
 - It prints each payment accepted, and stops with exit code 1 at one over the limit
 Picture: statement
-Say: Our example is that nightly payments import. Payments arrive on standard input, the stream a program reads its
+Say: Our example is a nightly payments import. Payments arrive on standard input, the stream a program reads its
   data from, one per line: an account, and an amount in pence. The largest payment allowed comes from an environment
   variable, a setting the script passes in. The program prints each payment it accepts, and a total. At the first
   payment over the limit, it stops, with exit code 1.
 
-## intro: The fix: run the whole program, with its system stubbed
+## intro: The fix: run the whole program
 - Give the program its environment variable and its input, in the test
 - Catch everything it prints, and check it line by line
 - Pass in how it ends, so the test records the exit code instead of stopping
 Picture: terminal
 Say: The fix is to run the whole program in the test, with what it takes from the system swapped for stand-ins. A
   stand-in like this is called a stub. The test gives the program its environment variable and its input. It catches
-  everything the program prints, and checks it line by line. And the program is given how to end, so in a test it
-  only records the exit code. That one small change is needed because the old way to catch an exit, Java's security
-  manager, was permanently disabled in Java 24.
+  everything the program prints, and checks it line by line. And we hand the program its way to end, so in a test it
+  only records the exit code. We need that small change because Java 24
+  permanently disabled the security manager, the old way to catch an exit.
 
 ## intro: How System Stubs looks
 - @SystemStub EnvironmentVariables("PAYMENT_LIMIT_PENCE", "50000")
@@ -54,14 +61,14 @@ Say: System Stubs is a library for this. Each stub is a field in the test, marke
 
 Include: how-we-build
 
-## closing: When to test an old command-line program this way
+## closing: When to test a program whole
 - Before changing an old program that scripts or schedulers run
 - First, pin down its output and exit codes with System Stubs, changing nothing else
 - Then make one small change: main hands the program its exit, and ends in one place
 Picture: map
 Say: When should you do this? [pause 1600ms] Before changing an old program that scripts or schedulers rely on. First,
   pin down what it prints and how it ends, with System Stubs, changing as little as you can. Then make one small
-  change: the program is given its exit, and ends in one place. After that, every other change is safe to test.
+  change: the program is given its exit, and ends in one place. After that, you can test every other change safely.
 
 ## closing: Where System Stubs came from
 - Stefan Birkner's System Rules, JUnit 4 rules for code that uses System
@@ -80,4 +87,4 @@ Say: System Stubs grew from Stefan Birkner's System Rules, a set of JUnit 4 rule
 Picture: globe
 Say: To find out more, start with the System Stubs guide. The links on screen also explain why the security manager
   is gone, and take you to this lesson's test code and examples, to run yourself. And try the exercise in the README:
-  pin what the program does on a night when nobody set its limit.
+  pin what the program does on a night when its limit isn't set.

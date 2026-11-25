@@ -5,19 +5,26 @@ playback described in its documentation, including recording from a target and c
 Maven Central (com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); RFC 2104 (HMAC, a keyed hash
 for signing data); Java Security Standard Algorithm Names (HmacSHA256, which every Java must provide).
 
-## intro: The postcode client trips on the rare answers
+## intro: Recorded HTTP responses
+- The problem: rare answers trip the postcode client
+- The fix: replay the supplier's answers
+- The tool: WireMock
+Picture: road
+Say: This lesson is about recorded HTTP responses: a supplier's real answers, saved and replayed in tests. WireMock is a
+  library that stands in for another web service. We'll see a postcode client that trips over the rare answers. Then
+  WireMock replays them, on demand.
+
+## intro: Rare answers trip the postcode client
 - Asked for a postcode the supplier doesn't know, it returns an empty town, not "no town"
 - When the supplier is down, it fails reading a web page as data, not "the supplier answered 503"
-- Nobody saw: the only test needs the real service and an account, so it is skipped
-- And recordings saved as recorded keep a person's name, email address and password token
+- Unseen, because the only test needs the real service and an account, so it is skipped
+- And raw recordings keep a person's name, email address and password token
 Picture: bug
-Say: This lesson is about recorded HTTP responses: a supplier's real answers, saved and replayed in tests. We'll see a
-  postcode client that trips over the rare answers, and how WireMock replays them on demand. [pause 1s] Here is the
-  problem. A shop's postcode client works for a postcode the supplier knows. Ask for one it doesn't know, and the client
-  hands back an empty town, instead of saying there is none. When the supplier is down, it answers 503, with a web page.
-  The client tries to read that page as data, and fails with a confusing error. Nobody saw either one, because the only
-  test needs the real service and an account, so it is skipped. And when we record the supplier's answers to test with,
-  the files keep a person's name, email address and password token.
+Say: Here is the problem. A shop's postcode client works for a postcode the supplier knows. Ask for one it doesn't know,
+  and the client hands back an empty town, instead of saying there is none. When the supplier is down, it answers 503,
+  with a web page. The client tries to read that page as data, and fails with a confusing error. Neither showed up,
+  because the only test needs the real service and an account, so it is skipped. And when we record the supplier's
+  answers to test with, the files keep a person's name, email address and password token.
 
 ## intro: Our example: a postcode lookup
 - A supplier's web service turns a postcode into a town
@@ -32,14 +39,19 @@ Say: Our example looks up postcodes, using a supplier's web service, which turns
 - Save each answer as a file: a recorded HTTP response
 - A stand-in server in the test replays them: no network, no account
 - Add the rare answers by hand: the unknown postcode, the outage
-- Clean each recording before it is saved: drop tokens, swap names for keyed substitutes
 Picture: camera
-Say: The fix is to replay the supplier's answers. Each answer, saved as a file, is called a recorded HTTP response.
-  A stand-in server inside the test replays them to the client, which can't tell the difference. So the tests need
-  no network and no account. The rare answers, the unknown postcode and the outage, are added by hand. And each
-  recording is cleaned before it is saved. The tokens are dropped, and each name and email address is swapped for a
-  keyed substitute. That is a code made from the value and a secret key, with a standard method called H-MAC. The
-  same person always gets the same code, but nobody without the key can work back to them.
+Say: The fix is to replay the supplier's answers. Each answer, saved as a file, is a recorded HTTP response. A stand-in
+  server inside the test replays them to the client, which can't tell the difference. So the tests need no network, and
+  no account. [pause 600ms] We add the rare answers by hand: the unknown postcode, and the outage.
+
+## intro: Mask each recording first
+- Drop the tokens
+- Swap each name and email address for a keyed substitute
+- A keyed substitute is a code made from the value and a secret key
+Picture: door
+Say: And we mask each recording before we save it. [pause 600ms] We drop the tokens. [pause 600ms] Each name and email
+  address becomes a keyed substitute: a code made from the value and a secret key, with a standard method called H-MAC.
+  [pause 600ms] The same person always gets the same code. But without the key, there's no way back to them.
 
 ## intro: How WireMock looks
 - A recording: request GET /postcodes/M1%201AE, response "status": 503
@@ -58,11 +70,11 @@ Include: how-we-build
 ## closing: When to use recorded responses
 - Whenever code calls a service you don't own
 - Record the real answers once, then add the rare ones by hand: errors, timeouts, odd data
-- Clean every recording before it is saved: no names, emails or passwords
+- Mask every recording before it is saved: no names, emails or passwords
 - Check recordings against the real service now and then; contract tests do this between teams
 Picture: map
 Say: When should you use them? [pause 1600ms] Whenever code calls a service you don't own. Record the real answers once,
-  then add the rare ones by hand: errors, slow answers, and odd data. Clean every recording before it is saved, so no
+  then add the rare ones by hand: errors, slow answers, and odd data. Mask every recording before it is saved, so no
   names, email addresses or passwords reach the files. And check the recordings against the real service now and then.
   Between teams, contract tests do that job.
 
@@ -71,8 +83,8 @@ Say: When should you use them? [pause 1600ms] Whenever code calls a service you 
 - Public since 2011, and used widely across Java
 - It also runs on its own, outside Java, for other languages
 Picture: book
-Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been public since 2011,
-  and is used widely across Java. It also runs on its own, outside Java, so other languages can use it too.
+Say: Tom Akehurst created WireMock. It's free under the Apache licence, has been public since 2011, and Java teams
+  everywhere use it. It also runs on its own, outside Java, so other languages can use it too.
 
 ## closing: Find out more
 - https://wiremock.org — WireMock, with its documentation

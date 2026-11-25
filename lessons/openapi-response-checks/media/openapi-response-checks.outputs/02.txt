@@ -1,6 +1,6 @@
 $ ./gradlew :lessons:openapi-response-checks:test
-ParcelDocumentTest > aParcelNobodySent() PASSED
-ParcelDocumentTest > aParcelOnItsWay() PASSED
+ParcelSchemaTest > aParcelNobodySent() PASSED
+ParcelSchemaTest > aParcelOnItsWay() PASSED
 ParcelFieldsTest > aParcelNobodySent() PASSED
 ParcelFieldsTest > aParcelOnItsWay() PASSED
 UnlistedStatusAnswerTest > aStatusTheDocumentDoesNotListIsRefused() PASSED

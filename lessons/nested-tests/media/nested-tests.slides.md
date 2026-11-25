@@ -3,16 +3,22 @@
 Sources: junit.org, the JUnit user guide (nested tests with @Nested, and display names with @DisplayName, both part of
 JUnit Jupiter since JUnit 5 in 2017; JUnit 6 is the current generation).
 
-## intro: A loan nobody approved is marked repaid
+## intro: Nested tests
+- The problem: an unapproved loan is marked repaid
+- The fix: group the tests by situation
+- The tool: JUnit
+Picture: road
+Say: This lesson is about nested tests: tests grouped by the situation they start from, so a missing case is easy to
+  see. We'll see a loan marked repaid that was never approved, and how JUnit's nested classes show the gap.
+
+## intro: An unapproved loan is marked repaid
 - A loan that was only requested can be marked repaid, skipping approval
 - The 4 tests pass: none of them asks
 - In one flat list, with long names, the missing question is invisible
 Picture: bug
-Say: This lesson is about nested tests: tests grouped by the situation they start from, so a missing case is easy to
-  see. We'll see a loan marked repaid that was never approved, and how JUnit's nested classes show the gap. [pause 1s]
-  Here is the problem. A loan that was only requested, and never approved, can be marked as repaid. It skips the
+Say: Here is the problem. A loan that was only requested, and never approved, can be marked as repaid. It skips the
   approval altogether. Yet the 4 tests all pass, because none of them asks. They are one flat list, with long names, and
-  in a list like that a missing question is invisible.
+  in a list like that a missing question is hard to spot.
 
 ## intro: Our example: a loan
 - A loan is requested, then approved, then repaid
@@ -29,7 +35,7 @@ Say: Our example is a loan. A loan is requested, then approved, then repaid. Eac
 Picture: folders
 Say: The fix is to group the tests by situation, one group for each state the loan can be in: requested, approved and
   repaid. Groups inside a test class are called nested tests. Each group asks the same 2 questions: can it be
-  approved, and can it be repaid? Asked in every state, the missing question stands out. And today, it fails.
+  approved, and can it be repaid? Ask them in every state, and the gap stands out. And today, it fails.
 
 ## intro: How JUnit nests tests
 - @Nested on an inner class, with @DisplayName("when approved")

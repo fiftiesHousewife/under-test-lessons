@@ -3,7 +3,7 @@
 Sources: wiremock.org, its documentation on simulating faults (withFixedDelay holds a response back for a set number of
 milliseconds; random delays and chunked dribble delays; the faults EMPTY_RESPONSE, a completely empty response;
 MALFORMED_RESPONSE_CHUNK, an OK status, then garbage, then the connection closed; RANDOM_DATA_THEN_CLOSE; and
-CONNECTION_RESET_BY_PEER, the connection closed so the client sees "connection reset by peer", working properly only on
+CONNECTION_RESET_BY_PEER, the connection closed so the client gets "connection reset by peer", working properly only on
 Unix-like systems); github.com/wiremock/wiremock (Apache 2.0 licence; created by Tom Akehurst); Maven Central
 (com.github.tomakehurst:wiremock, earliest versions published in 2012); the wiremock/wiremock repository on GitHub (begun on 9 October 2011); the Java documentation for
 java.net.http.HttpRequest.Builder (timeout: without one, a request blocks forever; with one, an HttpTimeoutException);
@@ -12,18 +12,25 @@ testing", MIT licence, used in Shopify's development and test environments since
 and other toxics); java.testcontainers.org/modules/toxiproxy (the Testcontainers module that runs it); pragprog.com,
 Release It! by Michael Nygard (second edition 2018; its stability patterns include Timeouts and Circuit Breaker).
 
+## intro: Slow and failing dependencies
+- The problem: A slow supplier holds up the shop
+- The fix: make the supplier fail, on purpose
+- The tool: WireMock
+Picture: road
+Say: This lesson is about testing against slow and failing dependencies. WireMock is a library that stands in for
+  another web service. We'll see a slow supplier hold up the whole shop. Then WireMock makes the supplier slow or broken
+  on purpose, so the test can check what the shop does.
+
 ## intro: A slow supplier holds up the shop
 - When the supplier answers 5 seconds late, the shop waits all 5, with no limit
 - When the connection drops, the shop throws an error page at the customer
 - The tests pass: the stand-in supplier always answers at once
 Picture: bug
-Say: This lesson is about testing against slow and failing dependencies. We'll see a slow supplier hold up the whole
-  shop, and how WireMock makes a service slow or broken on purpose, so the test can check what the shop does. [pause 1s]
-  Here is the problem. A shop asks its supplier how many kettles are in stock. When the supplier answers 5 seconds late,
-  the shop waits all 5 seconds, because it sets no limit on how long to wait. When the connection drops, the shop throws
-  an error at the customer. And the tests pass, because the stand-in supplier in the tests always answers at once. Real
-  services slow down and drop connections, most often when they are busy. And one slow supplier then holds up every page
-  that asks it.
+Say: Here is the problem. A shop asks its supplier how many kettles are in stock. When the supplier answers 5 seconds
+  late, the shop waits all 5 seconds, because it sets no limit on how long to wait. When the connection drops, the shop
+  throws an error at the customer. And the tests pass, because the stand-in supplier in the tests always answers at
+  once. Real services slow down and drop connections, most often when they are busy. And one slow supplier then holds up
+  every page that calls it.
 
 ## intro: Our example: checking a supplier's stock
 - A shop asks its supplier how many kettles are in stock
@@ -31,7 +38,7 @@ Say: This lesson is about testing against slow and failing dependencies. We'll s
 - When the supplier can't say, the shop shows "we'll confirm by email"
 - It must never keep the customer waiting, or show an error page
 Picture: basket
-Say: Our example is an online shop. Before it promises a delivery date, it asks its supplier how many of an item are
+Say: Our example is an online shop. Before it gives a delivery date, it asks its supplier how many of an item are
   in stock, say kettles. The supplier answers with a number, as JSON. When the supplier can't say, the shop should
   tell the customer it will confirm by email. It must never keep the customer waiting, or show them an error page.
 
@@ -43,7 +50,7 @@ Picture: plug
 Say: The fix is to make the supplier slow, or broken, on purpose, in a test. This is called testing slow and failing
   dependencies. The stand-in answers 5 seconds late, or drops the connection, or sends an OK status followed by
   garbage. Each test allows the shop 3 seconds, and expects a clear answer: supplier unavailable. To pass, the code
-  sets a timeout, a limit on how long it will wait, of half a second.
+  sets a timeout of half a second: a limit on how long it will wait.
 
 ## intro: How WireMock makes a service fail
 - Late: okJson("{\"units\": 12}").withFixedDelay(5000)
@@ -76,7 +83,7 @@ Say: When should you test slow and failing dependencies? [pause 1600ms] For ever
 - From Shopify, MIT licence, and it runs in a container, through Testcontainers
 Picture: book
 Say: Timeouts, and circuit breakers that stop calling a failing service for a while, are stability patterns from
-  Michael Nygard's book, Release It! WireMock was created by Tom Akehurst, and has been public since 2011. The next
+  Michael Nygard's book, Release It! Tom Akehurst created WireMock, and it has been public since 2011. The next
   step is Toxiproxy, from Shopify. It sits between real services, such as your code and a real database, and adds
   delay, or cuts the connection. It runs in a container, so those tests go with the container tests.
 

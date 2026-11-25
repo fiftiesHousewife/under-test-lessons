@@ -2,8 +2,8 @@ plugins {
     id("io.github.fiftieshousewife.java-conventions")
 }
 
-// Responses checked against the OpenAPI document: every answer the tests see must match the published description.
-//   ./gradlew :lessons:openapi-response-checks:test -Pcode=today   today's service: the document check names each contradiction
+// Responses checked against the OpenAPI schema: every answer the tests see must match the published description.
+//   ./gradlew :lessons:openapi-response-checks:test -Pcode=today   today's service: the schema check names each contradiction
 //   ./gradlew :lessons:openapi-response-checks:test                the fixed service: every test passes
 dependencies {
     implementation(libs.jackson3.databind)

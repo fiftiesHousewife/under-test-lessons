@@ -5,14 +5,20 @@ all tests in a class; its cleanup modes ALWAYS, the default, ON_SUCCESS and NEVE
 parameter injection), JUnit 5.4.0's release notes (a new @TempDir extension, formerly part of JUnit Pioneer, in
 February 2019), and JUnit 4's release notes for version 4.7 (rules, such as TemporaryFolder).
 
+## intro: Temporary folders
+- The problem: one cancelled order, and no file at all
+- The fix: a new, empty folder for every test
+- The tool: JUnit
+Picture: road
+Say: This lesson is about JUnit's temporary folders: a new, empty folder for every test that writes files. We'll see an
+  end-of-day export that writes no file at all, and how a temporary folder lets the test check exactly what was written.
+
 ## intro: One cancelled order, and no file at all
 - On a day with a cancelled order, the export writes no file at all
 - The test passes: it reads the file the test before it left behind
 - Both tests use the same folder, and nothing ever cleans it up
 Picture: bug
-Say: This lesson is about JUnit's temporary folders: a new, empty folder for every test that writes files. We'll see an
-  end-of-day export that writes no file at all, and how a temporary folder lets the test check exactly what was written.
-  [pause 1s] Here is the problem. On a day with a cancelled order, the export writes no file at all, so the accounts get
+Say: Here is the problem. On a day with a cancelled order, the export writes no file at all, so the accounts get
   nothing. Yet the test of a cancelled order passes. It reads the file that the test before it left behind. Both tests
   write to the same folder, and nothing ever cleans it up, so the leftover file looks like the right answer.
 
@@ -21,7 +27,7 @@ Say: This lesson is about JUnit's temporary folders: a new, empty folder for eve
 - A header, then one line per order: cancelled orders are left out
 - The accounts system reads that file
 Picture: files
-Say: Our example is a shop's end-of-day export. Every night, the day's orders are written to a file. It has a header,
+Say: Our example is a shop's end-of-day export. Every night, it writes the day's orders to a file. It has a header,
   then one line for each order, and cancelled orders are left out. The accounts system reads that file.
 
 ## intro: The fix: a new, empty folder for every test

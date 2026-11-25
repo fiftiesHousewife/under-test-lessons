@@ -8,21 +8,28 @@ voted in November 2025 to establish Apache Artemis as its own project, and 2.50.
 release under the new name and groupId); jakarta.ee/specifications/messaging (Jakarta Messaging 2.0, 3.0 and 3.1);
 jakarta.ee QueueBrowser documentation (a browser looks at messages without removing them, and may not see a fixed
 snapshot); kafka.apache.org design documentation (consumer groups; saving the position before processing is
-at-most-once, after processing at-least-once); the toolkit's research on capturing and cleaning data (browsing a JMS
+at-most-once, after processing at-least-once); the toolkit's research on capturing and masking data (browsing a JMS
 queue and reading a Kafka topic with its own consumer group, in non-production first).
 
-## intro: A payment is lost, and another is recorded twice
+## intro: Message consumers
+- The problem: one payment lost, another counted twice
+- The fix: a real broker inside the test
+- The tool: Apache Artemis, inside the test
+Picture: road
+Say: This lesson is about testing message consumers: the code that takes messages off a queue. Artemis is a message
+  broker, the server that passes messages between programs. We'll see a payment lost, and another recorded twice. Then
+  Artemis, started inside the test, catches both.
+
+## intro: One payment lost, another counted twice
 - When the payment book is busy for a moment, payment A-1002 is lost for good
 - When a payment arrives a second time, A-1001 is recorded twice
-- The old till's message, which no one can read, just disappears
+- The old till's unreadable message just disappears
 - The unit test passes: it hands the consumer one message, with no broker behind it
 Picture: bug
-Say: This lesson is about testing message consumers: the code that takes messages off a queue. We'll see a payment lost
-  and another recorded twice, and how an Artemis broker, started inside the test, catches both. [pause 1s] Here is the
-  problem. A shop records card payments sent from its tills. When the payment book is busy for a moment, one payment,
-  order A-1002, is lost for good. When a payment arrives a second time, order A-1001 is recorded twice. And a message
-  from an old till, which no one can read, simply disappears. The unit test passes. It hands the consumer one message it
-  built by hand, so it can't see any of this.
+Say: Here is the problem. A shop records card payments sent from its tills. When the payment book is busy for a moment,
+  one payment, order A-1002, is lost for good. When a payment arrives a second time, order A-1001 is recorded twice. And
+  a message from an old till, which the consumer can't read, simply disappears. The unit test passes. It hands the
+  consumer one message it built by hand, so it can't catch any of this.
 
 ## intro: Our example: card payments for a shop
 - The till sends one message per card payment: the order, the customer and the amount in pence
@@ -35,19 +42,25 @@ Say: Our example is a shop's card payments. The till sends one message for each 
   book. The book is a database, so now and then it is busy for a moment. And one old till still sends pounds, so one
   message can never be read.
 
-## intro: The fix: test on a real broker, inside the test
-- A broker holds messages on queues until they are taken: JMS is Java's standard for it
-- Today's consumer acknowledges each message on arrival, so the broker forgets it before it is recorded
-- A message consumer test sends the example messages to a real broker, and checks what was recorded
-- The example messages were browsed from a test queue, without taking any, then cleaned
+## intro: What a broker does
+- A broker holds messages on queues, until another program takes them
+- Acknowledging a message tells the broker it can forget it
+- Today's consumer acknowledges each one on arrival, before it records the payment
 Picture: queue
-Say: The fix is to test on a real broker. A broker is a program that holds messages on queues, until another program
-  takes them. In Java, the standard way to send and take them is JMS, now called Jakarta Messaging. Acknowledging a
-  message tells the broker it can forget it. Today's consumer acknowledges each one as it arrives, before the payment
-  is recorded, so a failure loses it. A message consumer test sends the example messages to a real broker, started
-  inside the test, and checks what was recorded, and what is left on each queue. The example messages were read from
-  a test queue with a queue browser, which takes none off it. Then they were cleaned of secrets, and each identifier
-  was swapped for a substitute that stays the same.
+Say: A broker is a program that holds messages on queues, until another program takes them. In Java, the standard way to
+  send and take them is JMS, now called Jakarta Messaging. [pause 600ms] Acknowledging a message tells the broker it can
+  forget it. [pause 600ms] Today's consumer acknowledges each one as it arrives, before it records the payment. So a
+  failure loses it.
+
+## intro: The fix: a real broker inside the test
+- A test sends the example messages to a real broker, started inside the test
+- It checks what the consumer recorded, and what is left on each queue
+- The examples came from a test queue, read without taking any, then masked
+Picture: server
+Say: The fix is to test on a real broker. A message consumer test sends the example messages to a real broker, started
+  inside the test. Then it checks what the consumer recorded, and what is left on each queue. [pause 600ms] We read the
+  example messages from a test queue with a queue browser, which takes none off it. Then we masked their secrets, and
+  swapped each identifier for a substitute that stays the same.
 
 ## intro: How an embedded Artemis broker looks
 - new EmbeddedActiveMQ(), reached in memory at vm://0, with setPersistenceEnabled(false)
@@ -55,21 +68,21 @@ Say: The fix is to test on a real broker. A broker is a program that holds messa
 - The fix: createSession(Session.SESSION_TRANSACTED), then commit or rollback
 - Today: payments recorded expected [A-1001, A-1002, A-1004] but was [A-1001, A-1004]
 Picture: server
-Say: Here is how it looks. Artemis is a broker written in plain Java, so the test starts it in a fraction of a
-  second. The consumer reaches it in memory, with no network, and nothing is written to disk. The test sets it up as
-  production's broker is set up: 3 tries at each message, then the dead-letter queue, where messages no one can
-  take are kept. The fixed consumer commits each message only after the payment is recorded, and rolls it back on a
-  failure, so the broker delivers it again. Today, the test expected 3 payments recorded, and found 2.
+Say: Here is how it looks. Artemis is a broker written in plain Java, so the test starts it in a fraction of a second.
+  The consumer reaches it in memory, with no network, and nothing is written to disk. The test sets it up as
+  production's broker is set up: 3 tries at each message, then the dead-letter queue, which keeps the messages the
+  consumer can't process. The fixed consumer commits each message only after the payment is recorded, and rolls it back
+  on a failure, so the broker delivers it again. Today, the test expected 3 payments recorded, and found 2.
 
 Include: how-we-build
 
 ## closing: When to use it
 - When code takes messages from a queue: acknowledgement, redelivery and dead letters only show on a broker
-- In discovery, with browsed and cleaned messages, to record what the consumer does today
+- In discovery, with browsed and masked messages, to record what the consumer does today
 - Keep each test to seconds, so it runs on every pull request
 Picture: map
 Say: When should you use it? [pause 1600ms] Whenever code takes messages from a queue, because acknowledgement,
-  redelivery and dead letters only show up on a real broker. In discovery, use browsed and cleaned messages to record
+  redelivery and dead letters only show up on a real broker. In discovery, use browsed and masked messages to record
   what the consumer does today. And keep each test to a few seconds, so it runs on every pull request.
 
 ## closing: Next: Kafka
@@ -78,8 +91,8 @@ Say: When should you use it? [pause 1600ms] Whenever code takes messages from a 
 - The same test: example messages in, then what was recorded, on a real Kafka broker
 Picture: queue
 Say: The next step is Kafka. A Kafka consumer saves its position in the topic, instead of acknowledging each message.
-  Save the position before processing, and a failure loses messages. Save it after, and they are read again. So the
-  same test applies. Send example messages to a real Kafka broker, and check what was recorded.
+  Save the position before processing, and a failure loses messages. Save it after, and the consumer reads them again.
+  So the same test applies. Send example messages to a real Kafka broker, and check what was recorded.
 
 ## closing: Where Artemis came from
 - Artemis began inside the Apache ActiveMQ project

@@ -85,7 +85,7 @@ Type@1ms `show OrderNumbersTest 10 24 "old tests: order numbers" --mark 10`
 Enter
 Sleep 300ms
 Show
-Sleep 37s
+Sleep 40s
 
 # ---- Scene 5: an old test class that mocks everything ----
 Hide
@@ -127,7 +127,7 @@ Type@1ms `show AntiPatternChecksTest 29 45 "the checks" --zoom 40-45`
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 30s
 
 # ---- Scene 8: today, no register yet ----
 Hide

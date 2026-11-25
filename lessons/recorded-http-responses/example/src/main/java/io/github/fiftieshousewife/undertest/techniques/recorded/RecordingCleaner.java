@@ -4,5 +4,5 @@ package io.github.fiftieshousewife.undertest.techniques.recorded;
 public interface RecordingCleaner {
 
     /** The recording as it will be saved. */
-    String clean(String recording);
+    String mask(String recording);
 }

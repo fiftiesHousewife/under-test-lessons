@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Parcel tracking
-  description: Where a parcel is now. Other teams build their screens and messages against this document.
+  description: Where a parcel is now. Other teams build their screens and messages against this schema.
   version: "1.0"
 paths:
   /parcels/{parcelId}:

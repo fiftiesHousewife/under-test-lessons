@@ -1,4 +1,0 @@
-# yaml-language-server: $schema=../../schema/lesson.schema.json
-id: cleaning-captured-data
-title: Cleaning captured data so tests still work
-techniques: [characterisation-tests]

@@ -4,16 +4,22 @@ Sources: junit.org (JUnit 6 is the current generation; the programmer-friendly t
 Maven Central (junit-jupiter-params, first released with JUnit 5.0.0 in September 2017); JUnit 4's API documentation
 (org.junit.runners.Parameterized, the runner for tests run once per row of parameters).
 
+## intro: Parameterised tests
+- The problem: the VAT comes out a penny short
+- The fix: one test, a table of cases
+- The tool: JUnit
+Picture: road
+Say: This lesson is about parameterised tests: one test, with a table of cases. We'll see VAT that comes out a penny
+  short, and how JUnit runs the same test for every row of the table.
+
 ## intro: The VAT comes out a penny short
 - On a price of 3 pence, VAT should be 1 penny: the calculator says 0
 - On 998 pence, it should be 200: the calculator says 199
 - The 3 tests pass: they try only 0 pence, £1 and £10, round numbers
 Picture: bug
-Say: This lesson is about parameterised tests: one test, with a table of cases. We'll see VAT that comes out a penny
-  short, and how JUnit runs the same test for every row of the table. [pause 1s] Here is the problem. On a price of 3
-  pence, the VAT should be 1 penny, and the calculator says 0. On 998 pence, it should be 200, and the calculator says
-  199. Yet all 3 tests pass. They try only nothing, £1 and £10, round numbers where rounding never comes into it. Each
-  case is a whole copied test, so nobody added the awkward ones.
+Say: Here is the problem. On a price of 3 pence, the VAT should be 1 penny, and the calculator says 0. On 998 pence, it
+  should be 200, and the calculator says 199. Yet all 3 tests pass. They try only zero, £1 and £10, round numbers where
+  rounding never comes into it. Each case is a whole copied test, so the awkward ones never made it in.
 
 ## intro: Our example: VAT on a price
 - Work out VAT at 20% on a net price, in pence

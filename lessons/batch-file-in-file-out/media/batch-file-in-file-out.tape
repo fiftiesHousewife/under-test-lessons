@@ -123,18 +123,18 @@ Sleep 300ms
 Show
 Sleep 28s
 
-# ---- Scene 8: a captured day, cleaned ----
+# ---- Scene 8: a day of real data, masked ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "A captured day's files, each account number swapped for a *keyed substitute*."`
+Type@1ms `note "A day of real files, each account number swapped for a *keyed substitute*."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-payments.csv 1 6 "captured payments, cleaned"`
+Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-payments.csv 1 6 "captured payments, masked"`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-settlement.csv 1 8 "settlement file the bank accepted, cleaned"`
+Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-settlement.csv 1 8 "settlement file the bank accepted, masked"`
 Enter
 Sleep 300ms
 Type@1ms `show KeyedSubstitutes 28 31 "keyed substitutes" --zoom 29`

@@ -2,7 +2,7 @@
 
 **Run the old code and its rewrite on the same inputs, and compare every answer.**
 
-A rewrite must keep every answer customers rely on. Tests written for the rewrite only check the cases someone thought
+A rewrite must keep every answer customers rely on. Tests written for the rewrite only check the cases their authors thought
 of, but the old code already knows every answer. A differential test asks both versions about every input, in a range,
 recorded from production or generated, and lists where they disagree. There are no expected values to write.
 

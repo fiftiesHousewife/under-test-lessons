@@ -1,0 +1,22 @@
+$ ./gradlew :lessons:masking-captured-data:test -Pcode=answer
+DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeMasking() PASSED
+DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
+DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
+MaskedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
+NothingPersonalLeftTest > maskedCaptureHasNothingThatLooksPersonal() FAILED
+    java.lang.AssertionError: [personal data left after masking]
+    Expecting empty but was: ["orders.csv row 4, note: an email address",
+        "orders.csv row 7, note: a customer's name"]
+ReportsStillWorkTest > ordersAreStillGroupedByCustomer() FAILED
+    org.opentest4j.AssertionFailedError: [orders per customer]
+    expected: [3, 2, 1, 1]
+     but was: [7]
+ReportsStillWorkTest > ordersStillMatchPaymentsByAccount() FAILED
+    org.opentest4j.AssertionFailedError: [pence owed by each unsettled account]
+    expected: [-500, 640]
+     but was: [140]
+SyntheticMaskingTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
+PhoneInANoteAnswerTest > aPhoneNumberInANoteIsMaskedToo() FAILED
+    java.lang.AssertionError: [personal data left after masking an order with a phone number]
+    Expecting empty but was: ["orders.csv row 1, note: a phone number"]
+9 tests completed, 4 failed

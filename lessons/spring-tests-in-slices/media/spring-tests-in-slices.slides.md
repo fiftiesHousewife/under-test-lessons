@@ -7,27 +7,33 @@ spring-boot-test-autoconfigure, which holds the slices, first published with 1.4
 download page (the standalone jar carries its own Jetty); this lesson's build, where plain WireMock 3 can't start
 beside Spring Boot 4.
 
+## intro: Spring tests in slices
+- The problem: the due date changed, and every test passed
+- The fix: test one layer at a time
+- The tool: Spring Boot's test slices
+Picture: road
+Say: This lesson is about Spring tests in slices: testing one layer at a time, with only the part of Spring it needs.
+  We'll see a changed due date that every test missed, and how Spring Boot's test slices catch it quickly.
+
 ## intro: The due date changed, and every test passed
 - A change for the printed delivery notes made the service write 23/11/2026, not 2026-11-23
 - Every caller that reads the date year first now breaks
 - Every test starts the whole application: slow, so they're written loosely
 - "D-1001 appears somewhere in the answer" passes, whatever the date says
 Picture: bug
-Say: This lesson is about Spring tests in slices: one layer tested at a time, with only the part of Spring it needs.
-  We'll see a changed due date that every test missed, and how Spring Boot's test slices catch it quickly. [pause 1s]
-  Here is the problem. A change for a shop's printed delivery notes made its delivery service write the due date day
-  first, 23/11/2026, where it promised year first, 2026-11-23. Every caller that reads the date year first now breaks.
-  Yet every test passes. Each one starts the whole application, with the database, a stand-in for the courier, and every
-  setting. So the tests are slow, and people write them loosely. A test that only checks that a reference appears
-  somewhere in the answer passes, whatever the date says.
+Say: Here is the problem. A change for a shop's printed delivery notes made its delivery service write the due date day
+  first, 23/11/2026, where its description says year first, 2026-11-23. Every caller that reads the date year first now
+  breaks. Yet every test passes. Each one starts the whole application, with the database, a stand-in for the courier,
+  and every setting. So the tests are slow, and people write them loosely. A test that only checks that a reference
+  appears somewhere in the answer passes, whatever the date says.
 
 ## intro: Our example: a shop's delivery service
 - It lists a customer's deliveries still to come, as JSON
 - Each with its due date, and what the courier's tracking service says
-- Its description promises the due date as an ISO date: 2026-11-23
+- Its description gives the due date as an ISO date: 2026-11-23
 Picture: basket
-Say: Our example is that shop's delivery service. It lists a customer's deliveries still to come, as JSON. Each one
-  has its due date, and what the courier's tracking service says about it. The service's description promises the due
+Say: Our example is the shop's delivery service. It lists a customer's deliveries still to come, as JSON. Each one
+  has its due date, and what the courier's tracking service says about it. The service's description gives the due
   date as an ISO date, the international standard, year first.
 
 ## intro: The fix: test one layer at a time
@@ -36,10 +42,10 @@ Say: Our example is that shop's delivery service. It lists a customer's deliveri
 - Each slice is quick, needs nothing outside it, and checks its layer exactly
 - One test of the whole application stays, for the wiring between the layers
 Picture: layers
-Say: The fix is to test one layer at a time. Spring, the framework the service is built on, calls one layer started
-  on its own a slice. There is a slice for the web layer, one for the data layer, and one for the JSON the service
-  writes. Each slice is quick, needs nothing outside it, and can check its layer's details exactly. The JSON slice
-  checks the due date field by field. And one test of the whole application stays, for the wiring between the layers.
+Say: The fix is to test one layer at a time. The service is built on Spring. Spring's name for one layer started on its
+  own is a slice. There is a slice for the web layer, one for the data layer, and one for the JSON the service writes.
+  Each slice is quick, needs nothing outside it, and can check its layer's details exactly. The JSON slice checks the
+  due date field by field. And one test of the whole application stays, for the wiring between the layers.
 
 ## intro: How the slices look
 - @WebMvcTest starts the controllers; @MockitoBean stands in for the service
@@ -50,7 +56,7 @@ Picture: blocks
 Say: How do the slices look? [pause 1600ms] The web slice starts the controllers, and Mockito stands in for the
   service. The data slice starts the repositories, with an in-memory database, and rolls back each test's rows. The
   JSON slice starts Jackson, the library that writes the JSON, set up as the application sets it up. Today it fails,
-  and names the due date: it expected year first, and got day first. And one test of the whole application is kept,
+  and names the due date: it expected year first, and got day first. And we keep one test of the whole application,
   for the wiring between the layers.
 
 Include: how-we-build

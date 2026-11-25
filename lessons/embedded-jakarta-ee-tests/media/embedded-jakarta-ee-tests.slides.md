@@ -3,17 +3,24 @@
 Sources: weld.cdi-spec.org (Weld, the reference implementation of CDI, Apache 2.0 licence, used in WildFly and other
 servers); github.com/weld/weld-testing (weld-junit5); jakarta.ee (CDI, first released as part of Java EE 6 in 2009).
 
+## intro: Embedded Jakarta EE tests
+- The problem: the checkout charges 5% VAT, not 20%
+- The fix: let the real wiring build it
+- The tool: Weld, with its JUnit support
+Picture: road
+Say: This lesson is about testing Jakarta EE code with its real wiring, in a small container started inside the test.
+  Weld is the part of Jakarta EE that wires an application's parts together. We'll see a checkout that charges the wrong
+  VAT. Then Weld's JUnit support builds the checkout as the server would.
+
 ## intro: The checkout charges 5% VAT, not 20%
 - On a £10 item, the checkout should charge £12: 20% VAT
 - Since a reduced rate of 5% was added, the server wires in that one, and charges £10.50
 - The unit test passes: it builds the checkout by hand, and hands it the rate it wants
 Picture: bug
-Say: This lesson is about testing Jakarta EE code with its real wiring, in a small container started inside the test.
-  We'll see a checkout that charges the wrong VAT, and how Weld and its JUnit support build the checkout as the server
-  would. [pause 1s] Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. But since a
-  reduced rate of 5% was added, the server gives the checkout that rate instead, and it charges £10.50. Nobody changed
-  the checkout's code. And the unit test passes, because it builds the checkout by hand, and hands it the rate it wants.
-  It never sees what the server chooses.
+Say: Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. But since the team added a
+  reduced rate of 5%, the server gives the checkout that rate instead, and it charges £10.50. The checkout's code stayed
+  the same. And the unit test passes, because it builds the checkout by hand, and hands it the rate it wants. It never
+  gets the rate the server chooses.
 
 ## intro: Our example: VAT at the checkout
 - The checkout adds VAT to a net price
@@ -21,18 +28,18 @@ Say: This lesson is about testing Jakarta EE code with its real wiring, in a sma
 - A reduced rate of 5% was added later, with no mark
 Picture: tag
 Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. A
-  reduced rate of 5% was added later, with no mark.
+  reduced rate of 5% came later, with no mark.
 
-## intro: The fix: let the real wiring build the checkout
+## intro: The fix: let the real wiring build it
 - Old enterprise Java runs in an application server, whose container wires the parts together
 - An embedded test starts just that container, inside the test, in seconds
-- It wires the checkout exactly as production does, so the test sees the wrong rate
+- It wires the checkout exactly as production does, so the test gets the wrong rate
 - The fixed checkout asks for the rate marked standard
 Picture: server
 Say: The fix is to let the real wiring build the checkout. Old enterprise Java runs inside an application server.
   Its container decides what each part gets, and wires them together. The standard for that wiring is called CDI,
   short for contexts and dependency injection. An embedded test starts just that container, inside the test, in
-  seconds, with no server to deploy to. It wires the checkout exactly as production does, so the test sees the wrong
+  seconds, with no server to deploy to. It wires the checkout exactly as production does, so the test gets the wrong
   rate. And the fixed checkout asks for the rate marked standard.
 
 ## intro: How Weld's JUnit support looks
@@ -42,9 +49,8 @@ Say: The fix is to let the real wiring build the checkout. Old enterprise Java r
 - Today: expected 1200 but was 1050
 Picture: robot
 Say: Here is how it looks, with Weld, the container many servers use. A JUnit extension starts it for each test. The
-  test lists the parts it needs: the checkout and both rates. Weld starts a container with just those. The test asks
-  it for the checkout, which arrives fully wired, and works out the total on 1000 pence. Today it expected 1200
-  pence, and got 1050.
+  test lists the parts it needs: the checkout and both rates. Weld starts a container with just those. The test asks it
+  for the checkout, fully wired, and works out the total on 1000 pence. Today it expected 1200 pence, and got 1050.
 
 Include: how-we-build
 

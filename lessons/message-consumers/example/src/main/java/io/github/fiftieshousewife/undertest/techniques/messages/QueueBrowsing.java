@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Reads the text of every message on a queue without taking any of them off it, with a JMS queue browser. This is how
- * the lesson's example messages were collected from a test environment's queue, before they were cleaned.
+ * the lesson's example messages were collected from a test environment's queue, before they were masked.
  */
 public final class QueueBrowsing {
 

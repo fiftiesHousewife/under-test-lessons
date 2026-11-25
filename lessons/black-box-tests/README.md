@@ -69,7 +69,7 @@ the test writes its own settings file and starts the service through the same en
 - **Check everything that leaves it:** the answers, the calls it makes, and what it writes (rows, files, messages).
   An answer that looks right can hide a call never made or a row never kept.
 - **Inputs:** start with examples the people who run the application know well; better, capture real requests and
-  messages and clean them of personal data first (see [recorded HTTP responses](../recorded-http-responses/README.md)).
+  messages and mask their personal data first (see [recorded HTTP responses](../recorded-http-responses/README.md)).
 - **Keep a few.** They are slower than unit tests; test the detailed rules in unit tests, and the edges here.
 
 ## On older Java

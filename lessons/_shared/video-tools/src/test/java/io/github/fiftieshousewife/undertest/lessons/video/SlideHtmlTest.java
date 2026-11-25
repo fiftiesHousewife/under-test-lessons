@@ -35,7 +35,8 @@ class SlideHtmlTest {
                 () -> assertThat(page.indexOf("teal")).isLessThan(page.indexOf("navy")),
                 () -> assertThat(page).contains("<h1>Tests &amp; &lt;bugs&gt;</h1>"),
                 () -> assertThat(page).contains("<li class=\"point\">A point</li>"),
-                () -> assertThat(page).contains("<li class=\"link\">https://pitest.org</li>"),
+                () -> assertThat(page).contains("<li class=\"link\"><a href=\"https://pitest.org\" target=\"_blank\""
+                        + " rel=\"noopener\">https://pitest.org</a></li>"),
                 () -> assertThat(page).contains("<figure class=\"picture\"><svg id=\"bug\"></svg></figure>"),
                 () -> assertThat(SlideHtml.page(new Slide(new Slide.Heading("No picture", ""), List.of(), "x"),
                         List.of(base), List.of(root))).doesNotContain("figure"),

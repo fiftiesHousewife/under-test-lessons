@@ -8,9 +8,9 @@ their own narration, in [real-databases-in-tests.slides.md](real-databases-in-te
    and machines with no container runtime skip only the container tests.
 3. Here is the code under test, today's query. It decides who the sales team should call first: customers who never
    ordered, then those who ordered longest ago. It simply sorts by the date of the last order.
-4. This is [pause 300ms] a test on H2, a database held in memory. It's quick, and needs nothing installed. But it isn't
+4. This is a test on H2, a database held in memory. It's quick, and needs nothing installed. But it isn't
    the database production uses.
-5. Now, [pause 300ms] the same test on real PostgreSQL, the database production uses. Testcontainers starts it in a
+5. Now, the same test on real PostgreSQL, the database production uses. Testcontainers starts it in a
    container for this test, and throws it away afterwards.
 6. We run both suites against today's query. On H2, it passes. On PostgreSQL, it fails. H2 puts customers who never
    ordered first. PostgreSQL puts them last. So the sales team would never call them.

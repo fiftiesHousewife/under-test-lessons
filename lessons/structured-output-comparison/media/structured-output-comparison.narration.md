@@ -9,9 +9,9 @@ Written to be spoken.
 3. The code writes an order summary as JSON, for the warehouse. It has a new id, and the time it was made, so those
    two fields are different on every run.
 4. Here is the code under test, today's total. It adds up each line's price, and forgets how many were bought.
-5. This is [pause 300ms] a loosened test. Comparing the whole text broke on every run, because of the id and the time.
-   So someone loosened it, and now it only checks that some words are there.
-6. Now, [pause 300ms] a structured comparison, with JSONUnit. It checks every field and every value, in any order. The
+5. This is a loosened test. Comparing the whole text broke on every run, because of the id and the time.
+   So we loosened it, and now it only checks that some words are there.
+6. Now, a structured comparison, with JSONUnit. It checks every field and every value, in any order. The
    id and the time only have to be there, as text.
 7. We run both tests against today's total. The loosened test passes. The structured comparison fails, and says
    exactly what is wrong: the total, what it expected, and what it found.

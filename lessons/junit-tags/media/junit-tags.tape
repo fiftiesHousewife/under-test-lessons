@@ -110,7 +110,7 @@ Sleep 300ms
 Type@1ms `note "The *slow task* runs only the tests tagged 'slow', and check depends on it."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/junit-tags/example/build.gradle.kts 22 49 "lesson build file" --zoom 28-30 --mark 47-49`
+Type@1ms `show lessons/junit-tags/example/build.gradle.kts 22 49 "lesson build file" --zoom 28-30 --mark 48`
 Enter
 Sleep 300ms
 Show

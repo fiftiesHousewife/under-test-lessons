@@ -4,25 +4,32 @@ Sources: openfeature.dev (OpenFeature, a Cloud Native Computing Foundation proje
 Maven Central as dev.openfeature:sdk since October 2022); Pete Hodgson, "Feature Toggles (aka Feature Flags)",
 martinfowler.com, 2017; Paul Hammant, "Branch by Abstraction", 2007.
 
+## intro: Feature flags
+- The problem: the new rules ship a £20 basket free
+- The fix: test both ways
+- The tool: OpenFeature
+Picture: road
+Say: This lesson is about feature flags: shipping new code behind a switch, and testing it with the switch both off and
+  on. OpenFeature is a standard way for code to read its flags. We'll see new shipping rules that would send a basket
+  free. Then OpenFeature lets a test choose each side.
+
 ## intro: The new rules ship a £20 basket free
 - New shipping rules wait, switched off, beside the old ones
 - They compare a basket in pence with a threshold in pounds: free from 50p, not £50
 - The tests pass: they never switch the new rules on
-- The mistake waits for the day someone does, in production
+- The mistake waits for the day the shop switches them on, in production
 Picture: bug
-Say: This lesson is about feature flags: new code shipped behind a switch, and tested with the switch both off and on.
-  We'll see new shipping rules that would send a basket free, and how OpenFeature lets a test choose each side.
-  [pause 1s] Here is the problem. A shop has written new shipping rules, and they wait, switched off, beside the old
-  ones. But they compare a basket in pence with a threshold in pounds. So delivery is free from 50 pence, not from £50,
-  and a £20 basket ships free. The tests all pass, because they never switch the new rules on. So the mistake waits for
-  the day someone does, in production.
+Say: Here is the problem. A shop has written new shipping rules, and they wait, switched off, beside the old ones. But
+  they compare a basket in pence with a threshold in pounds. So delivery is free from 50 pence, not from £50, and a £20
+  basket ships free. The tests all pass, because they never switch the new rules on. So the mistake waits for the day
+  the shop switches them on, in production.
 
 ## intro: Our example: shipping costs
 - Delivery costs £3.99, and is free from £50
 - The old rules have run for years
 - New rules, written for the same prices, wait behind a switch
 Picture: basket
-Say: Our example works out that shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules
+Say: Our example works out the shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules
   have run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
 
 ## intro: The fix: test both ways
@@ -31,7 +38,7 @@ Say: Our example works out that shop's shipping costs. Delivery costs £3.99, an
 - A £20 basket pays £3.99 both ways, and a £60 basket pays nothing
 Picture: switch
 Say: The fix is to test both ways. The switch is called a feature flag: a setting, read while the code runs, that
-  chooses between the old rules and the new ones. Ours is called new shipping, and it's off unless someone switches it
+  chooses between the old rules and the new ones. Ours is called new shipping, and it's off until the shop switches it
   on. While both rules exist, run every check with the flag off, and again with it on. A £20 basket must pay £3.99
   both ways, and a £60 basket must pay nothing.
 
@@ -41,10 +48,10 @@ Say: The fix is to test both ways. The switch is called a feature flag: a settin
 - One test, run twice: @ValueSource(booleans = {false, true})
 - Today, switched on: [a £20 basket] expected: 399 but was: 0
 Picture: robot
-Say: Here is how OpenFeature, an open standard for flags, looks. The code asks a client for the flag's value, giving
-  a default, off. A provider answers: a flag service in production, or, in tests, a simple provider kept in memory, set
-  up with the flag on or off. The same test runs twice, once each way. Today, with the flag switched on, the £20 basket
-  expected to pay 399 pence for delivery, and paid nothing.
+Say: Here is how OpenFeature looks. The code asks a client for the flag's value, giving a default, off. A provider
+  answers: a flag service in production, or, in tests, a simple provider kept in memory, set up with the flag on or off.
+  The same test runs twice, once each way. Today, with the flag switched on, the test expected the £20 basket to pay 399
+  pence for delivery, and it paid nothing.
 
 Include: how-we-build
 
@@ -53,9 +60,9 @@ Include: how-we-build
 - Test every flag both ways while both paths exist
 - Remove the flag and the old code as soon as the new code has proved itself
 Picture: map
-Say: When should you use feature flags? [pause 1600ms] To change old code in small, safe steps, a pattern called branch by
-  abstraction. Test every flag both ways, while both paths exist. And remove the flag, and the old code, as soon as the
-  new code has proved itself.
+Say: When should you use feature flags? [pause 1600ms] To change old code in small, safe steps, a pattern called branch
+  by abstraction. Test every flag both ways, while both paths exist. And remove the flag, and the old code, as soon as
+  the new code has proved itself.
 
 ## closing: Where the ideas came from
 - Paul Hammant named branch by abstraction in 2007

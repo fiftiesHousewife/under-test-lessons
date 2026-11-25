@@ -7,17 +7,24 @@ a type you don't own, don't mock value objects, don't mock everything); site.moc
 (MIT licence; started by Szczepan Faber in 2008); Martin Fowler, "Mocks Aren't Stubs" (martinfowler.com), for mocks,
 stubs and fakes.
 
-## intro: A £12.50 mug comes back, and £37.50 is refunded
+## intro: Mockito well used
+- The problem: A £12.50 mug returned, £37.50 refunded
+- The fix: mock only where the money leaves
+- The tool: Mockito
+Picture: road
+Say: This lesson is about using Mockito well. Mockito is a library that makes stand-ins for objects. Used well, it mocks
+  only the edge where the code reaches the outside world, and checks what the code really did. We'll see a refund for
+  the wrong amount, and every test passes. Then a fake and one mock catch it.
+
+## intro: A £12.50 mug returned, £37.50 refunded
 - The customer returns a mug: £12.50 should go back to the card
 - The card gets the whole order back: £37.50
 - The test passes: it makes stand-ins for everything, and any refund will do
 Picture: bug
-Say: This lesson is about using Mockito well: mocking only the edge where the code reaches the outside world, and
-  checking what it really did. We'll see a refund for the wrong amount that every test passes, and how a fake and one
-  mock catch it. [pause 1s] Here is the problem. A customer returns a mug, so £12.50 should go back to their card.
-  Instead, the card gets the whole order back: £37.50. Yet the test passes. It replaces everything around the refunds
-  with stand-ins, called mocks, made by a library called Mockito. Then it checks only that the order was looked up, and
-  that some refund was sent. Any refund will do.
+Say: Here is the problem. A customer returns a mug, so £12.50 should go back to their card. Instead, the card gets the
+  whole order back: £37.50. Yet the test passes. It replaces everything around the refunds with stand-ins, called mocks,
+  made with Mockito. Then it checks only that the code looked up the order, and that some refund was sent. Any refund
+  will do.
 
 ## intro: Our example: refunds for returned items
 - A customer orders a mug at £12.50 and a teapot at £25
@@ -49,7 +56,7 @@ Say: Here is how Mockito looks. Mock makes the one stand-in, for the card paymen
 
 Include: how-we-build
 
-## closing: When to use Mockito, and when a fake is better
+## closing: Mockito or a fake: when to use each
 - Make stand-ins only for interfaces you own, at the edges: payments, messages, mail
 - Check results; capture what crosses the edge and check it exactly
 - For something the code reads and writes a lot, such as a store or a queue, a fake is better
@@ -63,7 +70,7 @@ Say: When should you reach for Mockito? [pause 1600ms] Make stand-ins only for i
 - Free and open source, under the MIT licence
 - Argument captors since version 1.8; Mockito 5 can stand in for final classes by default
 Picture: book
-Say: Mockito was started by Szczepan Faber in 2008. It is free and open source, under the MIT licence. Argument
+Say: Szczepan Faber started Mockito in 2008. It is free and open source, under the MIT licence. Argument
   captors arrived in version 1.8. And since Mockito 5, it can stand in for final classes too, without any extra
   setting.
 

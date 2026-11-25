@@ -54,7 +54,7 @@ on any other library:
 2. **The provider's build lists the consumer versions it supports** (the newest on the main branch, and each version
    the release records show as deployed), fetches them as ordinary dependencies, and verifies each one in its own CI.
    The list lives in the provider's repository and changes by pull request.
-3. **A Pact Broker** (or PactFlow) adds a record of which versions work together, but it is a service someone must
+3. **A Pact Broker** (or PactFlow) adds a record of which versions work together, but it is a service a team must
    host and own. Use one only where the platform team runs it; the tests don't change if you move to one later.
 
 In this lesson the folder
@@ -71,7 +71,7 @@ for Java 8, which Pact no longer supports actively.
 ## Exercise
 
 The order screen's team has published version 1.1.0 of its pact. Beside the kettle, it now writes down what the order
-screen relies on when nobody stocks an item: a 404, with an error message. The stock service's build should verify the
+screen relies on when the shop doesn't stock an item: a 404, with an error message. The stock service's build should verify the
 new version too, with a state for the new request.
 
 1. Read [version 1.1.0 of the pact](example/package-repository/order-screen-pacts/1.1.0/order-screen-stock-service.json),
@@ -104,7 +104,7 @@ new version too, with a state for the new request.
   release records.
 - **Not for a supplier's API or a public one,** where the other side won't verify: use
   [recorded HTTP responses](../recorded-http-responses/README.md) with scheduled checks against the supplier's
-  sandbox, or [responses checked against the OpenAPI document](../openapi-response-checks/README.md).
+  sandbox, or [responses checked against the OpenAPI schema](../openapi-response-checks/README.md).
 
 ## On older Java
 

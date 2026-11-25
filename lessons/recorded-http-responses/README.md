@@ -5,7 +5,7 @@
 Tests against a real web service are slow, need accounts on every machine, and fail when the service is down. Worse,
 the real service won't fail on demand, so error handling goes untested. [WireMock](https://wiremock.org) runs a small
 web server inside the test and replays recorded answers: the happy ones, and the errors you add by hand. It can also
-make the recordings, and since a recording is a copy of a real answer, each one is cleaned of personal data and
+make the recordings, and since a recording is a copy of a real answer, each one has its personal data masked, and is
 passwords before it is saved.
 
 ## Run the example
@@ -35,7 +35,7 @@ The example looks up a town for a postcode, using a supplier's web service.
   anything is saved. Substitutes are 64 bits, so two people almost never share one. The same name always gets the
   same substitute, so recordings still match.
   [`CredentialsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/recorded/CredentialsTest.java)
-  cleans a recording holding every kind of credential, and scans every recording kept with the tests for any left.
+  masks a recording holding every kind of credential, and scans every recording kept with the tests for any left.
 
 ## Exercise
 
@@ -66,7 +66,7 @@ reads an empty town from it and says nothing is wrong.
 
 - **Whenever code calls a service you don't own.**
 - **Record once, then add the rare answers by hand:** errors, slow answers (WireMock's `fixedDelayMilliseconds`), odd data.
-- **Clean recordings before they are saved:** drop every credential, both ways, and swap names and email addresses for keyed
+- **Mask recordings before they are saved:** drop every credential, both ways, and swap names and email addresses for keyed
   substitutes, so recordings never put personal data in the repository.
 - **Keep recordings honest:** check them against the real service now and then. Between teams, use
   [contract tests](../CATALOGUE.md) instead.

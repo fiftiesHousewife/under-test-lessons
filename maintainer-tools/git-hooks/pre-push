@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Refuses a plain `git push`: pushes go through maintainer-tools/sync/sync.sh, which checks the build and brings the issues and
-# backlog page up to date first. Turn on once per clone with:  git config core.hooksPath maintainer-tools/git-hooks
-# Copied from the toolkit's hook.
-if [ "${LESSONS_SYNC:-}" != "1" ]; then
-  echo "Push with maintainer-tools/sync/sync.sh \"Commit message\" so the build is checked and the issues are synced first." >&2
-  exit 1
-fi

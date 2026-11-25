@@ -55,7 +55,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Example messages, *browsed* from a test environment's queue, then *cleaned*."`
+Type@1ms `note "Example messages, *browsed* from a test environment's queue, then *masked*."`
 Enter
 Sleep 300ms
 Type@1ms `note "One, from an old till, gives pounds instead of pence: no code can ever read it."`

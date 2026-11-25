@@ -79,7 +79,7 @@ Type@1ms `show TodaysCapture 18 23 "today's capture" --zoom 20`
 Enter
 Sleep 300ms
 Show
-Sleep 33s
+Sleep 35s
 
 # ---- Scene 5: the weak test ----
 Hide
@@ -93,7 +93,7 @@ Type@1ms `show CaptureRecordsTest 15 28 "the weak test" --zoom 20-26`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 28s
 
 # ---- Scene 6: the strong tests ----
 Hide
@@ -148,7 +148,7 @@ Show
 Wait+Screen@300s /All \d+ tests passed/
 Sleep 16s
 Hide
-Type@1ms `callout "Logbook's filters clean each message before it is written, and the capture matches its approved file."`
+Type@1ms `callout "Logbook's filters mask each message before it is written, and the capture matches its approved file."`
 Enter
 Sleep 300ms
 Show
