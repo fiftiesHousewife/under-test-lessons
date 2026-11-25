@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "Logbook inside the old service: a servlet filter for what it *receives*, a client hook for what it *sends*."`
 Enter
 Sleep 300ms
-Type@1ms `show CustomerServer 22 32 "the old service's server" --zoom 30`
+Type@1ms `show CustomerServer 28 40 "the old service's server" --zoom 36`
 Enter
 Sleep 300ms
 Type@1ms `show LoyaltyClient 25 31 "the loyalty client" --mark 27`
@@ -89,7 +89,7 @@ Sleep 300ms
 Type@1ms `note "The *weak* test: checks that each request and answer was recorded, never what was written."`
 Enter
 Sleep 300ms
-Type@1ms `show CaptureRecordsTest 15 28 "the weak test" --zoom 20-26`
+Type@1ms `show CaptureRecordsTest 15 23 "the weak test" --zoom 18-22`
 Enter
 Sleep 300ms
 Show
@@ -103,7 +103,7 @@ Sleep 300ms
 Type@1ms `note "The *strong* tests: no secret in the recording, and the whole recording matches its approved file."`
 Enter
 Sleep 300ms
-Type@1ms `show ApprovedCaptureTest 18 39 "the strong tests" --zoom 28-29`
+Type@1ms `show ApprovedCaptureTest 18 33 "the strong tests" --zoom 25-27`
 Enter
 Sleep 300ms
 Show

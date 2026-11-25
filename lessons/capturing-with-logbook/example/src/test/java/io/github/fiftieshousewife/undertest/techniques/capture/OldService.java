@@ -50,6 +50,15 @@ public final class OldService implements AutoCloseable {
         address = server.start();
     }
 
+    /** The capture of one request for a customer, read once the old service has stopped. */
+    public static String captureOf(final String id) throws IOException, InterruptedException {
+        final OldService service = new OldService();
+        try (service) {
+            service.customer(id);
+        }
+        return service.captured();
+    }
+
     /** Asks the old service for a customer, as a caller with a token would; returns its answer's body. */
     public String customer(final String id) throws IOException, InterruptedException {
         final HttpRequest request = HttpRequest.newBuilder(address.resolve("/customers/" + id))
@@ -59,7 +68,7 @@ public final class OldService implements AutoCloseable {
         }
     }
 
-    /** Everything the capture has written. */
+    /** Everything the capture has written: read it after close(), once every request has finished. */
     public String captured() {
         return captureLog.text();
     }

@@ -10,11 +10,17 @@ import org.eclipse.jetty.server.HttpConfiguration;
 import org.eclipse.jetty.server.HttpConnectionFactory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.handler.GracefulHandler;
 import org.zalando.logbook.Logbook;
 import org.zalando.logbook.servlet.LogbookFilter;
 
-/** The old service on an embedded Jetty server, on a free port, with Logbook's servlet filter in front of it. */
+/**
+ * The old service on an embedded Jetty server, on a free port, with Logbook's servlet filter in front of it. Stopping
+ * it waits for requests still in progress, so the capture is complete once it has stopped.
+ */
 public final class CustomerServer implements AutoCloseable {
+
+    private static final long STOP_WAIT_MILLIS = 5_000;
 
     private final Server server = new Server();
     private final ServerConnector connector;
@@ -29,7 +35,8 @@ public final class CustomerServer implements AutoCloseable {
         final ServletContextHandler context = new ServletContextHandler();
         context.addFilter(new FilterHolder(new LogbookFilter(logbook)), "/*", EnumSet.of(DispatcherType.REQUEST));
         context.addServlet(new ServletHolder(service), "/customers/*");
-        server.setHandler(context);
+        server.setHandler(new GracefulHandler(context));
+        server.setStopTimeout(STOP_WAIT_MILLIS);
     }
 
     /** Starts the server, and returns its address. */

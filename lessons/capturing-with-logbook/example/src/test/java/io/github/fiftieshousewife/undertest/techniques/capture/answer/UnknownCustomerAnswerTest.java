@@ -16,9 +16,9 @@ class UnknownCustomerAnswerTest {
 
     @Test
     void approvesTheCaptureForACustomerNobodyHas() throws IOException, InterruptedException {
-        try (OldService service = new OldService()) {
-            service.customer("C-9999");
-            Approvals.verify(service.captured(), new Options().withReporter(new QuietReporter()));
+        final String capture = OldService.captureOf("C-9999");
+        try {
+            Approvals.verify(capture, new Options().withReporter(new QuietReporter()));
         } catch (Error difference) {
             // ApprovalTests' own message lists full file paths; the build's approval summary shows the lines instead
             throw new AssertionError("the capture for a customer nobody has differs from its approved file",

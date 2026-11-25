@@ -22,20 +22,14 @@ class ApprovedCaptureTest {
 
     @Test
     void writesNoSecrets() throws IOException, InterruptedException {
-        try (OldService service = new OldService()) {
-            service.customer("C-1001");
-            final String capture = service.captured();
-            assertThat(SECRETS.keySet().stream().filter(name -> capture.contains(SECRETS.get(name))).sorted())
-                    .as("secrets in the capture").isEmpty();
-        }
+        final String capture = OldService.captureOf("C-1001");
+        assertThat(SECRETS.keySet().stream().filter(name -> capture.contains(SECRETS.get(name))).sorted())
+                .as("secrets in the capture").isEmpty();
     }
 
     @Test
     void matchesTheApprovedCapture() throws IOException, InterruptedException {
-        try (OldService service = new OldService()) {
-            service.customer("C-1001");
-            verifyApproved(service.captured());
-        }
+        verifyApproved(OldService.captureOf("C-1001"));
     }
 
     /*

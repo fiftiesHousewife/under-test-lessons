@@ -14,16 +14,10 @@ class CaptureRecordsTest {
 
     @Test
     void recordsWhatTheServiceReceivesAndSends() throws IOException, InterruptedException {
-        try (OldService service = new OldService()) {
-            service.customer("C-1001");
-            final String capture = service.captured();
-            assertAll(
-                    () -> assertThat(capture).as("what it received")
-                            .contains("Request received: GET /customers/C-1001"),
-                    () -> assertThat(capture).as("what it sent")
-                            .contains("Request sent: POST /points"),
-                    () -> assertThat(capture).as("the answers")
-                            .contains("Response received: 200", "Response sent: 200"));
-        }
+        final String capture = OldService.captureOf("C-1001");
+        assertAll(
+                () -> assertThat(capture).as("what it received").contains("Request received: GET /customers/C-1001"),
+                () -> assertThat(capture).as("what it sent").contains("Request sent: POST /points"),
+                () -> assertThat(capture).as("the answers").contains("Response received: 200", "Response sent: 200"));
     }
 }
