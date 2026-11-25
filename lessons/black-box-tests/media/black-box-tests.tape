@@ -58,14 +58,14 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The code under test: today's order tables. Two rows in one transaction, and *no commit*."`
+Type@1ms `note "The code under test: the code that saves orders today. Two rows in one transaction, and *no commit*."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysOrderTables 19 27 "today's order tables" --zoom 21-23`
+Type@1ms `show TodaysOrderTables 19 27 "today's code that saves orders" --zoom 21-23`
 Enter
 Sleep 300ms
 Show
-Sleep 31s
+Sleep 33s
 
 # ---- Scene 4: the unit tests ----
 Hide
@@ -130,15 +130,15 @@ Sleep 300ms
 Show
 Sleep 6s
 
-# ---- Scene 8: the fixed order tables ----
+# ---- Scene 8: the fixed code that saves orders ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The order tables that commit:"`
+Type@1ms `note "The fixed code commits the transaction:"`
 Enter
 Sleep 300ms
-Type@1ms `show OrderTables 19 28 "the fixed order tables" --zoom 24`
+Type@1ms `show OrderTables 19 28 "the fixed code that saves orders" --zoom 24`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:black-box-tests:test"`

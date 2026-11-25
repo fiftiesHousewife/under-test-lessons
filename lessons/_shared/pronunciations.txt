@@ -349,3 +349,6 @@ feature flag = /fˈiːtʃə flˈaɡ/
 feature flags = /fˈiːtʃə flˈaɡz/
 Feature flag = /fˈiːtʃə flˈaɡ/
 Feature flags = /fˈiːtʃə flˈaɡz/
+entry point = /ˈɛntɹi pɔɪnt/
+entry points = /ˈɛntɹi pɔɪnts/
+Entry point = /ˈɛntɹi pɔɪnt/

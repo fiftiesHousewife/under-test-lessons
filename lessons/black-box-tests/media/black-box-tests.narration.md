@@ -8,9 +8,9 @@ narration, in [black-box-tests.slides.md](black-box-tests.slides.md). Written to
 2. This is the order service as it ships. Its main method reads a settings file, and starts the service. Starting it
    creates the database tables, the warehouse client and the web server, each from the settings: the database's
    address, the warehouse's address, and the port. The test starts it the same way, with its own settings.
-3. Here is the code under test, today's order tables. It saves each order as 2 rows, the order and its line, in one
-   transaction, so both are kept or neither is. It turns off automatic commits, and inserts the rows. And then it
-   never commits. When the connection closes, the database throws both rows away.
+3. Here is the code under test, the code that saves orders today. It saves each order as 2 rows, the order and its
+   line, in one transaction, so both are kept or neither is. It turns off automatic commits, and inserts the rows.
+   And then it never commits. When the connection closes, the database throws both rows away.
 4. These are the unit tests. They check the order rules, with a stand-in warehouse, and a list in place
    of the database. An order with stock is placed and kept. An order without stock is refused. They pass, and they
    never run the web server, the warehouse call, or the database.
@@ -23,5 +23,5 @@ narration, in [black-box-tests.slides.md](black-box-tests.slides.md). Written to
 7. We run the tests against today's code. The unit tests pass. The refused order passes too, because nothing should be
    written. But the placed order fails. The answer was right, and the warehouse put the stock aside. Yet the service
    wrote no rows. The order is lost.
-8. Now the order tables that commit. We run the same tests. [pause 1s] Every test passes. The answer, the warehouse
-   call and the rows are all what the shop expects.
+8. Now the fixed code, which commits the transaction, so the database keeps both rows. We run the same tests.
+   [pause 1s] Every test passes. The answer, the warehouse call and the rows are all what the shop expects.
