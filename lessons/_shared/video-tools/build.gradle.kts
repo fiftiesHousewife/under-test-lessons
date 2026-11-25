@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // The video tools that run anywhere the lessons do, inside a company included: the checks of lesson video scripts,

@@ -2,7 +2,7 @@ import java.net.URI
 import java.security.MessageDigest
 
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // The tools that make lesson videos and read narration aloud: VHS, ttyd, Python, the Kokoro voice and ffmpeg. Only the

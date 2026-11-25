@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Property-based testing: state rules that must hold for every input, and let jetCheck try many.

@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Database changes with Liquibase: every change in the changelog applied to real PostgreSQL in a test, before production.

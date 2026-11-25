@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Recorded HTTP responses: a service you don't own, replayed from recordings, including the answers it rarely gives.

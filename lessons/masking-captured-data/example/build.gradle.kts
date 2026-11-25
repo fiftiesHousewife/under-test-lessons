@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Masking captured data: a day of real data masked so the tests that run on it still give the right answers.

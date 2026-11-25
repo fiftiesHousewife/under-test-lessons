@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Finding flaky tests: wait for background work with Awaitility instead of sleeping, and run each test five times.

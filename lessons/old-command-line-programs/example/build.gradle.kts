@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Old command-line programs: environment variables, standard input and output with System Stubs; System.exit passed in.

@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Embedded Jakarta EE tests: start a small CDI container (Weld) inside the test, so beans are wired as the

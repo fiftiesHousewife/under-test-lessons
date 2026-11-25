@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Two test suites cover the same class:
@@ -8,18 +8,14 @@ plugins {
 // `./gradlew :lessons:mutation-testing:pitest`                runs PIT with the strong suite
 // `./gradlew :lessons:mutation-testing:pitest -Pcode=today`   runs PIT with the weak suite, today's tests
 // `./gradlew :lessons:mutation-testing:pitest -Pcode=answer`  the weak suite and the exercise's answer, one more test
-// Here the code under test stays the same and the tests change, so "today" chooses today's tests.
 val code = providers.gradleProperty("code").getOrElse("fixed")
-
-pitest {
-    excludedTestClasses = when (code) {
-        "today" -> listOf("*StrongTest", "*AnswerTest")
-        "answer" -> listOf("*StrongTest")
-        else -> listOf("*WeakTest", "*AnswerTest")
-    }
+val unusedTests = when (code) {
+    "today" -> listOf("*StrongTest", "*AnswerTest")
+    "answer" -> listOf("*StrongTest")
+    else -> listOf("*WeakTest", "*AnswerTest")
 }
 
-// A lesson always reruns PIT, so switching between the two never shows a stale result.
-tasks.named("pitest") {
-    outputs.upToDateWhen { false }
+// The shared plugin's pitest task runs PIT; this lesson tells it which tests to leave out.
+tasks.named<JavaExec>("pitest") {
+    args("--excludedTestClasses=" + unusedTests.joinToString(","))
 }
