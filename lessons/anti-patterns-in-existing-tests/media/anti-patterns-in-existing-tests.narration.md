@@ -4,8 +4,8 @@ One item per scene of [anti-patterns-in-existing-tests.tape](anti-patterns-in-ex
 closing slides have their own narration, in
 [anti-patterns-in-existing-tests.slides.md](anti-patterns-in-existing-tests.slides.md). Written to be spoken.
 
-1. Step one. ArchUnit is already in the version catalogue, from the lesson on architecture rules. It comes from Maven
-   Central.
+1. Step one. ArchUnit is already in the version catalogue, from the lesson on architecture rules. It comes from the
+   binary repository you use: Maven Central, or your company's own, such as Artifactory or Nexus.
 2. Step two. The lesson's tests use ArchUnit. The old online shop gets a source set of its own, its code and its old
    tests, as they came to us. We compile its tests, but never run or change them here. The checks read their compiled
    classes from the test class path.
@@ -13,9 +13,8 @@ closing slides have their own narration, in
    off when it started failing, and stayed off. And the place order test checks only that an order came
    back, whatever is in it.
 4. These tests wait. Each sends an order to the warehouse in the background, then sleeps, for half a second or a whole
-   second, and hopes the work is done. On a busy continuous integration server, it may not be. That's the shared build
-   that runs every test whenever a developer pushes a change. And the order number tests share one counter, so they only
-   pass in the order the annotation sets.
+   second, and hopes the work is done. On a busy continuous integration server, it may not be. And the order number
+   tests share one counter, so they only pass in the order the annotation sets.
 5. This test class mocks everything. A mock is a stand-in that records how it was called. Five of them here, one for
    each thing the checkout uses, so its tests check the calls the code makes, and little of what it does.
 6. Here are the checks. Each kind of anti-pattern is one ArchUnit rule about a test: disabled, five or more

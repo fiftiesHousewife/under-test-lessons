@@ -83,10 +83,8 @@ of exactly £50 would lose its discount.
 - **Then, in key code:** strengthen the tests until PIT catches the planted bugs that matter. The toolkit has a prompt
   for this: strengthen tests until PIT catches the planted bugs.
 - **In pull requests:** report planted bugs that survive in the changed code, without failing the build at first.
-  Open-source PIT has no git support of its own, so there are two routes. The free one is to narrow PIT's
-  `targetClasses` to the classes a change touched, as [Coverage of changed code](../coverage-of-changed-code/README.md)
-  shows. The other is [Arcmutate](https://www.arcmutate.com/), PIT's commercial extension, which reads git itself
-  and reports on the pull request; it needs a licence.
+  On Maven, PIT's `scmMutationCoverage` goal mutates only what git says changed; on Gradle, narrow PIT to the
+  classes a change touched, as [Coverage of changed code](../coverage-of-changed-code/README.md) shows.
 - **Not yet** where there are almost no tests: there's nothing to strengthen. Record what the code does first, with
   [characterisation tests](../characterisation-tests/README.md).
 - **Never on a whole large repository at once:** limit PIT's `targetClasses` to high-risk code, or to what a pull

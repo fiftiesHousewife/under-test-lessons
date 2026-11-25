@@ -12,6 +12,8 @@ import tools.jackson.databind.node.ObjectNode;
  */
 public final class TodaysRefundClient implements Refunds {
 
+    private static final int OLD_MINIMUM_PENCE = 50; // TODAY, too: a minimum the provider dropped long ago
+
     private final ProviderHttp provider;
 
     public TodaysRefundClient(final ProviderHttp provider) {
@@ -20,6 +22,9 @@ public final class TodaysRefundClient implements Refunds {
 
     @Override
     public String send(final Refund refund) {
+        if (refund.pence() < OLD_MINIMUM_PENCE) {
+            return "not sent: under the minimum";
+        }
         final ObjectNode body = ProviderHttp.newBody()
                 .put("orderId", refund.orderId())
                 .put("amount", refund.pence() / 100.0)

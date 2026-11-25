@@ -9,8 +9,8 @@ Maven Central (junit-jupiter-params, first released with JUnit 5.0.0 in Septembe
 - The fix: one test, a table of test cases
 - The tool: JUnit
 Picture: road
-Say: This lesson is about parameterised tests: one test, with a table of test cases. We'll see VAT that comes out a
-  penny short, and how JUnit runs the same test for every row of the table.
+Say: The next stop on the journey is parameterised tests: one test, with a table of test cases. We'll see VAT that comes
+  out a penny short, and how JUnit runs the same test for every row of the table.
 
 ## intro: The VAT comes out a penny short
 - On a price of 3 pence, VAT should be 1 penny: the calculator says 0
@@ -26,9 +26,9 @@ Say: Here is the problem. On a price of 3 pence, the VAT should be 1 penny, and 
 - Round the result to the nearest penny
 - 20% is a fifth, and a fifth of a price can end in part of a penny
 Picture: tag
-Say: Our example works out VAT, at 20 percent, on a price before tax, in pence, and rounds it to the nearest penny.
-  20 percent is a fifth, and a fifth of a price can end in part of a penny, which should round up, or down. So every
-  way the rounding can go is a test case worth checking.
+Say: Our example works out VAT, at 20 percent, on a price before tax, in pence, and rounds it to the nearest penny. 20
+  percent is a fifth, and a fifth of a price can end in part of a penny, which should round up, or down. So every way
+  the rounding can go is a test case worth checking.
 
 ## intro: The fix: one test, a table of test cases
 - Write the check once, and list the test cases as rows of a table
@@ -44,9 +44,9 @@ Say: The fix is to write the check once, and list the test cases as a table. Thi
 - @CsvSource({"3, 1", "998, 200"}): one row per test case
 - Each row is its own test: 3 pence net gives 1 pence VAT FAILED
 Picture: robot
-Say: How does JUnit run the table? You mark the method as a parameterised test, with a pattern for each run's name.
-  You give the rows as comma separated values, a price and its VAT. JUnit runs the method once per row, and reports
-  each row by its name. So the failure says exactly which test case broke: 3 pence net gives 1 pence VAT.
+Say: How does JUnit run the table? You mark the method as a parameterised test, with a pattern for each run's name. You
+  give the rows as comma separated values, a price and its VAT. JUnit runs the method once per row, and reports each row
+  by its name. So the failure says exactly which test case broke: 3 pence net gives 1 pence VAT.
 
 Include: how-we-build
 
@@ -65,15 +65,15 @@ Say: When should you use them? [pause 1600ms] Whenever the same check runs on se
 - JUnit 5, in 2017, made it one annotation, @ParameterizedTest, with sources such as @CsvSource
 - JUnit 6 is the current generation
 Picture: book
-Say: JUnit 4 could already run a test once for each row of a table, with its Parameterized runner. JUnit 5, released
-  in 2017, made it a single annotation, ParameterizedTest, with sources such as a CSV source for the rows. JUnit 6 is
-  the current generation.
+Say: JUnit 4 could already run a test once for each row of a table, with its Parameterized runner. JUnit 5, released in
+  2017, made it a single annotation, ParameterizedTest, with sources such as a CSV source for the rows. JUnit 6 is the
+  current generation.
 
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/parameterised-tests — run this lesson yourself: its test code and examples
 - Exercise: add a table of refunds, where the net amount is negative; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with the JUnit user guide. The links on screen also take you to this lesson's test code
-  and examples, to run yourself. And try the exercise in the README: add a table of refunds, where the net amount is
+Say: To find out more, start with the JUnit user guide. The links on screen also take you to this lesson's test code and
+  examples, to run yourself. And try the exercise in the README: add a table of refunds, where the net amount is
   negative, and find 2 more rows the calculator in use today gets wrong.

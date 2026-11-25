@@ -15,18 +15,7 @@ guidance (pseudonymised data is personal data in the hands of whoever holds the 
 - The fix: the same value, the same substitute
 - The tools: Java's built-in HMAC, and Datafaker
 Picture: road
-Say: This lesson is about masking a copy of real data, so it's safe to keep for tests, and the tests still work.
-
-## intro: Masked, and the reports go wrong
-- A day of a shop's real data: 7 orders from 4 customers, and 5 payments
-- Today's data masking puts one word, REMOVED, in every name, email and account
-- Now there's 1 customer with 7 orders, and the accounts owing don't add up
-- And a note still holds a customer's email, and another a customer's name
-Picture: bug
-Say: Here is the problem. A shop keeps a day of real orders as test data: 7 orders from 4 customers. Today's data
-  masking puts one word in place of every name, email address and account number. The word it writes is [pause 300ms]
-  removed. Now the reports count 1 customer with all 7 orders, and the accounts no longer add up. And one note still
-  holds a customer's email address.
+Say: Here, we look at masking a copy of real data, so it's safe to keep for tests, and the tests still work.
 
 ## intro: Our example: a shop's day of orders
 - 7 orders and 5 payments, in two files
@@ -34,9 +23,19 @@ Say: Here is the problem. A shop keeps a day of real orders as test data: 7 orde
 - Account numbers join each order to its payments
 - Two reports: orders per customer, and accounts not settled
 Picture: statement
-Say: Our example is a day of the shop's real data: 7 orders, and the 5 payments made against them, in two files. The
-  same customers appear on several orders, and the account number joins each order to its payments. The shop runs two
-  reports on the day: how many orders each customer placed, and which accounts still owe money, or paid too much.
+Say: Our example is a day of a shop's real data: 7 orders, and the 5 payments made against them, in two files. The same
+  customers appear on several orders, and the account number joins each order to its payments. The shop runs two reports
+  on the day: how many orders each customer placed, and which accounts still owe money, or paid too much.
+
+## intro: Masked, and the reports go wrong
+- The 7 orders come from 4 customers
+- Today's data masking puts one word, REMOVED, in every name, email and account
+- Now there's 1 customer with 7 orders, and the accounts owing don't add up
+- And a note still holds a customer's email, and another a customer's name
+Picture: bug
+Say: Here is the problem. The 7 orders come from 4 customers. Today's data masking puts one word in place of every name,
+  email address and account number. It writes the same word in each. [pause 300ms] Removed. Now the reports count 1
+  customer with all 7 orders, and the accounts no longer add up. And one note still holds a customer's email address.
 
 ## intro: The trap: free text
 - A note, a comment, a message: people type whatever they like into it
@@ -89,8 +88,8 @@ Say: When should you do this? [pause 1s] Whenever you keep a copy of real data f
 - So keep a masked copy internal, and the key somewhere else
 Picture: door
 Say: Is the masked copy anonymous, then? [pause 1600ms] No. [pause 600ms] Whoever holds the key can link a substitute
-  back to a person. [pause 600ms] The Federal Trade Commission, California's privacy law, and GDPR in the UK and the
-  EU all still treat it as personal data. [pause 600ms] And you can't keep card numbers at all: the card industry's
+  back to a person. [pause 600ms] The Federal Trade Commission, California's privacy law, and GDPR in the UK and the EU
+  all still treat it as personal data. [pause 600ms] And you can't keep card numbers at all: the card industry's
   standard allows no real ones in tests. [pause 600ms] So keep a masked copy internal, and the key somewhere else.
 
 ## closing: Where the tools came from
@@ -106,7 +105,7 @@ Say: RFC 2104 described HMAC, the keyed hash, in 1997, and it comes with Java. D
 - https://csrc.nist.gov/pubs/sp/800/188/final — NIST's guide to de-identifying data
 - https://www.rfc-editor.org/rfc/rfc2104 — RFC 2104, HMAC
 - https://www.datafaker.net — Datafaker, and its guide to repeatable results
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/masking-captured-data — run this lesson yourself: its test code and examples
 - Exercise: check that a phone number in an order's note is masked too; the README has the steps and the answer
 Picture: globe
 Say: To find out more, follow the links on screen: the FTC on hashing, NIST's guide, the HMAC standard, and Datafaker.

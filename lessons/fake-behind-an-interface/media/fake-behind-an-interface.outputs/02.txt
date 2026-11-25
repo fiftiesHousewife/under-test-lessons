@@ -3,5 +3,5 @@ FakeQueueTest > bigOrderReachesTheWarehouseAndTheFraudCheck() PASSED
 FakeQueueTest > smallOrderSkipsTheFraudCheck() PASSED
 MockedQueueTest > bigOrderSendsBothMessagesAndCommits() PASSED
 QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() PASSED
-HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsReachesTheFraudCheck() PASSED
+HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsSendsAFraudCheck() PASSED
 All 5 tests passed.

@@ -46,7 +46,7 @@ with odd pence, £19.99.
    which runs against today's client with:
 
 ```bash
-./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer   # today's client: 3 of 5 tests fail; the answer expected 1 and 1999 but got 0.01 and 19.99, not whole numbers
+./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer   # today's client: 3 of 5 tests fail; the answer finds the 1p refund was never sent, and 19.99 is not whole pence
 ```
 
 ## Watch it, or present it

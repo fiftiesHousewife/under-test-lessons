@@ -12,7 +12,7 @@ public final class TodaysOrderSummary implements OrderSummary {
     private final SummaryJson writer;
 
     public TodaysOrderSummary(final Clock clock) {
-        this.writer = new SummaryJson(clock);
+        this.writer = new SummaryJson(Clock.systemUTC()); // TODAY, too: ignores the clock it is given
     }
 
     @Override

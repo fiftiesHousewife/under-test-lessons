@@ -8,29 +8,28 @@ Sources: archunit.org and github.com/TNG/ArchUnit (Apache 2.0 licence, by TNG Te
 - The fix: a test of which layer may use which
 - The tool: ArchUnit
 Picture: road
-Say: This lesson is about architecture rules: which layer of a shop's code may use which. ArchUnit is a library that
-  checks how Java code is put together. With it, the rules become a test, so every build checks them. We'll see a
-  shortcut that breaks the rules, and the test that catches it.
-
-## intro: A shortcut past the shop's rules
-- A shop's admin page reads the stored orders directly, skipping the service
-- It still shows the right answer: Orders: 2
-- So the unit tests pass, and the shortcut stays hidden
-- Each shortcut skips the shop's rules, and makes the next change harder
-Picture: bug
-Say: Here is the problem. A shop's admin page reads the stored orders directly, and skips the layer that holds the
-  shop's rules. It still shows the right answer: 2 orders. So the unit tests pass, and a review can easily miss it. But
-  every shortcut like this skips the shop's rules, and makes the next change harder. In old code, these shortcuts pile
-  up quietly.
+Say: The next stop on the journey is architecture rules: which layer of a shop's code may use which. ArchUnit is a
+  library that checks how Java code is put together. With it, the rules become a test, so every build checks them. We'll
+  see a shortcut that breaks the rules, and the test that catches it.
 
 ## intro: Our example: a shop in three layers
 - Web: the pages people see, including an admin page
 - Service: the shop's rules, such as "an order must cost something"
 - Storage: where orders are kept
 Picture: blocks
-Say: Our example is a small shop, built in three layers. The web layer has the pages people see, including the
-  admin page. The service layer holds the shop's rules, such as: an order must cost something. And the storage layer
-  is where the orders are kept. Web may use the service, and only the service may use storage.
+Say: Our example is a small shop, built in three layers. The web layer has the pages people see, including an admin
+  page. The service layer holds the shop's rules, such as: an order must cost something. And the storage layer is where
+  the orders are kept. Web may use the service, and only the service may use storage.
+
+## intro: A shortcut past the shop's rules
+- The admin page reads the stored orders directly, skipping the service
+- It still shows the right answer: Orders: 2
+- So the unit tests pass, and the shortcut stays hidden
+- Each shortcut skips the shop's rules, and makes the next change harder
+Picture: bug
+Say: Here is the problem. The admin page reads the stored orders directly, and skips the service layer. It still shows
+  the right answer: 2 orders. So the unit tests pass, and a review can easily miss it. But every shortcut like this
+  skips the shop's rules, and makes the next change harder. In old code, these shortcuts pile up quietly.
 
 ## intro: The fix: a test of which layer may use which
 - An architecture rule checks how the code is put together, not what it does
@@ -38,18 +37,18 @@ Say: Our example is a small shop, built in three layers. The web layer has the p
 - It reads the compiled classes, so it checks every call, field and parameter
 Picture: layers
 Say: The fix is a test of which layer may use which. This is called an architecture rule: a test that checks how the
-  code is put together, rather than what it does. Ours says that only the service layer may use storage. The rule
-  reads the compiled classes, so it checks every call, every field and every parameter, and nothing slips past.
+  code is put together, rather than what it does. Ours says that only the service layer may use storage. The rule reads
+  the compiled classes, so it checks every call, every field and every parameter, and nothing slips past.
 
 ## intro: How ArchUnit looks
 - Name the layers: .layer("Storage").definedBy(BASE + ".storage..")
 - Say who may use whom: .whereLayer("Storage").mayOnlyBeAccessedByLayers("Service")
 - Today it names each break: Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>
 Picture: robot
-Say: Here is how ArchUnit looks. It imports the compiled classes of the packages you
-  name. You name each layer by its package, in plain Java. Then you say which layer may use which: storage may only be
-  used by the service. Today the rule fails, and names every break: the admin page's constructor, its field, and its
-  call that counts the stored orders.
+Say: Here is how ArchUnit looks. It imports the compiled classes of the packages you name. You name each layer by its
+  package, in plain Java. Then you say which layer may use which: storage may only be used by the service. Today the
+  rule fails, and names every break: the admin page's constructor, its field, and its call that counts the stored
+  orders.
 
 Include: how-we-build
 
@@ -73,9 +72,9 @@ Say: ArchUnit was written at TNG Technology Consulting, and is free to use under
 
 ## closing: Find out more
 - https://www.archunit.org — ArchUnit, with its user guide
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/architecture-rules — run this lesson yourself: its test code and examples
 - Exercise: write a rule listing the only layers the web layer may use; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with the ArchUnit user guide. The links on screen also take you to this lesson's test
-  code and examples, to run yourself. And try the exercise in the README: write a rule that lists the only layers the
-  web layer may use.
+Say: To find out more, start with the ArchUnit user guide. The links on screen also take you to this lesson's test code
+  and examples, to run yourself. And try the exercise in the README: write a rule that lists the only layers the web
+  layer may use.

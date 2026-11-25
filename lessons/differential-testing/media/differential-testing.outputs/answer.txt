@@ -1,11 +1,22 @@
 $ ./gradlew :lessons:differential-testing:test -Pcode=answer
-OldAndNewAgreeTest > rewriteAgreesWithTheOldCalculatorOnEveryWeight() FAILED
-    java.lang.AssertionError: [weights where the rewrite disagrees]
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 100 g PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 250 g PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 500 g FAILED
+    java.lang.AssertionError: [weights up to 500 g where the rewrite disagrees]
     Expecting empty but was: ["451 g to 500 g: old 195p, new 315p"]
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 1 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 1.5 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 2 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 2.5 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 3 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 3.5 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 4 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 4.5 kg PASSED
+OldAndNewAgreeTest > rewriteAgreesOnEveryWeightInTheBand(String, int, int) > up to 5 kg PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 50 g costs 85 pence PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 200 g costs 155 pence PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 400 g costs 195 pence PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 800 g costs 315 pence PASSED
 RewriteExamplesTest > typicalWeightCostsTheListedPrice(int, int) > 1500 g costs 435 pence PASSED
 RefusalsAgreeAnswerTest > rewriteRefusesTheSameWeightsAsTheOldCalculator() PASSED
-7 tests completed, 1 failed
+18 tests completed, 1 failed

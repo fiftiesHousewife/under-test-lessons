@@ -72,11 +72,11 @@ Sleep 300ms
 Type@1ms `note "Today's writer: a header, then one line per payment, and nothing after them."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysSettlementJob 17 23 "today's writer" --zoom 22`
+Type@1ms `show TodaysSettlementJob 21 27 "today's writer" --zoom 25-26`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 21s
 
 # ---- Scene 5: tests of the pieces ----
 Hide

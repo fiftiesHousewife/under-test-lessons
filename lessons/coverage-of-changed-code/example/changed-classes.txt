@@ -1,4 +1,0 @@
-# The classes this change touched, one per line. In CI this list comes from git (see the README):
-#   git diff --name-only origin/main...HEAD -- '*.java' | grep '/src/main/' | xargs -n1 basename | sed 's/\.java$//'
-# Kept as a file here, so the lesson gives the same result on every run.
-BulkDiscount

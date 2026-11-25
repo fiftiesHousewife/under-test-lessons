@@ -2,7 +2,7 @@ package io.github.fiftieshousewife.undertest.techniques.differential.legacy;
 
 import io.github.fiftieshousewife.undertest.techniques.differential.Postage;
 
-/** The old calculator, in use for years. Nobody wants to change it, but its answers are the ones customers know. */
+/** The old calculator, in use for years: risky to change, and its answers are the prices the business means. */
 public final class LegacyPostage implements Postage {
 
     @Override

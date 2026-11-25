@@ -11,8 +11,8 @@ FakeQueueTest > bigOrderReachesTheWarehouseAndTheFraudCheck() FAILED
 FakeQueueTest > smallOrderSkipsTheFraudCheck() PASSED
 MockedQueueTest > bigOrderSendsBothMessagesAndCommits() PASSED
 QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() PASSED
-HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsReachesTheFraudCheck() FAILED
-    org.opentest4j.AssertionFailedError: [fraud checks]
+HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsSendsAFraudCheck() FAILED
+    org.opentest4j.AssertionFailedError: [fraud checks sent, delivered or not]
     Expecting actual:
       []
     to contain exactly (and in same order):

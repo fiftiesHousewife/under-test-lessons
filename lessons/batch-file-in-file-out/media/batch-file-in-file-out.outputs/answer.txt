@@ -11,11 +11,11 @@ WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() FAILED
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=12, total=17148.88]
      but was: null
-ManyChunksAnswerTest > theClosingLineCoversEveryChunk() FAILED
+ManyChunksAnswerTest > theFileHoldsALineForEveryPaymentInEveryChunk() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [closing line]
-    expected: "TRAILER,250,2196.25"
-     but was: "PAY,00000250,17.50"
+    	org.opentest4j.AssertionFailedError: [payment lines]
+    expected: 250
+     but was: 50
 SettlementTotalsTest > aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
 SettlementTotalsTest > aFreshStepStartsFromNothing() PASSED
 7 tests completed, 3 failed

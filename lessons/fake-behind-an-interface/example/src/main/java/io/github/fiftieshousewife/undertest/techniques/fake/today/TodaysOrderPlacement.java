@@ -16,7 +16,7 @@ public final class TodaysOrderPlacement implements OrderPlacement {
     public void place(final String orderId, final int pence) {
         queue.send("orders", orderId + " " + pence);
         queue.commit();
-        if (pence >= FRAUD_CHECK_PENCE) {
+        if (pence > FRAUD_CHECK_PENCE) { // TODAY, too: an order of exactly £100 is left out
             queue.send("fraud-checks", orderId + " " + pence);
         }
     }

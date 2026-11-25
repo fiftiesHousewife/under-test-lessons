@@ -71,6 +71,9 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
   library in a sentence of its own, saying what it does, before its history: "WireMock is a library that stands in for
   another web service."
 - **Say what the lesson covers first**, then the problem. Never open with a bare "Here is the problem".
+- **Vary the way into each topic**, linking it to the one before, as a person would: "Let's start with...",
+  "Once the code runs safely, the next question is...", "Next up...", "That's where ... comes in", "Finally...".
+  Never open two slides of a deck the same way; "Now we talk about" opens one slide at most.
 - **Contrast the outcomes before the problem**, and show a boundary with the values on each side of it: "Day 29: a
   refund. Day 31: store credit. Day 30: which?"
 - **Fewer words, more slides:** three or four points a slide, and a heading of 40 characters or less.
@@ -83,6 +86,9 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
 | Don't say | Say instead | Why |
 |---|---|---|
 | map (of the series) | journey | The series is a route a team takes |
+| works by hand (of a technique without AI) | works deterministically | Says what matters: the same result every run |
+| a vendor's product, or what it costs ("for a fee") | the open-source tool that does it, or nothing | Lessons teach established open-source frameworks only |
+| comes from Maven Central | comes from the binary repository you use: Maven Central, or your company's own, such as Artifactory or Nexus | Inside a company, libraries come from its own repository |
 | nobody wrote a rule, nobody has written down, a customer nobody has | there's no rule for, there's no record of, a customer the service doesn't know | Says what is true, without an imagined person |
 | someone added, someone tidies, someone loosened it | it has, we tidy the printer up, we loosened it | The same: no invented actor, and no passive |
 | that shop, that service | the shop, a service | "That" points at something the listener can't see |

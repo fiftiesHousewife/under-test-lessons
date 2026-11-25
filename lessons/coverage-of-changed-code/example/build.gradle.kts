@@ -3,11 +3,23 @@ plugins {
 }
 
 // Coverage of changed code: an old pricing module with no tests can't pass a whole-module coverage gate, so the gates
-// apply only to the classes this change touched, listed in changed-classes.txt (in CI, written from git diff).
+// apply only to the classes a change touched.
 //   ./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=today   the change's weak test: planted bugs survive
 //   ./gradlew :lessons:coverage-of-changed-code:pitest                the stronger test: every planted bug caught
-val changedClasses = file("changed-classes.txt").readLines().map { it.trim() }
-    .filter { it.isNotEmpty() && !it.startsWith("#") }
+
+// The classes the change touched. In CI, and on your own machine, the build asks git what the branch changed:
+//   ./gradlew :lessons:coverage-of-changed-code:pitest -PchangedSince=origin/main
+// This lesson's own history holds no such change, so without changedSince the build names the example's change.
+val changedSince = providers.gradleProperty("changedSince")
+val changedClasses: List<String> = if (changedSince.isPresent) {
+    providers.exec {
+        workingDir(projectDir)
+        commandLine("git", "diff", "--name-only", "--diff-filter=AMR", changedSince.get() + "...HEAD", "--", "src/main/java")
+    }.standardOutput.asText.get().lines().filter { it.endsWith(".java") }
+        .map { it.substringAfterLast('/').removeSuffix(".java") }
+} else {
+    listOf("BulkDiscount")
+}
 val code = providers.gradleProperty("code").getOrElse("fixed")
 val unusedTests = if (code == "today") "*StrongTest" else "*WeakTest"
 

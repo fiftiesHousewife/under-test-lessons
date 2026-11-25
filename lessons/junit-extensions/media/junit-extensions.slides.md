@@ -9,7 +9,7 @@ release notes for version 4.7 (rules, such as TemporaryFolder and ExternalResour
 - The fix: guard settings around each test
 - The tool: JUnit
 Picture: road
-Say: This lesson is about JUnit extensions: code that runs around every test, here to put shared settings back
+Say: Our subject this time is JUnit extensions: code that runs around every test, here to put shared settings back
   afterwards. We'll see one test break another by leaving a setting changed, and an extension that guards the settings.
 
 ## intro: A fine receipt fails its test
@@ -44,31 +44,31 @@ Say: The fix is to guard the shop's settings around every test. Before each test
 - @ExtendWith(StandardShopSettings.class) on the test class
 - The test that leaks fails: prices.include.vat was true, now false
 Picture: robot
-Say: How does JUnit run an extension? The extension has 2 methods JUnit calls back: one before each test, and one
-  after. Marking a test class with extend with asks JUnit to use it. And now the test that leaks is the one that
-  fails, saying the setting for prices including VAT was true, and is now false.
+Say: How does JUnit run an extension? The extension has 2 methods JUnit calls back: one before each test, and one after.
+  Marking a test class with extend with asks JUnit to use it. And now the test that leaks is the one that fails, saying
+  the setting for prices including VAT was true, and is now false.
 
 ## closing: When to use an extension
 - When many test classes repeat the same set-up and clean-up: settings, clocks, folders, data
 - In old code with shared state, to find which test leaves it changed
 - Look for one that exists first: JUnit's own temporary folder is an extension
 Picture: map
-Say: When should you write an extension? [pause 1600ms] When many test classes repeat the same set-up and clean-up,
-  for settings, clocks, folders, or test data. In old code with shared state, to find out which test leaves it
-  changed. And look for one that already exists first. JUnit's own temporary folder is an extension.
+Say: When should you write an extension? [pause 1600ms] When many test classes repeat the same set-up and clean-up, for
+  settings, clocks, folders, or test data. In old code with shared state, to find out which test leaves it changed. And
+  look for one that already exists first. JUnit's own temporary folder is an extension.
 
 ## closing: Where it came from
 - JUnit 4 had runners and rules, such as TemporaryFolder and ExternalResource
 - JUnit 5, in 2017, replaced them with one extension model
 - JUnit 6 is the current generation
 Picture: book
-Say: JUnit 4 had runners and rules for this, such as the temporary folder rule. JUnit 5, in 2017, replaced them with
-  one extension model. JUnit 6 is the current generation.
+Say: JUnit 4 had runners and rules for this, such as the temporary folder rule. JUnit 5, in 2017, replaced them with one
+  extension model. JUnit 6 is the current generation.
 
 ## closing: Find out more
 - https://docs.junit.org/current/extensions/overview.html — JUnit's user guide on extensions
 - https://junit.org — JUnit
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/junit-extensions — run this lesson yourself: its test code and examples
 - Exercise: one test that writes a trade invoice and then a receipt; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on extensions. The links on screen also take you to this

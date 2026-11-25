@@ -8,20 +8,9 @@ servers); github.com/weld/weld-testing (weld-junit5); jakarta.ee (CDI, first rel
 - The fix: let the real wiring build it
 - The tool: Weld, with its JUnit support
 Picture: road
-Say: This lesson is about testing Jakarta EE code with its real wiring, in a small container started inside the test.
-  Weld is the part of Jakarta EE that wires an application's parts together. We'll see a checkout that charges the wrong
-  VAT. Then Weld's JUnit support builds the checkout as the server would.
-
-## intro: The checkout charges 5% VAT, not 20%
-- On a £10 item, the checkout should charge £12: 20% VAT
-- A 5% rate arrived; the standard rate got a mark, the checkout didn't: it charges £10.50
-- The unit test passes: it builds the checkout by hand, and hands it the rate it wants
-Picture: bug
-Say: Here is the problem. On a £10 item, the checkout should charge £12, with VAT at 20%. Then the team added a reduced
-  rate of 5%. To tell the two apart, they marked the standard rate as standard, and left the new rate unmarked. But they
-  forgot the checkout. It still asks for any tax rate, so the server now gives it the unmarked one, the reduced rate,
-  and it charges £10.50. And the unit test passes, because it builds the checkout by hand, and hands it the rate it
-  wants. It never gets the rate the server chooses.
+Say: Let's look at testing Jakarta EE code with its real wiring, in a small container started inside the test. Weld is
+  the part of Jakarta EE that wires an application's parts together. We'll see a checkout that charges the wrong VAT.
+  Then Weld's JUnit support builds the checkout as the server would.
 
 ## intro: Our example: VAT at the checkout
 - The checkout adds VAT to a net price
@@ -31,17 +20,28 @@ Picture: tag
 Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. That
   mark came with the reduced rate of 5%, which has none.
 
+## intro: The checkout charges 5% VAT, not 20%
+- On a £10 item, the checkout should charge £12
+- It still asks for any rate, so the server gives it the unmarked 5%
+- So it charges £10.50
+- The unit test passes: it builds the checkout by hand, and hands it the rate it wants
+Picture: bug
+Say: Here is the problem. On a £10 item, the checkout should charge £12. But when the team added the reduced rate, they
+  forgot the checkout. It still asks for any tax rate. So the server now gives it the unmarked one, the reduced rate,
+  and it charges £10.50. And the unit test passes, because it builds the checkout by hand, and hands it the rate it
+  wants. It never gets the rate the server chooses.
+
 ## intro: The fix: let the real wiring build it
 - Old enterprise Java runs in an application server, whose container wires the parts together
 - An embedded test starts just that container, inside the test, in seconds
 - It wires the checkout exactly as production does, so the test gets the wrong rate
 - The fixed checkout asks for the rate marked standard
 Picture: server
-Say: The fix is to let the real wiring build the checkout. Old enterprise Java runs inside an application server.
-  Its container decides what each part gets, and wires them together. The standard for that wiring is called CDI,
-  short for contexts and dependency injection. An embedded test starts just that container, inside the test, in
-  seconds, with no server to deploy to. It wires the checkout exactly as production does, so the test gets the wrong
-  rate. And the fixed checkout asks for the rate marked standard.
+Say: The fix is to let the real wiring build the checkout. Old enterprise Java runs inside an application server. Its
+  container decides what each part gets, and wires them together. The standard for that wiring is called CDI, short for
+  contexts and dependency injection. An embedded test starts just that container, inside the test, in seconds, with no
+  server to deploy to. It wires the checkout exactly as production does, so the test gets the wrong rate. And the fixed
+  checkout asks for the rate marked standard.
 
 ## intro: How Weld's JUnit support looks
 - @ExtendWith(WeldJunit5Extension.class)
@@ -69,13 +69,13 @@ Say: When should you use them? [pause 1600ms] For old Java E E and Jakarta E E c
 - Weld is its reference implementation, inside WildFly and other servers
 - weld-junit brings it into JUnit tests
 Picture: book
-Say: CDI arrived with Java E E six, in 2009, and lives on in Jakarta E E. Weld is its reference implementation, the
-  one inside WildFly and other servers. And the Weld team's JUnit support brings it into ordinary tests.
+Say: CDI arrived with Java E E six, in 2009, and lives on in Jakarta E E. Weld is its reference implementation, the one
+  inside WildFly and other servers. And the Weld team's JUnit support brings it into ordinary tests.
 
 ## closing: Find out more
 - https://weld.cdi-spec.org — Weld
 - https://github.com/weld/weld-testing — Weld's JUnit support
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/embedded-jakarta-ee-tests — run this lesson yourself: its test code and examples
 - Exercise: add a third rate with no mark, and see what the container does; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Weld site, and its testing project. The links on screen also take you to this

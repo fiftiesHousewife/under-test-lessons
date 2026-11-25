@@ -14,7 +14,7 @@ Development of Mutation Testing", IEEE Transactions on Software Engineering, 201
 - The fix: plant bugs, count the catches
 - The tool: PIT
 Picture: road
-Say: This lesson is about mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
+Say: This lesson covers mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
   whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
   bugs and counts the ones caught.
 
@@ -37,23 +37,33 @@ Say: Our example is a small piece of code from an online shop. It works out the 
   pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
   more on top.
 
+## intro: Weak tests that run every line
+- One checks only that the discount is more than zero
+- One uses £70, far from either boundary
+- One calls the code and checks nothing at all
+- One checks that the price is not null: a number never is
+Picture: checklist
+Say: The shop's tests run every line, but look at what they check. [pause 600ms] One checks only that the discount is
+  more than zero. One uses 70 pounds, far from either boundary. One calls the code, and checks nothing at all.
+  [pause 600ms] And one checks that the final price is not null. A number is never null, so that test can't fail.
+
 ## intro: The fix: plant bugs, count the catches
 - Change one small thing, a mutation: "£50 or more" becomes "more than £50"
 - A test fails: the bug is caught. Every test passes: it survived
 - Bugs hide at a boundary, where a rule changes: test exactly £50, and £49.99
 Picture: boundary
-Say: The fix is to test the tests. Mutation testing changes one small thing in the code at a time. The change is
-  called a mutation. For example, 50 pounds or more becomes more than 50 pounds. If a test fails, the bug is caught.
-  If every test still passes, the bug survived. Many of these bugs sit at a boundary, the point where a rule changes.
-  So a strong test checks both sides: an order of exactly 50 pounds, and one of 49 pounds 99.
+Say: The fix is to test the tests. Mutation testing changes one small thing in the code at a time. The change is called
+  a mutation. For example, 50 pounds or more becomes more than 50 pounds. If a test fails, the bug is caught. If every
+  test still passes, the bug survived. Many of these bugs sit at a boundary, the point where a rule changes. So a strong
+  test checks both sides: an order of exactly 50 pounds, and one of 49 pounds 99.
 
 ## intro: How PIT runs
-- PIT comes with the shared quality plugin, so every project has a pitest task
+- PIT is open source, and the build runs it from its own command line
 - One task plants the bugs and runs the tests: pitest
 - The result: "the tests caught 5 of 13 planted bugs (38%)"
 Picture: robot
-Say: PIT is the mutation testing tool for Java, and it comes with the shared code-quality plugin these lessons use. One
-  task, called pit test, changes the compiled code in memory, one mutation at a time. For each change it runs only the
+Say: PIT is the mutation testing tool for Java, and it's open source. The build runs it from its own command line,
+  as a task called pit test. It changes the compiled code in memory, one mutation at a time. For each change it runs only the
   tests that reach that line, which keeps it fast. Then it reports every planted bug as caught or survived. For the
   shop's tests today, it says 5 of 13 were caught.
 
@@ -76,18 +86,17 @@ Say: When should you use it? [pause 1600ms] First, in discovery, when you are ju
 - The name first stood for Parallel Isolated Test
 Picture: book
 Say: The idea of mutation testing goes back to a student paper by Richard Lipton in 1971, and a 1978 paper by DeMillo,
-  Lipton and Sayward made it widely known. PIT itself is largely the
-  work of Henry Coles, in Edinburgh, with help from many contributors. It was first released in 2011. It began as a
-  tool to run tests in parallel and in isolation, so the name first stood for Parallel Isolated Test. Now, it just
-  stands for PIT.
+  Lipton and Sayward made it widely known. PIT itself is largely the work of Henry Coles, in Edinburgh, with help from
+  many contributors. It was first released in 2011. It began as a tool to run tests in parallel and in isolation, so the
+  name first stood for Parallel Isolated Test. Now, it just stands for PIT.
 
 ## closing: Find out more
 - https://pitest.org — PIT's website, quick start and FAQ
 - https://pitest.org/quickstart/commandline/ — PIT's command line, and its options
 - https://doi.org/10.1109/C-M.1978.218136 — the 1978 paper that made it widely known
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/mutation-testing — run this lesson yourself: its test code and examples
 - Exercise: write the one test that catches the missed bug on line 25; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with PIT's website, and its command-line options. The links on screen also take you to
-  the paper that made it widely known, and to this lesson's test code and examples, so you can run them yourself.
-  And try the exercise in the README: write the one test that catches the missed bug on line 25.
+Say: To find out more, start with PIT's website, and its command-line options. The links on screen also take you to the
+  paper that made it widely known, and to this lesson's test code and examples, so you can run them yourself. And try
+  the exercise in the README: write the one test that catches the missed bug on line 25.

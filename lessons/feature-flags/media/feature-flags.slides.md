@@ -9,28 +9,27 @@ martinfowler.com, 2017; Paul Hammant, "Branch by Abstraction", 2007.
 - The fix: test both ways
 - The tool: OpenFeature
 Picture: road
-Say: This lesson is about feature flags: shipping new code behind a switch, and testing it with the switch both off and
+Say: This lesson covers feature flags: shipping new code behind a switch, and testing it with the switch both off and
   on. OpenFeature is a standard way for code to read its flags. We'll see new shipping rules that would send a basket
   free. Then OpenFeature lets a test choose each side.
-
-## intro: The new rules ship a £20 basket free
-- New shipping rules wait, switched off, beside the old ones
-- They compare a basket in pence with a threshold in pounds: free from 50p, not £50
-- The tests pass: they never switch the new rules on
-- The mistake waits for the day the shop switches them on, in production
-Picture: bug
-Say: Here is the problem. A shop has written new shipping rules, and they wait, switched off, beside the old ones. But
-  they compare a basket in pence with a threshold in pounds. So delivery is free from 50 pence, not from £50, and a £20
-  basket ships free. The tests all pass, because they never switch the new rules on. So the mistake waits for the day
-  the shop switches them on, in production.
 
 ## intro: Our example: shipping costs
 - Delivery costs £3.99, and is free from £50
 - The old rules have run for years
 - New rules, written for the same prices, wait behind a switch
 Picture: basket
-Say: Our example works out the shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules
-  have run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
+Say: Our example works out the shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules have
+  run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
+
+## intro: The new rules ship a £20 basket free
+- The new rules compare a basket in pence with a threshold in pounds
+- So delivery is free from 50p, not £50
+- The tests pass: they never switch the new rules on
+- The mistake waits for the day the shop switches them on, in production
+Picture: bug
+Say: Here is the problem. The new rules compare a basket in pence with a threshold in pounds. So delivery is free from
+  50 pence, not from £50, and a £20 basket ships free. The tests all pass, because they never switch the new rules on.
+  So the mistake waits for the day the shop switches them on, in production.
 
 ## intro: The fix: test both ways
 - The switch is a feature flag, read while the code runs: new-shipping, off by default
@@ -39,8 +38,8 @@ Say: Our example works out the shop's shipping costs. Delivery costs £3.99, and
 Picture: switch
 Say: The fix is to test both ways. The switch is called a feature flag: a setting, read while the code runs, that
   chooses between the old rules and the new ones. Ours is called new shipping, and it's off until the shop switches it
-  on. While both rules exist, run every check with the flag off, and again with it on. A £20 basket must pay £3.99
-  both ways, and a £60 basket must pay nothing.
+  on. While both rules exist, run every check with the flag off, and again with it on. A £20 basket must pay £3.99 both
+  ways, and a £60 basket must pay nothing.
 
 ## intro: How OpenFeature looks
 - The code asks for the flag, with a default: flags.getBooleanValue("new-shipping", false)
@@ -76,7 +75,7 @@ Say: Paul Hammant named branch by abstraction in 2007. Pete Hodgson's article on
 ## closing: Find out more
 - https://openfeature.dev — OpenFeature, with its Java software development kit (SDK)
 - https://martinfowler.com/articles/feature-toggles.html — Feature Toggles, by Pete Hodgson
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/feature-flags — run this lesson yourself: its test code and examples
 - Exercise: check the old and new rules agree on every basket up to £100; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the OpenFeature site, and Pete Hodgson's article on feature toggles. The links on

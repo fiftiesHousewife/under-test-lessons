@@ -3,7 +3,7 @@ WholeJobTest > aMaskedCaptureGivesTheSettlementFileTheBankAccepted() PASSED
 WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() PASSED
 KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
 PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() PASSED
-ManyChunksAnswerTest > theClosingLineCoversEveryChunk() PASSED
+ManyChunksAnswerTest > theFileHoldsALineForEveryPaymentInEveryChunk() PASSED
 SettlementTotalsTest > aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
 SettlementTotalsTest > aFreshStepStartsFromNothing() PASSED
 All 7 tests passed.

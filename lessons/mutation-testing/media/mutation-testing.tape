@@ -29,44 +29,31 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 1: PIT comes with the shared code-quality plugin: one line of the version catalogue."`
+Type@1ms `note "Step 1: PIT, and its support for JUnit 5, in the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/java-conventions/" "gradle/libs.versions.toml"`
+Type@1ms `show libs.versions.toml "/^pitest/" "gradle/libs.versions.toml"`
 Enter
 Show
 Sleep 15s
 
-# ---- Scene 2: step 2, add the plugin ----
+# ---- Scene 2: step 2, PIT's own options ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 2: the lesson's build file applies it, through the lesson plugin, so pitest is a task already."`
+Type@1ms `note "Step 2: PIT's own command-line options."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 1 3 "lesson build file"`
-Enter
-Show
-Sleep 14s
-
-# ---- Scene 3: step 3, configure the plugin ----
-Hide
-Type@1ms "scene"
-Enter
-Sleep 300ms
-Type@1ms `note "Step 3: this lesson's one setting."`
-Enter
-Sleep 300ms
-Type@1ms `note "This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests:"`
+Type@1ms `note "The build runs PIT from its command line. One option chooses the weak tests or the strong tests:"`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 11 21 "lesson build file" --zoom 12-16`
 Enter
 Show
-Sleep 15s
+Sleep 22s
 
-# ---- Scene 4: the code under test ----
+# ---- Scene 3: the code under test ----
 Hide
 Type@1ms "scene"
 Enter
@@ -79,7 +66,7 @@ Enter
 Show
 Sleep 33s
 
-# ---- Scene 5: the weak tests ----
+# ---- Scene 4: the weak tests ----
 Hide
 Type@1ms "scene"
 Enter
@@ -93,7 +80,20 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorWeakTest 18 39 --zoom 26-27`
 Enter
 Show
-Sleep 35s
+Sleep 28s
+
+# ---- Scene 5: the weak test that checks a number is not null ----
+Hide
+Type@1ms "scene"
+Enter
+Sleep 300ms
+Type@1ms `note "The last *weak* test checks that the final price is not null. An int never is, so the check can't fail."`
+Enter
+Sleep 300ms
+Type@1ms `show DiscountCalculatorWeakTest 47 51 --zoom 49-50`
+Enter
+Show
+Sleep 20s
 
 # ---- Scene 6: PIT on the weak tests ----
 # PIT runs live, on camera; run_live measures how long it took, so captions and voice stay in time.

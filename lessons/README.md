@@ -19,9 +19,10 @@ still to come.
 Every deck and video follows the same flow, so a viewer always knows where they are:
 
 1. **What the lesson covers**, before anything else: the technique, the framework, the problem it will show and how
-   the framework fixes it, in two or three sentences ("This lesson is about mutation testing, with PIT...").
-2. **The problem**, in the example's own terms and numbers: what goes wrong today, and why it matters.
-3. **Our example**, in everyday terms, before anything refers to it.
+   the framework fixes it, in two or three sentences ("This lesson covers mutation testing, with PIT...", with a different opening from the lessons beside it).
+2. **Our example**, in everyday terms, before anything refers to it.
+3. **The problem**, in the example's own terms and numbers: what goes wrong today, and why it matters, without
+   describing the example again.
 4. **The fix**, in a sentence or two, with the technique's own term explained where it first appears.
 5. **How the framework looks**: the annotation, setting or command as it really is, then the shared "how we build"
    slide.

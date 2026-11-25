@@ -12,29 +12,29 @@ beside Spring Boot 4.
 - The fix: test one layer at a time
 - The tool: Spring Boot's test slices
 Picture: road
-Say: This lesson is about Spring tests in slices: testing one layer at a time, with only the part of Spring it needs.
-  We'll see a changed due date that every test missed, and how Spring Boot's test slices catch it quickly.
-
-## intro: The due date changed, and every test passed
-- A change for the printed delivery notes made the service write 23/11/2026, not 2026-11-23
-- Every caller that reads the date year first now breaks
-- Every test starts the whole application: slow, so they're written loosely
-- "D-1001 appears somewhere in the answer" passes, whatever the date says
-Picture: bug
-Say: Here is the problem. A change for a shop's printed delivery notes made its delivery service write the due date day
-  first, 23/11/2026, where its description says year first, 2026-11-23. Every caller that reads the date year first now
-  breaks. Yet every test passes. Each one starts the whole application, with the database, a stand-in for the courier,
-  and every setting. So the tests are slow, and people write them loosely. A test that only checks that a reference
-  appears somewhere in the answer passes, whatever the date says.
+Say: Here, we look at Spring tests in slices: testing one layer at a time, with only the part of Spring it needs. We'll
+  see a changed due date that every test missed, and how Spring Boot's test slices catch it quickly.
 
 ## intro: Our example: a shop's delivery service
 - It lists a customer's deliveries still to come, as JSON
 - Each with its due date, and what the courier's tracking service says
 - Its description gives the due date as an ISO date: 2026-11-23
 Picture: basket
-Say: Our example is the shop's delivery service. It lists a customer's deliveries still to come, as JSON. Each one
-  has its due date, and what the courier's tracking service says about it. The service's description gives the due
-  date as an ISO date, the international standard, year first.
+Say: Our example is a shop's delivery service. It lists a customer's deliveries still to come, as JSON. Each one has its
+  due date, and what the courier's tracking service says about it. The service's description gives the due date as an
+  ISO date, the international standard, year first.
+
+## intro: The due date changed, and every test passed
+- A change for printed delivery notes writes 23/11/2026, not 2026-11-23
+- Every caller that reads the date year first now breaks
+- Every test starts the whole application: slow, so people write them loosely
+- "D-1001 appears somewhere in the answer" passes, whatever the date says
+Picture: bug
+Say: Here is the problem. A change for the shop's printed delivery notes made the service write the due date day first:
+  23/11/2026, not 2026-11-23. Every caller that reads the date year first now breaks. Yet every test passes. Each one
+  starts the whole application, with the database, a stand-in for the courier, and every setting. So the tests are slow,
+  and people write them loosely. A test that only checks that a reference appears somewhere in the answer passes,
+  whatever the date says.
 
 ## intro: The fix: test one layer at a time
 - Start only one layer of the application: Spring calls it a slice
@@ -54,11 +54,11 @@ Say: The fix is to test one layer at a time. The service is built on Spring. Spr
 - @JsonTest starts Jackson: dueOn Expected: 2026-11-23 got: 23/11/2026
 - One @SpringBootTest is kept, for the wiring between the layers
 Picture: blocks
-Say: How do the slices look? [pause 1600ms] The web slice starts the controllers, and Mockito stands in for the
-  service. The data slice starts the repositories, with an in-memory database, and rolls back each test's rows. The
-  JSON slice starts Jackson, the library that writes the JSON, set up as the application sets it up. Today it fails,
-  and names the due date: it expected year first, and got day first. And we keep one test of the whole application,
-  for the wiring between the layers.
+Say: How do the slices look? [pause 1600ms] The web slice starts the controllers, and Mockito stands in for the service.
+  The data slice starts the repositories, with an in-memory database, and rolls back each test's rows. The JSON slice
+  starts Jackson, the library that writes the JSON, set up as the application sets it up. Today it fails, and names the
+  due date: it expected year first, and got day first. And we keep one test of the whole application, for the wiring
+  between the layers.
 
 Include: how-we-build
 
@@ -69,20 +69,20 @@ Include: how-we-build
 Picture: map
 Say: When should you use slices? [pause 1600ms] Use a slice for each layer's details: addresses and statuses, the
   queries, and the JSON that callers read. Keep one test of the whole application, or a few, for the wiring. And on
-  Spring Boot 4, use WireMock's standalone jar, which carries its own web server, or Spring's own stand-in for a
-  service the code calls.
+  Spring Boot 4, use WireMock's standalone jar, which carries its own web server, or Spring's own stand-in for a service
+  the code calls.
 
 ## closing: Where slices came from
 - Spring Boot was first released in 2014
 - Its test slices arrived with Spring Boot 1.4, in 2016
 - Spring Boot 4 came out in November 2025
 Picture: book
-Say: Spring Boot was first released in 2014. Its test slices arrived with Spring Boot 1.4, in 2016, and Spring Boot
-  4 came out in November 2025.
+Say: Spring Boot was first released in 2014. Its test slices arrived with Spring Boot 1.4, in 2016, and Spring Boot 4
+  came out in November 2025.
 
 ## closing: Find out more
 - https://docs.spring.io/spring-boot/reference/testing/index.html — Spring Boot's guide to testing, and its slices
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/spring-tests-in-slices — run this lesson yourself: its test code and examples
 - Exercise: test the courier's client on its own; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Spring Boot's guide to testing. The links on screen also take you to this lesson's

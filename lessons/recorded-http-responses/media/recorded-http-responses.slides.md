@@ -10,9 +10,18 @@ for signing data); Java Security Standard Algorithm Names (HmacSHA256, which eve
 - The fix: replay the supplier's answers
 - The tool: WireMock
 Picture: road
-Say: This lesson is about recorded HTTP responses: a supplier's real answers, saved and replayed in tests. WireMock is a
-  library that stands in for another web service. We'll see a postcode client that trips over the rare answers. Then
-  WireMock replays them, on demand.
+Say: This time, the topic is recorded HTTP responses: a supplier's real answers, saved and replayed in tests. WireMock
+  is a library that stands in for another web service. We'll see a postcode client that trips over the rare answers.
+  Then WireMock replays them, on demand.
+
+## intro: Our example: a postcode lookup
+- A supplier's web service turns a postcode into a town
+- It can say: here is the town, I don't know that postcode, or I'm down
+- Our client must handle all three
+Picture: map
+Say: Our example looks up postcodes, using a supplier's web service, which turns a postcode into a town. The service can
+  answer in three ways: here is the town. I don't know that postcode. Or, sorry, I'm down. Our client must handle all
+  three.
 
 ## intro: Rare answers trip the postcode client
 - Asked for a postcode the supplier doesn't know, it returns an empty town, not "no town"
@@ -20,20 +29,11 @@ Say: This lesson is about recorded HTTP responses: a supplier's real answers, sa
 - Unseen, because the only test needs the real service and an account, so it is skipped
 - And raw recordings keep a person's name, email address and password token
 Picture: bug
-Say: Here is the problem. A shop's postcode client works for a postcode the supplier knows. Ask for one it doesn't know,
-  and the client hands back an empty town, instead of saying there is none. When the supplier is down, it answers 503,
-  with a web page. The client tries to read that page as data, and fails with a confusing error. Neither showed up,
-  because the only test needs the real service and an account, so it is skipped. And when we record the supplier's
-  answers to test with, the files keep a person's name, email address and password token.
-
-## intro: Our example: a postcode lookup
-- A supplier's web service turns a postcode into a town
-- It can say: here is the town, I don't know that postcode, or I'm down
-- Our client must handle all three
-Picture: map
-Say: Our example looks up postcodes, using a supplier's web service, which turns a postcode into a town. The service
-  can answer in three ways: here is the town. I don't know that postcode. Or, sorry, I'm down. Our client must handle
-  all three.
+Say: Here is the problem. Ask the client for a postcode the supplier doesn't know, and it hands back an empty town,
+  instead of saying there is none. When the supplier is down, it answers 503, with a web page. The client tries to read
+  that page as data, and fails with a confusing error. Neither showed up, because the only test needs the real service
+  and an account, so it is skipped. And when we record the supplier's answers to test with, the files keep a person's
+  name, email address and password token.
 
 ## intro: The fix: replay the supplier's answers
 - Save each answer as a file: a recorded HTTP response
@@ -59,11 +59,11 @@ Say: And we mask each recording before we save it. [pause 600ms] We drop the tok
 - Recording: startRecording(recordSpec().forTarget(standIn.baseUrl()))
 - Today: expected "the postcode supplier answered 503" but was StreamReadException
 Picture: robot
-Say: Here is how WireMock looks. A recording is a small file that pairs a request with the answer to send back. This
-  one says: asked for the postcode M1 1AE, answer 503. The test starts WireMock's server on a free port, with the
-  recordings kept beside the tests. To make recordings, WireMock passes the questions on to a service and saves what
-  comes back. Today, the outage test expected the client to say the supplier answered 503. It got an error from
-  reading a web page as data instead.
+Say: Here is how WireMock looks. A recording is a small file that pairs a request with the answer to send back. This one
+  says: asked for the postcode M1 1AE, answer 503. The test starts WireMock's server on a free port, with the recordings
+  kept beside the tests. To make recordings, WireMock passes the questions on to a service and saves what comes back.
+  Today, the outage test expected the client to say the supplier answered 503. It got an error from reading a web page
+  as data instead.
 
 Include: how-we-build
 
@@ -89,9 +89,9 @@ Say: Tom Akehurst created WireMock. It's free under the Apache licence, has been
 
 ## closing: Find out more
 - https://wiremock.org — WireMock, with its documentation
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/recorded-http-responses — run this lesson yourself: its test code and examples
 - Exercise: add a too-many-requests answer by hand, and a test for it; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with the WireMock documentation. The links on screen also take you to this lesson's
-  test code and examples, to run yourself. And try the exercise in the README: add a recording of the supplier saying
-  too many requests, and check that the client says the supplier is unavailable.
+Say: To find out more, start with the WireMock documentation. The links on screen also take you to this lesson's test
+  code and examples, to run yourself. And try the exercise in the README: add a recording of the supplier saying too
+  many requests, and check that the client says the supplier is unavailable.

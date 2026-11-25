@@ -34,7 +34,7 @@ Type@1ms `show LegacyPostage 8 23 "the old calculator"`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 18s
 
 # ---- Scene 2: the rewrite ----
 Hide
@@ -72,11 +72,11 @@ Sleep 300ms
 Type@1ms `note "A *differential* test: ask both calculators about every weight, and list where they disagree."`
 Enter
 Sleep 300ms
-Type@1ms `show OldAndNewAgreeTest 19 43 "the differential test" --zoom 41-42`
+Type@1ms `show OldAndNewAgreeTest 21 38 "the differential test" --zoom 22-35`
 Enter
 Sleep 300ms
 Show
-Sleep 23s
+Sleep 31s
 
 # ---- Scene 5: the comparison finds a gap ----
 Hide

@@ -24,12 +24,18 @@ body.show-notes .deck-counter { display: none; }
 }
 .deck-listen[aria-pressed="true"] { color: inherit; border-color: currentColor; }
 .deck-listen.waiting { color: inherit; border-color: currentColor; font-weight: bold; }
-body.show-notes .deck-listen { display: none; }
+body.show-notes .deck-listen, body.show-notes .deck-pause { display: none; }
+.deck-pause {
+  position: fixed; right: 100px; bottom: 8px; padding: 4px 14px; font: 14px var(--font); color: var(--grey);
+  background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
+}
+.deck-pause[hidden] { display: none; }
+.deck-pause[aria-pressed="true"] { color: inherit; border-color: currentColor; }
 .deck-move {
   position: fixed; bottom: 8px; padding: 4px 14px; font: 14px var(--font); color: var(--grey);
   background: transparent; border: 1px solid var(--grey); border-radius: 14px; cursor: pointer;
 }
-.deck-move:hover, .deck-listen:hover { color: inherit; border-color: currentColor; }
+.deck-move:hover, .deck-listen:hover, .deck-pause:hover { color: inherit; border-color: currentColor; }
 .deck-back { right: calc(50% + 40px); }
 .deck-next { left: calc(50% + 40px); }
 /* The published series' links: where this lesson sits on the left, the lessons around it on the right. */
@@ -43,7 +49,7 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
   html, body.deck { overflow: visible; }
   .deck-slide { display: block; position: static; width: 1920px; height: 1080px; page-break-after: always; break-after: page; }
   .deck .slide { position: static; transform: none; }
-  .notes, .deck-counter, .deck-listen, .deck-move, .series-place, .series-links { display: none !important; }
+  .notes, .deck-counter, .deck-listen, .deck-pause, .deck-move, .series-place, .series-links { display: none !important; }
 }
 
 /* Scene slides: what the video shows at each step, as text: narration and callouts beside the code. */

@@ -14,28 +14,28 @@ database-unit-tests technique (an in-memory database is not evidence of what a d
 - The fix: a fresh database per test
 - The tool: H2
 Picture: road
-Say: This lesson is about in-memory databases: when one is enough, and when it isn't. H2 is a database that runs inside
+Say: This lesson covers in-memory databases: when one is enough, and when it isn't. H2 is a database that runs inside
   the test. We'll see invoice numbers that go wrong between tests. Then H2 gives each test a fresh database. And we'll
   see the signs that you need the real database instead.
-
-## intro: The shop's first invoice is number 0
-- A new shop's first invoice should be number 1, but the code gives it 0
-- The tests pass: they share one test database that is never empty
-- It holds 2 old invoices, and every row earlier runs left behind
-- So the tests can only check "more than 0", and the bug hides
-Picture: bug
-Say: Here is the problem. A new shop's first invoice should be number 1. The code gives it number 0. And the tests pass.
-  They share one test database, set up by hand long ago, and it is never empty. It holds 2 old invoices, and every row
-  that earlier runs left behind. So the tests can't know what the next number should be. They only check that it's more
-  than 0, and the bug hides behind the leftovers.
 
 ## intro: Our example: a shop's invoice numbers
 - Every invoice the shop sends gets its own number
 - Each new number is one more than the highest so far
 - The shop's very first invoice should be number 1
 Picture: statement
-Say: Our example is a shop's invoices. Every invoice it sends gets its own number. Each new number is one more than
-  the highest so far. And the shop's very first invoice should be number 1.
+Say: Our example is a shop's invoices. Every invoice it sends gets its own number. Each new number is one more than the
+  highest so far. And the shop's very first invoice should be number 1.
+
+## intro: The shop's first invoice is number 0
+- The code gives the first invoice number 0
+- The tests pass: they share one test database that is never empty
+- It holds 2 old invoices, and every row earlier runs left behind
+- So the tests can only check "more than 0", and the bug hides
+Picture: bug
+Say: Here is the problem. The code gives the first invoice number 0. And the tests pass. They share one test database,
+  set up by hand long ago, and it is never empty. It holds 2 old invoices, and every row that earlier runs left behind.
+  So the tests can't know what the next number should be. They only check that it's more than 0, and the bug hides
+  behind the leftovers.
 
 ## intro: The fix: a fresh database per test
 - An in-memory database runs inside the test, and keeps its data in memory
@@ -67,9 +67,9 @@ Include: how-we-build
 - A fresh database for each test, or each test class, with the real schema
 - Keep it honest: a check for vendor-only SQL, or the same tests tagged to run on both databases
 Picture: map
-Say: When is an in-memory database enough? [pause 1600ms] When the test is about the code's own logic, in plain SQL
-  that every database runs the same way. Give each test, or each test class, a fresh database with the real schema.
-  And keep the choice honest, with a check for vendor-only SQL, or the same tests, tagged to run on both databases.
+Say: When is an in-memory database enough? [pause 1600ms] When the test is about the code's own logic, in plain SQL that
+  every database runs the same way. Give each test, or each test class, a fresh database with the real schema. And keep
+  the choice honest, with a check for vendor-only SQL, or the same tests, tagged to run on both databases.
 
 ## closing: When you need the real database
 - When the test is about the database's own behaviour
@@ -77,10 +77,9 @@ Say: When is an in-memory database enough? [pause 1600ms] When the test is about
 - SQL that only one database runs, stored procedures, and schema changes
 - lesson: Real databases in tests (real-databases-in-tests)
 Picture: server
-Say: When do you need the real database? [pause 1600ms] When the test is about the database's own behaviour. The
-  order it sorts nulls in, dates and time zones, how it compares text, and locking. And SQL that only one database
-  runs, stored procedures, and changes to the schema. For those, the next step is the lesson on real databases in
-  tests.
+Say: When do you need the real database? [pause 1600ms] When the test is about the database's own behaviour. The order
+  it sorts nulls in, dates and time zones, how it compares text, and locking. And SQL that only one database runs,
+  stored procedures, and changes to the schema. For those, the next step is the lesson on real databases in tests.
 
 ## closing: Where H2 came from
 - Started in 2004, and first published in 2005
@@ -94,9 +93,9 @@ Say: H2 was started in 2004, and first published in 2005, by the author of an ea
 ## closing: Find out more
 - https://h2database.com/html/features.html — H2's features: in-memory databases and compatibility modes
 - https://h2database.com — H2's home page
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/in-memory-databases — run this lesson yourself: its test code and examples
 - Exercise: check that a fresh database refuses an invoice with no customer; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with H2's features page, which explains in-memory databases and compatibility modes.
-  The links on screen also take you to this lesson's test code and examples, to run yourself. And try the exercise in
-  the README: check that a fresh database, with the real schema, refuses an invoice with no customer.
+Say: To find out more, start with H2's features page, which explains in-memory databases and compatibility modes. The
+  links on screen also take you to this lesson's test code and examples, to run yourself. And try the exercise in the
+  README: check that a fresh database, with the real schema, refuses an invoice with no customer.

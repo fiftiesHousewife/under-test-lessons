@@ -8,35 +8,34 @@ others; validates requests and responses against Swagger 2 and OpenAPI 3 schemas
 Assured, WireMock, Spring MockMvc and Pact; full support for OpenAPI 3.0, partial for 3.1); its pom on Maven Central
 (com.atlassian.oai, built for Java 21, inception year 2016); asyncapi.com (the AsyncAPI schema describes an
 application's messages and channels, a contract between senders and receivers; the AsyncAPI Initiative is under the
-Linux Foundation); the toolkit's contract-testing technique (Pact contract tests need the provider team to verify, and
-don't suit an outside supplier's API).
+Linux Foundation); docs.pact.io (Pact needs the provider team to verify, and doesn't suit an outside supplier's API).
 
 ## intro: Checking answers against OpenAPI
 - The problem: the answer changed, and the tests still pass
 - The fix: check answers against the schema
 - The tool: Atlassian's OpenAPI validator
 Picture: road
-Say: This lesson is about checking a service's answers against its published OpenAPI schema. We'll see an answer that
-  changed while every test passed, and how a validator checks each answer against the schema.
-
-## intro: The answer changed, and the tests still pass
-- Today the service sends a parcel's weight as text, "1200", not the number 1200
-- A tidy-up renamed the 404's error field to message
-- The tests pass: they check the status code and 2 fields, never the weight or the error
-Picture: bug
-Say: Here is the problem. Today a parcel service sends a parcel's weight as text, 1200 in quotes, not the number 1200.
-  And a tidy-up renamed the field that gives the reason for a 404, from error to message. The service's own tests still
-  pass. They check the status code and 2 fields, the ones the tests' author thought of. But every team that reads the
-  weight as a number, or looks for the error field, now breaks.
+Say: Our subject this time is checking a service's answers against its published OpenAPI schema. We'll see an answer
+  that changed while every test passed, and how a validator checks each answer against the schema.
 
 ## intro: Our example: a parcel tracking service
 - Callers ask where a parcel is, by its id
 - The answer has the id, a status and the weight in grams, as a whole number
 - An unknown id gets 404, with the reason in a field called error
 Picture: basket
-Say: Our example is a parcel tracking service. Callers ask where a parcel is, by its id. The answer has the parcel's
-  id, its status, and its weight in grams, as a whole number. And when no parcel has that id, the answer is 404, with
-  the reason in a field called error. The service describes all of this in a published schema.
+Say: Our example is a parcel tracking service. Callers ask where a parcel is, by its id. The answer has the parcel's id,
+  its status, and its weight in grams, as a whole number. And when no parcel has that id, the answer is 404, with the
+  reason in a field called error. The service describes all of this in a published schema.
+
+## intro: The answer changed, and the tests still pass
+- Today the service sends the weight as text, "1200", not the number 1200
+- A tidy-up renamed the 404's error field to message
+- The tests pass: they check the status code and 2 fields, never the weight or the error
+Picture: bug
+Say: Here is the problem. Today the service sends the weight as text, 1200 in quotes, not the number 1200. And a tidy-up
+  renamed the error field, the reason for a 404, to message. The service's own tests still pass. They check the status
+  code and 2 fields, the ones the tests' author thought of. But every team that reads the weight as a number, or looks
+  for the error field, now breaks.
 
 ## intro: The fix: check answers against the schema
 - The service publishes an OpenAPI schema: every path, status code and field, with its type
@@ -54,10 +53,10 @@ Say: The fix is to check every answer against the schema. The service publishes 
 - Today it fails: field weightGrams: string found, integer expected
 - And: required property 'error' not found
 Picture: robot
-Say: Here is how it looks. The schema says the weight is an integer, a whole number, and that a 404 must have an
-  error field. Atlassian's OpenAPI request validator reads that schema. The tests add it as one filter in REST
-  Assured, the library they already use to send requests, so it checks every request and every answer. Today it fails
-  twice. The weight was text, where the schema wants a whole number. And the 404 answer had no error field.
+Say: Here is how it looks. The schema says the weight is an integer, a whole number, and that a 404 must have an error
+  field. Atlassian's OpenAPI request validator reads that schema. The tests add it as one filter in REST Assured, the
+  library they already use to send requests, so it checks every request and every answer. Today it fails twice. The
+  weight was text, where the schema wants a whole number. And the 404 answer had no error field.
 
 Include: how-we-build
 
@@ -66,10 +65,9 @@ Include: how-we-build
 - Add the filter to the tests you have, and it checks every answer they get
 - Where the other team won't run contract tests, or the caller is outside the company
 Picture: map
-Say: When should you check against the schema? [pause 1600ms] For every service that publishes an OpenAPI schema,
-  before other teams rely on it. Add the filter to the tests you already have, and it checks every answer they get.
-  It is most useful where contract tests can't reach: where the other team won't run them, or the caller is outside
-  the company.
+Say: When should you check against the schema? [pause 1600ms] For every service that publishes an OpenAPI schema, before
+  other teams rely on it. Add the filter to the tests you already have, and it checks every answer they get. It is most
+  useful where contract tests can't reach: where the other team won't run them, or the caller is outside the company.
 
 ## closing: Messages have schemas too
 - AsyncAPI describes the messages a system sends and receives, as OpenAPI does for web requests
@@ -93,9 +91,9 @@ Say: OpenAPI began as the Swagger specification. SmartBear gave it to the OpenAP
 - https://www.openapis.org — the OpenAPI Initiative and the specification
 - https://github.com/atlassian/openapi-request-validator — the validator, with its REST Assured filter
 - https://www.asyncapi.com — AsyncAPI, for messages
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/openapi-response-checks — run this lesson yourself: its test code and examples
 - Exercise: a parcel marked LOST, a status the schema doesn't allow, must fail the check; the README has the steps
 Picture: globe
-Say: To find out more, start with the OpenAPI Initiative's site, and the validator's own pages. The links on screen
-  also take you to AsyncAPI, and to this lesson's test code and examples, to run yourself. And try the exercise in
-  the README: give a parcel the status lost, which isn't one of the schema's four, and show that the check refuses it.
+Say: To find out more, start with the OpenAPI Initiative's site, and the validator's own pages. The links on screen also
+  take you to AsyncAPI, and to this lesson's test code and examples, to run yourself. And try the exercise in the
+  README: give a parcel the status lost, which isn't one of the schema's four, and show that the check refuses it.

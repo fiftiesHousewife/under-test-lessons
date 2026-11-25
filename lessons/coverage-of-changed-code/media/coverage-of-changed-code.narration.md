@@ -4,10 +4,9 @@ One item per scene of [coverage-of-changed-code.tape](coverage-of-changed-code.t
 their own narration, in [coverage-of-changed-code.slides.md](coverage-of-changed-code.slides.md). Written to be spoken:
 short sentences, no commands read aloud.
 
-1. Step one. The list of what changed. A team's pipeline writes it from git: the names of the Java files this branch
-   changed, compared with the main branch. Here we keep it as a file, so the lesson gives the same answer on every
-   run. This change touched one class, the bulk discount.
-2. Step two. The lesson's build file reads that list. PIT plants its bugs only in the classes on the list. Every test
+1. Step one. What changed. The build asks git which Java files the branch changed, compared with the main branch.
+   This lesson's own history holds no such change, so it names its example's change: one class, the bulk discount.
+2. Step two. PIT plants its bugs only in the changed classes. Every test
    in the module may run against them. And the switch chooses the change's weak test, or the strong one.
 3. Step three. A gate runs after PIT. It reads PIT's report, and fails the build if any planted bug in the changed
    classes survived. PIT never mutates the old classes, so their missing tests can't fail it.

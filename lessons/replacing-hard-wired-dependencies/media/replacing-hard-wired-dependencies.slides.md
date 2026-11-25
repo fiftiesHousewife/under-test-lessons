@@ -9,29 +9,27 @@ stand-ins built in).
 - The fix: pass the rates in
 - The tool: Mockito
 Picture: road
-Say: This lesson is about replacing hard-wired dependencies, so a class can be tested at all. We'll see an invoice that
+Say: This lesson covers replacing hard-wired dependencies, so a class can be tested at all. We'll see an invoice that
   can't be tested, because it fetches its own exchange rates. Passing the rates in fixes it. Mockito is a library that
   makes stand-ins, and it makes one for the test.
-
-## intro: The invoice can't be tested
-- An invoice of £12.50 should come to €14.63 at a rate of 1.17
-- But the code fetches the rate itself, from the bank's live service
-- On a test machine: cannot reach the bank's exchange-rate service
-- So every test fails before it checks a single number
-Picture: bug
-Say: Here is the problem. An invoice of £12.50 should come to 14 euros 63 cents, at a rate of 1.17 euros to the pound.
-  But the code fetches the rate itself, from the bank's live rate service. A test machine has no network and no account
-  for it. So both tests fail with the same error, cannot reach the bank's exchange-rate service, before they check a
-  single number.
 
 ## intro: Our example: an invoice in euros
 - Lines are priced in pounds, in pence
 - The total is charged in euros, at today's exchange rate, to the nearest cent
 - The rate comes from the bank's live rate service
 Picture: statement
-Say: Our example is an invoice. The lines are priced in pounds, in pence, and the total is charged in euros, at
-  today's exchange rate, rounded to the nearest cent. And the rate comes from the bank's live rate service, over the
-  network.
+Say: Our example is an invoice. The lines are priced in pounds, in pence, and the total is charged in euros, at today's
+  exchange rate, rounded to the nearest cent. And the rate comes from the bank's live rate service, over the network.
+
+## intro: The invoice can't be tested
+- An invoice of £12.50 should come to €14.63 at a rate of 1.17
+- But the code fetches the rate itself
+- On a test machine: cannot reach the bank's exchange-rate service
+- So every test fails before it checks a single number
+Picture: bug
+Say: Here is the problem. An invoice of £12.50 should come to 14 euros 63 cents, at a rate of 1.17 euros to the pound.
+  But the code fetches the rate itself. A test machine has no network, and no account for the bank's service. So both
+  tests fail with the same error, cannot reach the bank's exchange-rate service, before they check a single number.
 
 ## intro: The fix: pass the rates in
 - Today the invoice reaches for a singleton, the one live rate service: a hard-wired dependency
@@ -41,9 +39,9 @@ Say: Our example is an invoice. The lines are priced in pounds, in pence, and th
 Picture: plug
 Say: The fix is to pass the rates in. Today the invoice reaches out for a singleton, the one and only live rate service.
   When code reaches for something, instead of being given it, that's a hard-wired dependency, and a test can't swap it.
-  One small change fixes that: the invoice takes its rates through its constructor. [pause 600ms] Handing a class
-  what it needs, instead of letting it fetch it, is called dependency injection. Production passes the live rates,
-  and a test passes a stand-in, fixed at 1.17.
+  One small change fixes that: the invoice takes its rates through its constructor. [pause 600ms] Handing a class what
+  it needs, instead of letting it fetch it, is called dependency injection. Production passes the live rates, and a test
+  passes a stand-in, fixed at 1.17.
 
 ## intro: How Mockito makes the stand-in
 - Make it: mock(ExchangeRates.class)
@@ -72,13 +70,13 @@ Say: When should you do this? [pause 1600ms] Before changing old code that calls
 - PowerMock used to fake statics
 - It is no longer maintained, and Mockito does it now
 Picture: book
-Say: Szczepan Faber started Mockito in 2008, building on an older library called EasyMock. It is free under the
-  MIT licence, and is one of the most widely used Java libraries. Old projects may use PowerMock to fake static calls.
+Say: Szczepan Faber started Mockito in 2008, building on an older library called EasyMock. It is free under the MIT
+  licence, and is one of the most widely used Java libraries. Old projects may use PowerMock to fake static calls.
   PowerMock is no longer maintained, and Mockito can do that now, though passing dependencies in is better still.
 
 ## closing: Find out more
 - https://site.mockito.org — Mockito, with its documentation
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/replacing-hard-wired-dependencies — run this lesson yourself: its test code and examples
 - Exercise: make the stand-in act like the bank's service timing out; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Mockito documentation. The links on screen also take you to this lesson's test

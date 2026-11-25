@@ -54,10 +54,10 @@ can stop the clock and check the time exactly. Only the id, new on every run, ne
    [`Summaries`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/Summaries.java) does.
 2. Expect the exact time in `generatedAt`, and keep `${json-unit.any-string}` for the id alone.
 3. Compare with the answer, [`FixedClockAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/structured/answer/FixedClockAnswerTest.java), which runs against
-   today's total with:
+   today's summary with:
 
 ```bash
-./gradlew :lessons:structured-output-comparison:test -Pcode=answer   # today's total: 2 of 3 tests fail, each on totalPence alone, so the time matched exactly
+./gradlew :lessons:structured-output-comparison:test -Pcode=answer   # today's summary: 2 of 3 tests fail; the answer also finds generatedAt is the machine's time, not the clock's
 ```
 
 ## Watch it, or present it

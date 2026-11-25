@@ -96,8 +96,7 @@ line totals on both sides of each boundary, is enough to get it to pass.
   [characterisation tests](../characterisation-tests/README.md) first, or read the summary for the changed lines only.
 - **Changed lines rather than classes:** this lesson gates whole classes, which needs no extra tools.
   [diff-cover](https://github.com/Bachmann1234/diff_cover) (Python, Apache 2.0) compares JaCoCo's XML report with
-  `git diff` and reports the changed lines' coverage; [Arcmutate](https://www.arcmutate.com), from PIT's makers, adds
-  Git support to PIT, for a fee.
+  `git diff` and reports the changed lines' coverage.
 - **Not on a module with flaky tests:** a test that fails at random catches planted bugs at random. Fix those first.
 
 ## On older Java

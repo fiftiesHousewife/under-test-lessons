@@ -15,7 +15,7 @@ a company takes, everything the lessons fetch, and the settings that route it. T
 
 A company takes the whole repository. Inside, it builds and checks the lessons, changes them, and rebuilds their
 decks, with the JDK, Gradle, its own Maven repository and its installed Chrome. It never runs the tools that make the
-videos or the voice, and it needs no AI tool: every lesson works by hand.
+videos or the voice, and it needs no AI tool: every lesson works deterministically.
 
 | Part | Runs with | What it holds | Inside a company? |
 |---|---|---|---|

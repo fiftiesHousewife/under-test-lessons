@@ -19,8 +19,8 @@ import tools.jackson.databind.json.JsonMapper;
 
 /*
  * THE EXERCISE'S ANSWER: two more amounts, the smallest refund there is and one with odd pence, each read back from
- * the body of the request the client really sent. Both must go as whole pence. Run it against today's client with
- * {@code -Pcode=answer}.
+ * the body of the request the client really sent. Both must be sent, as whole pence. Run it against today's client
+ * with {@code -Pcode=answer}: beside the pounds, it finds that today's client never sends the 1p refund at all.
  */
 class OddAmountsAnswerTest {
 

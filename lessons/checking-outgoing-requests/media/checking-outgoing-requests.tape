@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "The code under test: today's refund client. It sends the amount in *pounds*, and no Idempotency-Key header."`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysRefundClient 21 31 "today's refund client" --zoom 25`
+Type@1ms `show TodaysRefundClient 23 36 "today's refund client" --zoom 30`
 Enter
 Sleep 300ms
 Show

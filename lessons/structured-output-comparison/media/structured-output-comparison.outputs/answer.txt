@@ -4,6 +4,7 @@ CompareJsonTest > summaryHasTheExpectedLinesAndTotal() FAILED
     Different value found in node "totalPence", expected: <1120> but was: <370>.
 ContainsTextTest > summaryMentionsEveryItemAndATotal() PASSED
 FixedClockAnswerTest > summaryHasTheTimeFromItsClock() FAILED
-    org.opentest4j.AssertionFailedError: JSON documents are different:
+    net.javacrumbs.jsonunit.core.internal.Opentest4jExceptionFactory$JsonAssertError: JSON documents are different:
+    Different value found in node "generatedAt", expected: <"2026-03-01T09:30:00Z"> but was: <"2026-11-25T20:09:28.863537Z">.
     Different value found in node "totalPence", expected: <1120> but was: <370>.
 3 tests completed, 2 failed

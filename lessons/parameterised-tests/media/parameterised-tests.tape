@@ -27,10 +27,10 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "JUnit comes with the shared code-quality plugin, and parameterised tests come with JUnit: nothing to add."`
+Type@1ms `note "Parameterised tests come with JUnit Jupiter: nothing to add."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/parameterised-tests/example/build.gradle.kts 1 3 "lesson build file"`
+Type@1ms `show libs.versions.toml "/^junit/" "gradle/libs.versions.toml"`
 Enter
 Sleep 300ms
 Type@1ms `note "The lesson adds one switch, to choose which calculator the tests run against:"`

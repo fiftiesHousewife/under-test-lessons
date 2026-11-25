@@ -16,32 +16,30 @@ characterisation tests.
 - The fix: filter the recording, then approve it
 - The tools: Logbook and ApprovalTests
 Picture: road
-Say: This lesson is about capturing what an old service receives and sends, so it can become a test. Logbook is a
-  library that writes down every request and answer a service handles. We'll see a recording that keeps the secrets.
-  Then Logbook's filters take them out, before anything is written down.
-
-## intro: The recording keeps the secrets
-- We record what an old service receives and sends, before anyone changes it
-- Today the recording holds the caller's token, the loyalty provider's key and a customer's email
-- The test passes: it checks only that each request and answer was recorded
-- Once a secret is written to a log or a file, it is hard to take back
-Picture: bug
-Say: Here is the problem. Before anyone changes an old service, we record every request it receives and sends, as they
-  really happen. But today the recording holds the caller's token, the loyalty provider's key, and a customer's email
-  address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only checks that each
-  request and answer was recorded. It never reads what was written. And once a secret is written to a log or a file, it
-  is hard to take back.
+Say: The next stop on the journey is capturing what an old service receives and sends, so it can become a test. Logbook
+  is a library that writes down every request and answer a service handles. We'll see a recording that keeps the
+  secrets. Then Logbook's filters take them out, before anything is written down.
 
 ## intro: Our example: an old customer service
 - Callers ask it for a customer, with their own token in an Authorization header
 - It asks a loyalty provider for the customer's points, posting their email address, with its own key
 - It answers with the customer's email, tier and points, as JSON
-- There is no record of what it receives and sends
+- Before we change it, we record what it receives and sends
 Picture: server
-Say: Our example is an old customer service. Callers ask it for a customer, and send their own token in a header
-  called Authorization. To answer, the service asks a loyalty provider how many points the customer has. It posts the
+Say: Our example is an old customer service. Callers ask it for a customer, and send their own token in a header called
+  Authorization. To answer, the service asks a loyalty provider how many points the customer has. It posts the
   customer's email address, with its own key. Then it answers with the customer's email, loyalty tier and points, as
-  JSON. There is no record of what it receives and sends, so we capture it.
+  JSON. There is no record of what it receives and sends. So, before we change it, we record every request and answer.
+
+## intro: The recording keeps the secrets
+- The recording holds the caller's token, the loyalty provider's key and a customer's email
+- The test passes: it checks only that each request and answer was recorded
+- Once a secret is written to a log or a file, it is hard to take back
+Picture: bug
+Say: Here is the problem. The recording holds the caller's token, the loyalty provider's key, and a customer's email
+  address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only checks that each
+  request and answer was recorded. It never reads what was written. And once a secret is written to a log or a file, it
+  is hard to take back.
 
 ## intro: The fix: filter the recording, then approve it
 - Logbook captures from inside the service: a servlet filter, and a hook in its HTTP client
@@ -75,9 +73,9 @@ Include: how-we-build
 - Keep the examples a person has checked as approved files, and change them only on purpose
 Picture: map
 Say: When should you capture with Logbook? [pause 1600ms] Before you change an old service with no record of what it
-  receives and sends. Start in a test environment, especially where a proxy can't sit in front of the service.
-  Filter secrets and personal data at source, and have a test check that the recording holds none. Keep the examples a
-  person has checked as approved files, and change them only on purpose, in a pull request a reviewer checks.
+  receives and sends. Start in a test environment, especially where a proxy can't sit in front of the service. Filter
+  secrets and personal data at source, and have a test check that the recording holds none. Keep the examples a person
+  has checked as approved files, and change them only on purpose, in a pull request a reviewer checks.
 
 ## closing: Where Logbook came from
 - Written at Zalando, free under the MIT licence
@@ -94,10 +92,9 @@ Say: Logbook was written at Zalando, and is free under the MIT licence. It has b
 ## closing: Find out more
 - https://github.com/zalando/logbook — Logbook's guide: its integrations, filters, formatters and writers
 - https://approvaltests.com — ApprovalTests, for approved files
-- {toolkit-repo} — the toolkit, with its characterisation tests technique
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/capturing-with-logbook — run this lesson yourself: its test code and examples
 - Exercise: approve the recording for a customer the service doesn't know; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with Logbook's guide, which lists its integrations, filters, formatters and writers. The
-  links on screen also take you to ApprovalTests, to the toolkit, and to this lesson's test code and examples, to run
-  yourself. And try the exercise in the README: approve the recording for a customer the service doesn't know.
+  links on screen also take you to ApprovalTests, and to this lesson's test code and examples, to run yourself. And try
+  the exercise in the README: approve the recording for a customer the service doesn't know.

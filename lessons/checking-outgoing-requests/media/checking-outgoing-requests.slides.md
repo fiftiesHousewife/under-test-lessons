@@ -13,19 +13,9 @@ HTTP Header Field" (a request header that makes a POST safe to repeat).
 - The fix: check the request that was sent
 - The tool: WireMock
 Picture: road
-Say: This lesson is about checking the requests your code sends to other services, not just the answers it gets back.
+Say: Here, we look at checking the requests your code sends to other services, not just the answers it gets back.
   WireMock is a library that stands in for another web service. We'll see a refund sent wrong while every test passes.
   Then WireMock checks the request itself.
-
-## intro: The refund is sent wrong, and the tests pass
-- A refund of £12.50 goes to the payment provider as 12.5, not 1250 pence
-- It goes with no Idempotency-Key, so a refund sent twice could be paid twice
-- The tests pass: the stand-in provider answers "created" whatever it is sent
-Picture: bug
-Say: Here is the problem. A shop refunds a customer £12.50. The payment provider expects the amount in pence, 1250. The
-  shop sends 12.5. It also leaves out the header that names the refund, so a refund sent twice could be paid twice. And
-  the tests pass. The stand-in provider in the tests answers that the refund is created, whatever the shop sends. So the
-  mistakes only show up at the real provider, when a customer gets the wrong amount back.
 
 ## intro: Our example: refunds to a payment provider
 - A shop gives money back to a customer for an order
@@ -35,17 +25,27 @@ Say: Here is the problem. A shop refunds a customer £12.50. The payment provide
 Picture: basket
 Say: Our example is a shop that gives money back to customers. For each refund, it posts a request to a payment
   provider: the order's number, and the amount in pence, as JSON. It also sends a header called Idempotency-Key, which
-  names the refund. If the same refund arrives twice, say after a timeout and a retry, the
-  provider pays it only once. The provider answers 201 Created, with an id for the refund.
+  names the refund. If the same refund arrives twice, say after a timeout and a retry, the provider pays it only once.
+  The provider answers 201 Created, with an id for the refund.
+
+## intro: The refund is sent wrong, and the tests pass
+- A refund of £12.50 goes as 12.5, not 1250 pence
+- It goes with no Idempotency-Key, so a refund sent twice could be paid twice
+- The tests pass: the stand-in provider answers "created" whatever it is sent
+Picture: bug
+Say: Here is the problem. The shop refunds a customer £12.50, and sends 12.5, not 1250 pence. It also leaves out the
+  Idempotency-Key header, so a refund sent twice could be paid twice. And the tests pass. The stand-in provider in the
+  tests answers that the refund is created, whatever the shop sends. So the mistakes only show up at the real provider,
+  when a customer gets the wrong amount back.
 
 ## intro: The fix: check the request that was sent
 - The stand-in keeps every request it receives
 - The test checks the refund the shop really sent: method, address, headers and body
 - Checking outgoing requests, not only the answer that comes back
 Picture: magnifier
-Say: The fix is to check the request the shop really sent. The stand-in provider keeps every request it receives.
-  So after the refund, the test looks at it: the method, the address, the headers, and the body with its amount. This
-  is called checking outgoing requests, because the test checks what goes out, not only the answer that comes back.
+Say: The fix is to check the request the shop really sent. The stand-in provider keeps every request it receives. So
+  after the refund, the test looks at it: the method, the address, the headers, and the body with its amount. This is
+  called checking outgoing requests, because the test checks what goes out, not only the answer that comes back.
 
 ## intro: How WireMock's verify looks
 - verify(postRequestedFor(urlEqualTo("/refunds"))
@@ -55,8 +55,8 @@ Say: The fix is to check the request the shop really sent. The stand-in provider
 Picture: server
 Say: Here is how it looks. WireMock keeps the requests in memory, in what it calls its request journal. Verify looks
   there for a post to the refunds address, with the refund's key in its header, and a body that matches the JSON
-  expected. That match compares fields and values, so spacing and field order don't matter. Today, no request
-  matched. The failure shows the closest one beside it: an amount of 12.5, and no key.
+  expected. That match compares fields and values, so spacing and field order don't matter. Today, no request matched.
+  The failure shows the closest one beside it: an amount of 12.5, and no key.
 
 Include: how-we-build
 
@@ -66,26 +66,26 @@ Include: how-we-build
 - Only at the edge of your system, for services you don't own
 - For your own classes, check results instead of calls
 Picture: map
-Say: When should you check outgoing requests? [pause 1600ms] Whenever a request changes something you can't undo,
-  such as money, messages or orders. Check what the other side relies on: the amount, the keys, and the headers. Do
-  it at the edge of your system, for services you don't own. For your own classes, check what they produce, not
-  every call they make, or the tests just repeat the code.
+Say: When should you check outgoing requests? [pause 1600ms] Whenever a request changes something you can't undo, such
+  as money, messages or orders. Check what the other side relies on: the amount, the keys, and the headers. Do it at the
+  edge of your system, for services you don't own. For your own classes, check what they produce, not every call they
+  make, or the tests just repeat the code.
 
 ## closing: Where WireMock came from
 - Created by Tom Akehurst, free under the Apache licence
 - Public since 2011, and used widely across Java
 - Its JSON matching is built on JsonUnit
 Picture: book
-Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been public since 2011,
-  and is used widely across Java. Its JSON matching is built on another library, JsonUnit.
+Say: WireMock was created by Tom Akehurst, and is free under the Apache licence. It has been public since 2011, and is
+  used widely across Java. Its JSON matching is built on another library, JsonUnit.
 
 ## closing: Find out more
 - https://wiremock.org/docs/verifying/ — WireMock's guide to verifying requests
 - https://wiremock.org/docs/request-matching/ — matching headers and bodies, including equalToJson
 - https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/ — the Idempotency-Key header
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/checking-outgoing-requests — run this lesson yourself: its test code and examples
 - Exercise: check the amounts sent for refunds of 1p and £19.99; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with WireMock's guides to verifying requests, and to matching headers and bodies. The
-  links on screen also describe the Idempotency-Key header, and take you to this lesson's test code and examples, to
-  run yourself. And try the exercise in the README: check that refunds of 1p and £19.99 are sent as whole pence.
+Say: To find out more, start with WireMock's guides to verifying requests, and to matching headers and bodies. The links
+  on screen also describe the Idempotency-Key header, and take you to this lesson's test code and examples, to run
+  yourself. And try the exercise in the README: check that refunds of 1p and £19.99 are sent as whole pence.

@@ -121,6 +121,17 @@ await settle(); // the deck's own start, with no click yet: refused
   clickInProgress = false;
   check('the next click on the page starts the voice', started.length > before && freshListen.textContent === 'Mute');
 }
+// Pause holds the voice and the slide; Play carries on from the same word, and the deck then moves on as before.
+const pause = appended.find(el => el.className === 'deck-pause');
+check('a deck with voice has a pause button, shown while listening', Boolean(pause) && pause.hidden === false);
+pause.click();
+await settle();
+const freshPlayer = everyAudio[everyAudio.length - 1]; // this deck's own player, made when its voice started
+check('Pause stops the voice and offers Play', freshPlayer.paused && pause.textContent === 'Play');
+const startedBeforePlay = started.length;
+pause.click();
+check('Play carries on with the same clip', started[started.length - 1] === 'x.m4a' && pause.textContent === 'Pause'
+  && started.length === startedBeforePlay + 1);
 // Muting is remembered: a deck opened after a mute stays silent until unmuted.
 const store = {};
 global.window.localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (k, v) => { store[k] = String(v); } };

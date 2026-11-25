@@ -34,7 +34,7 @@ Type@1ms `show libs.versions.toml "/archunit/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 21s
 
 # ---- Scene 2: step 2, the old online shop beside the checks ----
 Hide

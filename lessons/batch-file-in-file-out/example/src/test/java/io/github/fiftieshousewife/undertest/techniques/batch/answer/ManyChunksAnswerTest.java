@@ -21,8 +21,9 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 /*
  * THE EXERCISE'S ANSWER: the job writes in chunks of 100 payments, and the whole-job tests run only 6 and 12, one chunk
- * each. A day of 250 payments takes three chunks, so the closing line must count and add up across all of them:
- * payment n is n times 7 pence, 219,625 pence in all. Run it against today's job with {@code -Pcode=answer}.
+ * each. A day of 250 payments takes three chunks, and the settlement file must hold a line for every one of them.
+ * Run it against today's job with {@code -Pcode=answer}: today's writer writes the file anew for each chunk, so only
+ * the last chunk's payments are left.
  */
 @SpringBatchTest
 @SpringJUnitConfig(Jobs.class)
@@ -37,7 +38,7 @@ class ManyChunksAnswerTest {
     Path folder;
 
     @Test
-    void theClosingLineCoversEveryChunk() throws Exception {
+    void theFileHoldsALineForEveryPaymentInEveryChunk() throws Exception {
         final Path input = Files.write(folder.resolve("payments.csv"), IntStream.rangeClosed(1, PAYMENTS)
                 .mapToObj(n -> String.format(Locale.ROOT, "%08d,%d", n, n * 7)).toList(), StandardCharsets.UTF_8);
         final Path settlement = folder.resolve("settlement.csv");
@@ -48,6 +49,8 @@ class ManyChunksAnswerTest {
         final List<String> lines = Files.readAllLines(settlement, StandardCharsets.UTF_8);
         assertAll(
                 () -> assertThat(status).as("job").isEqualTo(BatchStatus.COMPLETED),
-                () -> assertThat(lines.getLast()).as("closing line").isEqualTo("TRAILER,250,2196.25"));
+                () -> assertThat(Math.toIntExact(lines.stream().filter(line -> line.startsWith("PAY,")).count()))
+                        .as("payment lines")
+                        .isEqualTo(PAYMENTS));
     }
 }

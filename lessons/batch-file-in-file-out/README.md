@@ -57,16 +57,16 @@ field in quotes when it holds a comma or a line break, so read them with a CSV p
 ## Exercise
 
 The job writes in chunks of 100 payments, but the whole-job tests run only 6 and 12, one chunk each. A real day has
-more, and the closing line must count and add up across every chunk.
+more, and the settlement file must hold every chunk's payments.
 
 1. Add a test class beside [`WholeJobTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/WholeJobTest.java), configured the same way, that writes an input
    file of 250 payments, three chunks' worth, into its temporary folder.
-2. Run the whole job on it and check the settlement file's last line: the count, 250, and the total of every payment.
+2. Run the whole job on it and check the settlement file holds a payment line for each of the 250.
 3. Compare with the answer, [`ManyChunksAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/batch/answer/ManyChunksAnswerTest.java), which runs against
    today's job with:
 
 ```bash
-./gradlew :lessons:batch-file-in-file-out:test -Pcode=answer   # today's job: 3 of 7 tests fail; the answer expected TRAILER,250,2196.25 as the last line
+./gradlew :lessons:batch-file-in-file-out:test -Pcode=answer   # today's job: 3 of 7 tests fail; the answer counts 50 payment lines, not 250: the last chunk's
 ```
 
 ## Watch it, or present it

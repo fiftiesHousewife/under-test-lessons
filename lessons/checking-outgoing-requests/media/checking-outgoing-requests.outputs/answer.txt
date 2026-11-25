@@ -30,5 +30,5 @@ RefundResponseTest > acceptedRefundGivesItsId() PASSED
 OddAmountsAnswerTest > oddAmountsAreSentInWholePence() FAILED
     org.opentest4j.AssertionFailedError: [the amount in each refund sent]
     expected: ["1", "1999"]
-     but was: ["not a whole number: 0.01", "not a whole number: 19.99"]
+     but was: ["not a whole number: 19.99"]
 5 tests completed, 3 failed

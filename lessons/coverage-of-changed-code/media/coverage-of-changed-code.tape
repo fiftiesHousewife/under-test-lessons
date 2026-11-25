@@ -27,10 +27,10 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 1: the list of what this change touched. In CI, git writes it; here it is a file."`
+Type@1ms `note "Step 1: the build asks git what the branch changed. This lesson names its example change."`
 Enter
 Sleep 300ms
-Type@1ms "show lessons/coverage-of-changed-code/example/changed-classes.txt 1 4 changed-classes.txt --zoom 4"
+Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 10 22 "lesson build file" --zoom 15-19`
 Enter
 Sleep 300ms
 Show
@@ -41,10 +41,10 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 2: PIT plants bugs only in the classes on the list."`
+Type@1ms `note "Step 2: PIT plants bugs only in the changed classes."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 9 19 "lesson build file" --zoom 15-19`
+Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 26 31 "lesson build file" --zoom 28-30`
 Enter
 Sleep 300ms
 Show
@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "Step 3: a gate after PIT fails the build if any planted bug in the changed classes survived."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 21 38 "lesson build file" --zoom 27-29`
+Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 33 50 "lesson build file" --zoom 39-41`
 Enter
 Sleep 300ms
 Show
@@ -72,7 +72,7 @@ Sleep 300ms
 Type@1ms `note "Step 4: the coverage gate counts only the changed classes, and asks for every line."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 45 58 "lesson build file" --zoom 47-49`
+Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 57 70 "lesson build file" --zoom 59-61`
 Enter
 Sleep 300ms
 Show

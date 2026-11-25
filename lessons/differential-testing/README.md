@@ -22,7 +22,8 @@ with one row mistyped.
 - [`RewriteExamplesTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/RewriteExamplesTest.java)
   is the "before": one typical weight per row, all passing.
 - [`OldAndNewAgreeTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/differential/OldAndNewAgreeTest.java)
-  is the "after": every weight from 1 g to 5 kg, old against new, with differences grouped into runs.
+  is the "after": a parameterised test with one row per band of the post office's price list, comparing old and new
+  on every weight in the band, with differences grouped into runs. A failure names its band.
 
 ## Exercise
 
@@ -36,7 +37,7 @@ differential test compares failures as well as answers.
    the rewrite as typed today with:
 
 ```bash
-./gradlew :lessons:differential-testing:test -Pcode=answer   # the rewrite as typed today: only the price comparison fails, 1 of 7; the refusals agree
+./gradlew :lessons:differential-testing:test -Pcode=answer   # the rewrite as typed today: 1 of 18 tests fails, the band up to 500 g; the refusals agree
 ```
 
 ## Watch it, or present it

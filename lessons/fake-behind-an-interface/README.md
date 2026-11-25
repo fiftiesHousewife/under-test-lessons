@@ -42,12 +42,13 @@ exactly £100, the smallest that needs a fraud check.
 1. Add a test class beside [`FakeQueueTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/FakeQueueTest.java)
    that places an order of 10,000 pence through the fake queue,
    [`InMemoryMessageQueue`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/InMemoryMessageQueue.java).
-2. Expect its fraud-check message to be delivered.
+2. Expect a fraud-check message to be sent for it. Today's code loses every fraud check, so check what was sent,
+   delivered or not, with the fake's `sent`; that finds a bug of its own.
 3. Compare with the answer, [`HundredPoundOrderAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/answer/HundredPoundOrderAnswerTest.java),
    which runs against today's order placement with:
 
 ```bash
-./gradlew :lessons:fake-behind-an-interface:test -Pcode=answer   # today's order placement: 2 of 5 tests fail; no fraud check is delivered for order A-3, 10000 pence
+./gradlew :lessons:fake-behind-an-interface:test -Pcode=answer   # today's order placement: 2 of 5 tests fail; no fraud check is even sent for order A-3, at the boundary
 ```
 
 ## Watch it, or present it

@@ -25,13 +25,16 @@ work.
 a newcomer follows a concrete problem, and an abstract slide before it makes little sense.
 1. **What the lesson covers,** at the start of the first slide's narration, before the problem: the technique, the
    framework, the problem it will show and how the framework fixes it, in two or three sentences, then `[pause 1s]`.
-   "This lesson is about mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
+   "This lesson covers mutation testing, with PIT: a way to measure whether your tests would catch a bug, not just
    whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
-   bugs and counts the ones caught." Never open with a bare "Here is the problem".
-2. **The problem, in the example:** what goes wrong today, in the example's own terms and numbers ("a shop's build
-   has 4 quick tests and 2 slow ones; every run waits for the slow ones"), and why that matters.
-3. **Our example**, in everyday terms, before anything refers to it: "a shop's discount rules: 5% off orders of £50 or
+   bugs and counts the ones caught." Never open with a bare "Here is the problem". Vary the opening from the lessons
+   beside it in the series: "In this lesson, we look at...", "This lesson covers...", "Let's look at...", "The next
+   stop on the journey is...", "Here, we look at...", "We're going to look at...", "Our subject this time is...",
+   "This time, the topic is...". Never "This lesson is about" in every deck.
+2. **Our example**, in everyday terms, before anything refers to it: "a shop's discount rules: 5% off orders of £50 or
    more...". Never mention a class name before this slide has explained what it does.
+3. **The problem, in the example:** what goes wrong today, in the example's own terms and numbers ("every run waits
+   for the 2 slow tests"), and why that matters. Build on the example slide: never describe the example a second time.
 4. **The fix**, in a sentence or two, with the technique's own term explained through the example where it first
    appears ("label the slow tests: JUnit calls the label a tag"). No separate "what we'll compare" slide: the
    terminal scenes show today's code, the weak tests and the strong ones.
@@ -145,9 +148,13 @@ What a full review of every deck with its voice found, so each new lesson gets i
 - **Names aloud:** a slide whose heading names a technique or tool says that name in its narration too ("The answer
   is characterisation tests"): the listener may not be looking.
 - **One item to a bullet:** never two ideas joined by a semicolon on one bullet; give each its own.
-- **Overview slides:** a slide about a technique opens with its name and what it is ("Now we talk about differential
-  testing. Differential testing runs the old code and its rewrite on the same inputs..."), then the question it
-  answers. Name the established term the code shows, such as dependency injection for passing dependencies in.
+- **Overview slides:** a slide about a technique opens with its name and what it is, then the question it answers
+  ("With the old behaviour pinned down, we can turn to differential testing. Differential testing runs the old code
+  and its rewrite on the same inputs...").
+- **Vary the way into a topic:** never open two slides in a deck the same way. Link each topic to the one before, as
+  a person would: "Let's start with...", "Once the code runs safely, the next question is...", "Next up...", "From
+  what the code does, we move on to what it sends...", "That's where ... comes in", "Moving on...", "Finally...".
+  "Now we talk about" may open one slide at most. Name the established term the code shows, such as dependency injection for passing dependencies in.
 - **Known terms:** don't explain what engineers already know, such as continuous integration.
 - **Story:** contrast the outcomes before the problem; a boundary gets its own slide, with the values on each side; one
   idea to a slide, three or four points, a heading of 40 characters or less.

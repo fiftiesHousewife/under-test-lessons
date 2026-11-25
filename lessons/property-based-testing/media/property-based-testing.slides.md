@@ -8,9 +8,9 @@ IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
 - The fix: state rules, try 100 bills
 - The tool: jetCheck
 Picture: road
-Say: This lesson is about property-based testing: rules that must always hold, checked against hundreds of made-up
-  inputs. jetCheck is a library that makes up those inputs, and checks the rules against each. We'll see a bill split
-  where one person pays every penny left over. Then jetCheck finds it.
+Say: Let's look at property-based testing: rules that must always hold, checked against hundreds of made-up inputs.
+  jetCheck is a library that makes up those inputs, and checks the rules against each. We'll see a bill split where one
+  person pays every penny left over. Then jetCheck finds it.
 
 ## intro: One person pays every penny left over
 - Split 3 pence between 4 people: the first pays 3, the others 0
@@ -35,9 +35,9 @@ Say: Our example splits a bill, in pence, between several people. Everyone pays 
 - A library makes up a hundred bills, and looks for one that breaks a rule
 Picture: dice
 Say: The fix is to state the rules that must hold for every bill, instead of checking one bill at a time. A rule like
-  this is called a property, so this is a property test. Here there are 3 rules: one share for each person, shares
-  that add up to the bill, and no two shares more than a penny apart. Then a library makes up a hundred bills, and
-  looks for one that breaks a rule.
+  this is called a property, so this is a property test. Here there are 3 rules: one share for each person, shares that
+  add up to the bill, and no two shares more than a penny apart. Then a library makes up a hundred bills, and looks for
+  one that breaks a rule.
 
 ## intro: How jetCheck looks
 - Bills from building blocks: integers(0, 1_000) pence, integers(1, 12) people
@@ -70,9 +70,9 @@ Say: The idea comes from QuickCheck, by Koen Claessen and John Hughes, for the H
 
 ## closing: Find out more
 - https://github.com/JetBrains/jetCheck — jetCheck, its README and examples
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/property-based-testing — run this lesson yourself: its test code and examples
 - Exercise: add a rule that a penny more changes only one share; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with jetCheck's README, which has more examples of properties. The links on screen also
-  take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: one more
-  rule, that adding a penny to the bill adds a penny to just one share.
+  take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: one more rule,
+  that adding a penny to the bill adds a penny to just one share.

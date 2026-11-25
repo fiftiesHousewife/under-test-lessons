@@ -2,7 +2,8 @@
 // back) move between slides; N shows the speaker notes; the address remembers the slide (#3), so a link can point at
 // one. A deck with its voice (buildLessonDeckVoice) plays itself when it opens: each slide's narration, then the next
 // slide when it ends. The Mute button, or V, stops the voice, and the deck then moves only when you move it; Unmute
-// carries on from the slide you are on. Muting is remembered, so the next deck opens muted too.
+// carries on from the slide you are on. Muting is remembered, so the next deck opens muted too. Pause (or P) holds
+// the voice and the slide; Play carries on.
 (function () {
   var slides = Array.prototype.slice.call(document.querySelectorAll('.deck-slide'));
   var counter = document.createElement('div');
@@ -27,6 +28,9 @@
   var player = null;
   var unlocked = false;
   var turn = 0;
+  var paused = false;
+  var pauseButton = null;
+  var readSlide = -1;
   function clipSource(index) {
     var clip = slides[index] && slides[index].querySelector('audio.voice');
     return clip ? clip.getAttribute('src') : null;
@@ -60,6 +64,7 @@
   function start(source, refused) {
     if (!player) { player = new Audio(); player.onended = slideRead; }
     player.src = source;
+    readSlide = current;
     player.play().then(function () { unlocked = true; }).catch(refused);
   }
   function playVoice() {
@@ -94,12 +99,38 @@
     waiting = true;
     if (listen) { listen.textContent = 'Click for sound'; listen.classList.add('waiting'); }
   }
+  // Pause holds the slide and stops the voice mid-sentence; Play carries on from the same word. Paused in the silence
+  // between slides, Play moves on; paused after a move by hand, Play reads the slide now showing.
+  function togglePause() {
+    if (!listening) { return; }
+    paused = !paused;
+    if (paused) {
+      clearTimeout(nextTimer);
+      turn++;
+      if (player) { player.pause(); }
+    } else if (player && readSlide === current && !player.ended) {
+      player.play().catch(waitForClick);
+    } else if (player && readSlide === current) {
+      nextTimer = setTimeout(function () { advance(); }, LEAD_MS);
+    } else {
+      playVoice();
+    }
+    showPause();
+  }
+  function showPause() {
+    if (!pauseButton) { return; }
+    pauseButton.textContent = paused ? 'Play' : 'Pause';
+    pauseButton.setAttribute('aria-pressed', String(paused));
+    pauseButton.hidden = !listening;
+  }
   function setListening(on) {
     waiting = false;
+    paused = false;
     if (listen) { listen.classList.remove('waiting'); }
     listening = on;
     stopVoice();
     if (listen) { listen.textContent = on ? 'Mute' : 'Unmute'; listen.setAttribute('aria-pressed', String(!on)); }
+    showPause();
     if (on) { playVoice(); }
   }
   // Muting by hand is remembered for the next deck; a browser without storage simply starts each deck with sound.
@@ -117,7 +148,7 @@
     slides.forEach(function (slide, i) { slide.classList.toggle('current', i === current); });
     counter.textContent = (current + 1) + ' / ' + slides.length;
     history.replaceState(null, '', '#' + (current + 1));
-    if (listening) { stopVoice(); playVoice(); } else if (byHand && listen) { readThisSlide(); }
+    if (listening) { stopVoice(); if (!paused) { playVoice(); } } else if (byHand && listen) { readThisSlide(); }
   }
   function move(step) { show(current + step, true); }
   function control(className, text, onClick) {
@@ -136,6 +167,8 @@
   if (document.querySelector('audio.voice')) {
     listen = control('deck-listen', 'Unmute', toggleSound);
     listen.setAttribute('aria-pressed', 'true');
+    pauseButton = control('deck-pause', 'Pause', togglePause);
+    showPause();
   }
   document.addEventListener('keydown', function (event) {
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].indexOf(event.key) >= 0) { move(1); event.preventDefault(); }
@@ -144,6 +177,7 @@
     if (event.key === 'End') { show(slides.length - 1, true); }
     if (event.key === 'n' || event.key === 'N') { document.body.classList.toggle('show-notes'); }
     if ((event.key === 'v' || event.key === 'V') && listen) { toggleSound(); }
+    if (event.key === 'p' || event.key === 'P') { togglePause(); }
   });
   document.addEventListener('click', function (event) {
     if (waiting) { setListening(true); return; }

@@ -13,9 +13,9 @@ dannorth.net, first in Better Software magazine, March 2006; Gojko Adzic, "Speci
 - Once more time has gone by: store credit, to spend in the shop
 - Between the two is a boundary: the day the answer changes
 Picture: scales
-Say: This lesson is about writing a business rule down as examples, and running each one as a test. [pause 1s]
-  A returned item can be refunded to the card. [pause 800ms] But if more time has gone by, the customer gets store
-  credit instead, to spend in the shop. [pause 1s] Between the two is a boundary: the day the answer changes.
+Say: We're going to look at writing a business rule down as examples, and running each one as a test. [pause 1s] A
+  returned item can be refunded to the card. [pause 800ms] But if more time has gone by, the customer gets store credit
+  instead, to spend in the shop. [pause 1s] Between the two is a boundary: the day the answer changes.
 
 ## intro: The 30th day gets the wrong refund
 - An item comes back on the 30th day, with its receipt
@@ -42,19 +42,18 @@ Say: Our example is the shop's refund rules. [pause 800ms] Within 30 days, with 
 - Day 31, with a receipt: store credit
 - Day 30, with a receipt: which?
 Picture: scales
-Say: Let's look at the boundary, day by day. [pause 800ms] On day 29, with a receipt,
-  it's a refund to the card. [pause 800ms] On day 31, it's store credit. [pause 800ms] But on day 30? [pause 1600ms]
-  The specification says within 30 days. [pause 600ms] It doesn't say whether the 30th day counts. [pause 800ms]
-  Bugs gather at boundaries like this.
+Say: Let's look at the boundary, day by day. [pause 800ms] On day 29, with a receipt, it's a refund to the card.
+  [pause 800ms] On day 31, it's store credit. [pause 800ms] But on day 30? [pause 1600ms] The specification says within
+  30 days. [pause 600ms] It doesn't say whether the 30th day counts. [pause 800ms] Bugs gather at boundaries like this.
 
 ## intro: Why the tests pass
 - They were written by reading the code, so they agree with it
 - They try day 5 and day 60, far from the boundary
 - No test tries day 30 or day 31
 Picture: magnifier
-Say: So why do the tests pass? [pause 1600ms] They were written by reading the code, so they agree with it,
-  mistakes and all. [pause 800ms] They try day 5 and day 60. [pause 600ms] Both are far from the boundary.
-  [pause 800ms] No test tries day 30, or day 31.
+Say: So why do the tests pass? [pause 1600ms] They were written by reading the code, so they agree with it, mistakes and
+  all. [pause 800ms] They try day 5 and day 60. [pause 600ms] Both are far from the boundary. [pause 800ms] No test
+  tries day 30, or day 31.
 
 ## intro: The fix: the experts' examples, run as tests
 - The returns team writes the rules down as 5 named examples
@@ -103,10 +102,9 @@ Say: Ward Cunningham's tool Fit, in 2002, let customers write examples in tables
 - https://docs.junit.org/current/writing-tests/parameterized-classes-and-tests.html — JUnit's parameterised tests
 - https://cucumber.io/docs/ — Cucumber, for examples written as sentences
 - https://gojko.net/books/specification-by-example/ — Specification by Example, by Gojko Adzic
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/behaviour-as-examples — run this lesson yourself: its test code and examples
 - Exercise: add the example for the 30th day without a receipt; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with JUnit's guide to parameterised tests, and Cucumber's documentation. Gojko Adzic's
-  book shows how whole teams write their rules down as examples. The links on screen also take you to this lesson's
-  test code and examples, to run yourself. And try the exercise in the README: add the example for the 30th day
-  without a receipt.
+Say: To find out more, start with JUnit's guide to parameterised tests, and Cucumber's documentation. Gojko Adzic's book
+  shows how whole teams write their rules down as examples. The links on screen also take you to this lesson's test code
+  and examples, to run yourself. And try the exercise in the README: add the example for the 30th day without a receipt.

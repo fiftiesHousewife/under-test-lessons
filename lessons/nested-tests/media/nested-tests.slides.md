@@ -8,8 +8,8 @@ JUnit Jupiter since JUnit 5 in 2017; JUnit 6 is the current generation).
 - The fix: group the tests by situation
 - The tool: JUnit
 Picture: road
-Say: This lesson is about nested tests: tests grouped by the situation they start from, so a missing case is easy to
-  see. We'll see a loan marked repaid that was never approved, and how JUnit's nested classes show the gap.
+Say: Here, we look at nested tests: tests grouped by the situation they start from, so a missing case is easy to see.
+  We'll see a loan marked repaid that was never approved, and how JUnit's nested classes show the gap.
 
 ## intro: An unapproved loan is marked repaid
 - A loan that was only requested can be marked repaid, skipping approval
@@ -34,8 +34,8 @@ Say: Our example is a loan. A loan is requested, then approved, then repaid. Eac
 - Asked in every state, the missing question stands out, and it fails
 Picture: folders
 Say: The fix is to group the tests by situation, one group for each state the loan can be in: requested, approved and
-  repaid. Groups inside a test class are called nested tests. Each group asks the same 2 questions: can it be
-  approved, and can it be repaid? Ask them in every state, and the gap stands out. And today, it fails.
+  repaid. Groups inside a test class are called nested tests. Each group asks the same 2 questions: can it be approved,
+  and can it be repaid? Ask them in every state, and the gap stands out. And today, it fails.
 
 ## intro: How JUnit nests tests
 - @Nested on an inner class, with @DisplayName("when approved")
@@ -65,9 +65,9 @@ Say: Nested tests and display names have been part of JUnit since JUnit 5, in 20
 
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide on nested tests
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/nested-tests — run this lesson yourself: its test code and examples
 - Exercise: ask every situation whether a refused step leaves the loan as it was; the README has the steps and the answer
 Picture: globe
-Say: To find out more, read the JUnit user guide's section on nested tests. The links on screen also take you to
-  this lesson's test code and examples, to run yourself. And try the exercise in the README: ask every situation one
-  more question, whether a refused step leaves the loan as it was.
+Say: To find out more, read the JUnit user guide's section on nested tests. The links on screen also take you to this
+  lesson's test code and examples, to run yourself. And try the exercise in the README: ask every situation one more
+  question, whether a refused step leaves the loan as it was.

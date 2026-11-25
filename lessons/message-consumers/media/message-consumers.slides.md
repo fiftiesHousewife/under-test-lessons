@@ -8,28 +8,16 @@ voted in November 2025 to establish Apache Artemis as its own project, and 2.50.
 release under the new name and groupId); jakarta.ee/specifications/messaging (Jakarta Messaging 2.0, 3.0 and 3.1);
 jakarta.ee QueueBrowser documentation (a browser looks at messages without removing them, and may not see a fixed
 snapshot); kafka.apache.org design documentation (consumer groups; saving the position before processing is
-at-most-once, after processing at-least-once); the toolkit's research on capturing and masking data (browsing a JMS
-queue and reading a Kafka topic with its own consumer group, in non-production first).
+at-most-once, after processing at-least-once).
 
 ## intro: Message consumers
 - The problem: one payment lost, another counted twice
 - The fix: a real broker inside the test
 - The tool: Apache Artemis, inside the test
 Picture: road
-Say: This lesson is about testing message consumers: the code that takes messages off a queue. Artemis is a message
+Say: This time, the topic is testing message consumers: the code that takes messages off a queue. Artemis is a message
   broker, the server that passes messages between programs. We'll see a payment lost, and another recorded twice. Then
   Artemis, started inside the test, catches both.
-
-## intro: One payment lost, another counted twice
-- When the payment book is busy for a moment, payment A-1002 is lost for good
-- When the same payment arrives a second time, the shop records it twice
-- The old till's unreadable message just disappears
-- The unit test passes: it hands the consumer one message, with no broker behind it
-Picture: bug
-Say: Here is the problem. A shop records card payments sent from its tills. When the payment book is busy for a moment,
-  one payment, order A-1002, is lost for good. When the same payment, for order A-1001, arrives a second time, the
-  shop records it twice. And a message from an old till, which the consumer can't read, simply disappears. The unit test
-  passes. It hands the consumer one message it built by hand, so it can't catch any of this.
 
 ## intro: Our example: card payments for a shop
 - The till sends one message per card payment: the order, the customer and the amount in pence
@@ -37,10 +25,21 @@ Say: Here is the problem. A shop records card payments sent from its tills. When
 - The book is a database, and can be busy for a moment
 - An old till still sends pounds, so one message can never be read
 Picture: tag
-Say: Our example is a shop's card payments. The till sends one message for each payment, with the order, the
-  customer, and the amount in pence. The shop's consumer takes each message, and records the payment in its payment
-  book. The book is a database, so now and then it is busy for a moment. And one old till still sends pounds, so one
-  message can never be read.
+Say: Our example is a shop's card payments. The till sends one message for each payment, with the order, the customer,
+  and the amount in pence. The shop's consumer takes each message, and records the payment in its payment book. The book
+  is a database, so now and then it is busy for a moment. And one old till still sends pounds, so one message can never
+  be read.
+
+## intro: One payment lost, another counted twice
+- When the payment book is busy for a moment, payment A-1002 is lost for good
+- When the same payment arrives a second time, the shop records it twice
+- The old till's unreadable message just disappears
+- The unit test passes: it hands the consumer one message, with no broker behind it
+Picture: bug
+Say: Here is the problem. When the payment book is busy for a moment, one payment, order A-1002, is lost for good. When
+  the same payment, for order A-1001, arrives a second time, the shop records it twice. And the old till's message,
+  which the consumer can't read, simply disappears. The unit test passes. It hands the consumer one message it built by
+  hand, so it can't catch any of this.
 
 ## intro: What a broker does
 - A broker holds messages on queues, until another program takes them
@@ -100,18 +99,18 @@ Say: The next step is Kafka. A Kafka consumer saves its position in the topic, i
 - In 2025, the project voted to make Artemis an Apache project of its own
 - Its first release under the new name was in 2026
 Picture: book
-Say: Artemis began inside the Apache ActiveMQ project. In 2025, that project voted to make Artemis an Apache
-  project of its own, and its first release under the new name came in 2026.
+Say: Artemis began inside the Apache ActiveMQ project. In 2025, that project voted to make Artemis an Apache project of
+  its own, and its first release under the new name came in 2026.
 
 ## closing: Find out more
 - https://artemis.apache.org — Apache Artemis
 - https://artemis.apache.org/components/artemis/documentation/latest/embedding-activemq.html — embedding the broker
 - https://jakarta.ee/specifications/messaging/ — Jakarta Messaging
 - https://kafka.apache.org/documentation/ — Apache Kafka
-- {lessons-repo} — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/message-consumers — run this lesson yourself: its test code and examples
 - Exercise: send a message with no order, and check where it ends up; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with the Artemis site, and its guide to embedding the broker. Then the Jakarta
-  Messaging specification, and Kafka's documentation. The links on screen also take you to this lesson's test code
-  and examples, to run yourself. And try the exercise in the README: send a payment message that names no order, and
-  check it ends in the dead-letter queue.
+Say: To find out more, start with the Artemis site, and its guide to embedding the broker. Then the Jakarta Messaging
+  specification, and Kafka's documentation. The links on screen also take you to this lesson's test code and examples,
+  to run yourself. And try the exercise in the README: send a payment message that names no order, and check it ends in
+  the dead-letter queue.

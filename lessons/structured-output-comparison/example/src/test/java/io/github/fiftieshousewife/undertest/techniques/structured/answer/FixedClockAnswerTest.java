@@ -16,7 +16,8 @@ import org.junit.jupiter.api.Test;
 /*
  * THE EXERCISE'S ANSWER: the time comes from a clock, so a test can give the summary a stopped clock and check the
  * time exactly, instead of accepting any text. Only the id, which is new on every run, stays a placeholder. Run it
- * against today's total with {@code -Pcode=answer}: it fails on the total alone, because the time now matches.
+ * against today's summary with {@code -Pcode=answer}: beside the total, it finds what CompareJsonTest can't, that
+ * today's summary ignores its clock and writes the machine's own time.
  */
 class FixedClockAnswerTest {
 
