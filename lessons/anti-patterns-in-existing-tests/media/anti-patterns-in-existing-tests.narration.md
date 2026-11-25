@@ -6,8 +6,8 @@ closing slides have their own narration, in
 
 1. Step one. ArchUnit is already in the version catalogue, from the lesson on architecture rules. It comes from Maven
    Central.
-2. Step two. The lesson's tests use ArchUnit. The old shop gets a source set of its own, its code and its old tests, as
-   they came to us. We compile its tests, but never run or change them here. The checks read their compiled
+2. Step two. The lesson's tests use ArchUnit. The old online shop gets a source set of its own, its code and its old
+   tests, as they came to us. We compile its tests, but never run or change them here. The checks read their compiled
    classes from the test class path.
 3. Now, the old tests themselves. The empty basket test checks nothing. The gift card test was switched
    off when it started failing, and stayed off. And the place order test checks only that an order came

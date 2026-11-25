@@ -57,8 +57,10 @@ Include: how-we-build
 
 ## closing: When to test database changes
 - Every change, every time: apply the whole changelog to a fresh real database in the build
-- Prefer Liquibase changes to raw SQL; when raw SQL is needed, test it on every database you run
-- Check the licence: Liquibase 5 uses the Functional Source License; Flyway is an alternative
+- Prefer Liquibase changes to raw SQL
+- When raw SQL is needed, test it on every database you run
+- Check the licence: Liquibase 5 uses the Functional Source License
+- Flyway is an alternative
 Picture: map
 Say: When should you test database changes? [pause 1600ms] Every change, every time: apply the whole changelog to a
   fresh, real database in the build. Prefer Liquibase changes to raw SQL, and when you need raw SQL, test it on every

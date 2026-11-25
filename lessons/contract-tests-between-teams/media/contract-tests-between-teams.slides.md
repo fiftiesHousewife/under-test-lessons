@@ -56,7 +56,8 @@ Say: The fix is a contract test: one written agreement, checked from both sides.
 - The order screen's test: .integerType("available", 3), any whole number, named available
 - The stock service's test: @Provider("stock-service") @PactFolder("package-repository/order-screen-pacts/1.0.0")
 - Today: body: $ Actual map is missing the following keys: available
-- Pact JVM 4.7 needs Java 17 or later; Java 8 code bases need the older 4.1 line
+- Pact JVM 4.7 needs Java 17 or later
+- Java 8 code bases need the older 4.1 line
 Picture: robot
 Say: Here is how Pact looks. The order screen's test says the answer needs a field called available, holding any whole
   number. Pact stands in for the stock service with exactly that answer while the test runs, and writes the pact file.
@@ -81,7 +82,8 @@ Say: When should you use contract tests? [pause 1600ms] Between services in one 
 ## closing: Where it came from
 - Ian Robinson described consumer-driven contracts in 2006
 - Pact was first written at realestate.com.au in 2013, by a team that included DiUS developers
-- DiUS consultants started Pact JVM on a hack day; it is free under the Apache licence
+- DiUS consultants started Pact JVM on a hack day
+- It is free under the Apache licence
 Picture: book
 Say: Ian Robinson described consumer-driven contracts in 2006: the consumers say what they need, and the provider
   checks it gives them that. Pact was first written at realestate.com.au, an Australian property site, in 2013, by a

@@ -36,12 +36,12 @@ Sleep 300ms
 Show
 Sleep 13s
 
-# ---- Scene 2: step 2, the old shop beside the checks ----
+# ---- Scene 2: step 2, the old online shop beside the checks ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 2: ArchUnit for the checks, and the old shop in a *source set of its own*, compiled but never run."`
+Type@1ms `note "Step 2: ArchUnit for the checks, and the old online shop in a *source set of its own*, compiled but never run."`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/anti-patterns-in-existing-tests/example/build.gradle.kts 10 30 "lesson build file" --zoom 18-20 --mark 26`

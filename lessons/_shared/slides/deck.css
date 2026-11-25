@@ -34,7 +34,7 @@ body.show-notes .deck-listen { display: none; }
 .deck-next { left: calc(50% + 40px); }
 /* The published series' links: where this lesson sits on the left, the lessons around it on the right. */
 .series-place { position: fixed; left: 16px; bottom: 12px; font: 14px var(--font); color: var(--grey); }
-.series-links { position: fixed; right: 110px; bottom: 12px; font: 14px var(--font); }
+.series-links { position: fixed; right: 175px; bottom: 12px; font: 14px var(--font); }
 .series-links a { color: var(--grey); text-decoration: none; margin-left: 16px; }
 .series-links a:hover { color: inherit; text-decoration: underline; }
 body.show-notes .series-place, body.show-notes .series-links { display: none; }

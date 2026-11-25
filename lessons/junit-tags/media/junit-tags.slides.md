@@ -37,9 +37,8 @@ Say: Our example is an online shop's stock check. Before it takes an order, the 
 - Continuous integration runs the slow ones too, so nothing goes untested
 Picture: tag
 Say: The fix is to label the slow tests. JUnit's word for the label is a tag. You write tag, slow, on each slow test, or
-  on its whole class. Then every change runs only the quick tests, which take a moment. And continuous integration, the
-  shared build that runs every test whenever a developer pushes a change, runs the slow ones as well, so nothing goes
-  untested.
+  on its whole class. Then every change runs only the quick tests, which take a moment. And continuous integration runs
+  the slow ones as well, so nothing goes untested.
 
 ## intro: How the build uses the label
 - The quick task leaves the slow tests out: excludeTags("slow")
@@ -62,7 +61,8 @@ Say: When should you use tags? [pause 1600ms] When some tests take seconds, and 
   And make sure something still runs the slow tests, such as the check task in continuous integration.
 
 ## closing: Where it came from
-- JUnit 4 had categories; TestNG had test groups
+- JUnit 4 had categories
+- TestNG had test groups
 - JUnit 5, in 2017, brought tags
 - JUnit 6 is the current generation
 Picture: book

@@ -4,8 +4,7 @@
 
 A flaky test sometimes passes and sometimes fails with no change to the code or the test, usually because of time, the
 order tests run in, or state they share. The commonest cause is a test that sleeps for a fixed time and hopes the
-background work is done: it passes on a quiet laptop and fails, now and then, in busy continuous integration (CI: the
-shared build that runs every test whenever a developer pushes a change). Every flaky failure teaches people to rerun the
+background work is done: it passes on a quiet laptop and fails, now and then, in busy continuous integration. Every flaky failure teaches people to rerun the
 build and ignore what it says. [Awaitility](https://github.com/awaitility/awaitility) waits for a condition instead,
 checking it again and again until it is true or a time limit passes. JUnit's [repeated
 tests](https://docs.junit.org/current/writing-tests/repeated-tests.html) run a test several times, so a new test can be

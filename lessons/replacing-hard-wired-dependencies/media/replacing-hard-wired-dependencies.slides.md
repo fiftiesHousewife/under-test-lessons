@@ -35,12 +35,14 @@ Say: Our example is an invoice. The lines are priced in pounds, in pence, and th
 
 ## intro: The fix: pass the rates in
 - Today the invoice reaches for a singleton, the one live rate service: a hard-wired dependency
-- One small change: the invoice takes its rates through its constructor
-- Production passes the live rates; a test passes a stand-in fixed at 1.17
+- Dependency injection: the invoice takes its rates through its constructor
+- Production passes the live rates
+- A test passes a stand-in, fixed at 1.17
 Picture: plug
 Say: The fix is to pass the rates in. Today the invoice reaches out for a singleton, the one and only live rate service.
   When code reaches for something, instead of being given it, that's a hard-wired dependency, and a test can't swap it.
-  One small change fixes that: the invoice takes its rates through its constructor. Production passes the live rates,
+  One small change fixes that: the invoice takes its rates through its constructor. [pause 600ms] Handing a class
+  what it needs, instead of letting it fetch it, is called dependency injection. Production passes the live rates,
   and a test passes a stand-in, fixed at 1.17.
 
 ## intro: How Mockito makes the stand-in
@@ -65,8 +67,10 @@ Say: When should you do this? [pause 1600ms] Before changing old code that calls
 
 ## closing: Where Mockito came from
 - Started by Szczepan Faber in 2008, building on EasyMock
-- Free under the MIT licence; one of the most used Java libraries
-- PowerMock used to fake statics; it is no longer maintained, and Mockito does it now
+- Free under the MIT licence
+- One of the most used Java libraries
+- PowerMock used to fake statics
+- It is no longer maintained, and Mockito does it now
 Picture: book
 Say: Szczepan Faber started Mockito in 2008, building on an older library called EasyMock. It is free under the
   MIT licence, and is one of the most widely used Java libraries. Old projects may use PowerMock to fake static calls.

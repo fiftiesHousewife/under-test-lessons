@@ -17,20 +17,20 @@ smells); Gerard Meszaros, xUnit Test Patterns: Refactoring Test Code, Addison-We
 Picture: road
 Say: This lesson is about the tests you already have, and the habits that make them look stronger than they are.
   ArchUnit is a library that reads compiled Java code and checks rules about it. We'll use it to find five kinds of
-  anti-pattern in an old shop's tests. Then we'll write each one down, and make the build refuse new ones.
+  anti-pattern in an old online shop's tests. Then we'll write each one down, and make the build refuse new ones.
 
 ## intro: The tests look better than they are
-- An old shop's 13 tests: coverage counts every one
+- An old online shop's 13 tests: coverage counts every one
 - One checks nothing, one checks only that an answer exists
 - One is switched off, two wait with fixed sleeps, two only pass in order
 - Deleting them would lose what they do pin down
 Picture: magnifier
-Say: Here is the problem. We've inherited an old shop's code, with 13 tests. Coverage counts every one of them. But one
-  test checks nothing at all, and another checks only that an answer exists. One has been switched off. Two wait with
-  fixed sleeps, and two only pass in a certain order. We can't trust them as they are. And we can't just delete them,
-  because some of them pin down behaviour that nothing else records.
+Say: Here is the problem. We've inherited an old online shop's code, with 13 tests. Coverage counts every one of them.
+  But one test checks nothing at all, and another checks only that an answer exists. One has been switched off. Two wait
+  with fixed sleeps, and two only pass in a certain order. We can't trust them as they are. And we can't just delete
+  them, because some of them pin down behaviour that nothing else records.
 
-## intro: Our example: an old shop's tests
+## intro: Our example: an old online shop's tests
 - A basket: 5% off orders of £50 or more
 - Refunds, to a card or to a gift card
 - Order numbers, and sending paid orders to the warehouse
@@ -55,7 +55,8 @@ Say: An anti-pattern is a habit that makes a test look stronger than it is, also
 - "sleeps", test -> sleeps(test) || setUpMethods(...).anyMatch(...)
 - sleeps   DispatcherTest.triesAgainWhenTheWarehouseIsBusy   fix with the flaky tests
 - [anti-patterns not in the register] expected: 0 but was: 9
-- The rules read the compiled tests with ArchUnit; no test is run or changed
+- The rules read the compiled tests with ArchUnit
+- No test is run or changed
 Picture: terminal
 Say: How does it look? [pause 1600ms] Each kind is one rule, written with ArchUnit, a library that reads compiled Java
   classes. The register is a plain text file, one row for each finding, with its decision. And the ratchet's failure
@@ -75,7 +76,8 @@ Say: There are 7 common kinds. The lesson's checks find 5. Tests that reach shar
 ## closing: When to look for anti-patterns
 - In discovery, before anyone trusts the coverage figure
 - Triage: disabled tests go to the application's owner
-- Waits and order go with the flaky tests; the rest are strengthened
+- Waits and order go with the flaky tests
+- We strengthen the rest
 - Nothing deleted before the approval-test baseline exists
 Picture: map
 Say: When should you look for anti-patterns? [pause 1600ms] In discovery, before anyone trusts the coverage figure.

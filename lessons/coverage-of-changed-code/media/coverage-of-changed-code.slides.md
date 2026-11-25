@@ -55,15 +55,16 @@ Say: The fix is to check only what the change touched. Git lists the classes a b
 - PIT plants bugs only there: targetClasses = changedClasses
 - A gate after PIT: "5 of 11 planted bugs in the changed classes survived"
 Picture: robot
-Say: How does the build know? A short file lists the changed classes, and in continuous integration, the shared build
-  that runs on every push, git writes it. PIT, the mutation testing tool, plants bugs only in the classes on that list,
-  so it stays quick. JaCoCo's coverage check counts only those classes too. And a gate after PIT fails the build. Today
-  it says 5 of 11 planted bugs in the changed classes survived.
+Say: How does the build know? A short file lists the changed classes, and in continuous integration, git writes it. PIT,
+  the mutation testing tool, plants bugs only in the classes on that list, so it stays quick. JaCoCo's coverage check
+  counts only those classes too. And a gate after PIT fails the build. Today it says 5 of 11 planted bugs in the changed
+  classes survived.
 
 Include: how-we-build
 
 ## closing: When to use it
-- On old code, from the first change that comes with tests; in pull requests, gate only the change
+- On old code, from the first change that comes with tests
+- In pull requests, gate only the change
 - A change to an old class mutates all of it: pin it down with characterisation tests first
 - For changed lines rather than classes: diff-cover for coverage, and Arcmutate, from PIT's makers, for a fee
 Picture: map

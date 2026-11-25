@@ -71,7 +71,8 @@ Include: how-we-build
 - Whenever code calls a service you don't own
 - Record the real answers once, then add the rare ones by hand: errors, timeouts, odd data
 - Mask every recording before it is saved: no names, emails or passwords
-- Check recordings against the real service now and then; contract tests do this between teams
+- Check recordings against the real service now and then
+- Contract tests do this between teams
 Picture: map
 Say: When should you use them? [pause 1600ms] Whenever code calls a service you don't own. Record the real answers once,
   then add the rare ones by hand: errors, slow answers, and odd data. Mask every recording before it is saved, so no

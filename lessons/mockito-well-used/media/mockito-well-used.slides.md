@@ -58,7 +58,8 @@ Include: how-we-build
 
 ## closing: Mockito or a fake: when to use each
 - Make stand-ins only for interfaces you own, at the edges: payments, messages, mail
-- Check results; capture what crosses the edge and check it exactly
+- Check results
+- Capture what crosses the edge and check it exactly
 - For something the code reads and writes a lot, such as a store or a queue, a fake is better
 Picture: map
 Say: When should you reach for Mockito? [pause 1600ms] Make stand-ins only for interfaces you own, at the edges of your
@@ -68,7 +69,8 @@ Say: When should you reach for Mockito? [pause 1600ms] Make stand-ins only for i
 ## closing: Where Mockito came from
 - Started by Szczepan Faber in 2008
 - Free and open source, under the MIT licence
-- Argument captors since version 1.8; Mockito 5 can stand in for final classes by default
+- Argument captors since version 1.8
+- Mockito 5 can stand in for final classes by default
 Picture: book
 Say: Szczepan Faber started Mockito in 2008. It is free and open source, under the MIT licence. Argument
   captors arrived in version 1.8. And since Mockito 5, it can stand in for final classes too, without any extra
