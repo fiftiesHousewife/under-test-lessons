@@ -118,7 +118,7 @@ Type@1ms `run_live "./gradlew :lessons:openapi-response-checks:test -Pcode=today
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 16s
 Hide
 Type@1ms `callout "The weak tests pass. The schema check names the field and the rule each answer breaks."`
@@ -142,7 +142,7 @@ Type@1ms `run_live "./gradlew :lessons:openapi-response-checks:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "The service and its schema agree, and every test that calls it keeps them that way."`

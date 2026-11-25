@@ -121,7 +121,7 @@ Type@1ms `run_live "./gradlew :lessons:black-box-tests:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 20s
 Hide
 Type@1ms `callout "The answer said 201 Created and the stock was put aside, but no rows were written: the order is lost."`
@@ -145,7 +145,7 @@ Type@1ms `run_live "./gradlew :lessons:black-box-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 12s
 Hide
 Type@1ms `callout "The answer, the warehouse call and the rows written are all what the shop expects."`

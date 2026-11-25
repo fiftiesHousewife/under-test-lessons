@@ -104,7 +104,7 @@ Type@1ms `run_live "./gradlew :lessons:architecture-rules:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 14s
 Hide
 Type@1ms `callout "The unit tests pass. The rule names every place the web layer reaches into storage."`
@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:architecture-rules:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Every layer uses only the layer below it, and the rule keeps it that way."`

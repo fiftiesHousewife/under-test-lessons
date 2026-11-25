@@ -62,7 +62,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-tags:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "All 6 tests ran, the 2 slow warehouse tests too: every run waits for the warehouse."`
@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-tags:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "Only the 4 quick tests ran. None of them waited for the warehouse."`

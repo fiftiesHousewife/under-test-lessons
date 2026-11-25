@@ -141,7 +141,7 @@ Type@1ms `run_live "./gradlew :lessons:anti-patterns-in-existing-tests:test -Pco
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 24s
 Hide
 Type@1ms `callout "9 anti-patterns in 8 of 13 tests, each with its file and line. None is written down yet."`
@@ -176,7 +176,7 @@ Type@1ms `run_live "./gradlew :lessons:anti-patterns-in-existing-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 17s
 Hide
 Type@1ms `callout "Every anti-pattern is recorded, with its decision. No test was deleted, and a new one fails the build."`

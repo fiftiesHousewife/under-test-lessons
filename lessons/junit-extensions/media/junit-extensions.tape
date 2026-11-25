@@ -104,7 +104,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-extensions:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 18s
 Hide
 Type@1ms `callout "By hand, the innocent receipt test fails. The extension fails the test that left the setting changed."`
@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-extensions:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "Every test passes. The extension sets up and cleans up for every test that uses it."`

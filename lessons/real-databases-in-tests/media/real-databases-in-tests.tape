@@ -113,7 +113,7 @@ Type@1ms `run_live "./gradlew :lessons:real-databases-in-tests:test :lessons:rea
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 14s
 Hide
 Type@1ms `callout "H2 puts customers who never ordered first. PostgreSQL puts them last: sales would never call them."`

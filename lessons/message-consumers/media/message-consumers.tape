@@ -138,7 +138,7 @@ Type@1ms `run_live "./gradlew :lessons:message-consumers:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 18s
 Hide
 Type@1ms `callout "The hand-built test passes. On the broker, a payment is lost and the unreadable message vanishes."`
@@ -162,7 +162,7 @@ Type@1ms `run_live "./gradlew :lessons:message-consumers:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "Every payment recorded, the bad message kept for people to look at, and all in seconds."`

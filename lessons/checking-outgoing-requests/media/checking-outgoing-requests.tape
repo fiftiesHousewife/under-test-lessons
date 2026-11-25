@@ -104,7 +104,7 @@ Type@1ms `run_live "./gradlew :lessons:checking-outgoing-requests:test -Pcode=to
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 18s
 Hide
 Type@1ms `callout "The answer was handled. The request was wrong: no Idempotency-Key header, and 12.5 where the provider expects 1250 pence."`
@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:checking-outgoing-requests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 14s
 Hide
 Type@1ms `callout "The request is the one the provider expects: method, address, headers and body."`

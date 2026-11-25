@@ -40,6 +40,7 @@ public final class VideoScriptChecker {
         problems.addAll(narrationProblems(tape));
         problems.addAll(LessonChecks.shows(root, tape));
         problems.addAll(LiveOutputs.problems(new Media(root, lessonId(tape))));
+        problems.addAll(LiveWaits.problems(new Media(root, lessonId(tape))));
         problems.addAll(ZoomChecks.problems(root, tape));
         problems.addAll(VideoLength.problems(new Media(root, lessonId(tape))));
         problems.addAll(ReadmeCommands.problems(new Media(root, lessonId(tape))));

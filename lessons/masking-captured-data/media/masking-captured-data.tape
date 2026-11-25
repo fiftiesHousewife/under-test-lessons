@@ -152,7 +152,7 @@ Type@1ms `run_live "./gradlew :lessons:masking-captured-data:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 26s
 Hide
 Type@1ms `callout "Fixed text merges every customer and account, so both reports go wrong. And the notes still hold an email and a name."`
@@ -190,7 +190,7 @@ Type@1ms `run_live "./gradlew :lessons:masking-captured-data:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 22s
 Hide
 Type@1ms `callout "The reports agree before and after data masking, the detector finds nothing, and Datafaker's seeded values pass too."`

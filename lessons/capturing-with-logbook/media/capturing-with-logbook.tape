@@ -121,7 +121,7 @@ Type@1ms `run_live "./gradlew :lessons:capturing-with-logbook:test -Pcode=today"
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 19s
 Hide
 Type@1ms `callout "Everything was recorded, so the weak test passed. So were both tokens and the customer's email, as they are."`
@@ -145,7 +145,7 @@ Type@1ms `run_live "./gradlew :lessons:capturing-with-logbook:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "Logbook's filters mask each message before it is written, and the recording matches its approved file."`

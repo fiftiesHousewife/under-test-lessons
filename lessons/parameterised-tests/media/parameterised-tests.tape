@@ -96,7 +96,7 @@ Type@1ms `run_live "./gradlew :lessons:parameterised-tests:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 12s
 Hide
 Type@1ms `callout "3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five."`
@@ -120,7 +120,7 @@ Type@1ms `run_live "./gradlew :lessons:parameterised-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "Every row passes: each case named, each case checked."`

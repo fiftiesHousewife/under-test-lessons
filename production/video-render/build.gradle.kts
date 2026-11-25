@@ -48,6 +48,8 @@ val recordLessonVideo = tasks.register<JavaExec>("recordLessonVideo") {
     val root = repoRoot
     val lessonId = lesson
     argumentProviders.add(CommandLineArgumentProvider { listOf("record", root, lessonId.getOrElse("")) })
+    // Every script is checked before VHS starts: a stale wait or a missing output fails in under a minute, not ten.
+    dependsOn(":lessons:video-tools:checkVideoScripts")
 }
 
 // The offline voice, set up once per machine under build/voice. An organisation can use its own Python

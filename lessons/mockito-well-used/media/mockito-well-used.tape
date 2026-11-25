@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:mockito-well-used:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 14s
 Hide
 Type@1ms `callout "The weak test passes. The captor shows the card got the whole order back: 3750 pence, not 1250."`
@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:mockito-well-used:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "The card gets 1250 pence back, the amount on the receipt. Every test passes."`

@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-temporary-folders:test -Pcode=today
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 19s
 Hide
 Type@1ms `callout "The fixed folder's leftover file hid the bug. The temporary folder was empty, so the test failed."`
@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-temporary-folders:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "Every test passes. Each one wrote, and read, only its own folder."`

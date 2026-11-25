@@ -132,7 +132,7 @@ Type@1ms `run_live "./gradlew :lessons:spring-tests-in-slices:test -Pcode=today"
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 16s
 Hide
 Type@1ms `callout "Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where the description says 2026-11-23."`
@@ -156,7 +156,7 @@ Type@1ms `run_live "./gradlew :lessons:spring-tests-in-slices:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 10s
 Hide
 Type@1ms `callout "All 9 tests pass: the slices check each layer, and one whole-application test checks the wiring."`

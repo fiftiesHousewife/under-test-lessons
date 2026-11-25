@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:differential-testing:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 13s
 Hide
 Type@1ms `callout "Every example passes. The comparison finds 50 weights, 451 g to 500 g, where the rewrite charges more."`
@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:differential-testing:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "The rewrite agrees with the old calculator on all 5,000 weights. Now the old one can go."`

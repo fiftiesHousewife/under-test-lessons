@@ -12,12 +12,12 @@ import java.util.Locale;
  * the run as it really looked. Each clip is muted, 1280 pixels wide, and starts at once in a browser (faststart). A
  * scene with no live command gets no clip, and a deck shows the run's kept output where there is none.
  */
-final class DeckClips {
+final class LiveRunClips {
 
     static final String CLIPS = ".deck-clips";
     private static final String WIDTH = "1280";
 
-    private DeckClips() {
+    private LiveRunClips() {
     }
 
     static void cut(final Media media) {

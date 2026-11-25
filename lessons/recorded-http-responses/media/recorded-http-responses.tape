@@ -146,7 +146,7 @@ Type@1ms `run_live "./gradlew :lessons:recorded-http-responses:test -Pcode=today
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 18s
 Hide
 Type@1ms `callout "The recordings show two bugs in the client, and the saved files hold a name, an email address and a token."`

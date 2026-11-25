@@ -149,7 +149,7 @@ Type@1ms `run_live "./gradlew :lessons:in-memory-databases:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 22s
 Hide
 Type@1ms `callout "The shared database hid it: on a fresh one, the shop's first invoice is number 0."`
@@ -173,7 +173,7 @@ Type@1ms `run_live "./gradlew :lessons:in-memory-databases:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "Every test starts empty, in milliseconds, so no leftover row can hide a bug."`

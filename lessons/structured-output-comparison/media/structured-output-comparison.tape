@@ -118,7 +118,7 @@ Type@1ms `run_live "./gradlew :lessons:structured-output-comparison:test -Pcode=
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 12s
 Hide
 Type@1ms `callout "The loosened test passes. The structured comparison names the field, the value expected, and the value found."`
@@ -142,7 +142,7 @@ Type@1ms `run_live "./gradlew :lessons:structured-output-comparison:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "The structured comparison passes on every run, whatever the id and the time."`

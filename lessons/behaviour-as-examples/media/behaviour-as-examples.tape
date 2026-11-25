@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:behaviour-as-examples:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 16s
 Hide
 Type@1ms `callout "The team's example and the code disagree. That is a question for the returns team, not a test to delete."`
@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:behaviour-as-examples:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 10s
 Hide
 Type@1ms `callout "Every example passes. The table stays, as the rules written down, for the next change."`

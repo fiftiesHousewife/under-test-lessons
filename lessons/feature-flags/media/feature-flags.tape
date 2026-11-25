@@ -118,7 +118,7 @@ Type@1ms `run_live "./gradlew :lessons:feature-flags:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 13s
 Hide
 Type@1ms `callout "With the flag on, a £20 basket ships free: the threshold is in pounds, compared with pence."`
@@ -142,7 +142,7 @@ Type@1ms `run_live "./gradlew :lessons:feature-flags:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Both ways agree. Now the flag can be switched on, and later the old rules removed."`

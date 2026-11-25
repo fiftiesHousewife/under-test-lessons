@@ -113,7 +113,7 @@ Type@1ms `run_live "./gradlew :lessons:database-changes-with-liquibase:test :les
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 14s
 Hide
 Type@1ms `callout "H2 takes the change. PostgreSQL has no TINYINT type: this release would have failed in production."`

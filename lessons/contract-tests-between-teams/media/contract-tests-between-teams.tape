@@ -166,7 +166,7 @@ Type@1ms `run_live "./gradlew :lessons:contract-tests-between-teams:test -Pcode=
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 18s
 Hide
 Type@1ms `callout "Each team's own tests pass. The pact check names the field the order screen reads and the service no longer sends."`
@@ -190,7 +190,7 @@ Type@1ms `run_live "./gradlew :lessons:contract-tests-between-teams:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 14s
 Hide
 Type@1ms `callout "The service meets the pact again. Drop the old field only when no supported order screen reads it."`

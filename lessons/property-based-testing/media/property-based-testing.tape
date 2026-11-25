@@ -107,7 +107,7 @@ Type@1ms `run_live "./gradlew :lessons:property-based-testing:test -Pcode=today"
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 12s
 Hide
 Type@1ms `callout "3 pence between 4 people: the first person pays all 3. None of the example tests checked a bill like this."`
@@ -131,7 +131,7 @@ Type@1ms `run_live "./gradlew :lessons:property-based-testing:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 10s
 Hide
 Type@1ms `callout "Every property holds, for every bill jetCheck tried."`

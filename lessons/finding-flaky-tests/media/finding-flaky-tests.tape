@@ -104,7 +104,7 @@ Type@1ms `run_live "./gradlew :lessons:finding-flaky-tests:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 16s
 Hide
 Type@1ms `callout "Nothing changed between runs: run 3 waited 600 ms for the mail queue, longer than the test slept."`
@@ -139,7 +139,7 @@ Type@1ms `run_live "./gradlew :lessons:finding-flaky-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 14s
 Hide
 Type@1ms `callout "Wait for the result, never sleep for a guess, and let no new test in without five clean runs."`

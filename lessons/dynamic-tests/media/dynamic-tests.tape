@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:dynamic-tests:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 15s
 Hide
 Type@1ms `callout "The loop shows one failure, then stops. The factory names all three: apostrophes and hyphens."`
@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:dynamic-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Every example passes. A new example is just a new file: no new test code."`

@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:replacing-hard-wired-dependencies:test -P
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 12s
 Hide
 Type@1ms `callout "Today's invoice has nowhere to take the stand-in, so it calls the live service, and the test can't run."`
@@ -122,7 +122,7 @@ Type@1ms `run_live "./gradlew :lessons:replacing-hard-wired-dependencies:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Same test, same stand-in: now it runs in a second, with no network and no account."`

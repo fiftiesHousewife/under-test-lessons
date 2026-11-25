@@ -104,7 +104,7 @@ Type@1ms `run_live "./gradlew :lessons:slow-and-failing-dependencies:test -Pcode
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 18s
 Hide
 Type@1ms `callout "A slow supplier kept the shop waiting, and a broken connection became an exception, not an answer."`
@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:slow-and-failing-dependencies:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "Too slow, reset, empty or broken: the shop answers supplier unavailable within a second."`

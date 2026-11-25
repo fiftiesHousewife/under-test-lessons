@@ -90,7 +90,7 @@ Type@1ms `run_live "./gradlew :lessons:nested-tests:test -Pcode=today"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 14s
 Hide
 Type@1ms `callout "The report reads like a specification. A requested loan can be repaid: money back that was never lent."`
@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:nested-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "Every situation, every question, answered. Nesting made the missing case easy to see."`

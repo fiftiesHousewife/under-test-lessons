@@ -121,7 +121,7 @@ Type@1ms `run_live "./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=tod
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /tests failed\. Report/
+Wait+Screen@300s /completed, \d+ failed/
 Sleep 13s
 Hide
 Type@1ms `callout "By hand, it's right. In the container, the checkout gets the reduced rate: 5% instead of 20%."`
@@ -145,7 +145,7 @@ Type@1ms `run_live "./gradlew :lessons:embedded-jakarta-ee-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /All \d+ tests passed/
+Wait+Screen@300s /(All \d+ tests|1 test) passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Wired as intended, and tested in seconds, with no application server."`
