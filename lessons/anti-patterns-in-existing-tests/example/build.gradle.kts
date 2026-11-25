@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Anti-patterns in existing tests: an old shop's tests, read by checks the build runs for what makes them

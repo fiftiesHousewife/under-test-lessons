@@ -19,7 +19,7 @@ import uk.org.webcompere.systemstubs.jupiter.SystemStubsExtension;
 import uk.org.webcompere.systemstubs.stream.SystemIn;
 import uk.org.webcompere.systemstubs.stream.SystemOut;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the strong tests pin the program's two normal endings. This pins a third, a night when
  * nobody set PAYMENT_LIMIT_PENCE: the program fails before it reads a payment, prints nothing, and never reaches its
  * exit. Today's program does the same without reaching System.exit, so {@code -Pcode=answer} can run it against today's
@@ -48,7 +48,7 @@ class NoLimitSetAnswerTest {
                 () -> assertThat(exits).as("exit codes").isEmpty());
     }
 
-    /** Today's program, run with -Pcode=answer, or the one given its exit. */
+    /* Today's program, run with -Pcode=answer, or the one given its exit. */
     private ThrowingCallable program() {
         if ("answer".equals(System.getProperty("code"))) {
             return () -> TodaysPaymentImport.main(new String[0]);

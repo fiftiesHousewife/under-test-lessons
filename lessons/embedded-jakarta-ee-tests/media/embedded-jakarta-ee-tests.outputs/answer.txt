@@ -2,7 +2,7 @@ $ ./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=answer
 CheckoutByHandTest > addsVatAtTheStandardRate() PASSED
 CheckoutInContainerTest > theReducedRateIsStillThereForThingsThatNeedIt() PASSED
 CheckoutInContainerTest > addsVatAtTheStandardRate() FAILED
-    org.opentest4j.AssertionFailedError:
+    org.opentest4j.AssertionFailedError: [£10 with VAT]
     expected: 1200
      but was: 1050
 ZeroRateAnswerTest > aThirdRateLeavesTheCheckoutOnTheStandardRate() FAILED
@@ -10,6 +10,6 @@ ZeroRateAnswerTest > aThirdRateLeavesTheCheckoutOnTheStandardRate() FAILED
       at injection point [BackedAnnotatedParameter] Parameter 1 of [BackedAnnotatedConstructor] @Inject public io.github.fiftieshousewife.undertest.techniques.jakartaee.today.TodaysCheckout(TaxRate)
       at io.github.fiftieshousewife.undertest.techniques.jakartaee.today.TodaysCheckout.<init>(TodaysCheckout.java:0)
       Possible dependencies:
-      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.answer.ZeroRateAnswerTest$ZeroRate] with qualifiers [@Any @Default],
-      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.ReducedRate] with qualifiers [@Any @Default]
+      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.ReducedRate] with qualifiers [@Any @Default],
+      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.answer.ZeroRateAnswerTest$ZeroRate] with qualifiers [@Any @Default]
 4 tests completed, 2 failed

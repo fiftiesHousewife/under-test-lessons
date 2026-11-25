@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Test;
 
-/** AFTER: a detector scans every field of the masked capture, including fields nobody wrote a rule for. */
+/* AFTER: a detector scans every field of the masked capture, including fields nobody wrote a rule for. */
 class NothingPersonalLeftTest {
 
     @Test

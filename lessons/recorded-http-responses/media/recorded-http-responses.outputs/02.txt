@@ -6,7 +6,7 @@ RecordedSupplierTest > unknownPostcodeGivesNoTown() PASSED
 RecordedSupplierTest > outageSaysTheSupplierIsUnavailable() PASSED
 RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
 RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
-RecordingTest > cleanedFirstTheFilesHoldSubstitutes() PASSED
 RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
+RecordingTest > maskedFirstTheFilesHoldSubstitutes() PASSED
 TooManyRequestsAnswerTest > tooManyRequestsSaysTheSupplierIsUnavailable() PASSED
-All 10 tests that ran passed; 1 skipped.
+10 of 11 tests passed; 1 didn't run.

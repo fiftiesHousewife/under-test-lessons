@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Reading files, and the ids a pattern finds in a piece of text. */
+/* Reading files, and the ids a pattern finds in a piece of text. */
 final class Text {
 
     private Text() {
@@ -23,7 +23,7 @@ final class Text {
         }
     }
 
-    /** Every first group the pattern finds in the text, sorted. */
+    /* Every first group the pattern finds in the text, sorted. */
     static Set<String> matches(final Pattern pattern, final String text) {
         final Set<String> found = new TreeSet<>();
         final Matcher matcher = pattern.matcher(text);

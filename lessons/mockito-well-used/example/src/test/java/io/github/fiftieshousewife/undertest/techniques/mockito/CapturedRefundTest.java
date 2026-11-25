@@ -10,7 +10,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-/**
+/*
  * AFTER: the order book is a fake, a map of real orders. The only mock is the card payments, where money leaves the
  * shop, and an argument captor catches the refund the code really sent, so the test can check its amount.
  */
@@ -25,8 +25,8 @@ class CapturedRefundTest {
     void refundsOnlyTheReturnedMug() {
         final int refunded = Shop.refunds(ORDERS, payments).refund("A-1", List.of("mug"));
 
-        verify(payments).refund(sent.capture());
         assertAll(
+                () -> verify(payments).refund(sent.capture()),
                 () -> assertThat(refunded).as("pence refunded").isEqualTo(1250),
                 () -> assertThat(sent.getValue()).as("refund sent").isEqualTo(new Refund("card ending 4242", 1250)));
     }

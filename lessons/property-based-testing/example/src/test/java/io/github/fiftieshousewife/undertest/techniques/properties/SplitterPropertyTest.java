@@ -9,14 +9,14 @@ import org.jetbrains.jetCheck.PropertyChecker;
 import org.jetbrains.jetCheck.PropertyFalsified;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: a property test. Instead of single examples, it states rules that must hold for every bill, and jetCheck
  * tries a hundred random bills. If one breaks a rule, jetCheck shrinks it to a smaller bill that still does. The seed
  * is fixed, so every run tries the same bills and the lesson is repeatable.
  */
 class SplitterPropertyTest {
 
-    /** A bill to split: the total in pence, and the number of people. */
+    /* A bill to split: the total in pence, and the number of people. */
     record Bill(int totalPence, int people) {
     }
 
@@ -25,8 +25,8 @@ class SplitterPropertyTest {
     private final BillSplitter splitter = Splitters.current();
 
     // jetCheck deprecates a fixed seed to steer real projects towards random seeds, which find more over time. A lesson
-    // must give the same result every run, so this one keeps a fixed seed.
-    @SuppressWarnings("deprecation")
+    // must give the same result every run, so this one keeps a fixed seed. Its assertion is the fail() in the catch.
+    @SuppressWarnings({"deprecation", "PMD.TestMustAssert"})
     @Test
     void sharesAddUpToTheTotalAndDifferByAtMostOnePenny() {
         try {

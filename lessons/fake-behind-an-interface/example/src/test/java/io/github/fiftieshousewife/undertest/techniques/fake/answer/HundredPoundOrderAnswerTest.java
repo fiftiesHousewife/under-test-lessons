@@ -7,7 +7,7 @@ import io.github.fiftieshousewife.undertest.techniques.fake.OrderPlacement;
 import io.github.fiftieshousewife.undertest.techniques.fake.Placements;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the boundary. An order of exactly £100 is the smallest that needs a fraud check, so its
  * fraud-check message must be delivered. Run it against today's order placement with {@code -Pcode=answer}.
  */

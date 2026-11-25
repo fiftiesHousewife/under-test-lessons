@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Checks that the lessons and the toolkit (under-test) agree. Each lesson's lesson.yaml names the toolkit techniques it

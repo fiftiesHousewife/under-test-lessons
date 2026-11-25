@@ -8,8 +8,8 @@ spoken.
    Contexts and Dependency Injection: the part of Jakarta E E that wires objects together.
 2. Step two. The lesson compiles against the CDI interface, which the application server provides in production. And
    its tests use Weld.
-3. Here are two tax rates. The standard rate, twenty percent, is marked standard. A reduced rate, five percent, came
-   later, with no mark at all.
+3. Here are two tax rates. The standard rate, twenty percent, is marked standard: the team marked it when the reduced
+   rate, five percent, came along, with no mark at all.
 4. Here is the code under test, today's checkout. It asks the container for a tax rate, without saying which.
 5. This is a unit test that builds the checkout by hand, and hands it the standard rate itself. So it
    checks the sums, but not the wiring.

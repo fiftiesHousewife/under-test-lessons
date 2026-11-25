@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * The checks over the old shop's tests. The first lists every anti-pattern the rules find, with its test, file and
  * line, for triage, and never fails on an old one. The second is the ratchet: it compares the findings with the
  * register, the committed file of anti-patterns already triaged, and refuses any it doesn't hold. With -Pcode=today

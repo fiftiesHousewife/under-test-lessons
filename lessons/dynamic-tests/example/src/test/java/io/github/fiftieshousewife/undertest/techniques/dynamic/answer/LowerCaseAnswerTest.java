@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-/**
+/*
  * The exercise's answer: one more example, a record in lower case as a web form sends it. Its file is in the test
  * resources' answer folder, so -Pcode=today leaves it out; adding it to the examples folder works the same way.
  */

@@ -10,7 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
-/** The order screen team's own stand-in for the stock service: it answers what they expect the real one to send. */
+/* The order screen team's own stand-in for the stock service: it answers what they expect the real one to send. */
 final class HandWrittenStockService implements AutoCloseable {
 
     private static final String KETTLE = "{\"sku\": \"KETTLE-01\", \"available\": 3}";

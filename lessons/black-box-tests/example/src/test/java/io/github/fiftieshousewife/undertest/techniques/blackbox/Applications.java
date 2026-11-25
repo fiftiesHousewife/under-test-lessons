@@ -4,7 +4,7 @@ import io.github.fiftieshousewife.undertest.techniques.blackbox.fixed.OrderServi
 import io.github.fiftieshousewife.undertest.techniques.blackbox.today.TodaysOrderService;
 import java.util.Set;
 
-/**
+/*
  * The order service the tests start through its entry point: the fix, or today's with -Pcode=today (and with
  * -Pcode=answer, which adds the exercise's answer).
  */

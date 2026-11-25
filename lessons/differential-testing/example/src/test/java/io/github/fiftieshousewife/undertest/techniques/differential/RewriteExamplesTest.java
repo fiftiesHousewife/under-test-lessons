@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-/** BEFORE: the rewrite's own tests: one typical weight from each row of the price list. */
+/* BEFORE: the rewrite's own tests: one typical weight from each row of the price list. */
 class RewriteExamplesTest {
 
     @ParameterizedTest(name = "{0} g costs {1} pence", quoteTextArguments = false)

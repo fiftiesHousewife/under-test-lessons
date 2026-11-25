@@ -13,8 +13,9 @@ import java.util.Set;
 /** The code the tests run against: the fix, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
 public final class Clients {
 
-    /** How long the fixed client waits to connect, and then for an answer. */
-    static final Duration TIMEOUT = Duration.ofMillis(500);
+    static final Duration TIMEOUT =
+            // How long the fixed client waits to connect, and then for an answer.
+            Duration.ofMillis(500);
 
     private Clients() {
     }
@@ -25,7 +26,7 @@ public final class Clients {
         return today() ? new TodaysStockClient(supplier) : new StockClient(supplier, TIMEOUT, TIMEOUT);
     }
 
-    /**
+    /*
      * One untimed request to the stand-in's own admin page, before a test's clock starts. The first HTTP call in a
      * fresh JVM loads the JDK's HTTP client and wakes the stand-in, which in busy continuous integration can take most
      * of the second a test allows; the tests time the shop's waiting, not that start-up.

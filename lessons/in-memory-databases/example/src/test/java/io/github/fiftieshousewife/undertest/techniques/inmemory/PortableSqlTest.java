@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
 
-/** Keeps the choice honest: code tested only on H2 may use only SQL that every database runs the same way. */
+/* Keeps the choice honest: code tested only on H2 may use only SQL that every database runs the same way. */
 class PortableSqlTest {
 
     private static final Path MAIN_CODE = Path.of("src", "main");

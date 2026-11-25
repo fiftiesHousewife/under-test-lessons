@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: tests of the pieces. They read one line and check the limit, but never run the program: not its
  * environment variable, its input, what it prints, or how it ends.
  */

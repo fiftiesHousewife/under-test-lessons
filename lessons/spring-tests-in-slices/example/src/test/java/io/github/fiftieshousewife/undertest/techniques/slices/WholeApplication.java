@@ -14,15 +14,16 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.web.client.RestClient;
 
-/**
+/*
  * The whole application, started on a free port: every bean, every setting, the database and the courier. The
  * courier is a WireMock stand-in, and the tests add the database's rows themselves.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 abstract class WholeApplication {
 
-    /** Started once for every test class: Spring keeps the started application for the next class, and its setting. */
-    static final WireMockServer COURIER = startCourier();
+    static final WireMockServer COURIER =
+            // Started once for every test class: Spring keeps the started application, and its setting, for the next.
+            startCourier();
 
     @Autowired
     private DeliveryRepository repository;
@@ -56,7 +57,7 @@ abstract class WholeApplication {
         COURIER.resetAll();
     }
 
-    /** The body of the service's answer to GET on this path. */
+    /* The body of the service's answer to GET on this path. */
     String bodyOf(final String path) {
         return RestClient.create("http://localhost:" + port).get().uri(path).retrieve().body(String.class);
     }

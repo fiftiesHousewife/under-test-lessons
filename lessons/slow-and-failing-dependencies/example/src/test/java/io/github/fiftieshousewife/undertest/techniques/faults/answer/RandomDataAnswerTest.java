@@ -11,7 +11,7 @@ import com.github.tomakehurst.wiremock.http.Fault;
 import io.github.fiftieshousewife.undertest.techniques.faults.Clients;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: WireMock's fourth fault, which the strong tests leave out: the supplier sends random bytes
  * instead of an answer, then closes the connection. The shop must still say "supplier unavailable". Run it against
  * today's client with {@code -Pcode=answer}.

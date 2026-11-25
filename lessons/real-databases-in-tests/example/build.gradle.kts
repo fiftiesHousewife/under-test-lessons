@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Real databases in tests: the same repository tested on an in-memory database, and on real PostgreSQL in a container.

@@ -135,8 +135,8 @@ class VideoScriptCheckerTest {
         final Path matching = Files.writeString(root.resolve("y.narration.md"), "1. One.\n2. Two.\n3. Three.\n");
 
         assertAll(
-                () -> assertThat(VideoScriptChecker.checkSceneCount(tape, narration)).get()
+                () -> assertThat(Narration.checkSceneCount(tape, narration)).get()
                         .extracting(Object::toString).asString().contains("3 scenes but 2 narration items"),
-                () -> assertThat(VideoScriptChecker.checkSceneCount(tape, matching)).isEmpty());
+                () -> assertThat(Narration.checkSceneCount(tape, matching)).isEmpty());
     }
 }

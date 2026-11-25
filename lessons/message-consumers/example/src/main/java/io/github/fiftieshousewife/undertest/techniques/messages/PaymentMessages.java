@@ -6,25 +6,34 @@ import jakarta.jms.TextMessage;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Reads a payment from a message such as {@code order=A-1001;customer=customer-7f3a;pence=2599}. */
+/** Reads a payment from a message such as {@code payment=P-501;order=A-1001;customer=customer-7f3a;pence=2599}. */
 public final class PaymentMessages {
 
     private PaymentMessages() {
     }
 
     public static Payment read(final Message message) throws JMSException {
+        final Map<String, String> fields = fields(text(message));
+        final String pence = fields.getOrDefault("pence", "");
+        if (!fields.containsKey("payment") || !fields.containsKey("order") || !pence.matches("\\d{1,9}")) {
+            throw new PaymentNotRecorded("no payment id or order, or the amount is not a whole number of pence");
+        }
+        return new Payment(fields.get("payment"), fields.get("order"), Integer.parseInt(pence));
+    }
+
+    private static String text(final Message message) throws JMSException {
         if (!(message instanceof TextMessage text) || text.getText() == null) {
             throw new PaymentNotRecorded("not a text message");
         }
+        return text.getText();
+    }
+
+    private static Map<String, String> fields(final String text) {
         final Map<String, String> fields = new HashMap<>();
-        for (final String field : text.getText().split(";")) {
+        for (final String field : text.split(";")) {
             final String[] pair = field.split("=", 2);
             fields.put(pair[0].trim(), pair.length == 2 ? pair[1].trim() : "");
         }
-        final String pence = fields.getOrDefault("pence", "");
-        if (!fields.containsKey("order") || !pence.matches("\\d{1,9}")) {
-            throw new PaymentNotRecorded("no order, or the amount is not a whole number of pence");
-        }
-        return new Payment(fields.get("order"), Integer.parseInt(pence));
+        return fields;
     }
 }

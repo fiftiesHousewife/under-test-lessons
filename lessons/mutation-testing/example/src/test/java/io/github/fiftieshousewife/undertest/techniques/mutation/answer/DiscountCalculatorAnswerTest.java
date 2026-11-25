@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import io.github.fiftieshousewife.undertest.techniques.mutation.DiscountCalculator;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one test, added to today's weak tests, that catches the planted bug on line 25, where
  * {@code >= 5_000} becomes {@code > 5_000}. Only an order of exactly £50 shows the difference, so the test checks both
  * sides of the boundary: one penny under, and exactly £50. Run it with {@code -Pcode=answer}.

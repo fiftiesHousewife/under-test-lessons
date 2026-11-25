@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/*
  * Draws a lesson's slides as images: each slide's HTML page, styled by the shared stylesheet and then any user
  * stylesheet (the system property {@code video.slideCss}), screenshotted by the browser into the voice folder.
  */
@@ -16,7 +16,7 @@ final class SlideDrawing {
     private SlideDrawing() {
     }
 
-    /** Draws one slide as {@code <name>.png} in the lesson's voice folder, and returns the image. */
+    /* Draws one slide as {@code <name>.png} in the lesson's voice folder, and returns the image. */
     static Path draw(final Media media, final String name, final Slide slide) {
         final Path folder = media.file(".voice");
         try {
@@ -32,7 +32,7 @@ final class SlideDrawing {
         }
     }
 
-    /**
+    /*
      * Draws a slide once for each stage of its build-up, as {@code <name>-0.png}, {@code <name>-1.png} and so on: the
      * title alone, then one more point each time, the picture arriving with the first. A slide without points is one
      * stage, drawn whole.
@@ -57,7 +57,7 @@ final class SlideDrawing {
         return stages;
     }
 
-    /** Draws every slide of a lesson, for a quick look without making the whole video. */
+    /* Draws every slide of a lesson, for a quick look without making the whole video. */
     static List<Path> drawAll(final Media media) {
         final Slides slides = media.slides();
         final List<Path> images = new ArrayList<>();

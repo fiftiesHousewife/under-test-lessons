@@ -17,7 +17,7 @@ public final class Prices {
         return pounds(netPence) + " + VAT";
     }
 
-    /** Pounds and pence, with the sign in front for a credit: {@code -£0.05}. */
+    /* Pounds and pence, with the sign in front for a credit: {@code -£0.05}. */
     static String pounds(final long pence) {
         final long whole = Math.abs(pence);
         return String.format(Locale.ROOT, "%s£%d.%02d", pence < 0 ? "-" : "", whole / 100, whole % 100);

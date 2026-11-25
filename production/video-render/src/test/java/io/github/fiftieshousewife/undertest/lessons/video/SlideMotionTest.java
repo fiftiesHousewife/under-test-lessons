@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Slides fade up from black and back, with a slow zoom between, without changing how long they show. */
+/* Slides fade up from black and back, with a slow zoom between, without changing how long they show. */
 class SlideMotionTest {
 
     @TempDir
@@ -51,7 +51,7 @@ class SlideMotionTest {
 
 
 
-    /** The average brightness (0 to 255) of the frame at that moment. */
+    /* The average brightness (0 to 255) of the frame at that moment. */
     private double brightness(final Path video, final double seconds) {
         final String at = String.format(Locale.ROOT, "%.2f", seconds);
         final String report = ExternalCommand.run(List.of("ffmpeg", "-ss", at,

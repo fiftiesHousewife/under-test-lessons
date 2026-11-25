@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** A lesson's README states what each command shows; the check holds it to what the command really printed. */
+/* A lesson's README states what each command shows; the check holds it to what the command really printed. */
 class ReadmeCommandsTest {
 
     @TempDir

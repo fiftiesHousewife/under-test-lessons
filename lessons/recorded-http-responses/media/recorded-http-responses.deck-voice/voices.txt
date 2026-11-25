@@ -4,6 +4,7 @@
 307cf0530a20f44b.m4a voice 2eba1bc7140b7b5d kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 39eeb8176a4357c5.m4a voice b8c374da00a14c97 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 3c0269d444c82a86.m4a voice 02e2cc9d5213f2e0 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
+423f842494317326.m4a voice af29eb0770d4627a kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 4b311c237e70d49f.m4a voice a0f93bfc4910f9f6 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 61a3b5d3d6bcde75.m4a voice 576ba16e9aab26b6 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 65643858621619e9.m4a voice 632706023ed1cbaf kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
@@ -18,5 +19,4 @@ a538501a79b3cff3.m4a voice 0e470085cf60cc8e kokoro-onnx-0.6.1/bf_emma/1.0/models
 ae26a469665c7aab.m4a voice 9e5baa6221349d36 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 b8923a73f1122b4c.m4a voice ac209759809efff8 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 bc874613140cf0e7.m4a voice 066c4345081b3b2c kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
-c28d43fa7de79cbc.m4a voice 05a65070157ec913 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47
 fa1b2f2e26b9b678.m4a voice 7dc009beedca4152 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47

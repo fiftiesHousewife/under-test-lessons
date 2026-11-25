@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: two baskets check only two prices. While both rules exist, the new ones must charge what the
  * old ones charge for every basket, here every penny from nothing to £100. Run it against today's new rules with
  * {@code -Pcode=answer}: it counts the baskets where they disagree, and names the first.

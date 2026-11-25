@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: where no container runtime is to hand, H2 can be told to sort nulls as PostgreSQL does, last
  * in ascending order. Then the in-memory test catches today's query too. It is still not PostgreSQL: it copies one
  * difference that is known, and the real database is the only way to find the ones that aren't.

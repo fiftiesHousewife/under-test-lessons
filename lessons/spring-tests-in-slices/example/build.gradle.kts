@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Spring tests in slices: a Spring Boot 4 delivery service tested one layer at a time (web, data, JSON), with one

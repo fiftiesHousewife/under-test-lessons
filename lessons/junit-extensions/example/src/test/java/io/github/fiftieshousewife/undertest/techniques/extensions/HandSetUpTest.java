@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-/** BEFORE: sets the shop's settings by hand, once, and never puts them back. A change in one test breaks the next. */
+/* BEFORE: sets the shop's settings by hand, once, and never puts them back. A change in one test breaks the next. */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class HandSetUpTest {
 

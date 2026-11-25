@@ -32,8 +32,9 @@ public final class AntiPatternRules {
             "order-dependent", test -> test.getOwner().isAnnotatedWith(TestMethodOrder.class),
             "sleeps", test -> sleeps(test) || setUpMethods(test.getOwner()).anyMatch(AntiPatternRules::sleeps));
 
-    /** Assertions that check only that something exists: they pass whatever the code does. */
-    private static final Set<String> NOT_REAL = Set.of("assertNotNull", "assertNull", "assertThat", "isNotNull");
+    private static final Set<String> NOT_REAL =
+            // Assertions that check only that something exists: they pass whatever the code does.
+            Set.of("assertNotNull", "assertThat", "isNotNull");
 
     private AntiPatternRules() {
     }
@@ -42,7 +43,7 @@ public final class AntiPatternRules {
         return test.isAnnotatedWith(Disabled.class) || test.getOwner().isAnnotatedWith(Disabled.class);
     }
 
-    /** A call to AssertJ, to JUnit's assertions or to Mockito's verify, other than one that checks only existence. */
+    /* A call to AssertJ, to JUnit's assertions or to Mockito's verify, other than one that checks only existence. */
     static boolean isRealAssertion(final MethodCallTarget call) {
         final String owner = call.getOwner().getName();
         final boolean assertion = owner.startsWith("org.assertj.") || "org.junit.jupiter.api.Assertions".equals(owner)

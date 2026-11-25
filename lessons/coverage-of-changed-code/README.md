@@ -41,7 +41,7 @@ The example is an online shop's old pricing module, with no tests:
 - [`BulkDiscount`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/changedcode/BulkDiscount.java)
   is the change: 10 or more of an item get 5% off the line, 50 or more get 10%.
 - [`changed-classes.txt`](example/changed-classes.txt) lists the classes the change touched, and
-  [the build file](example/build.gradle.kts) reads it: PIT's `targetClasses`, the gate after PIT, and the coverage
+  [the build file](example/build.gradle.kts) reads it: PIT leaves every other class out (`--excludedClasses`), the gate after PIT, and the coverage
   check's classes all come from it.
 - [`BulkDiscountWeakTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/changedcode/BulkDiscountWeakTest.java)
   is the "before" (`-Pcode=today`): the change's own test, which runs every new line and checks nothing exact.
@@ -116,7 +116,7 @@ AssertJ runs on Java 8 as it is.
 ## Find out more
 
 - [PIT](https://pitest.org/): "run it frequently against only the code that has been changed"
-- [The gradle-pitest-plugin](https://github.com/szpak/gradle-pitest-plugin), and its `targetClasses` and `targetTests`
+- [PIT's command line](https://pitest.org/quickstart/commandline/), and its `--excludedClasses` and `--excludedTestClasses`
 - [diff-cover](https://github.com/Bachmann1234/diff_cover), coverage of changed lines from any XML coverage report
 - Petrović, Fraser, Ivanković and Just, *Practical Mutation Testing at Scale: A view from Google* (IEEE Transactions
   on Software Engineering, 2021): mutating only the code changed in each code review

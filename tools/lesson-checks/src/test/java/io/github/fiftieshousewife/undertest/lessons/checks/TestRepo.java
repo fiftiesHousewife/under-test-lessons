@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
-/** A small lessons repo and toolkit checkout in a temporary folder, built up file by file. */
+/* A small lessons repo and toolkit checkout in a temporary folder, built up file by file. */
 record TestRepo(Path root) {
 
     TestRepo {
@@ -23,7 +23,7 @@ record TestRepo(Path root) {
         }
     }
 
-    /** A lesson folder with a README and a lesson.yaml naming the given techniques (comma-separated). */
+    /* A lesson folder with a README and a lesson.yaml naming the given techniques (comma-separated). */
     TestRepo lesson(final String id, final String techniques) {
         write(root, "lessons/" + id + "/README.md", "# " + id + "\n");
         write(root, "lessons/" + id + "/lesson.yaml",
@@ -32,20 +32,20 @@ record TestRepo(Path root) {
         return this;
     }
 
-    /** The catalogue's technique table, one row per {@code technique|lesson cell}. */
+    /* The catalogue's technique table, one row per {@code technique|lesson cell}. */
     TestRepo catalogue(final String... rows) {
         write(root, LessonTables.CATALOGUE_PAGE,
                 table(LessonTables.CATALOGUE_HEADING, "| Technique | Lesson | When |", rows));
         return this;
     }
 
-    /** The lessons index table, one row per {@code lesson cell|technique cell}. */
+    /* The lessons index table, one row per {@code lesson cell|technique cell}. */
     TestRepo index(final String... rows) {
         write(root, LessonTables.INDEX_PAGE, table(LessonTables.INDEX_HEADING, "| Lesson | Technique | Deck |", rows));
         return this;
     }
 
-    /** A toolkit checkout inside the repo, where CI puts it, with the given technique folders. */
+    /* A toolkit checkout inside the repo, where CI puts it, with the given technique folders. */
     Path toolkit(final String... techniques) {
         final Path toolkit = root.resolve(".toolkit");
         for (final String technique : techniques) {

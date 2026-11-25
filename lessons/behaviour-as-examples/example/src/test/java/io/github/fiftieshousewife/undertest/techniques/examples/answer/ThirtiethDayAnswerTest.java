@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one more row the returns team would write, the 30th day without a receipt. It is the same
  * boundary as their 30th-day example, on the other side of the receipt rule: the team's rules give store credit, and
  * today's code gives nothing. Run it against today's refunds with {@code -Pcode=answer}.

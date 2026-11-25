@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * Pins down the bug the property test found in the splitter in use today, as an example test, so it stays written
  * down: with more than one penny left over, the first person pays all of it.
  */

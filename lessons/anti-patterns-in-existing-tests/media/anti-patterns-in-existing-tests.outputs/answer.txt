@@ -4,4 +4,4 @@ The answer's rule, counting mock() calls too: 2 anti-patterns not in the registe
   kind               test                                             where                    decision
   mocks-everything   CheckoutEmailTest.mailsTheReceipt                CheckoutEmailTest.java:29 not in the register
   mocks-everything   CheckoutEmailTest.recordsTheSale                 CheckoutEmailTest.java:35 not in the register
-All 1 tests passed.
+1 test passed.

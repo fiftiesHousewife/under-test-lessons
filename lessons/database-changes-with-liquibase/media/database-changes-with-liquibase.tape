@@ -95,7 +95,7 @@ Sleep 300ms
 Type@1ms `note "The same changes applied to *real PostgreSQL*, in a throwaway container."`
 Enter
 Sleep 300ms
-Type@1ms `show RealPostgresChangesTest 20 29 "the test on PostgreSQL" --zoom 20-21`
+Type@1ms `show RealPostgresChangesTest 19 30 "the test on PostgreSQL" --zoom 19-22`
 Enter
 Sleep 300ms
 Show

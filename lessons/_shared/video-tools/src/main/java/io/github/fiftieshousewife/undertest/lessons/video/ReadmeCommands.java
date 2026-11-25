@@ -7,20 +7,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
+/*
  * Holds a lesson's README to what its commands really print. Each {@code ./gradlew :lessons:...} line in the README
  * must be one of the video's live commands, whose output is kept ({@link LiveOutputs}); and what its comment says must
  * match that output: every number it gives appears there, "only ... fails" means exactly one test failed, "fails" that
  * one did, and "every ... passes" (or holds, matches) that none did. A lesson's exercise answer ({@code -Pcode=answer})
  * isn't in the video; its output is kept beside the live ones and checked the same way. CI keeps the outputs afresh
- * before checking, so there the commands really run.
+ * before checking, so there the commands really run. {@code ANSWER_SWITCH} is how a README runs the exercise's answer.
  */
 final class ReadmeCommands {
 
-    /** How a README runs a lesson's exercise answer. */
     static final String ANSWER_SWITCH = "-Pcode=answer";
     private static final Pattern COMMAND = Pattern.compile("^(\\./gradlew :lessons:[^#]*?)\\s*(?:#\\s*(.*))?$");
     private static final Pattern NUMBER = Pattern.compile("\\b\\d+\\b");
@@ -30,7 +30,7 @@ final class ReadmeCommands {
     private ReadmeCommands() {
     }
 
-    /** What the README says that its commands' outputs don't bear out. */
+    /* What the README says that its commands' outputs don't bear out. */
     static List<Problem> problems(final Media media) {
         final Path readme = media.folder().resolveSibling("README.md");
         if (!Files.isRegularFile(readme) || !Files.isRegularFile(media.file(".tape"))) {
@@ -41,30 +41,37 @@ final class ReadmeCommands {
         for (final String line : lines(readme)) {
             final Matcher command = COMMAND.matcher(line.strip());
             if (command.matches()) {
-                final String says = command.group(2) == null ? "" : command.group(2);
-                final String typed = command.group(1).replaceAll("\\s+", " ");
-                problems.addAll(checked(media, live, new Claim(readme, typed, says)));
+                problems.addAll(checked(media, live, claim(readme, command)));
             }
         }
         return problems;
     }
 
-    /** What is wrong with one README command and what it says: a live command, or the exercise's answer. */
+    private static Claim claim(final Path readme, final Matcher command) {
+        final String says = command.group(2) == null ? "" : command.group(2);
+        return new Claim(readme, command.group(1).replaceAll("\\s+", " "), says);
+    }
+
+    /* What is wrong with one README command and what it says: a live command, or the exercise's answer. */
     private static List<Problem> checked(final Media media, final List<String> live, final Claim claim) {
         final int index = live.indexOf(claim.command());
-        if (index < 0 && claim.command().endsWith(ANSWER_SWITCH)) {
-            return answer(media, claim);
-        }
         if (index < 0) {
-            return List.of(new Problem(claim.readme(), "`" + claim.command() + "` isn't one of the video's live"
-                    + " commands, so what the README says it shows can't be checked; run it in the video, or leave it"
-                    + " out"));
+            return notLive(media, claim);
         }
         final List<String> output = LiveOutputs.read(media, index, claim.command());
         return claim.says().isEmpty() || output.isEmpty() ? List.of() : contradictions(claim, output);
     }
 
-    /**
+    private static List<Problem> notLive(final Media media, final Claim claim) {
+        if (claim.command().endsWith(ANSWER_SWITCH)) {
+            return answer(media, claim);
+        }
+        return List.of(new Problem(claim.readme(), "`" + claim.command() + "` isn't one of the video's live"
+                + " commands, so what the README says it shows can't be checked; run it in the video, or leave it"
+                + " out"));
+    }
+
+    /*
      * The exercise's answer command, which no video runs: its output is kept as {@code answer.txt} with the live ones
      * ({@link LiveOutputs#readAnswer}), and what the README says about it is held to that.
      */
@@ -77,7 +84,7 @@ final class ReadmeCommands {
         return contradictions(claim, output);
     }
 
-    /** A README line's command and what its comment says it shows. */
+    /* A README line's command and what its comment says it shows. */
     private record Claim(Path readme, String command, String says) {
     }
 
@@ -88,7 +95,7 @@ final class ReadmeCommands {
         return problems;
     }
 
-    /** Every number the comment gives appears in the output. */
+    /* Every number the comment gives appears in the output. */
     private static List<Problem> numbers(final Claim claim, final String printed) {
         final List<Problem> problems = new ArrayList<>();
         final Matcher number = NUMBER.matcher(claim.says());
@@ -101,22 +108,27 @@ final class ReadmeCommands {
         return problems;
     }
 
-    /** What the comment says failed or passed matches how many tests failed. */
-    private static java.util.Optional<Problem> failures(final Claim claim, final long failed) {
-        final String words = claim.says().toLowerCase(Locale.ROOT);
-        final boolean only = words.contains("only") && words.contains("fail");
-        final String expected;
-        if (only && failed != 1) {
-            expected = "only one test fails";
-        } else if (!only && words.contains("fail") && failed == 0) {
-            expected = "a test fails";
-        } else if (ALL_PASS.matcher(words).find() && failed > 0) {
-            expected = "every test passes";
-        } else {
-            return java.util.Optional.empty();
+    /* What the comment says failed or passed matches how many tests failed. */
+    private static Optional<Problem> failures(final Claim claim, final long failed) {
+        return expected(claim.says().toLowerCase(Locale.ROOT), failed).map(expected -> new Problem(claim.readme(),
+                "the README says " + expected + " for `" + claim.command() + "`, but " + failed
+                        + " failed in its output"));
+    }
+
+    /* What the comment's words say about failures, where the number that failed doesn't bear it out. */
+    private static Optional<String> expected(final String words, final long failed) {
+        if (saysOnlyOneFails(words)) {
+            return failed == 1 ? everyPasses(words, failed) : Optional.of("only one test fails");
         }
-        return java.util.Optional.of(new Problem(claim.readme(), "the README says " + expected + " for `"
-                + claim.command() + "`, but " + failed + " failed in its output"));
+        return words.contains("fail") && failed == 0 ? Optional.of("a test fails") : everyPasses(words, failed);
+    }
+
+    private static boolean saysOnlyOneFails(final String words) {
+        return words.contains("only") && words.contains("fail");
+    }
+
+    private static Optional<String> everyPasses(final String words, final long failed) {
+        return ALL_PASS.matcher(words).find() && failed > 0 ? Optional.of("every test passes") : Optional.empty();
     }
 
     private static List<String> lines(final Path file) {

@@ -20,9 +20,7 @@ public final class LessonFileChecks {
     }
 
     public static void main(final String... args) {
-        if (args.length == 0 || args.length > 2) {
-            throw new IllegalArgumentException("usage: LessonFileChecks <repository root> [<toolkit checkout>]");
-        }
+        checkUsage(args);
         final Optional<Toolkit> toolkit = args.length == 2
                 ? Optional.of(new Toolkit(Path.of(args[1])))
                 : Optional.empty();
@@ -33,6 +31,12 @@ public final class LessonFileChecks {
         final Path root = Path.of(args[0]);
         final List<Problem> problems = new ArrayList<>(check(root, toolkit.map(Toolkit::techniqueIds)));
         failOn(problems);
+    }
+
+    private static void checkUsage(final String... args) {
+        if (args.length == 0 || args.length > 2) {
+            throw new IllegalArgumentException("usage: LessonFileChecks <repository root> [<toolkit checkout>]");
+        }
     }
 
     static List<Problem> check(final Path root, final Optional<Set<String>> techniques) {
@@ -49,42 +53,42 @@ public final class LessonFileChecks {
         return problems;
     }
 
-    /**
+    /*
      * Every lesson with an example teaches at least one of the toolkit's techniques, so the two repositories match
      * both ways. A lesson without an example, such as the overview, which maps the others, needn't name one.
      */
     private static List<Problem> lessonsWithoutATechnique(final Path root, final List<Lesson> lessons) {
-        final List<Problem> problems = new ArrayList<>();
-        for (final Lesson lesson : lessons) {
-            final Path folder = root.resolve("lessons/" + lesson.id());
-            if (lesson.techniques().isEmpty() && Files.isDirectory(folder.resolve("example"))) {
-                problems.add(new Problem(folder.resolve("lesson.yaml"), "names no toolkit technique:"
-                        + " name what it teaches in techniques, or ask for it to be added to the toolkit"));
-            }
-        }
-        return problems;
+        return lessons.stream().filter(lesson -> lesson.techniques().isEmpty() && hasExample(root, lesson))
+                .map(lesson -> new Problem(folder(root, lesson).resolve("lesson.yaml"), "names no toolkit technique:"
+                        + " name what it teaches in techniques, or ask for it to be added to the toolkit"))
+                .toList();
     }
 
-    /**
+    private static Path folder(final Path root, final Lesson lesson) {
+        return root.resolve("lessons/" + lesson.id());
+    }
+
+    private static boolean hasExample(final Path root, final Lesson lesson) {
+        return Files.isDirectory(folder(root, lesson).resolve("example"));
+    }
+
+    /*
      * Every lesson with an example has an exercise whose answer the build checks: an {@code answer} package in its
      * example, and an "Exercise" section in its README (docs/decisions/0029). Its README also says what to use on
      * older Java (docs/decisions/0028).
      */
     private static List<Problem> lessonsWithoutAnExercise(final Path root, final List<Lesson> lessons) {
         final List<Problem> problems = new ArrayList<>();
-        for (final Lesson lesson : lessons) {
-            final Path folder = root.resolve("lessons/" + lesson.id());
-            if (Files.isDirectory(folder.resolve("example"))) {
-                if (!hasAnswerPackage(folder.resolve("example"))) {
-                    problems.add(new Problem(folder.resolve("example"), "has no answer package for its exercise"));
-                }
-                problems.addAll(missingSections(folder.resolve("README.md")));
-            }
-        }
+        lessons.stream().filter(lesson -> hasExample(root, lesson)).map(lesson -> folder(root, lesson))
+                .forEach(folder -> {
+                    if (!hasAnswerPackage(folder.resolve("example"))) {
+                        problems.add(new Problem(folder.resolve("example"), "has no answer package for its exercise"));
+                    }
+                    problems.addAll(missingSections(folder.resolve("README.md")));
+                });
         return problems;
     }
 
-    /** The sections every lesson's README with an example must have. */
     private static final List<String> SECTIONS = List.of("## Exercise", "## On older Java");
 
     private static List<Problem> missingSections(final Path readme) {

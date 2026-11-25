@@ -9,9 +9,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import io.restassured.response.ValidatableResponse;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,7 +29,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/**
+/*
  * AFTER: the order service started as it ships, from a settings file, with WireMock as the warehouse and its own
  * database in a temporary folder. The test checks only what comes out: the answer, the call, and the rows written.
  */
@@ -56,13 +58,14 @@ class OrderServiceTest {
     void anOrderIsReservedAnsweredAndKept() throws SQLException {
         warehouse.stubFor(post(urlEqualTo("/reservations"))
                 .willReturn(okJson("{\"reservationId\": \"W-881\"}").withStatus(201)));
-        given().port(service.port()).contentType("application/json")
+        final ValidatableResponse answer = given().port(service.port()).contentType("application/json")
                 .body("{\"customer\": \"C-42\", \"sku\": \"PEN-01\", \"quantity\": 3}")
-                .when().post("/orders")
-                .then().statusCode(201).header("Location", "/orders/O-1001").body("orderId", equalTo("O-1001"));
-        warehouse.verify(postRequestedFor(urlEqualTo("/reservations"))
-                .withRequestBody(equalToJson("{\"sku\": \"PEN-01\", \"quantity\": 3}")));
-        assertThat(rowsWritten()).as("rows written").isEqualTo(List.of("O-1001 C-42 W-881 PEN-01 3"));
+                .when().post("/orders").then();
+        assertAll(
+                () -> answer.statusCode(201).header("Location", "/orders/O-1001").body("orderId", equalTo("O-1001")),
+                () -> warehouse.verify(postRequestedFor(urlEqualTo("/reservations"))
+                        .withRequestBody(equalToJson("{\"sku\": \"PEN-01\", \"quantity\": 3}"))),
+                () -> assertThat(rowsWritten()).as("rows written").isEqualTo(List.of("O-1001 C-42 W-881 PEN-01 3")));
     }
 
     @Test
@@ -75,7 +78,7 @@ class OrderServiceTest {
         assertThat(rowsWritten()).as("rows written").isEmpty();
     }
 
-    /** Every order and its line, read straight from the service's database, one line each. */
+    /* Every order and its line, read straight from the service's database, one line each. */
     private List<String> rowsWritten() throws SQLException {
         final List<String> rows = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(database);

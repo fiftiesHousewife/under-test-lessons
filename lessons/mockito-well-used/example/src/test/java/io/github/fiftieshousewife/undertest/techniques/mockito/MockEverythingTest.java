@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: everything around the refunds is a mock, and the test checks the calls the code makes. That repeats the
  * code, and any refund will do, so it passes while the card gets the whole order back.
  */

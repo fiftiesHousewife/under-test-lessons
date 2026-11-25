@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-/**
+/*
  * AFTER: the same line coverage as the weak suite, but PIT kills all 13 mutants.
  * The fixes: test both sides of every boundary, assert exact values, and assert every result.
  * Several assertions in one test are wrapped in assertAll, so every failure is reported, not just the first.

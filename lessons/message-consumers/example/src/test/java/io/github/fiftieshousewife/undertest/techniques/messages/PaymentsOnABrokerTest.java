@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-/**
+/*
  * AFTER: the example messages are sent to a real broker, started inside the test, and the test checks what the
  * consumer did: every payment recorded, even when the book is busy once, and the unreadable message kept.
  */
@@ -38,13 +38,13 @@ class PaymentsOnABrokerTest {
     }
 
     @Test
-    void aMessageDeliveredAgainIsRecordedOnce() throws JMSException {
+    void theSamePaymentSentTwiceIsRecordedOnce() throws JMSException {
         final BusyOnceBook book = new BusyOnceBook();
         final String payment = ExampleMessages.forOrder("A-1001");
         broker.sendPayments(List.of(payment, payment));
 
         Consumers.using(broker.factory(), book).takeWaiting();
 
-        assertThat(book.recorded()).as("payments recorded for an order delivered twice").hasSize(1);
+        assertThat(book.recorded()).as("the same payment, sent twice").hasSize(1);
     }
 }

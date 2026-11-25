@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: one flat list of tests. Each name packs in a situation and a result, and nothing shows what is missing. */
+/* BEFORE: one flat list of tests. Each name packs in a situation and a result, and nothing shows what is missing. */
 class FlatLoanTest {
 
     @Test

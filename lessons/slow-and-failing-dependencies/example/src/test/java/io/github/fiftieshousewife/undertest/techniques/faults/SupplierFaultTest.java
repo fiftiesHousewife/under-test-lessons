@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-/**
+/*
  * AFTER: WireMock makes the supplier fail on demand: an answer five seconds late, a connection reset, an empty answer,
  * a broken one. Each test checks the shop answers within 3 seconds, with a clear "supplier unavailable".
  */

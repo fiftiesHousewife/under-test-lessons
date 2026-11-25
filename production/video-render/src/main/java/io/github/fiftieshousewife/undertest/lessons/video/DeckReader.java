@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 
-/**
+/*
  * Reads a deck's slides aloud, on the machine that makes the videos: each slide's clip, in {@code <id>.deck-voice/},
  * named as {@link DeckVoice} names it. {@link ClipLedger} records which clips the machine voice read, and from what:
  * those are read again when what the voice is given changes; a clip a person recorded is never read again or removed.
@@ -21,7 +21,7 @@ final class DeckReader {
     private DeckReader() {
     }
 
-    /**
+    /*
      * Gives each slide its clip: a clip the voice read from what it would be given now, with the same engine, or a
      * person's, is kept; one
      * still under its earlier name is renamed; the rest are made from the lesson's store of spoken clips
@@ -47,24 +47,34 @@ final class DeckReader {
         return made;
     }
 
-    /** Whether the slide already has the clip it needs, renaming one still under its earlier name. */
+    /* Whether the slide already has the clip it needs, renaming one still under its earlier name. */
     private static boolean kept(final Path folder, final ClipLedger ledger, final Spoken slide) {
         final Path clip = folder.resolve(slide.clipName());
         if (DeckVoice.clips(folder, slide).stream().anyMatch(found -> !found.equals(clip))) {
             return true; // a person's recording, as .wav or .mp3: the voice never makes one over it
         }
-        if (Files.isRegularFile(clip) && ledger.first() && slide.clipName().equals(slide.earlierClipName())) {
+        if (Files.isRegularFile(clip)) {
+            return keptAsItIs(ledger, slide);
+        }
+        return renamedFromItsEarlierName(folder, ledger, slide);
+    }
+
+    /* Whether the clip the slide needs, which is there, is still what it should say. */
+    private static boolean keptAsItIs(final ClipLedger ledger, final Spoken slide) {
+        if (ledger.first() && slide.clipName().equals(slide.earlierClipName())) {
             // made before ledgers, by the voice, from these words
             ledger.voiceRead(slide.clipName(), slide.saidKey(), Speech.engine());
             return true;
         }
-        if (Files.isRegularFile(clip)) {
-            final boolean current = ledger.readFrom(slide.clipName(), slide.saidKey(), Speech.engine());
-            if (current) {
-                ledger.stampEngine(slide.clipName(), Speech.engine());
-            }
-            return current || !ledger.byTheVoice(slide.clipName());
+        final boolean current = ledger.readFrom(slide.clipName(), slide.saidKey(), Speech.engine());
+        if (current) {
+            ledger.stampEngine(slide.clipName(), Speech.engine());
         }
+        return current || !ledger.byTheVoice(slide.clipName());
+    }
+
+    private static boolean renamedFromItsEarlierName(final Path folder, final ClipLedger ledger, final Spoken slide) {
+        final Path clip = folder.resolve(slide.clipName());
         final Path earlier = folder.resolve(slide.earlierClipName());
         if (Files.isRegularFile(earlier)) {
             move(earlier, clip);
@@ -75,7 +85,7 @@ final class DeckReader {
         return false;
     }
 
-    /**
+    /*
      * Speech compresses well: one channel of AAC at 48 kbit/s, about 6 KB a second. The clip is the video's sound as
      * it is, its gaps between sentences already shortened ({@link Speech#LONGEST_GAP}), so a fresh clone's video
      * decoded from it sounds the same. Its index comes first (faststart), so a browser can start playing it from the

@@ -13,14 +13,14 @@ RecordedSupplierTest > outageSaysTheSupplierIsUnavailable() FAILED
      but was: "StreamReadException: Unexpected character ('<' (code 60)): expected a valid value (JSON String, Number, Array, Object or token 'null', 'true' or 'false')"
 RecordedSupplierTest > unreachableSupplierSaysSo() PASSED
 RecordedSupplierTest > knownPostcodeGivesItsTown() PASSED
-RecordingTest > cleanedFirstTheFilesHoldSubstitutes() FAILED
+RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
+RecordingTest > maskedFirstTheFilesHoldSubstitutes() FAILED
     org.gradle.internal.exceptions.DefaultMultiCauseException: Multiple Failures (2 failures)
     	java.lang.AssertionError: [personal data in the saved recordings]
     Expecting empty but was: ["Ada Lovelace", "ada.lovelace@example.com", "Bearer supplier-token-4f7q"]
     	org.opentest4j.AssertionFailedError: [names in the saved recordings]
     expected: ["person-ea08c4400378ace1", "person-ea08c4400378ace1"]
      but was: ["Ada Lovelace", "Ada Lovelace"]
-RecordingTest > savedAsRecordedTheFilesHoldPersonalData() PASSED
 TooManyRequestsAnswerTest > tooManyRequestsSaysTheSupplierIsUnavailable() FAILED
     org.opentest4j.AssertionFailedError:
     expected: "the postcode supplier answered 429"

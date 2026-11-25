@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: the changes applied to H2, the in-memory database the developers use. */
+/* BEFORE: the changes applied to H2, the in-memory database the developers use. */
 class InMemoryChangesTest {
 
     @Test

@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: checks that the capture recorded the exchanges: the request the service received, the call it made to the
  * loyalty provider, and both answers. It never reads what was written, so a token or an email in it goes unnoticed.
  */

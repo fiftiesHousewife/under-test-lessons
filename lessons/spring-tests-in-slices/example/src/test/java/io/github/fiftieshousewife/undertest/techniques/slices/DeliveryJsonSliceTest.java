@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
-/**
+/*
  * AFTER: the JSON slice. Only Jackson starts, set up as the application sets it up. It checks the JSON written for one
  * delivery, field by field, as the service's description promises it.
  */

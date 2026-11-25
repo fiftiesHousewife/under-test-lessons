@@ -6,7 +6,7 @@ import io.github.fiftieshousewife.undertest.techniques.parameterised.Calculators
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: refunds. A credit note's net amount is negative, and its VAT rounds to the nearest penny
  * too: 3 pence refunded gives 0.6 pence of VAT back, which is 1 penny. Three more rows, no more code.
  */

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 
-/**
+/*
  * AFTER: the data slice. Only Spring Data JPA, the repository and an in-memory H2 database start, and each test's
  * rows are rolled back after it. It checks the query returns the right rows, in the right order.
  */

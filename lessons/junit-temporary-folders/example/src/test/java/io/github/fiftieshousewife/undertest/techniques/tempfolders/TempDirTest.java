@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.io.TempDir;
 
-/** AFTER: JUnit gives each test its own empty folder, and removes it afterwards. */
+/* AFTER: JUnit gives each test its own empty folder, and removes it afterwards. */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TempDirTest {
 

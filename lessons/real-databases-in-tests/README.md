@@ -13,13 +13,15 @@ Needs a container runtime, such as Docker Desktop, Colima or Podman. Inside a co
 with `postgresImage`; see [Using the lessons inside a company](../../docs/using-inside-a-company.md).
 
 ```bash
-./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest -Pcode=today
-./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest
+./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest -Pcode=today   # H2 passes; on PostgreSQL the test fails: Cy comes first, not Bob
+./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest                # NULLS FIRST: both databases put Bob first, and every test passes
 ```
 
 The example picks who sales should call first: customers who never ordered, then those who ordered longest ago.
 [`CustomerRepository`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/database/CustomerRepository.java)
-holds today's query (`ORDER BY last_order`) and the fixed one (`ORDER BY last_order NULLS FIRST`).
+holds today's query (`ORDER BY last_order`) and the fixed one (`ORDER BY last_order NULLS FIRST`). `NULLS FIRST` is
+standard SQL that PostgreSQL, H2 and Oracle support; MySQL and SQL Server don't, and there
+`ORDER BY CASE WHEN last_order IS NULL THEN 0 ELSE 1 END, last_order` does the same.
 
 - [`InMemoryDatabaseTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/database/InMemoryDatabaseTest.java)
   is the "before": on H2, nulls sort first, so today's query passes.

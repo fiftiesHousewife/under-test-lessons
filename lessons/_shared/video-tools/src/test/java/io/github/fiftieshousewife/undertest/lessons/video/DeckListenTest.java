@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * The deck's Listen control keeps playing slide after slide in a browser that guards autoplay (as Safari does), and
  * says when the last slide has been read. Runs deck-listen.test.js with Node, where Node is installed.
  */

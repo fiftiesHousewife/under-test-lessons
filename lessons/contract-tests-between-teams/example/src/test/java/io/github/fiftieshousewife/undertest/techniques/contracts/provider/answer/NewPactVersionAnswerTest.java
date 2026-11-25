@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the stock service also verifies version 1.1.0 of the order screen's pact, which adds what the
  * order screen relies on when nobody stocks an item: 404, with an error message. The new state sets up nothing, as an
  * empty shelf is the state. Run it against today's stock service with {@code -Pcode=answer}.

@@ -1,7 +1,8 @@
 $ ./gradlew :lessons:black-box-tests:test -Pcode=today
 OrderServiceTest > anOrderWithoutStockIsRefusedAndNothingIsWritten() PASSED
 OrderServiceTest > anOrderIsReservedAnsweredAndKept() FAILED
-    org.opentest4j.AssertionFailedError: [rows written]
+    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
+    	org.opentest4j.AssertionFailedError: [rows written]
     expected: ["O-1001 C-42 W-881 PEN-01 3"]
      but was: []
 OrderTakingTest > anOrderWithStockIsPlacedAndKept() PASSED

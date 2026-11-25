@@ -11,14 +11,14 @@ import org.jetbrains.jetCheck.PropertyChecker;
 import org.jetbrains.jetCheck.PropertyFalsified;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one more rule, comparing two bills rather than checking one. Adding a penny to the bill must
  * add a penny to exactly one share and leave every other share as it was. Run it against the splitter in use today
  * with {@code -Pcode=answer}: jetCheck finds a bill whose extra penny moves the other shares, and shrinks it.
  */
 class OneMorePennyAnswerTest {
 
-    /** A bill before its extra penny: the total in pence, and how many share it. */
+    /* A bill before its extra penny: the total in pence, and how many share it. */
     record Before(int totalPence, int people) {
     }
 
@@ -26,7 +26,8 @@ class OneMorePennyAnswerTest {
 
     private final BillSplitter splitter = Splitters.current();
 
-    @SuppressWarnings("deprecation") // a fixed seed, so every run tries the same bills, as in SplitterPropertyTest
+    // A fixed seed, so every run tries the same bills, as in SplitterPropertyTest; the assertion is the fail() below.
+    @SuppressWarnings({"deprecation", "PMD.TestMustAssert"})
     @Test
     void oneMorePennyChangesOneShareByOnePenny() {
         final Generator<Before> bills = Generator.zipWith(Generator.integers(1, 12), Generator.integers(0, 1_000),

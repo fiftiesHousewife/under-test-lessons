@@ -8,7 +8,7 @@ import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.EvaluationResult;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: an architecture rule. It reads the compiled classes and checks which layer may use which: web may use the
  * service, the service may use storage, and nothing else may reach storage. It checks the web classes chosen with
  * -Pcode (today or fixed).
@@ -32,7 +32,7 @@ class LayerRulesTest {
         check(layers.evaluate(classes));
     }
 
-    /** Fails with ArchUnit's own report, with the long package names taken out so it reads easily. */
+    /* Fails with ArchUnit's own report, with the long package names taken out so it reads easily. */
     private static void check(final EvaluationResult result) {
         if (result.hasViolation()) {
             throw new AssertionError(String.join(System.lineSeparator(), result.getFailureReport().getDetails())

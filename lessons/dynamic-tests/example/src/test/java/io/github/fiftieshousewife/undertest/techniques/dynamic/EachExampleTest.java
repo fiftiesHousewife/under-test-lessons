@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.TestFactory;
 
-/** AFTER: a test factory makes one test for each example file, named after the file. Every one runs and reports. */
+/* AFTER: a test factory makes one test for each example file, named after the file. Every one runs and reports. */
 class EachExampleTest {
 
     @TestFactory

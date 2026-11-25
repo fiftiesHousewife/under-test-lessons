@@ -8,7 +8,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import io.github.fiftieshousewife.undertest.techniques.recorded.Clients;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: one more answer the real supplier rarely gives, added by hand as a recording
  * (supplier/mappings/too-many-requests.json): 429 Too Many Requests. The client must say the supplier is unavailable,
  * not give an empty town. Run it against today's client with {@code -Pcode=answer}.

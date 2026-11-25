@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-/** The exercise's answer: a return the order refuses sends no money at all, checked at the one mock, the card. */
+/* The exercise's answer: a return the order refuses sends no money at all, checked at the one mock, the card. */
 class RefusedReturnAnswerTest {
 
     private final CardPayments card = mock(CardPayments.class);

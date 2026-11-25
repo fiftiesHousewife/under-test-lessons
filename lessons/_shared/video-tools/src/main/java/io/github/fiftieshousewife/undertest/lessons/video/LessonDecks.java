@@ -18,17 +18,21 @@ public final class LessonDecks {
     }
 
     public static void main(final String... args) {
-        if (args.length < 3 || !("slides".equals(args[0]) || "deck".equals(args[0]))) {
+        if (args.length < 3 || !isCommand(args[0])) {
             throw new IllegalArgumentException("usage: LessonDecks slides <root> <lesson|all>"
                     + " | deck <root> <lesson|all> [pdf]");
         }
         final Path root = Path.of(args[1]);
         if ("slides".equals(args[0])) {
-            SlideDeck.lessons(root, args[2]).forEach(lesson -> log.info("{}: {} slides drawn, in the lesson's voice"
+            Media.lessons(root, args[2]).forEach(lesson -> log.info("{}: {} slides drawn, in the lesson's voice"
                     + " folder", lesson.safeLesson(), SlideDrawing.drawAll(lesson).size()));
             return;
         }
         final boolean pdf = args.length > 3 && "pdf".equals(args[3]);
-        SlideDeck.lessons(root, args[2]).forEach(media -> SlideDeck.write(media, pdf));
+        Media.lessons(root, args[2]).forEach(media -> SlideDeck.write(media, pdf));
+    }
+
+    private static boolean isCommand(final String word) {
+        return "slides".equals(word) || "deck".equals(word);
     }
 }

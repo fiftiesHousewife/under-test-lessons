@@ -2,10 +2,12 @@ package io.github.fiftieshousewife.undertest.lessons.video;
 
 import java.util.List;
 
-/** One slide: its heading (title, and the picture beside the points), the points shown, and the narration spoken. */
+/**
+ * One slide: its heading (title, and the picture beside the points), the points shown, and the narration spoken.
+ * {@code BREATH_SECONDS} is the time a slide stays up in a video after its narration ends.
+ */
 public record Slide(Heading heading, List<String> points, String narration) {
 
-    /** Time a slide stays up in a video after its narration ends, in seconds. */
     public static final double BREATH_SECONDS = 1.5;
 
     /** A slide's title, and the name of its picture (empty for none). */

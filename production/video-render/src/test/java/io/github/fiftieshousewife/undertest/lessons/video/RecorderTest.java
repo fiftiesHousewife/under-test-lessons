@@ -1,8 +1,8 @@
 package io.github.fiftieshousewife.undertest.lessons.video;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Tests the recording step with a stand-in for VHS. */
+/* Tests the recording step with a stand-in for VHS. */
 class RecorderTest {
 
     @TempDir
@@ -35,10 +35,11 @@ class RecorderTest {
     void recordsWhenVhsSucceedsAndReportsTheEndOfItsLogWhenItFails() throws IOException {
         final Media media = new Media(root, "demo");
         standInVhs("printf 'Hide\\nShow\\nType 1ms note \"hello\"\\nCreating demo.gif...\\n'");
-        assertThatCode(() -> new Recorder(Clock.systemUTC()).record(media)).doesNotThrowAnyException();
+        final Throwable succeeded = catchThrowable(() -> new Recorder(Clock.systemUTC()).record(media));
 
         standInVhs("echo 'Error: timeout waiting for Killed'; exit 1");
         assertAll(
+                () -> assertThat(succeeded).isNull(),
                 () -> assertThatIllegalStateException().isThrownBy(() -> new Recorder(Clock.systemUTC()).record(media))
                         .withMessageContaining("Recording failed")
                         .withMessageContaining("timeout waiting for Killed"),

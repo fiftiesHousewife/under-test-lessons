@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
-/**
+/*
  * The two hand-kept tables that repeat what lesson.yaml files say: the catalogue's table of every toolkit technique and
  * its lessons, and the lessons index's table of every lesson and its techniques.
  */
@@ -28,7 +28,7 @@ final class LessonTables {
     private LessonTables() {
     }
 
-    /** Each technique row links exactly the lessons that name it; with the toolkit, every technique has a row. */
+    /* Each technique row links exactly the lessons that name it; with the toolkit, every technique has a row. */
     static List<Problem> catalogue(final Path root, final List<Lesson> lessons, final Optional<Set<String>> toolkit) {
         final Path file = root.resolve(CATALOGUE_PAGE);
         final Map<String, Set<String>> taught = lessonsByTechnique(lessons);
@@ -36,14 +36,7 @@ final class LessonTables {
         for (final List<String> row : rows(file, CATALOGUE_HEADING)) {
             rows.put(row.getFirst(), Text.matches(LESSON_LINK, row.get(1)));
         }
-        final List<Problem> problems = new ArrayList<>();
-        rows.forEach((technique, linked) -> {
-            final Set<String> expected = taught.getOrDefault(technique, Set.of());
-            if (!linked.equals(expected)) {
-                problems.add(new Problem(file, technique + ": the row links " + linked
-                        + ", but the lessons that name it in lesson.yaml are " + expected));
-            }
-        });
+        final List<Problem> problems = new ArrayList<>(rowsThatDisagree(file, rows, taught));
         final Set<String> needed = new TreeSet<>(taught.keySet());
         toolkit.ifPresent(needed::addAll);
         needed.stream().filter(technique -> !rows.containsKey(technique))
@@ -54,7 +47,20 @@ final class LessonTables {
         return problems;
     }
 
-    /** Each lesson has a row, and the row links exactly the techniques its lesson.yaml names. */
+    private static List<Problem> rowsThatDisagree(final Path file, final Map<String, Set<String>> rows,
+            final Map<String, Set<String>> taught) {
+        final List<Problem> problems = new ArrayList<>();
+        rows.forEach((technique, linked) -> {
+            final Set<String> expected = taught.getOrDefault(technique, Set.of());
+            if (!linked.equals(expected)) {
+                problems.add(new Problem(file, technique + ": the row links " + linked
+                        + ", but the lessons that name it in lesson.yaml are " + expected));
+            }
+        });
+        return problems;
+    }
+
+    /* Each lesson has a row, and the row links exactly the techniques its lesson.yaml names. */
     static List<Problem> index(final Path root, final List<Lesson> lessons) {
         final Path file = root.resolve(INDEX_PAGE);
         final Map<String, Set<String>> rows = new TreeMap<>();
@@ -75,23 +81,30 @@ final class LessonTables {
         return problems;
     }
 
-    /** The cells of each row of the first table under a heading, without its header and divider rows. */
+    /* The cells of each row of the first table under a heading, without its header and divider rows. */
     static List<List<String>> rows(final Path file, final String heading) {
         final List<String> lines = Text.read(file).lines().toList();
         final int start = lines.indexOf(heading);
         if (start < 0) {
             throw new IllegalArgumentException(file + " has no heading " + heading);
         }
-        final List<List<String>> rows = new ArrayList<>();
-        for (final String line : lines.subList(start + 1, lines.size())) {
+        final List<List<String>> rows = tableLines(lines.subList(start + 1, lines.size())).stream()
+                .map(LessonTables::cells).toList();
+        return rows.isEmpty() ? rows : rows.subList(1, rows.size());
+    }
+
+    /* The table lines up to the next heading, leaving out divider rows. */
+    private static List<String> tableLines(final List<String> lines) {
+        final List<String> table = new ArrayList<>();
+        for (final String line : lines) {
             if (line.startsWith("## ")) {
                 break;
             }
             if (line.startsWith("|") && !DIVIDER.matcher(line).matches()) {
-                rows.add(cells(line));
+                table.add(line);
             }
         }
-        return rows.isEmpty() ? rows : rows.subList(1, rows.size());
+        return table;
     }
 
     private static List<String> cells(final String line) {

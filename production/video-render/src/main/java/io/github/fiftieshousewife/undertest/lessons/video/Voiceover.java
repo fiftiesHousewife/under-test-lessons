@@ -7,12 +7,12 @@ import java.util.Locale;
 
 /**
  * Places one spoken clip at the start of each scene to make a single narration track, after checking that every clip
- * fits its scene. A clip that runs longer than its scene would talk over the next one, so it is reported with how
- * much longer the scene's pauses must be.
+ * fits its scene. A clip that runs longer than its scene would talk over the next one, so it is reported with how much
+ * longer the scene's pauses must be. {@code BREATH_SECONDS} is left at the end of each scene after its narration, so
+ * speech never runs into the next scene.
  */
 public final class Voiceover {
 
-    /** Time left at the end of each scene after its narration, so speech never runs into the next scene. */
     static final double BREATH_SECONDS = 1.0;
 
     private Voiceover() {
@@ -41,15 +41,7 @@ public final class Voiceover {
      */
     public static WavFile track(final List<Scene> scenes, final List<WavFile> clips) {
         final WavFile format = clips.getFirst();
-        for (int i = 1; i < clips.size(); i++) {
-            if (clips.get(i).sampleRate() != format.sampleRate() || clips.get(i).channels() != format.channels()) {
-                throw new IllegalStateException(String.format(Locale.ROOT,
-                        "scene %d's clip is %d Hz with %d channel(s), but scene 1's is %d Hz with %d; record every"
-                                + " clip the same way",
-                        i + 1, clips.get(i).sampleRate(), clips.get(i).channels(), format.sampleRate(),
-                        format.channels()));
-            }
-        }
+        requireOneFormat(clips);
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final int bytesPerFrame = format.channels() * 2;
         for (int i = 0; i < scenes.size(); i++) {
@@ -60,5 +52,18 @@ public final class Voiceover {
         final int endByte = format.frames(scenes.getLast().end()) * bytesPerFrame;
         out.writeBytes(new byte[Math.max(0, endByte - out.size())]);
         return new WavFile(format.sampleRate(), format.channels(), out.toByteArray());
+    }
+
+    private static void requireOneFormat(final List<WavFile> clips) {
+        final WavFile format = clips.getFirst();
+        for (int i = 1; i < clips.size(); i++) {
+            if (clips.get(i).sampleRate() != format.sampleRate() || clips.get(i).channels() != format.channels()) {
+                throw new IllegalStateException(String.format(Locale.ROOT,
+                        "scene %d's clip is %d Hz with %d channel(s), but scene 1's is %d Hz with %d; record every"
+                                + " clip the same way",
+                        i + 1, clips.get(i).sampleRate(), clips.get(i).channels(), format.sampleRate(),
+                        format.channels()));
+            }
+        }
     }
 }

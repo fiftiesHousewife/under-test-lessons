@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the mocks-everything rule counts @Mock fields only, so a test class that makes its mocks with
  * calls to Mockito's mock() gets past it. This rule counts both, finds that class's tests, and the register, which
  * holds only what the lesson's rules found, refuses them as new. Run it with {@code -Pcode=answer}.

@@ -100,7 +100,7 @@ Sleep 300ms
 Type@1ms `note "A *fresh* in-memory database for each test, with the real schema, gone when the test ends."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/FreshDatabase.java 11 35 "a fresh database" --zoom 19-21`
+Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/FreshDatabase.java 11 36 "a fresh database" --zoom 20-22`
 Enter
 Sleep 300ms
 Show
@@ -128,7 +128,7 @@ Sleep 300ms
 Type@1ms `note "Keeping the choice *honest*: no SQL that only one database runs, or that depends on the database."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/PortableSql.java 17 20 "what the check looks for" --zoom 18-20`
+Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/PortableSql.java 17 21 "what the check looks for" --zoom 17-21`
 Enter
 Sleep 300ms
 Type@1ms `show PortableSqlTest 14 26 "the check"`

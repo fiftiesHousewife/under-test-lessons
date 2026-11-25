@@ -8,7 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/** AFTER: each test gets a new in-memory database with the real schema, so no leftover row can hide a bug. */
+/* AFTER: each test gets a new in-memory database with the real schema, so no leftover row can hide a bug. */
 class FreshDatabaseTest {
 
     private FreshDatabase database;

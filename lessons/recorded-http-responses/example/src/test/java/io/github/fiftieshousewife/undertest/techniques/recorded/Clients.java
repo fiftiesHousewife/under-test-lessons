@@ -10,8 +10,9 @@ import java.util.Set;
 /** The code the tests run against: the fix, or today's with -Pcode=today (and -Pcode=answer, the exercise's). */
 public final class Clients {
 
-    /** A fixed key, for tests only: the same name gets the same substitute on every run. */
-    private static final String TEST_KEY = "a key for test recordings only";
+    private static final String TEST_KEY =
+            // A fixed key, for tests only: the same name gets the same substitute on every run.
+            "a key for test recordings only";
 
     private Clients() {
     }

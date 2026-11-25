@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Feature flags: old and new code side by side behind a flag, and tests that run both, until the old code goes.

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
 
-/** BEFORE: places an order, sleeps a fixed 200 ms, then checks. It guesses how long the confirmation will take. */
+/* BEFORE: places an order, sleeps a fixed 200 ms, then checks. It guesses how long the confirmation will take. */
 class SleepingTest {
 
     private static final MailServer MAIL = MailServers.chosen();

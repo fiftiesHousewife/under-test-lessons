@@ -19,7 +19,7 @@ import org.springframework.batch.test.context.SpringBatchTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the job writes in chunks of 100 payments, and the whole-job tests run only 6 and 12, one chunk
  * each. A day of 250 payments takes three chunks, so the closing line must count and add up across all of them:
  * payment n is n times 7 pence, 219,625 pence in all. Run it against today's job with {@code -Pcode=answer}.

@@ -82,7 +82,7 @@ class DeckClipsTest {
 
     @Test
     void readsAClipsLengthFromItsMp4Header() throws IOException {
-        assertThat(DeckClips.Mp4Length.seconds(clip(BYE, 2.5))).isCloseTo(2.5, within(1e-9));
+        assertThat(ClipLength.mp4(clip(BYE, 2.5))).isCloseTo(2.5, within(1e-9));
     }
 
     @Test
@@ -93,7 +93,7 @@ class DeckClipsTest {
         assertAll(
                 () -> assertThat(check(true, false).problems()).isEmpty(),
                 () -> assertThat(check(true, false).warnings()).isEmpty(),
-                () -> assertThat(DeckClips.WavLength.seconds(wav)).isCloseTo(3, within(1e-9)),
+                () -> assertThat(ClipLength.wav(wav)).isCloseTo(3, within(1e-9)),
                 () -> assertThat(DeckVoice.sources(new Media(root, "demo"))).containsExactly(
                         "demo.deck-voice/" + wav.getFileName(),
                         "demo.deck-voice/" + new Spoken(BYE, BYE).clipStem() + ".mp3"));
@@ -111,7 +111,7 @@ class DeckClipsTest {
                         + new Spoken(HELLO, HELLO).clipName() + ", so remove the other");
     }
 
-    /** A silent WAV: 8000 one-channel 16-bit samples a second. */
+    /* A silent WAV: 8000 one-channel 16-bit samples a second. */
     private static byte[] wav(final double seconds) {
         final int size = (int) Math.round(seconds * 16000);
         final ByteBuffer out = ByteBuffer.allocate(44 + size).order(java.nio.ByteOrder.LITTLE_ENDIAN);
@@ -123,7 +123,7 @@ class DeckClipsTest {
         return out.array();
     }
 
-    /** The smallest MP4 the check reads: an ftyp box, then moov holding mvhd with a timescale of 1000. */
+    /* The smallest MP4 the check reads: an ftyp box, then moov holding mvhd with a timescale of 1000. */
     private static byte[] mp4(final double seconds) {
         final ByteBuffer out = ByteBuffer.allocate(16 + 8 + 28);
         out.putInt(16).put("ftyp".getBytes(StandardCharsets.US_ASCII)).put("M4A ".getBytes(StandardCharsets.US_ASCII))

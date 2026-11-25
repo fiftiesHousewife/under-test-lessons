@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: the order screen's client against a stand-in its own team wrote. It passes, whatever the service sends. */
+/* BEFORE: the order screen's client against a stand-in its own team wrote. It passes, whatever the service sends. */
 class StockClientTest {
 
     private final HandWrittenStockService stockService = new HandWrittenStockService();

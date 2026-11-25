@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // The video tools that run anywhere the lessons do, inside a company included: the checks of lesson video scripts,
@@ -89,4 +89,9 @@ tasks.register("buildLessonSlides") {
 
 tasks.check {
     dependsOn(checkVideoScripts)
+}
+
+// The video tools are one package: its classes share package-private methods, so it holds more than the usual 20.
+underTest {
+    maxClassesPerPackage = 42
 }

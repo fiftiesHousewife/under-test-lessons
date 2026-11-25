@@ -24,7 +24,7 @@ unavailable", so it can tell the customer it will confirm by email.
 - [`TodaysStockClient`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/faults/today/TodaysStockClient.java)
   sets no timeout, and throws a failed connection on as an `UncheckedIOException`.
   [`StockClient`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/faults/fixed/StockClient.java)
-  has a connect timeout and a read timeout of 500 milliseconds, and turns a timeout or any failed connection into
+  has a connect timeout and a response timeout of 500 milliseconds (Java's `HttpRequest.timeout` bounds the wait for the answer's headers; a body that trickles in slowly needs its own limit, and WireMock's `withChunkedDribbleDelay` tests it), and turns a timeout or any failed connection into
   "supplier unavailable", with the reason.
 - [`StockAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/faults/StockAnswerTest.java)
   is the "before": a stand-in supplier answers at once, with 12 in stock or with 503. Both versions pass.

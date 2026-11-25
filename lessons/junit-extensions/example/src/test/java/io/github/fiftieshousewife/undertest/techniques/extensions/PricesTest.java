@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.Test;
 
-/** How prices are written: VAT to the nearest penny, and a credit with its sign in front. */
+/* How prices are written: VAT to the nearest penny, and a credit with its sign in front. */
 class PricesTest {
 
     @Test

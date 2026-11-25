@@ -29,45 +29,39 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 1: add PIT's versions, and the PIT Gradle plugin, to the version catalogue."`
+Type@1ms `note "Step 1: PIT comes with the shared code-quality plugin: one line of the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml"`
+Type@1ms `show libs.versions.toml "/java-conventions/" "gradle/libs.versions.toml"`
 Enter
 Show
-Sleep 13s
+Sleep 15s
 
 # ---- Scene 2: step 2, add the plugin ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 2: add the plugin to the shared build logic, and apply it in the convention plugin."`
+Type@1ms `note "Step 2: the lesson's build file applies it, through the lesson plugin, so pitest is a task already."`
 Enter
 Sleep 300ms
-Type@1ms `show build-logic/build.gradle.kts "/gradle.pitest.plugin/" "build-logic/build.gradle.kts: the plugins the build logic uses"`
-Enter
-Sleep 300ms
-Type@1ms `show java-conventions "/info.solidsoft.pitest/" "build conventions: plugins" --zoom 31`
+Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 1 3 "lesson build file"`
 Enter
 Show
-Sleep 11s
+Sleep 14s
 
 # ---- Scene 3: step 3, configure the plugin ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 3: configure PIT once, in the convention plugin."`
-Enter
-Sleep 300ms
-Type@1ms `show java-conventions "/^pitest \\{/" "build conventions: PIT settings"`
+Type@1ms `note "Step 3: this lesson's one setting."`
 Enter
 Sleep 300ms
 Type@1ms `note "This lesson adds one switch, to choose whether PIT uses the weak tests or the strong tests:"`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 10 19 "lesson build file" --zoom 10-13`
+Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 11 21 "lesson build file" --zoom 12-16`
 Enter
 Show
 Sleep 15s

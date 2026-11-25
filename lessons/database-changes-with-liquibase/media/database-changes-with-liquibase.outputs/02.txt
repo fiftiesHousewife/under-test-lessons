@@ -3,5 +3,5 @@ FailedChangeTest > aRefusedChangeSaysWhy() PASSED
 InMemoryChangesTest > everyChangeApplies() PASSED
 PostgresSqlAnswerTest > theLoyaltyLevelGetsATypePostgresHas(Path) PASSED
 All 3 tests passed.
-RealPostgresChangesTest > everyChangeApplies() SKIPPED
-No tests ran; 1 skipped.
+RealPostgresChangesTest > everyChangeApplies() PASSED
+1 test passed.

@@ -5,7 +5,7 @@ points shown on screen (a URL is drawn as a link and never spoken), and a Say: l
 
 Sources: pitest.org, its home page (run mutation testing "frequently against only the code that has been changed";
 arcmutate, from the same team, extends PIT with Git support and runs against pull and merge requests) and the
-gradle-pitest-plugin's README (targetClasses and targetTests); github.com/Bachmann1234/diff_cover, its README (compares
+PIT's command-line options (--excludedClasses, --excludedTestClasses); github.com/Bachmann1234/diff_cover, its README (compares
 an XML coverage report, including JaCoCo's, with the output of git diff, and reports the changed lines' coverage;
 Python, Apache 2.0 licence); G. Petrović, G. Fraser, M. Ivanković and R. Just, "Practical Mutation Testing at Scale: A
 view from Google", IEEE Transactions on Software Engineering, 2021 (mutation testing done incrementally, "mutating only
@@ -52,7 +52,7 @@ Say: The fix is to check only what the change touched. Git lists the classes a b
 
 ## intro: How the build is told
 - A list of the changed classes, written from git: BulkDiscount
-- PIT plants bugs only there: targetClasses = changedClasses
+- PIT plants bugs only there: every other class is left out, --excludedClasses
 - A gate after PIT: "5 of 11 planted bugs in the changed classes survived"
 Picture: robot
 Say: How does the build know? A short file lists the changed classes, and in continuous integration, git writes it. PIT,
@@ -84,7 +84,7 @@ Say: PIT's own advice is to run mutation testing often, against only the code th
 
 ## closing: Find out more
 - https://pitest.org — PIT's website
-- https://github.com/szpak/gradle-pitest-plugin — the Gradle plugin, and its targetClasses setting
+- https://pitest.org/quickstart/commandline/ — PIT's command line, and its options for leaving classes out
 - https://github.com/Bachmann1234/diff_cover — diff-cover, coverage of changed lines
 - {lessons-repo} — run this lesson yourself: its test code and examples
 - Exercise: write the one test that gets the gate to pass; the README has the steps and the answer

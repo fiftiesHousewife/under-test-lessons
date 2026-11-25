@@ -224,7 +224,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  23          Files.write(folder.resolve(FILE_NAME), lines);
  24      }
  25  }</pre></figure></main><aside class="notes">Here is the code under test, today's export. When it meets a cancelled order, it should skip it and carry on. Instead, it returns, so on any day with a cancelled order, it writes no file at all.</aside><audio class="voice" preload="none" src="junit-temporary-folders.deck-voice/8d8aa38fb3952f6e.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests with a fixed folder</h1><div class="rule"></div><ul class="scene-points"><li class="point">Both write to the same place, and nothing cleans it up</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests with a fixed folder</figcaption><pre> 14  /** BEFORE: every test writes to the same fixed folder, and nothing ever cleans it up. */
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests with a fixed folder</h1><div class="rule"></div><ul class="scene-points"><li class="point">Both write to the same place, and nothing cleans it up</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests with a fixed folder</figcaption><pre> 14  /* BEFORE: every test writes to the same fixed folder, and nothing ever cleans it up. */
  15  @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
  16  class FixedFolderTest {
  17  
@@ -247,7 +247,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  34          assertThat(ExportFile.linesIn(OUT)).containsExactly(&quot;order,total&quot;, &quot;1001,25.00&quot;, &quot;1002,10.00&quot;);
  35      }
  36  }</pre></figure></main><aside class="notes">These are tests with a fixed folder, the way many old tests do it. Both tests write to the same folder under the build, and nothing ever cleans it up. So whatever the first test wrote is still there for the second test to read.</aside><audio class="voice" preload="none" src="junit-temporary-folders.deck-voice/a51812bd62469cb2.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests with a temporary folder</h1><div class="rule"></div><ul class="scene-points"><li class="point">The same tests with @TempDir</li><li class="point">Each test gets its own empty folder, removed afterwards</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests with a temporary folder</figcaption><pre> 14  /** AFTER: JUnit gives each test its own empty folder, and removes it afterwards. */
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Tests with a temporary folder</h1><div class="rule"></div><ul class="scene-points"><li class="point">The same tests with @TempDir</li><li class="point">Each test gets its own empty folder, removed afterwards</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests with a temporary folder</figcaption><pre> 14  /* AFTER: JUnit gives each test its own empty folder, and removes it afterwards. */
  15  @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
  16  class TempDirTest {
  17  
@@ -266,11 +266,11 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  30          assertThat(ExportFile.linesIn(folder)).containsExactly(&quot;order,total&quot;, &quot;1001,25.00&quot;, &quot;1002,10.00&quot;);
  31      }
  32  }</pre></figure></main><aside class="notes">Now, the same two tests with a temporary folder. The test asks for a folder, and JUnit gives each test its own empty one, and removes it when the test is done. No test can read a file that another test left behind.</aside><audio class="voice" preload="none" src="junit-temporary-folders.deck-voice/44b55cf2d3a6e801.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The leftover file hides the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both sets of tests against today's export</li></ul><p class="callout">The fixed folder's leftover file hid the bug. The temporary folder was empty, so the test failed.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:junit-temporary-folders:test -Pcode=today</pre><pre class="output">TempDirTest &gt; writesOneLinePerOrder(Path) PASSED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The leftover file hides the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both sets of tests against today's export</li></ul><p class="callout">The fixed folder's leftover file hid the bug. The temporary folder was empty, so the test failed.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:junit-temporary-folders:test -Pcode=today</pre><pre class="output">FixedFolderTest &gt; writesOneLinePerOrder() PASSED
+FixedFolderTest &gt; leavesOutCancelledOrders() PASSED
+TempDirTest &gt; writesOneLinePerOrder(Path) PASSED
 TempDirTest &gt; leavesOutCancelledOrders(Path) FAILED
     java.lang.AssertionError: No orders.csv was written
-FixedFolderTest &gt; writesOneLinePerOrder() PASSED
-FixedFolderTest &gt; leavesOutCancelledOrders() PASSED
 4 tests completed, 1 failed</pre></figure></main><aside class="notes">We run both sets of tests against today's export. With the fixed folder, both tests pass. The cancelled-order test read the file the first test wrote, so the missing file went unnoticed. With temporary folders, that test fails, and says no orders file was written.</aside><audio class="voice" preload="none" src="junit-temporary-folders.deck-voice/77f6a1a268ec037d.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed export</h1><div class="rule"></div><ul class="scene-points"><li class="point">The export that leaves cancelled orders out, and always writes the file</li></ul><p class="callout">Every test passes. Each one wrote, and read, only its own folder.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed export</figcaption><pre> 11  /** FIXED: leaves cancelled orders out, and always writes the file. */
  12  public final class FixedOrdersExport implements OrdersExport {

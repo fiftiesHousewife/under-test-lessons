@@ -8,7 +8,7 @@ import io.github.fiftieshousewife.undertest.techniques.extensions.StandardShopSe
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/**
+/*
  * The exercise's answer: a trade invoice, then a shop receipt, in one test. The extension only runs between tests, so
  * this asks what a customer at the till would see, whatever order the tests run in.
  */

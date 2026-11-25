@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 
-/** The example messages: collected by browsing a real queue, masked, and kept one per line, after comment lines. */
+/* The example messages: collected by browsing a real queue, masked, and kept one per line, after comment lines. */
 final class ExampleMessages {
 
     private ExampleMessages() {
@@ -25,6 +25,6 @@ final class ExampleMessages {
     }
 
     static String forOrder(final String order) {
-        return payments().stream().filter(text -> text.startsWith("order=" + order + ";")).findFirst().orElseThrow();
+        return payments().stream().filter(text -> text.contains(";order=" + order + ";")).findFirst().orElseThrow();
     }
 }

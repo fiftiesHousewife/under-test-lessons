@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/** One test for both invoices. It hands over stand-in rates, made by Mockito, fixed at 1.17 euros to the pound. */
+/* One test for both invoices. It hands over stand-in rates, made by Mockito, fixed at 1.17 euros to the pound. */
 class InvoiceTest {
 
     private final ExchangeRates rates = mock(ExchangeRates.class);

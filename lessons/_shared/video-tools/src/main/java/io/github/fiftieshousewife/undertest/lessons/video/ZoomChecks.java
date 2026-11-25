@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
+/*
  * Checks a script's zooms on key code before anything is recorded: each zoom's lines are among the lines its panel
  * shows, a scene has at most one zoom, and each zoom's scene leaves it time to ease in, hold and ease out.
  */
@@ -24,7 +24,7 @@ final class ZoomChecks {
     private ZoomChecks() {
     }
 
-    /** Problems with the zooms in a script, each naming its scene. */
+    /* Problems with the zooms in a script, each naming its scene. */
     static List<Problem> problems(final Path root, final Path tape) {
         final List<Problem> problems = new ArrayList<>(shownAndOnePerScene(root, tape));
         problems.addAll(timeToZoom(root, tape));
@@ -33,46 +33,65 @@ final class ZoomChecks {
 
     private static List<Problem> shownAndOnePerScene(final Path root, final Path tape) {
         final List<Problem> problems = new ArrayList<>();
-        final Path lesson = tape.toAbsolutePath().resolveSibling("..").normalize();
-        final List<Path> places = List.of(lesson, root.resolve("lessons/_shared"), root.resolve("build-logic"),
-                root.resolve("gradle"));
-        String scene = "?";
-        int zoomsInScene = 0;
-        for (final String line : lines(tape)) {
-            final Matcher heading = SCENE.matcher(line);
-            final Matcher typed = TYPED.matcher(line);
-            if (heading.matches()) {
-                scene = heading.group(1);
-                zoomsInScene = 0;
-            } else if (typed.matches() && typed.group(2).startsWith("show ")) {
-                final List<String> words = SceneContent.words(typed.group(2));
-                final Set<Integer> zoomed = SceneContent.zoomed(words);
-                if (zoomed.isEmpty()) {
-                    continue;
-                }
-                if (++zoomsInScene == 2) {
-                    problems.add(new Problem(tape, "scene " + scene + " zooms twice; a scene zooms on one place"));
-                }
-                try {
-                    final SceneContent.Panel panel = SceneContent.panel(root, places, words.subList(1, words.size()));
-                    final String where = "scene " + scene;
-                    notShown(zoomed, panel).ifPresent(missing -> problems.add(new Problem(tape,
-                            where + " zooms on line " + missing + ", which its panel doesn't show")));
-                } catch (IllegalArgumentException e) {
-                    continue; // a show line that finds no file, which LessonChecks.shows reports
-                }
+        for (final Zoom zoom : zooms(tape)) {
+            if (zoom.number() == 2) {
+                problems.add(new Problem(tape, "scene " + zoom.scene() + " zooms twice; a scene zooms on one place"));
             }
+            outsideItsPanel(root, tape, zoom).ifPresent(problems::add);
         }
         return problems;
     }
 
-    /** The first zoomed line the panel doesn't show, if any. */
+    /* A {@code show ... --zoom} line's words, its scene, and which zoom of its scene it is, counting from 1. */
+    private record Zoom(String scene, List<String> words, int number) {
+    }
+
+    private static List<Zoom> zooms(final Path tape) {
+        final List<Zoom> zooms = new ArrayList<>();
+        String scene = "?";
+        int zoomsInScene = 0;
+        for (final String line : lines(tape)) {
+            final Matcher heading = SCENE.matcher(line);
+            final List<String> words = zoomingShow(line);
+            if (heading.matches()) {
+                scene = heading.group(1);
+                zoomsInScene = 0;
+            } else if (!words.isEmpty()) {
+                zooms.add(new Zoom(scene, words, ++zoomsInScene));
+            }
+        }
+        return zooms;
+    }
+
+    /* The words of a {@code show} line that zooms, or none. */
+    private static List<String> zoomingShow(final String line) {
+        final Matcher typed = TYPED.matcher(line);
+        if (!typed.matches() || !typed.group(2).startsWith("show ")) {
+            return List.of();
+        }
+        final List<String> words = SceneContent.words(typed.group(2));
+        return MarkedLines.zoomed(words).isEmpty() ? List.of() : words;
+    }
+
+    private static Optional<Problem> outsideItsPanel(final Path root, final Path tape, final Zoom zoom) {
+        final List<Path> places = ShownCode.places(root, tape);
+        final List<String> words = zoom.words();
+        try {
+            final SceneContent.Panel panel = ShownCode.panel(root, places, words.subList(1, words.size()));
+            return notShown(MarkedLines.zoomed(words), panel).map(missing -> new Problem(tape,
+                    "scene " + zoom.scene() + " zooms on line " + missing + ", which its panel doesn't show"));
+        } catch (IllegalArgumentException e) {
+            return Optional.empty(); // a show line that finds no file, which LessonChecks.shows reports
+        }
+    }
+
+    /* The first zoomed line the panel doesn't show, if any. */
     private static Optional<Integer> notShown(final Set<Integer> zoomed, final SceneContent.Panel panel) {
-        final List<Integer> shown = panel.lines().stream().map(LiveOutputs::lineNumber).toList();
+        final List<Integer> shown = panel.lines().stream().map(MarkedLines::lineNumber).toList();
         return zoomed.stream().filter(line -> !shown.contains(line)).findFirst();
     }
 
-    /** Each zoom's scene shows it long enough; scenes with live runs are checked once a recording has timed them. */
+    /* Each zoom's scene shows it long enough; scenes with live runs are checked once a recording has timed them. */
     private static List<Problem> timeToZoom(final Path root, final Path tape) {
         final List<ZoomTiming.Span> spans;
         try {

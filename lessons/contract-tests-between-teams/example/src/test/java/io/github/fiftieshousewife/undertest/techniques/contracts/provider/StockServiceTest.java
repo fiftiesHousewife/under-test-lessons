@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
-/** BEFORE: the stock service team's own tests. They check what the team thought of, not what callers read. */
+/* BEFORE: the stock service team's own tests. They check what the team thought of, not what callers read. */
 class StockServiceTest {
 
     private static final JsonMapper JSON = JsonMapper.builder().build();

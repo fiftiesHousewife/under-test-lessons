@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Coverage of changed code: an old pricing module with no tests can't pass a whole-module coverage gate, so the gates
@@ -11,11 +11,11 @@ val changedClasses = file("changed-classes.txt").readLines().map { it.trim() }
 val code = providers.gradleProperty("code").getOrElse("fixed")
 val unusedTests = if (code == "today") "*StrongTest" else "*WeakTest"
 
-// PIT plants bugs only in the changed classes; every test may run against them.
-pitest {
-    targetClasses = changedClasses.map { "*.$it" }
-    targetTests = listOf("${project.group}.*")
-    excludedTestClasses = listOf(unusedTests)
+// PIT plants bugs only in the changed classes: it leaves every other class alone.
+tasks.named<JavaExec>("pitest") {
+    val unchanged = fileTree("src/main/java") { include("**/*.java") }.files.map { it.nameWithoutExtension }
+        .filter { it !in changedClasses }.flatMap { listOf("*.$it", "*.$it\$*") }
+    args("--excludedClasses=" + unchanged.joinToString(","))
 }
 
 // After PIT's summary, the gate: every planted bug in the changed classes must be caught.
@@ -32,7 +32,7 @@ val changedCodeGate = tasks.register("changedCodeGate") {
     }
 }
 tasks.named("pitest") {
-    outputs.upToDateWhen { false } // a lesson always reruns PIT, so switching tests never shows a stale result
+    // after PIT's summary, the gate
     finalizedBy(changedCodeGate)
 }
 changedCodeGate { mustRunAfter("mutationSummary") }
@@ -60,8 +60,9 @@ tasks.jacocoTestCoverageVerification {
 // The exercise's answer (answer/*AnswerTest): `./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=answer` runs
 // PIT with the change's weak test and the answer, one more test. PIT's other runs leave the answer out, and so does
 // -Pcode=today's test run; `check` runs it with the fixed code's tests.
-pitest {
-    excludedTestClasses = if (code == "answer") listOf("*StrongTest") else listOf(unusedTests, "*AnswerTest")
+tasks.named<JavaExec>("pitest") {
+    val left = if (code == "answer") listOf("*StrongTest") else listOf(unusedTests, "*AnswerTest")
+    args("--excludedTestClasses=" + left.joinToString(","))
 }
 if (code == "today") {
     tasks.test { filter { excludeTestsMatching("*AnswerTest") } }

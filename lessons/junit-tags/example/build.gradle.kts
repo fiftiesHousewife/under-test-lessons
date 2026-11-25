@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Tags: fast tests first, slow tests apart. JUnit's @Tag comes with the build conventions' JUnit, so there is nothing

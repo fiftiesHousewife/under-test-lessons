@@ -20,7 +20,7 @@ public class CourierClient {
         return tracking == null ? "Not known" : tracking.status();
     }
 
-    /** The courier's answer: {"reference": "D-1001", "status": "At the depot"}. */
+    /* The courier's answer: {"reference": "D-1001", "status": "At the depot"}. */
     record CourierTracking(String reference, String status) {
     }
 }

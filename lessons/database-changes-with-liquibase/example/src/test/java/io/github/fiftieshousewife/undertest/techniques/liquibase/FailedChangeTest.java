@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.h2.jdbcx.JdbcDataSource;
 import org.junit.jupiter.api.Test;
 
-/** A change the database refuses stops the update, with the database's own reason in one line. */
+/* A change the database refuses stops the update, with the database's own reason in one line. */
 class FailedChangeTest {
 
     @Test

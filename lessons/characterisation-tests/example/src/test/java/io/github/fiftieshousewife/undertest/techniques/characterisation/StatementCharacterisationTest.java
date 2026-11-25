@@ -6,7 +6,7 @@ import org.approvaltests.core.Options;
 import org.approvaltests.reporters.QuietReporter;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: a characterisation test. It saves the whole statement the code prints today as the approved file, next to
  * this test, and fails if the output ever differs, line for line. The month below reaches every rule: an overdraft
  * fee (including at exactly zero, a quirk nobody remembered), and interest on a high balance.
@@ -26,7 +26,7 @@ class StatementCharacterisationTest {
                 new Options().withReporter(new QuietReporter()).withScrubber(text -> text.replace("\r\n", "\n")));
     }
 
-    /** The legacy printer, or today's rewrite with -Pcode=today. */
+    /* The legacy printer, or today's rewrite with -Pcode=today. */
     private static Statement statement() {
         return "refactored".equals(System.getProperty("statement.version"))
                 ? new RefactoredStatement() : new LegacyStatement();

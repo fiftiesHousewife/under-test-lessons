@@ -46,7 +46,7 @@ planted bug, and hovering over the number beside a line lists each one.
 | Weakness in the weak tests | Planted bug that survives | Fix in the strong tests |
 |---|---|---|
 | Inputs far from the boundary (£70, `-1`) | `>= 5_000` becomes `> 5_000`; `< 0` becomes `<= 0` | Test both sides of every boundary, in pence: `0`, `4_999`, `5_000`, `9_999`, `10_000` |
-| A vague assertion (`> 0`) | Returning the wrong percentage | Assert the exact value |
+| A vague assertion (`> 0`), on an order far from £100 | `>= 10_000` becomes `> 10_000` | Assert the exact value, on both sides of £100 |
 | No assertion at all | `+= 2` becomes `-= 2` | Every test checks its result |
 | `assertNotNull` on a number | Every arithmetic change on the price line | Assert the computed price (`180`, `176`) |
 

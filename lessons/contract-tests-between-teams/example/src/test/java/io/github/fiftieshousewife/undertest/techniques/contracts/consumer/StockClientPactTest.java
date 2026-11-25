@@ -13,7 +13,7 @@ import java.net.URI;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/**
+/*
  * AFTER, the order screen's side: each answer it relies on, written down as an interaction in a pact. Pact stands in
  * for the stock service with exactly these answers, and writes the pact file for the stock service's team to verify.
  */

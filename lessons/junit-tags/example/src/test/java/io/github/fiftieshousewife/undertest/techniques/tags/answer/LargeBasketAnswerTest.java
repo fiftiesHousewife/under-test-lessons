@@ -10,7 +10,7 @@ import io.github.fiftieshousewife.undertest.techniques.tags.WarehouseTestSystem;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * The exercise's answer: a quick test class that gains one test needing the warehouse's test system. Only that test
  * is tagged slow, so the quick task still runs the rest of the class.
  */

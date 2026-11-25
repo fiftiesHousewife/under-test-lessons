@@ -8,13 +8,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-/** The exercise's answer: one more question for every situation. Does a refused step leave the loan as it was? */
+/* The exercise's answer: one more question for every situation. Does a refused step leave the loan as it was? */
 @DisplayName("A loan, after a refused step")
 class RefusedStepAnswerTest {
 
     private final Loan loan = Loans.newLoan();
 
-    /** Takes a step that should be refused; the test then asks what state the loan was left in. */
+    /* Takes a step that should be refused; the test then asks what state the loan was left in. */
     private static void tryTo(final Runnable step) {
         try {
             step.run();

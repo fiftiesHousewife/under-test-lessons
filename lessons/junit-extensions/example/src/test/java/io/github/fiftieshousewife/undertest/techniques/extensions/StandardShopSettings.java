@@ -41,7 +41,7 @@ public final class StandardShopSettings implements BeforeEachCallback, AfterEach
                 .collect(Collectors.joining("; "));
     }
 
-    /** The settings as they were before a test. */
+    /* The settings as they were before a test. */
     private record Snapshot(Map<String, String> settings) {
     }
 }

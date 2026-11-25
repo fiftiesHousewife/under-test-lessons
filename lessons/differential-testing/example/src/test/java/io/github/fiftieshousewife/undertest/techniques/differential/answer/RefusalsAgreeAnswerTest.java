@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: a differential test compares failures as well as answers. Outside 1 g to 5 kg the old
  * calculator refuses the parcel, so the rewrite must refuse the same weights, with the same message. Run it against
  * today's rewrite with {@code -Pcode=answer}: the refusals agree, so the price gap is the only difference.
@@ -30,7 +30,7 @@ class RefusalsAgreeAnswerTest {
                 .isEqualTo(OUTSIDE_THE_RANGE.stream().map(grams -> outcome(legacy, grams)).toList());
     }
 
-    /** The price, or why the parcel was refused. */
+    /* The price, or why the parcel was refused. */
     private static String outcome(final Postage postage, final int grams) {
         try {
             return grams + " g: " + postage.pence(grams) + "p";

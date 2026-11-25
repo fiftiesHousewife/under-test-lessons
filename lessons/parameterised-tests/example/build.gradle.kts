@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.java-conventions")
+    id("io.github.fiftieshousewife.lesson")
 }
 
 // Parameterised tests: one test, many cases, each reported on its own. JUnit's parameterised tests come with the

@@ -16,7 +16,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.json.JsonMapper;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: two more amounts, the smallest refund there is and one with odd pence, each read back from
  * the body of the request the client really sent. Both must go as whole pence. Run it against today's client with
  * {@code -Pcode=answer}.

@@ -5,7 +5,7 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * BEFORE: a mock of the queue. The test checks that each call was made, which repeats the code line by line. It can't
  * tell that the fraud-check message was sent after the commit, so it is never delivered.
  */

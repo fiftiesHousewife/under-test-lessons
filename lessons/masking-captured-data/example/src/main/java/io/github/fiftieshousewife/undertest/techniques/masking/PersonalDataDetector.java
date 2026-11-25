@@ -27,7 +27,7 @@ public final class PersonalDataDetector {
         this.knownNames = knownNames.stream().distinct().map(PersonalDataDetector::anyCase).toList();
     }
 
-    /**
+    /*
      * Each kind of personal number and its shape. Digits next to letters count, as an IBAN's follow its bank code, but
      * a number marked {@code TEST}, as made-up account numbers are, is allowed, as the test email domain is.
      */

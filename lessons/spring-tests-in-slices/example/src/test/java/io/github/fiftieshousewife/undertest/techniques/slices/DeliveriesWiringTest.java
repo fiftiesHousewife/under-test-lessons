@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: one test of the whole application, kept only for the wiring: the web layer, the service, the database and
  * the courier's client, joined by Spring, answer one request together. The slices check each layer's details.
  */

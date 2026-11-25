@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-/**
+/*
  * AFTER, the stock service's side: every interaction in the order screen's published pact, version 1.0.0, replayed
  * against the real service. The folder stands in for the company's package repository.
  */

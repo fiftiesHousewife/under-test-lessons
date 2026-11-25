@@ -51,7 +51,7 @@ public final class FixedPaymentConsumer implements PaymentConsumer {
     @Override
     public void handle(final Message message) throws JMSException {
         final Payment payment = PaymentMessages.read(message);
-        if (!book.has(payment.order())) {
+        if (!book.has(payment.id())) {
             book.record(payment);
         }
     }

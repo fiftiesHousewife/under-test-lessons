@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-/**
+/*
  * Every link into the toolkit's {@code techniques/} folder, in this repo's Markdown pages, names a technique the
  * toolkit has. Research reviews are skipped: they record what was true when they were written.
  */

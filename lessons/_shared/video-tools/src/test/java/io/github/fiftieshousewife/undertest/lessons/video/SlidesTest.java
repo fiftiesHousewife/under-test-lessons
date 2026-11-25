@@ -16,9 +16,7 @@ class SlidesTest {
     @TempDir
     Path folder;
 
-    @Test
-    void readsIntroAndClosingSlides() throws IOException {
-        final Path file = Files.writeString(folder.resolve("x.slides.md"), """
+    private static final String SLIDES = """
                 # Slides
 
                 ## intro: What is mutation testing?
@@ -31,7 +29,11 @@ class SlidesTest {
                 - https://pitest.org
                 Picture: globe
                 Say: Find out more at the PIT website.
-                """);
+                """;
+
+    @Test
+    void readsIntroAndClosingSlides() throws IOException {
+        final Path file = Files.writeString(folder.resolve("x.slides.md"), SLIDES);
         final Slides slides = Slides.read(file, folder);
 
         assertAll(

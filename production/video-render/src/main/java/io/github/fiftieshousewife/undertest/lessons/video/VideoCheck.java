@@ -9,18 +9,18 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Entry point: {@code VideoCheck <repository root>} checks every step a lesson video goes through, with the real
- * tools, in about half a minute, before any lesson is recorded. It records {@code video-check.tape} (code that rolls
- * in, a zoom on key lines, a callout that slides in) and checks the terminal reported where the zoomed lines landed;
- * draws a two-point slide stage by stage with the browser and builds it up; joins the slide and the zoomed recording;
- * and burns a caption in. It leaves {@code build/video-check/video-check.mp4} to watch.
+ * Entry point: {@code VideoCheck <repository root>} checks every step a lesson video goes through, with the real tools,
+ * in about half a minute, before any lesson is recorded. It records {@code video-check.tape} (code that rolls in, a
+ * zoom on key lines, a callout that slides in) and checks the terminal reported where the zoomed lines landed; draws a
+ * two-point slide stage by stage with the browser and builds it up; joins the slide and the zoomed recording; and burns
+ * a caption in. It leaves {@code build/video-check/video-check.mp4} to watch. The tape zooms on lines 22 to 24: three
+ * lines, {@code ROWS_APART} rows apart.
  */
 @Slf4j
 public final class VideoCheck {
 
     static final Path TAPE = Path.of("production/video-render/video-check.tape");
     static final Path FOLDER = Path.of("build/video-check");
-    /** The tape zooms on lines 22 to 24: three lines, two rows apart. */
     private static final int ROWS_APART = 2;
     private static final double SLIDE_VOICE_SECONDS = 4;
 
@@ -34,27 +34,32 @@ public final class VideoCheck {
         final Path root = Path.of(args[0]);
         final Path folder = root.resolve(FOLDER);
         createFolder(folder);
-        ExternalCommand.run(List.of(Recorder.vhs(), TAPE.toString()), root);
-        final List<Optional<Zoom.Rows>> rows = Zoom.rows(folder.resolve("video-check.zooms"));
-        final Optional<String> problem = problem(rows);
-        if (problem.isPresent()) {
-            throw new IllegalStateException("The zoom doesn't work in VHS's terminal: " + problem.get());
-        }
-        final Path zoomed = zoom(root, rows.getFirst().orElseThrow());
+        final Path zoomed = recorded(root);
         final Path slide = slide(new Media(root, "mutation-testing"), folder);
         final Path joined = folder.resolve("video-check.joined.mp4");
-        Splicer.join(List.of(slide, zoomed), joined);
+        FinishedVideo.join(List.of(slide, zoomed), joined);
         BurnedCaptions.burn(joined, List.of(new Cue(0.5, 3.5, "Slides build up one point at a time."),
                 new Cue(6, 10, "Code rolls in, the key lines zoom, and a callout slides in.")),
                 folder.resolve("video-check.mp4"));
         log.info("Every video step works. Watch build/video-check/video-check.mp4 to see them.");
     }
 
-    /** The recording, zoomed on its key lines, with silent sound so it joins with slides. */
+    /* The check recording, made with VHS, zoomed where the terminal reported its key lines. */
+    private static Path recorded(final Path root) {
+        ExternalCommand.run(List.of(Recorder.vhs(), TAPE.toString()), root);
+        final List<Optional<Zoom.Rows>> rows = Zoom.rows(root.resolve(FOLDER).resolve("video-check.zooms"));
+        final Optional<String> problem = problem(rows);
+        if (problem.isPresent()) {
+            throw new IllegalStateException("The zoom doesn't work in VHS's terminal: " + problem.get());
+        }
+        return zoom(root, rows.getFirst().orElseThrow());
+    }
+
+    /* The recording, zoomed on its key lines, with silent sound so it joins with slides. */
     private static Path zoom(final Path root, final Zoom.Rows rows) {
         final Zoom.Geometry geometry = Zoom.geometry(root.resolve(TAPE));
-        final String filter = Zoom.filter(geometry, TapeTimeline.zooms(root, root.resolve(TAPE), List.of()),
-                List.of(Zoom.window(geometry, rows)));
+        final String filter = ZoomedRecording.filter(geometry,
+                TapeTimeline.zooms(root, root.resolve(TAPE), List.of()), List.of(Zoom.window(geometry, rows)));
         final Path folder = root.resolve(FOLDER);
         ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i",
                 "video-check.silent.mp4", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-vf", filter,
@@ -63,7 +68,7 @@ public final class VideoCheck {
         return folder.resolve("video-check.zoomed.mp4");
     }
 
-    /** A two-point slide, drawn stage by stage and built up over a silent voice. */
+    /* A two-point slide, drawn stage by stage and built up over a silent voice. */
     private static Path slide(final Media media, final Path folder) {
         final Slide slide = new Slide(new Slide.Heading("What this checks", "checklist"),
                 List.of("Slides build up one point at a time", "Code rolls in and zooms on the key lines"), "");
@@ -75,7 +80,7 @@ public final class VideoCheck {
         return video;
     }
 
-    /** What is wrong with the rows the check recording reported, if anything. */
+    /* What is wrong with the rows the check recording reported, if anything. */
     static Optional<String> problem(final List<Optional<Zoom.Rows>> rows) {
         if (rows.size() != 1) {
             return Optional.of("expected rows for 1 zoom, got " + rows.size()
@@ -85,10 +90,12 @@ public final class VideoCheck {
             return Optional.of("the terminal didn't say where the cursor was");
         }
         final Zoom.Rows found = rows.getFirst().get();
-        if (found.last() - found.first() != ROWS_APART || found.first() < 1 || found.last() > found.screenRows()) {
-            return Optional.of("rows " + found + " don't fit three zoomed lines on screen");
-        }
-        return Optional.empty();
+        return fitsThreeLines(found) ? Optional.empty()
+                : Optional.of("rows " + found + " don't fit three zoomed lines on screen");
+    }
+
+    private static boolean fitsThreeLines(final Zoom.Rows found) {
+        return found.last() - found.first() == ROWS_APART && found.first() >= 1 && found.last() <= found.screenRows();
     }
 
     private static void createFolder(final Path folder) {

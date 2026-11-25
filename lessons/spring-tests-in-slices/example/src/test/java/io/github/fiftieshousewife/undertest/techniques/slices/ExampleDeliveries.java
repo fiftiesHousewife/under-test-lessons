@@ -3,7 +3,7 @@ package io.github.fiftieshousewife.undertest.techniques.slices;
 import java.time.LocalDate;
 import java.util.List;
 
-/** Ann's deliveries, one of them already delivered, and one of Bob's. */
+/* Ann's deliveries, one of them already delivered, and one of Bob's. */
 final class ExampleDeliveries {
 
     static final String ANN = "ann";

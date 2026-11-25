@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
-/** BEFORE: every test uses one long-lived test database, set up by hand, and leaves its rows behind for the next. */
+/* BEFORE: every test uses one long-lived test database, set up by hand, and leaves its rows behind for the next. */
 class SharedDatabaseTest {
 
     @Test

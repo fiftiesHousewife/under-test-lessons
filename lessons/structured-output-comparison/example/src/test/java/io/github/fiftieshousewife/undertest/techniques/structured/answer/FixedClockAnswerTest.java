@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: the time comes from a clock, so a test can give the summary a stopped clock and check the
  * time exactly, instead of accepting any text. Only the id, which is new on every run, stays a placeholder. Run it
  * against today's total with {@code -Pcode=answer}: it fails on the total alone, because the time now matches.

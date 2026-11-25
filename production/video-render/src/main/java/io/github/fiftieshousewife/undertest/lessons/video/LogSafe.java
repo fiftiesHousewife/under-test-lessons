@@ -1,6 +1,6 @@
 package io.github.fiftieshousewife.undertest.lessons.video;
 
-/** A lesson's name as the production tools log it: on one line, so a log line can't be split in two. */
+/* A lesson's name as the production tools log it: on one line, so a log line can't be split in two. */
 final class LogSafe {
 
     private LogSafe() {

@@ -89,7 +89,7 @@ Sleep 300ms
 Type@1ms `note "The *black-box test* starts WireMock, writes a settings file, and starts the service as it ships."`
 Enter
 Sleep 300ms
-Type@1ms `show OrderServiceTest 40 53 "starting the service for each test" --zoom 43-46`
+Type@1ms `show OrderServiceTest 42 55 "starting the service for each test" --zoom 45-48`
 Enter
 Sleep 300ms
 Show
@@ -103,7 +103,7 @@ Sleep 300ms
 Type@1ms `note "It checks only what comes out: the *answer*, the *warehouse call*, and the *rows written*."`
 Enter
 Sleep 300ms
-Type@1ms `show OrderServiceTest 55 66 "the black-box test" --zoom 62-65`
+Type@1ms `show OrderServiceTest 57 69 "the black-box test" --zoom 64-68`
 Enter
 Sleep 300ms
 Show

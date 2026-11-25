@@ -4,7 +4,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 import org.junit.jupiter.api.Test;
 
-/**
+/*
  * AFTER: JSONUnit compares the JSON as a structure: every field and every value, in any field order. The two fields
  * that change on every run only have to be there, as text.
  */

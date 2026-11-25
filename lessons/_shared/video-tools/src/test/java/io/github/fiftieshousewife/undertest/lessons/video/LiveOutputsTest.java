@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/** Tests keeping live commands' output for decks, and the checks that decks show what the narration names. */
+/* Tests keeping live commands' output for decks, and the checks that decks show what the narration names. */
 class LiveOutputsTest {
 
     @TempDir
@@ -35,7 +35,7 @@ class LiveOutputsTest {
         Files.writeString(media.resolve("demo.narration.md"), "1. Line 2 says two.\n2. The run names line 24.\n");
     }
 
-    /** Keeps an output for the lesson's first live command, as tools/capture-lesson-outputs.py does. */
+    /* Keeps an output for the lesson's first live command, as tools/capture-lesson-outputs.py does. */
     private void keep(final String command, final String output) throws IOException {
         final Path outputs = Files.createDirectories(media.resolve("demo.outputs"));
         Files.writeString(outputs.resolve("01.txt"), "$ " + command + "\n" + output + "\n");
@@ -55,9 +55,9 @@ class LiveOutputsTest {
     @Test
     void readsMarkedLinesAndRanges() {
         assertAll(
-                () -> assertThat(SceneContent.marks("18,22-24")).containsExactly(18, 22, 23, 24),
-                () -> assertThat(LiveOutputs.lineNumber(" 24  code")).isEqualTo(24),
-                () -> assertThat(LiveOutputs.lineNumber("   \u22ee")).isEqualTo(-1));
+                () -> assertThat(MarkedLines.marks("18,22-24")).containsExactly(18, 22, 23, 24),
+                () -> assertThat(MarkedLines.lineNumber(" 24  code")).isEqualTo(24),
+                () -> assertThat(MarkedLines.lineNumber("   \u22ee")).isEqualTo(-1));
     }
 
     @Test

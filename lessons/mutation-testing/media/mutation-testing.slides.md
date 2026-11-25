@@ -48,14 +48,14 @@ Say: The fix is to test the tests. Mutation testing changes one small thing in t
   So a strong test checks both sides: an order of exactly 50 pounds, and one of 49 pounds 99.
 
 ## intro: How PIT runs
-- The PIT plugin in the build: id("info.solidsoft.pitest")
+- PIT comes with the shared quality plugin, so every project has a pitest task
 - One task plants the bugs and runs the tests: pitest
 - The result: "the tests caught 5 of 13 planted bugs (38%)"
 Picture: robot
-Say: PIT is the mutation testing tool for Java, and it comes as a plugin for the build. One task, called pit test,
-  changes the compiled code in memory, one mutation at a time. For each change it runs only the tests that reach
-  that line, which keeps it fast. Then it reports every planted bug as caught or survived. For the shop's tests
-  today, it says 5 of 13 were caught.
+Say: PIT is the mutation testing tool for Java, and it comes with the shared code-quality plugin these lessons use. One
+  task, called pit test, changes the compiled code in memory, one mutation at a time. For each change it runs only the
+  tests that reach that line, which keeps it fast. Then it reports every planted bug as caught or survived. For the
+  shop's tests today, it says 5 of 13 were caught.
 
 Include: how-we-build
 
@@ -83,11 +83,11 @@ Say: The idea of mutation testing goes back to a student paper by Richard Lipton
 
 ## closing: Find out more
 - https://pitest.org — PIT's website, quick start and FAQ
-- https://gradle-pitest-plugin.solidsoft.info — the PIT plugin for Gradle
+- https://pitest.org/quickstart/commandline/ — PIT's command line, and its options
 - https://doi.org/10.1109/C-M.1978.218136 — the 1978 paper that made it widely known
 - {lessons-repo} — run this lesson yourself: its test code and examples
 - Exercise: write the one test that catches the missed bug on line 25; the README has the steps and the answer
 Picture: globe
-Say: To find out more, start with PIT's website, and the PIT plugin for Gradle. The links on screen also take you to
+Say: To find out more, start with PIT's website, and its command-line options. The links on screen also take you to
   the paper that made it widely known, and to this lesson's test code and examples, so you can run them yourself.
   And try the exercise in the README: write the one test that catches the missed bug on line 25.

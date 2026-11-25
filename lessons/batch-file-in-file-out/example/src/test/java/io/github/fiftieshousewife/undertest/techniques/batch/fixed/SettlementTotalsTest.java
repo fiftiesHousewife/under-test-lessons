@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.infrastructure.item.Chunk;
 import org.springframework.batch.infrastructure.item.ExecutionContext;
 
-/**
+/*
  * The closing line after a restart. Spring Batch saves each writer's state with every committed chunk and, when a
  * failed step is run again, starts a new writer from what was saved; these tests drive the totals the same way.
  */

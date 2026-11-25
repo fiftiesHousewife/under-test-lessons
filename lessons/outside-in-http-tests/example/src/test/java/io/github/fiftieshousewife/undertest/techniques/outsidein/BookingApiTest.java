@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.startsWith;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-/** AFTER: REST Assured tests the running service from outside, through its API only, as a caller sees it. */
+/* AFTER: REST Assured tests the running service from outside, through its API only, as a caller sees it. */
 class BookingApiTest {
 
     private final BookingServer service = Services.start();

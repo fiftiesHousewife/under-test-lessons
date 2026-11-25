@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-/** What a return is worth: each returned item matched to one line of the order. */
+/* What a return is worth: each returned item matched to one line of the order. */
 class OrderTest {
 
     private final Order twoMugsAndAPot = new Order("card-1",

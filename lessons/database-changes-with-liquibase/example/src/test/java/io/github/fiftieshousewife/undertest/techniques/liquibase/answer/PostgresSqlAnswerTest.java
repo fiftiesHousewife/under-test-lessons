@@ -18,7 +18,7 @@ import liquibase.resource.ResourceAccessor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-/**
+/*
  * THE EXERCISE'S ANSWER: with no container runtime, Liquibase can still write out the SQL it would run on PostgreSQL,
  * from an offline connection that only names the database. The loyalty level must get a type PostgreSQL has. Run it
  * against today's changelog with {@code -Pcode=answer}: raw SQL goes to PostgreSQL as written, TINYINT and all.

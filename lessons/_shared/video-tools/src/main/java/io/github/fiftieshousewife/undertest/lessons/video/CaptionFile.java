@@ -47,14 +47,12 @@ public final class CaptionFile {
         final List<String> chunks = new ArrayList<>();
         StringBuilder current = new StringBuilder();
         for (final String word : text.split(" ")) {
-            if (!current.isEmpty() && current.length() + word.length() + 1 > MAX_CUE_CHARACTERS) {
-                chunks.add(current.toString());
-                current = new StringBuilder();
+            if (overflows(current, word)) {
+                current = finish(chunks, current);
             }
-            current.append(current.isEmpty() ? "" : " ").append(word);
-            if (word.matches(".*[.!?:]$") && current.length() > MAX_CUE_CHARACTERS / 2) {
-                chunks.add(current.toString());
-                current = new StringBuilder();
+            appendWord(current, word);
+            if (endsALongSentence(current, word)) {
+                current = finish(chunks, current);
             }
         }
         if (!current.isEmpty()) {
@@ -63,16 +61,37 @@ public final class CaptionFile {
         return chunks;
     }
 
-    /** Breaks a cue into two lines at the space nearest the middle, if it is too long for one. */
+    private static boolean overflows(final StringBuilder current, final String word) {
+        return !current.isEmpty() && current.length() + word.length() + 1 > MAX_CUE_CHARACTERS;
+    }
+
+    private static boolean endsALongSentence(final StringBuilder current, final String word) {
+        return word.matches(".*[.!?:]$") && current.length() > MAX_CUE_CHARACTERS / 2;
+    }
+
+    private static StringBuilder finish(final List<String> chunks, final StringBuilder current) {
+        chunks.add(current.toString());
+        return new StringBuilder();
+    }
+
+    private static void appendWord(final StringBuilder current, final String word) {
+        current.append(current.isEmpty() ? "" : " ").append(word);
+    }
+
+    /* Breaks a cue into two lines at the space nearest the middle, if it is too long for one. */
     static String wrap(final String cue) {
         if (cue.length() <= MAX_LINE_CHARACTERS) {
             return cue;
         }
+        final int at = spaceNearestMiddle(cue);
+        return at < 0 ? cue : cue.substring(0, at) + "\n" + cue.substring(at + 1);
+    }
+
+    private static int spaceNearestMiddle(final String cue) {
         final int middle = cue.length() / 2;
         final int before = cue.lastIndexOf(' ', middle);
         final int after = cue.indexOf(' ', middle);
-        final int at = after < 0 || before >= 0 && middle - before <= after - middle ? before : after;
-        return at < 0 ? cue : cue.substring(0, at) + "\n" + cue.substring(at + 1);
+        return after < 0 || before >= 0 && middle - before <= after - middle ? before : after;
     }
 
     public static String webVtt(final List<Cue> cues) {

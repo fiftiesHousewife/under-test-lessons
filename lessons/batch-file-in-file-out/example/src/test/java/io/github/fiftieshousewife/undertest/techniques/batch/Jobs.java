@@ -26,7 +26,7 @@ public class Jobs {
         }
     }
 
-    /** Picks the job's Spring configuration from the "code" switch. */
+    /* Picks the job's Spring configuration from the "code" switch. */
     static final class Chosen implements ImportSelector {
 
         @Override

@@ -8,6 +8,7 @@ import java.time.Clock;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,12 +32,7 @@ public final class LessonVideo {
     }
 
     public static void main(final String... args) {
-        final List<String> commands = List.of("record", "voice", "assemble", "deckvoice");
-        if (args.length < 3 || !commands.contains(args[0])) {
-            throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
-                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson>"
-                    + " | deckvoice <root> <lesson|all> <command...>");
-        }
+        checkUsage(args);
         if ("deckvoice".equals(args[0])) {
             deckVoice(Path.of(args[1]), args[2], List.of(Arrays.copyOfRange(args, 3, args.length)));
             return;
@@ -45,44 +41,47 @@ public final class LessonVideo {
         switch (args[0]) {
             case "record" -> new Recorder(Clock.systemUTC()).record(media);
             case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
-            default -> assemble(media);
+            default -> FinishedVideo.assemble(media);
+        }
+    }
+
+    private static void checkUsage(final String... args) {
+        final List<String> commands = List.of("record", "voice", "assemble", "deckvoice");
+        if (args.length < 3 || !commands.contains(args[0])) {
+            throw new IllegalArgumentException("usage: LessonVideo record <root> <lesson>"
+                    + " | voice <root> <lesson> <command...> | assemble <root> <lesson>"
+                    + " | deckvoice <root> <lesson|all> <command...>");
         }
     }
 
     static void deckVoice(final Path root, final String lesson, final List<String> command) {
-        if (command.isEmpty()) {
-            throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
-        }
-        SlideDeck.lessons(root, lesson).forEach(media -> {
+        requireCommand(command);
+        Media.lessons(root, lesson).forEach(media -> {
             DeckReader.speak(media, command);
             SlideDeck.write(media, false);
         });
     }
 
-    static void voice(final Media media, final List<String> command) {
+    private static void requireCommand(final List<String> command) {
         if (command.isEmpty()) {
             throw new IllegalArgumentException("give the voice command: a program that turns a text file into a WAV");
         }
+    }
+
+    static void voice(final Media media, final List<String> command) {
+        requireCommand(command);
         final List<Scene> scenes = Recording.scenes(media);
         final Pronunciation pronunciation = DeckVoice.pronunciation(media);
         final List<Spoken> narration = Narration.paragraphs(media.file(".narration.md")).stream()
                 .map(paragraph -> Spoken.of(paragraph, pronunciation)).toList();
-        final Path clipsFolder = media.file(".voice");
-        createFolder(clipsFolder);
+        createFolder(media.file(".voice"));
         final Slides slides = media.slides();
-        final List<Spoken> everything = new ArrayList<>(narration);
-        java.util.stream.Stream.concat(slides.intro().stream(), slides.closing().stream())
-                .forEach(slide -> everything.add(Spoken.of(slide.narration(), pronunciation)));
-        VoiceClips.readAhead(media, command, everything);
+        VoiceClips.readAhead(media, command, everything(narration, slides, pronunciation));
         final List<WavFile> clips = new ArrayList<>();
         for (final Spoken scene : narration) {
             clips.add(VoiceClips.wav(media, command, scene));
         }
-        final List<String> misfits = Voiceover.misfits(scenes, clips);
-        if (!misfits.isEmpty()) {
-            throw new IllegalStateException("The narration does not fit the video:\n  " + String.join("\n  ", misfits));
-        }
-        Voiceover.track(scenes, clips).write(media.file(".narration.wav"));
+        writeTrack(media, scenes, clips);
         final Voice voice = new Voice(media, command, pronunciation);
         speakSlides(voice, slides.intro(), "intro");
         speakSlides(voice, slides.closing(), "closing");
@@ -90,58 +89,29 @@ public final class LessonVideo {
                 slides.intro().size() + slides.closing().size());
     }
 
-    static void assemble(final Media media) {
-        final Path folder = media.folder();
-        final String recording = String.valueOf(Zoom.zoomed(media).getFileName());
-        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
-                "-i", recording, "-i", media.name(".narration.wav"),
-                "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-c:a", "aac", "-b:a", "128k", media.name(".main.mp4")),
-                folder);
-        final Slides slides = media.slides();
-        final List<Splicer.Segment> intro = segments(media, slides.intro(), "intro");
-        final List<Splicer.Segment> closing = segments(media, slides.closing(), "closing");
-        final List<Path> videos = new ArrayList<>(intro.stream().map(Splicer.Segment::video).toList());
-        videos.add(media.file(".main.mp4"));
-        videos.addAll(closing.stream().map(Splicer.Segment::video).toList());
-        Splicer.join(videos, media.file(".joined.mp4"));
-        final List<Cue> cues = SpliceCaptions.cues(media, slides, new Splicer.Timings(intro, closing));
-        writeText(media.file(".vtt"), CaptionFile.webVtt(cues));
-        writeText(media.file(".srt"), CaptionFile.srt(cues));
-        final String picture = burnCaptions() ? burned(media, cues) : media.name(".joined.mp4");
-        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
-                "-i", picture, "-i", media.name(".vtt"), "-map", "0", "-map", "1", "-c", "copy",
-                "-c:s", "mov_text", "-metadata:s:s:0", "language=eng", media.name(".mp4")), folder);
-        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error",
-                "-i", media.name(".joined.mp4"), "-vn", "-c:a", "aac", "-b:a", "128k", media.name(".narration.m4a")),
-                folder);
-        log.info("{}: finished video written: {} intro slides, the recording, {} closing slides, voice and captions",
-                LogSafe.lesson(media), intro.size(), closing.size());
+    /* Every piece the voice reads for the video: each scene's narration, then each slide's. */
+    private static List<Spoken> everything(final List<Spoken> narration, final Slides slides,
+            final Pronunciation pronunciation) {
+        final List<Spoken> everything = new ArrayList<>(narration);
+        Stream.concat(slides.intro().stream(), slides.closing().stream())
+                .forEach(slide -> everything.add(Spoken.of(slide.narration(), pronunciation)));
+        return everything;
     }
 
-    /** Captions are burned into the picture unless {@code lessonBurnCaptions} is false. */
-    private static boolean burnCaptions() {
-        return Boolean.parseBoolean(System.getProperty("video.burnCaptions", "true"));
-    }
-
-    /** The joined video with its captions burned in, as {@code <id>.captioned.mp4}; returns its file name. */
-    private static String burned(final Media media, final List<Cue> cues) {
-        BurnedCaptions.burn(media.file(".joined.mp4"), cues, media.file(".captioned.mp4"));
-        return media.name(".captioned.mp4");
-    }
-
-    private static List<Splicer.Segment> segments(final Media media, final List<Slide> slides, final String kind) {
-        final List<Splicer.Segment> segments = new ArrayList<>();
-        for (int i = 0; i < slides.size(); i++) {
-            segments.add(Splicer.slide(media, kind + "-" + (i + 1), slides.get(i)));
+    /* The narration track: each scene's clip at its scene's start, if every clip fits its scene. */
+    private static void writeTrack(final Media media, final List<Scene> scenes, final List<WavFile> clips) {
+        final List<String> misfits = Voiceover.misfits(scenes, clips);
+        if (!misfits.isEmpty()) {
+            throw new IllegalStateException("The narration does not fit the video:\n  " + String.join("\n  ", misfits));
         }
-        return segments;
+        Voiceover.track(scenes, clips).write(media.file(".narration.wav"));
     }
 
-    /** The lesson, the voice command and how it should say awkward words. */
+    /* The lesson, the voice command and how it should say awkward words. */
     private record Voice(Media media, List<String> command, Pronunciation pronunciation) {
     }
 
-    /** Each slide's clip, from the lesson's store of spoken clips, kept as {@code <kind>-<n>.wav} for the splicer. */
+    /* Each slide's clip, from the lesson's store of spoken clips, kept as {@code <kind>-<n>.wav} for the splicer. */
     private static void speakSlides(final Voice voice, final List<Slide> slides, final String kind) {
         for (int i = 0; i < slides.size(); i++) {
             VoiceClips.wav(voice.media(), voice.command(), Spoken.of(slides.get(i).narration(), voice.pronunciation()))
@@ -149,15 +119,7 @@ public final class LessonVideo {
         }
     }
 
-    private static void writeText(final Path file, final String text) {
-        try {
-            Files.writeString(file, text);
-        } catch (IOException e) {
-            throw new UncheckedIOException(e);
-        }
-    }
-
-    /** Speaks one piece of narration: each part between pause markers, joined with the pauses' silence. */
+    /* Speaks one piece of narration: each part between pause markers, joined with the pauses' silence. */
     static WavFile speak(final List<String> command, final String narration, final Path clip) {
         return Speech.readAll(command, List.of(Speech.of(narration, clip))).getFirst();
     }

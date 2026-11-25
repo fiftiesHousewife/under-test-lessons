@@ -64,7 +64,7 @@ night when nobody set `PAYMENT_LIMIT_PENCE`. Pin what the program does then, bef
    the same without reaching `System.exit`, so the answer runs alone against today's program with:
 
 ```bash
-./gradlew :lessons:old-command-line-programs:test -Pcode=answer   # the answer alone, against today's program: all 1 tests passed, so it holds before the change too
+./gradlew :lessons:old-command-line-programs:test -Pcode=answer   # the answer alone, against today's program: 1 test passed, so it holds before the change too
 ```
 
 ## Watch it, or present it

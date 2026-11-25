@@ -3,8 +3,6 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.gradle.pitest.plugin)
-    implementation(libs.gradle.spotbugs.plugin)
-    implementation(libs.gradle.forbiddenapis.plugin)
-    implementation(libs.gradle.versions.plugin)
+    // The shared code-quality standards, published to Maven Central; the lesson plugin applies them.
+    implementation(libs.java.conventions.plugin)
 }

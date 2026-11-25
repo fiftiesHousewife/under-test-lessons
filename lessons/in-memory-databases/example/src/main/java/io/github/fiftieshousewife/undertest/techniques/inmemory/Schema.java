@@ -15,13 +15,12 @@ import java.util.stream.Collectors;
 /** The database's tables, from the one schema file the application applies to production, and tests apply too. */
 public final class Schema {
 
-    /** The schema file, on the classpath. */
-    public static final String FILE = "/db/schema.sql";
+    public static final String FILE = "/db/schema.sql"; // The schema file, on the classpath.
 
     private Schema() {
     }
 
-    /** Creates every table and index in the schema file. */
+    /* Creates every table and index in the schema file. */
     @SuppressFBWarnings(value = {"SQL_NONCONSTANT_STRING_PASSED_TO_EXECUTE", "SQL_INJECTION_JDBC"},
             justification = "The statements come from the application's own schema file, never from users")
     public static void apply(final Connection connection) throws SQLException {

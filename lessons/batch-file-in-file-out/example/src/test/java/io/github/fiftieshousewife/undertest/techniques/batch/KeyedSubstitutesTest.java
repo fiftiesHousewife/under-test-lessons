@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Test;
 
-/** A captured file is masked with keyed substitutes: one account number gets one substitute, in every file. */
+/* A captured file is masked with keyed substitutes: one account number gets one substitute, in every file. */
 class KeyedSubstitutesTest {
 
     @Test

@@ -19,11 +19,11 @@ public final class RewrittenPostage implements Postage {
         if (grams <= 0 || grams > MAX_GRAMS) {
             throw new IllegalArgumentException("a parcel weighs from 1 g to 5 kg");
         }
-        for (final Band band : bands) {
-            if (grams <= band.upToGrams()) {
-                return band.pence();
-            }
-        }
+        return bands.stream().filter(band -> grams <= band.upToGrams()).findFirst()
+                .map(Band::pence).orElseGet(() -> overTheLastBand(grams));
+    }
+
+    private int overTheLastBand(final int grams) {
         final Band last = bands.getLast();
         final int extraHalfKilos = (grams - last.upToGrams() + 499) / 500;
         return last.pence() + extraHalfKilos * EXTRA_PENCE_PER_HALF_KILO;

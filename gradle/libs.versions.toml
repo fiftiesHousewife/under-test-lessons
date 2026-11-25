@@ -1,6 +1,8 @@
 # One catalogue for the whole repository. build-logic reads it with from(files("../gradle/libs.versions.toml")).
 
 [versions]
+# The shared code-quality standards every project applies, through build-logic's lesson plugin.
+java-conventions = "0.2.0"
 jetcheck = "0.3.0"
 approvaltests = "32.1.0"
 archunit = "1.5.1"
@@ -72,6 +74,7 @@ pact-jvm = "4.7.7"
 spring-boot = "4.2.0"
 
 [libraries]
+java-conventions-plugin = { module = "io.github.fiftieshousewife.java-conventions:io.github.fiftieshousewife.java-conventions.gradle.plugin", version.ref = "java-conventions" }
 jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
 approvaltests = { module = "com.approvaltests:approvaltests", version.ref = "approvaltests" }
 archunit = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
