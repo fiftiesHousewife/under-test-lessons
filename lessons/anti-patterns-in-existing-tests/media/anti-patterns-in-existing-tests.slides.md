@@ -1,10 +1,6 @@
 # Slides: Anti-patterns in existing tests
 
-Sources: the toolkit's decision guide, Anti-patterns in existing tests are recorded and triaged, and no existing test
-is deleted before the approval-test baseline exists (record, triage and fix in order; disabled tests to the
-Application Owner; tests that reach shared systems tagged and left out of normal runs; coverage overstates how far the
-tests can be trusted); the seven common kinds, how each is counted (a
-disabled test counted as disabled only, five or more mocks); ArchUnit's user guide (it reads compiled classes; frozen rules
+Sources: ArchUnit's user guide (it reads compiled classes; frozen rules
 record today's violations in a store and fail only on new ones); Maven Central (ArchUnit 0.4.0, April 2017); PMD's
 documentation (CPD, the copy-paste detector, with a minimum number of tokens; 75 in this repository's build); van
 Deursen, Moonen, van den Bergh and Kok, Refactoring Test Code, XP2001, Cagliari, May 2001 (a catalogue of test

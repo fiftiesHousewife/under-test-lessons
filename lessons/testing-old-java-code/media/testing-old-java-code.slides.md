@@ -3,8 +3,7 @@
 The overview lesson: slides only, with no video script. Each technique slide links the lessons that teach it; planned
 lessons are marked "coming". Written to be spoken: plain English, each term explained before it is used.
 
-Sources: this series' own lessons and their READMEs, its catalogue (lessons/CATALOGUE.md), and the techniques and
-decision guides of the toolkit these lessons go with. Every fact on these slides is shown in a linked lesson, except
+Sources: this series' own lessons and their READMEs, and its catalogue (lessons/CATALOGUE.md). Every fact on these slides is shown in a linked lesson, except
 the software vice and the definition of legacy code, from Michael Feathers' Working Effectively with Legacy Code
 (Prentice Hall, 2004, in Robert C. Martin's series). The voice never mentions lessons still to come; the slides mark
 them "coming".

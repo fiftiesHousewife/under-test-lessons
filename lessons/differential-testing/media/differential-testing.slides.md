@@ -1,8 +1,7 @@
 # Slides: differential testing
 
 Sources: William M. McKeeman, "Differential Testing for Software", Digital Technical Journal, volume 10, number 1,
-1998; the toolkit's differential-testing technique (replaying recorded traffic with Keploy, or WireMock recordings
-with ApprovalTests; not Diffy, which is archived and whose only fork has a non-commercial licence).
+1998.
 
 ## intro: Differential testing
 - The problem: the rewrite overcharges, and its tests pass

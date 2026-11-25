@@ -291,9 +291,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 31          final byte[] keyed = mac.doFinal(account.getBytes(StandardCharsets.UTF_8));</mark>
 <mark> 32          return &quot;TEST-%012x&quot;.formatted(ByteBuffer.wrap(keyed).getLong() &gt;&gt;&gt; UNUSED_BITS);</mark>
  33      }</pre></figure></main><aside class="notes">The second test uses a day of real files, masked before we kept them. We replaced each account number with a keyed substitute, made with a keyed hash that comes with Java, and a fixed test key. The same number always gets the same substitute, so each payment still matches its line in the settlement file.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/3703ecb39fc7442f.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The records name the gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's job</li></ul><p class="callout">Every piece is right. The records show the closing line, with the count and total, is missing.</p></section><figure class="code" style="--code-size: 18px"><pre class="command">$ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today</pre><pre class="output">KeyedSubstitutesTest &gt; anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
-PaymentLineTest &gt; readsAPaymentAndWritesItsSettlementLine() PASSED
-WholeJobTest &gt; aMaskedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The records name the gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's job</li></ul><p class="callout">Every piece is right. The records show the closing line, with the count and total, is missing.</p></section><figure class="code" style="--code-size: 18px"><pre class="command">$ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today</pre><pre class="output">WholeJobTest &gt; aMaskedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=6, total=427.14]
@@ -303,6 +301,8 @@ WholeJobTest &gt; syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() FAILED
     	org.opentest4j.AssertionFailedError: [closing line]
     expected: ClosingRecord[count=12, total=17148.88]
      but was: null
+KeyedSubstitutesTest &gt; anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
+PaymentLineTest &gt; readsAPaymentAndWritesItsSettlementLine() PASSED
 SettlementTotalsTest &gt; aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
 SettlementTotalsTest &gt; aFreshStepStartsFromNothing() PASSED
 6 tests completed, 2 failed</pre></figure></main><aside class="notes">We run the tests against today's job. The tests of the pieces pass. The whole-job tests fail, and name the record that is wrong: the closing line, with the count and the total, is missing. The bank would reject the file.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/73bbbffab239e55c.m4a"></audio></section>
@@ -318,7 +318,7 @@ SettlementTotalsTest &gt; aFreshStepStartsFromNothing() PASSED
 WholeJobTest &gt; syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() PASSED
 KeyedSubstitutesTest &gt; anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
 PaymentLineTest &gt; readsAPaymentAndWritesItsSettlementLine() PASSED
-ManyChunksAnswerTest &gt; theClosingLineCoversEveryChunk() PASSED
+ManyChunksAnswerTest &gt; theFileHoldsALineForEveryPaymentInEveryChunk() PASSED
 SettlementTotalsTest &gt; aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
 SettlementTotalsTest &gt; aFreshStepStartsFromNothing() PASSED
 All 7 tests passed.</pre></figure></main><aside class="notes">Now the writer that counts and adds up the lines as it writes them, and then writes the closing line the bank checks. We run the same tests. Every record matches.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/bef282c783b37c26.m4a"></audio></section>

@@ -6,8 +6,7 @@ MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH given for Post
 the differences between databases are implemented in this way"); h2database.com history page (development started in
 May 2004, first published in December 2005, by the author of Hypersonic SQL; H2 stands for Hypersonic 2 and shares no
 code with it); h2database.com licence page (MPL 2.0 or EPL 1.0); this repository's decision that every lesson works
-inside a company (many company laptops, Windows ones especially, can't run containers); the toolkit's
-database-unit-tests technique (an in-memory database is not evidence of what a different database product does).
+inside a company (many company laptops, Windows ones especially, can't run containers).
 
 ## intro: When an in-memory database is enough
 - The problem: the shop's first invoice is number 0
