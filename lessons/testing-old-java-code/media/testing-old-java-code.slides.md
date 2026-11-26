@@ -39,30 +39,30 @@ Say: Tests do two different jobs. Some record what the code does today, right or
   kind before the second, because you can't safely fix a rule until you know what the code does now.
 
 ## intro: Before you change anything
-- Plug the leaks: no secret or personal data gets out
-- Take stock: can the tests we have be trusted?
+- Plug the leaks: what secrets or personal data could leak?
+- Take stock: can the tests we have now be trusted?
 - Pin it down: what does the code do now, right or wrong?
 Picture: map
-Say: The journey has nine stages, in three parts. [pause 600ms] The first part comes before any change. Plug the leaks,
-  so no secret or personal data gets out. [pause 400ms] Take stock: can the tests we have be trusted? [pause 400ms] And
-  pin it down: what does the code do now, right or wrong? [pause 600ms] In practice, taking stock, pinning it down and
-  digging deeper often happen side by side.
+Say: The journey has nine stages. [pause 600ms] The first three come before any change. Plug the leaks,
+  so no secret or personal data gets out. [pause 400ms] Take stock: can the tests we have now be trusted? [pause 400ms] And
+  pin it down: what does the code do now, right or wrong?
 
 ## intro: Getting ready to change
 - Dig deeper: what is the code really for?
-- Unplug it: test without the real systems around it
-- Open it up: test code that won't let us in
+- Unplug it: how do we test it without the real systems around it?
+- Open it up: how do we test code that won't let us in?
 Picture: road
-Say: The second part gets the code ready to change. Dig deeper: what is the code really for? [pause 400ms] Unplug it, so
+Say: The next three get the code ready to change. Dig deeper: what is the code really for? [pause 400ms] Unplug it, so
   it can be tested without the real systems around it. [pause 400ms] And open it up, so code that won't let a test in
-  can be tested at all.
+  can be tested at all. [pause 600ms] In practice, taking stock, pinning it down and digging deeper often happen side
+  by side.
 
 ## intro: Changing, and staying changed
-- Change with a safety net: old and new compared, new code behind a switch
-- Stop the rot: every change held to a higher standard than the old code
-- Hone the tests: fewer tests that check more, and fail for a reason
+- Change with a safety net: how do we change it without breaking it?
+- Stop the rot: how do we keep it from getting worse?
+- Hone the tests: how do we write tests that stay useful?
 Picture: checklist
-Say: The third part is the change itself, and what keeps it good. Change with a safety net: compare old and new, and put
+Say: The last three are the change itself, and what keeps it good. Change with a safety net: compare old and new, and put
   new code behind a switch. [pause 400ms] Stop the rot, so every change is held to a higher standard than the old code.
   [pause 400ms] And hone the tests: fewer tests that check more, and fail for a reason.
 

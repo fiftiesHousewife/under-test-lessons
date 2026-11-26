@@ -30,7 +30,7 @@ viewer already has. Each slide: a title, at most three points, one picture, and 
 
 **Part 3. The techniques, as answers to questions (one slide per question, lessons linked)**
 
-6. **Can we trust the tests we have?** Coverage only says which lines ran. Mutation testing plants small bugs and
+6. **Can we trust the tests we have now?** Coverage only says which lines ran. Mutation testing plants small bugs and
    counts how many the tests catch. → Mutation testing.
 7. **What does the code do today?** Treat the application as a black box: start it as it ships, drive it through its
    edges (API, messages, files), and record what comes out, before touching anything inside. → Black-box tests of a

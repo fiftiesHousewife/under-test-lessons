@@ -28,7 +28,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 ## Take stock
 
-**Can the tests we have be trusted?** Measure what the existing tests really check: plant bugs to see which they catch, look for habits that make them look stronger than they are, and find the ones that flake. A coverage figure only says which lines ran.
+**Can the tests we have now be trusted?** Measure what the existing tests really check: plant bugs to see which they catch, look for habits that make them look stronger than they are, and find the ones that flake. A coverage figure only says which lines ran.
 
 **Techniques:** mutation testing, test smells, flaky-test detection. **Tools:** PIT, ArchUnit, Awaitility, JUnit. **References:** DeMillo, Lipton and Sayward, [*Hints on Test Data Selection*](https://doi.org/10.1109/C-M.1978.218136) (1978); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007); Fowler, [*Eradicating Non-Determinism in Tests*](https://martinfowler.com/articles/nonDeterminism.html) (2011).
 

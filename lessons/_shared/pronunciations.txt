@@ -86,8 +86,8 @@ rewrites = /ɹˈiːɹaɪts/
 rewrite = /ɹˈiːɹaɪt/
 Rewrite = /ɹˈiːɹaɪt/
 # Stressed on out and in.
-Outside-in = /aʊtsaɪd ˈɪn/
-outside-in = /aʊtsaɪd ˈɪn/
+Outside-in = /ˌaʊtsaɪd ˈɪn/
+outside-in = /ˌaʊtsaɪd ˈɪn/
 # Stressed on what the service does, not on the service.
 old service receives and sends = /əʊld sɜːvɪs ɹɪsˈiːvz ən sˈɛndz/
 2005 = two thousand and five
@@ -226,13 +226,14 @@ Legacy Code = /lˈɛɡəsi kˈəʊd/
 Legacy code = /lˈɛɡəsi kˈəʊd/
 slice test = /slˈaɪs tɛst/
 integration test = /ˌɪntɪɡɹˈeɪʃən tɛst/
-outside-in tests = /aʊtsaɪd ˈɪn tˈɛsts/
-outside-in test = /aʊtsaɪd ˈɪn tˈɛst/
+outside-in tests = /ˌaʊtsaɪd ˈɪn tˌɛsts/
+outside-in test = /ˌaʊtsaɪd ˈɪn tˌɛst/
 end-to-end test = /ˌɛnd tʊ ˈɛnd tɛst/
 example test = /ɛɡzˈɑːmpəl tɛst/
 test suites = /tˈɛst swiːts/
 message broker = /mˈɛsɪdʒ bɹəʊkə/
-Outside-in tests = /aʊtsaɪd ˈɪn tˈɛsts/
+Outside-in tests = /ˌaʊtsaɪd ˈɪn tˌɛsts/
+outside-in HTTP tests = /ˌaʊtsaɪd ˈɪn ˌeɪtʃtiːtiːpˈiː tˌɛsts/
 loyalty provider's = /lˈɔɪəltipɹəvaɪdəz/
 loyalty provider = /lˈɔɪəltipɹəvaɪdə/
 # Names said as one name, the way their users say them
@@ -307,6 +308,8 @@ anti-pattern = /ˈantipatən/
 Anti-patterns = /ˈantipatənz/
 class mocks = /klˈɑːs mˈɒks/
 worth having = /wˈɜːθ havɪŋ/
+tests we have now = /tˈɛsts wiː hˈav nˈaʊ/
+safety net = /sˈeɪfti nɛt/
 online shop = /ɒnlaɪn ʃˈɒp/
 Online shop = /ɒnlaɪn ʃˈɒp/
 Online Shop = /ɒnlaɪn ʃˈɒp/
