@@ -1,31 +1,30 @@
 # Backlog
 
-Open work for this repository, generated from the issue tracker by [tools/backlog-import](../tools/backlog-import/README.md) after each import. Do not edit by hand.
+Open work for this repository, generated from the issue tracker by [under-test's backlog importer](https://github.com/fiftiesHousewife/under-test/blob/main/tools/backlog-import/README.md) after each import. Do not edit by hand.
 
 Ordered by horizon (now, next, later), then items that are ready before items waiting on others.
 
-## [Every lesson has a finished video, made from its script and published](https://github.com/fiftiesHousewife/under-test-lessons/issues/1)
+## [Every lesson has a finished deck: voiced, with its live runs as clips, and published](https://github.com/fiftiesHousewife/under-test-lessons/issues/1)
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #2 | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) | deliverable | Lessons Owner | person | – |
-| #66 | [Publish each lesson's video as a release asset, with a manifest](https://github.com/fiftiesHousewife/under-test-lessons/issues/66) | deliverable | Lessons Owner | ai | – |
+| #112 | [Decks with clips replace the lesson videos: the full video mode is removed](https://github.com/fiftiesHousewife/under-test-lessons/issues/112) | deliverable | Lessons Owner | ai | – |
+| #113 | [Deck clips record only the scenes that changed, in one session per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/113) | deliverable | Lessons Owner | ai | – |
+| #114 | [The code scenes talk the viewer through the code on screen](https://github.com/fiftiesHousewife/under-test-lessons/issues/114) | deliverable | Lessons Owner | ai | – |
+| #2 | [Review every lesson's deck, with its voice and clips](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) | deliverable | Lessons Owner | person | – |
 | #99 | [Slides about a thing show it drawn in the speech bubble](https://github.com/fiftiesHousewife/under-test-lessons/issues/99) | deliverable | Lessons Owner | ai | – |
 | #100 | [Diagrams are drawn in Excalidraw and exported in the build](https://github.com/fiftiesHousewife/under-test-lessons/issues/100) | deliverable | Lessons Owner | ai | – |
-| #3 | [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3) | deliverable | Lessons Owner | ai | [Review every lesson's slides and deck before videos are rendered](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) |
 | #9 | [Large hand-drawn objects on the slides about the subject](https://github.com/fiftiesHousewife/under-test-lessons/issues/9) | deliverable | Lessons Owner | ai | – |
 | #10 | [Different people on the slides in different lessons](https://github.com/fiftiesHousewife/under-test-lessons/issues/10) | deliverable | Lessons Owner | ai | – |
-| #12 | [Render videos in CI and publish them with each release](https://github.com/fiftiesHousewife/under-test-lessons/issues/12) | deliverable | Lessons Owner | tool | – |
 
 ## [The planned lessons are built, in the catalogue's order](https://github.com/fiftiesHousewife/under-test-lessons/issues/13)
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #16 | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) | deliverable | Lessons Owner | ai | – |
+| #115 | [Lesson: checks after release](https://github.com/fiftiesHousewife/under-test-lessons/issues/115) | deliverable | Lessons Owner | ai | – |
 | #106 | [Lesson: fuzzing with Jazzer](https://github.com/fiftiesHousewife/under-test-lessons/issues/106) | deliverable | Lessons Owner | ai | – |
 | #107 | [Lesson: concurrency tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/107) | deliverable | Lessons Owner | ai | – |
 | #108 | [Lesson: AI-drafted tests, judged by mutation testing](https://github.com/fiftiesHousewife/under-test-lessons/issues/108) | deliverable | Lessons Owner | ai | – |
-| #15 | [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15) | deliverable | Lessons Owner | ai | [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16) |
 | #109 | [Lesson: metamorphic tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/109) | deliverable | Lessons Owner | ai | – |
 | #110 | [Lesson: load tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/110) | deliverable | Lessons Owner | ai | – |
 | #111 | [Decide whether to teach formal verification](https://github.com/fiftiesHousewife/under-test-lessons/issues/111) | deliverable | Lessons Owner | ai | – |
@@ -57,7 +56,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #50 | [Automatic rebranding of each release's videos](https://github.com/fiftiesHousewife/under-test-lessons/issues/50) | deliverable | Lessons Owner | tool | – |
+| #116 | [A company brands every deck from one folder: look, pictures, header and footer, its own opening and closing slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/116) | deliverable | Lessons Owner | ai | – |
 | #70 | [CI proves the inside copy builds with only a company's Maven repository](https://github.com/fiftiesHousewife/under-test-lessons/issues/70) | deliverable | Lessons Owner | ai | – |
 
 ## [This repo keeps itself in order: its checks, sync, CI and tools](https://github.com/fiftiesHousewife/under-test-lessons/issues/51)
@@ -66,3 +65,14 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |---|---|---|---|---|---|
 | #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
 | #94 | [The README's lesson count comes from the catalogue](https://github.com/fiftiesHousewife/under-test-lessons/issues/94) | deliverable | Lessons Owner | tool | – |
+
+## Dropped
+
+Work decided against, kept in the backlog file as a record.
+
+- [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
+- [Render videos in CI and publish them with each release](https://github.com/fiftiesHousewife/under-test-lessons/issues/12): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
+- [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
+- [Slides-only videos: a lesson whose video is its slides and their narration](https://github.com/fiftiesHousewife/under-test-lessons/issues/16): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
+- [Automatic rebranding of each release's videos](https://github.com/fiftiesHousewife/under-test-lessons/issues/50): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
+- [Publish each lesson's video as a release asset, with a manifest](https://github.com/fiftiesHousewife/under-test-lessons/issues/66): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
