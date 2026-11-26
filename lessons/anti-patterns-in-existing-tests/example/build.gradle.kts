@@ -15,7 +15,7 @@ dependencies {
 // The old shop, as it came to us: its code and its tests, in old-shop/. Its tests are compiled but never run here, and
 // never changed: the checks read their compiled classes. It is the lesson's subject, not this repository's code, so
 // this repository's own quality checks don't apply to it.
-val oldShop by sourceSets.creating {
+val oldShop = sourceSets.create("oldShop") {
     java.setSrcDirs(listOf("old-shop/src/main/java", "old-shop/src/test/java"))
 }
 dependencies {
