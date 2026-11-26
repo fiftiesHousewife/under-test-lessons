@@ -17,8 +17,8 @@ up in this repository's build conventions.
 - The tools: PIT and JaCoCo
 Picture: road
 Say: Let's look at measuring tests against only the code a change touched, so old code with no tests doesn't block every
-  change. JaCoCo test coverage measures which lines the tests run, and PIT, from the lesson on mutation testing, plants
-  the bugs. We'll see a coverage rule that every change fails. Then PIT checks just the changed class instead.
+  change. JaCoCo measures which lines the tests run. PIT, from the lesson on mutation testing, plants small bugs for the
+  tests to catch. We'll see a coverage rule that every change fails. Then PIT checks just the changed class instead.
 
 ## intro: Our example: a shop's old pricing module
 - Delivery charges, VAT and order totals, written long ago, with no tests
@@ -38,10 +38,10 @@ Include: how-we-build
 - Maven builds: PIT's scmMutationCoverage goal asks git itself
 - Changed lines, not classes: diff-cover for coverage
 Picture: map
-Say: When should you use it? [pause 1600ms] On old code, from the first change that comes with tests. In pull requests,
-  gate only the change. A change to an old class mutates the whole class, so pin that class down with characterisation
-  tests first. On Maven, PIT's own goal, scm mutation coverage, asks git itself. And to check changed lines rather than
-  whole classes, diff-cover reports their coverage.
+Say: When should you check only the changed code? [pause 1600ms] On old code, from the first change that comes with
+  tests. In pull requests, gate only the change. A change to an old class mutates the whole class, so pin that class
+  down with characterisation tests first. On Maven, PIT's own goal, scm mutation coverage, asks git itself. And to check
+  changed lines rather than whole classes, diff-cover reports their coverage.
 
 ## closing: Where it came from
 - PIT's own advice: run mutation testing often, on only the code that changed

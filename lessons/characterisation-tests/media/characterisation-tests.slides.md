@@ -10,8 +10,8 @@ characterisation tests.
 - The tool: ApprovalTests
 Picture: road
 Say: The next stop on the journey is characterisation tests: tests that record what old code does today, right or wrong,
-  so any change is noticed. ApprovalTests is a library that saves a test's whole output, and compares each run before
-  and after. We'll see a tidy rewrite quietly change a bank statement, and ApprovalTests shows the difference.
+  so any change is noticed. ApprovalTests is a library that saves a test's whole output, and compares every later run
+  with it. We'll see a tidy rewrite quietly change a bank statement, and see ApprovalTests show the difference.
 
 ## intro: Our example: a bank statement printer
 - Prints a month of transactions with a running balance
@@ -29,9 +29,10 @@ Include: how-we-build
 - On outputs that are files, reports, messages or long text
 - A difference is a question, not automatically a bug: approve it, or fix the code
 Picture: map
-Say: When should you use them? [pause 1600ms] Before you change code you can't fully explain, and wherever the output is
-  a file, a report, or a message. When a test fails, treat the difference as a question. If the change is intended,
-  approve the new output. If not, fix the code. Then use mutation testing to see how much the tests really catch.
+Say: When should you use characterisation tests? [pause 1600ms] Before you change code you can't fully explain, and
+  wherever the output is a file, a report, or a message. When a test fails, treat the difference as a question. If the
+  change is intended, approve the new output. If not, fix the code. Then use mutation testing to see how much the tests
+  really catch.
 
 ## closing: Where they came from
 - Michael Feathers named characterisation tests in Working Effectively with Legacy Code, in 2004

@@ -59,9 +59,9 @@ Say: The journey has nine stages. [pause 600ms] Plug the leaks, [pause 300ms] ta
 - Take stock: can the tests we have now be trusted?
 - Pin it down: what does the code do now, right or wrong?
 Picture: door
-Say: The first three stages come before any change. Plug the leaks, so no secret or personal data gets out. [pause
-  400ms] Take stock: can the tests we have now [pause 400ms] be trusted? [pause 400ms] And pin it down: what does the
-  code do now, right or wrong?
+Say: The first three stages come before any change. Plug the leaks, so no secret or personal data gets out.
+  [pause 400ms] Take stock: can the tests we have now [pause 400ms] be trusted? [pause 400ms] And pin it down: what does
+  the code do now, right or wrong?
 
 ## intro: Getting ready to change
 - Dig deeper: what is the code really for?
@@ -78,9 +78,9 @@ Say: The next three get the code ready to change. Dig deeper: what is the code r
 - Stop the rot: how do we keep it from getting worse?
 - Hone the tests: how do we write tests that stay useful?
 Picture: checklist
-Say: The last three are the change itself, and what keeps it good. Change with a safety net: compare old and new, and put
-  new code behind a switch. [pause 400ms] Stop the rot, so every change is held to a higher standard than the old code.
-  [pause 400ms] And hone the tests: fewer tests that check more, and fail for a reason.
+Say: The last three are the change itself, and what keeps it good. Change with a safety net: compare old and new, and
+  put new code behind a switch. [pause 400ms] Stop the rot, so every change is held to a higher standard than the old
+  code. [pause 400ms] And hone the tests: fewer tests that check more, and fail for a reason.
 
 ## intro: From small to large
 - A unit test checks one class
@@ -126,8 +126,8 @@ Picture: bug
 Say: Once nothing can leak, the next question is whether the tests can be trusted. That brings us to mutation testing.
   [pause 600ms] Mutation testing plants small bugs in the code, one at a time, and counts how many the tests catch. The
   tool is PIT. [pause 600ms] Line coverage only says which lines the tests ran. Mutation testing says whether they
-  checked anything useful. Two more lessons find the tests that only look strong, and the ones that pass on one run and fail on
-  the next.
+  checked anything useful. Two more lessons find the tests that only look strong, and the ones that pass on one run and
+  fail on the next.
 
 ## intro: Pin it down: characterisation
 - Treat the application as a black box: drive it through its edges
@@ -171,9 +171,9 @@ Say: So far, the tests record what the code does. Now we dig deeper: what is it 
 Picture: server
 Say: With its purpose clear, we can unplug the code from the systems around it. [pause 600ms] A stand-in takes the place
   of a real system in a test. WireMock replays recorded answers for services you don't own. A small fake stands in for
-  anything you talk to a lot, and Mockito, used well, for what's left. [pause 600ms] H2 is an in-memory database, right
-  where the code uses only plain SQL. And where the database's own behaviour matters, Testcontainers starts a real one
-  in a throwaway container.
+  anything you talk to a lot, and Mockito, used well, for what's left. [pause 600ms] H2, an in-memory database, is the
+  right choice where the code uses only plain SQL. And where the database's own behaviour matters, Testcontainers starts
+  a real one in a throwaway container.
 
 ## intro: Open it up: dependency injection
 - It reaches out for what it needs: the clock, a static, a hard-wired service

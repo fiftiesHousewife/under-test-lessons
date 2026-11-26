@@ -47,4 +47,4 @@ Say: JUnit 4 had runners and rules for this, such as the temporary folder rule. 
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on extensions. The links on screen also take you to this
   lesson's test code and examples, to run yourself. And try the exercise in the README: a delivery note that puts the
-  VAT rate back to the standard, whatever it was, which only a test that looks inside can find.
+  VAT rate back to the standard rate, whatever it was before. Only a test that checks the rate itself finds that.

@@ -26,9 +26,9 @@ their own narration, in [capturing-with-logbook.slides.md](capturing-with-logboo
 7. We run the tests against today's capture. The weak test passes. Both strong tests fail. The recording holds all 3
    secrets, and the approval summary shows where. Both Authorization headers carry the real tokens, and both bodies
    carry the customer's real email address. Once a secret is in a log or a file, it is hard to take back.
-8. Next, the filtered capture. It puts Logbook's Authorization filter back, beside its own header filter. That filter
-   writes XXX in place of each token. And a JSON body filter replaces every email field with a made-up address that no
-   real person uses. We run the same tests. [pause 1s] Every test passes.
+8. Next, the filtered capture. It puts Logbook's Authorization filter back, beside its own header filter. The
+   Authorization filter writes XXX in place of each token. And a JSON body filter replaces every email field with a
+   made-up address that no real person uses. We run the same tests. [pause 1s] Every test passes.
 9. Last, the approved capture: the file a person checked, which the tests compare against. The service received the
    request with its token replaced by XXX. It sent the loyalty provider a request with the key hidden too, and a
    stand-in email address. Both answers follow. This file is safe to keep beside the tests.

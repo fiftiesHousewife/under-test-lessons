@@ -34,7 +34,7 @@ Type@1ms `show TodaysRefundPolicy 8 21 "today's refunds" --zoom 16`
 Enter
 Sleep 300ms
 Show
-Sleep 25s
+Sleep 27s
 
 # ---- Scene 2: the weak tests ----
 Hide

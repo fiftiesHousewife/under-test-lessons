@@ -25,12 +25,12 @@ closing slides have their own narration, in
 7. Two tests use the rules. At the top, ArchUnit imports the compiled classes of the old shop's tests, and picks out
    every test among them. No test runs. The first test lists every finding, with its test, file and line, and never
    fails on an old one. The second is the ratchet, which turns one way only. It compares the findings with the
-   register, and fails on any finding missing from the register, and on any row it no longer finds.
+   register, and fails on any finding missing from the register, and on any row whose finding has gone.
 8. We run the checks with no register yet. [pause 1s] The list names 9 anti-patterns in 8 of the 13 tests, each with its
    file and line. None is in the register, so the ratchet fails, and says 9 are missing. The first step is to write
    them down.
 9. Here is the register, written down after triage. One row for each finding, with its decision. The disabled test goes
-   to the shop's owner. The tests that wait or depend on order are fixed with the flaky tests. The rest are
-   strengthened. No test is deleted.
+   to the shop's owner. We fix the tests that wait or depend on order with the flaky tests, strengthen the rest, and
+   delete none.
 10. We run the same checks with the register. [pause 1s] All 5 tests pass. Every finding has its decision beside it, and
     a new anti-pattern would now fail the build.

@@ -34,7 +34,7 @@ Type@1ms `show StockCheckTest 8 22 "quick tests" --zoom 11`
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 31s
 
 # ---- Scene 2: slow tests ----
 Hide

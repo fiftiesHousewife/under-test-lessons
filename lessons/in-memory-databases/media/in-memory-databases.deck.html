@@ -298,7 +298,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  33      @Override
  34      public void close() throws SQLException {
  35          keepAlive.close(); // the last connection closes, and the database and its rows are gone
- 36      }</pre></figure></main><aside class="notes">Now, a fresh database for each test, held in memory. Each gets its own name, and the settings from H2's documentation that bring it closer to PostgreSQL. That same documentation says the mode covers only a small part of the differences. So it narrows the gap, and doesn't close it. The database keeps one connection open, and applies the real schema. When it closes that connection, the database and its rows are gone. After the first, each takes a few milliseconds.</aside><audio class="voice" preload="none" src="in-memory-databases.deck-voice/3ce3589c1b78563d.m4a"></audio></section>
+ 36      }</pre></figure></main><aside class="notes">Now, a fresh database for each test, held in memory. Each gets its own name, and the settings from H2's documentation that bring it closer to PostgreSQL. That same documentation says these settings cover only a small part of the differences. So they narrow the gap, and don't close it. The database keeps one connection open, and applies the real schema. When it closes that connection, the database and its rows are gone. After the first, each new database takes only a few milliseconds.</aside><audio class="voice" preload="none" src="in-memory-databases.deck-voice/90144f78380f45a1.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong tests</h1><div class="rule"></div><ul class="scene-points"><li class="point">A fresh database before each test, thrown away after</li><li class="point">The strong tests can check exact numbers</li></ul></section><figure class="code" style="--code-size: 16px"><figcaption>before and after each test</figcaption><pre> 17      @BeforeEach
  18      void startAFreshDatabase() throws SQLException {
 <mark> 19          database = FreshDatabase.start();</mark>
@@ -565,7 +565,7 @@ All 8 tests passed.</pre></figure></main><aside class="notes">Now the fix. With 
   // Edit voice: only where the voice review runs on this machine (production/voice-review), which
   // answers at localhost; anywhere else the button never appears. It opens the review of this lesson's voice.
   var REVIEW = 'http://localhost:8765';
-  var lesson = (location.pathname.split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
+  var lesson = ((location.pathname || '').split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
   if (lesson && window.fetch && window.AbortController) {
     var asking = new AbortController();
     setTimeout(function () { asking.abort(); }, 1000);

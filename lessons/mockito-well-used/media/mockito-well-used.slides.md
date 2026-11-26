@@ -14,7 +14,7 @@ stubs and fakes.
 Picture: road
 Say: We're going to look at using Mockito well. Mockito is a library that makes stand-ins for objects. Used well, it
   mocks only the edge where the code reaches the outside world, and checks what the code really did. We'll see a refund
-  for the wrong amount, and every test passes. Then a fake and one mock catch it.
+  for the wrong amount, while every test passes. Then a fake and one mock catch it.
 
 ## intro: Our example: refunds for returned items
 - A customer orders a mug at £12.50 and a teapot at £25
@@ -34,8 +34,8 @@ Include: how-we-build
 - For something the code reads and writes a lot, such as a store or a queue, a fake is better
 Picture: map
 Say: When should you reach for Mockito? [pause 1600ms] Make stand-ins only for interfaces you own, at the edges of your
-  code, such as payments, messages and mail. Check results, and capture what crosses the edge, and check it exactly. And
-  for something your code reads and writes a lot, such as a store or a queue, a small fake is better than a mock.
+  code, such as payments, messages and mail. Check results. Capture what crosses the edge, and check it exactly. And for
+  something your code reads and writes a lot, such as a store or a queue, a small fake is better than a mock.
 
 ## closing: Where Mockito came from
 - Started by Szczepan Faber in 2008

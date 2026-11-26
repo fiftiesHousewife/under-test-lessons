@@ -4,8 +4,8 @@ One item per scene of [behaviour-as-examples.tape](behaviour-as-examples.tape). 
 own narration, in [behaviour-as-examples.slides.md](behaviour-as-examples.slides.md). Written to be spoken.
 
 1. Here is the code under test, today's refund rules, as the tills run them. It counts the days between buying and
-   returning. Returned in time, with a receipt, the customer gets a refund to their card. In time means fewer than 30
-   days.
+   returning. If the item comes back in time, with a receipt, the customer gets a refund to their card. In time means
+   fewer than 30 days.
 2. These are the weak tests, written by a developer who read the code, so they agree with it, mistakes and all.
    Returned after 5 days, or after 60 days, with and without a receipt. Both are far from the 30 day boundary. No test
    tries day 30, or day 31.

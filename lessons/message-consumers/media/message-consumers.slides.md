@@ -48,9 +48,10 @@ Include: how-we-build
 - In discovery, with browsed and masked messages, to record what the consumer does today
 - Keep each test to seconds, so it runs on every pull request
 Picture: map
-Say: When should you use it? [pause 1600ms] Whenever code takes messages from a queue, because acknowledgement,
-  redelivery and dead letters only show up on a real broker. In discovery, use browsed and masked messages to record
-  what the consumer does today. And keep each test to a few seconds, so it runs on every pull request.
+Say: When should you test on a real broker? [pause 1600ms] Whenever code takes messages from a queue, because
+  acknowledgement, redelivery and dead letters only show up on a real broker. In discovery, use browsed and masked
+  messages to record what the consumer does today. And keep each test to a few seconds, so it runs on every pull
+  request.
 
 ## closing: Next: Kafka
 - Kafka consumers save their position in the topic, instead of acknowledging each message

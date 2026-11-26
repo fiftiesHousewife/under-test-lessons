@@ -46,9 +46,9 @@ Say: Watch out for one trap. [pause 600ms] Free text. [pause 600ms] A note on an
 - Fixed text for the rest
 - Run the guard on every masked copy before you keep it
 Picture: map
-Say: When should you do this? [pause 1s] Whenever you keep a copy of real data for tests. [pause 600ms] Use keyed
-  substitutes for anything that joins or repeats, and fixed text for the rest. [pause 600ms] And run the guard before
-  you keep the copy.
+Say: When should you mask a copy of real data? [pause 1s] Whenever you keep a copy of real data for tests. [pause 600ms]
+  Use keyed substitutes for anything that joins or repeats, and fixed text for the rest. [pause 600ms] And run the guard
+  before you keep the copy.
 
 ## closing: Masked is not anonymous
 - Whoever holds the key can link a substitute back to a person
@@ -65,7 +65,7 @@ Say: Is the masked copy anonymous, then? [pause 1600ms] No. [pause 600ms] Whoeve
 - HMAC, the keyed hash, was described in RFC 2104, in 1997
 - It comes with Java, as HmacSHA256
 Picture: book
-Say: RFC 2104 described HMAC, the keyed hash, in 1997, and it comes with Java.
+Say: HMAC, the keyed hash, was described in an internet standard, RFC 2104, in 1997, and it comes with Java.
 
 ## closing: Find out more
 - https://www.ftc.gov/policy/advocacy-research/tech-at-ftc/2024/07/no-hashing-still-doesnt-make-your-data-anonymous — the FTC on hashing

@@ -10,7 +10,7 @@ IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
 Picture: road
 Say: Let's look at property-based testing: rules that must always hold, checked against hundreds of made-up inputs.
   jetCheck is a library that makes up those inputs, and checks the rules against each. We'll see a bill split where one
-  person pays every penny left over. Then jetCheck finds it.
+  person pays every penny left over. Then jetCheck finds the unfair split.
 
 ## intro: Our example: splitting a bill
 - Share a bill, in pence, between several people
@@ -27,9 +27,9 @@ Include: how-we-build
 - Alongside example tests, not instead of them
 - Keep each smallest failing input as an example test too
 Picture: map
-Say: When should you use it? [pause 1600ms] For calculations, parsing and conversions, where a rule is easier to state
-  than every right answer. Use it alongside example tests, not instead of them. And when a property finds a bug, keep
-  the smallest failing input as an example test too.
+Say: When should you use property-based testing? [pause 1600ms] For calculations, parsing and conversions, where a rule
+  is easier to state than every right answer. Use it alongside example tests, not instead of them. And when a property
+  finds a bug, keep the smallest failing input as an example test too.
 
 ## closing: Where it came from
 - QuickCheck, by Koen Claessen and John Hughes, introduced the idea for Haskell in 2000

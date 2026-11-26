@@ -37,9 +37,9 @@ Include: how-we-build
 - First, pin down its output and exit codes with System Stubs, changing nothing else
 - Then make one small change: hand the program its exit, so it ends in one place
 Picture: map
-Say: When should you do this? [pause 1600ms] Before changing an old program that scripts or schedulers rely on. First,
-  pin down what it prints and how it ends, with System Stubs, changing as little as you can. Then make one small change:
-  hand the program its exit, so it ends in one place. After that, you can test every other change safely.
+Say: When should you test a program whole? [pause 1600ms] Before changing an old program that scripts or schedulers rely
+  on. First, pin down what it prints and how it ends, with System Stubs, changing as little as you can. Then make one
+  small change: hand the program its exit, so it ends in one place. After that, you can test every other change safely.
 
 ## closing: Where System Stubs came from
 - Stefan Birkner's System Rules, JUnit 4 rules for code that uses System

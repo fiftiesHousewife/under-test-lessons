@@ -290,7 +290,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  24      void showsWhatTheCourierSays() {
 <mark> 25          assertThat(bodyOf(&quot;/customers/ann/deliveries&quot;)).as(&quot;Ann's deliveries&quot;).contains(&quot;At the depot&quot;);</mark>
  26      }
- 27  }</pre></figure></main><aside class="notes">Now, the weak tests. Their base class starts the whole application on a free port: the database, and every setting. WireMock stands in for the courier, and a setting hands the application its address. Starting all that is slow, so people write these tests loosely. Each test only looks for words in the answer. None of them reads the date.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/2e17d6584405952c.m4a"></audio></section>
+ 27  }</pre></figure></main><aside class="notes">Now, the weak tests. Their base class starts the whole application on a free port: the database, and every setting. WireMock stands in for the courier, and a setting hands the application its address. Starting all that is slow, and tests like these tend to check loosely. Each test only looks for words in the answer. None of them reads the date.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/adc4d1537b95b765.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The web slice</h1><div class="rule"></div><ul class="scene-points"><li class="point">Only the controller and Spring's web layer, with the service stood in for</li></ul></section><figure class="code" style="--code-size: 16px"><figcaption>the web slice</figcaption><pre><mark> 17  @WebMvcTest(DeliveryController.class)</mark>
  18  class DeliveryWebSliceTest {
  19  
@@ -565,7 +565,7 @@ All 9 tests passed.</pre></figure></main><aside class="notes">Now the fixed answ
   // Edit voice: only where the voice review runs on this machine (production/voice-review), which
   // answers at localhost; anywhere else the button never appears. It opens the review of this lesson's voice.
   var REVIEW = 'http://localhost:8765';
-  var lesson = (location.pathname.split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
+  var lesson = ((location.pathname || '').split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
   if (lesson && window.fetch && window.AbortController) {
     var asking = new AbortController();
     setTimeout(function () { asking.abort(); }, 1000);

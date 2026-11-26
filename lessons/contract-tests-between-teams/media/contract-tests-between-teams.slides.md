@@ -39,9 +39,9 @@ Include: how-we-build
 Picture: map
 Say: When should you use contract tests? [pause 1600ms] Between services in one company, where both teams agree to run
   the checks. Keep the list of consumer versions you support in the provider's build, and change it by pull request.
-  Check the pacts before renaming or retyping a field, since they say who still reads it. They don't suit a supplier's
-  API, or a public one, where the other side won't run them. Check [pause 400ms] those [pause 400ms] against recorded
-  answers, or [pause 400ms] against a published OpenAPI schema.
+  Check the pacts before renaming or retyping a field, since they say who still reads it. Contract tests don't suit a
+  supplier's API, or a public one, where the other side won't run them. Check [pause 400ms] those [pause 400ms] against
+  recorded answers, or [pause 400ms] against a published OpenAPI schema.
 
 ## closing: Where it came from
 - Ian Robinson described consumer-driven contracts in 2006

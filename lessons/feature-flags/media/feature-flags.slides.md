@@ -10,8 +10,8 @@ martinfowler.com, 2017; Paul Hammant, "Branch by Abstraction", 2007.
 - The tool: OpenFeature
 Picture: road
 Say: This lesson covers feature flags: shipping new code behind a switch, and testing it with the switch both off and
-  on. OpenFeature is a standard way for code to read its flags. We'll see new shipping rules that would send a basket
-  free. Then OpenFeature lets a test choose each side.
+  on. OpenFeature is a standard way for code to read its flags. We'll see new shipping rules that would give a £20
+  basket free delivery. Then OpenFeature lets a test choose each side.
 
 ## intro: Our example: shipping costs
 - Delivery costs £3.99, and is free from £50

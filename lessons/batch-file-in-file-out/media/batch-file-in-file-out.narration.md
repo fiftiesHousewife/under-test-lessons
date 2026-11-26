@@ -8,8 +8,8 @@ their own narration, in [batch-file-in-file-out.slides.md](batch-file-in-file-ou
 2. Step two. The job itself uses Spring Batch. The tests use its test library, and Datafaker.
 3. Here is the code under test: the nightly job, written with Spring Batch. Its one step reads each payment, processes
    it into a settlement line in pounds, and writes the line to the settlement file.
-4. And here is today's writer. It writes a header, then one line for each payment, and nothing after them. It
-   writes the file anew for every chunk, too, which the tests here never check.
+4. And here is today's writer. It writes a header, then one line for each payment, and nothing after them. It also
+   starts the file over for every chunk, the batch of payments the job writes at once, which the tests here never check.
 5. These are tests of the pieces. They read one line, process it, and check the line it becomes. None of them looks
    at the whole file.
 6. Next, the input for a test of the whole job. Datafaker makes up a day's payments: realistic account numbers and

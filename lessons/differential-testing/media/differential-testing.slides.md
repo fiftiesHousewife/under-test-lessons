@@ -25,9 +25,9 @@ Say: Our example prices parcels by weight, up to 5 kilograms. There's an old cal
 - Keep the old version running in tests until the new one agrees everywhere
 - For services, replay recorded traffic against both versions
 Picture: map
-Say: When should you use it? [pause 1600ms] Whenever you rewrite old code, move it to a new platform, or upgrade it.
-  Keep the old version running in the tests until the new one agrees everywhere. And for whole services, replay recorded
-  traffic against both versions.
+Say: When should you use differential testing? [pause 1600ms] Whenever you rewrite old code, move it to a new platform,
+  or upgrade it. Keep the old version running in the tests until the new one agrees everywhere. And for whole services,
+  replay recorded traffic against both versions.
 
 ## closing: Where the idea came from
 - William McKeeman named it in 1998, comparing C compilers

@@ -76,7 +76,7 @@ Type@1ms `show OrderSummaryPageTest 14 30 "unit tests" --zoom 27-28`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 20s
 
 # ---- Scene 5: the architecture rule ----
 Hide

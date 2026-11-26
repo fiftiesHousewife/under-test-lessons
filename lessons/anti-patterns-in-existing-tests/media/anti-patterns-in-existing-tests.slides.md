@@ -33,9 +33,9 @@ Include: how-we-build
 - Copy-pasted tests: PMD's copy-paste detector finds them
 - Coverage, reported with and without the tests in the register
 Picture: files
-Say: There are 7 common kinds. The lesson's checks find 5. Tests that reach shared systems show up when they run on a
-  machine with no route out. PMD's copy-paste detector finds copy-pasted tests. And report coverage twice, with and
-  without the tests in the register.
+Say: There are 7 common kinds of anti-pattern in tests. The lesson's checks find 5. Tests that reach shared systems show
+  up when they run on a machine with no route out. PMD's copy-paste detector finds copy-pasted tests. And report
+  coverage twice, with and without the tests in the register.
 
 ## closing: When to look for anti-patterns
 - In discovery, before anyone trusts the coverage figure
@@ -47,7 +47,7 @@ Picture: map
 Say: When should you look for anti-patterns? [pause 1600ms] In discovery, before anyone trusts the coverage figure. Then
   triage each one. Disabled tests go to the application's owner, to switch back on or delete. Tests that wait or depend
   on order get fixed with the flaky tests, and we strengthen the rest. And we delete no test before the approval tests
-  exist, which record what the code does today, since an old test may be the only record of how the shop really behaves.
+  exist. They record what the code does today. An old test may be the only record of how the shop really behaves.
 
 ## closing: Where it came from
 - Test smells were first catalogued in 2001, in a paper called Refactoring Test Code
@@ -57,7 +57,7 @@ Say: When should you look for anti-patterns? [pause 1600ms] In discovery, before
 Picture: book
 Say: Test smells were first catalogued in 2001, in a paper called Refactoring Test Code, written at a Dutch research
   institute. Gerard Meszaros's book, xUnit Test Patterns, gathered many more in 2007. ArchUnit has been on Maven Central
-  since 2017. Its own frozen rules work as a ratchet too: they record today's breaks, and fail only on new ones.
+  since 2017. Its own frozen rules work as a ratchet too: they record today's broken rules, and fail only on new ones.
 
 ## closing: Find out more
 - https://www.archunit.org/userguide/html/000_Index.html — ArchUnit's user guide, with frozen rules

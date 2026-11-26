@@ -14,13 +14,13 @@ spoken.
    missing header, passes.
 5. Next, the strong test. At the top, the test makes a WireMock server on a free port, as the stand-in provider. Before
    each test, it starts, and answers 201 to a post to the refunds address. After each test, it stops. WireMock keeps
-   every request it receives in memory, in what it calls its request journal. After the refund, verify looks there for
-   the one the client sent. It must be a post to the refunds address, with the shop's key, the JSON content type, and
-   the Idempotency-Key header. Its body must equal this JSON, compared field by field, so spacing and the order of the
-   fields don't matter.
+   every request it receives in memory, in what it calls its request journal. After the refund, the test looks there for
+   the request the client sent. It must be a post to the refunds address, with the shop's key, the JSON content type,
+   and the Idempotency-Key header. Its body must equal this JSON, compared field by field, so spacing and the order of
+   the fields don't matter.
 6. We run the tests against today's code. The weak test passes. The strong test fails, and WireMock shows the request it
    expected beside the closest one it got. The Idempotency-Key header is missing, and the amount is 12.5, not 1250.
    Without this test, the mistakes would show up only at the real provider, when a customer gets the wrong amount back.
 7. Here is the fixed client. It sends the amount in pence, and adds the Idempotency-Key header, made from the refund's
-   own id, so a retry repeats it and a second refund on the same order doesn't. We run the same tests. [pause 1s] Every
-   test passes. The request is the one the provider expects.
+   own id. A retry sends the same key, and a second refund on the same order gets a new one. We run the same tests.
+   [pause 1s] Every test passes. The request is the one the provider expects.

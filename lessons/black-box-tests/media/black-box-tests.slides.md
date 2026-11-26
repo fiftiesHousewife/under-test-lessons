@@ -35,10 +35,10 @@ Include: how-we-build
 - Keep a few: they are slower than unit tests, so test the rules in unit tests
 - Run them on every pull request, with stand-ins only, so they never reach production
 Picture: map
-Say: When should you use it? [pause 1600ms] First, on an untested application, before anything inside it changes. Record
-  what it does today, right or wrong, and then change the code underneath. Keep a few. They are slower than unit tests,
-  so test the detailed rules in unit tests. And run them on every pull request, with stand-ins only, so they never reach
-  anything real.
+Say: When should you use black-box tests? [pause 1600ms] First, on an untested application, before anything inside it
+  changes. Record what it does today, right or wrong, and then change the code underneath. Keep a few. They are slower
+  than unit tests, so test the detailed rules in unit tests. And run them on every pull request, with stand-ins only, so
+  they never reach anything real.
 
 ## closing: Where it came from
 - Black-box tests know only inputs and outputs, never the code inside
@@ -46,9 +46,8 @@ Say: When should you use it? [pause 1600ms] First, on an untested application, b
 - It joins outside-in tests, batch file-in file-out and characterisation tests
 Picture: book
 Say: A black-box test knows only the inputs and outputs, never the code inside. Michael Feathers named the tests that
-  record what old code does today characterisation tests, in his 2004 book, Working Effectively with Legacy Code. A
-  black-box test of a whole application goes with 3 other lessons. They are outside-in tests, batch file-in file-out,
-  and characterisation tests.
+  record what old code does today characterisation tests, in his 2004 book, Working Effectively with Legacy Code. There
+  are 3 other lessons that go with this one: outside-in tests, batch file-in file-out, and characterisation tests.
 
 ## closing: Find out more
 - https://wiremock.org/docs/verifying/ — WireMock's guide to checking the calls it received

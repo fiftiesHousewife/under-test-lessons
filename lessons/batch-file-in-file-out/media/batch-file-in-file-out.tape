@@ -76,7 +76,7 @@ Type@1ms `show TodaysSettlementJob 21 27 "today's writer" --zoom 25-26`
 Enter
 Sleep 300ms
 Show
-Sleep 21s
+Sleep 25s
 
 # ---- Scene 5: tests of the pieces ----
 Hide

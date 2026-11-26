@@ -33,8 +33,8 @@ Say: Our example is the shop's refund rules. [pause 800ms] Within 30 days, with 
 - Day 30, with a receipt: which?
 Picture: scales
 Say: Let's look at the boundary, day by day. [pause 800ms] On day 29, with a receipt, it's a refund to the card.
-  [pause 800ms] On day 31, it's store credit. [pause 800ms] But on day 30? [pause 1600ms] The specification says within
-  30 days. [pause 600ms] It doesn't say whether the 30th day counts. [pause 800ms] Bugs gather at boundaries like this.
+  [pause 800ms] On day 31, it's store credit. [pause 800ms] But on day 30? [pause 1600ms] The rule says within 30 days.
+  [pause 600ms] It doesn't say whether the 30th day counts. [pause 800ms] Bugs gather at boundaries like this.
 
 Include: how-we-build
 

@@ -11,8 +11,8 @@ narration, in [parameterised-tests.slides.md](parameterised-tests.slides.md). Wr
    into it. Each new test case costs a whole copied method, so the awkward ones never made it in.
 4. Now, the parameterised test: one test that runs once for each row of a table. JUnit's parameterised test annotation
    gives each run a name, made from its row. Below it, the rows are comma-separated values: a price, and the VAT it
-   should give. They include every way a fifth of a penny can round. A new test case costs one more row, so 3 pence
-   gets its turn.
+   should give. They include every way the rounding can go. A new test case costs one more row, so 3 pence gets its
+   turn.
 5. We run the tests against the calculator in use today. The copy-pasted tests pass. Three rows of the table fail, and
    JUnit reports each one by its name, so the failure says which test case broke. Three pence net should give one
    penny of VAT, and gives none.

@@ -3,7 +3,6 @@
 0f8d7d88b382256d.m4a voice ae1c9783c250d908 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 176bcd6456e2a493.m4a voice e65db3eb56ef9c69 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 21b51cb9fb336fe2.m4a voice cc5124a927670457 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
-2dc2e9206262f307.m4a voice 392e3be4a2fdcce9 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 2f339ad7e00106b8.m4a voice 257ecc121ee2502a kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 50c1188402300c49.m4a voice d16a7079740b7837 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 52a50cd14756a598.m4a voice 4e60cf3c182bfb21 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
@@ -16,6 +15,7 @@ a37588d87b286202.m4a voice 4b3f62a560860c61 kokoro-onnx-0.6.1/bf_emma/1.0/models
 a84430070e94ee20.m4a voice f3b5de353805d7e2 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 b7aa79c7b4a266f8.m4a voice ef7009e78eee275b kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 bf8c1360e7bbb99f.m4a voice e371f7b7c2848649 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
+c04f19a9303fe86f.m4a voice 3d94e018d3bd7108 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 c3b125cfd9b388db.m4a voice 44e75a968843cd53 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 c8a58b2eba190196.m4a voice 5e24d38b2ff4bd83 kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7
 cf72df97db91d47c.m4a voice 27c9cadbce3fe93c kokoro-onnx-0.6.1/bf_emma/1.0/models-7d5df8ec-bca610b8/packages-7c508b47/script-678b52a7

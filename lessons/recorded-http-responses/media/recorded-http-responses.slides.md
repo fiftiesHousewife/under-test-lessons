@@ -32,10 +32,10 @@ Include: how-we-build
 - Check recordings against the real service now and then
 - Contract tests do this between teams
 Picture: map
-Say: When should you use them? [pause 1600ms] Whenever code calls a service you don't own. Record the real answers once,
-  then add the rare ones by hand: errors, slow answers, and odd data. Mask every recording before it is saved, so no
-  names, email addresses or passwords reach the files. And check the recordings against the real service now and then.
-  Between teams, contract tests do that job.
+Say: When should you use recorded responses? [pause 1600ms] Whenever code calls a service you don't own. Record the real
+  answers once, then add the rare ones by hand: errors, slow answers, and odd data. Mask every recording before it is
+  saved, so no names, email addresses or passwords reach the files. And check the recordings against the real service
+  now and then. Between teams, contract tests do that job.
 
 ## closing: Where WireMock came from
 - Created by Tom Akehurst, free under the Apache licence

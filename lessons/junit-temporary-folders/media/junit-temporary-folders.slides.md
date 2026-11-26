@@ -36,8 +36,8 @@ Say: When should you use a temporary folder? [pause 1600ms] Whenever the code un
 - @TempDir came to JUnit 5.4, in 2019, from JUnit Pioneer
 - JUnit 6 is the current generation
 Picture: book
-Say: JUnit 4 point 7 added rules, among them the temporary folder rule. Temp dir came to JUnit 5 point 4, in 2019, from
-  JUnit Pioneer, a project of extra JUnit extensions. JUnit 6 is the current generation.
+Say: JUnit 4 point 7 added rules, among them the temporary folder rule. The temp dir annotation came to JUnit 5 point 4,
+  in 2019, from JUnit Pioneer, a project of extra JUnit extensions. JUnit 6 is the current generation.
 
 ## closing: Find out more
 - https://docs.junit.org/current/writing-tests/built-in-extensions.html — JUnit's user guide on @TempDir

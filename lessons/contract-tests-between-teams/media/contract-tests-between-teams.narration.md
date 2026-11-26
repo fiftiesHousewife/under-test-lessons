@@ -4,16 +4,16 @@ One item per scene of [contract-tests-between-teams.tape](contract-tests-between
 slides have their own narration, in [contract-tests-between-teams.slides.md](contract-tests-between-teams.slides.md).
 Written to be spoken.
 
-1. Step one. Add Pact JVM to the version catalogue. Version 4.7 runs on Java 17 or later, so it suits our Java 25
-   build. Code bases still on Java 8 need the older 4.1 line.
+1. Step one. Add Pact JVM to the version catalogue. Version 4.7 runs on Java 17 or later, so it suits the lesson's Java
+   25 code. Code bases still on Java 8 need the older 4.1 line.
 2. Step two. Add Pact's two JUnit libraries as test dependencies. One is for the team that calls the service, the
    consumer. The other is for the team that runs it, the provider. In a company they live in two repositories. Here
    they share one lesson.
 3. Here is the code under test, starting with the consumer, the order screen's client. It asks for the item by its
    code. A 404 means no such item. Otherwise it reads two fields from the answer: the code, and the whole number
    called available.
-4. And the provider: today's stock service. A tidy-up renamed the field available to quantity in stock. The order
-   screen's team never heard about it.
+4. And the provider: today's stock service. A tidy-up renamed the field called available. Its new name is quantity in
+   stock. The order screen's team never heard about it.
 5. These are the order screen's weak tests. They run against a stand-in its own team wrote, which
    answers exactly what they expect: a field called available. So they pass, whatever the real stock service sends.
 6. And the stock service's own weak tests. They check the status code and the item's code. Nothing in them says which

@@ -65,4 +65,5 @@ Say: OpenAPI began as the Swagger specification. SmartBear gave it to the OpenAP
 Picture: globe
 Say: To find out more, start with the OpenAPI Initiative's site, and the validator's own pages. The links on screen also
   take you to AsyncAPI, and to this lesson's test code and examples, to run yourself. And try the exercise in the
-  README: give a parcel the status lost, which isn't one of the schema's four, and show that the check refuses it.
+  README: give a parcel the status lost, which isn't one of the 4 statuses the schema allows, and show that the check
+  refuses it.

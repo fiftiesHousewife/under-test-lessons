@@ -34,7 +34,7 @@ Type@1ms `show libs.versions.toml "/pact/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 22s
 
 # ---- Scene 2: step 2, the test dependencies ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show TodaysStockBodies 9 14 "today's stock service" --zoom 13`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 18s
 
 # ---- Scene 5: the order screen's weak tests ----
 Hide

@@ -79,7 +79,7 @@ Type@1ms `show OldAndNewAgreeTest 41 59 "every weight in the band, asked of both
 Enter
 Sleep 300ms
 Show
-Sleep 48s
+Sleep 50s
 
 # ---- Scene 5: the comparison finds a gap ----
 Hide

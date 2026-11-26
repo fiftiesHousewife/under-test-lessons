@@ -34,7 +34,7 @@ Include: how-we-build
 - Then strengthen the tests in key code until PIT catches the planted bugs
 - In pull requests: report surviving bugs on changed code, without failing the build at first
 Picture: map
-Say: When should you use it? [pause 1600ms] First, in discovery, when you are judging how far the existing tests can be
+Say: When should you use PIT? [pause 1600ms] First, in discovery, when you are judging how far the existing tests can be
   trusted. Coverage tells you what ran. PIT tells you what was checked. Then, strengthen the tests in the code that
   matters most, until PIT catches the planted bugs there. Later, run it on each pull request, and report the bugs that
   survive in the changed code, without failing the build at first.

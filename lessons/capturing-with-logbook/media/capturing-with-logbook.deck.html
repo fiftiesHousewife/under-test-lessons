@@ -313,7 +313,7 @@ ApprovedCaptureTest &gt; writesNoSecrets() PASSED
 CaptureRecordsTest &gt; recordsWhatTheServiceReceivesAndSends() PASSED
 UnknownCustomerAnswerTest &gt; approvesTheCaptureForACustomerNobodyHas() PASSED
 All 4 tests passed.
-Approvals: every output matches its approved file.</pre></figure></main><aside class="notes">Next, the filtered capture. It puts Logbook's Authorization filter back, beside its own header filter. That filter writes XXX in place of each token. And a JSON body filter replaces every email field with a made-up address that no real person uses. We run the same tests. Every test passes.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/94bc2c8c7c7c3fb7.m4a"></audio></section>
+Approvals: every output matches its approved file.</pre></figure></main><aside class="notes">Next, the filtered capture. It puts Logbook's Authorization filter back, beside its own header filter. The Authorization filter writes XXX in place of each token. And a JSON body filter replaces every email field with a made-up address that no real person uses. We run the same tests. Every test passes.</aside><audio class="voice" preload="none" src="capturing-with-logbook.deck-voice/a5ac4eda726441d9.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The approved capture</h1><div class="rule"></div><ul class="scene-points"><li class="point">Checked by a person, kept beside the tests, and holding no secrets</li></ul></section><figure class="code" style="--code-size: 21px"><figcaption>the approved capture</figcaption><pre>  1  Request received: GET /customers/C-1001
   2  Authorization: XXX
   3  
@@ -542,7 +542,7 @@ Approvals: every output matches its approved file.</pre></figure></main><aside c
   // Edit voice: only where the voice review runs on this machine (production/voice-review), which
   // answers at localhost; anywhere else the button never appears. It opens the review of this lesson's voice.
   var REVIEW = 'http://localhost:8765';
-  var lesson = (location.pathname.split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
+  var lesson = ((location.pathname || '').split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
   if (lesson && window.fetch && window.AbortController) {
     var asking = new AbortController();
     setTimeout(function () { asking.abort(); }, 1000);

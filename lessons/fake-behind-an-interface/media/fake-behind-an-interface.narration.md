@@ -14,7 +14,7 @@ their own narration, in [fake-behind-an-interface.slides.md](fake-behind-an-inte
    lines of ordinary code.
 5. And a test with the fake. It places an order of 15000 pence, that's £150, and checks what was delivered, not which
    calls were made: one message to the warehouse, and one to the fraud check.
-6. We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails.
-   It expected the order in the fraud checks, and found none, because the code sent that message after the commit.
+6. We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails. It
+   expected the order on the fraud checks topic, and found none, because the code sent that message after the commit.
 7. Now the order placement that commits once, at the end. We run the same tests. [pause 1s] Both messages are
    delivered, and every test passes.

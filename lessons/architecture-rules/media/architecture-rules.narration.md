@@ -9,8 +9,8 @@ narration, in [architecture-rules.slides.md](architecture-rules.slides.md). Writ
 3. Here is the code under test, the shop's admin page as it is today. It shows how many orders there are. To get the
    number, it goes straight to the storage layer, skipping the service layer and the shop's rules. A review can easily
    miss it. But every shortcut like this makes the next change harder, and in old code, shortcuts pile up quietly.
-4. These are ordinary unit tests. They check that both versions of the page give the right answer. They
-   do, so the tests pass, whichever way the page gets its number.
+4. These are ordinary unit tests. They check that the page gives the right answer, both today and after the fix. It
+   does, so the tests pass, whichever way the page gets its number.
 5. Next, the architecture rule: a test of how the code is put together, rather than what it does. First, ArchUnit
    imports the compiled classes of each layer's package. Reading compiled code, it checks every call, field and
    parameter. The rule names three layers, web, service and storage, each by its package. The web layer may use the

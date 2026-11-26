@@ -34,7 +34,7 @@ Type@1ms `show libs.versions.toml "/artemis|jakarta-jms/" gradle/libs.versions.t
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 18s
 
 # ---- Scene 2: step 2, the dependencies ----
 Hide

@@ -10,10 +10,9 @@ their own narration, in [spring-tests-in-slices.slides.md](spring-tests-in-slice
 3. Here is the code under test, today's delivery answer. A change for the printed delivery notes gave the due date a
    day-first pattern. So the service now writes the date day first, where its description says year first. Every
    caller that reads the date year first now breaks.
-4. Now, the weak tests. Their base class starts the whole application on a free port: the database, and every
-   setting. WireMock stands in for the courier, and a setting hands the application its address. Starting all that is
-   slow, so people write these tests loosely. Each test only looks for words in the answer. None of them reads
-   the date.
+4. Now, the weak tests. Their base class starts the whole application on a free port: the database, and every setting.
+   WireMock stands in for the courier, and a setting hands the application its address. Starting all that is slow, and
+   tests like these tend to check loosely. Each test only looks for words in the answer. None of them reads the date.
 5. Now, the strong tests, one layer at a time. Spring calls one layer started on its own a slice. The web slice
    annotation starts only the controller and Spring's web layer. Mockito stands in for the service. The test checks the
    address, the status, and the list of references.

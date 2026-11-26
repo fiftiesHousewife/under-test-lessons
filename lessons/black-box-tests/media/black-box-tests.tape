@@ -110,7 +110,7 @@ Type@1ms `show OrderServiceTest 81 94 "reading the rows written" --mark 84-87`
 Enter
 Sleep 300ms
 Show
-Sleep 52s
+Sleep 54s
 
 # ---- Scene 7: the order is lost ----
 Hide

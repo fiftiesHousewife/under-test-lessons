@@ -27,9 +27,9 @@ Include: how-we-build
 - Ignore only fields that must vary, and check they are present
 - For XML, XMLUnit does the same job
 Picture: map
-Say: When should you use it? [pause 1600ms] Whenever a test checks JSON or XML: API responses, messages, and files for
-  other systems. Ignore only the fields that must vary, and still check that they are there. For XML, XMLUnit does the
-  same job.
+Say: When should you compare output as data? [pause 1600ms] Whenever a test checks JSON or XML: API responses, messages,
+  and files for other systems. Ignore only the fields that must vary, and still check that they are there. For XML,
+  XMLUnit does the same job.
 
 ## closing: Where JSONUnit came from
 - Written by Lukáš Křečan, free under the Apache licence

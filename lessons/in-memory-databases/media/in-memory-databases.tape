@@ -104,7 +104,7 @@ Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fifti
 Enter
 Sleep 300ms
 Show
-Sleep 45s
+Sleep 47s
 
 # ---- Scene 7: the strong tests ----
 Hide

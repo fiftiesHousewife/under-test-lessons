@@ -28,9 +28,10 @@ Include: how-we-build
 - Make the smallest change: a constructor parameter, and whatever builds the class chooses what to pass
 - Time is a dependency too: pass in a Clock, never ask for the time
 Picture: map
-Say: When should you do this? [pause 1600ms] Before changing old code that calls a service, a clock, the file system, or
-  a static helper. Make the smallest change you can: a constructor parameter. Whatever builds the class chooses what to
-  pass it. And remember that time is a dependency too: pass in a clock, rather than asking for the time.
+Say: When should you replace a hard-wired dependency? [pause 1600ms] Before changing old code that calls a service, a
+  clock, the file system, or a static helper. Make the smallest change you can: a constructor parameter. Whatever builds
+  the class chooses what to pass it. And remember that time is a dependency too: pass in a clock, rather than asking for
+  the time.
 
 ## closing: Where Mockito came from
 - Started by Szczepan Faber in 2008, building on EasyMock
@@ -49,5 +50,5 @@ Say: Szczepan Faber started Mockito in 2008, building on an older library called
 - Exercise: make the stand-in act like the bank's service timing out; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Mockito documentation. The links on screen also take you to this lesson's test
-  code and examples, to run yourself. And try the exercise in the README: make the stand-in play the bank's service
+  code and examples, to run yourself. And try the exercise in the README: make the stand-in act like the bank's service
   timing out, and check the invoice passes the error on.

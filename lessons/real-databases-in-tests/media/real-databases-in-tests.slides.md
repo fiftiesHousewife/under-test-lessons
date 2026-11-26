@@ -11,15 +11,15 @@ last in ascending order, unless NULLS FIRST is given); h2database.com (H2 sorts 
 Picture: road
 Say: Let's look at using real databases in tests. Testcontainers is a library that runs real software, such as a
   database, in a throwaway container. We'll see a query that sorts differently on the real database. Then Testcontainers
-  starts PostgreSQL for the test, and the test catches it.
+  starts PostgreSQL for the test, and the test catches the difference.
 
 ## intro: Our example: who to call first
 - Customers, and the date of their last order
 - Sales first calls those who have never ordered, then those who ordered longest ago
-- The order comes from a SQL query
+- The calling order comes from a SQL query
 Picture: statement
 Say: Our example keeps customers, and the date of their last order. The sales team first calls those who have never
-  ordered, then those who ordered longest ago. And that order comes from a SQL query.
+  ordered, then those who ordered longest ago. And the calling order comes from a SQL query.
 
 Include: how-we-build
 

@@ -3,12 +3,13 @@
 One item per scene of [junit-tags.tape](junit-tags.tape). The intro and closing slides have their own narration, in
 [junit-tags.slides.md](junit-tags.slides.md). Written to be spoken.
 
-1. The quick tests give the stock check a warehouse made from a map: 3 car seats on the shelf. One test asks for 3
-   and expects a yes. The other asks for 4, and expects a no. Tests like these take a few thousandths of a second each.
+1. Here are 2 of the 4 quick tests. They give the stock check a warehouse made from a map: 3 car seats on the shelf. One
+   test asks for 3 and expects a yes. The other asks for 4, and expects a no. Tests like these take a few thousandths of
+   a second each.
 2. The slow tests start the warehouse's test system before each test, and it takes 2 seconds to start. Then one test
    asks for the last pushchair on the shelf, and the other for a cot the warehouse doesn't stock. In real code, this is
    a database, a server, or a whole application starting up.
-3. We run the quick task with today's build, which has no tags. It runs all 6 tests. The 4 quick ones, and the 2 slow
+3. We run the quick tests with today's build, which has no tags. It runs all 6 tests. The 4 quick ones, and the 2 slow
    warehouse tests too. So every run, after every small change, waits for the warehouse. And when every run is slow,
    people stop running the tests.
 4. JUnit's word for a label is a tag. This annotation of our own, called slow, carries JUnit's tag named slow, so the

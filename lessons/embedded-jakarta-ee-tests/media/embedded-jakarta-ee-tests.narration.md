@@ -18,7 +18,7 @@ spoken.
    servers use, and here it runs inside the test, with no server to deploy to. The test lists the parts it needs: the
    checkout and both rates. Then it asks Weld for the checkout, wired as the server would wire it, and checks that £10
    comes to £12.
-7. We run the tests against today's checkout. By hand, it's right. In the container, the checkout gets the reduced
-   rate, because it's the only one without a mark. So £10 comes to £10.50, instead of £12.
+7. We run the tests against today's checkout. Built by hand, the checkout is right. In the container, the checkout gets
+   the reduced rate, because it's the only one without a mark. So £10 comes to £10.50, instead of £12.
 8. Now the checkout that asks for the standard rate, by name: its constructor marks the rate it wants as standard. We
    run the same tests. [pause 1s] It's wired as intended.

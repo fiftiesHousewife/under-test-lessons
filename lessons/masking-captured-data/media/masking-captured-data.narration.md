@@ -10,8 +10,7 @@ their own narration, in [masking-captured-data.slides.md](masking-captured-data.
    apart by email address. The second adds up each account's orders and payments, and lists the accounts that still
    owe money, or paid too much.
 3. These are the tests of the reports, with the day's real answers. Ada placed three orders, Omar two, and the others
-   one each. Ada's account still owes 640 pence, and Lin paid 500 too many. The tests run on the day as the test data
-   masks it.
+   one each. Ada's account still owes 640 pence, and Lin paid 500 too many. The tests run on the masked copy of the day.
 4. And this is how the test data is made today. It puts one word in place of every name, email address, account
    number and card number. The word it writes is [pause 300ms] removed. But there's no rule for the note a customer
    types on an order. The masking makes the tests' data, so it lives with the tests, never in the code under test.
@@ -20,8 +19,8 @@ their own narration, in [masking-captured-data.slides.md](masking-captured-data.
    numbers it looks for: card and account numbers, sort codes, phone numbers, Social Security and National Insurance
    numbers, ZIP codes and postcodes. It looks for email addresses and the customers' names as well.
 6. We run the tests on today's test data. Every customer now has the same name: removed. So the report counts one
-   customer with 7 orders, not 4. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one
-   500 in credit. Both tests fail. And the guard finds an email address and a name, left in the notes.
+   customer with 7 orders, instead of 4 customers. The accounts merge too: one account owing 140 pence, instead of one
+   owing 640 and one 500 in credit. Both tests fail. And the guard finds an email address and a name, left in the notes.
 7. The fix uses keyed substitutes, and they start with a key. The lesson's key is a fixed one. A real key comes from
    outside, such as your company's secret store, and stays apart from the masked files. HMAC is a keyed hash that
    comes with Java. We ask Java for it, and give it the key. Then HMAC mixes each value with the key, and we turn the

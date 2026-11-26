@@ -29,9 +29,9 @@ Include: how-we-build
 - Keep one idea per test
 - Rows that need different checks belong in different tests
 Picture: map
-Say: When should you use them? [pause 1600ms] Whenever the same check runs on several inputs, like boundaries, rounding,
-  conversions, and validation rules. Give every row a readable name, so a failure tells you which test case broke. And
-  keep one idea per test.
+Say: When should you use parameterised tests? [pause 1600ms] Whenever the same check runs on several inputs, like
+  boundaries, rounding, conversions, and validation rules. Give every row a readable name, so a failure tells you which
+  test case broke. And keep one idea per test.
 
 ## closing: Where they came from
 - JUnit 4 ran a test once for each row of a table, with its Parameterized runner

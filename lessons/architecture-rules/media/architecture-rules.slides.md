@@ -28,9 +28,9 @@ Include: how-we-build
 - Run the rules with the unit tests, in every build
 - Keep rules few and named, so a failure says what was agreed
 Picture: map
-Say: When should you use them? [pause 1600ms] Whenever a team agrees how the code should be shaped, write it down as a
-  rule, so the build holds the team to it. The rules are ordinary tests, so they run with the unit tests, every time.
-  And keep the rules few, with clear names.
+Say: When should you use architecture rules? [pause 1600ms] Whenever a team agrees how the code should be shaped, write
+  it down as a rule, so the build holds the team to it. The rules are ordinary tests, so they run with the unit tests,
+  every time. And keep the rules few, with clear names.
 
 ## closing: Where ArchUnit came from
 - Written by TNG Technology Consulting, free under the Apache licence

@@ -7,8 +7,8 @@ narration, in [finding-flaky-tests.slides.md](finding-flaky-tests.slides.md). Wr
 2. Step two. Add it to the lesson. Only the tests need to wait, so it is a test dependency.
 3. Here is the order desk's code. It hands the confirmation email to a background thread, and returns straight away.
 4. Here is the code under test, the mail server as it runs today, in busy, shared continuous integration. Most messages
-   go at once. But every third one waits 600 milliseconds in a queue. The code is right. It is only slower, [pause
-   400ms] some of the time.
+   go at once. But every third one waits 600 milliseconds in a queue. The code is right. It is only slower,
+   [pause 400ms] some of the time.
 5. Now, the sleeping test. Instead of the usual test annotation, it has JUnit's repeated test annotation, with a
    count of 5, so JUnit runs it 5 times and reports each run on its own: run 1 of 5, run 2 of 5, and so on. Each run
    places an order, sleeps for 200 milliseconds, and then checks that the confirmation has gone. The sleep is a guess

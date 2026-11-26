@@ -17,19 +17,19 @@ Say: Let's look at testing Jakarta EE code with its real wiring, in a small cont
 - The standard rate is 20%, marked as standard
 - A reduced rate of 5%, added later, with no mark
 Picture: tag
-Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. That
-  mark came with the reduced rate of 5%, which has none.
+Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, marked as standard. That mark
+  arrived with a reduced rate of 5%. The reduced rate has no mark.
 
 Include: how-we-build
 
 ## closing: When to use embedded tests
 - For old Java EE and Jakarta EE code: CDI beans, and EJBs with Weld's extra support
-- Before adding a bean that could change what others get
+- Before adding a bean that could change which bean other code is given
 - Keep server-level tests for what truly needs the server: security, transactions across systems
 Picture: map
-Say: When should you use them? [pause 1600ms] For old Java E E and Jakarta E E code: CDI beans, and E J Bs too, with
-  Weld's extra support. Use them before adding any bean that could change what others get. And keep the slow server
-  tests for what truly needs a server.
+Say: When should you use embedded tests? [pause 1600ms] For old Java E E and Jakarta E E code: CDI beans, and E J Bs
+  too, with Weld's extra support. Use them before adding any bean that could change what others get. And keep the slow
+  server tests for what truly needs a server.
 
 ## closing: Where Weld came from
 - CDI arrived with Java EE 6, in 2009, and lives on in Jakarta EE

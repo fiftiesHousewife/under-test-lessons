@@ -12,9 +12,9 @@ own narration, in [differential-testing.slides.md](differential-testing.slides.m
    tries a weight between 451 and 500 grams.
 4. The differential test needs nothing beyond JUnit. It's a parameterised test, with one row for each band of the post
    office's price list, from 1 gram to 5 kilograms. Each row checks that its band has no weights where the two
-   calculators disagree. Below it, the loop asks both calculators about every gram in the band. Where their prices
-   differ, a run of weights starts, so 50 wrong weights read as one cause. There are no expected prices to write: the
-   old calculator is the reference.
+   calculators disagree. Below it, the loop asks both calculators about every gram in the band. The test reports each
+   stretch of weights where their prices differ as one run, so 50 wrong weights read as one cause. There are no expected
+   prices to write: the old calculator is the reference.
 5. We run the tests against the rewrite as it is today. Every example passes. The comparison fails for one band, up to
    500 grams: 50 weights, from 451 grams to 500, where the rewrite charges 3 pounds 15, not 1 pound 95.
 6. Here is why: in today's price list, the row for up to 500 grams says 450. We check the price list against the printed

@@ -16,11 +16,11 @@ own narration, in [in-memory-databases.slides.md](in-memory-databases.slides.md)
 5. This is the weak test. It issues 2 invoices, and checks that the first number is greater than 0, and the second
    follows on. On the shared database, the table is never empty, so no test can ask what happens to the very first
    invoice.
-6. Now, a fresh database for each test, held in memory. Each gets its own name, and the settings from H2's
-   documentation that bring it closer to PostgreSQL. That same documentation says the mode covers only a small part of
-   the differences. So it narrows the gap, and doesn't close it. The database keeps one connection open, and applies
-   the real schema. When it closes that connection, the database and its rows are gone. After the first, each takes a
-   few milliseconds.
+6. Now, a fresh database for each test, held in memory. Each gets its own name, and the settings from H2's documentation
+   that bring it closer to PostgreSQL. That same documentation says these settings cover only a small part of the
+   differences. So they narrow the gap, and don't close it. The database keeps one connection open, and applies the real
+   schema. When it closes that connection, the database and its rows are gone. After the first, each new database takes
+   only a few milliseconds.
 7. Before each test, JUnit starts a fresh database, and after each test, it closes it and throws it away. So each of
    the strong tests starts with no invoices at all, and can check exact numbers. The shop's first invoice must be
    number 1. And 3 invoices must be numbered 1, 2 and 3.

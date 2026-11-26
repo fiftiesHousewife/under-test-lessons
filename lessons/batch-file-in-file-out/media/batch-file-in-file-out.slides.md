@@ -32,9 +32,9 @@ Include: how-we-build
 - Make up input with Datafaker, or mask a day of real data with keyed substitutes
 - Never keep real customer data with the tests
 Picture: map
-Say: When should you use them? [pause 1600ms] For every batch job that reads or writes files other systems use. Make up
-  the input with Datafaker, or take a day of real data and mask it with keyed substitutes. And never keep real customer
-  data with the tests.
+Say: When should you use file-in, file-out tests? [pause 1600ms] For every batch job that reads or writes files other
+  systems use. Make up the input with Datafaker, or take a day of real data and mask it with keyed substitutes. And
+  never keep real customer data with the tests.
 
 ## closing: Where the tools came from
 - JUnit has made temporary folders since JUnit 5.4, in 2019
