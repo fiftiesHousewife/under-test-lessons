@@ -1,0 +1,19 @@
+# Phrases slides and narration never use, each a regular expression = why. Checked by checkVideoScripts in every
+# slide's bullets and Say text, and every video narration; source notes and links are left out. The rules behind them
+# are in GLOSSARY.md, "Writing for the voice".
+\bnobody\b = an invented actor: say what is true instead ("there's no rule for")
+\bsomeone\b = an invented actor: name who, or use "we"
+\bthat shop\b = "that" points at something the listener can't see: say "the shop"
+\bpromises?\b = a schema or description says or gives; it doesn't promise
+\bplainly\b = filler: cut it
+can't be anyone's = makes no sense aloud
+\bthis (build|repo|repository)\b = the listener's build isn't ours: name the tool, or say what it does
+\bworks? by hand\b = say "works deterministically"
+comes from Maven Central = say "comes from the binary repository you use", with examples
+\bfor a fee\b = lessons name open-source tools only, never a vendor's product or price
+This lesson is about = vary the opening from the lessons beside it
+it may not be\. = say what may not have happened: "may not have finished yet"
+\bof something\. = end a sentence on what matters, not "something"
+\b[a-z][A-Za-z]*\(\) = code read aloud: say "the mock method", not mock()
+\border tables\b = say what the code does: "the code that saves orders"
+\bcustomers know\b = say what the business means: "the prices the business means to charge"

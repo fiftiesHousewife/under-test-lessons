@@ -265,25 +265,25 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  28      void refusesALineWithoutAnAmount() {
  29          assertThatThrownBy(() -&gt; Payment.parse(&quot;ACC-1001&quot;)).hasMessageContaining(&quot;an account and an amount&quot;);
  30      }</pre></figure></main><aside class="notes">Now, the weak tests. They test the pieces: reading one line, and checking a payment against the limit. They never run the program. So they never check its environment variable, its input, what it prints, or how it ends.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/876149280f109d60.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong test, its stubs</h1><div class="rule"></div><ul class="scene-points"><li class="point">The strong test runs the whole program</li><li class="point">System Stubs sets the environment, the input and the output</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>the strong test</figcaption><pre> 16  @ExtendWith(SystemStubsExtension.class)
- 17  class PaymentImportTest {
- 18  
-<mark> 19      @SystemStub</mark>
-<mark> 20      private final EnvironmentVariables environment = new EnvironmentVariables(&quot;PAYMENT_LIMIT_PENCE&quot;, &quot;50000&quot;);</mark>
-<mark> 21      @SystemStub</mark>
-<mark> 22      private final SystemIn input = new SystemIn();</mark>
-<mark> 23      @SystemStub</mark>
-<mark> 24      private final SystemOut output = new SystemOut();</mark>
- 25      private final AtomicInteger exitCode = new AtomicInteger(-1); // stands in for System.exit: -1 until it exits</pre></figure></main><aside class="notes">Now the strong test. It runs the whole program. System Stubs sets the environment variable to 50000 pence, gives the program its standard input, and catches what it prints. The exit code needs something else. System Stubs used to catch System exit with Java's security manager, which Java 24 permanently disabled. So the test passes the program its own exit, which only records the number.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/e07a98951f52737e.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong test, one test</h1><div class="rule"></div><ul class="scene-points"><li class="point">One test</li><li class="point">A limit of 2000 pence, and three payments</li><li class="point">The second is over the limit</li></ul></section><figure class="code" style="--code-size: 14px"><figcaption>one strong test</figcaption><pre> 37      @Test
- 38      void stopsAtThePaymentOverTheLimitAndEndsWithOne() throws Throwable {
-<mark> 39          environment.set(&quot;PAYMENT_LIMIT_PENCE&quot;, &quot;2000&quot;);</mark>
-<mark> 40          input.setInputStream(Lines.of(&quot;ACC-1001,1500&quot;, &quot;ACC-1002,2500&quot;, &quot;ACC-1003,1000&quot;));</mark>
-<mark> 41          Programs.paymentImport(output, exitCode::set).execute();</mark>
- 42          assertAll(
- 43              () -&gt; assertThat(output.getLines()).containsExactly(&quot;accepted ACC-1001 1500&quot;, &quot;over the limit: ACC-1002&quot;),
- 44              () -&gt; assertThat(exitCode).as(&quot;exit code&quot;).hasValue(1));
- 45      }</pre></figure></main><aside class="notes">Here is one test. It lowers the limit to 2000 pence, and gives the program three payments. It expects the first to be accepted, the second to stop the program, and the exit code to be 1.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/5c8f95fd8814c56b.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong test, its stubs</h1><div class="rule"></div><ul class="scene-points"><li class="point">The strong test runs the whole program</li><li class="point">System Stubs sets the environment, the input and the output</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>the strong test</figcaption><pre> 19  @ExtendWith(SystemStubsExtension.class)
+ 20  class PaymentImportTest {
+ 21  
+<mark> 22      @SystemStub</mark>
+<mark> 23      private final EnvironmentVariables environment = new EnvironmentVariables(&quot;PAYMENT_LIMIT_PENCE&quot;, &quot;50000&quot;);</mark>
+<mark> 24      @SystemStub</mark>
+<mark> 25      private final SystemIn input = new SystemIn();</mark>
+<mark> 26      @SystemStub</mark>
+<mark> 27      private final SystemOut output = new SystemOut();</mark>
+ 28      private final AtomicInteger exitCode = new AtomicInteger(-1);</pre></figure></main><aside class="notes">Now the strong test. It runs the whole program. System Stubs sets the environment variable to 50000 pence, gives the program its standard input, and catches what it prints. The exit code needs something else. System Stubs used to catch System exit with Java's security manager, which Java 24 permanently disabled. So the test passes the program its own exit, which only records the number.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/e07a98951f52737e.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The strong test, one test</h1><div class="rule"></div><ul class="scene-points"><li class="point">One test</li><li class="point">A limit of 2000 pence, and three payments</li><li class="point">The second is over the limit</li></ul></section><figure class="code" style="--code-size: 14px"><figcaption>one strong test</figcaption><pre> 40      @Test
+ 41      void stopsAtThePaymentOverTheLimitAndEndsWithOne() throws Throwable {
+<mark> 42          environment.set(&quot;PAYMENT_LIMIT_PENCE&quot;, &quot;2000&quot;);</mark>
+<mark> 43          input.setInputStream(Lines.of(&quot;ACC-1001,1500&quot;, &quot;ACC-1002,2500&quot;, &quot;ACC-1003,1000&quot;));</mark>
+<mark> 44          Programs.paymentImport(output, exitCode::set).execute();</mark>
+ 45          assertAll(
+ 46              () -&gt; assertThat(output.getLines()).containsExactly(&quot;accepted ACC-1001 1500&quot;, &quot;over the limit: ACC-1002&quot;),
+ 47              () -&gt; assertThat(exitCode).as(&quot;exit code&quot;).hasValue(1));
+ 48      }</pre></figure></main><aside class="notes">Here is one test. It lowers the limit to 2000 pence, and gives the program three payments. It expects the first to be accepted, the second to stop the program, and the exit code to be 1.</aside><audio class="voice" preload="none" src="old-command-line-programs.deck-voice/5c8f95fd8814c56b.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's program stops the test run</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's program</li></ul><p class="callout">System Stubs ran today's program unchanged, until its System.exit stopped the whole test run.</p></section><figure class="code" style="--code-size: 15px"><pre class="command">$ ./gradlew :lessons:old-command-line-programs:test -Pcode=today</pre><pre class="output">PaymentImportTest &gt; acceptsPaymentsUpToTheLimitAndEndsWithZero() PASSED
 Gradle Test Run :lessons:old-command-line-programs:test FAILED
     org.gradle.process.ProcessExecutionException: Process 'Gradle Test Executor 2' finished with non-zero exit value 1

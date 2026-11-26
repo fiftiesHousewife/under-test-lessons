@@ -13,7 +13,8 @@ closing slides have their own narration, in
    off when it started failing, and stayed off. And the place order test checks only that an order came
    back, whatever is in it.
 4. These tests wait. Each sends an order to the warehouse in the background, then sleeps, for half a second or a whole
-   second, and hopes the work is done. On a busy continuous integration server, it may not be. And the order number
+   second, and hopes the work is done. On a busy continuous integration server, the work may not have
+   finished yet. And the order number
    tests share one counter, so they only pass in the order the annotation sets.
 5. This test class mocks everything. A mock is a stand-in that records how it was called. Five of them here, one for
    each thing the checkout uses, so its tests check the calls the code makes, and little of what it does.

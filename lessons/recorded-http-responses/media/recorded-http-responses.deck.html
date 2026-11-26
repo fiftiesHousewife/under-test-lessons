@@ -243,35 +243,35 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark>  6      &quot;body&quot;: &quot;&lt;html&gt;&lt;body&gt;Service temporarily unavailable&lt;/body&gt;&lt;/html&gt;&quot;</mark>
   7    }
   8  }</pre></figure></main><aside class="notes">This is a recorded answer. It holds the request, and what the supplier sent back. This one is an outage: a 503 error, with a web page instead of JSON.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/808927b102be6cc3.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Making recordings from a stand-in</h1><div class="rule"></div><ul class="scene-points"><li class="point">Making recordings</li><li class="point">WireMock passes each question to a stand-in supplier on this machine, and keeps the answer</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>making recordings</figcaption><pre> 81      /* Records two questions to the stand-in, then masks each recording and saves it to a file. */
- 82      private List&lt;String&gt; recordAndSave(final RecordingCleaner cleaner) throws IOException, InterruptedException {
-<mark> 83          recorder.startRecording(recordSpec().forTarget(standIn.baseUrl())</mark>
-<mark> 84                  .captureHeader(&quot;Authorization&quot;).makeStubsPersistent(false));</mark>
- 85          ask(&quot;/postcodes/LS1%204AP&quot;);
- 86          ask(&quot;/postcodes/ZZ9%209ZZ&quot;);
- 87          final List&lt;String&gt; files = new ArrayList&lt;&gt;();
- 88          for (final StubMapping recording : recorder.stopRecording().getStubMappings()) {
- 89              final Path file = saved.resolve(recording.getName() + &quot;.json&quot;);
- 90              Files.writeString(file, cleaner.mask(Json.write(recording)));
- 91              files.add(Files.readString(file));
- 92          }
- 93          return files;
- 94      }</pre></figure></main><aside class="notes">Where do the recordings come from? We make them from a stand-in for the supplier, running on this machine. WireMock passes each question on, and keeps the answer, and the request's password token. Then we mask each recording, and save it to a file.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/73adb9e38553f10d.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests for recordings</h1><div class="rule"></div><ul class="scene-points"><li class="point">Recordings copy real answers, so they can hold personal data</li><li class="point">Today they are saved as recorded</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests for the saved recordings</figcaption><pre> 65      @Test
- 66      void savedAsRecordedTheFilesHoldPersonalData() throws IOException, InterruptedException {
- 67          final List&lt;String&gt; files = recordAndSave(recording -&gt; recording);
- 68          assertThat(personalDataIn(files)).as(&quot;personal data in the saved recordings&quot;)
- 69                  .containsExactly(NAME, EMAIL, TOKEN);
- 70      }
- 71  
- 72      @Test
- 73      void maskedFirstTheFilesHoldSubstitutes() throws IOException, InterruptedException {
- 74          final List&lt;String&gt; files = recordAndSave(Clients.cleaner());
- 75          assertAll(
-<mark> 76                  () -&gt; assertThat(personalDataIn(files)).as(&quot;personal data in the saved recordings&quot;).isEmpty(),</mark>
- 77                  () -&gt; assertThat(namesIn(files)).as(&quot;names in the saved recordings&quot;)
- 78                          .isEqualTo(List.of(&quot;person-ea08c4400378ace1&quot;, &quot;person-ea08c4400378ace1&quot;)));
- 79      }</pre></figure></main><aside class="notes">Recordings copy real answers, so they can hold personal data. The first test saves them unchanged, and finds a person's name, email address and token in the files. The second masks them first. It expects none of these, and one substitute for the name, in both files.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/86bae711fdb65a3c.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Making recordings from a stand-in</h1><div class="rule"></div><ul class="scene-points"><li class="point">Making recordings</li><li class="point">WireMock passes each question to a stand-in supplier on this machine, and keeps the answer</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>making recordings</figcaption><pre> 82      /* Records two questions to the stand-in, then masks each recording and saves it to a file. */
+ 83      private List&lt;String&gt; recordAndSave(final RecordingCleaner cleaner) throws IOException, InterruptedException {
+<mark> 84          recorder.startRecording(recordSpec().forTarget(standIn.baseUrl())</mark>
+<mark> 85                  .captureHeader(&quot;Authorization&quot;).makeStubsPersistent(false));</mark>
+ 86          ask(&quot;/postcodes/LS1%204AP&quot;);
+ 87          ask(&quot;/postcodes/ZZ9%209ZZ&quot;);
+ 88          final List&lt;String&gt; files = new ArrayList&lt;&gt;();
+ 89          for (final StubMapping recording : recorder.stopRecording().getStubMappings()) {
+ 90              final Path file = saved.resolve(recording.getName() + &quot;.json&quot;);
+ 91              Files.writeString(file, cleaner.mask(Json.write(recording)));
+ 92              files.add(Files.readString(file));
+ 93          }
+ 94          return files;
+ 95      }</pre></figure></main><aside class="notes">Where do the recordings come from? We make them from a stand-in for the supplier, running on this machine. WireMock passes each question on, and keeps the answer, and the request's password token. Then we mask each recording, and save it to a file.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/73adb9e38553f10d.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests for recordings</h1><div class="rule"></div><ul class="scene-points"><li class="point">Recordings copy real answers, so they can hold personal data</li><li class="point">Today they are saved as recorded</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests for the saved recordings</figcaption><pre> 66      @Test
+ 67      void savedAsRecordedTheFilesHoldPersonalData() throws IOException, InterruptedException {
+ 68          final List&lt;String&gt; files = recordAndSave(recording -&gt; recording);
+ 69          assertThat(personalDataIn(files)).as(&quot;personal data in the saved recordings&quot;)
+ 70                  .containsExactly(NAME, EMAIL, TOKEN);
+ 71      }
+ 72  
+ 73      @Test
+ 74      void maskedFirstTheFilesHoldSubstitutes() throws IOException, InterruptedException {
+ 75          final List&lt;String&gt; files = recordAndSave(Clients.cleaner());
+ 76          assertAll(
+<mark> 77                  () -&gt; assertThat(personalDataIn(files)).as(&quot;personal data in the saved recordings&quot;).isEmpty(),</mark>
+ 78                  () -&gt; assertThat(namesIn(files)).as(&quot;names in the saved recordings&quot;)
+ 79                          .isEqualTo(List.of(&quot;person-ea08c4400378ace1&quot;, &quot;person-ea08c4400378ace1&quot;)));
+ 80      }</pre></figure></main><aside class="notes">Recordings copy real answers, so they can hold personal data. The first test saves them unchanged, and finds a person's name, email address and token in the files. The second masks them first. It expects none of these, and one substitute for the name, in both files.</aside><audio class="voice" preload="none" src="recorded-http-responses.deck-voice/86bae711fdb65a3c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The tests with recordings</h1><div class="rule"></div><ul class="scene-points"><li class="point">Tests with WireMock</li><li class="point">It replays every recording on a local port</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>tests with recorded answers</figcaption><pre><mark> 18      private final WireMockServer supplier = new WireMockServer(options().dynamicPort()</mark>
 <mark> 19              .usingFilesUnderClasspath(&quot;supplier&quot;));</mark>
  20  

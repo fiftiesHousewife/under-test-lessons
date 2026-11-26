@@ -83,6 +83,9 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
 - **Pronunciation:** add each name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`, and check
   it there before writing a new one.
 
+The phrases below that a machine can spot are in [`lessons/_shared/dont-say.txt`](lessons/_shared/dont-say.txt), which
+`checkVideoScripts` applies to every slide and narration: add a phrase there when it's agreed, not only here.
+
 | Don't say | Say instead | Why |
 |---|---|---|
 | map (of the series) | journey | The series is a route a team takes |

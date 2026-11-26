@@ -301,19 +301,19 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 28                  .as(&quot;Ann's deliveries still to come&quot;).extracting(Delivery::getReference)</mark>
 <mark> 29                  .containsExactly(&quot;D-1002&quot;, &quot;D-1001&quot;);</mark>
  30      }</pre></figure></main><aside class="notes">The data slice starts only the repository, and an in-memory database, and rolls back each test's rows. It checks the query returns Ann's deliveries still to come, earliest first.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/d1dfe66bf6d2ef09.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice</h1><div class="rule"></div><ul class="scene-points"><li class="point">Only Jackson, checking the answer field by field</li></ul></section><figure class="code" style="--code-size: 16px"><figcaption>the JSON slice</figcaption><pre> 15  @JsonTest
- 16  class DeliveryJsonSliceTest {
- 17  
- 18      @Autowired
- 19      private JacksonTester&lt;Object&gt; json; // Object, so Jackson writes the record the answer really is
- 20  
- 21      @Test
- 22      void writesTheFieldsTheDescriptionPromises() throws IOException {
- 23          final DeliveryAnswer answer = Answers.forDelivery(ExampleDeliveries.ovenGloves(), &quot;At the depot&quot;);
- 24  
-<mark> 25          assertThat(json.write(answer)).isStrictlyEqualToJson(&quot;&quot;&quot;</mark>
-<mark> 26                  {&quot;reference&quot;: &quot;D-1001&quot;, &quot;dueOn&quot;: &quot;2026-11-23&quot;, &quot;tracking&quot;: &quot;At the depot&quot;}&quot;&quot;&quot;);</mark>
- 27      }</pre></figure></main><aside class="notes">And the JSON slice starts only Jackson, set up as the application sets it up. It checks the answer for one delivery, field by field, exactly as the description gives it.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/7141e01945b0ed16.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice</h1><div class="rule"></div><ul class="scene-points"><li class="point">Only Jackson, checking the answer field by field</li></ul></section><figure class="code" style="--code-size: 16px"><figcaption>the JSON slice</figcaption><pre> 16  @JsonTest
+ 17  class DeliveryJsonSliceTest {
+ 18  
+ 19      @Autowired
+ 20      private JacksonTester&lt;Object&gt; json;
+ 21  
+ 22      @Test
+ 23      void writesTheFieldsTheDescriptionPromises() throws IOException {
+ 24          final DeliveryAnswer answer = Answers.forDelivery(ExampleDeliveries.ovenGloves(), &quot;At the depot&quot;);
+ 25  
+<mark> 26          assertThat(json.write(answer)).isStrictlyEqualToJson(&quot;&quot;&quot;</mark>
+<mark> 27                  {&quot;reference&quot;: &quot;D-1001&quot;, &quot;dueOn&quot;: &quot;2026-11-23&quot;, &quot;tracking&quot;: &quot;At the depot&quot;}&quot;&quot;&quot;);</mark>
+ 28      }</pre></figure></main><aside class="notes">And the JSON slice starts only Jackson, set up as the application sets it up. It checks the answer for one delivery, field by field, exactly as the description gives it.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/7141e01945b0ed16.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice names the date</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where the description says 2026-11-23.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:spring-tests-in-slices:test -Pcode=today</pre><pre class="output">DeliveriesApplicationTest &gt; showsWhatTheCourierSays() PASSED
 DeliveriesApplicationTest &gt; listsTheCustomersDeliveries() PASSED
 DeliveriesApplicationTest &gt; leavesOutWhatHasBeenDelivered() PASSED

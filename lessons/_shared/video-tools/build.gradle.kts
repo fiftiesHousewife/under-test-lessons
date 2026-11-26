@@ -93,5 +93,5 @@ tasks.check {
 
 // The video tools are one package: its classes share package-private methods, so it holds more than the usual 20.
 underTest {
-    maxClassesPerPackage = 42
+    maxClassesPerPackage = 44
 }
