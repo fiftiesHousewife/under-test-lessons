@@ -63,7 +63,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - name: Run all checks
         shell: pwsh
-        run: .\gradlew.bat check --continue "-PtoolkitDir=.toolkit" "-PcontainerTestsMaySkip=true" -x :lessons:video-tools:test -x :lessons:video-tools:requireTests -x :lessons:video-tools:jacocoTestCoverageVerification -x :production:video-render:check 2>&1 | Tee-Object -FilePath check.log
+        run: .\gradlew.bat check --continue "-PtoolkitDir=.toolkit" "-PunderTest.integrationTestsMaySkip=true" -x :lessons:video-tools:test -x :lessons:video-tools:requireTests -x :lessons:video-tools:jacocoTestCoverageVerification -x :production:video-render:check 2>&1 | Tee-Object -FilePath check.log
       - name: Say why the checks failed
         if: failure()
         run: python tools/build-failure-annotations.py check.log lessons

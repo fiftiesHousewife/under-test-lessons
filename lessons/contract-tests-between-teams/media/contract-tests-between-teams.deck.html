@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,8 +221,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
-139  pact-consumer-junit5 = { module = &quot;au.com.dius.pact.consumer:junit5&quot;, version.ref = &quot;pact-jvm&quot; }
-140  pact-provider-junit5 = { module = &quot;au.com.dius.pact.provider:junit5&quot;, version.ref = &quot;pact-jvm&quot; }</pre></figure></main><aside class="notes">Step one. Add Pact JVM to the version catalogue. Version 4.7 runs on Java 17 or later, so it suits our Java 25 build. Code bases on older Java need an older line.</aside><audio class="voice" preload="none" src="contract-tests-between-teams.deck-voice/58f7e7be7b138d76.m4a"></audio></section>
+138  pact-consumer-junit5 = { module = &quot;au.com.dius.pact.consumer:junit5&quot;, version.ref = &quot;pact-jvm&quot; }
+139  pact-provider-junit5 = { module = &quot;au.com.dius.pact.provider:junit5&quot;, version.ref = &quot;pact-jvm&quot; }</pre></figure></main><aside class="notes">Step one. Add Pact JVM to the version catalogue. Version 4.7 runs on Java 17 or later, so it suits our Java 25 build. Code bases on older Java need an older line.</aside><audio class="voice" preload="none" src="contract-tests-between-teams.deck-voice/58f7e7be7b138d76.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependencies</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Pact's JUnit libraries, one for the consumer, one for the provider</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
 <mark> 10      testImplementation(libs.pact.consumer.junit5)</mark>
@@ -326,22 +330,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  42      void threeKettles() {
  43          shelves.put(&quot;KETTLE-01&quot;, 3);
  44      }</pre></figure></main><aside class="notes">And the provider's strong test. It reads the pact from that folder, starts the real stock service, and replays each interaction against it. A provider state, such as three kettles in stock, is a method that sets up the data the interaction needs.</aside><audio class="voice" preload="none" src="contract-tests-between-teams.deck-voice/0d083c8e199eb78d.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The pact check names the field</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run every test against today's stock service</li></ul><p class="callout">Each team's own tests pass. The pact check names the field the order screen reads and the service no longer sends.</p></section><figure class="code" style="--code-size: 15px"><pre class="command">$ ./gradlew :lessons:contract-tests-between-teams:test -Pcode=today</pre><pre class="output">StockClientPactTest &gt; readsHowManyAreAvailable(MockServer) PASSED
-StockClientPactTest &gt; refusesAnItemTheShopDoesNotStock(MockServer) PASSED
-StockClientTest &gt; readsHowManyAreAvailable() PASSED
-StockServicePactTest &gt; meetsThePact(PactVerificationContext) &gt; order-screen - a request for the kettle's stock FAILED
-    java.lang.AssertionError: order-screen - Upon a request for the kettle's stock
-    Failures:
-    1) Verifying a pact between order-screen and stock-service - a request for the kettle's stock has a matching body
-        1.1) body: $ Actual map is missing the following keys: available
-            {
-            -  &quot;available&quot;: 3,
-            +  &quot;quantityInStock&quot;: 3,
-              &quot;sku&quot;: &quot;KETTLE-01&quot;
-            }
-StockServiceTest &gt; anItemNobodyStocks() PASSED
-StockServiceTest &gt; anItemOnTheShelves() PASSED
-6 tests completed, 1 failed</pre></figure></main><aside class="notes">We run every test against today's stock service. Both teams' weak tests pass, and so does the order screen's pact test. But the stock service fails the pact, and names the field. The answer has no field called available, only quantity in stock.</aside><audio class="voice" preload="none" src="contract-tests-between-teams.deck-voice/cbd8a1ac3af7129f.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The pact check names the field</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run every test against today's stock service</li></ul><p class="callout">Each team's own tests pass. The pact check names the field the order screen reads and the service no longer sends.</p></section><figure class="code" style="--code-size: 15px"><video class="live-run" src="contract-tests-between-teams.deck-clips/scene-10.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run every test against today's stock service. Both teams' weak tests pass, and so does the order screen's pact test. But the stock service fails the pact, and names the field. The answer has no field called available, only quantity in stock.</aside><audio class="voice" preload="none" src="contract-tests-between-teams.deck-voice/cbd8a1ac3af7129f.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed stock service</h1><div class="rule"></div><ul class="scene-points"><li class="point">The stock service that keeps the field the pact names</li></ul><p class="callout">The service meets the pact again. Drop the old field only when no supported order screen reads it.</p></section><figure class="code" style="--code-size: 13px"><figcaption>the fixed stock service</figcaption><pre>  9      @Override
  10      public Map&lt;String, Object&gt; item(final String sku, final int count) {
  11          return Map.of(

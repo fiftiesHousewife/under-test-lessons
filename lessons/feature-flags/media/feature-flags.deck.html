@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 92  openfeature-sdk = { module = &quot;dev.openfeature:sdk&quot;, version.ref = &quot;openfeature&quot; }</pre></figure></main><aside class="notes">Step one. Add the OpenFeature software development kit to the version catalogue.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ce8dabe2b5e82b8.m4a"></audio></section>
+ 91  openfeature-sdk = { module = &quot;dev.openfeature:sdk&quot;, version.ref = &quot;openfeature&quot; }</pre></figure></main><aside class="notes">Step one. Add the OpenFeature software development kit to the version catalogue.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ce8dabe2b5e82b8.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it to the lesson</li><li class="point">The code itself asks the flag, so it is a main dependency</li></ul></section><figure class="code" style="--code-size: 19px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      implementation(libs.openfeature.sdk)</mark>
  10      // OpenFeature's classes carry SpotBugs annotations; the compiler wants to see them.
@@ -252,14 +256,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  18                  () -&gt; assertThat(checkout.shippingPence(2000)).as(&quot;a £20 basket&quot;).isEqualTo(399),
  19                  () -&gt; assertThat(checkout.shippingPence(6000)).as(&quot;a £60 basket&quot;).isZero());
  20      }</pre></figure></main><aside class="notes">Now, tests that run both ways: the same checks, with the flag off, and then on. Until we remove the old rules, both ways must agree.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/fb433884b1d199d8.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Both ways finds the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's new rules</li></ul><p class="callout">With the flag on, a £20 basket ships free: the threshold is in pounds, compared with pence.</p></section><figure class="code" style="--code-size: 15px"><pre class="command">$ ./gradlew :lessons:feature-flags:test -Pcode=today</pre><pre class="output">BothWaysTest &gt; smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) &gt; new shipping rules switched on: false PASSED
-BothWaysTest &gt; smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) &gt; new shipping rules switched on: true FAILED
-    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [a £20 basket]
-    expected: 399
-     but was: 0
-DefaultFlagsTest &gt; smallBasketPaysForDeliveryAndBigBasketDoesNot() PASSED
-3 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against today's new rules. The default tests pass. With the flag on, a twenty pound basket ships free. The threshold is fifty pounds, but it's compared with pence.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ed6313dbe6ecce9.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Both ways finds the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's new rules</li></ul><p class="callout">With the flag on, a £20 basket ships free: the threshold is in pounds, compared with pence.</p></section><figure class="code" style="--code-size: 15px"><video class="live-run" src="feature-flags.deck-clips/scene-7.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's new rules. The default tests pass. With the flag on, a twenty pound basket ships free. The threshold is fifty pounds, but it's compared with pence.</aside><audio class="voice" preload="none" src="feature-flags.deck-voice/2ed6313dbe6ecce9.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed new rules</h1><div class="rule"></div><ul class="scene-points"><li class="point">The new rules, comparing pence with pence</li></ul><p class="callout">Both ways agree. Now the flag can be switched on, and later the old rules removed.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed new rules</figcaption><pre><mark>  8      private static final int FREE_FROM_PENCE = 50 * 100;</mark>
   9      private static final int CHARGE_PENCE = 399;
  10  

@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:dynamic-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Every example passes. A new example is just a new file: no new test code."`

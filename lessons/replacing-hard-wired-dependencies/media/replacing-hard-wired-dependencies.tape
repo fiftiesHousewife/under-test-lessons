@@ -122,7 +122,7 @@ Type@1ms `run_live "./gradlew :lessons:replacing-hard-wired-dependencies:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Same test, same stand-in: now it runs in a second, with no network and no account."`

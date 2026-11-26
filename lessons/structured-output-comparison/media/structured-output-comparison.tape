@@ -142,7 +142,7 @@ Type@1ms `run_live "./gradlew :lessons:structured-output-comparison:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "The structured comparison passes on every run, whatever the id and the time."`

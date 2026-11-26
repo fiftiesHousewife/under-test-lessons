@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Database changes with Liquibase: every change in the changelog applied to real PostgreSQL in a test, before production.
@@ -17,16 +17,12 @@ testing {
                 implementation(libs.h2)
             }
         }
-        register<JvmTestSuite>("integrationTest") {
+        // The plugin's integrationTest suite, which check runs, with the unit tests' libraries; it adds the containers.
+        named<JvmTestSuite>("integrationTest") {
             dependencies {
-                implementation(project())
-                implementation(platform(libs.junit.bom))
-                implementation(libs.junit.jupiter)
-                implementation(libs.assertj.core)
                 implementation(libs.testcontainers.postgresql)
                 implementation(libs.testcontainers.junit.jupiter)
                 implementation(libs.postgresql)
-                runtimeOnly(libs.junit.platform.launcher)
             }
         }
     }
@@ -45,8 +41,4 @@ tasks.test {
     if (providers.gradleProperty("code").orNull == "today") {
         filter { excludeTestsMatching("*AnswerTest") }
     }
-}
-
-tasks.check {
-    dependsOn("integrationTest")
 }

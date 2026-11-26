@@ -15,23 +15,36 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 |---|---|---|---|
 | [Testing old Java code: a journey](testing-old-java-code/README.md): every kind of test and technique as the answer to a team's question, with every lesson linked | none | slides only | built |
 
-## Before you change anything
+## Plug the leaks
 
-The first step with any old repo: see what its existing tests really check.
+**What secrets or personal data could leak?** Before anything runs, find what could leak secrets or personal data, or reach production, and mask or filter it out. Old code's settings often point at real systems, so one careless run can do real harm.
+
+**Techniques:** data masking, pseudonymisation (keyed substitutes), log filtering. **Tools:** Logbook, Datafaker, the JDK's HMAC. **References:** [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html); [NIST SP 800-122](https://doi.org/10.6028/NIST.SP.800-122), protecting personal data (2010); [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC (1997).
+
+| Lesson | Tools | Needs | Status |
+|---|---|---|---|
+| [Masking captured data so tests still work](masking-captured-data/README.md): one capture masked three ways (fixed text, keyed substitutes, seeded synthetic values); keyed substitutes keep joins and repeated values working, and a detector check fails on a field the data masking missed; includes what counts as anonymous | the JDK's HMAC, Datafaker | Java only | built |
+| [Capturing what an old service receives and sends](capturing-with-logbook/README.md): [Logbook](https://github.com/zalando/logbook)'s servlet filter and client interceptor record real requests and responses, with the `Authorization` header and customers' emails filtered out at source, and the examples kept as approval tests | Logbook (MIT), ApprovalTests | Java 17 or later | built |
+
+## Take stock
+
+**Can the tests we have be trusted?** Measure what the existing tests really check: plant bugs to see which they catch, look for habits that make them look stronger than they are, and find the ones that flake. A coverage figure only says which lines ran.
+
+**Techniques:** mutation testing, test smells, flaky-test detection. **Tools:** PIT, ArchUnit, Awaitility, JUnit. **References:** DeMillo, Lipton and Sayward, [*Hints on Test Data Selection*](https://doi.org/10.1109/C-M.1978.218136) (1978); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007); Fowler, [*Eradicating Non-Determinism in Tests*](https://martinfowler.com/articles/nonDeterminism.html) (2011).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md): an old shop's tests read by ArchUnit rules for what makes them untrustworthy (disabled, no real assertion, sleeps, fixed order, mocks everything), each finding listed with its file and line and written in a register with its decision; none deleted | ArchUnit | Java only | built |
-
-## Measure how far tests can be trusted
-
-| Lesson | Tools | Needs | Status |
-|---|---|---|---|
 | [Mutation testing](mutation-testing/README.md) | PIT | Java only | built |
-| [Coverage of changed code](coverage-of-changed-code/README.md): the coverage and PIT gates applied only to the classes a change touched | PIT, JaCoCo | Java only | built |
+| [Finding flaky tests](finding-flaky-tests/README.md): wait with Awaitility instead of sleeping, and five clean runs as a gate | Awaitility, JUnit 6 | Java only | built |
 | The test mix: why old code starts with mostly broad, slow tests, and how the mix changes as its tests mature (asked for by the toolkit's guide to the target test mix): a slide of [Testing old Java code: a journey](testing-old-java-code/README.md), "The mix for old code starts with large tests" | none | slides only | built, in the overview |
+| Load tests: how an old service behaves under many callers at once | Gatling or JMeter | Java only | later |
 
-## Record what the code does today (outside in, black box)
+## Pin it down
+
+**What does the code do now, right or wrong?** Record the code's whole output from the outside, and keep it as the expected result. Then any change in behaviour shows up, even before anyone knows whether today's behaviour is right.
+
+**Techniques:** characterisation tests, approval testing (golden master), black-box testing, outside-in testing. **Tools:** ApprovalTests, REST Assured, JSONUnit, XMLUnit, Spring Batch Test. **References:** Feathers, *Working Effectively with Legacy Code* (2004); [ApprovalTests](https://approvaltests.com).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
@@ -40,22 +53,27 @@ The first step with any old repo: see what its existing tests really check.
 | [Outside-in HTTP tests](outside-in-http-tests/README.md): a running service tested through its API only | REST Assured, JDK HTTP server | Java only | built |
 | [Black-box tests of a whole application](black-box-tests/README.md): the order service started as it ships, driven through its API, its warehouse and database stood in for | WireMock, REST Assured, H2 (a container database where needed) | Java only | built |
 | [Batch file-in, file-out](batch-file-in-file-out/README.md): a Spring Batch job run on synthetic input and a masked day of real data, its output compared record by record | spring-batch-test, Datafaker, JUnit temporary folders | Java only | built |
-| [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
-| [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
-| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
-| [Capturing what an old service receives and sends](capturing-with-logbook/README.md): [Logbook](https://github.com/zalando/logbook)'s servlet filter and client interceptor record real requests and responses, with the `Authorization` header and customers' emails filtered out at source, and the examples kept as approval tests | Logbook (MIT), ApprovalTests | Java 17 or later | built |
-| [Masking captured data so tests still work](masking-captured-data/README.md): one capture masked three ways (fixed text, keyed substitutes, seeded synthetic values); keyed substitutes keep joins and repeated values working, and a detector check fails on a field the data masking missed; includes what counts as anonymous | the JDK's HMAC, Datafaker | Java only | built |
 | Recording current behaviour from real traffic: [Keploy](https://keploy.io/) records a small Spring Boot service's API calls and its MySQL and HTTP calls, then replays them as tests with its own stand-ins | Keploy (native, no admin rights), WireMock to compare | Keploy binary | later: after the toolkit's Keploy trial |
 | Server-rendered pages: JSP and JSF pages checked through the browser | HtmlUnit, Playwright using the installed Chrome (never its own browser download) | Browser | last: needs other tools |
+| AI-drafted tests, judged by mutation testing: drafted tests kept as files, and PIT decides which are worth keeping | PIT | Java only | next |
 
-## Agree what the code should do
+## Dig deeper
+
+**What is the code really for?** Work out with the people who know the business what the code is meant to do, and write it down as examples that run as tests, with the schemas and contracts other teams rely on. Where code and example disagree, ask the business.
+
+**Techniques:** specification by example, behaviour-driven development, consumer-driven contract testing, schema validation. **Tools:** JUnit, Cucumber, Pact JVM, OpenAPI request validator. **References:** Adzic, *Specification by Example* (2011); North, [*Introducing BDD*](https://dannorth.net/introducing-bdd/) (2006); Robinson, [*Consumer-Driven Contracts*](https://martinfowler.com/articles/consumerDrivenContracts.html) (2006); the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Behaviour written down as examples](behaviour-as-examples/README.md): the rules as named examples the experts wrote, run against today's code | JUnit parameterised tests (`@CsvFileSource`); Cucumber only when business people write the examples | Java only | built |
 | [Responses checked against the OpenAPI schema](openapi-response-checks/README.md): every answer the tests see checked against the published document | OpenAPI request validator (formerly swagger-request-validator), REST Assured, JDK HTTP server | Java only | built |
+| [Contract tests between teams](contract-tests-between-teams/README.md): the order screen writes down what it relies on as a pact, and the stock service verifies it in its own build; the pact travels as a versioned artifact through the company's package repository, without a broker | Pact JVM | Java only | built |
 
-## Stand in for real systems
+## Unplug it
+
+**How do we test it without the real systems around it?** Replace the databases, services and queues it talks to with stand-ins the test controls, choosing the right kind for each. The tests run anywhere, fast and the same every time, and can try what real systems rarely do: slow answers, failures, odd data.
+
+**Techniques:** test doubles (stubs, fakes, mocks), service virtualisation (record and replay), fault injection. **Tools:** WireMock, Mockito, H2, Testcontainers, Apache Artemis. **References:** Fowler, [*Mocks Aren't Stubs*](https://martinfowler.com/articles/mocksArentStubs.html) (2007); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007); Nygard, *Release It!* (2007).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
@@ -63,24 +81,55 @@ The first step with any old repo: see what its existing tests really check.
 | [Fake behind an interface](fake-behind-an-interface/README.md): an in-memory fake for a message queue | An in-memory fake, and an ArchUnit rule that keeps the queue's client inside the connection code | Java only | built |
 | [When an in-memory database is enough](in-memory-databases/README.md): each test gets a fresh H2 database with the real schema, where the code uses plain SQL; a check keeps vendor-only SQL out | H2 | Java only | built |
 | [Real databases in tests](real-databases-in-tests/README.md): an in-memory database misses what real PostgreSQL does | Testcontainers | Docker | built |
-| [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
 | [Checking the requests your code sends](checking-outgoing-requests/README.md): method, headers and body, not just the answers it gets | WireMock's verify | Java only | built |
 | [Mockito well used](mockito-well-used/README.md): stand-ins for what you own, argument captors, and when a fake is better | Mockito | Java only | built |
 | [Slow and failing dependencies](slow-and-failing-dependencies/README.md): a supplier made slow or broken on demand, and a client with timeouts and a clear fallback (Toxiproxy next, for network faults between real services) | WireMock's delays and faults | Java only | built |
 | [Message consumers](message-consumers/README.md): a JMS consumer on a real broker started in the test, with browsed and masked example messages; Kafka next | Apache Artemis, embedded | Java only | built |
-| [Contract tests between teams](contract-tests-between-teams/README.md): the order screen writes down what it relies on as a pact, and the stock service verifies it in its own build; the pact travels as a versioned artifact through the company's package repository, without a broker | Pact JVM | Java only | built |
-| Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
-| Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
-| Running script tests in CI: JUnit reports, tags and filters, parallel runs, time limits and retries | bats-core | bats | last: needs other tools |
 
-## Make old code testable
+## Open it up
+
+**How do we test code that won't let us in?** Make the smallest changes that let a test reach the code: pass in what it reaches out for, such as the clock or a service, and start only as much of the framework as a test needs.
+
+**Techniques:** dependency injection, seams, slice testing. **Tools:** Mockito, System Stubs, Weld, Spring Boot test. **References:** Feathers, *Working Effectively with Legacy Code* (2004); Fowler, [*Inversion of Control Containers and the Dependency Injection Pattern*](https://martinfowler.com/articles/injection.html) (2004).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md): clocks, statics and `new` | Mockito (instead of PowerMock), injected `Clock` | Java only | built |
 | [Old command-line programs](old-command-line-programs/README.md): environment variables, `System.exit` and standard input | System Stubs | Java only | built |
+| [Embedded Jakarta EE tests](embedded-jakarta-ee-tests/README.md): CDI beans wired by Weld inside the test, no server | Weld, weld-junit5 | Java only | built |
+| [Spring tests in slices](spring-tests-in-slices/README.md): each layer of a Spring Boot 4 service tested on its own (web, data, JSON), and one test of the whole application kept for the wiring | Spring Boot test, H2, WireMock standalone | Java only | built |
+| Stand-in commands: shell scripts tested with stand-in programs | bats-core, bats-mock | bats | last: needs other tools |
+| Checking what batch scripts write: output files compared with saved expected files | bats-file (from source only, never npm) | bats | last: needs other tools |
+| Running script tests in CI: JUnit reports, tags and filters, parallel runs, time limits and retries | bats-core | bats | last: needs other tools |
 
-## Write better tests
+## Change with a safety net
+
+**How do we change it without breaking it?** Compare the old code and its rewrite on thousands of inputs, put new code behind a switch, and try each database change before production. Each difference is caught while it's cheap to fix.
+
+**Techniques:** differential testing, feature flags, database migration testing. **Tools:** JUnit, OpenFeature, Liquibase, Testcontainers. **References:** McKeeman, *Differential Testing for Software* (1998); Hodgson, [*Feature Toggles*](https://martinfowler.com/articles/feature-toggles.html) (2016); Sadalage and Ambler, *Refactoring Databases* (2006).
+
+| Lesson | Tools | Needs | Status |
+|---|---|---|---|
+| [Differential testing](differential-testing/README.md): the old code and its rewrite, compared on every input | none | Java only | built |
+| [Feature flags](feature-flags/README.md): old and new code behind a flag, tested both ways | OpenFeature | Java only | built |
+| [Database changes with Liquibase](database-changes-with-liquibase/README.md): every change applied to real PostgreSQL in a test, before production | Liquibase 5 (Functional Source License), Testcontainers | Docker | built |
+
+## Stop the rot
+
+**How do we keep it from getting worse?** Add checks every build runs: rules for how the code is built, and gates that hold each change to full coverage, whatever the old code around it. Without them, each change quietly undoes the work.
+
+**Techniques:** architecture fitness functions, quality gates on changed code, ratchets. **Tools:** ArchUnit, JaCoCo, PIT. **References:** Ford, Parsons and Kua, *Building Evolutionary Architectures* (2017); Petrović, Ivanković, Fraser and Just, [*Practical Mutation Testing at Scale*](https://arxiv.org/abs/2102.11378) (2021).
+
+| Lesson | Tools | Needs | Status |
+|---|---|---|---|
+| [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
+| [Coverage of changed code](coverage-of-changed-code/README.md): the coverage and PIT gates applied only to the classes a change touched | PIT, JaCoCo | Java only | built |
+
+## Hone the tests
+
+**How do we write tests that stay useful?** Write fewer tests that check more, with tables of cases, generated inputs and tests grouped by situation, set up cleanly and fast to run. Tests people trust get run, read and kept.
+
+**Techniques:** parameterised tests, property-based testing, test fixtures, test tagging. **Tools:** JUnit, jetCheck, Gradle. **References:** the [JUnit User Guide](https://docs.junit.org/current/user-guide/); Claessen and Hughes, [*QuickCheck*](https://doi.org/10.1145/351240.351266) (2000); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
@@ -88,17 +137,12 @@ The first step with any old repo: see what its existing tests really check.
 | [Nested tests](nested-tests/README.md): group tests by situation, so gaps stand out | JUnit 6 | Java only | built |
 | [Dynamic tests](dynamic-tests/README.md): one test per example file, each named | JUnit 6 | Java only | built |
 | [JUnit extensions](junit-extensions/README.md): set up and clean up shared state once, and catch the test that leaves it changed | JUnit 6 | Java only | built |
-| [Finding flaky tests](finding-flaky-tests/README.md): wait with Awaitility instead of sleeping, and five clean runs as a gate | Awaitility, JUnit 6 | Java only | built |
 | [Temporary folders](junit-temporary-folders/README.md): each test gets its own empty folder, removed afterwards, so no test reads a file another left behind | JUnit 6 | Java only | built |
 | [Tags: fast tests first, slow tests apart](junit-tags/README.md): the slow tests labelled, the quick ones run on every change, the slow ones by continuous integration | JUnit 6, Gradle | Java only | built |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
-| [Architecture rules](architecture-rules/README.md): keep layers and dependencies the way they should be | ArchUnit | Java only | built |
-| [Spring tests in slices](spring-tests-in-slices/README.md): each layer of a Spring Boot 4 service tested on its own (web, data, JSON), and one test of the whole application kept for the wiring | Spring Boot test, H2, WireMock standalone | Java only | built |
 | Fuzzing: a coverage-guided fuzzer feeds an old parser inputs nobody wrote a test for, and finds the one that crashes it | Jazzer | Java only | next |
 | Concurrency tests: run a class from many threads at once, and find the state it shares unsafely | Lincheck or jcstress | Java only | next |
-| AI-drafted tests, judged by mutation testing: drafted tests kept as files, and PIT decides which are worth keeping | PIT | Java only | next |
 | Metamorphic tests: where there is no exact expected answer, check how the answers relate across related inputs | JUnit 6 | Java only | later |
-| Load tests: how an old service behaves under many callers at once | Gatling or JMeter | Java only | later |
 | Proving one function correct: a specification of a pure function, checked by a verifier | OpenJML or KeY, once their support for current Java is checked | Java only | later: to decide |
 
 ## Every toolkit technique, and its lesson

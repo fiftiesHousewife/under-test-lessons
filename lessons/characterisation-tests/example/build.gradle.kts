@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // A characterisation test pins down what untested code does today, so it can be changed safely:

@@ -100,7 +100,7 @@ Sleep 300ms
 Type@1ms `note "Making recordings: WireMock passes each question to a *stand-in* supplier on this machine, and keeps the answer."`
 Enter
 Sleep 300ms
-Type@1ms `show RecordingTest 82 95 "making recordings" --zoom 84-85`
+Type@1ms `show RecordingTest 83 98 "making recordings" --zoom 85-86`
 Enter
 Sleep 300ms
 Show
@@ -114,7 +114,7 @@ Sleep 300ms
 Type@1ms `note "Recordings copy real answers, so they can hold *personal data*. Today they are saved as recorded."`
 Enter
 Sleep 300ms
-Type@1ms `show RecordingTest 66 80 "tests for the saved recordings" --zoom 77`
+Type@1ms `show RecordingTest 67 81 "tests for the saved recordings" --zoom 78`
 Enter
 Sleep 300ms
 Show

@@ -2,7 +2,9 @@ $ ./gradlew :lessons:characterisation-tests:test -Pcode=today
 RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
 RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
 StatementCharacterisationTest > printsTheSameStatementAsToday() FAILED
-    java.lang.Error at StatementCharacterisationTest.java:25
+    java.lang.Error: Failed Approval
+      Approved:lessons/characterisation-tests/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt
+      Received:lessons/characterisation-tests/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/StatementCharacterisationTest.printsTheSameStatementAsToday.received.txt
 StatementWeakTest > printsSomething() PASSED
 4 tests completed, 1 failed
 Approvals: the output differs from its approved file (- approved, + received):

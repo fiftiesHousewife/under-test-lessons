@@ -45,7 +45,11 @@ a newcomer follows a concrete problem, and an abstract slide before it makes lit
 1. **The build, one step per scene:** the version catalogue entry, adding the plugin or library, configuring it. Show
    each change in its context, not as a lone line: the whole `plugins { }`, `dependencies { }` or configuration block,
    and catalogue entries under their `[versions]` and `[libraries]` headers (`show <file> /pattern/`).
-2. **The code under test, explained:** what each method takes and returns, and the rules it follows.
+2. **The code under test, explained:** what each method takes and returns, and the rules it follows. Dwell on the
+   code scenes, and only these: the code under test, the weak and strong tests and the fix. Walk through what the
+   code on screen does, in the order it reads, one idea a sentence, with `[pause 600ms]` between ideas, so a viewer
+   can follow it on screen. Say what each test sets up, what it checks, and what it misses. The build steps stay
+   brief.
 3. **The *weak* tests, and what is weak about each one** (checks only "more than zero", uses a value far from any
    boundary, checks nothing, checks something that is always true).
 4. **The before run, live,** and what it reveals.

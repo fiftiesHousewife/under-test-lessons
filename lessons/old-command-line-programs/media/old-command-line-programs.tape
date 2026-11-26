@@ -164,7 +164,7 @@ Type@1ms `run_live "./gradlew :lessons:old-command-line-programs:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Same tests: environment, input and output stubbed by System Stubs, and the exit passed in. Every test passes."`

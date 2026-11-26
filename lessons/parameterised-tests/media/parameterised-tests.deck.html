@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,9 +221,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 95  junit-bom = { module = &quot;org.junit:junit-bom&quot;, version.ref = &quot;junit&quot; }
- 96  junit-jupiter = { module = &quot;org.junit.jupiter:junit-jupiter&quot; }
- 97  junit-platform-launcher = { module = &quot;org.junit.platform:junit-platform-launcher&quot; }</pre><figcaption>lesson build file</figcaption><pre> 10  tasks.test {
+ 94  junit-bom = { module = &quot;org.junit:junit-bom&quot;, version.ref = &quot;junit&quot; }
+ 95  junit-jupiter = { module = &quot;org.junit.jupiter:junit-jupiter&quot; }
+ 96  junit-platform-launcher = { module = &quot;org.junit.platform:junit-platform-launcher&quot; }</pre><figcaption>lesson build file</figcaption><pre> 10  tasks.test {
  11      systemProperty(&quot;code&quot;, providers.gradleProperty(&quot;code&quot;).getOrElse(&quot;fixed&quot;))
  12      outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching calculators never shows a stale result
  13  }</pre></figure></main><aside class="notes">Parameterised tests come with JUnit Jupiter, so there is nothing to add: JUnit is already in the version catalogue. The lesson's build file adds one switch, to choose the calculator in use today or the fixed one, and always reruns the tests.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/e2e09d2df85e7142.m4a"></audio></section>
@@ -263,28 +267,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  28      void roundsVatToTheNearestPenny(final int netPence, final int expectedVat) {
  29          assertThat(vat.vatPence(netPence)).isEqualTo(expectedVat);
  30      }</pre></figure></main><aside class="notes">Now, the parameterised test. The test cases are a table, one row per test case, including every way a fifth of a penny can round.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/7c363abfa4dea0b5.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The table finds a bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the calculator in use today</li></ul><p class="callout">3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five.</p></section><figure class="code" style="--code-size: 17px"><pre class="command">$ ./gradlew :lessons:parameterised-tests:test -Pcode=today</pre><pre class="output">RoundingDownVatTest &gt; roundsDownWhereItShouldRoundUp() PASSED
-VatCopyPasteTest &gt; vatOnTenPounds() PASSED
-VatCopyPasteTest &gt; vatOnOnePound() PASSED
-VatCopyPasteTest &gt; noVatOnNothing() PASSED
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 0 pence net gives 0 pence VAT PASSED
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 1 pence net gives 0 pence VAT PASSED
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 2 pence net gives 0 pence VAT PASSED
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 3 pence net gives 1 pence VAT FAILED
-    org.opentest4j.AssertionFailedError:
-    expected: 1
-     but was: 0
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 4 pence net gives 1 pence VAT FAILED
-    org.opentest4j.AssertionFailedError:
-    expected: 1
-     but was: 0
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 5 pence net gives 1 pence VAT PASSED
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 998 pence net gives 200 pence VAT FAILED
-    org.opentest4j.AssertionFailedError:
-    expected: 200
-     but was: 199
-VatParameterisedTest &gt; roundsVatToTheNearestPenny(int, int) &gt; 1000 pence net gives 200 pence VAT PASSED
-12 tests completed, 3 failed</pre></figure></main><aside class="notes">We run the tests against the calculator in use today. The copy-pasted tests pass. Three rows of the table fail, and each one is named. Three pence net should give one penny of VAT, and gives none.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/d68f610d71581e56.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The table finds a bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the calculator in use today</li></ul><p class="callout">3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five.</p></section><figure class="code" style="--code-size: 17px"><video class="live-run" src="parameterised-tests.deck-clips/scene-5.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against the calculator in use today. The copy-pasted tests pass. Three rows of the table fail, and each one is named. Three pence net should give one penny of VAT, and gives none.</aside><audio class="voice" preload="none" src="parameterised-tests.deck-voice/d68f610d71581e56.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The nearest-penny calculator</h1><div class="rule"></div><ul class="scene-points"><li class="point">The calculator that rounds to the nearest penny</li></ul><p class="callout">Every row passes: each case named, each case checked.</p></section><figure class="code" style="--code-size: 15px"><figcaption>NearestPennyVat.java</figcaption><pre>  6      @Override
   7      public int vatPence(final int netPence) {
 <mark>  8          return Math.floorDiv(netPence * 2 + 5, 10);</mark>

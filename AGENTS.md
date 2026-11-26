@@ -24,7 +24,7 @@ lives in that repo; link to it by full URL.
 | [`docs/using-inside-a-company.md`](docs/using-inside-a-company.md) | Repository manager, own container images, proxies, licences |
 | [`docs/research/`](docs/research/technology-gap-review.md) | Research behind the lesson plan |
 | [`GLOSSARY.md`](GLOSSARY.md) | The words lessons use, on top of the toolkit's word list |
-| `build-logic/`, `config/quality/` | Convention plugins every module applies, and the quality-check rules |
+| `gradle/libs.versions.toml`, `gradle.properties` | Every library's version, and the settings of [java-conventions](https://github.com/fiftiesHousewife/under-test-java-conventions), the published plugin every project applies for its quality checks and test summaries |
 | `tools/` | Helpers: the video-script generator, and PMD and Checkstyle without Gradle worker processes |
 | [`.github/skills/`](.github/skills/) | This repo's own skills, listed below |
 

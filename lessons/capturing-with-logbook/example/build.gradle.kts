@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Capturing what an old service receives and sends: Logbook records each exchange, its filters remove secrets before

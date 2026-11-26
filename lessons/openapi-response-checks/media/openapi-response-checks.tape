@@ -142,7 +142,7 @@ Type@1ms `run_live "./gradlew :lessons:openapi-response-checks:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "The service and its schema agree, and every test that calls it keeps them that way."`

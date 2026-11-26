@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 82  json-unit-assertj = { module = &quot;net.javacrumbs.json-unit:json-unit-assertj&quot;, version.ref = &quot;json-unit&quot; }</pre></figure></main><aside class="notes">Step one. Add JSONUnit to the version catalogue.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/95507898c779eabc.m4a"></audio></section>
+ 81  json-unit-assertj = { module = &quot;net.javacrumbs.json-unit:json-unit-assertj&quot;, version.ref = &quot;json-unit&quot; }</pre></figure></main><aside class="notes">Step one. Add JSONUnit to the version catalogue.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/95507898c779eabc.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency</li><li class="point">It reads JSON with Jackson, which the code already uses</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
 <mark> 10      testImplementation(libs.json.unit.assertj)</mark>
@@ -260,11 +264,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  25                          }
  26                          &quot;&quot;&quot;);
  27      }</pre></figure></main><aside class="notes">Now, a structured comparison, with JSONUnit. It checks every field and every value, in any order. The id and the time only have to be there, as text.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/82f6975fd56aa8bf.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The comparison finds the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both tests against today's total</li></ul><p class="callout">The loosened test passes. The structured comparison names the field, the value expected, and the value found.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:structured-output-comparison:test -Pcode=today</pre><pre class="output">CompareJsonTest &gt; summaryHasTheExpectedLinesAndTotal() FAILED
-    org.opentest4j.AssertionFailedError: JSON documents are different:
-    Different value found in node &quot;totalPence&quot;, expected: &lt;1120&gt; but was: &lt;370&gt;.
-ContainsTextTest &gt; summaryMentionsEveryItemAndATotal() PASSED
-2 tests completed, 1 failed</pre></figure></main><aside class="notes">We run both tests against today's total. The loosened test passes. The structured comparison fails, and says exactly what is wrong: the total, what it expected, and what it found.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/eb8922591325dc19.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The comparison finds the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both tests against today's total</li></ul><p class="callout">The loosened test passes. The structured comparison names the field, the value expected, and the value found.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="structured-output-comparison.deck-clips/scene-7.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run both tests against today's total. The loosened test passes. The structured comparison fails, and says exactly what is wrong: the total, what it expected, and what it found.</aside><audio class="voice" preload="none" src="structured-output-comparison.deck-voice/eb8922591325dc19.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed total</h1><div class="rule"></div><ul class="scene-points"><li class="point">The total that multiplies price by quantity</li></ul><p class="callout">The structured comparison passes on every run, whatever the id and the time.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed total</figcaption><pre> 18      @Override
  19      public String json(final List&lt;Line&gt; lines) {
 <mark> 20          return writer.write(lines, lines.stream().mapToInt(line -&gt; line.pricePence() * line.quantity()).sum());</mark>

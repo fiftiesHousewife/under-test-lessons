@@ -90,12 +90,15 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
 - **Only people see.** A report counts, a test gets; never "the test sees".
 - **Active voice, not passive:** "we tidy the printer up", not "the printer is tidied up"; "the schema stayed the
   same", not "the schema wasn't changed". The subject is the thing itself, or "we" for the lesson.
-- **Pauses** go between sentences, never inside a phrase ("This is [pause] the weak test").
+- **Pauses** go between sentences, never inside a phrase ("This is [pause] the weak test"). The voice runs straight
+  through commas: give an aside its own sentence, and each item of a spoken list a short pause.
 - **Pronunciation:** add each name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`, and check
   it there before writing a new one. What reviewing taught:
   - A phrase gets its own entry, with its stress: equal on both words where both matter ("feature flag", "Spring
     Batch", "copy-paste"), on the first for a compound noun ("build file", "test case"), and on the word that differs
     in a contrast. A word the voice shrinks needs its own stress too ("new code", not "new cd").
+    Write the sounds of a phrase whose later words stay light as one word, so it gets one main stress ("loyalty
+    provider" as /lˈɔɪəltipɹəvaɪdə/); written as separate words, each may take a stress of its own.
   - Every name the list spells out needs its possessive as well ("WireMock's"), or the voice says the name, then "s".
   - "read" is the present tense unless a phrase says otherwise: give the past tense a phrase ("line read", "be read").
   - Status codes as developers say them ("201 = two oh one"); one-word terms as one word ("commandline", "classpath");

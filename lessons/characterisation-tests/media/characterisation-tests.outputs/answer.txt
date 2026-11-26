@@ -1,11 +1,15 @@
 $ ./gradlew :lessons:characterisation-tests:test -Pcode=answer
 StatementCharacterisationTest > printsTheSameStatementAsToday() FAILED
-    java.lang.Error at StatementCharacterisationTest.java:25
+    java.lang.Error: Failed Approval
+      Approved:lessons/characterisation-tests/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt
+      Received:lessons/characterisation-tests/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/StatementCharacterisationTest.printsTheSameStatementAsToday.received.txt
 RefactoredStatementTest > chargesNoFeeAtExactlyZeroUnlikeTheLegacyPrinter() PASSED
 RefactoredStatementTest > stillChargesTheFeeBelowZeroAndPaysInterestOnHighBalances() PASSED
 StatementWeakTest > printsSomething() PASSED
 ZeroBalanceStatementAnswerTest > chargesTheFeeWhenTheBalanceReachesExactlyZero() FAILED
-    java.lang.Error at ZeroBalanceStatementAnswerTest.java:28
+    java.lang.Error: Failed Approval
+      Approved:lessons/characterisation-tests/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/answer/ZeroBalanceStatementAnswerTest.chargesTheFeeWhenTheBalanceReachesExactlyZero.approved.txt
+      Received:lessons/characterisation-tests/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/characterisation/answer/ZeroBalanceStatementAnswerTest.chargesTheFeeWhenTheBalanceReachesExactlyZero.received.txt
 5 tests completed, 2 failed
 Approvals: the output differs from its approved file (- approved, + received):
   - 02 Mar  Overdraft fee               -25  balance    -25

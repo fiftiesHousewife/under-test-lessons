@@ -24,63 +24,67 @@ lesson's own) shows the "before"; without it, every test passes, so the whole re
 [deck](https://fiftieshousewife.github.io/under-test-lessons/testing-old-java-code.html) is an overview that introduces
 every kind of test and technique below, and links to each lesson. Lessons in *italics* are still to come.
 
-The lessons follow the order work usually happens on an old codebase: find out how far the tests can be trusted,
-record what the code does before touching it, agree what it should do, cut it loose from the systems around it, make
-the changes safely, and then raise the standard of every test written from then on. The full plan, with every toolkit technique, its lesson
-and what is still to come, is in [the catalogue](lessons/CATALOGUE.md).
+The lessons follow the stages a team goes through with old code. Each stage answers one question.
 
-### 1. Find out how far the tests can be trusted
+| Stage | The question it answers | What happens, and why | Well-known techniques | Tools | References |
+|---|---|---|---|---|---|
+| **Plug the leaks** | What secrets or personal data could leak? | Before anything runs, find what could leak secrets or personal data, or reach production, and mask or filter it out. Old code's settings often point at real systems, so one careless run can do real harm. | data masking, pseudonymisation (keyed substitutes), log filtering | Logbook, Datafaker, the JDK's HMAC | [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html); [NIST SP 800-122](https://doi.org/10.6028/NIST.SP.800-122), protecting personal data (2010); [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC (1997) |
+| **Take stock** | Can the tests we have be trusted? | Measure what the existing tests really check: plant bugs to see which they catch, look for habits that make them look stronger than they are, and find the ones that flake. A coverage figure only says which lines ran. | mutation testing, test smells, flaky-test detection | PIT, ArchUnit, Awaitility, JUnit | DeMillo, Lipton and Sayward, [*Hints on Test Data Selection*](https://doi.org/10.1109/C-M.1978.218136) (1978); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007); Fowler, [*Eradicating Non-Determinism in Tests*](https://martinfowler.com/articles/nonDeterminism.html) (2011) |
+| **Pin it down** | What does the code do now, right or wrong? | Record the code's whole output from the outside, and keep it as the expected result. Then any change in behaviour shows up, even before anyone knows whether today's behaviour is right. | characterisation tests, approval testing (golden master), black-box testing, outside-in testing | ApprovalTests, REST Assured, JSONUnit, XMLUnit, Spring Batch Test | Feathers, *Working Effectively with Legacy Code* (2004); [ApprovalTests](https://approvaltests.com) |
+| **Dig deeper** | What is the code really for? | Work out with the people who know the business what the code is meant to do, and write it down as examples that run as tests, with the schemas and contracts other teams rely on. Where code and example disagree, ask the business. | specification by example, behaviour-driven development, consumer-driven contract testing, schema validation | JUnit, Cucumber, Pact JVM, OpenAPI request validator | Adzic, *Specification by Example* (2011); North, [*Introducing BDD*](https://dannorth.net/introducing-bdd/) (2006); Robinson, [*Consumer-Driven Contracts*](https://martinfowler.com/articles/consumerDrivenContracts.html) (2006); the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html) |
+| **Unplug it** | How do we test it without the real systems around it? | Replace the databases, services and queues it talks to with stand-ins the test controls, choosing the right kind for each. The tests run anywhere, fast and the same every time, and can try what real systems rarely do: slow answers, failures, odd data. | test doubles (stubs, fakes, mocks), service virtualisation (record and replay), fault injection | WireMock, Mockito, H2, Testcontainers, Apache Artemis | Fowler, [*Mocks Aren't Stubs*](https://martinfowler.com/articles/mocksArentStubs.html) (2007); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007); Nygard, *Release It!* (2007) |
+| **Open it up** | How do we test code that won't let us in? | Make the smallest changes that let a test reach the code: pass in what it reaches out for, such as the clock or a service, and start only as much of the framework as a test needs. | dependency injection, seams, slice testing | Mockito, System Stubs, Weld, Spring Boot test | Feathers, *Working Effectively with Legacy Code* (2004); Fowler, [*Inversion of Control Containers and the Dependency Injection Pattern*](https://martinfowler.com/articles/injection.html) (2004) |
+| **Change with a safety net** | How do we change it without breaking it? | Compare the old code and its rewrite on thousands of inputs, put new code behind a switch, and try each database change before production. Each difference is caught while it's cheap to fix. | differential testing, feature flags, database migration testing | JUnit, OpenFeature, Liquibase, Testcontainers | McKeeman, *Differential Testing for Software* (1998); Hodgson, [*Feature Toggles*](https://martinfowler.com/articles/feature-toggles.html) (2016); Sadalage and Ambler, *Refactoring Databases* (2006) |
+| **Stop the rot** | How do we keep it from getting worse? | Add checks every build runs: rules for how the code is built, and gates that hold each change to full coverage, whatever the old code around it. Without them, each change quietly undoes the work. | architecture fitness functions, quality gates on changed code, ratchets | ArchUnit, JaCoCo, PIT | Ford, Parsons and Kua, *Building Evolutionary Architectures* (2017); Petrović, Ivanković, Fraser and Just, [*Practical Mutation Testing at Scale*](https://arxiv.org/abs/2102.11378) (2021) |
+| **Hone the tests** | How do we write tests that stay useful? | Write fewer tests that check more, with tables of cases, generated inputs and tests grouped by situation, set up cleanly and fast to run. Tests people trust get run, read and kept. | parameterised tests, property-based testing, test fixtures, test tagging | JUnit, jetCheck, Gradle | the [JUnit User Guide](https://docs.junit.org/current/user-guide/); Claessen and Hughes, [*QuickCheck*](https://doi.org/10.1145/351240.351266) (2000); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007) |
 
-Old code often comes with tests, and a coverage figure that looks fine. Coverage only says which lines ran, not
-whether any test would notice them going wrong. Before relying on existing tests, during discovery, measure what they
-actually catch; later, use the same measure to decide when new tests are strong enough.
+Every lesson, under its stage, is in [the catalogue](lessons/CATALOGUE.md).
+
+### 1. Plug the leaks
+
+**What secrets or personal data could leak?** Before anything runs, find what could leak secrets or personal data, or reach production, and mask or filter it out. Old code's settings often point at real systems, so one careless run can do real harm.
+
+| Lesson | Tools | What you'll see |
+|---|---|---|
+| [Capturing what an old service receives and sends](lessons/capturing-with-logbook/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/capturing-with-logbook.html) | [Logbook](https://github.com/zalando/logbook), [ApprovalTests](https://approvaltests.com/) | One header filter silently drops Logbook's default, and a token and an email are captured; its filters mask them at source and the capture is approved |
+| [Masking captured data so tests still work](lessons/masking-captured-data/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/masking-captured-data.html) | the JDK's HMAC, [Datafaker](https://www.datafaker.net) | Fixed text merges every customer, so the reports go wrong; keyed substitutes keep them right, and a detector finds the email left in a note |
+
+### 2. Take stock
+
+**Can the tests we have be trusted?** Measure what the existing tests really check: plant bugs to see which they catch, look for habits that make them look stronger than they are, and find the ones that flake. A coverage figure only says which lines ran.
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Mutation testing](lessons/mutation-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/mutation-testing.html) | [PIT](https://pitest.org/) | Two test suites with the same 100% line coverage: PIT shows one catches 5 of 13 planted bugs, the other all 13 |
-| [Coverage of changed code](lessons/coverage-of-changed-code/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/coverage-of-changed-code.html) | [PIT](https://pitest.org/), [JaCoCo](https://www.jacoco.org/) | PIT mutates only the class a change touched: the weak test lets 5 of 11 planted bugs through, the strong one catches all 11 |
 | [Anti-patterns in existing tests](lessons/anti-patterns-in-existing-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/anti-patterns-in-existing-tests.html) | [ArchUnit](https://www.archunit.org) | An old repo's tests listed for 5 kinds of anti-pattern, each with its file and line; a register of decisions makes the ratchet pass and refuse new ones |
-| *AI-written tests that pass the acceptance check* | [PIT](https://pitest.org/), the toolkit's acceptance check | *coming* |
+| [Finding flaky tests](lessons/finding-flaky-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/finding-flaky-tests.html) | [Awaitility](https://github.com/awaitility/awaitility) | A test that sleeps passes twice, then fails on its third of five runs with nothing changed; Awaitility waits and passes all five |
 
-### 2. Record what the code does today
+### 3. Pin it down
 
-You can't safely change code whose behaviour nobody has written down. These techniques pin down today's behaviour from
-the outside, where it shows: whole outputs, API responses, files, or the old version itself. Most are black-box tests:
-they drive the code only through what goes in and what comes out, knowing nothing of the classes inside, so they keep
-working while the inside is rewritten. Use them before a
-refactor, a rewrite or an upgrade, and on any code whose rules live only in the code. They record what the code *does*,
-which is not always what it *should* do; differences found later are questions for the people who know the business.
+**What does the code do now, right or wrong?** Record the code's whole output from the outside, and keep it as the expected result. Then any change in behaviour shows up, even before anyone knows whether today's behaviour is right.
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
+| *AI-written tests that pass the acceptance check* | [PIT](https://pitest.org/), the toolkit's acceptance check | *coming* |
 | [Characterisation tests](lessons/characterisation-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/characterisation-tests.html) | [ApprovalTests](https://approvaltests.com/) | A whole bank statement approved as it is, so a tidy-up that changes one amount is caught |
 | [Comparing structured output](lessons/structured-output-comparison/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) | [JSONUnit](https://github.com/lukas-krecan/JsonUnit) | A loosened "contains" test passes on a wrong total; JSONUnit names the field and both values |
 | [Outside-in HTTP tests](lessons/outside-in-http-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/outside-in-http-tests.html) | [REST Assured](https://rest-assured.io/) | REST Assured finds a service answering `200 OK` to a refused booking |
 | [Batch file-in, file-out](lessons/batch-file-in-file-out/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) | [JUnit](https://junit.org/) temporary folders | A nightly settlement file compared line by line finds a missing closing line |
-| [Differential testing](lessons/differential-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) | [JUnit](https://junit.org/) (no extra library) | An old calculator and its rewrite compared on all 5,000 weights find a mistyped price |
 | [Black-box tests of a whole application](lessons/black-box-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/black-box-tests.html) | [WireMock](https://wiremock.org/), [REST Assured](https://rest-assured.io/), [H2](https://h2database.com) | The order service, started as it ships, answers and calls its warehouse correctly but never keeps the order; only checking the rows written finds it |
-| [Capturing what an old service receives and sends](lessons/capturing-with-logbook/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/capturing-with-logbook.html) | [Logbook](https://github.com/zalando/logbook), [ApprovalTests](https://approvaltests.com/) | One header filter silently drops Logbook's default, and a token and an email are captured; its filters mask them at source and the capture is approved |
-| [Masking captured data so tests still work](lessons/masking-captured-data/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/masking-captured-data.html) | the JDK's HMAC, [Datafaker](https://www.datafaker.net) | Fixed text merges every customer, so the reports go wrong; keyed substitutes keep them right, and a detector finds the email left in a note |
 
-### 3. Agree what the code should do
+### 4. Dig deeper
 
-Recording what the code does is not the same as knowing what it should do. Once today's behaviour is pinned down, the
-rules that matter are written down with the people who know the business, as examples, and the code is checked
-against them; interfaces other systems rely on are checked against their published descriptions. Use these when
-behaviour is disputed, before changing business rules, and where other teams depend on an interface.
+**What is the code really for?** Work out with the people who know the business what the code is meant to do, and write it down as examples that run as tests, with the schemas and contracts other teams rely on. Where code and example disagree, ask the business.
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Behaviour written down as examples](lessons/behaviour-as-examples/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) | [JUnit](https://junit.org/), [Cucumber](https://cucumber.io/) where business people use the examples | The returns team's named examples find the 30th-day refund the code gets wrong |
 | [Responses checked against the OpenAPI schema](lessons/openapi-response-checks/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) | [OpenAPI request validator](https://github.com/atlassian/openapi-request-validator) | A parcel service's tests pass while it sends the weight as text; checking against its OpenAPI schema names the field and the rule |
+| [Contract tests between teams](lessons/contract-tests-between-teams/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/contract-tests-between-teams.html) | [Pact JVM](https://github.com/pact-foundation/pact-jvm) | Both teams' own tests pass while a renamed field breaks the order screen; the pact, shared through the package repository, names the field |
 
-### 4. Stand in for the systems around it
+### 5. Unplug it
 
-Old code talks to databases, queues, other teams' services and application servers. Tests that need the real thing
-are slow, need accounts, fail when someone else's system is down, and can't make it fail on demand. These techniques
-put a stand-in in its place: recorded answers, an in-memory fake, a real database in a throwaway container, or just
-the container the server would provide. Use them as soon as a test needs anything outside its own process; pick the
-stand-in by how much of the real system's behaviour the test depends on.
+**How do we test it without the real systems around it?** Replace the databases, services and queues it talks to with stand-ins the test controls, choosing the right kind for each. The tests run anywhere, fast and the same every time, and can try what real systems rarely do: slow answers, failures, odd data.
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
@@ -89,32 +93,43 @@ stand-in by how much of the real system's behaviour the test depends on.
 | [Fake behind an interface](lessons/fake-behind-an-interface/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/fake-behind-an-interface.html) | Plain Java; [Mockito](https://site.mockito.org/) for the comparison | A mock test passes while a message is lost; an in-memory fake queue finds it |
 | [When an in-memory database is enough](lessons/in-memory-databases/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/in-memory-databases.html) | [H2](https://h2database.com) | Each test's fresh in-memory database finds the first invoice numbered 0, which a shared test database hid |
 | [Real databases in tests](lessons/real-databases-in-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) | [Testcontainers](https://testcontainers.com/), [PostgreSQL](https://www.postgresql.org/), [H2](https://www.h2database.com/) | A query passes on H2 and fails on real PostgreSQL, started by Testcontainers |
-| [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) | [Liquibase](https://www.liquibase.com/), [Testcontainers](https://testcontainers.com/) | A change that works on the developers' database fails on real PostgreSQL, before production does |
-| [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) | [Weld](https://weld.cdi-spec.org/), [weld-testing](https://github.com/weld/weld-testing) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
 | [Message consumers](lessons/message-consumers/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/message-consumers.html) | [Apache Artemis](https://artemis.apache.org), embedded | A hand-built message passes while a payment is lost; a real broker in the test finds it, and the dead-letter queue keeps the bad message (Kafka next) |
 | [Slow and failing dependencies](lessons/slow-and-failing-dependencies/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) | [WireMock](https://wiremock.org/)'s delays and faults | A slow supplier hangs the shop and a reset connection crashes it; timeouts and a fallback answer "supplier unavailable" within a second |
-| [Contract tests between teams](lessons/contract-tests-between-teams/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/contract-tests-between-teams.html) | [Pact JVM](https://github.com/pact-foundation/pact-jvm) | Both teams' own tests pass while a renamed field breaks the order screen; the pact, shared through the package repository, names the field |
+| [Mockito well used](lessons/mockito-well-used/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/mockito-well-used.html) | [Mockito](https://site.mockito.org/) | A test that mocks everything passes while the card gets the whole order back; an argument captor catches it |
 
-### 5. Make old code testable, and change it safely
+### 6. Open it up
 
-Some code can't be tested as it stands: it reaches for a singleton, the clock or the network itself. The first change
-is usually the smallest one that lets a test hand over a stand-in. Once tests are in place, big changes still go in
-small steps, with the new code switched off until it has proved itself. Use these when a class resists testing, and
-whenever a change is too large to make in one go.
+**How do we test code that won't let us in?** Make the smallest changes that let a test reach the code: pass in what it reaches out for, such as the clock or a service, and start only as much of the framework as a test needs.
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
+| [Embedded Jakarta EE tests](lessons/embedded-jakarta-ee-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) | [Weld](https://weld.cdi-spec.org/), [weld-testing](https://github.com/weld/weld-testing) | Weld wires a checkout as the server would, and it gets the wrong tax rate |
 | [Replacing hard-wired dependencies](lessons/replacing-hard-wired-dependencies/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) | [Mockito](https://site.mockito.org/) | An invoice that can't be tested until its exchange rates are passed in; then Mockito does the rest |
 | [Old command-line programs](lessons/old-command-line-programs/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/old-command-line-programs.html) | [System Stubs](https://github.com/webcompere/system-stubs) | A nightly import's `System.exit` ends the whole test run; given how to print and how to end, it's tested end to end |
+| [Spring tests in slices](lessons/spring-tests-in-slices/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/spring-tests-in-slices.html) | [Spring Boot](https://spring.io/projects/spring-boot)'s test slices | Whole-application tests pass while the due date is written day first; the JSON slice names it, and one test is kept for the wiring |
+
+### 7. Change with a safety net
+
+**How do we change it without breaking it?** Compare the old code and its rewrite on thousands of inputs, put new code behind a switch, and try each database change before production. Each difference is caught while it's cheap to fix.
+
+| Lesson | Tools | What you'll see |
+|---|---|---|
+| [Differential testing](lessons/differential-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/differential-testing.html) | [JUnit](https://junit.org/) (no extra library) | An old calculator and its rewrite compared on all 5,000 weights find a mistyped price |
+| [Database changes with Liquibase](lessons/database-changes-with-liquibase/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) | [Liquibase](https://www.liquibase.com/), [Testcontainers](https://testcontainers.com/) | A change that works on the developers' database fails on real PostgreSQL, before production does |
 | [Feature flags](lessons/feature-flags/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/feature-flags.html) | [OpenFeature](https://openfeature.dev/) | New code behind an OpenFeature flag, tested both ways, before anyone switches it on |
-| [Mockito well used](lessons/mockito-well-used/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/mockito-well-used.html) | [Mockito](https://site.mockito.org/) | A test that mocks everything passes while the card gets the whole order back; an argument captor catches it |
 
-### 6. Write better tests from now on
+### 8. Stop the rot
 
-Getting old code under test produces a lot of new tests, many of them drafted with AI assistance. These lessons are
-about making each one count: cover the cases that matter rather than the easy ones, let a tool hunt for the inputs you
-didn't think of, make the report readable as a specification, and let the build guard the code's structure. Use them
-in every new test, and when reviewing tests written by people or by AI.
+**How do we keep it from getting worse?** Add checks every build runs: rules for how the code is built, and gates that hold each change to full coverage, whatever the old code around it. Without them, each change quietly undoes the work.
+
+| Lesson | Tools | What you'll see |
+|---|---|---|
+| [Coverage of changed code](lessons/coverage-of-changed-code/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/coverage-of-changed-code.html) | [PIT](https://pitest.org/), [JaCoCo](https://www.jacoco.org/) | PIT mutates only the class a change touched: the weak test lets 5 of 11 planted bugs through, the strong one catches all 11 |
+| [Architecture rules](lessons/architecture-rules/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) | [ArchUnit](https://www.archunit.org/) | ArchUnit finds a web page reaching straight into storage |
+
+### 9. Hone the tests
+
+**How do we write tests that stay useful?** Write fewer tests that check more, with tables of cases, generated inputs and tests grouped by situation, set up cleanly and fast to run. Tests people trust get run, read and kept.
 
 | Lesson | Tools | What you'll see |
 |---|---|---|
@@ -125,9 +140,6 @@ in every new test, and when reviewing tests written by people or by AI.
 | [JUnit extensions](lessons/junit-extensions/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-extensions.html) | [JUnit](https://junit.org/) | Shared settings old tests set up by hand become one extension that puts them back and names the test that leaked |
 | [Temporary folders](lessons/junit-temporary-folders/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-temporary-folders.html) | [JUnit](https://junit.org/) | A file left in a shared folder hides an export that writes nothing; @TempDir gives each test its own folder, and the test fails |
 | [Tags: fast tests first, slow tests apart](lessons/junit-tags/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-tags.html) | [JUnit](https://junit.org/), [Gradle](https://gradle.org/) | Every change runs the slow warehouse tests too; tagged, the quick task runs 4 and continuous integration runs the 2 slow ones |
-| [Architecture rules](lessons/architecture-rules/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) | [ArchUnit](https://www.archunit.org/) | ArchUnit finds a web page reaching straight into storage |
-| [Spring tests in slices](lessons/spring-tests-in-slices/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/spring-tests-in-slices.html) | [Spring Boot](https://spring.io/projects/spring-boot)'s test slices | Whole-application tests pass while the due date is written day first; the JSON slice names it, and one test is kept for the wiring |
-| [Finding flaky tests](lessons/finding-flaky-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/finding-flaky-tests.html) | [Awaitility](https://github.com/awaitility/awaitility) | A test that sleeps passes twice, then fails on its third of five runs with nothing changed; Awaitility waits and passes all five |
 
 ## Coming next
 

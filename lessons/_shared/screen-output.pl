@@ -7,11 +7,12 @@
 #
 # It takes out only padding, never a result:
 #   - blank lines, which Gradle prints after every test's result line;
+#   - the JVM's warning that class sharing is off when an agent extends the boot class path,
 #   - the JDK's warnings about Lombok's use of sun.misc.Unsafe, and about Gradle's native library, which a newer JDK
 #     prints before a build starts;
 #   - Gradle's general advice after a failure ("* Try:" and its "> Run with --stacktrace" lines), and its
 #     "FAILURE: Build failed with an exception." heading;
-#   - the "* What went wrong:" block of the build's own test summary task (testFailures), which only repeats the line
+#   - the "* What went wrong:" block of the build's own test summary task (testSummary), which only repeats the line
 #     "N tests completed, M failed" printed just above it. Any other "* What went wrong:" and its reason stay.
 use strict;
 use warnings;
@@ -21,7 +22,7 @@ my $in_advice = 0;
 my $held = undef;    # a "* What went wrong:" line, held until the next line says what failed
 while (my $line = <STDIN>) {
     if (defined $held) {
-        my $summary = $line =~ /^Execution failed for task '[^']*:\w*[Ff]ailures'/;
+        my $summary = $line =~ /^Execution failed for task '[^']*:\w*([Ff]ailures|[Ss]ummary)'/;
         print $held unless $summary;
         $held = undef;
         if ($summary) {
@@ -43,6 +44,7 @@ while (my $line = <STDIN>) {
     }
     next if $line =~ /^\s*$/;
     next if $line =~ /^FAILURE: Build failed with an exception\.$/;
+    next if $line =~ /^OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes/;
     next if $line =~ /^WARNING: .*(sun\.misc\.Unsafe|lombok\.permit|terminally deprecated method|restricted method|System::load|--enable-native-access|Restricted methods will be blocked)/;
     print $line;
 }

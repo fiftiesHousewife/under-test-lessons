@@ -33,24 +33,34 @@ Say: Our example is an old customer service. Callers ask it for a customer, and 
 
 ## intro: The recording keeps the secrets
 - The recording holds the caller's token, the loyalty provider's key and a customer's email
-- The test passes: it checks only that each request and answer was recorded
+- The test passes: it checks only that each request and answer has an entry
 - Once a secret is written to a log or a file, it is hard to take back
 Picture: bug
 Say: Here is the problem. The recording holds the caller's token, the loyalty provider's key, and a customer's email
   address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only checks that each
-  request and answer was recorded. It never reads what was written. And once a secret is written to a log or a file, it
-  is hard to take back.
+  request and answer has an entry. It never checks what those entries say. And once a secret is written to a log or a
+  file, it is hard to take back.
 
-## intro: The fix: filter the recording, then approve it
-- Logbook captures from inside the service: a servlet filter, and a hook in its HTTP client
+## intro: The fix: record from inside, filtered
+- Logbook records from inside the service
+- A servlet filter records each request that comes in
+- A hook in its HTTP client records each call that goes out
 - Its filters remove secrets before anything is written
-- A person checks the recording once, and it's kept as an approved file
-- Later tests compare against it, line by line, and fail on any secret
 Picture: camera
-Say: The fix is to filter the recording, then approve it. Logbook, a small Java library, captures from inside the
-  service. A servlet filter, a hook in the web server, records what comes in, and a hook in its HTTP client records what
-  goes out. Its filters remove secrets before anything is written. A person checks the recording once, and we keep it as
-  the approved file. Later tests compare each new capture with it, line by line, and fail if any secret is there.
+Say: The fix starts with recording from inside the service. Logbook is a small Java library that does this.
+  [pause 600ms] On the way in, a servlet filter records each request. A servlet filter is a hook in the web server.
+  [pause 600ms] On the way out, a hook in the HTTP client records each call. [pause 600ms] And Logbook's filters remove
+  secrets before anything is written down.
+
+## intro: Then approve the recording
+- A person checks the recording once
+- It's kept as the approved file
+- Later tests compare each new recording with it, line by line
+- A test fails if any secret is there
+Picture: checklist
+Say: Then we approve the recording. [pause 600ms] A person checks it once, and we keep it as the approved file.
+  [pause 600ms] Later tests compare each new recording with it, line by line. [pause 600ms] And a test fails if any
+  secret is there.
 
 ## intro: How Logbook's filters look
 - Our one header filter replaced Logbook's default, which hides the Authorization header
@@ -60,9 +70,9 @@ Say: The fix is to filter the recording, then approve it. Logbook, a small Java 
 Picture: plug
 Say: Here is how the filters look. Logbook hides the Authorization header by default. But today's set-up gives it one
   header filter of its own, to drop the headers that change on every run, and that replaces the default. So we put
-  Logbook's authorization filter back. It writes 3 Xs in place of the token. A body filter replaces every email field
-  with a made-up address that no real person uses. Today the approved file and the new capture differ: the approved file
-  has the Xs, and the recording has the caller's real token.
+  Logbook's authorization filter back. It writes XXX in place of the token. A body filter replaces every email field
+  with a made-up address that no real person uses. Today the approved file and the new recording differ: the approved
+  file has XXX, and the recording has the caller's real token.
 
 Include: how-we-build
 

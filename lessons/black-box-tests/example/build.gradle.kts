@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Black-box tests of a whole application: start it as it ships, and test it only through what it receives and sends.

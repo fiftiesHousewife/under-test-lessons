@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -287,15 +291,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 67                          .withRequestBody(equalToJson(&quot;{\&quot;sku\&quot;: \&quot;PEN-01\&quot;, \&quot;quantity\&quot;: 3}&quot;))),</mark>
 <mark> 68                  () -&gt; assertThat(rowsWritten()).as(&quot;rows written&quot;).isEqualTo(List.of(&quot;O-1001 C-42 W-881 PEN-01 3&quot;)));</mark>
  69      }</pre></figure></main><aside class="notes">The test itself knows nothing about the classes inside. It posts an order, and checks the answer: 201 Created, with the order's address and id. It checks the call the warehouse received. And it reads the rows written, straight from the service's database.</aside><audio class="voice" preload="none" src="black-box-tests.deck-voice/0b046d3e1d7f3a4b.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The order is lost</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">The answer said 201 Created and the stock was put aside, but no rows were written: the order is lost.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:black-box-tests:test -Pcode=today</pre><pre class="output">OrderServiceTest &gt; anOrderWithoutStockIsRefusedAndNothingIsWritten() PASSED
-OrderServiceTest &gt; anOrderIsReservedAnsweredAndKept() FAILED
-    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [rows written]
-    expected: [&quot;O-1001 C-42 W-881 PEN-01 3&quot;]
-     but was: []
-OrderTakingTest &gt; anOrderWithStockIsPlacedAndKept() PASSED
-OrderTakingTest &gt; anOrderWithoutStockIsRefusedAndNotKept() PASSED
-4 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against today's code. The unit tests pass. The refused order passes too, because nothing should be written. But the placed order fails. The answer was right, and the warehouse put the stock aside. Yet the service wrote no rows. The order is lost.</aside><audio class="voice" preload="none" src="black-box-tests.deck-voice/ac87150d771304cd.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The order is lost</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">The answer said 201 Created and the stock was put aside, but no rows were written: the order is lost.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="black-box-tests.deck-clips/scene-7.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's code. The unit tests pass. The refused order passes too, because nothing should be written. But the placed order fails. The answer was right, and the warehouse put the stock aside. Yet the service wrote no rows. The order is lost.</aside><audio class="voice" preload="none" src="black-box-tests.deck-voice/ac87150d771304cd.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed code that saves orders</h1><div class="rule"></div><ul class="scene-points"><li class="point">The fixed code commits the transaction</li></ul><p class="callout">The answer, the warehouse call and the rows written are all what the shop expects.</p></section><figure class="code" style="--code-size: 19px"><figcaption>the fixed code that saves orders</figcaption><pre> 19      @Override
  20      public void save(final PlacedOrder order) {
  21          try (Connection connection = database.connect()) {

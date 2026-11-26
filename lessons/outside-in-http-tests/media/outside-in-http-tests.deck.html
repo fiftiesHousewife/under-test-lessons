@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 93  rest-assured = { module = &quot;io.rest-assured:rest-assured&quot;, version.ref = &quot;rest-assured&quot; }</pre></figure></main><aside class="notes">Step one. Add REST Assured, a test library, to the version catalogue. Only the tests use it.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/f927c01ea91ecf20.m4a"></audio></section>
+ 92  rest-assured = { module = &quot;io.rest-assured:rest-assured&quot;, version.ref = &quot;rest-assured&quot; }</pre></figure></main><aside class="notes">Step one. Add REST Assured, a test library, to the version catalogue. Only the tests use it.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/f927c01ea91ecf20.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency of the lesson</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
 <mark> 10      testImplementation(libs.rest.assured)</mark>
@@ -258,14 +262,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  33                  .then().statusCode(400)
  34                  .body(&quot;error&quot;, equalTo(&quot;nights must be at least 1&quot;));
  35      }</pre></figure></main><aside class="notes">Now, tests from outside. REST Assured sends real web requests to the running service, as a caller would, and checks the status code, the headers, and the body.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/31619ada55e8ffdf.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The outside tests get what callers get</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">The inside tests pass. Callers get 200 OK for a refused booking, and no address for a new one.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:outside-in-http-tests:test -Pcode=today</pre><pre class="output">BookingApiTest &gt; bookingTwoNightsCreatesABooking() FAILED
-    java.lang.AssertionError: 1 expectation failed.
-    Expected status code &lt;201&gt; but was &lt;200&gt;.
-BookingApiTest &gt; bookingNoNightsIsRefused() FAILED
-    java.lang.AssertionError: 1 expectation failed.
-    Expected status code &lt;400&gt; but was &lt;200&gt;.
-BookingRulesTest &gt; twoNightsCostTwiceTheNightlyRate() PASSED
-3 tests completed, 2 failed</pre></figure></main><aside class="notes">We run the tests against today's service. The inside tests pass. The outside tests fail. A refused booking comes back as 200 OK, and a new booking has no address.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/f940692320052495.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The outside tests get what callers get</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">The inside tests pass. Callers get 200 OK for a refused booking, and no address for a new one.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="outside-in-http-tests.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's service. The inside tests pass. The outside tests fail. A refused booking comes back as 200 OK, and a new booking has no address.</aside><audio class="voice" preload="none" src="outside-in-http-tests.deck-voice/f940692320052495.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed service</h1><div class="rule"></div><ul class="scene-points"><li class="point">The service that answers 201 Created, or 400 Bad Request</li></ul><p class="callout">The API now tells callers what happened, and the outside tests keep it that way.</p></section><figure class="code" style="--code-size: 17px"><figcaption>the fixed service</figcaption><pre> 20      @Override
  21      public void handle(final HttpExchange exchange) throws IOException {
  22          final JsonNode body = Exchanges.body(exchange);

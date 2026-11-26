@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -284,17 +288,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  25          assertThat(new ShopReceipt().line(&quot;Car seat&quot;, 10_000)).isEqualTo(&quot;Car seat  £120.00&quot;);
  26      }
  27  }</pre></figure></main><aside class="notes">The same two tests, with no set-up of their own. One line asks JUnit to use the extension, and any test class can do the same.</aside><audio class="voice" preload="none" src="junit-extensions.deck-voice/7db2d05f8d9f55c2.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The leak is caught</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both sets of tests against today's trade invoice</li></ul><p class="callout">By hand, the innocent receipt test fails. The extension fails the test that left the setting changed.</p></section><figure class="code" style="--code-size: 16px"><pre class="command">$ ./gradlew :lessons:junit-extensions:test -Pcode=today</pre><pre class="output">GuardedSettingsTest &gt; tradeInvoiceShowsPriceWithoutVat() FAILED
-    java.lang.AssertionError: The test left a shop setting changed: prices.include.vat was true, now false
-GuardedSettingsTest &gt; shopReceiptShowsPriceWithVat() PASSED
-HandSetUpTest &gt; tradeInvoiceShowsPriceWithoutVat() PASSED
-HandSetUpTest &gt; shopReceiptShowsPriceWithVat() FAILED
-    org.opentest4j.AssertionFailedError:
-    expected: &quot;Car seat  £120.00&quot;
-     but was: &quot;Car seat  £100.00 + VAT&quot;
-PricesTest &gt; aCreditIsWrittenWithItsSignInFront() PASSED
-PricesTest &gt; vatIsRoundedToTheNearestPenny() PASSED
-6 tests completed, 2 failed</pre></figure></main><aside class="notes">We run both sets of tests against today's trade invoice. The tests set up by hand blame the receipt, whose code is fine. The real culprit, the trade invoice, passes. With the extension, the trade invoice test fails, and names the setting it left changed. And the receipt test passes, because the extension put the settings back.</aside><audio class="voice" preload="none" src="junit-extensions.deck-voice/7ee6cf435d7b5604.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The leak is caught</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both sets of tests against today's trade invoice</li></ul><p class="callout">By hand, the innocent receipt test fails. The extension fails the test that left the setting changed.</p></section><figure class="code" style="--code-size: 16px"><video class="live-run" src="junit-extensions.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run both sets of tests against today's trade invoice. The tests set up by hand blame the receipt, whose code is fine. The real culprit, the trade invoice, passes. With the extension, the trade invoice test fails, and names the setting it left changed. And the receipt test passes, because the extension put the settings back.</aside><audio class="voice" preload="none" src="junit-extensions.deck-voice/7ee6cf435d7b5604.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed trade invoice</h1><div class="rule"></div><ul class="scene-points"><li class="point">The trade invoice that writes its own price without VAT, and leaves the settings alone</li></ul><p class="callout">Every test passes. The extension sets up and cleans up for every test that uses it.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the fixed trade invoice</figcaption><pre>  7  public final class FixedTradeInvoice implements TradeInvoice {
   8  
   9      @Override

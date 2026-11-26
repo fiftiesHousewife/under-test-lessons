@@ -179,7 +179,7 @@ Type@1ms `run_live "./gradlew :lessons:batch-file-in-file-out:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 10s
 Hide
 Type@1ms `callout "Every record matches: the header, each payment, and the closing line."`

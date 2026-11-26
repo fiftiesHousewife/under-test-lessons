@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Contract tests between teams: the order screen and the stock service check one agreement, a pact, with Pact JVM.

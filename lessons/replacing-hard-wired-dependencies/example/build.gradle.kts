@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Replacing a hard-wired dependency: pass it in, so a test can hand over a stand-in.

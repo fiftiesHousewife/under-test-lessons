@@ -48,7 +48,7 @@ Type@1ms `show lessons/capturing-with-logbook/example/build.gradle.kts "/^depend
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 17s
 
 # ---- Scene 3: where Logbook hooks in ----
 Hide
@@ -86,14 +86,14 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *weak* test: checks that each request and answer was recorded, never what was written."`
+Type@1ms `note "The *weak* test: checks that each request and answer has an entry, never what the entries say."`
 Enter
 Sleep 300ms
 Type@1ms `show CaptureRecordsTest 15 23 "the weak test" --zoom 18-22`
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 30s
 
 # ---- Scene 6: the strong tests ----
 Hide
@@ -145,7 +145,7 @@ Type@1ms `run_live "./gradlew :lessons:capturing-with-logbook:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "Logbook's filters mask each message before it is written, and the recording matches its approved file."`

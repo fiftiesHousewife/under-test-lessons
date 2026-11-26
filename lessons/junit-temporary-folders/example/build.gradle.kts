@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Temporary folders: JUnit's @TempDir gives each test its own empty folder, and removes it afterwards.

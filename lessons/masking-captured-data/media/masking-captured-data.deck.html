@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
-110  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. Datafaker, which makes up realistic test data, is already in the version catalogue. The keyed hash needs no library at all: it comes with Java.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/8eb15ea7561fc212.m4a"></audio></section>
+109  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. Datafaker, which makes up realistic test data, is already in the version catalogue. The keyed hash needs no library at all: it comes with Java.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/8eb15ea7561fc212.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">The third way of data masking, made-up values, uses Datafaker</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      implementation(libs.datafaker)</mark>
  10      compileOnly(libs.spotbugs.annotations)
@@ -306,24 +310,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 77          });</mark>
  78          if (knownNames.stream().anyMatch(name -&gt; name.matcher(value).find())) {
  79              kinds.add(&quot;a customer's name&quot;);</pre></figure></main><aside class="notes">The second strong test is a detector. It scans every field of the masked data, including fields with no rule. It looks for email addresses, the shapes of account and card numbers, phone numbers, Social Security and National Insurance numbers, ZIP codes and postcodes, and any customer's name.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/6092106ed1d17465.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's data masking breaks the reports</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's data masking</li></ul><p class="callout">Fixed text merges every customer and account, so both reports go wrong. And the notes still hold an email and a name.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:masking-captured-data:test -Pcode=today</pre><pre class="output">DetectorFindsTest &gt; detectorFindsEveryKindOfPersonalDataBeforeMasking() PASSED
-DetectorFindsTest &gt; detectorFindsEachKnownShapeOfPersonalNumber() PASSED
-DetectorFindsTest &gt; detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
-MaskedFieldsTest &gt; namesEmailsAndAccountsAreReplaced() PASSED
-NothingPersonalLeftTest &gt; maskedCaptureHasNothingThatLooksPersonal() FAILED
-    java.lang.AssertionError: [personal data left after masking]
-    Expecting empty but was: [&quot;orders.csv row 4, note: an email address&quot;,
-        &quot;orders.csv row 7, note: a customer's name&quot;]
-ReportsStillWorkTest &gt; ordersAreStillGroupedByCustomer() FAILED
-    org.opentest4j.AssertionFailedError: [orders per customer]
-    expected: [3, 2, 1, 1]
-     but was: [7]
-ReportsStillWorkTest &gt; ordersStillMatchPaymentsByAccount() FAILED
-    org.opentest4j.AssertionFailedError: [pence owed by each unsettled account]
-    expected: [-500, 640]
-     but was: [140]
-SyntheticMaskingTest &gt; syntheticValuesKeepTheReportsAndRepeat() PASSED
-8 tests completed, 3 failed</pre></figure></main><aside class="notes">We run the tests against today's data masking. The weak test passes. But now every customer has the same name: removed. So the report counts one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the notes.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/d45c30f444719cff.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>Today's data masking breaks the reports</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's data masking</li></ul><p class="callout">Fixed text merges every customer and account, so both reports go wrong. And the notes still hold an email and a name.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="masking-captured-data.deck-clips/scene-9.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's data masking. The weak test passes. But now every customer has the same name: removed. So the report counts one customer with 7 orders, not 4 customers. The accounts merge too: one account owing 140 pence, instead of one owing 640 and one 500 in credit. And the detector finds an email address and a name, left in the notes.</aside><audio class="voice" preload="none" src="masking-captured-data.deck-voice/d45c30f444719cff.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Keyed substitutes</h1><div class="rule"></div><ul class="scene-points"><li class="point">The fix</li><li class="point">Same value, same key</li><li class="point">Same substitute</li></ul></section><figure class="code" style="--code-size: 16px"><figcaption>keyed substitutes</figcaption><pre> 32      /** Sixteen capital letters standing for the value: always the same ones for the same value. */
  33      public String of(final String value) {
 <mark> 34          final byte[] keyed = mac.doFinal(value.getBytes(StandardCharsets.UTF_8));</mark>

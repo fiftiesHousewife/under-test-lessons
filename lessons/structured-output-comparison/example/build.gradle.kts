@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Comparing structured output: check JSON by its structure, ignoring only the parts that change on every run.

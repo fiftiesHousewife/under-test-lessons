@@ -2,7 +2,7 @@ import java.net.URI
 import java.security.MessageDigest
 
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // The tools that make lesson videos and read narration aloud: VHS, ttyd, Python, the Kokoro voice and ffmpeg. Only the
@@ -10,7 +10,7 @@ plugins {
 // this folder. They use the inside video tools (lessons/_shared/video-tools). The main tasks:
 //   renderLessonVideo:     makes a lesson's video (-Plesson=<id>; -PslidesOnly=true for just its slides).
 //   buildLessonDeckVoice:  reads each deck slide's narration aloud (-Plesson=<id>, or every lesson).
-//   recordLessonDeckClips: records each live-run scene on its own, for the deck (-Plesson=<id>).
+//   recordLessonDeckClips: records a lesson's changed live-run scenes, in one session, for its deck (-Plesson=<id>).
 //   checkVideoInRecording: checks every video step with the real tools in half a minute.
 //   testVideoHelpers:      tests the in-terminal helpers against a stand-in for VHS (needs bash).
 
@@ -133,17 +133,19 @@ val setUpLessonVoice = tasks.register("setUpLessonVoice") {
 
 // The voice engine in one word, recorded beside each clip the voice makes (voices.txt), so a clip made with another
 // program, voice, speed, model or package set is read again: kokoro-onnx-<version>/<voice>/<speed>/<model checksums>
-// /<package list checksum>, or command-<checksum> for another voice command. The models' checksums are the recorded
+// /<package list checksum>/<the script that turns text into sounds' checksum>, or command-<checksum> for another voice
+// command. The models' checksums are the recorded
 // ones, which setUpLessonVoice holds the files to.
 fun shortSha256(text: String) = MessageDigest.getInstance("SHA-256").digest(text.toByteArray())
     .joinToString("") { "%02x".format(it) }.take(8)
+val speakScript = file("speak-kokoro.py")
 val voiceEngine = customVoice.map { "command-" + shortSha256(it) }.orElse(provider {
     val requirements = voiceRequirements.readText()
     val version = Regex("""kokoro-onnx==(\S+)""").find(requirements)?.groupValues?.get(1) ?: "unknown"
     val voice = System.getenv("KOKORO_VOICE") ?: "bf_emma"
     val speed = System.getenv("KOKORO_SPEED") ?: "1.0"
     "kokoro-onnx-$version/$voice/$speed/models-" + voiceModels.values.joinToString("-") { it.take(8) } +
-        "/packages-" + shortSha256(requirements)
+        "/packages-" + shortSha256(requirements) + "/script-" + shortSha256(speakScript.readText())
 })
 
 val buildLessonVoice = tasks.register<JavaExec>("buildLessonVoice") {
@@ -173,10 +175,11 @@ tasks.register<JavaExec>("assembleLessonVideo") {
     dependsOn(":lessons:video-tools:buildLessonCaptions", buildLessonVoice)
 }
 
-// The deck's live-run slides play their scene, recorded on its own, in place of the kept output.
+// The deck's live-run slides play their scene in place of the kept output. Only scenes that changed are recorded, in
+// one session per lesson.
 tasks.register<JavaExec>("recordLessonDeckClips") {
     group = "documentation"
-    description = "Records each live-run scene of a lesson on its own, for its deck to play (-Plesson=<id>)."
+    description = "Records a lesson's changed live-run scenes, in one session, for its deck to play (-Plesson=<id>)."
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass = "io.github.fiftieshousewife.undertest.lessons.video.LessonVideo"
     val root = repoRoot
@@ -239,4 +242,10 @@ tasks.register("renderLessonVideo") {
 
 tasks.check {
     dependsOn(testVideoHelpers)
+}
+
+// The video tools are one package, sharing package-private methods with the lesson tools, so it holds a few more than
+// the usual 20.
+underTest {
+    maxClassesPerPackage = 22
 }

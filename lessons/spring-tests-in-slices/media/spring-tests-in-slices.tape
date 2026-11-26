@@ -156,7 +156,7 @@ Type@1ms `run_live "./gradlew :lessons:spring-tests-in-slices:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 10s
 Hide
 Type@1ms `callout "All 9 tests pass: the slices check each layer, and one whole-application test checks the wiring."`

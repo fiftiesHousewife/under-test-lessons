@@ -26,6 +26,14 @@ SERIES_JS = """// Added to each published deck: links back to the index and on t
     where.className = 'series-place';
     where.textContent = place;
     document.body.appendChild(where);
+    // The intro slide names the lesson's stage of the journey, above its title.
+    var title = document.querySelector('.deck-slide h1');
+    if (title) {
+      var stage = document.createElement('p');
+      stage.className = 'stage-kicker';
+      stage.textContent = place;
+      title.parentNode.insertBefore(stage, title);
+    }
   }
   var nav = document.createElement('nav');
   nav.className = 'series-links';

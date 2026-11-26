@@ -190,7 +190,7 @@ Type@1ms `run_live "./gradlew :lessons:contract-tests-between-teams:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 14s
 Hide
 Type@1ms `callout "The service meets the pact again. Drop the old field only when no supported order screen reads it."`

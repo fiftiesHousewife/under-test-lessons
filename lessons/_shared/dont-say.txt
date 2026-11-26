@@ -17,3 +17,4 @@ it may not be\. = say what may not have happened: "may not have finished yet"
 \b[a-z][A-Za-z]*\(\) = code read aloud: say "the mock method", not mock()
 \border tables\b = say what the code does: "the code that saves orders"
 \bcustomers know\b = say what the business means: "the prices the business means to charge"
+never (reads |checks )?what was written = say what the test ignores: "it never checks what those entries say"

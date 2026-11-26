@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:junit-temporary-folders:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "Every test passes. Each one wrote, and read, only its own folder."`

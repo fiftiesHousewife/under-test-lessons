@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:checking-outgoing-requests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 14s
 Hide
 Type@1ms `callout "The request is the one the provider expects: method, address, headers and body."`

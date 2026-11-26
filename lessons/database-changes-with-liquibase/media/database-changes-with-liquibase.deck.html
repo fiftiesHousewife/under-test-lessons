@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 90  liquibase-core = { module = &quot;org.liquibase:liquibase-core&quot;, version.ref = &quot;liquibase&quot; }</pre></figure></main><aside class="notes">Step one. Add Liquibase to the version catalogue. Version five is under the Functional Source License, which becomes the Apache licence after two years. Check your company accepts it.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/95bf622b9484fcc3.m4a"></audio></section>
+ 89  liquibase-core = { module = &quot;org.liquibase:liquibase-core&quot;, version.ref = &quot;liquibase&quot; }</pre></figure></main><aside class="notes">Step one. Add Liquibase to the version catalogue. Version five is under the Functional Source License, which becomes the Apache licence after two years. Check your company accepts it.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/95bf622b9484fcc3.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">The application applies its own changes when it starts, so Liquibase is a main dependency</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      implementation(libs.liquibase.core)</mark>
  11  }</pre></figure></main><aside class="notes">Step two. The application applies its own database changes when it starts, so Liquibase is an ordinary dependency.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/691678828c1d0898.m4a"></audio></section>
@@ -247,12 +251,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  28          try (Connection connection = DriverManager.getConnection(POSTGRES.getJdbcUrl(), POSTGRES.getUsername(),
  29                  POSTGRES.getPassword())) {
  30              DatabaseChanges.apply(connection, changelog);</pre></figure></main><aside class="notes">Now, the same changes, applied to real PostgreSQL, the database production uses, in a throwaway container.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/1c7887518986a637.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>PostgreSQL refuses the change</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both suites against today's changelog</li></ul><p class="callout">H2 takes the change. PostgreSQL has no TINYINT type: this release would have failed in production.</p></section><figure class="code" style="--code-size: 14px"><pre class="command">$ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today</pre><pre class="output">FailedChangeTest &gt; aRefusedChangeSaysWhy() PASSED
-InMemoryChangesTest &gt; everyChangeApplies() PASSED
-All 2 tests passed.
-RealPostgresChangesTest &gt; everyChangeApplies() FAILED
-    java.sql.SQLException: a database change failed: ERROR: type &quot;tinyint&quot; does not exist
-1 test completed, 1 failed</pre></figure></main><aside class="notes">We run both suites against today's changelog. H2 takes the change. PostgreSQL refuses it: it has no tiny int type. This release would have failed in production, part way through.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/9298f9aa24090623.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>PostgreSQL refuses the change</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run both suites against today's changelog</li></ul><p class="callout">H2 takes the change. PostgreSQL has no TINYINT type: this release would have failed in production.</p></section><figure class="code" style="--code-size: 14px"><video class="live-run" src="database-changes-with-liquibase.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run both suites against today's changelog. H2 takes the change. PostgreSQL refuses it: it has no tiny int type. This release would have failed in production, part way through.</aside><audio class="voice" preload="none" src="database-changes-with-liquibase.deck-voice/9298f9aa24090623.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed changelog</h1><div class="rule"></div><ul class="scene-points"><li class="point">The change written as a Liquibase change, which writes the right SQL for each database</li></ul><p class="callout">Both databases take every change. Liquibase wrote SMALLINT for PostgreSQL.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed changelog</figcaption><pre> 11    - changeSet:
  12        id: add-loyalty-level
  13        author: shop

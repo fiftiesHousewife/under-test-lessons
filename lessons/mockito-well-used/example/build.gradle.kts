@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Mockito well used: a stand-in only where money leaves the shop, and an argument captor to check what was sent.

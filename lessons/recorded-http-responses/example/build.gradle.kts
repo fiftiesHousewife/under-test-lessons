@@ -1,11 +1,12 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Recorded HTTP responses: a service you don't own, replayed from recordings, including the answers it rarely gives.
 //   ./gradlew :lessons:recorded-http-responses:test -Pcode=today   today's client: the recordings show two bugs
 //   ./gradlew :lessons:recorded-http-responses:test                the fixed client: every recording is handled
 dependencies {
+    testImplementation(libs.awaitility)
     implementation(libs.jackson3.databind)
     testImplementation(libs.wiremock)
 }

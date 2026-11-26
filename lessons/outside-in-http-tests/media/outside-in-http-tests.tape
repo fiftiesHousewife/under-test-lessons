@@ -128,7 +128,7 @@ Type@1ms `run_live "./gradlew :lessons:outside-in-http-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "The API now tells callers what happened, and the outside tests keep it that way."`

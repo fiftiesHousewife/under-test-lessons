@@ -162,7 +162,7 @@ Type@1ms `run_live "./gradlew :lessons:message-consumers:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 16s
 Hide
 Type@1ms `callout "Every payment recorded, the bad message kept for people to look at, and all in seconds."`

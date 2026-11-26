@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Fake behind an interface: tests use an in-memory fake that behaves like the real message queue, instead of mocks.

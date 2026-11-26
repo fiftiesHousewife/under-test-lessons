@@ -6,6 +6,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.okJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.recordSpec;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -85,6 +86,8 @@ class RecordingTest {
                 .captureHeader("Authorization").makeStubsPersistent(false));
         ask("/postcodes/LS1%204AP");
         ask("/postcodes/ZZ9%209ZZ");
+        // WireMock notes a request just after it answers, so wait until it has noted both before stopping.
+        await().until(() -> recorder.getAllServeEvents().size() == 2);
         final List<String> files = new ArrayList<>();
         for (final StubMapping recording : recorder.stopRecording().getStubMappings()) {
             final Path file = saved.resolve(recording.getName() + ".json");

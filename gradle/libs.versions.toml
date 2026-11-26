@@ -2,7 +2,7 @@
 
 [versions]
 # The shared code-quality standards every project applies, through build-logic's lesson plugin.
-java-conventions = "0.3.0"
+java-conventions = "0.5.0"
 jetcheck = "0.3.0"
 approvaltests = "32.1.0"
 archunit = "1.5.1"
@@ -74,7 +74,6 @@ pact-jvm = "4.7.7"
 spring-boot = "4.2.0"
 
 [libraries]
-java-conventions-plugin = { module = "io.github.fiftieshousewife.java-conventions:io.github.fiftieshousewife.java-conventions.gradle.plugin", version.ref = "java-conventions" }
 jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
 approvaltests = { module = "com.approvaltests:approvaltests", version.ref = "approvaltests" }
 archunit = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
@@ -148,3 +147,6 @@ spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-bo
 spring-boot-starter-data-jpa-test = { module = "org.springframework.boot:spring-boot-starter-data-jpa-test" }
 # WireMock with its own Jetty 11 inside: Spring Boot 4's BOM lifts the plain artifact's Jetty to 12, where it can't start
 wiremock-standalone = { module = "org.wiremock:wiremock-standalone", version.ref = "wiremock" }
+
+[plugins]
+java-conventions = { id = "io.github.fiftieshousewife.java-conventions", version.ref = "java-conventions" }

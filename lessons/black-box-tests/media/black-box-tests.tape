@@ -145,7 +145,7 @@ Type@1ms `run_live "./gradlew :lessons:black-box-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 12s
 Hide
 Type@1ms `callout "The answer, the warehouse call and the rows written are all what the shop expects."`

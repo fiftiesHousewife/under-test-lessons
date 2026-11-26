@@ -100,7 +100,8 @@
           "status": {
             "enum": [
               "open",
-              "done"
+              "done",
+              "dropped"
             ],
             "description": "done: the work is finished; importers close the item as completed. Omitted means open."
           }

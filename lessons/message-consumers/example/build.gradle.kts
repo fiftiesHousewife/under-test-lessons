@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Message consumers: a JMS consumer tested on a real broker, Apache Artemis, started inside the test with no network,

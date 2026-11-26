@@ -145,7 +145,7 @@ Type@1ms `run_live "./gradlew :lessons:embedded-jakarta-ee-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "Wired as intended, and tested in seconds, with no application server."`

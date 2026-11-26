@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Coverage of changed code: an old pricing module with no tests can't pass a whole-module coverage gate, so the gates
@@ -78,4 +78,9 @@ tasks.named<JavaExec>("pitest") {
 }
 if (code == "today") {
     tasks.test { filter { excludeTestsMatching("*AnswerTest") } }
+}
+
+// PIT always reruns, so switching between test suites with -Pcode never shows a stale result.
+tasks.named("pitest") {
+    outputs.upToDateWhen { false }
 }

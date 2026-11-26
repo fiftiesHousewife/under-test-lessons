@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Real databases in tests: the same repository tested on an in-memory database, and on real PostgreSQL in a container.
@@ -13,16 +13,12 @@ testing {
                 implementation(libs.h2)
             }
         }
-        register<JvmTestSuite>("integrationTest") {
+        // The plugin's integrationTest suite, which check runs, with the unit tests' libraries; it adds the containers.
+        named<JvmTestSuite>("integrationTest") {
             dependencies {
-                implementation(project())
-                implementation(platform(libs.junit.bom))
-                implementation(libs.junit.jupiter)
-                implementation(libs.assertj.core)
                 implementation(libs.testcontainers.postgresql)
                 implementation(libs.testcontainers.junit.jupiter)
                 implementation(libs.postgresql)
-                runtimeOnly(libs.junit.platform.launcher)
             }
         }
     }
@@ -41,8 +37,4 @@ tasks.test {
     if (providers.gradleProperty("code").orNull == "today") {
         filter { excludeTestsMatching("*AnswerTest") }
     }
-}
-
-tasks.check {
-    dependsOn("integrationTest")
 }

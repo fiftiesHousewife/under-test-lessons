@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -221,8 +225,8 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
-136  artemis-jakarta-server = { module = &quot;org.apache.artemis:artemis-jakarta-server&quot;, version.ref = &quot;artemis&quot; }
-137  jakarta-jms-api = { module = &quot;jakarta.jms:jakarta.jms-api&quot;, version.ref = &quot;jakarta-jms&quot; }</pre></figure></main><aside class="notes">Step one. Add Apache Artemis, a message broker, and the programming interface for JMS, the Java standard for sending and receiving messages, to the version catalogue.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/f426162d2a4d5f92.m4a"></audio></section>
+135  artemis-jakarta-server = { module = &quot;org.apache.artemis:artemis-jakarta-server&quot;, version.ref = &quot;artemis&quot; }
+136  jakarta-jms-api = { module = &quot;jakarta.jms:jakarta.jms-api&quot;, version.ref = &quot;jakarta-jms&quot; }</pre></figure></main><aside class="notes">Step one. Add Apache Artemis, a message broker, and the programming interface for JMS, the Java standard for sending and receiving messages, to the version catalogue.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/f426162d2a4d5f92.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">The shop's code needs only the JMS API; the tests get the whole broker</li></ul></section><figure class="code" style="--code-size: 15px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
 <mark> 10      compileOnly(libs.jakarta.jms.api) // the application server or the client library provides it in production</mark>
 <mark> 11      testImplementation(libs.artemis.jakarta.server) // the broker, and its JMS client, run inside the test</mark>
@@ -299,22 +303,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  36          assertThat(broker.browse(EmbeddedBroker.DEAD_LETTERS)).as(&quot;dead-letter queue&quot;)
  37                  .isEqualTo(List.of(ExampleMessages.forOrder(&quot;A-1003&quot;)));
  38      }</pre></figure></main><aside class="notes">And the strong tests. They send the example messages to the broker, and check what the consumer did. In the first, the payment book is busy once, for order A 1002. Every payment must still be recorded. In the second, the unreadable message must end up in the dead-letter queue.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/42ac65e1a2ec8e2b.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The broker finds lost payments</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's consumer</li></ul><p class="callout">The hand-built test passes. On the broker, a payment is lost and the unreadable message vanishes.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:message-consumers:test -Pcode=today</pre><pre class="output">BrowsingTest &gt; browsingReadsEveryMessageWithoutTakingAny() PASSED
-PaymentByHandTest &gt; recordsThePaymentInAMessage() PASSED
-PaymentsOnABrokerTest &gt; theSamePaymentSentTwiceIsRecordedOnce() FAILED
-    java.lang.AssertionError: [the same payment, sent twice]
-    Expected size: 1 but was: 2 in:
-    [Payment[id=P-501, order=A-1001, pence=2599],
-        Payment[id=P-501, order=A-1001, pence=2599]]
-PaymentsOnABrokerTest &gt; aMessageNoOneCanReadEndsInTheDeadLetterQueue() FAILED
-    org.opentest4j.AssertionFailedError: [dead-letter queue]
-    expected: [&quot;payment=P-503;order=A-1003;customer=customer-7f3a;pence=12.50&quot;]
-     but was: []
-PaymentsOnABrokerTest &gt; aPaymentIsRecordedEvenWhenTheBookIsBusyOnce() FAILED
-    org.opentest4j.AssertionFailedError: [payments recorded]
-    expected: [&quot;A-1001&quot;, &quot;A-1002&quot;, &quot;A-1004&quot;]
-     but was: [&quot;A-1001&quot;, &quot;A-1004&quot;]
-5 tests completed, 3 failed</pre></figure></main><aside class="notes">We run the tests against today's consumer. The unit test passes. On the broker, order A 1002 is lost, because it was acknowledged before the book refused it. And the dead-letter queue is empty, so the unreadable message has vanished without a trace.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/566c92dd7876d531.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The broker finds lost payments</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's consumer</li></ul><p class="callout">The hand-built test passes. On the broker, a payment is lost and the unreadable message vanishes.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="message-consumers.deck-clips/scene-8.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's consumer. The unit test passes. On the broker, order A 1002 is lost, because it was acknowledged before the book refused it. And the dead-letter queue is empty, so the unreadable message has vanished without a trace.</aside><audio class="voice" preload="none" src="message-consumers.deck-voice/566c92dd7876d531.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed consumer</h1><div class="rule"></div><ul class="scene-points"><li class="point">The consumer with a transacted session</li><li class="point">Commit after recording, roll back on failure</li></ul><p class="callout">Every payment recorded, the bad message kept for people to look at, and all in seconds.</p></section><figure class="code" style="--code-size: 17px"><figcaption>the fixed consumer</figcaption><pre> 30      public void takeWaiting() throws JMSException {
  31          try (Connection connection = factory.createConnection();
  32                  Session session = connection.createSession(Session.SESSION_TRANSACTED)) {

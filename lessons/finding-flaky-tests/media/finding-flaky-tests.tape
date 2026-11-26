@@ -139,7 +139,7 @@ Type@1ms `run_live "./gradlew :lessons:finding-flaky-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 14s
 Hide
 Type@1ms `callout "Wait for the result, never sleep for a guess, and let no new test in without five clean runs."`

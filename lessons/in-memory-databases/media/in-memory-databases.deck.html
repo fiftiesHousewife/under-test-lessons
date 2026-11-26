@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -331,20 +335,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  24                  .as(&quot;vendor-only SQL found&quot;)
  25                  .containsExactly(&quot;ILIKE&quot;, &quot;NULLS FIRST&quot;);
  26      }</pre></figure></main><aside class="notes">One more check keeps the choice honest. It reads every piece of SQL in the code, and fails on anything only PostgreSQL runs, or whose answer depends on the database, such as the order of nulls. Code like that belongs on a real database.</aside><audio class="voice" preload="none" src="in-memory-databases.deck-voice/38cc75540aa7303e.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fresh database finds invoice 0</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's invoice book</li></ul><p class="callout">The shared database hid it: on a fresh one, the shop's first invoice is number 0.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:in-memory-databases:test -Pcode=today</pre><pre class="output">FreshDatabaseTest &gt; invoicesAreNumberedOneTwoThree() FAILED
-    org.opentest4j.AssertionFailedError: [invoice numbers]
-    expected: [1, 2, 3]
-     but was: [0, 1, 2]
-FreshDatabaseTest &gt; eachTestStartsWithNoInvoices() PASSED
-FreshDatabaseTest &gt; theShopsFirstInvoiceIsNumberOne() FAILED
-    org.opentest4j.AssertionFailedError: [the first invoice's number]
-    expected: 1
-     but was: 0
-PortableSqlTest &gt; theCheckFindsSqlThatDependsOnTheDatabase() PASSED
-PortableSqlTest &gt; theCodeTestedOnH2UsesOnlyPortableSql() PASSED
-SharedDatabaseTest &gt; newInvoicesAreNumberedInTurn() PASSED
-SharedDatabaseTest &gt; anIssuedInvoiceIsKept() PASSED
-7 tests completed, 2 failed</pre></figure></main><aside class="notes">We run the tests against today's invoice book. The weak tests, on the shared database, pass, as they always have. On a fresh database, the first invoice is number 0, and 3 invoices are numbered 0, 1 and 2. The portable SQL check passes, so H2 is the right place for these tests.</aside><audio class="voice" preload="none" src="in-memory-databases.deck-voice/2521e7855b526648.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fresh database finds invoice 0</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's invoice book</li></ul><p class="callout">The shared database hid it: on a fresh one, the shop's first invoice is number 0.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="in-memory-databases.deck-clips/scene-9.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's invoice book. The weak tests, on the shared database, pass, as they always have. On a fresh database, the first invoice is number 0, and 3 invoices are numbered 0, 1 and 2. The portable SQL check passes, so H2 is the right place for these tests.</aside><audio class="voice" preload="none" src="in-memory-databases.deck-voice/2521e7855b526648.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed invoice book</h1><div class="rule"></div><ul class="scene-points"><li class="point">The fix</li><li class="point">With no invoices yet, the highest number counts as 0</li><li class="point">Plain SQL, the same everywhere</li></ul><p class="callout">Every test starts empty, in milliseconds, so no leftover row can hide a bug.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed invoice book</figcaption><pre>  9  /** FIXED: with no invoices yet, the highest number counts as 0, so the first invoice is number 1. Plain SQL. */
  10  public final class FixedInvoiceBook implements InvoiceBook {
  11  

@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -266,26 +270,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  36      void rewriteAgreesOnEveryWeightInTheBand(final String band, final int lightest, final int heaviest) {
  37          assertThat(disagreements(lightest, heaviest)).as(&quot;weights &quot; + band + &quot; where the rewrite disagrees&quot;).isEmpty();
  38      }</pre></figure></main><aside class="notes">Now, a differential test. It's a parameterised test, with one row for each band of the post office's price list. Each row asks both calculators about every weight in its band, and lists each run of weights where they disagree. There are no expected prices to write: the old calculator is the reference.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/a42866cf143ffcf4.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The comparison finds a gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the rewrite as it is today</li></ul><p class="callout">Every example passes. The comparison finds 50 weights, 451 g to 500 g, where the rewrite charges more.</p></section><figure class="code" style="--code-size: 18px"><pre class="command">$ ./gradlew :lessons:differential-testing:test -Pcode=today</pre><pre class="output">OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 100 g PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 250 g PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 500 g FAILED
-    java.lang.AssertionError: [weights up to 500 g where the rewrite disagrees]
-    Expecting empty but was: [&quot;451 g to 500 g: old 195p, new 315p&quot;]
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 1 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 1.5 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 2 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 2.5 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 3 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 3.5 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 4 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 4.5 kg PASSED
-OldAndNewAgreeTest &gt; rewriteAgreesOnEveryWeightInTheBand(String, int, int) &gt; up to 5 kg PASSED
-RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 50 g costs 85 pence PASSED
-RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 200 g costs 155 pence PASSED
-RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 400 g costs 195 pence PASSED
-RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 800 g costs 315 pence PASSED
-RewriteExamplesTest &gt; typicalWeightCostsTheListedPrice(int, int) &gt; 1500 g costs 435 pence PASSED
-17 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against the rewrite as it is today. Every example passes. The comparison fails for one band, up to 500 grams: 50 weights, from 451 grams to 500, where the rewrite charges more.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/afed77089cd66634.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The comparison finds a gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the rewrite as it is today</li></ul><p class="callout">Every example passes. The comparison finds 50 weights, 451 g to 500 g, where the rewrite charges more.</p></section><figure class="code" style="--code-size: 18px"><video class="live-run" src="differential-testing.deck-clips/scene-5.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against the rewrite as it is today. Every example passes. The comparison fails for one band, up to 500 grams: 50 weights, from 451 grams to 500, where the rewrite charges more.</aside><audio class="voice" preload="none" src="differential-testing.deck-voice/afed77089cd66634.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The corrected price list</h1><div class="rule"></div><ul class="scene-points"><li class="point">The price list, checked against the printed one</li></ul><p class="callout">The rewrite agrees with the old calculator on all 5,000 weights. Now the old one can go.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the price list</figcaption><pre>  8      public static final List&lt;Band&gt; AS_TYPED_TODAY = List.of( // As typed today: &quot;up to 500 g&quot; was typed as 450.
 <mark>  9              new Band(100, 85), new Band(250, 155), new Band(450, 195), new Band(1000, 315));</mark>
 <mark> 10  </mark>

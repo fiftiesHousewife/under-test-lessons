@@ -24,19 +24,34 @@ import sys
 SOUNDS = re.compile(r"/((?=[^/]*[ˈˌ])[^/\s][^/]*)/")
 
 
+# An article just before sounds given exactly is said in its weak form: on its own, phonemize reads "a" as the letter.
+WEAK = {"a": "ɐ", "an": "ən", "the": "ðə"}
+
+
 def to_sounds(text, phonemize):
     """The whole text as sounds: the parts given between slashes kept as they are, the rest turned into sounds by
-    phonemize, with the spaces between them kept."""
+    phonemize, with the spaces between them kept. An article just before given sounds is said weakly ("a" as ɐ)."""
+    parts = SOUNDS.split(text)
     pieces = []
-    for i, part in enumerate(SOUNDS.split(text)):
+    for i, part in enumerate(parts):
         if i % 2:
             pieces.append(part)
             continue
         middle = part.strip()
         lead = " " if part[:1].isspace() else ""
         trail = " " if part[-1:].isspace() else ""
-        pieces.append(lead + (phonemize(middle) if middle else "") + trail)
+        pieces.append(lead + spoken(middle, phonemize, i + 1 < len(parts)) + trail)
     return "".join(pieces)
+
+
+def spoken(words, phonemize, before_sounds):
+    """The words as sounds; when given sounds follow, a last word that is an article takes its weak form."""
+    if not words:
+        return ""
+    head, _, last = words.rpartition(" ")
+    if before_sounds and last.lower() in WEAK:
+        return ((phonemize(head) + " ") if head else "") + WEAK[last.lower()]
+    return phonemize(words)
 
 
 def read_list(list_file):

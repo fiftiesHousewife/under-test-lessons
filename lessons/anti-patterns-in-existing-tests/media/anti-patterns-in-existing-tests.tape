@@ -176,7 +176,7 @@ Type@1ms `run_live "./gradlew :lessons:anti-patterns-in-existing-tests:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 17s
 Hide
 Type@1ms `callout "Every anti-pattern is recorded, with its decision. No test was deleted, and a new one fails the build."`

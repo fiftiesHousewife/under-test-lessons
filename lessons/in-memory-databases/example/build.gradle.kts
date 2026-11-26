@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // When an in-memory database is enough: each test gets its own H2 database, held in memory, with the real schema,

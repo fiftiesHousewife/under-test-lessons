@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:differential-testing:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 8s
 Hide
 Type@1ms `callout "The rewrite agrees with the old calculator on all 5,000 weights. Now the old one can go."`

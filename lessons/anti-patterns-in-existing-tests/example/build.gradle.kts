@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Anti-patterns in existing tests: an old shop's tests, read by checks the build runs for what makes them
@@ -63,6 +63,6 @@ val antiPatternRegister = tasks.register("antiPatternRegister") {
 tasks.test {
     finalizedBy(antiPatternRegister)
 }
-tasks.named("testFailures") {
+tasks.named("testSummary") {
     mustRunAfter(antiPatternRegister)
 }

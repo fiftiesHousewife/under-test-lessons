@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // JUnit extensions: set up and clean up shared state once, for every test, and catch the test that leaves it changed.

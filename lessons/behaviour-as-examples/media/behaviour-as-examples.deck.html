@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -256,16 +260,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  25  
  26          assertThat(policy.refundFor(item).words()).as(example).isEqualTo(row.getString(4));
  27      }</pre></figure></main><aside class="notes">The strong test reads the team's table. Each row runs as its own test, and is reported by the team's name for it. The test only turns a row into a returned item, and compares the refund with the team's words.</aside><audio class="voice" preload="none" src="behaviour-as-examples.deck-voice/f80399c91389609f.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The examples and the code disagree</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">The team's example and the code disagree. That is a question for the returns team, not a test to delete.</p></section><figure class="code" style="--code-size: 15px"><pre class="command">$ ./gradlew :lessons:behaviour-as-examples:test -Pcode=today</pre><pre class="output">RefundPolicyTest &gt; refundsDependOnDaysAndReceipt() PASSED
-ReturnsTeamExamplesTest &gt; returnsTeamExample(ArgumentsAccessor) &gt; returned the next day with a receipt PASSED
-ReturnsTeamExamplesTest &gt; returnsTeamExample(ArgumentsAccessor) &gt; returned on the 30th day with a receipt FAILED
-    org.opentest4j.AssertionFailedError: [returned on the 30th day with a receipt]
-    expected: &quot;refund to card&quot;
-     but was: &quot;store credit&quot;
-ReturnsTeamExamplesTest &gt; returnsTeamExample(ArgumentsAccessor) &gt; returned on the 31st day with a receipt PASSED
-ReturnsTeamExamplesTest &gt; returnsTeamExample(ArgumentsAccessor) &gt; returned within 30 days without a receipt PASSED
-ReturnsTeamExamplesTest &gt; returnsTeamExample(ArgumentsAccessor) &gt; returned after 30 days without a receipt PASSED
-6 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against today's code. The weak tests pass. One of the team's examples fails. Returned on the 30th day, with a receipt, the code gives store credit, but the team wrote refund to card. That is a question for the returns team, not a test to delete.</aside><audio class="voice" preload="none" src="behaviour-as-examples.deck-voice/30f03ee13c850b92.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The examples and the code disagree</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">The team's example and the code disagree. That is a question for the returns team, not a test to delete.</p></section><figure class="code" style="--code-size: 15px"><video class="live-run" src="behaviour-as-examples.deck-clips/scene-5.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's code. The weak tests pass. One of the team's examples fails. Returned on the 30th day, with a receipt, the code gives store credit, but the team wrote refund to card. That is a question for the returns team, not a test to delete.</aside><audio class="voice" preload="none" src="behaviour-as-examples.deck-voice/30f03ee13c850b92.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The team's answer</h1><div class="rule"></div><ul class="scene-points"><li class="point">The returns team confirmed their example</li><li class="point">The 30 days include the 30th day</li></ul><p class="callout">Every example passes. The table stays, as the rules written down, for the next change.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the refunds the team confirmed</figcaption><pre>  8  /** FIXED: asked about their example, the returns team confirmed it: the 30 days include the 30th day. */
   9  public final class ShopRefundPolicy implements RefundPolicy {
  10  

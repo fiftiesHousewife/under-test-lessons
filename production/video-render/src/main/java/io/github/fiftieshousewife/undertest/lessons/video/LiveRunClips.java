@@ -7,12 +7,12 @@ import java.nio.file.Path;
 import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /*
- * Records each live-run scene of a lesson on its own, into <id>.deck-clips/scene-<n>.mp4, so the deck can play the run
- * as it really looked. Each scene gets a short script: the lesson script's settings, then that scene alone, so the clip
- * starts and ends exactly at the scene, and a lesson's clips take minutes rather than its whole video. Each clip is
- * then made muted, 1280 pixels wide, and quick to start in a browser (faststart). The scripts go to build/deck-clips.
+ * Records a lesson's changed live-run scenes (SceneChecksum) into <id>.deck-clips/scene-<n>.mp4, in one VHS session,
+ * so Gradle warms up once. The session's run times place each scene exactly (TapeTimeline), and it is cut out: muted,
+ * 1280 pixels wide, quick to start in a browser. The session's script goes to build/deck-clips.
  */
 final class LiveRunClips {
 
@@ -25,31 +25,53 @@ final class LiveRunClips {
 
     static void record(final Media media) {
         final List<String> script = lines(media.file(".tape"));
-        final List<String> settings = settings(script);
         final List<List<String>> scenes = scenes(script);
         final Path clips = folder(media.file(CLIPS));
-        final Path scripts = folder(media.root().resolve("build/deck-clips"));
-        for (int i = 0; i < scenes.size(); i++) {
-            if (scenes.get(i).stream().anyMatch(line -> line.contains("run_live"))) {
-                final Path raw = clips.resolve("scene-" + (i + 1) + ".raw.mp4");
-                final Path tape = write(scripts.resolve(media.safeLesson() + "-scene-" + (i + 1) + ".tape"),
-                        clipScript(settings, scenes.get(i), media.root().relativize(raw)));
-                new Recorder(Clock.systemUTC()).record(media, tape);
-                shrink(raw, clips.resolve(name(i)));
-            }
+        final List<Integer> changed = changed(media, scenes, clips);
+        if (changed.isEmpty()) {
+            return;
         }
+        final Path raw = clips.resolve("session.raw.mp4");
+        final Path tape = sessionTape(media, settings(script), changed.stream().map(scenes::get).toList());
+        new Recorder(Clock.systemUTC()).record(media, tape);
+        final List<Scene> timed = TapeTimeline.scenes(media.root(), tape, media.measuredRuns());
+        for (int i = 0; i < changed.size(); i++) {
+            final int scene = changed.get(i);
+            cut(raw, timed.get(i), clips.resolve(name(scene)));
+            SceneChecksum.write(clips, scene, SceneChecksum.of(media, scenes.get(scene)));
+        }
+        delete(raw);
     }
 
-    /* The clip's file name for the scene at this index, counting scenes from 1. */
+    /* Writes the session's script, to build/deck-clips/<id>.tape, recording into the clips folder. */
+    private static Path sessionTape(final Media media, final List<String> settings, final List<List<String>> chosen) {
+        final Path raw = media.file(CLIPS).resolve("session.raw.mp4");
+        final Path scripts = folder(media.root().resolve("build/deck-clips"));
+        return write(scripts.resolve(media.safeLesson() + ".tape"),
+                sessionScript(settings, chosen, media.root().relativize(raw)));
+    }
+
+    /* The live-run scenes whose clip is missing, or whose checksum no longer matches. */
+    static List<Integer> changed(final Media media, final List<List<String>> scenes, final Path clips) {
+        final List<Integer> changed = new ArrayList<>();
+        for (int i = 0; i < scenes.size(); i++) {
+            final boolean live = scenes.get(i).stream().anyMatch(line -> line.contains("run_live"));
+            if (live && !SceneChecksum.matches(clips, i, SceneChecksum.of(media, scenes.get(i)))) {
+                changed.add(i);
+            }
+        }
+        return changed;
+    }
+
     static String name(final int index) {
         return "scene-" + (index + 1) + ".mp4";
     }
 
-    /* A script that records one scene: the lesson's settings with one Output, the clip's, then the scene. */
-    static List<String> clipScript(final List<String> settings, final List<String> scene, final Path output) {
+    /* A script that records the given scenes in one session: the lesson's settings with one Output, then the scenes. */
+    static List<String> sessionScript(final List<String> settings, final List<List<String>> scenes, final Path output) {
         final List<String> script = new ArrayList<>(List.of("Output " + output));
         settings.stream().filter(line -> !line.startsWith("Output ")).forEach(script::add);
-        script.addAll(scene);
+        scenes.forEach(script::addAll);
         return script;
     }
 
@@ -82,15 +104,23 @@ final class LiveRunClips {
         return -1;
     }
 
-    /* Makes the recorded scene a small clip, and removes the full-size recording. */
-    static void shrink(final Path raw, final Path clip) {
-        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-i", raw.toString(), "-an",
+    /* Cuts one scene out of the session's recording as a small clip. */
+    static void cut(final Path raw, final Scene scene, final Path clip) {
+        ExternalCommand.run(List.of(Ffmpeg.program(), "-y", "-loglevel", "error", "-ss", seconds(scene.start()),
+                "-t", seconds(scene.end() - scene.start()), "-i", raw.toString(), "-an",
                 "-vf", "scale=" + WIDTH + ":-2", "-c:v", "libx264", "-preset", "slow", "-crf", "28",
                 "-pix_fmt", "yuv420p", "-movflags", "+faststart", clip.toString()), Path.of("").toAbsolutePath());
+    }
+
+    private static String seconds(final double value) {
+        return String.format(Locale.ROOT, "%.3f", value);
+    }
+
+    private static void delete(final Path file) {
         try {
-            Files.deleteIfExists(raw);
+            Files.deleteIfExists(file);
         } catch (IOException e) {
-            throw new UncheckedIOException("could not remove " + raw, e);
+            throw new UncheckedIOException("could not remove " + file, e);
         }
     }
 

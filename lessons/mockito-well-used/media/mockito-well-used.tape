@@ -114,7 +114,7 @@ Type@1ms `run_live "./gradlew :lessons:mockito-well-used:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 9s
 Hide
 Type@1ms `callout "The card gets 1250 pence back, the amount on the receipt. Every test passes."`

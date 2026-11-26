@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Slow and failing dependencies: a supplier that answers late, drops the connection or sends a broken answer.

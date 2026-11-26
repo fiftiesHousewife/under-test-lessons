@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -218,9 +222,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
-108  spring-batch-core = { module = &quot;org.springframework.batch:spring-batch-core&quot;, version.ref = &quot;spring-batch&quot; }
-109  spring-batch-test = { module = &quot;org.springframework.batch:spring-batch-test&quot;, version.ref = &quot;spring-batch&quot; }
-110  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. We add two libraries to the version catalogue: Spring Batch, with its test library, and Datafaker, which makes up realistic test data.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/f1f362e98b578d63.m4a"></audio></section>
+107  spring-batch-core = { module = &quot;org.springframework.batch:spring-batch-core&quot;, version.ref = &quot;spring-batch&quot; }
+108  spring-batch-test = { module = &quot;org.springframework.batch:spring-batch-test&quot;, version.ref = &quot;spring-batch&quot; }
+109  datafaker = { module = &quot;net.datafaker:datafaker&quot;, version.ref = &quot;datafaker&quot; }</pre></figure></main><aside class="notes">Step one. We add two libraries to the version catalogue: Spring Batch, with its test library, and Datafaker, which makes up realistic test data.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/f1f362e98b578d63.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the dependencies</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">The job uses Spring Batch; the tests use its test library and Datafaker</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      implementation(libs.spring.batch.core)</mark>
  10      testImplementation(libs.spring.batch.test)
@@ -294,21 +298,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 31          final byte[] keyed = mac.doFinal(account.getBytes(StandardCharsets.UTF_8));</mark>
 <mark> 32          return &quot;TEST-%012x&quot;.formatted(ByteBuffer.wrap(keyed).getLong() &gt;&gt;&gt; UNUSED_BITS);</mark>
  33      }</pre></figure></main><aside class="notes">The second test uses a day of real files, masked before we kept them. We replaced each account number with a keyed substitute, made with a keyed hash that comes with Java, and a fixed test key. The same number always gets the same substitute, so each payment still matches its line in the settlement file.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/3703ecb39fc7442f.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The records name the gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's job</li></ul><p class="callout">Every piece is right. The records show the closing line, with the count and total, is missing.</p></section><figure class="code" style="--code-size: 18px"><pre class="command">$ ./gradlew :lessons:batch-file-in-file-out:test -Pcode=today</pre><pre class="output">WholeJobTest &gt; aMaskedCaptureGivesTheSettlementFileTheBankAccepted() FAILED
-    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [closing line]
-    expected: ClosingRecord[count=6, total=427.14]
-     but was: null
-WholeJobTest &gt; syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() FAILED
-    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [closing line]
-    expected: ClosingRecord[count=12, total=17148.88]
-     but was: null
-KeyedSubstitutesTest &gt; anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() PASSED
-PaymentLineTest &gt; readsAPaymentAndWritesItsSettlementLine() PASSED
-SettlementTotalsTest &gt; aRestartedStepCountsTheLinesWrittenBeforeItFailed() PASSED
-SettlementTotalsTest &gt; aFreshStepStartsFromNothing() PASSED
-6 tests completed, 2 failed</pre></figure></main><aside class="notes">We run the tests against today's job. The tests of the pieces pass. The whole-job tests fail, and name the record that is wrong: the closing line, with the count and the total, is missing. The bank would reject the file.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/73bbbffab239e55c.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The records name the gap</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's job</li></ul><p class="callout">Every piece is right. The records show the closing line, with the count and total, is missing.</p></section><figure class="code" style="--code-size: 18px"><video class="live-run" src="batch-file-in-file-out.deck-clips/scene-9.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's job. The tests of the pieces pass. The whole-job tests fail, and name the record that is wrong: the closing line, with the count and the total, is missing. The bank would reject the file.</aside><audio class="voice" preload="none" src="batch-file-in-file-out.deck-voice/73bbbffab239e55c.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed job</h1><div class="rule"></div><ul class="scene-points"><li class="point">The writer that adds the closing line the bank checks</li></ul><p class="callout">Every record matches: the header, each payment, and the closing line.</p></section><figure class="code" style="--code-size: 14px"><figcaption>the fixed writer</figcaption><pre> 19      /** The writer: the same lines, counted and added up as they are written, then the closing line. */
  20      @Bean
  21      @StepScope

@@ -90,15 +90,19 @@ final class LessonChecks {
         return !live && scene.stream().anyMatch(line -> SHOWN_FOR.matcher(line).matches());
     }
 
-    /* Seconds a narration paragraph needs on screen: spoken words, pauses, and room. */
     static double needed(final String paragraph) {
+        return spoken(paragraph) * ROOM + EXTRA_SECONDS;
+    }
+
+    /* Seconds a paragraph takes to say: its words, and its pauses; needed adds the room a scene gives it on screen. */
+    static double spoken(final String paragraph) {
         double pauses = 0;
         final Matcher pause = PAUSE.matcher(paragraph);
         while (pause.find()) {
             pauses += seconds(pause.group(1), pause.group(2));
         }
         final String[] words = PAUSE.matcher(paragraph).replaceAll(" ").strip().split("\\s+");
-        return (words.length / WORDS_PER_SECOND + pauses) * ROOM + EXTRA_SECONDS;
+        return words.length / WORDS_PER_SECOND + pauses;
     }
 
     private static double lastShownFor(final List<String> scene) {

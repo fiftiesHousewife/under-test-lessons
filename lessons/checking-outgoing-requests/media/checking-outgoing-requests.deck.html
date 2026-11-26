@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,9 +221,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 83  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }
+ 82  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }
    ⋮
-150  wiremock-standalone = { module = &quot;org.wiremock:wiremock-standalone&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="checking-outgoing-requests.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
+149  wiremock-standalone = { module = &quot;org.wiremock:wiremock-standalone&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="checking-outgoing-requests.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency of the lesson</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
 <mark> 10      testImplementation(libs.wiremock)</mark>
@@ -253,35 +257,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 42                  .withRequestBody(equalToJson(&quot;&quot;&quot;</mark>
 <mark> 43                          {&quot;orderId&quot;: &quot;A-1001&quot;, &quot;amount&quot;: 1250, &quot;currency&quot;: &quot;GBP&quot;}&quot;&quot;&quot;)));</mark>
  44      }</pre></figure></main><aside class="notes">Now, the strong test. WireMock keeps every request it receives, and verify checks the one the client sent. It must be a post to the refunds address, with the shop's key, the JSON content type, and the Idempotency-Key header. Its body must equal this JSON, compared field by field, so spacing and the order of the fields don't matter.</aside><audio class="voice" preload="none" src="checking-outgoing-requests.deck-voice/78fec2af71b41cb1.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The request is wrong</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">The answer was handled. The request was wrong: no Idempotency-Key header, and 12.5 where the provider expects 1250 pence.</p></section><figure class="code" style="--code-size: 13px"><pre class="command">$ ./gradlew :lessons:checking-outgoing-requests:test -Pcode=today</pre><pre class="output">RefundKeyTest &gt; eachRefundHasItsOwnKeyAndARetryRepeatsIt() FAILED
-    org.opentest4j.AssertionFailedError: [the Idempotency-Key of each refund sent]
-    expected: [&quot;RF-5501&quot;, &quot;RF-5502&quot;, &quot;RF-5502&quot;]
-     but was: [&quot;no key&quot;, &quot;no key&quot;, &quot;no key&quot;]
-RefundRequestTest &gt; sendsTheRefundTheProviderExpects() FAILED
-    com.github.tomakehurst.wiremock.client.VerificationException: No requests exactly matched. Most similar request was:  expected:&lt;
-    POST
-    /refunds
-    Authorization: Bearer test-key
-    Content-Type: application/json
-    Idempotency-Key: RF-5501
-    [equalToJson]
-    {
-      &quot;orderId&quot; : &quot;A-1001&quot;,
-      &quot;amount&quot; : 1250,
-      &quot;currency&quot; : &quot;GBP&quot;
-    }&gt; but was:&lt;
-    POST
-    /refunds
-    Authorization: Bearer test-key
-    Content-Type: application/json
-    {
-      &quot;orderId&quot; : &quot;A-1001&quot;,
-      &quot;amount&quot; : 12.5,
-      &quot;currency&quot; : &quot;GBP&quot;
-    }&gt;
-RefundResponseTest &gt; outageAndSilenceSayTheProviderIsUnavailable() PASSED
-RefundResponseTest &gt; acceptedRefundGivesItsId() PASSED
-4 tests completed, 2 failed</pre></figure></main><aside class="notes">We run the tests against today's code. The weak test passes. The strong test fails, and WireMock shows the request it expected beside the closest one it got. The Idempotency-Key header is missing, and the amount is 12.5, not 1250.</aside><audio class="voice" preload="none" src="checking-outgoing-requests.deck-voice/5e8da281e008e7e8.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The request is wrong</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">The answer was handled. The request was wrong: no Idempotency-Key header, and 12.5 where the provider expects 1250 pence.</p></section><figure class="code" style="--code-size: 13px"><video class="live-run" src="checking-outgoing-requests.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's code. The weak test passes. The strong test fails, and WireMock shows the request it expected beside the closest one it got. The Idempotency-Key header is missing, and the amount is 12.5, not 1250.</aside><audio class="voice" preload="none" src="checking-outgoing-requests.deck-voice/5e8da281e008e7e8.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed client</h1><div class="rule"></div><ul class="scene-points"><li class="point">The client that sends pence, and the Idempotency-Key header</li></ul><p class="callout">The request is the one the provider expects: method, address, headers and body.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the fixed client</figcaption><pre> 19      public String send(final Refund refund) {
  20          final ObjectNode body = ProviderHttp.newBody()
  21                  .put(&quot;orderId&quot;, refund.orderId())

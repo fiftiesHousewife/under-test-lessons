@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Batch file-in, file-out: run the whole Spring Batch job on a known input file, and compare its output file's records.

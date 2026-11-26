@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -258,19 +262,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 18                  () -&gt; assertThat(queue.delivered(&quot;orders&quot;)).as(&quot;orders&quot;).containsExactly(&quot;A-1 15000&quot;),</mark>
 <mark> 19                  () -&gt; assertThat(queue.delivered(&quot;fraud-checks&quot;)).as(&quot;fraud checks&quot;).containsExactly(&quot;A-1 15000&quot;));</mark>
  20      }</pre></figure></main><aside class="notes">And a test with the fake. It places a big order, and checks what was delivered: one message to the warehouse, and one to the fraud check.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/181510bbf0a78135.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fake finds the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's order placement</li></ul><p class="callout">The mock test passes. The fake shows the fraud check never arrives: it was sent after the commit.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:fake-behind-an-interface:test -Pcode=today</pre><pre class="output">FakeQueueTest &gt; bigOrderReachesTheWarehouseAndTheFraudCheck() FAILED
-    org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [fraud checks]
-    Expecting actual:
-      []
-    to contain exactly (and in same order):
-      [&quot;A-1 15000&quot;]
-    but could not find the following elements:
-      [&quot;A-1 15000&quot;]
-FakeQueueTest &gt; smallOrderSkipsTheFraudCheck() PASSED
-MockedQueueTest &gt; bigOrderSendsBothMessagesAndCommits() PASSED
-QueueClientRuleTest &gt; onlyTheConnectionCodeUsesTheQueueClient() PASSED
-4 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails: the fraud check message never arrives, because the code sent it after the commit.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/b628d4f457ea6bfc.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fake finds the bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's order placement</li></ul><p class="callout">The mock test passes. The fake shows the fraud check never arrives: it was sent after the commit.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="fake-behind-an-interface.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's order placement. The mock test passes: every call was made. The fake test fails: the fraud check message never arrives, because the code sent it after the commit.</aside><audio class="voice" preload="none" src="fake-behind-an-interface.deck-voice/b628d4f457ea6bfc.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed order placement</h1><div class="rule"></div><ul class="scene-points"><li class="point">The order placement that commits once, at the end</li></ul><p class="callout">Both messages are delivered. The fake checks results, so it doesn't care how the code gets there.</p></section><figure class="code" style="--code-size: 21px"><figcaption>the fixed order placement</figcaption><pre> 16      public void place(final String orderId, final int pence) {
  17          queue.send(&quot;orders&quot;, orderId + &quot; &quot; + pence);
  18          if (pence &gt;= FRAUD_CHECK_PENCE) {

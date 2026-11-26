@@ -12,9 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * A printable script for a person to voice a lesson's deck, where no speech engine runs: one entry per clip, with the
- * file to save it as, the slide's title, the words with their pauses as directions, and hints from the pronunciation
- * list. Entry point: {@code RecordingScript <root> <lesson> [missing]}, which writes
- * {@code build/recording-scripts/<lesson>.html}; with {@code missing}, only the slides with no clip yet.
+ * file to save it as, how long it takes at the decks' pace, the slide's title, the words with their pauses as
+ * directions, and hints from the pronunciation list. Entry point: {@code RecordingScript <root> <lesson> [missing]},
+ * which writes {@code build/recording-scripts/<lesson>.html}; with {@code missing}, only the slides with no clip yet.
  */
 @Slf4j
 public final class RecordingScript {
@@ -91,10 +91,14 @@ public final class RecordingScript {
                 + " .mp3.</p>";
     }
 
-    /* One clip to record: its number and title, its file name, its words, and its reading hints (already HTML). */
+    /*
+     * One clip to record: its number and title, its file name, how long it takes at the decks' pace, its words, and its
+     * reading hints (already HTML).
+     */
     private static String entry(final String label, final Spoken slide, final List<String> hints) {
         return "<div class=\"clip\"><p><b>" + SlideHtml.escape(label) + "</b> · save as <span"
-                + " class=\"file\">" + slide.clipStem() + ".m4a</span></p><p class=\"words\">"
+                + " class=\"file\">" + slide.clipStem() + ".m4a</span> · about "
+                + Math.round(LessonChecks.spoken(slide.written())) + " seconds</p><p class=\"words\">"
                 + SlideHtml.withPauseDirections(slide.written()) + "</p>"
                 + (hints.isEmpty() ? "" : "<p class=\"hints\">" + String.join(" · ", hints) + "</p>")
                 + "</div>";

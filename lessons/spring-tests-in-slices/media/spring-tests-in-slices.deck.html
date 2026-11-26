@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,13 +221,13 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
-142  spring-boot-dependencies = { module = &quot;org.springframework.boot:spring-boot-dependencies&quot;, version.ref = &quot;spring-boot&quot; }
-143  spring-boot-starter-webmvc = { module = &quot;org.springframework.boot:spring-boot-starter-webmvc&quot; }
-144  spring-boot-starter-data-jpa = { module = &quot;org.springframework.boot:spring-boot-starter-data-jpa&quot; }
-145  spring-boot-starter-restclient = { module = &quot;org.springframework.boot:spring-boot-starter-restclient&quot; }
-146  spring-boot-starter-test = { module = &quot;org.springframework.boot:spring-boot-starter-test&quot; }
-147  spring-boot-starter-webmvc-test = { module = &quot;org.springframework.boot:spring-boot-starter-webmvc-test&quot; }
-148  spring-boot-starter-data-jpa-test = { module = &quot;org.springframework.boot:spring-boot-starter-data-jpa-test&quot; }</pre></figure></main><aside class="notes">Step one. Spring Boot's list of versions goes in the version catalogue, with the test starters whose versions it sets. Every slice comes from those starters.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/65b16dd1158d52dd.m4a"></audio></section>
+141  spring-boot-dependencies = { module = &quot;org.springframework.boot:spring-boot-dependencies&quot;, version.ref = &quot;spring-boot&quot; }
+142  spring-boot-starter-webmvc = { module = &quot;org.springframework.boot:spring-boot-starter-webmvc&quot; }
+143  spring-boot-starter-data-jpa = { module = &quot;org.springframework.boot:spring-boot-starter-data-jpa&quot; }
+144  spring-boot-starter-restclient = { module = &quot;org.springframework.boot:spring-boot-starter-restclient&quot; }
+145  spring-boot-starter-test = { module = &quot;org.springframework.boot:spring-boot-starter-test&quot; }
+146  spring-boot-starter-webmvc-test = { module = &quot;org.springframework.boot:spring-boot-starter-webmvc-test&quot; }
+147  spring-boot-starter-data-jpa-test = { module = &quot;org.springframework.boot:spring-boot-starter-data-jpa-test&quot; }</pre></figure></main><aside class="notes">Step one. Spring Boot's list of versions goes in the version catalogue, with the test starters whose versions it sets. Every slice comes from those starters.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/65b16dd1158d52dd.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependencies</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">The test starters for each slice, and WireMock's standalone jar for the courier</li></ul></section><figure class="code" style="--code-size: 14px"><figcaption>lesson build file</figcaption><pre>  9  dependencies {
  10      implementation(platform(libs.spring.boot.dependencies)) // Spring Boot's BOM sets the starters' versions
  11      implementation(libs.spring.boot.starter.webmvc)
@@ -314,18 +318,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 26          assertThat(json.write(answer)).isStrictlyEqualToJson(&quot;&quot;&quot;</mark>
 <mark> 27                  {&quot;reference&quot;: &quot;D-1001&quot;, &quot;dueOn&quot;: &quot;2026-11-23&quot;, &quot;tracking&quot;: &quot;At the depot&quot;}&quot;&quot;&quot;);</mark>
  28      }</pre></figure></main><aside class="notes">And the JSON slice starts only Jackson, set up as the application sets it up. It checks the answer for one delivery, field by field, exactly as the description gives it.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/7141e01945b0ed16.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice names the date</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where the description says 2026-11-23.</p></section><figure class="code" style="--code-size: 22px"><pre class="command">$ ./gradlew :lessons:spring-tests-in-slices:test -Pcode=today</pre><pre class="output">DeliveriesApplicationTest &gt; showsWhatTheCourierSays() PASSED
-DeliveriesApplicationTest &gt; listsTheCustomersDeliveries() PASSED
-DeliveriesApplicationTest &gt; leavesOutWhatHasBeenDelivered() PASSED
-DeliveriesWiringTest &gt; answersWithEveryPartJoinedUp() PASSED
-DeliveryDataSliceTest &gt; findsTheDeliveriesStillToComeEarliestFirst() PASSED
-DeliveryJsonSliceTest &gt; writesTheFieldsTheDescriptionPromises() FAILED
-    java.lang.AssertionError: JSON Comparison failure: dueOn
-    Expected: 2026-11-23
-         got: 23/11/2026
-DeliveryWebSliceTest &gt; answersWithTheCustomersDeliveries() PASSED
-DeliveryWebSliceTest &gt; answersNotFoundForAnAddressItDoesNotHave() PASSED
-8 tests completed, 1 failed</pre></figure></main><aside class="notes">We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/abcc8ce4b6b3dcdb.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The JSON slice names the date</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where the description says 2026-11-23.</p></section><figure class="code" style="--code-size: 22px"><video class="live-run" src="spring-tests-in-slices.deck-clips/scene-8.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run every test against today's service. Every whole-application test passes. Only the JSON slice fails, and it names the field: the due date, written day first.</aside><audio class="voice" preload="none" src="spring-tests-in-slices.deck-voice/abcc8ce4b6b3dcdb.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed service</h1><div class="rule"></div><ul class="scene-points"><li class="point">The answer with the date as the description gives it</li></ul><p class="callout">All 9 tests pass: the slices check each layer, and one whole-application test checks the wiring.</p></section><figure class="code" style="--code-size: 16px"><figcaption>the fixed delivery answer</figcaption><pre>  7  /** FIXED: the due date is written as the description promises, an ISO date such as 2026-11-23. */
 <mark>  8  public record DeliveryView(String reference, LocalDate dueOn, String tracking) implements DeliveryAnswer {</mark>
   9  

@@ -190,7 +190,7 @@ Type@1ms `run_live "./gradlew :lessons:masking-captured-data:test"`
 Enter
 Sleep 300ms
 Show
-Wait+Screen@300s /(All \d+ tests|1 test) passed\./
+Wait+Screen@300s /\d+ tests? passed\./
 Sleep 22s
 Hide
 Type@1ms `callout "The reports agree before and after data masking, the detector finds nothing, and Datafaker's seeded values pass too."`

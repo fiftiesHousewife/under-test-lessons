@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 80  archunit = { module = &quot;com.tngtech.archunit:archunit&quot;, version.ref = &quot;archunit&quot; }</pre></figure></main><aside class="notes">Step one. Add ArchUnit to the version catalogue.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/5b323edc2110019a.m4a"></audio></section>
+ 79  archunit = { module = &quot;com.tngtech.archunit:archunit&quot;, version.ref = &quot;archunit&quot; }</pre></figure></main><aside class="notes">Step one. Add ArchUnit to the version catalogue.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/5b323edc2110019a.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency of the lesson</li><li class="point">There is nothing to configure</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.archunit)</mark>
  10  }</pre></figure></main><aside class="notes">Step two. Add it as a test dependency of the lesson. There is nothing to configure: ArchUnit is an ordinary library, used from ordinary tests.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/95b518330e6820d9.m4a"></audio></section>
@@ -263,12 +267,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 31                  .whereLayer(&quot;Storage&quot;).mayOnlyBeAccessedByLayers(&quot;Service&quot;);</mark>
  32          check(layers.evaluate(classes));
  33      }</pre></figure></main><aside class="notes">Now, the architecture rule. It names three layers: web, service and storage. The web layer may use the service. The service may use storage. And nothing else may reach storage.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/30aee9704d789a4b.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The rule finds the shortcut</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the admin page as it is today</li></ul><p class="callout">The unit tests pass. The rule names every place the web layer reaches into storage.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:architecture-rules:test -Pcode=today</pre><pre class="output">LayerRulesTest &gt; onlyTheServiceLayerUsesStorage() FAILED
-    java.lang.AssertionError: Constructor &lt;web.today.TodaysSummaryPage.&lt;init&gt;(storage.OrderStore)&gt; has parameter of type &lt;storage.OrderStore&gt;
-    Field &lt;web.today.TodaysSummaryPage.store&gt; has type &lt;storage.OrderStore&gt;
-    Method &lt;web.today.TodaysSummaryPage.summary()&gt; calls method &lt;storage.OrderStore.count()&gt;
-OrderSummaryPageTest &gt; bothPagesCountTheOrders() PASSED
-2 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests against the page as it is today. The unit tests pass. The rule fails, and names every place the web layer reaches into storage: the constructor, the field, and the method call.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/9353d5fc5037e237.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The rule finds the shortcut</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the admin page as it is today</li></ul><p class="callout">The unit tests pass. The rule names every place the web layer reaches into storage.</p></section><figure class="code" style="--code-size: 12px"><video class="live-run" src="architecture-rules.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against the page as it is today. The unit tests pass. The rule fails, and names every place the web layer reaches into storage: the constructor, the field, and the method call.</aside><audio class="voice" preload="none" src="architecture-rules.deck-voice/9353d5fc5037e237.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The page that goes through the service</h1><div class="rule"></div><ul class="scene-points"><li class="point">The admin page that asks the service layer instead</li></ul><p class="callout">Every layer uses only the layer below it, and the rule keeps it that way.</p></section><figure class="code" style="--code-size: 22px"><figcaption>web layer: the admin page, fixed</figcaption><pre>  6  /** FIXED: the admin page asks the service, as every web class should. */
   7  public final class SummaryPage implements OrderSummary {
   8  

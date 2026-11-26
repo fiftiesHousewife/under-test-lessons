@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,7 +221,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
-125  openapi-request-validator-restassured = { module = &quot;com.atlassian.oai:openapi-request-validator-restassured&quot;, version.ref = &quot;openapi-request-validator&quot; }</pre></figure></main><aside class="notes">Step one. Add Atlassian's OpenAPI request validator to the version catalogue. It used to be called the Swagger request validator.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/e9b13e6418ef710f.m4a"></audio></section>
+124  openapi-request-validator-restassured = { module = &quot;com.atlassian.oai:openapi-request-validator-restassured&quot;, version.ref = &quot;openapi-request-validator&quot; }</pre></figure></main><aside class="notes">Step one. Add Atlassian's OpenAPI request validator to the version catalogue. It used to be called the Swagger request validator.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/e9b13e6418ef710f.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency, beside REST Assured</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
  10      testImplementation(libs.rest.assured)
@@ -297,14 +301,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  38                  .when().get(&quot;/parcels/P-0000&quot;)
  39                  .then().statusCode(404);
  40      }</pre></figure></main><aside class="notes">Now, the strong tests. The same requests and the same checks, with one addition. A filter checks every request and answer against the schema, and names each mismatch on its own line.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/4c84b8c26881efd3.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The schema check names each contradiction</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">The weak tests pass. The schema check names the field and the rule each answer breaks.</p></section><figure class="code" style="--code-size: 12px"><pre class="command">$ ./gradlew :lessons:openapi-response-checks:test -Pcode=today</pre><pre class="output">ParcelFieldsTest &gt; aParcelNobodySent() PASSED
-ParcelFieldsTest &gt; aParcelOnItsWay() PASSED
-ParcelSchemaTest &gt; aParcelNobodySent() FAILED
-    java.lang.AssertionError: GET /parcels/P-0000 answered 404, body: required property 'error' not found
-    GET /parcels/P-0000 answered 404, body: property 'message' is not defined in the schema and the schema does not allow additional properties
-ParcelSchemaTest &gt; aParcelOnItsWay() FAILED
-    java.lang.AssertionError: GET /parcels/P-1001 answered 200, field weightGrams: string found, integer expected
-4 tests completed, 2 failed</pre></figure></main><aside class="notes">We run both against today's service. The weak tests pass. The strong tests fail, and say exactly where. The weight is a string, where the schema says a whole number. The 404 answer has no error field, and a message field the schema doesn't have.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/1070ef06577d2b8d.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The schema check names each contradiction</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's service</li></ul><p class="callout">The weak tests pass. The schema check names the field and the rule each answer breaks.</p></section><figure class="code" style="--code-size: 12px"><video class="live-run" src="openapi-response-checks.deck-clips/scene-7.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run both against today's service. The weak tests pass. The strong tests fail, and say exactly where. The weight is a string, where the schema says a whole number. The 404 answer has no error field, and a message field the schema doesn't have.</aside><audio class="voice" preload="none" src="openapi-response-checks.deck-voice/1070ef06577d2b8d.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed service</h1><div class="rule"></div><ul class="scene-points"><li class="point">The service that answers as the schema says</li></ul><p class="callout">The service and its schema agree, and every test that calls it keeps them that way.</p></section><figure class="code" style="--code-size: 22px"><figcaption>the fixed answers</figcaption><pre> 10      @Override
  11      public Map&lt;String, Object&gt; parcel(final Parcel parcel) {
  12          return Map.of(

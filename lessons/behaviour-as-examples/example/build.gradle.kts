@@ -1,5 +1,5 @@
 plugins {
-    id("io.github.fiftieshousewife.lesson")
+    alias(libs.plugins.java.conventions)
 }
 
 // Behaviour written down as examples: the rules, as named examples the people who know them wrote, checked against

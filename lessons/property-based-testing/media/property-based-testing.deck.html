@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -216,8 +220,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
   6  jetcheck = &quot;0.3.0&quot;
    ⋮
  76  [libraries]
-   ⋮
- 78  jetcheck = { module = &quot;org.jetbrains:jetCheck&quot;, version.ref = &quot;jetcheck&quot; }</pre></figure></main><aside class="notes">Step one. Add jetCheck to the version catalogue.</aside><audio class="voice" preload="none" src="property-based-testing.deck-voice/aa006d71b7c76138.m4a"></audio></section>
+ 77  jetcheck = { module = &quot;org.jetbrains:jetCheck&quot;, version.ref = &quot;jetcheck&quot; }</pre></figure></main><aside class="notes">Step one. Add jetCheck to the version catalogue.</aside><audio class="voice" preload="none" src="property-based-testing.deck-voice/aa006d71b7c76138.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency</li><li class="point">A switch chooses which splitter the tests run against</li></ul></section><figure class="code" style="--code-size: 14px"><figcaption>lesson build file: dependencies</figcaption><pre>  8  dependencies {
 <mark>  9      testImplementation(libs.jetcheck)</mark>
  10  }</pre><figcaption>lesson build file: tests</figcaption><pre> 12  tasks.test {
@@ -263,12 +266,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
 <mark> 45                  &amp;&amp; shares.stream().mapToInt(Integer::intValue).sum() == bill.totalPence()</mark>
 <mark> 46                  &amp;&amp; Collections.max(shares) - Collections.min(shares) &lt;= 1;</mark>
  47      }</pre></figure></main><aside class="notes">Now, the property test. For every bill, there must be one share per person, the shares must add up to the total, and no two shares may differ by more than a penny.</aside><audio class="voice" preload="none" src="property-based-testing.deck-voice/e27fa1231cc792fe.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The property finds a bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the splitter in use today</li></ul><p class="callout">3 pence between 4 people: the first person pays all 3. None of the example tests checked a bill like this.</p></section><figure class="code" style="--code-size: 19px"><pre class="command">$ ./gradlew :lessons:property-based-testing:test -Pcode=today</pre><pre class="output">FirstPayerSplitterTest &gt; givesTheFirstPersonEveryPennyLeftOver() PASSED
-SplitterExampleTest &gt; givesTheOddPennyToSomeone() PASSED
-SplitterExampleTest &gt; splitsEvenly() PASSED
-SplitterPropertyTest &gt; sharesAddUpToTheTotalAndDifferByAtMostOnePenny() FAILED
-    java.lang.AssertionError: Unfair bill found: 3 pence between 4 people gives [3, 0, 0, 0]
-4 tests completed, 1 failed</pre></figure></main><aside class="notes">We run the tests. The examples pass, but the property fails, and jetCheck shrinks the failure to a small unfair bill. Three pence between four people gives the first person all three pennies.</aside><audio class="voice" preload="none" src="property-based-testing.deck-voice/4db298b50f233eae.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The property finds a bug</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against the splitter in use today</li></ul><p class="callout">3 pence between 4 people: the first person pays all 3. None of the example tests checked a bill like this.</p></section><figure class="code" style="--code-size: 19px"><video class="live-run" src="property-based-testing.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests. The examples pass, but the property fails, and jetCheck shrinks the failure to a small unfair bill. Three pence between four people gives the first person all three pennies.</aside><audio class="voice" preload="none" src="property-based-testing.deck-voice/4db298b50f233eae.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fair splitter</h1><div class="rule"></div><ul class="scene-points"><li class="point">The fair splitter shares the leftover pence one each</li></ul><p class="callout">Every property holds, for every bill jetCheck tried.</p></section><figure class="code" style="--code-size: 21px"><figcaption>FairSplitter.java</figcaption><pre>  9      @Override
  10      public List&lt;Integer&gt; split(final int totalPence, final int people) {
  11          final List&lt;Integer&gt; shares = new ArrayList&lt;&gt;();

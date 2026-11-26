@@ -155,6 +155,10 @@ body.show-notes .series-place, body.show-notes .series-links { display: none; }
 /* A live run's clip, cut from the lesson's recording, fills the code side of its slide. */
 video.live-run { width: 100%; max-height: 860px; border-radius: 6px; background: #111; }
 
+/* On the published site, the intro slide names the lesson's place and stage of the journey above its title. */
+.stage-kicker { margin: 0 0 10px; font: 600 22px var(--font); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--grey); }
+
 /* Newspaper: black ink on newsprint, cartoons in line and hatching. Use it with
    -PlessonSlideCss=lessons/_shared/slides/themes/newspaper.css, or copy it as the start of your own theme. */
 :root {
@@ -217,9 +221,9 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
    ⋮
  76  [libraries]
    ⋮
- 83  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }
+ 82  wiremock = { module = &quot;org.wiremock:wiremock&quot;, version.ref = &quot;wiremock&quot; }
    ⋮
-150  wiremock-standalone = { module = &quot;org.wiremock:wiremock-standalone&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
+149  wiremock-standalone = { module = &quot;org.wiremock:wiremock-standalone&quot;, version.ref = &quot;wiremock&quot; }</pre></figure></main><aside class="notes">Step one. Add WireMock to the version catalogue.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/669ecf8cdfb0e504.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>Step 2, the test dependency</h1><div class="rule"></div><ul class="scene-points"><li class="point">Step 2</li><li class="point">Add it as a test dependency of the lesson</li></ul></section><figure class="code" style="--code-size: 22px"><figcaption>lesson build file</figcaption><pre>  8  dependencies {
   9      implementation(libs.jackson3.databind)
 <mark> 10      testImplementation(libs.wiremock)</mark>
@@ -262,23 +266,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  54          final String outcome = assertTimeoutPreemptively(THREE_SECONDS, this::askForKettles, WAITED_TOO_LONG);
  55          assertThat(outcome).as(fault.name()).isEqualTo(&quot;supplier unavailable: the connection failed&quot;);
  56      }</pre></figure></main><aside class="notes">Now, the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The test allows the shop 3 seconds, and stops it there if it's still waiting. The second test runs 3 times, once for each fault: a connection reset, an empty response, and a broken answer. Every time, the shop must say, supplier unavailable.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/802ce31080157339.m4a"></audio></section>
-<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The supplier fails</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">A slow supplier kept the shop waiting, and a broken connection became an exception, not an answer.</p></section><figure class="code" style="--code-size: 13px"><pre class="command">$ ./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today</pre><pre class="output">StockAnswerTest &gt; supplierWithStockGivesTheUnits() PASSED
-StockAnswerTest &gt; supplierOutageSaysTheSupplierIsUnavailable() PASSED
-SupplierFaultTest &gt; brokenConnectionSaysTheSupplierIsUnavailable(Fault) &gt; [1] fault = CONNECTION_RESET_BY_PEER FAILED
-    org.opentest4j.AssertionFailedError: [CONNECTION_RESET_BY_PEER]
-    expected: &quot;supplier unavailable: the connection failed&quot;
-     but was: &quot;UncheckedIOException: java.io.IOException: HTTP/1.1 header parser received no bytes&quot;
-SupplierFaultTest &gt; brokenConnectionSaysTheSupplierIsUnavailable(Fault) &gt; [2] fault = EMPTY_RESPONSE FAILED
-    org.opentest4j.AssertionFailedError: [EMPTY_RESPONSE]
-    expected: &quot;supplier unavailable: the connection failed&quot;
-     but was: &quot;UncheckedIOException: java.io.IOException: HTTP/1.1 header parser received no bytes&quot;
-SupplierFaultTest &gt; brokenConnectionSaysTheSupplierIsUnavailable(Fault) &gt; [3] fault = MALFORMED_RESPONSE_CHUNK FAILED
-    org.opentest4j.AssertionFailedError: [MALFORMED_RESPONSE_CHUNK]
-    expected: &quot;supplier unavailable: the connection failed&quot;
-     but was: &quot;UncheckedIOException: java.io.IOException: Illegal character in chunk size: 108&quot;
-SupplierFaultTest &gt; slowSupplierCostsTheShopOneTimeout() FAILED
-    org.opentest4j.AssertionFailedError: the shop kept the customer waiting for the supplier ==&gt; execution timed out after 3000 ms
-6 tests completed, 4 failed</pre></figure></main><aside class="notes">We run the tests against today's code. The weak tests pass. The 4 strong tests fail. The slow supplier kept the shop waiting past its 3 seconds. And each broken connection came back as an exception, not as a clear answer.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/6ecad9a5fb7655fc.m4a"></audio></section>
+<section class="deck-slide"><main class="slide scene"><section class="text"><h1>The supplier fails</h1><div class="rule"></div><ul class="scene-points"><li class="point">Run the tests against today's code</li></ul><p class="callout">A slow supplier kept the shop waiting, and a broken connection became an exception, not an answer.</p></section><figure class="code" style="--code-size: 13px"><video class="live-run" src="slow-and-failing-dependencies.deck-clips/scene-6.mp4" muted playsinline preload="auto"></video></figure></main><aside class="notes">We run the tests against today's code. The weak tests pass. The 4 strong tests fail. The slow supplier kept the shop waiting past its 3 seconds. And each broken connection came back as an exception, not as a clear answer.</aside><audio class="voice" preload="none" src="slow-and-failing-dependencies.deck-voice/6ecad9a5fb7655fc.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The fixed client</h1><div class="rule"></div><ul class="scene-points"><li class="point">The client with a connect and a read timeout, and a clear fallback</li></ul><p class="callout">Too slow, reset, empty or broken: the shop answers supplier unavailable within a second.</p></section><figure class="code" style="--code-size: 15px"><figcaption>the fixed client</figcaption><pre> 30      @Override
  31      public StockAnswer check(final String sku) {
  32          try {
