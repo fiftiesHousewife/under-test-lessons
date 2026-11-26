@@ -23,48 +23,6 @@ Say: Our example looks up postcodes, using a supplier's web service, which turns
   answer in three ways: here is the town. I don't know that postcode. Or, sorry, I'm down. Our client must handle all
   three.
 
-## intro: Rare answers trip the postcode client
-- Asked for a postcode the supplier doesn't know, it returns an empty town, not "no town"
-- When the supplier is down, it fails reading a web page as data, not "the supplier answered 503"
-- Unseen, because the only test needs the real service and an account, so it is skipped
-- And raw recordings keep a person's name, email address and password token
-Picture: bug
-Say: Here is the problem. Ask the client for a postcode the supplier doesn't know, and it hands back an empty town,
-  instead of saying there is none. When the supplier is down, it answers 503, with a web page. The client tries to read
-  that page as data, and fails with a confusing error. Neither showed up, because the only test needs the real service
-  and an account, so it is skipped. And when we record the supplier's answers to test with, the files keep a person's
-  name, email address and password token.
-
-## intro: The fix: replay the supplier's answers
-- Save each answer as a file: a recorded HTTP response
-- A stand-in server in the test replays them: no network, no account
-- Add the rare answers by hand: the unknown postcode, the outage
-Picture: camera
-Say: The fix is to replay the supplier's answers. Each answer, saved as a file, is a recorded HTTP response. A stand-in
-  server inside the test replays them to the client, which can't tell the difference. So the tests need no network, and
-  no account. [pause 600ms] We add the rare answers by hand: the unknown postcode, and the outage.
-
-## intro: Mask each recording first
-- Drop the tokens
-- Swap each name and email address for a keyed substitute
-- A keyed substitute is a code made from the value and a secret key
-Picture: door
-Say: And we mask each recording before we save it. [pause 600ms] We drop the tokens. [pause 600ms] Each name and email
-  address becomes a keyed substitute: a code made from the value and a secret key, with a standard method called H-MAC.
-  [pause 600ms] The same person always gets the same code. But without the key, there's no way back to them.
-
-## intro: How WireMock looks
-- A recording: request GET /postcodes/M1%201AE, response "status": 503
-- The server: new WireMockServer(options().dynamicPort().usingFilesUnderClasspath("supplier"))
-- Recording: startRecording(recordSpec().forTarget(standIn.baseUrl()))
-- Today: expected "the postcode supplier answered 503" but was StreamReadException
-Picture: robot
-Say: Here is how WireMock looks. A recording is a small file that pairs a request with the answer to send back. This one
-  says: asked for the postcode M1 1AE, answer 503. The test starts WireMock's server on a free port, with the recordings
-  kept beside the tests. To make recordings, WireMock passes the questions on to a service and saves what comes back.
-  Today, the outage test expected the client to say the supplier answered 503. It got an error from reading a web page
-  as data instead.
-
 Include: how-we-build
 
 ## closing: When to use recorded responses

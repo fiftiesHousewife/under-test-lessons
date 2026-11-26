@@ -21,37 +21,6 @@ Picture: basket
 Say: Our example works out the shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules have
   run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
 
-## intro: The new rules ship a £20 basket free
-- The new rules compare a basket in pence with a threshold in pounds
-- So delivery is free from 50p, not £50
-- The tests pass: they never switch the new rules on
-- The mistake waits for the day the shop switches them on, in production
-Picture: bug
-Say: Here is the problem. The new rules compare a basket in pence with a threshold in pounds. So delivery is free from
-  50 pence, not from £50, and a £20 basket ships free. The tests all pass, because they never switch the new rules on.
-  So the mistake waits for the day the shop switches them on, in production.
-
-## intro: The fix: test both ways
-- The switch is a feature flag, read while the code runs: new-shipping, off by default
-- While both rules exist, run every check with the flag off and on
-- A £20 basket pays £3.99 both ways, and a £60 basket pays nothing
-Picture: switch
-Say: The fix is to test both ways. The switch is called a feature flag: a setting, read while the code runs, that
-  chooses between the old rules and the new ones. Ours is called new shipping, and it's off until the shop switches it
-  on. While both rules exist, run every check with the flag off, and again with it on. A £20 basket must pay £3.99 both
-  ways, and a £60 basket must pay nothing.
-
-## intro: How OpenFeature looks
-- The code asks for the flag, with a default: flags.getBooleanValue("new-shipping", false)
-- Tests use the in-memory provider: new InMemoryProvider(Map.of("new-shipping", flag))
-- One test, run twice: @ValueSource(booleans = {false, true})
-- Today, switched on: [a £20 basket] expected: 399 but was: 0
-Picture: robot
-Say: Here is how OpenFeature looks. The code asks a client for the flag's value, giving a default, off. A provider
-  answers: a flag service in production, or, in tests, a simple provider kept in memory, set up with the flag on or off.
-  The same test runs twice, once each way. Today, with the flag switched on, the test expected the £20 basket to pay 399
-  pence for delivery, and it paid nothing.
-
 Include: how-we-build
 
 ## closing: When to use feature flags

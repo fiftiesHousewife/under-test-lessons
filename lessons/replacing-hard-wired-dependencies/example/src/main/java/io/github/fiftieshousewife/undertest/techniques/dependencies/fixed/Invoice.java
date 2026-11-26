@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-/** FIXED: the rates are passed in. Production passes the live rates; a test passes a stand-in. */
+/** FIXED: the rates are passed in. Whatever builds the invoice chooses them: the live rates, or a stand-in. */
 public final class Invoice implements PricedInvoice {
 
     private final ExchangeRates rates;

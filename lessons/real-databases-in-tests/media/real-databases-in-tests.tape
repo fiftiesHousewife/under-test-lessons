@@ -53,11 +53,11 @@ Sleep 300ms
 Type@1ms `note "Step 2: container tests get their own suite, so tests that need no containers stay quick."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/real-databases-in-tests/example/build.gradle.kts "/^testing/" "lesson build file" --zoom 16`
+Type@1ms `show lessons/real-databases-in-tests/example/build.gradle.kts "/^testing/" "lesson build file" --zoom 17-22`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 24s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -85,7 +85,7 @@ Type@1ms `show InMemoryDatabaseTest 13 24 "the test on H2" --zoom 15-16`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 25s
 
 # ---- Scene 5: the test on real PostgreSQL ----
 Hide
@@ -95,11 +95,11 @@ Sleep 300ms
 Type@1ms `note "The same test on *real PostgreSQL*, started in a container for the test, and thrown away after."`
 Enter
 Sleep 300ms
-Type@1ms `show RealPostgresTest 17 31 "the test on PostgreSQL" --zoom 21-25`
+Type@1ms `show RealPostgresTest 18 34 "the test on PostgreSQL" --zoom 21-25`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 53s
 
 # ---- Scene 6: PostgreSQL disagrees ----
 Hide

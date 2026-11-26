@@ -22,33 +22,6 @@ Say: Our example is an online shop's stock check. Before it takes an order, the 
   enough of the item. The quick tests use a warehouse kept in memory, which answers at once. The slow tests use the
   warehouse's own test system. They're worth keeping, because they check the real thing.
 
-## intro: Every change waits for the slow tests
-- The shop has 4 quick tests, and 2 slow ones
-- The warehouse's test system takes 2 seconds to start
-- Every test run waits for it, so people stop running the tests
-Picture: bug
-Say: Here is the problem. The shop has 4 quick tests, and 2 slow ones. The warehouse's test system takes 2 seconds to
-  start. Every test run waits for it, even after the smallest change. And when every run is slow, people stop running
-  the tests.
-
-## intro: The fix: label the slow tests
-- Put a label, a tag, on each slow test: @Tag("slow")
-- Every change runs only the quick tests: a moment, not 2 seconds
-- Continuous integration runs the slow ones too, so nothing goes untested
-Picture: tag
-Say: The fix is to label the slow tests. JUnit's word for the label is a tag. You write tag, slow, on each slow test, or
-  on its whole class. Then every change runs only the quick tests, which take a moment. And continuous integration runs
-  the slow ones as well, so nothing goes untested.
-
-## intro: How the build uses the label
-- The quick task leaves the slow tests out: excludeTags("slow")
-- A second task, slowTest, runs only them: includeTags("slow")
-- Continuous integration runs check, which runs both
-Picture: robot
-Say: How does the build use the label? We tell the usual test task to leave out the tests tagged 'slow'. A second task,
-  called slow test, runs only those. And continuous integration runs the check task, which runs both, so the slow tests
-  still run on every change that's pushed.
-
 Include: how-we-build
 
 ## closing: When to use tags

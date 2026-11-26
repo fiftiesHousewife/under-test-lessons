@@ -29,33 +29,6 @@ Say: Our example is an online shop's old pricing module. It works out delivery c
   written long ago, and it has no tests. The change adds a bulk discount on one line of an order. 10 or more of an item
   get 5 percent off that line. 50 or more get 10 percent off.
 
-## intro: Old code fails every coverage gate
-- An 80% coverage gate can never pass on the module, so it's off
-- The bulk discount's own test runs all 8 new lines
-- Yet 5 of 11 small bugs planted in those lines go unnoticed
-Picture: bug
-Say: Here is the problem. A rule that the module needs 80 percent line coverage can never pass, so the team turned it
-  off. The bulk discount's own test runs all 8 of the new lines. But when we plant 11 small bugs in those lines, one at
-  a time, the test misses 5 of them. And nothing in the build stops the change.
-
-## intro: The fix: check only what the change touched
-- Git lists the classes the change touched: here, just the bulk discount
-- Every line of them must run in the tests
-- Every bug PIT plants in them must be caught
-Picture: magnifier
-Say: The fix is to check only what the change touched. Git lists the classes a branch changed. Here, that's just the
-  bulk discount. Every line of those classes must run in the tests. And every small bug PIT plants in them must make a
-  test fail. It's a gate every change can meet, however old the code around it.
-
-## intro: How the build is told
-- The build asks git what the branch changed: BulkDiscount
-- PIT plants bugs only there, and JaCoCo counts only there
-- A gate after PIT: "5 of 11 planted bugs in the changed classes survived"
-Picture: robot
-Say: How does the build know? It asks git which classes the branch changed, compared with the main branch. Here, that's
-  the bulk discount. PIT plants bugs only in those classes, so it stays quick, and JaCoCo's coverage check counts only
-  them. And a gate after PIT fails the build. Today it says 5 of 11 planted bugs in the changed classes survived.
-
 Include: how-we-build
 
 ## closing: When to use it

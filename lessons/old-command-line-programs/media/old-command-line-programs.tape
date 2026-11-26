@@ -100,11 +100,11 @@ Sleep 300ms
 Type@1ms `note "The *strong* test runs the whole program. System Stubs sets the environment, the input and the output."`
 Enter
 Sleep 300ms
-Type@1ms `show PaymentImportTest 19 28 "the strong test" --zoom 22-27`
+Type@1ms `show PaymentImportTest 19 28 "the strong test" --zoom 22-28`
 Enter
 Sleep 300ms
 Show
-Sleep 37s
+Sleep 62s
 
 # ---- Scene 7: the strong test, one test ----
 Hide
@@ -149,11 +149,11 @@ Sleep 300ms
 Type@1ms `note "The program after one small change: it is *given* how to print and how to end."`
 Enter
 Sleep 300ms
-Type@1ms `show PaymentImport 17 31 "the program, given its exit" --zoom 30`
+Type@1ms `show PaymentImport 17 31 "the program, given its exit" --zoom 20,30`
 Enter
 Sleep 300ms
 Show
-Sleep 30s
+Sleep 37s
 
 # ---- Scene 10: every test passes ----
 Hide

@@ -26,7 +26,7 @@ program prints each payment it accepts and a total, and stops at the first payme
   is the old program: `System.getenv`, `System.in`, `System.out` and `System.exit`, all in `main`.
 - [`PaymentImport`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/commandline/fixed/PaymentImport.java)
   is the same program, given how to print and how to end; it still reads its environment variable and standard input.
-  Production passes `System.out::println` and `System::exit`.
+  It never calls `System.exit` itself: whatever runs it passes the exit, and a test passes one that records the code.
 - [`PaymentLineTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/commandline/PaymentLineTest.java)
   is the weak tests: the pieces, never the program.
 - [`PaymentImportTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/commandline/PaymentImportTest.java)

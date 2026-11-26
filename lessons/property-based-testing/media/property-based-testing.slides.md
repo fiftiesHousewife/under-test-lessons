@@ -12,15 +12,6 @@ Say: Let's look at property-based testing: rules that must always hold, checked 
   jetCheck is a library that makes up those inputs, and checks the rules against each. We'll see a bill split where one
   person pays every penny left over. Then jetCheck finds it.
 
-## intro: One person pays every penny left over
-- Split 3 pence between 4 people: the first pays 3, the others 0
-- The tests pass: £9 between 3, £1 between 3, £1.01 between 2
-- Each leaves at most a penny over, so the tests missed the bug
-Picture: bug
-Say: Here is the problem. Split 3 pence between 4 people, and the first person pays all 3, while the others pay nothing.
-  With a bigger bill, one person pays several pence more than everyone else. Yet the tests pass. They split £9 between
-  3, £1 between 3, and £1.01 between 2. Each of those leaves at most a penny over, so the tests missed the bug.
-
 ## intro: Our example: splitting a bill
 - Share a bill, in pence, between several people
 - Everyone pays the same, and one person pays what's left over
@@ -28,25 +19,6 @@ Say: Here is the problem. Split 3 pence between 4 people, and the first person p
 Picture: pizza
 Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and one person has to
   pay the pennies left over. To be fair, no two people should pay more than a penny apart.
-
-## intro: The fix: state rules, try 100 bills
-- Write rules that hold for every bill, not one bill at a time
-- One share each, shares that add up to the bill, no two more than a penny apart
-- A library makes up a hundred bills, and looks for one that breaks a rule
-Picture: dice
-Say: The fix is to state the rules that must hold for every bill, instead of checking one bill at a time. A rule like
-  this is called a property, so this is a property test. Here there are 3 rules: one share for each person, shares that
-  add up to the bill, and no two shares more than a penny apart. Then a library makes up a hundred bills, and looks for
-  one that breaks a rule.
-
-## intro: How jetCheck looks
-- Bills from building blocks: integers(0, 1_000) pence, integers(1, 12) people
-- forAll(bills, this::isFair) checks the rules on each one
-- It shrinks a failure to the smallest: 3 pence between 4 people gives [3, 0, 0, 0]
-Picture: robot
-Say: Here is how jetCheck looks. It builds each bill from simple pieces: a number of pence up to 1,000, and between 1
-  and 12 people. It checks the rules on every bill it makes. When a bill breaks a rule, jetCheck shrinks it, to the
-  smallest bill that still fails. Here that is 3 pence between 4 people, which shows the bug most clearly.
 
 Include: how-we-build
 

@@ -22,33 +22,6 @@ Say: Our example is a bank's statement printer. It prints a month of transaction
   25 pound overdraft fee when the balance goes too low, and it turns out that includes a balance of exactly zero. And it
   adds interest when the balance ends the month over 1000 pounds. Its rules are written down only in its code.
 
-## intro: A tidy rewrite changes the statements
-- Its one test checks only that something printed
-- A tidier rewrite drops the forgotten £25 fee
-- The closing balance moves from £2,030 to £2,055, and the test still passes
-Picture: bug
-Say: Here is the problem. The printer has run for years, and its only test checks that something was printed. A rewrite
-  makes it tidier. The rewrite quietly drops the 25 pound overdraft fee, which the bank had forgotten. On a test month,
-  the closing balance moves from 2030 pounds to 2055. And the test still passes.
-
-## intro: The fix: record what it does today
-- Before changing it, save a whole statement it prints today
-- Every later run must print exactly the same, bugs and quirks included
-- This is a characterisation test: it asks what the code does, not what it should do
-Picture: camera
-Say: The fix is to record what the printer does today, before anyone changes it. Save a whole statement it prints, for a
-  month that reaches every rule. Every later run must print exactly the same, bugs and quirks included. This is called a
-  characterisation test. It doesn't ask what the code should do. It asks what it actually does.
-
-## intro: How ApprovalTests looks
-- One line in the test: Approvals.verify(statement)
-- The first run's output, once checked, is saved as an approved file beside the test
-- A different output fails, and the build shows each line that changed
-Picture: checklist
-Say: ApprovalTests is a library that does this. The test hands it the whole statement in one line. Once we've checked
-  the first run's output, ApprovalTests saves it as an approved file beside the test. If a later run prints anything
-  different, the test fails, and the build shows each line that changed, approved and received side by side.
-
 Include: how-we-build
 
 ## closing: When to use characterisation tests

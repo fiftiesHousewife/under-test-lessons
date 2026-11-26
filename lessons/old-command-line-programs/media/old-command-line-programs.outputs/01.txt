@@ -3,6 +3,7 @@ PaymentImportTest > acceptsPaymentsUpToTheLimitAndEndsWithZero() PASSED
 PaymentImportTest > stopsAtThePaymentOverTheLimitAndEndsWithOne() SKIPPED
 Gradle Test Run :lessons:old-command-line-programs:test FAILED
     org.gradle.process.ProcessExecutionException: Process 'Gradle Test Executor 1' finished with non-zero exit value 1
+1 of 2 tests passed; 1 didn't run.
 * What went wrong:
 Execution failed for task ':lessons:old-command-line-programs:test' (registered by plugin 'org.gradle.jvm-test-suite').
 > Test process encountered an unexpected problem.

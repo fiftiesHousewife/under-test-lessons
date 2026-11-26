@@ -106,11 +106,14 @@ Sleep 300ms
 Type@1ms `note "Set up as production's: 3 tries, then the dead-letter queue."`
 Enter
 Sleep 300ms
-Type@1ms `show EmbeddedBroker 34 47 "the broker in the test" --zoom 41-43`
+Type@1ms `show PaymentsOnABrokerTest 16 17 "each test registers the broker" --mark 16-17`
+Enter
+Sleep 300ms
+Type@1ms `show EmbeddedBroker 26 47 "the broker in the test" --zoom 42-43 --mark 31,37,40`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 45s
 
 # ---- Scene 7: the tests on the broker ----
 Hide
@@ -120,11 +123,11 @@ Sleep 300ms
 Type@1ms `note "The tests on the broker: the example messages in, then what the consumer did."`
 Enter
 Sleep 300ms
-Type@1ms `show PaymentsOnABrokerTest 19 38 "the tests on the broker" --zoom 21-24`
+Type@1ms `show PaymentsOnABrokerTest 19 49 "the tests on the broker" --zoom 21-24 --mark 36-37,43-44,48`
 Enter
 Sleep 300ms
 Show
-Sleep 31s
+Sleep 38s
 
 # ---- Scene 8: the broker finds lost payments ----
 Hide
@@ -152,10 +155,13 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The consumer with a *transacted* session: commit after recording, roll back on failure:"`
+Type@1ms `note "The consumer with a *transacted* session: commit after recording, roll back on failure, record once:"`
 Enter
 Sleep 300ms
-Type@1ms `show FixedPaymentConsumer 30 45 "the fixed consumer" --zoom 37-41`
+Type@1ms `show FixedPaymentConsumer 30 43 "the fixed consumer" --zoom 32,37-41`
+Enter
+Sleep 300ms
+Type@1ms `show FixedPaymentConsumer 51 57 "each payment recorded once" --mark 54-56`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:message-consumers:test"`

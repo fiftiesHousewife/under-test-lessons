@@ -17,7 +17,7 @@ Say: Here, we look at checking the requests your code sends to other services, n
   WireMock is a library that stands in for another web service. We'll see a refund sent wrong while every test passes.
   Then WireMock checks the request itself.
 
-## intro: Our example: refunds to a payment provider
+## intro: Our example: refunds to a provider
 - A shop gives money back to a customer for an order
 - It posts the refund to a payment provider, as JSON, in pence
 - An Idempotency-Key header names the refund, so one sent twice is paid once
@@ -27,36 +27,6 @@ Say: Our example is a shop that gives money back to customers. For each refund, 
   provider: the order's number, and the amount in pence, as JSON. It also sends a header called Idempotency-Key, which
   names the refund. If the same refund arrives twice, say after a timeout and a retry, the provider pays it only once.
   The provider answers 201 Created, with an id for the refund.
-
-## intro: The refund is sent wrong, and the tests pass
-- A refund of £12.50 goes as 12.5, not 1250 pence
-- It goes with no Idempotency-Key, so a refund sent twice could be paid twice
-- The tests pass: the stand-in provider answers "created" whatever it is sent
-Picture: bug
-Say: Here is the problem. The shop refunds a customer £12.50, and sends 12.5, not 1250 pence. It also leaves out the
-  Idempotency-Key header, so a refund sent twice could be paid twice. And the tests pass. The stand-in provider in the
-  tests answers that the refund is created, whatever the shop sends. So the mistakes only show up at the real provider,
-  when a customer gets the wrong amount back.
-
-## intro: The fix: check the request that was sent
-- The stand-in keeps every request it receives
-- The test checks the refund the shop really sent: method, address, headers and body
-- Checking outgoing requests, not only the answer that comes back
-Picture: magnifier
-Say: The fix is to check the request the shop really sent. The stand-in provider keeps every request it receives. So
-  after the refund, the test looks at it: the method, the address, the headers, and the body with its amount. This is
-  called checking outgoing requests, because the test checks what goes out, not only the answer that comes back.
-
-## intro: How WireMock's verify looks
-- verify(postRequestedFor(urlEqualTo("/refunds"))
-- .withHeader("Idempotency-Key", equalTo("RF-5501"))
-- .withRequestBody(equalToJson("""{ "amount" : 1250 ... }"""))
-- Today: no requests exactly matched, closest was "amount" : 12.5 and no key
-Picture: server
-Say: Here is how it looks. WireMock keeps the requests in memory, in what it calls its request journal. Verify looks
-  there for a post to the refunds address, with the refund's key in its header, and a body that matches the JSON
-  expected. That match compares fields and values, so spacing and field order don't matter. Today, no request matched.
-  The failure shows the closest one beside it: an amount of 12.5, and no key.
 
 Include: how-we-build
 

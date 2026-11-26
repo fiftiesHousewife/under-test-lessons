@@ -11,15 +11,6 @@ Picture: road
 Say: We're going to look at dynamic tests: tests that JUnit makes while it runs, one for each example in a folder. We'll
   see names printed wrong on letters, and how one test for each example file finds every name that goes wrong.
 
-## intro: Letters go out to Mr Patrick O'brien
-- 3 of 5 example names come out wrong: O'brien, Smith-jones, Mary-ann
-- The test loops over all 5, and stops at the first wrong one
-- It reports 1 failure, with no example's name: the other 2 stay hidden
-Picture: bug
-Say: Here is the problem. Letters go out to Mister Patrick O'brien, with a small b. 3 of the 5 example names come out
-  wrong: O'brien, Smith-jones, and Mary-ann. The test loops over all 5 examples, and stops at the first wrong one. So it
-  reports a single failure, and its name doesn't say which example broke. The other 2 stay hidden.
-
 ## intro: Our example: names on letters
 - Customer records are stored as SURNAME,FIRST NAME,TITLE, in capitals
 - Letters need the name written properly: Mr Patrick O'Brien
@@ -28,24 +19,6 @@ Picture: statement
 Say: Our example writes names on letters. The old system stores customer records as surname, first name, and title, all
   in capitals. Letters need the name written properly, such as Mister Patrick O'Brien. And a folder of example files
   shows the expected name for each record.
-
-## intro: The fix: one test for each example file
-- Make the tests from the folder, while the tests run: one per file
-- Each is named after its file, and passes or fails on its own
-- Adding an example is adding a file, with no new test code
-Picture: folders
-Say: The fix is to make one test for each example file, from the folder, while the tests run. Tests made like this, from
-  data, are called dynamic tests. Each one is named after its file, and passes or fails on its own, so all 3 wrong names
-  are reported. And adding an example is adding a file, with no new test code.
-
-## intro: How JUnit makes them
-- @TestFactory on a method that returns Stream<DynamicTest>
-- dynamicTest(fileName, () -> check the file): a name, and the code to run
-- Each is reported by name: apostrophe.txt FAILED, double-barrelled.txt FAILED
-Picture: robot
-Say: How does JUnit make them? You mark a method as a test factory, and it returns a stream of dynamic tests. Each one
-  has a name, here the file's name, and the code to run. JUnit runs and reports each one like any other test. So the
-  report names every example that broke: the apostrophe, the double-barrelled surname, and the hyphenated first name.
 
 ## closing: When to use dynamic tests
 - When the test cases live in files: regression packs, sample messages, old bug reports

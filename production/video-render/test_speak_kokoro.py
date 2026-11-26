@@ -28,12 +28,15 @@ class ToSoundsTest(unittest.TestCase):
                          SPEAK.to_sounds("/ɹɪkˈɔːd/ what it does, /ɹɪkˈɔːd/, then.", fake))
 
     def test_sounds_stressed_on_their_first_sound_and_two_runs_in_one_sentence(self):
-        self.assertEqual("<In> ðə ˈadmɪn peɪdʒ<, then> ðə ˈɑːkɪtɛktʃə ɹuːlz<.>",
+        self.assertEqual("<In> ði ˈadmɪn peɪdʒ<, then> ði ˈɑːkɪtɛktʃə ɹuːlz<.>",
                          SPEAK.to_sounds("In the /ˈadmɪn peɪdʒ/, then the /ˈɑːkɪtɛktʃə ɹuːlz/.", fake))
 
     def test_an_article_before_given_sounds_is_said_weakly(self):
         self.assertEqual("ɐ bˈɒdifɪltə <replaces it>", SPEAK.to_sounds("A /bˈɒdifɪltə/ replaces it", fake))
         self.assertEqual("<Then> ðə stˈandɪn <answers>", SPEAK.to_sounds("Then the /stˈandɪn/ answers", fake))
+
+    def test_the_before_a_vowel_is_said_thee(self):
+        self.assertEqual("<Change> ði əʊld kˈəʊd", SPEAK.to_sounds("Change the /əʊld kˈəʊd/", fake))
 
     def test_slashes_without_a_stress_mark_are_ordinary_text(self):
         self.assertEqual("<and/or the input/output>", SPEAK.to_sounds("and/or the input/output", fake))

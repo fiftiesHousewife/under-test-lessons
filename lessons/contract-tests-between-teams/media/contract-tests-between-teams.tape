@@ -107,7 +107,7 @@ Type@1ms `show StockServiceTest 36 49 "the stock service's weak tests" --zoom 41
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 25s
 
 # ---- Scene 7: the consumer's pact test ----
 Hide
@@ -117,14 +117,14 @@ Sleep 300ms
 Type@1ms `note "The *strong* tests, the consumer's side: each answer the order screen relies on, in a pact."`
 Enter
 Sleep 300ms
-Type@1ms `show StockClientPactTest 24 35 "the order screen's pact" --zoom 31-33`
+Type@1ms `show StockClientPactTest 21 35 "the order screen's pact" --zoom 31-34`
 Enter
 Sleep 300ms
 Type@1ms `show StockClientPactTest 37 42 "the order screen's pact test"`
 Enter
 Sleep 300ms
 Show
-Sleep 38s
+Sleep 47s
 
 # ---- Scene 8: the published pact ----
 Hide
@@ -134,11 +134,14 @@ Sleep 300ms
 Type@1ms `note "The pact file, published as a *versioned artifact*. A folder stands in for the package repository."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/contract-tests-between-teams/example/package-repository/order-screen-pacts/1.0.0/order-screen-stock-service.json 38 61 "the pact, version 1.0.0" --zoom 41`
+Type@1ms `show lessons/contract-tests-between-teams/example/package-repository/order-screen-pacts/1.0.0/order-screen-stock-service.json 20 42 "the pact, version 1.0.0" --zoom 22,35-40`
+Enter
+Sleep 300ms
+Type@1ms `show lessons/contract-tests-between-teams/example/build.gradle.kts 35 40 "the step that stands in for publishing" --mark 35-39`
 Enter
 Sleep 300ms
 Show
-Sleep 32s
+Sleep 50s
 
 # ---- Scene 9: the provider's pact test ----
 Hide
@@ -152,7 +155,7 @@ Type@1ms `show StockServicePactTest 18 44 "the stock service's pact test" --zoom
 Enter
 Sleep 300ms
 Show
-Sleep 25s
+Sleep 37s
 
 # ---- Scene 10: the pact check names the field ----
 Hide

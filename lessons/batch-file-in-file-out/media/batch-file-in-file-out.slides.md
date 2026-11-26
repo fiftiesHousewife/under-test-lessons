@@ -25,38 +25,6 @@ Say: Our example is a nightly job, written with Spring Batch, a framework for jo
   in bulk. It reads the day's payments, and writes a settlement file for the bank to collect. The file has a header, a
   line for each payment, and a closing line. The bank reads all of it, and rejects a file it can't check.
 
-## intro: The bank's file has no closing line
-- A day of 6 payments comes to £427.14
-- The closing line should give the count and total: 6, and 427.14
-- Today's job leaves it out, and the tests of each piece all pass
-Picture: bug
-Say: Here is the problem. Take a day of 6 payments, 427 pounds 14 in all. The closing line should give the number of
-  payments and their total. Today's nightly job leaves that closing line out. Yet its tests pass. They check one line
-  read, and one line written, and never look at the whole file.
-
-## intro: The fix: test the whole file
-- Run the whole job on a known input file, in a fresh folder
-- Read the output back as records, and compare them field by field
-- Input: made-up payments, or a day of real files, masked first
-Picture: files
-Say: The fix is to test the whole file. This is called a file-in, file-out test. Run the whole job on a known input
-  file, in a fresh folder, so one run never interferes with the next. Read the output back as records, and compare them
-  with the ones you expect, field by field. Then a failure names the field that's wrong, and shows both values. The
-  input is made-up payments, or a day of real files, masked before they are kept with the tests.
-
-## intro: How the tools look
-- @SpringBatchTest, then batch.startJob(parameters): the real job, end to end
-- new Faker(new Random(SEED)): the same made-up payments every run
-- @TempDir: a fresh folder for each test, deleted afterwards
-- HmacSHA256: each real account number becomes a keyed substitute
-Picture: robot
-Say: Here is how the tools look. Spring Batch's test library starts the real job, end to end, with the input and output
-  files as its settings. Datafaker makes up realistic payments, and given a fixed seed, a starting number for its random
-  choices, it makes the same ones every run. JUnit's temporary folder gives each test a fresh folder, and deletes it
-  afterwards. And we mask a day of real files with a standard keyed hash that comes with Java. Each account number
-  becomes a substitute made from the number and a key. The same number always gets the same substitute, so each payment
-  still matches its line in the settlement file.
-
 Include: how-we-build
 
 ## closing: When to use file-in, file-out tests
@@ -83,7 +51,7 @@ Say: JUnit has made temporary folders for tests since version five point four, i
 - https://www.datafaker.net — Datafaker, and its guide to repeatable results
 - https://junit.org — JUnit, with its user guide on temporary folders
 - {lessons-repo}/tree/main/lessons/batch-file-in-file-out — run this lesson yourself: its test code and examples
-- Exercise: run the job on 250 payments, three chunks, and check the closing line; the README has the steps and the answer
+- Exercise: run the job on 250 payments, 3 chunks, and check the closing line; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the Spring Batch guide to testing jobs, Datafaker's guide, and the JUnit user guide on
   temporary folders. The links on screen also take you to this lesson's test code and examples, to run yourself. And try

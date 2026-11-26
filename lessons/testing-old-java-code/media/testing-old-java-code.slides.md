@@ -38,14 +38,30 @@ Say: Tests do two different jobs. Some record what the code does today, right or
   noticed. Others check what the code should do, as agreed with the people who know the rules. Old code needs the first
   kind before the second, because you can't safely fix a rule until you know what the code does now.
 
+## intro: The journey in nine stages
+- Plug the leaks
+- Take stock
+- Pin it down
+- Dig deeper
+- Unplug it
+- Open it up
+- Change with a safety net
+- Stop the rot
+- Hone the tests
+Picture: map
+Say: The journey has nine stages. [pause 600ms] Plug the leaks, [pause 300ms] take stock, [pause 300ms] pin it down,
+  [pause 300ms] dig deeper, [pause 300ms] unplug it, [pause 300ms] open it up, [pause 300ms] change with a safety net,
+  [pause 300ms] stop the rot, [pause 300ms] and hone the tests. [pause 600ms] Each stage asks one question, and the
+  lessons answer it.
+
 ## intro: Before you change anything
 - Plug the leaks: what secrets or personal data could leak?
 - Take stock: can the tests we have now be trusted?
 - Pin it down: what does the code do now, right or wrong?
-Picture: map
-Say: The journey has nine stages. [pause 600ms] The first three come before any change. Plug the leaks,
-  so no secret or personal data gets out. [pause 400ms] Take stock: can the tests we have now be trusted? [pause 400ms] And
-  pin it down: what does the code do now, right or wrong?
+Picture: door
+Say: The first three stages come before any change. Plug the leaks, so no secret or personal data gets out. [pause
+  400ms] Take stock: can the tests we have now [pause 400ms] be trusted? [pause 400ms] And pin it down: what does the
+  code do now, right or wrong?
 
 ## intro: Getting ready to change
 - Dig deeper: what is the code really for?
@@ -110,7 +126,7 @@ Picture: bug
 Say: Once nothing can leak, the next question is whether the tests can be trusted. That brings us to mutation testing.
   [pause 600ms] Mutation testing plants small bugs in the code, one at a time, and counts how many the tests catch. The
   tool is PIT. [pause 600ms] Line coverage only says which lines the tests ran. Mutation testing says whether they
-  checked anything. Two more lessons find the tests that only look strong, and the ones that pass on one run and fail on
+  checked anything useful. Two more lessons find the tests that only look strong, and the ones that pass on one run and fail on
   the next.
 
 ## intro: Pin it down: characterisation
@@ -173,7 +189,7 @@ Say: Stand-ins only help if the code lets you pass them in. That's where opening
   Other lessons open up an old command-line program, and start just enough of Jakarta EE, or of Spring, to test one
   part.
 
-## intro: Change safely: differential testing
+## intro: Change with a safety net: differential testing
 - Run the old code and the new on the same inputs
 - Every difference is either a bug or a decision
 - lesson: Differential testing (differential-testing)
@@ -183,7 +199,7 @@ Say: With the code open, it can change, with a safety net. [pause 600ms] Differe
   bug in the rewrite, or a decision the team has to make. The lesson finds a mistyped price that no example test
   noticed.
 
-## intro: Change safely: feature flags
+## intro: Change with a safety net: feature flags
 - Put the new code behind a switch
 - Test it both ways, until it has proved itself
 - Try every database change on the real database first
@@ -229,19 +245,21 @@ Say: Finally, honing the tests. [pause 600ms] Parameterised tests run one test o
 - lesson: Temporary folders (junit-temporary-folders)
 - lesson: Tags: fast tests first, slow tests apart (junit-tags)
 Picture: checklist
-Say: Three more help hone the tests. [pause 600ms] JUnit extensions put shared settings back after every test, so one
-  test can't break another. Temporary folders give each test its own empty folder. And tags run the quick tests on every
-  change, and the slow ones apart.
+Say: Three more lessons stop tests tripping over each other. [pause 600ms] JUnit extensions put shared settings back
+  after every test, so one test can't break another. Temporary folders give each test its own empty folder. And tags
+  keep the quick tests quick: they run on every change, and the slow ones run apart.
 
 ## intro: Choosing where to start
-- No tests: record what it does, from the outside
-- Tests you don't trust: mutation testing
-- A class you can't test: dependency injection
-- A rewrite: differential testing
+- Personal data or secrets could get out: plug the leaks
+- Tests you don't trust: take stock
+- No tests: pin it down
+- A class you can't test: open it up
+- A rewrite: change with a safety net
 Picture: magnifier
-Say: So where do you start? If there are no tests, record what the code does, from the outside. If there are tests you
-  don't trust, use mutation testing. If a class can't be tested, pass its dependencies in. And for a rewrite, use
-  differential testing.
+Say: So where do you start? Start at the stage that fits what you face. [pause 600ms] Wherever personal data or secrets
+  could get out, plug the leaks first. [pause 400ms] If there are tests you don't trust, take stock. [pause 400ms] If
+  there are no tests, pin it down: record what the code does, from the outside. [pause 400ms] If a class can't be
+  tested, open it up. [pause 400ms] And for a rewrite, change with a safety net.
 
 ## intro: AI drafts, people decide
 - Where your company has approved one, an AI assistant can draft many tests quickly

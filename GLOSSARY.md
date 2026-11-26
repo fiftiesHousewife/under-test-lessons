@@ -80,7 +80,9 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
   refund. Day 31: store credit. Day 30: which?"
 - **Fewer words, more slides:** three or four points a slide, one item to a bullet, and a heading of 40 characters
   or less.
-- **Bullets are plain English.** Code goes in a slide's code panel, never mixed into a sentence on a bullet.
+- **Bullets are plain English.** Code goes in a slide's code panel, or in a scene that shows the real file, never
+  mixed into a sentence on a bullet. The most a bullet holds is one method or class name, such as `await()` or
+  `@RepeatedTest`: never a call with arguments, a chain of calls, an assignment, a lambda or a build line.
 - **Never read code aloud.** Say what it is: "calling the mock method", not "mock()"; never a command, `./` or
   `gradlew`.
 - **Say what code does,** not a class's name made into a phrase: "the code that saves orders", not "the order tables".
@@ -93,7 +95,8 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
 - **Pauses** go between sentences, never inside a phrase ("This is [pause] the weak test"). The voice runs straight
   through commas: give an aside its own sentence, and each item of a spoken list a short pause.
 - **Pronunciation:** add each name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`, and check
-  it there before writing a new one. What reviewing taught:
+  it there before writing a new one; [the voice review](production/voice-review/README.md) does it by ear and by
+  clicking. What reviewing taught:
   - A phrase gets its own entry, with its stress: equal on both words where both matter ("feature flag", "Spring
     Batch", "copy-paste"), on the first for a compound noun ("build file", "test case"), and on the word that differs
     in a contrast. A word the voice shrinks needs its own stress too ("new code", not "new cd").

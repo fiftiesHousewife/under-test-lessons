@@ -27,37 +27,6 @@ Say: Our example is a parcel tracking service. Callers ask where a parcel is, by
   its status, and its weight in grams, as a whole number. And when no parcel has that id, the answer is 404, with the
   reason in a field called error. The service describes all of this in a published schema.
 
-## intro: The answer changed, and the tests still pass
-- Today the service sends the weight as text, "1200", not the number 1200
-- A tidy-up renamed the 404's error field to message
-- The tests pass: they check the status code and 2 fields, never the weight or the error
-Picture: bug
-Say: Here is the problem. Today the service sends the weight as text, 1200 in quotes, not the number 1200. And a tidy-up
-  renamed the error field, the reason for a 404, to message. The service's own tests still pass. They check the status
-  code and 2 fields, the ones the tests' author thought of. But every team that reads the weight as a number, or looks
-  for the error field, now breaks.
-
-## intro: The fix: check answers against the schema
-- The service publishes an OpenAPI schema: every path, status code and field, with its type
-- Other teams build against that schema, not against the code
-- So check every answer the tests already see against it
-Picture: checklist
-Say: The fix is to check every answer against the schema. The service publishes an OpenAPI schema, a file that lists
-  every path it answers, every status code, and every field, with its type. Other teams build their code against that
-  schema, not against the service's code. So check every answer the existing tests get against what the schema says.
-  There are no new tests to write.
-
-## intro: How the validator looks
-- The schema says weightGrams: type: integer, and error is required
-- The tests add one filter: given().port(service.port()).filter(THE_SCHEMA)
-- Today it fails: field weightGrams: string found, integer expected
-- And: required property 'error' not found
-Picture: robot
-Say: Here is how it looks. The schema says the weight is an integer, a whole number, and that a 404 must have an error
-  field. Atlassian's OpenAPI request validator reads that schema. The tests add it as one filter in REST Assured, the
-  library they already use to send requests, so it checks every request and every answer. Today it fails twice. The
-  weight was text, where the schema wants a whole number. And the 404 answer had no error field.
-
 Include: how-we-build
 
 ## closing: When to check against the schema

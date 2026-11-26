@@ -54,7 +54,7 @@ service times out, the invoice must pass the error on, not charge a wrong amount
 ## When to use it
 
 - **Before changing old code** that calls a service, a clock, the file system or a static helper.
-- **Make the smallest change:** a constructor parameter, keeping the old object as the production default.
+- **Make the smallest change:** a constructor parameter. Whatever builds the class chooses what to pass it.
 - **Time is a dependency:** pass in a `java.time.Clock`; never call `now()` directly.
 - **Faking statics** (`Mockito.mockStatic`) is a stopgap for code you can't change yet. PowerMock, which old projects
   use for this, is no longer maintained.

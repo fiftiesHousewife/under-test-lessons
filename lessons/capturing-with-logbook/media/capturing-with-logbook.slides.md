@@ -31,49 +31,6 @@ Say: Our example is an old customer service. Callers ask it for a customer, and 
   customer's email address, with its own key. Then it answers with the customer's email, loyalty tier and points, as
   JSON. There is no record of what it receives and sends. So, before we change it, we record every request and answer.
 
-## intro: The recording keeps the secrets
-- The recording holds the caller's token, the loyalty provider's key and a customer's email
-- The test passes: it checks only that each request and answer has an entry
-- Once a secret is written to a log or a file, it is hard to take back
-Picture: bug
-Say: Here is the problem. The recording holds the caller's token, the loyalty provider's key, and a customer's email
-  address, jo dot bloggs, written just as they crossed the wire. The test passes, because it only checks that each
-  request and answer has an entry. It never checks what those entries say. And once a secret is written to a log or a
-  file, it is hard to take back.
-
-## intro: The fix: record from inside, filtered
-- Logbook records from inside the service
-- A servlet filter records each request that comes in
-- A hook in its HTTP client records each call that goes out
-- Its filters remove secrets before anything is written
-Picture: camera
-Say: The fix starts with recording from inside the service. Logbook is a small Java library that does this.
-  [pause 600ms] On the way in, a servlet filter records each request. A servlet filter is a hook in the web server.
-  [pause 600ms] On the way out, a hook in the HTTP client records each call. [pause 600ms] And Logbook's filters remove
-  secrets before anything is written down.
-
-## intro: Then approve the recording
-- A person checks the recording once
-- It's kept as the approved file
-- Later tests compare each new recording with it, line by line
-- A test fails if any secret is there
-Picture: checklist
-Say: Then we approve the recording. [pause 600ms] A person checks it once, and we keep it as the approved file.
-  [pause 600ms] Later tests compare each new recording with it, line by line. [pause 600ms] And a test fails if any
-  secret is there.
-
-## intro: How Logbook's filters look
-- Our one header filter replaced Logbook's default, which hides the Authorization header
-- Put it back: .headerFilter(HeaderFilters.authorization())
-- Mask the bodies: every "email" becomes customer@example.invalid
-- Today: the approved file has XXX, the recording the real token
-Picture: plug
-Say: Here is how the filters look. Logbook hides the Authorization header by default. But today's set-up gives it one
-  header filter of its own, to drop the headers that change on every run, and that replaces the default. So we put
-  Logbook's authorization filter back. It writes XXX in place of the token. A body filter replaces every email field
-  with a made-up address that no real person uses. Today the approved file and the new recording differ: the approved
-  file has XXX, and the recording has the caller's real token.
-
 Include: how-we-build
 
 ## closing: When to capture with Logbook

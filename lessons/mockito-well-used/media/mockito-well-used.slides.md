@@ -22,35 +22,8 @@ Say: We're going to look at using Mockito well. Mockito is a library that makes 
 - The money leaves through the card provider
 Picture: basket
 Say: Our example is a shop's refunds. A customer orders a mug at £12.50, and a teapot at £25. The mug comes back, so
-  £12.50 should go back to the card the order was paid with. And that money leaves the shop through the card provider.
-
-## intro: A £12.50 mug returned, £37.50 refunded
-- The card gets the whole order back: £37.50, not £12.50
-- The test passes: it makes stand-ins for everything
-- It checks only that some refund went, so any refund will do
-Picture: bug
-Say: Here is the problem. When the mug comes back, the card gets the whole order back: £37.50. Yet the test passes. It
-  replaces everything around the refunds with stand-ins, called mocks, made with Mockito. Then it checks only that the
-  code looked up the order, and that some refund was sent. Any refund will do.
-
-## intro: The fix: mock only where the money leaves
-- One mock, for the shop's own interface to the card provider
-- The orders come from a fake: a small map of real orders
-- Catch the refund the code sent, and check its card and amount
-Picture: scales
-Say: The fix is to mock only the edge where money leaves the shop: the shop's own interface to the card provider. The
-  orders come from a fake instead, a small working stand-in, here a map of real orders. Then the test catches the refund
-  the code really sent, and checks its card and its amount, like any other result. A test that only checks calls repeats
-  the code, so it agrees with the code's mistakes.
-
-## intro: How Mockito looks
-- mock(CardPayments.class): the one stand-in
-- ArgumentCaptor<Refund>, then verify(payments).refund(sent.capture())
-- expected: Refund[card=card ending 4242, pence=1250] but was: pence=3750
-Picture: plug
-Say: Here is how Mockito looks. Mock makes the one stand-in, for the card payments. An argument captor catches what the
-  code passed, when verify checks that the refund was sent. Then the test checks the captured refund. Today it expected
-  1,250 pence to the card ending 4242, and found 3,750.
+  £12.50 should go back to the card the order was paid with. And that money [pause 400ms] leaves the shop [pause 400ms]
+  through the card provider.
 
 Include: how-we-build
 
@@ -70,8 +43,8 @@ Say: When should you reach for Mockito? [pause 1600ms] Make stand-ins only for i
 - Argument captors since version 1.8
 - Mockito 5 can stand in for final classes by default
 Picture: book
-Say: Szczepan Faber started Mockito in 2008. It is free and open source, under the MIT licence. Argument captors arrived
-  in version 1.8. And since Mockito 5, it can stand in for final classes too, without any extra setting.
+Say: Szczepan Faber started Mockito in 2008. It is free [pause 400ms] and open source, under the MIT licence. Argument
+  captors arrived in version 1.8. And since Mockito 5, it can stand in for final classes too, without any extra setting.
 
 ## closing: Find out more
 - https://site.mockito.org — Mockito, with its documentation

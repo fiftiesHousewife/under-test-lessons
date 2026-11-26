@@ -1,55 +1,53 @@
 # Masking captured data so tests still work
 
-**Replace the personal data in a day of real data so the tests that run on it still give the right answers, and check
-nothing personal is left.**
+**Test old code on a day of its real data, masked first so nothing personal is kept, and make sure the masking
+leaves the tests' answers right.**
 
 A capture of real data (a day's files, recorded requests, a copy of a database) is the best test data there is, but it
-holds real people. Masking replaces names, email addresses and account numbers before the capture is kept. Done with
-fixed text ("REMOVED"), it makes every customer the same customer: joins between files and repeated values stop
-working, and the tests on the masked data give the wrong answers. Keyed substitutes, made with the JDK's HMAC-SHA256
-(`javax.crypto.Mac`) and a key, give the same value the same substitute every time, so joins and counts still work.
-[Datafaker](https://www.datafaker.net) with a fixed seed is a third way: realistic made-up values, remembered so a
-repeated value gets the same one. A detector check, a test that scans every field of the masked capture, catches the
-field the data masking rules forgot.
+holds real people, so it is masked before it is kept with the tests. The masking is part of the tests, not the code
+under test, and it can break them: done with fixed text ("REMOVED"), it makes every customer the same customer, so the
+joins between files and the repeated values the code depends on are gone, and the tests give the wrong answers.
+Keyed substitutes, made with the JDK's HMAC-SHA256 (`javax.crypto.Mac`) and a key, give the same value the same
+substitute every time, so the tests on the masked data get the day's real answers. A guard on the test data scans
+every field after masking, and catches the field the masking rules forgot.
 
 ## Run the example
 
 ```bash
-./gradlew :lessons:masking-captured-data:test -Pcode=today   # today's data masking: both reports go wrong, and the detector finds an email and a name in the notes
-./gradlew :lessons:masking-captured-data:test                # keyed substitutes: the reports agree before and after data masking, and nothing personal is left
+./gradlew :lessons:masking-captured-data:test -Pcode=today   # today's test data: both reports' tests fail, and the guard finds an email and a name in the notes
+./gradlew :lessons:masking-captured-data:test                # keyed substitutes: the reports' tests pass, and nothing personal is left
 ```
 
-The example is a day of a small shop's real data: [7 orders](example/src/test/resources/capture/orders.csv) and
-[the 5 payments made against them](example/src/test/resources/capture/payments.csv), joined by account number. The shop's two reports,
-[`DayReport`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/DayReport.java), count
-each customer's orders and list the accounts not yet settled.
+The code under test is the shop's two reports,
+[`DayReport`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/DayReport.java): how many
+orders each customer placed, and the accounts not yet settled. It is tested on a day of the shop's real data:
+[7 orders](example/src/test/resources/capture/orders.csv) and
+[the 5 payments made against them](example/src/test/resources/capture/payments.csv), joined by account number.
 
-- [`TodaysMasking`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/today/TodaysMasking.java)
-  is today's code: fixed text in every name, email, account and card field, and no rule for the free-text note.
-- [`KeyedMasking`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/fixed/KeyedMasking.java)
-  is the fix: [keyed substitutes](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/fixed/KeyedSubstitutes.java)
-  for everything that identifies a real person, and fixed text for the card number and the note, which nothing joins on.
-  [`SyntheticMasking`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/fixed/SyntheticMasking.java)
-  is the third way, with Datafaker and a fixed seed.
-- [`MaskedFieldsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/MaskedFieldsTest.java)
-  is the "before": the fields it was told about have changed, and no order was lost. It passes on both.
-- [`ReportsStillWorkTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/ReportsStillWorkTest.java)
-  is the "after": the reports give the same answers on the capture before and after data masking.
-- [`NothingPersonalLeftTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/NothingPersonalLeftTest.java)
-  is the detector check: [`PersonalDataDetector`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/PersonalDataDetector.java)
-  looks in every field for an email address outside `example.invalid`, a card or account number, an IBAN, a sort
-  code, a UK phone number, a postcode, a National Insurance number, or a customer's name. It finds known shapes only:
-  a capture it passes still needs its data masking rules reviewed, and is still treated as personal data.
-  [`DetectorFindsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/DetectorFindsTest.java)
-  first shows it finds each kind in the capture before data masking: a detector that finds nothing proves nothing.
+- [`DayReportTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/DayReportTest.java) is the tests of the reports, with the day's real answers: Ada Brennan
+  placed three orders, Omar Haddad two, the others one each; Ada's account owes 640 pence, and Lin's paid 500 too
+  many. It runs on the day as [`TestData`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/testdata/TestData.java) masks it.
+- [`TodaysMasking`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/testdata/TodaysMasking.java) is how the test data is made today: fixed text in every name,
+  email, account and card field, and no rule for the free-text note.
+- [`KeyedMasking`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/testdata/KeyedMasking.java) is the fix:
+  [keyed substitutes](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/testdata/KeyedSubstitutes.java) for everything that identifies a real person, and fixed text
+  for the card number and the note, which nothing joins on.
+- [`TestDataHasNothingPersonalTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/TestDataHasNothingPersonalTest.java) is the guard on the test data:
+  [`PersonalDataDetector`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/testdata/PersonalDataDetector.java) looks in every field for an email address outside
+  `example.invalid`, a card or account number, an IBAN, a sort code, a phone number, a postcode, a National Insurance
+  number, or a customer's name. It finds known shapes only: data it passes still needs its masking rules reviewed, and
+  is still treated as personal data.
 
 One order, masked each way:
 
 | | customer | email | account | note |
 |---|---|---|---|---|
 | Captured | Grace Okafor | grace.okafor@inbox.test | 40335512 | Please email grace.okafor@inbox.test if late |
-| Today's data masking | REMOVED | REMOVED | REMOVED | Please email grace.okafor@inbox.test if late |
+| Today's test data | REMOVED | REMOVED | REMOVED | Please email grace.okafor@inbox.test if late |
 | Keyed substitutes | Customer JBMFDCAAIFKPFLLJ | fpnfioblcpcdgacg@example.invalid | ACCT-KJDALGOPAIOLIOKG | REMOVED |
+
+Where no real data is needed at all, made-up data is simpler still: the
+[batch lesson](../batch-file-in-file-out/README.md) makes its payments with Datafaker.
 
 ## Masked is not anonymous
 
@@ -74,9 +72,7 @@ standards a US company follows agree:
 So a masked copy is still treated as personal data: it stays in internal repositories, never public ones, and the key
 is kept somewhere else (a secrets store, not the repository). Every personal field is masked, free text included, and
 [NIST's guide to de-identifying data](https://csrc.nist.gov/pubs/sp/800/188/final) adds that data masking alone may not
-be enough where the remaining fields together still point to one person. Seeded synthetic values are the same while
-the table of choices is kept. Only data made up from nothing, such as Datafaker's output with no real data behind it,
-is safe to publish. This lesson's own data is made up, which is why it can live in a public repository with a key
+be enough where the remaining fields together still point to one person. Only data made up from nothing, such as Datafaker's output with no real data behind it, is safe to publish. This lesson's own data is made up, which is why it can live in a public repository with a key
 written into its tests.
 
 The example splits each line at its commas, which is enough for its own made-up records. Real CSV files put a
@@ -85,19 +81,17 @@ field in quotes when it holds a comma or a line break, so read them with a CSV p
 
 ## Exercise
 
-The detector check only sees what the day's data happens to hold. Tomorrow's capture may have a phone number in a
-note, a shape today's day never shows, and the data masking must catch that too.
+A second day's capture is in [`capture-day-2`](example/src/test/resources/capture-day-2): Sam Patel paid one order
+twice, and Ada Brennan paid only part of one.
 
-1. Add a test class beside [`NothingPersonalLeftTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/NothingPersonalLeftTest.java)
-   that makes a capture of one order, with `CapturedFile.parse`, whose note reads `Call 07700 900123 before delivery`.
-2. Mask it with the data masking [`Captures`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/Captures.java)
-   chooses, and expect [`PersonalDataDetector`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/masking/PersonalDataDetector.java)
-   to find nothing.
-3. Compare with the answer, [`PhoneInANoteAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/answer/PhoneInANoteAnswerTest.java),
-   which runs against today's data masking with:
+1. Add a test beside [`DayReportTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/DayReportTest.java) that masks the second day with
+   `TestData.masked("capture-day-2")`, and expects `DayReport.unsettledAccounts` to give that day's real answer.
+2. Work the answer out from the two files first: what does each account owe?
+3. Compare with the answer, [`SecondDayAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/masking/answer/SecondDayAnswerTest.java), which runs against today's
+   test data with:
 
 ```bash
-./gradlew :lessons:masking-captured-data:test -Pcode=answer   # today's data masking: 4 of 9 tests fail; the new order's note still has a phone number
+./gradlew :lessons:masking-captured-data:test -Pcode=answer   # today's test data: all 4 tests fail; fixed text merges the two accounts into one
 ```
 
 ## Watch it, or present it
@@ -115,8 +109,8 @@ note, a shape today's day never shows, and the data masking must catch that too.
   or the approved output of a [characterisation test](../characterisation-tests/README.md).
 - **Keyed substitutes for anything that joins or repeats;** fixed text for fields nothing depends on, such as card
   numbers and free-text notes.
-- **Test the masked data, not the data masking rules:** run the code's real reports before and after, and run the
-  detector on every masked capture before it is kept.
+- **Test the code on the masked data, with its real answers;** the masking is part of the tests, so a guard checks
+  every masked capture before it is kept, and nothing tests the masking itself.
 - **Treat the result as personal data:** internal repositories only, and the key out of the repository.
 
 ## On older Java
@@ -128,7 +122,6 @@ the technique is the same; use the last versions of its libraries built for that
 | Library | On Java 8 | On Java 11 |
 |---|---|---|
 | JUnit | 5.14 | 5.14 |
-| Datafaker | 1.9 | 1.9 |
 
 AssertJ runs on Java 8 as it is.
 
@@ -137,7 +130,6 @@ AssertJ runs on Java 8 as it is.
 - The FTC, [No, hashing still doesn't make your data anonymous](https://www.ftc.gov/policy/advocacy-research/tech-at-ftc/2024/07/no-hashing-still-doesnt-make-your-data-anonymous)
 - NIST, [De-Identifying Government Datasets](https://csrc.nist.gov/pubs/sp/800/188/final) (SP 800-188)
 - [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC, the keyed hash behind the substitutes
-- [Datafaker](https://www.datafaker.net), and its guide to repeatable results with a seed
 - [RFC 2606](https://www.rfc-editor.org/rfc/rfc2606), which reserves `.invalid` and `.test` for names that must never reach anyone, and for tests
 - The toolkit's [characterisation-tests technique](https://github.com/fiftiesHousewife/under-test/blob/main/techniques/characterisation-tests/technique.yaml),
   whose captured inputs and approved outputs this data masking keeps safe

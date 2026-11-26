@@ -2,16 +2,12 @@ plugins {
     alias(libs.plugins.java.conventions)
 }
 
-// Masking captured data: a day of real data masked so the tests that run on it still give the right answers.
-//   ./gradlew :lessons:masking-captured-data:test -Pcode=today   today's masking: joins break, and a field is missed
-//   ./gradlew :lessons:masking-captured-data:test                keyed substitutes: the reports agree, nothing is left
-dependencies {
-    implementation(libs.datafaker)
-    compileOnly(libs.spotbugs.annotations)
-    testCompileOnly(libs.spotbugs.annotations)
-}
+// Masking captured data: the shop's reports (the code under test) are tested on a captured day of real data, masked
+// first. How the test data is masked decides whether those tests give the right answers.
+//   ./gradlew :lessons:masking-captured-data:test -Pcode=today   today's test data: the reports' tests fail, a note leaks
+//   ./gradlew :lessons:masking-captured-data:test                keyed substitutes: they pass, and nothing personal is left
 
-// `./gradlew :lessons:masking-captured-data:test -Pcode=answer` runs today's masking with the exercise's answer
+// `./gradlew :lessons:masking-captured-data:test -Pcode=answer` runs today's test data with the exercise's answer
 // (answer/*AnswerTest), which -Pcode=today leaves out.
 val code = providers.gradleProperty("code").getOrElse("fixed")
 tasks.test {
@@ -20,10 +16,4 @@ tasks.test {
         filter { excludeTestsMatching("*AnswerTest") }
     }
     outputs.upToDateWhen { false } // a lesson always reruns its tests, so switching versions never shows a stale result
-}
-
-// Today's masking is the "before", run with -Pcode=today; coverage is measured on the rest.
-tasks.jacocoTestCoverageVerification {
-    val fixedCode = sourceSets.main.get().output.classesDirs.asFileTree.matching { exclude("**/today/**") }
-    classDirectories.setFrom(fixedCode)
 }

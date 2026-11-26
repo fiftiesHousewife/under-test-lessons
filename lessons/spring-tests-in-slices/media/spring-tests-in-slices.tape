@@ -62,7 +62,7 @@ Type@1ms `show TodaysDeliveryView 8 17 "today's delivery answer" --zoom 12`
 Enter
 Sleep 300ms
 Show
-Sleep 22s
+Sleep 28s
 
 # ---- Scene 4: the weak tests ----
 Hide
@@ -72,11 +72,14 @@ Sleep 300ms
 Type@1ms `note "The *weak* tests: each one starts the whole application, and looks for words in the answer."`
 Enter
 Sleep 300ms
-Type@1ms `show DeliveriesApplicationTest 11 27 "the whole application, in every test" --zoom 15`
+Type@1ms `show WholeApplication 21 43 "the whole application, with a stand-in courier" --zoom 21,40-43`
+Enter
+Sleep 300ms
+Type@1ms `show DeliveriesApplicationTest 11 27 "the whole application, in every test" --mark 15,20,25`
 Enter
 Sleep 300ms
 Show
-Sleep 21s
+Sleep 34s
 
 # ---- Scene 5: the web slice ----
 Hide
@@ -86,11 +89,11 @@ Sleep 300ms
 Type@1ms `note "The *web* slice: only the controller and Spring's web layer, with the service stood in for."`
 Enter
 Sleep 300ms
-Type@1ms `show DeliveryWebSliceTest 17 34 "the web slice" --zoom 31-33`
+Type@1ms `show DeliveryWebSliceTest 17 34 "the web slice" --zoom 17,23,31-33`
 Enter
 Sleep 300ms
 Show
-Sleep 22s
+Sleep 28s
 
 # ---- Scene 6: the data slice ----
 Hide
@@ -100,7 +103,7 @@ Sleep 300ms
 Type@1ms `note "The *data* slice: only the repository and an in-memory database."`
 Enter
 Sleep 300ms
-Type@1ms `show DeliveryDataSliceTest 14 30 "the data slice" --zoom 27-29`
+Type@1ms `show DeliveryDataSliceTest 14 30 "the data slice" --zoom 14,27-29`
 Enter
 Sleep 300ms
 Show
@@ -114,11 +117,11 @@ Sleep 300ms
 Type@1ms `note "The *JSON* slice: only Jackson, checking the answer field by field."`
 Enter
 Sleep 300ms
-Type@1ms `show DeliveryJsonSliceTest 16 28 "the JSON slice" --zoom 26-27`
+Type@1ms `show DeliveryJsonSliceTest 16 28 "the JSON slice" --zoom 16,26-27`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 22s
 
 # ---- Scene 8: the JSON slice names the date ----
 Hide

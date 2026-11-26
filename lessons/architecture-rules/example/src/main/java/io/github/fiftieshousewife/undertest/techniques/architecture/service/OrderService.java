@@ -13,7 +13,7 @@ public final class OrderService {
 
     public void placeOrder(final String id, final int amountPence) {
         if (amountPence <= 0) {
-            throw new IllegalArgumentException("an order must cost something");
+            throw new IllegalArgumentException("an order can't be free");
         }
         store.save(id, amountPence);
     }

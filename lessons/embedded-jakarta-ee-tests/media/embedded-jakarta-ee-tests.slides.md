@@ -20,39 +20,6 @@ Picture: tag
 Say: Our example is a checkout that adds VAT to a net price. The standard rate is 20%, and is marked as standard. That
   mark came with the reduced rate of 5%, which has none.
 
-## intro: The checkout charges 5% VAT, not 20%
-- On a £10 item, the checkout should charge £12
-- It still asks for any rate, so the server gives it the unmarked 5%
-- So it charges £10.50
-- The unit test passes: it builds the checkout by hand, and hands it the rate it wants
-Picture: bug
-Say: Here is the problem. On a £10 item, the checkout should charge £12. But when the team added the reduced rate, they
-  forgot the checkout. It still asks for any tax rate. So the server now gives it the unmarked one, the reduced rate,
-  and it charges £10.50. And the unit test passes, because it builds the checkout by hand, and hands it the rate it
-  wants. It never gets the rate the server chooses.
-
-## intro: The fix: let the real wiring build it
-- Old enterprise Java runs in an application server, whose container wires the parts together
-- An embedded test starts just that container, inside the test, in seconds
-- It wires the checkout exactly as production does, so the test gets the wrong rate
-- The fixed checkout asks for the rate marked standard
-Picture: server
-Say: The fix is to let the real wiring build the checkout. Old enterprise Java runs inside an application server. Its
-  container decides what each part gets, and wires them together. The standard for that wiring is called CDI, short for
-  contexts and dependency injection. An embedded test starts just that container, inside the test, in seconds, with no
-  server to deploy to. It wires the checkout exactly as production does, so the test gets the wrong rate. And the fixed
-  checkout asks for the rate marked standard.
-
-## intro: How Weld's JUnit support looks
-- @ExtendWith(WeldJunit5Extension.class)
-- @WeldSetup WeldInitiator.of(checkout, StandardRate.class, ReducedRate.class)
-- weld.select(...).get().totalPence(1000), expected 1200
-- Today: expected 1200 but was 1050
-Picture: robot
-Say: Here is how it looks, with Weld, the container many servers use. A JUnit extension starts it for each test. The
-  test lists the parts it needs: the checkout and both rates. Weld starts a container with just those. The test asks it
-  for the checkout, fully wired, and works out the total on 1000 pence. Today it expected 1200 pence, and got 1050.
-
 Include: how-we-build
 
 ## closing: When to use embedded tests

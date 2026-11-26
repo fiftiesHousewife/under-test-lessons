@@ -1,11 +1,6 @@
 $ ./gradlew :lessons:masking-captured-data:test
-NothingPersonalLeftTest > maskedCaptureHasNothingThatLooksPersonal() PASSED
-ReportsStillWorkTest > ordersAreStillGroupedByCustomer() PASSED
-ReportsStillWorkTest > ordersStillMatchPaymentsByAccount() PASSED
-DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeMasking() PASSED
-DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
-DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
-MaskedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
-SyntheticMaskingTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
-PhoneInANoteAnswerTest > aPhoneNumberInANoteIsMaskedToo() PASSED
-All 9 tests passed.
+DayReportTest > countsEachCustomersOrders() PASSED
+DayReportTest > listsWhatEachUnsettledAccountOwes() PASSED
+TestDataHasNothingPersonalTest > theMaskedDayHasNothingThatLooksPersonal() PASSED
+SecondDayAnswerTest > listsWhatEachUnsettledAccountOwesOnTheSecondDay() PASSED
+All 4 tests passed.

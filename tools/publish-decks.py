@@ -52,24 +52,40 @@ SERIES_JS = """// Added to each published deck: links back to the index and on t
 
 def lessons_in_order():
     """The catalogue's groups, each with its built lessons in order, as (group title, [(lesson id, name)])."""
+    return [(title, lessons) for title, _, lessons in groups_described()]
+
+
+def groups_described():
+    """The catalogue's groups as (title, what the catalogue says of it, [(lesson id, name)]), only built lessons, in
+    order. What it says is the stage's question and why, then its techniques, tools and references, as markdown."""
     groups, current = [], None
     with open(CATALOGUE, encoding="utf-8") as f:
         for line in f:
             heading = re.match(r"^## (.+)$", line)
             if heading:
-                current = (heading.group(1).strip(), [])
+                current = (heading.group(1).strip(), [], [])
                 groups.append(current)
                 continue
+            if current is not None and re.match(r"^\*\*[^*]+(\?|:)\*\*", line) and not current[2]:
+                current[1].append(line.strip())
             row = re.match(r"^\| \[([^\]]+)\]\(([a-z0-9-]+)/README\.md\)", line)
             if row and current is not None:
-                current[1].append((row.group(2), row.group(1)))
+                current[2].append((row.group(2), row.group(1)))
     seen, ordered = set(), []
-    for title, lessons in groups:
+    for title, said, lessons in groups:
         fresh = [(lesson, name) for lesson, name in lessons if lesson not in seen and deck_of(lesson)]
         seen.update(lesson for lesson, _ in fresh)
         if fresh:
-            ordered.append((title, fresh))
+            ordered.append((title, said, fresh))
     return ordered
+
+
+def inline(markdown):
+    """A line of the catalogue's markdown as HTML: links, bold and italics."""
+    text = html.escape(markdown, quote=False)
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", lambda m: f'<a href="{html.escape(m.group(2))}">{m.group(1)}</a>', text)
+    text = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", text)
+    return re.sub(r"(?<![\w*])\*([^*]+)\*(?![\w*])", r"<i>\1</i>", text)
 
 
 def deck_of(lesson):
@@ -119,25 +135,24 @@ def main(out):
     with open(os.path.join(out, "series.js"), "w", encoding="utf-8") as f:
         f.write(SERIES_JS)
     sections = []
-    for title, lessons in groups:
+    stage = 0
+    for title, said, lessons in groups_described():
         items = "".join(
             f'<li><a href="{lesson}.html#1">{html.escape(name)}</a>'
             + "</li>" for lesson, name in lessons)
-        sections.append(f"<h2>{html.escape(title)}</h2><ol>{items}</ol>")
-    first = order[0] if order else ""
+        stage += 1 if said else 0
+        heading = (f"{stage}. " if said else "") + html.escape(title)
+        about = "".join(f'<p class="{"question" if i == 0 else "kit"}">{inline(line)}</p>' for i, line in enumerate(said))
+        sections.append(f"<h2>{heading}</h2>{about}<ol>{items}</ol>")
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8") as f:
         f.write('<!doctype html><html lang="en"><head><meta charset="utf-8">'
                 '<meta name="viewport" content="width=device-width, initial-scale=1"><title>Lesson slide decks</title>'
                 '<style>body{font:18px/1.6 Georgia,serif;background:#f3efe4;color:#111;max-width:44rem;'
                 'margin:2rem auto;padding:0 16px}h1,h2{font-family:Helvetica,Arial,sans-serif;text-transform:uppercase}'
                 'h2{font-size:1rem;margin-top:2rem}a{color:#111}a.listen{font:14px Helvetica,Arial,sans-serif;'
-                'margin-left:.5rem}.start{font:16px Helvetica,Arial,sans-serif}</style></head><body>'
+                'margin-left:.5rem}.question{margin:.4rem 0}.kit{font:14px/1.55 Helvetica,Arial,sans-serif;color:#333;'
+                'margin:.4rem 0 .8rem}.kit a{color:#333}</style></head><body>'
                 '<h1>Lesson slide decks</h1>'
-                '<p>The lessons in the catalogue\'s order. Arrow keys move between slides, N shows the speaker notes, '
-                'and each deck reads its slides aloud as it plays, then carries on into the next lesson. Mute (or V) '
-                'stops the voice.</p>'
-                + (f'<p class="start"><a href="{first}.html#1">Start the series from the beginning</a>'
-                   '</p>' if first else "")
                 + "".join(sections) + "</body></html>\n")
     print(f"{len(order)} decks gathered into {out}, in the catalogue's order")
 

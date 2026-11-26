@@ -27,14 +27,14 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *old* postage calculator: a chain of ifs, in use for years. Its answers are the ones customers know."`
+Type@1ms `note "The *old* postage calculator: a chain of ifs, in use for years. Its answers are the prices the business means."`
 Enter
 Sleep 300ms
 Type@1ms `show LegacyPostage 8 23 "the old calculator"`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 38s
 
 # ---- Scene 2: the rewrite ----
 Hide
@@ -48,7 +48,7 @@ Type@1ms `show RewrittenPostage 17 30 "the rewrite" --zoom 22-23`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 24s
 
 # ---- Scene 3: the rewrite's own tests ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show RewriteExamplesTest 8 16 "the rewrite's own tests" --zoom 12`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 18s
 
 # ---- Scene 4: the differential test ----
 Hide
@@ -72,11 +72,14 @@ Sleep 300ms
 Type@1ms `note "A *differential* test: ask both calculators about every weight, and list where they disagree."`
 Enter
 Sleep 300ms
-Type@1ms `show OldAndNewAgreeTest 21 38 "the differential test" --zoom 22-35`
+Type@1ms `show OldAndNewAgreeTest 22 37 "the differential test" --mark 25,37`
+Enter
+Sleep 300ms
+Type@1ms `show OldAndNewAgreeTest 41 59 "every weight in the band, asked of both" --zoom 42-43,58`
 Enter
 Sleep 300ms
 Show
-Sleep 31s
+Sleep 48s
 
 # ---- Scene 5: the comparison finds a gap ----
 Hide

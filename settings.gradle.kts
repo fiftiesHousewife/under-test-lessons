@@ -33,6 +33,8 @@ project(":lessons:video-tools").projectDir = rootDir.resolve("lessons/_shared/vi
 if (rootDir.resolve("production/video-render").isDirectory) {
     include(":production:video-render")
     project(":production:video-render").projectDir = rootDir.resolve("production/video-render")
+    include(":production:voice-review")
+    project(":production:voice-review").projectDir = rootDir.resolve("production/voice-review")
 }
 // Checks that lesson.yaml files, the catalogue, the lessons index and the toolkit's techniques agree.
 include(":tools:lesson-checks")

@@ -25,40 +25,6 @@ Picture: statement
 Say: Our example is a shop's invoices. Every invoice it sends gets its own number. Each new number is one more than the
   highest so far. And the shop's very first invoice should be number 1.
 
-## intro: The shop's first invoice is number 0
-- The code gives the first invoice number 0
-- The tests pass: they share one test database that is never empty
-- It holds 2 old invoices, and every row earlier runs left behind
-- So the tests can only check "more than 0", and the bug hides
-Picture: bug
-Say: Here is the problem. The code gives the first invoice number 0. And the tests pass. They share one test database,
-  set up by hand long ago, and it is never empty. It holds 2 old invoices, and every row that earlier runs left behind.
-  So the tests can't know what the next number should be. They only check that it's more than 0, and the bug hides
-  behind the leftovers.
-
-## intro: The fix: a fresh database per test
-- An in-memory database runs inside the test, and keeps its data in memory
-- Each test gets a new one, empty, with the real schema, in milliseconds
-- So the tests check exact numbers: 1, then 2, then 3
-- No container needed, so it runs on any machine, even company laptops
-Picture: database
-Say: The fix is to give each test a fresh database of its own. An in-memory database runs inside the test, and keeps its
-  data in memory. Each test gets a new, empty one, with the real schema: the table definitions production uses. It takes
-  a few milliseconds. Because each starts empty, the tests can check exact numbers: 1, then 2, then 3. And there's no
-  container to run, so the tests work on any machine, even the many company laptops where containers can't run.
-
-## intro: How H2 looks
-- jdbc:h2:mem:invoices-1, a named database held in memory
-- ;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
-- It lives while a connection is open: close it, and the rows are gone
-- Today: expected [1, 2, 3] but was [0, 1, 2]
-Picture: robot
-Say: Here is how H2 looks. H2 is a SQL database written in Java, added to the tests as one library. Each test names its
-  own database, held in memory. A compatibility mode brings it closer to PostgreSQL. But H2's own documentation says
-  only a small part of the differences are covered, so a mode narrows the gap, and doesn't close it. The database lives
-  while a connection to it is open. Close it, and the rows are gone. Today, the test expected 1, 2 and 3. The shop gave
-  0, 1 and 2.
-
 Include: how-we-build
 
 ## closing: When an in-memory database is enough

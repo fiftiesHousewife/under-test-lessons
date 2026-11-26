@@ -25,7 +25,10 @@ SOUNDS = re.compile(r"/((?=[^/]*[ˈˌ])[^/\s][^/]*)/")
 
 
 # An article just before sounds given exactly is said in its weak form: on its own, phonemize reads "a" as the letter.
+# Before a vowel, "the" is said "thee", or it runs into the word ("th'old code").
 WEAK = {"a": "ɐ", "an": "ən", "the": "ðə"}
+BEFORE_A_VOWEL = {"the": "ði"}
+VOWELS = "aeiouæɑɐɒɔəɛɜɪʊʌ"
 
 
 def to_sounds(text, phonemize):
@@ -40,18 +43,23 @@ def to_sounds(text, phonemize):
         middle = part.strip()
         lead = " " if part[:1].isspace() else ""
         trail = " " if part[-1:].isspace() else ""
-        pieces.append(lead + spoken(middle, phonemize, i + 1 < len(parts)) + trail)
+        after = parts[i + 1] if i + 1 < len(parts) else None
+        pieces.append(lead + spoken(middle, phonemize, after) + trail)
     return "".join(pieces)
 
 
-def spoken(words, phonemize, before_sounds):
-    """The words as sounds; when given sounds follow, a last word that is an article takes its weak form."""
+def spoken(words, phonemize, sounds_after):
+    """The words as sounds; when given sounds follow, a last word that is an article takes its weak form, or "thee"
+    for "the" before a vowel."""
     if not words:
         return ""
     head, _, last = words.rpartition(" ")
-    if before_sounds and last.lower() in WEAK:
-        return ((phonemize(head) + " ") if head else "") + WEAK[last.lower()]
-    return phonemize(words)
+    article = last.lower()
+    if sounds_after is None or article not in WEAK:
+        return phonemize(words)
+    vowel = sounds_after.lstrip("ˈˌ")[:1] in VOWELS
+    weak = BEFORE_A_VOWEL.get(article, WEAK[article]) if vowel else WEAK[article]
+    return ((phonemize(head) + " ") if head else "") + weak
 
 
 def read_list(list_file):

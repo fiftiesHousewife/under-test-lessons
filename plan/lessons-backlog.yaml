@@ -234,7 +234,7 @@ items:
       - "Its example builds in ./gradlew check, with today's code behind its switch"
       - "Its README, slides, narration and script are written and its deck is voiced"
       - "Its facts are checked at their sources, named in its slides file"
-    notes: "One capture masked three ways: fixed text, keyed substitutes, seeded synthetic values. Replacing names with REMOVED breaks the tests; keyed substitutes keep joins and repeated values working. A detector check fails on a field the masking missed. Includes what counts as anonymous, and why recordings stay in internal repositories. Java only, with the JDK's HMAC and Datafaker, unless the toolkit's capture cleaner exists by then. Follows the toolkit's decision guides on capturing current behaviour."
+    notes: "The shop's reports are the code under test, tested on a captured day masked first: the masking is part of the tests. Replacing names with REMOVED gives the tests wrong answers; keyed substitutes keep joins and repeated values working. A guard on the test data fails on a field the masking missed. Includes what counts as anonymous, and why recordings stay in internal repositories. Java only, with the JDK's HMAC and Datafaker, unless the toolkit's capture cleaner exists by then. Follows the toolkit's decision guides on capturing current behaviour."
     status: "done"
   - key: "lesson-behaviour-written-down-as-examples"
     type: "deliverable"

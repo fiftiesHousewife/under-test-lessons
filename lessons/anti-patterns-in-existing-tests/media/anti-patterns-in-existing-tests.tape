@@ -68,7 +68,7 @@ Type@1ms `show CheckoutTest 42 45 "old test: placing an order" --mark 44`
 Enter
 Sleep 300ms
 Show
-Sleep 25s
+Sleep 30s
 
 # ---- Scene 4: old tests that wait, or depend on order ----
 Hide
@@ -109,11 +109,11 @@ Sleep 300ms
 Type@1ms `note "The checks: *one rule for each kind*, over ArchUnit's view of each compiled test."`
 Enter
 Sleep 300ms
-Type@1ms `show AntiPatternRules 29 58 "the anti-pattern rules" --zoom 29-34`
+Type@1ms `show AntiPatternRules 28 61 "the anti-pattern rules" --zoom 29-33 --mark 59-61`
 Enter
 Sleep 300ms
 Show
-Sleep 35s
+Sleep 47s
 
 # ---- Scene 7: the list, and the ratchet ----
 Hide
@@ -123,11 +123,11 @@ Sleep 300ms
 Type@1ms `note "Two tests: the *list* of findings, and the *ratchet*, which compares them with the register."`
 Enter
 Sleep 300ms
-Type@1ms `show AntiPatternChecksTest 29 45 "the checks" --zoom 40-45`
+Type@1ms `show AntiPatternChecksTest 23 45 "the checks" --zoom 23-24 --mark 30,41`
 Enter
 Sleep 300ms
 Show
-Sleep 30s
+Sleep 45s
 
 # ---- Scene 8: today, no register yet ----
 Hide

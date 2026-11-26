@@ -44,11 +44,11 @@ Sleep 300ms
 Type@1ms `note "Step 2: PIT plants bugs only in the changed classes."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 26 31 "lesson build file" --zoom 28-30`
+Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 23 31 "lesson build file" --mark 24 --zoom 28-30`
 Enter
 Sleep 300ms
 Show
-Sleep 24s
+Sleep 29s
 
 # ---- Scene 3: step 3, the gate ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show lessons/coverage-of-changed-code/example/build.gradle.kts 33 50 "
 Enter
 Sleep 300ms
 Show
-Sleep 22s
+Sleep 29s
 
 # ---- Scene 4: step 4, coverage of the changed classes ----
 Hide

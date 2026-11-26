@@ -29,29 +29,29 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 1: PIT, and its support for JUnit 5, in the version catalogue."`
+Type@1ms `note "Step 1: PIT, its support for JUnit 5, and the Gradle PIT plugin, in the version catalogue."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/^pitest/" "gradle/libs.versions.toml"`
+Type@1ms `show libs.versions.toml "/pitest/" "gradle/libs.versions.toml" --mark 44,112`
 Enter
 Show
-Sleep 15s
+Sleep 29s
 
 # ---- Scene 2: step 2, PIT's own options ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Step 2: PIT's own command-line options."`
+Type@1ms `note "Step 2: in your own build, the Gradle PIT plugin, or PIT's Maven plugin, adds the pitest task."`
 Enter
 Sleep 300ms
-Type@1ms `note "The build runs PIT from its command line. One option chooses the weak tests or the strong tests:"`
+Type@1ms `note "The lesson's build has the task already. One of PIT's options chooses the weak tests or the strong tests:"`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/mutation-testing/example/build.gradle.kts 11 21 "lesson build file" --zoom 12-16`
 Enter
 Show
-Sleep 22s
+Sleep 30s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -80,7 +80,7 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorWeakTest 18 39 --zoom 26-27`
 Enter
 Show
-Sleep 28s
+Sleep 34s
 
 # ---- Scene 5: the weak test that checks a number is not null ----
 Hide
@@ -134,7 +134,7 @@ Sleep 300ms
 Type@1ms `show DiscountCalculatorStrongTest 18 40 --zoom 22-23`
 Enter
 Show
-Sleep 29s
+Sleep 37s
 
 # ---- Scene 8: PIT on the strong tests ----
 Hide

@@ -62,7 +62,7 @@ Type@1ms `show HandSetUpTest 12 32 "tests set up by hand" --zoom 15-19`
 Enter
 Sleep 300ms
 Show
-Sleep 24s
+Sleep 30s
 
 # ---- Scene 4: the extension ----
 Hide
@@ -72,11 +72,11 @@ Sleep 300ms
 Type@1ms `note "A *JUnit extension*: standard settings before each test, put back after, and a check nothing leaked."`
 Enter
 Sleep 300ms
-Type@1ms `show StandardShopSettings 11 31 "the extension" --zoom 25-31`
+Type@1ms `show StandardShopSettings 11 31 "the extension" --zoom 19-21,26-29 --mark 11`
 Enter
 Sleep 300ms
 Show
-Sleep 23s
+Sleep 34s
 
 # ---- Scene 5: tests that use it ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show GuardedSettingsTest 11 27 "tests that use the extension" --zoom 1
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 20s
 
 # ---- Scene 6: the leak is caught ----
 Hide

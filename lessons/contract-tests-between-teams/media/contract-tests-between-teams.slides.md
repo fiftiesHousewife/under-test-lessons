@@ -29,41 +29,6 @@ Say: Our example is the shop. One team runs the order screen. Before it takes an
   many of an item are available, by the item's code. Another team runs the stock service. Its answer has the item's
   code, and a whole number called available. And when the shop doesn't stock the item, the answer is 404.
 
-## intro: A renamed field passes both teams' builds
-- A tidy-up in the stock service renames available to quantityInStock
-- The order screen's tests pass: they run against a stand-in their own team wrote
-- The stock service's tests pass: they check the status code and the item's code
-- The break shows only when the two services meet
-Picture: bug
-Say: Here is the problem. A tidy-up in the stock service renames the field called available. The order screen still
-  looks for the old name. Yet both teams' builds pass. The order screen's tests use a stand-in that their own team
-  wrote, so it always agrees with them. The stock service's tests check only the status code and the item's code. So the
-  break shows up only when the two services meet.
-
-## intro: The fix: one agreement, checked by both
-- The order screen, the consumer, writes down each answer it relies on: the agreement, a pact
-- The stock service, the provider, checks the pact in its own build, on every change
-- The pact travels as a versioned artifact through the company's package repository
-Picture: plug
-Say: The fix is a contract test: one written agreement, checked from both sides. The team that calls, the consumer,
-  writes down each request it makes and the answer it relies on. Pact, the tool, calls that agreement a pact. The team
-  that answers, the provider, checks the pact in its own build, every time it changes. The pact travels as a versioned
-  artifact, a numbered build output, through the company's package repository, where builds already publish their
-  libraries. So there is no new service to run.
-
-## intro: How Pact looks
-- The order screen's test: .integerType("available", 3), any whole number, named available
-- The stock service's test: @Provider("stock-service") @PactFolder("package-repository/order-screen-pacts/1.0.0")
-- Today: body: $ Actual map is missing the following keys: available
-- Pact JVM 4.7 needs Java 17 or later
-- Java 8 code bases need the older 4.1 line
-Picture: robot
-Say: Here is how Pact looks. The order screen's test says the answer needs a field called available, holding any whole
-  number. Pact stands in for the stock service with exactly that answer while the test runs, and writes the pact file.
-  The stock service's test reads version 1.0.0 of the published pact, and replays every request in it against the real
-  service. Today it fails, and says the answer is missing the key, available. One more thing: Pact JVM 4.7 needs Java 17
-  or later, and code bases still on Java 8 need the older 4.1 line.
-
 Include: how-we-build
 
 ## closing: When to use contract tests
@@ -75,8 +40,8 @@ Picture: map
 Say: When should you use contract tests? [pause 1600ms] Between services in one company, where both teams agree to run
   the checks. Keep the list of consumer versions you support in the provider's build, and change it by pull request.
   Check the pacts before renaming or retyping a field, since they say who still reads it. They don't suit a supplier's
-  API, or a public one, where the other side won't run them. Check those against recorded answers, or against a
-  published OpenAPI schema.
+  API, or a public one, where the other side won't run them. Check [pause 400ms] those [pause 400ms] against recorded
+  answers, or [pause 400ms] against a published OpenAPI schema.
 
 ## closing: Where it came from
 - Ian Robinson described consumer-driven contracts in 2006

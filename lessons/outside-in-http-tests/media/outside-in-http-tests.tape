@@ -62,7 +62,7 @@ Type@1ms `show TodaysBookingHandler 13 21 "today's booking service" --zoom 17-19
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 24s
 
 # ---- Scene 4: the tests from inside ----
 Hide
@@ -86,11 +86,11 @@ Sleep 300ms
 Type@1ms `note "Tests from *outside*: REST Assured sends real HTTP requests to the running service, as a caller would."`
 Enter
 Sleep 300ms
-Type@1ms `show BookingApiTest 20 35 "tests from outside" --zoom 24-26`
+Type@1ms `show BookingApiTest 13 35 "tests from outside" --zoom 22-26 --mark 13,17`
 Enter
 Sleep 300ms
 Show
-Sleep 18s
+Sleep 54s
 
 # ---- Scene 6: the outside tests get what callers get ----
 Hide

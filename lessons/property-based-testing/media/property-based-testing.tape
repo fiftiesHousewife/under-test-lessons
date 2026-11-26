@@ -65,7 +65,7 @@ Type@1ms `show FirstPayerSplitter 14 19 --zoom 17`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 25s
 
 # ---- Scene 4: the example tests ----
 Hide
@@ -79,7 +79,7 @@ Type@1ms `show SplitterExampleTest 12 26`
 Enter
 Sleep 300ms
 Show
-Sleep 10s
+Sleep 20s
 
 # ---- Scene 5: the property test ----
 Hide
@@ -89,11 +89,11 @@ Sleep 300ms
 Type@1ms `note "The *property* test: three rules for every bill, checked on a hundred random bills."`
 Enter
 Sleep 300ms
-Type@1ms `show SplitterPropertyTest 30 47 --zoom 44-46`
+Type@1ms `show SplitterPropertyTest 30 47 --zoom 33-34 --mark 44-46`
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 45s
 
 # ---- Scene 6: the property finds a bug ----
 Hide

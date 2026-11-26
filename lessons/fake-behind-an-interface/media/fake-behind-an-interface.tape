@@ -34,7 +34,7 @@ Type@1ms `show MessageQueue 3 13 "the shop's interface to the queue" --zoom 9-12
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 25s
 
 # ---- Scene 2: the code under test ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show MockedQueueTest 16 23 "the mock test" --zoom 20-22`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 20s
 
 # ---- Scene 4: the fake ----
 Hide
@@ -72,11 +72,11 @@ Sleep 300ms
 Type@1ms `note "A *fake* queue: it holds messages until commit, then delivers them, like the real queue."`
 Enter
 Sleep 300ms
-Type@1ms `show InMemoryMessageQueue 14 28 "the fake queue" --zoom 20-22`
+Type@1ms `show InMemoryMessageQueue 10 29 "the fake queue" --zoom 21-23`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 23s
 
 # ---- Scene 5: the fake test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show FakeQueueTest 13 20 "the fake test" --zoom 18-19`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 22s
 
 # ---- Scene 6: the fake finds the bug ----
 Hide

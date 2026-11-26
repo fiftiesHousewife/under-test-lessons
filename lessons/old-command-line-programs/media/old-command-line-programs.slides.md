@@ -30,46 +30,16 @@ Say: Our example is a nightly payments import. Payments arrive on standard input
   payment over the limit, it stops, with exit code 1. The exit code is the code a program ends with. A script runs the
   import every night, and reads that code. 0 means done. 1 means a person must look.
 
-## intro: The nightly program is never tested whole
-- Its 3 tests check pieces, such as reading one line, never the program
-- Nothing checks what it prints, or how it ends
-- Run the program in a test, and its call to System.exit ends the whole test run
-Picture: bug
-Say: Here is the problem. The program has 3 tests, but they check pieces, such as reading one line. None runs the whole
-  program, so nothing checks what it prints, or how it ends. And when a test does run it, the program's call to end
-  itself ends the whole test run, and the tests after it never run.
-
-## intro: The fix: run the whole program
-- Give the program its environment variable and its input, in the test
-- Catch everything it prints, and check it line by line
-- Pass in how it ends, so the test records the exit code instead of stopping
-Picture: terminal
-Say: The fix is to run the whole program in the test, with what it takes from the system swapped for stand-ins. A
-  stand-in like this is called a stub. The test gives the program its environment variable and its input. It catches
-  everything the program prints, and checks it line by line. And we hand the program its way to end, so in a test it
-  only records the exit code. We need that small change because Java 24 permanently disabled the security manager, the
-  old way to catch an exit.
-
-## intro: How System Stubs looks
-- @SystemStub EnvironmentVariables("PAYMENT_LIMIT_PENCE", "50000")
-- @SystemStub SystemIn and SystemOut: the input given, the lines printed
-- exitCode::set in the test, System::exit in production
-Picture: plug
-Say: System Stubs is a library for this. Each stub is a field in the test, marked with the System Stub annotation, and
-  the real one is put back after every test. One sets the payment limit to 500 pounds. One gives the program its input,
-  and one catches the lines it prints. And where production passes Java's own exit, the test passes one that only
-  records the code.
-
 Include: how-we-build
 
 ## closing: When to test a program whole
 - Before changing an old program that scripts or schedulers run
 - First, pin down its output and exit codes with System Stubs, changing nothing else
-- Then make one small change: main hands the program its exit, and ends in one place
+- Then make one small change: hand the program its exit, so it ends in one place
 Picture: map
 Say: When should you do this? [pause 1600ms] Before changing an old program that scripts or schedulers rely on. First,
   pin down what it prints and how it ends, with System Stubs, changing as little as you can. Then make one small change:
-  the program is given its exit, and ends in one place. After that, you can test every other change safely.
+  hand the program its exit, so it ends in one place. After that, you can test every other change safely.
 
 ## closing: Where System Stubs came from
 - Stefan Birkner's System Rules, JUnit 4 rules for code that uses System

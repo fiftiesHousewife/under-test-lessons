@@ -19,6 +19,7 @@ lives in that repo; link to it by full URL.
 | [`lessons/`](lessons/README.md) | One folder per lesson; [the catalogue](lessons/CATALOGUE.md) is the plan |
 | `lessons/_shared/` | Video set-up and helpers, slide styles, themes and pictures, and `video-tools`: the checks of video scripts, captions, slide pictures and decks, which run anywhere, inside a company included |
 | `production/video-render/` | The tools that make videos and read narration aloud (VHS, ffmpeg, the Kokoro voice): run only on the machine that makes the videos, never inside a company; the build works without this folder |
+| [`production/voice-review/`](production/voice-review/README.md) | The voice review: a page to hear what the voice says and change its emphasis, pauses and words by clicking, saved to the pronunciation list and the narration; production only, like video-render |
 | [`docs/decisions/`](docs/decisions/README.md) | This repo's decisions, in MADR form |
 | [`plan/lessons-backlog.yaml`](plan/lessons-backlog.yaml), [`docs/BACKLOG.md`](docs/BACKLOG.md) | Work in hand: the backlog file, loaded into GitHub issues, and the page generated from them |
 | [`docs/using-inside-a-company.md`](docs/using-inside-a-company.md) | Repository manager, own container images, proxies, licences |
@@ -46,6 +47,7 @@ Every step belongs to one of three groups ([decision](docs/decisions/0026-what-r
 | Voice a deck | `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` | Production |
 | Make a video | `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` | Production |
 | Set up the voice, check the video tools | `setUpLessonVoice`, `checkVideoInRecording` (in `:production:video-render`) | Production |
+| Hear and fix what the voice says, by clicking | `./gradlew :production:voice-review:reviewVoice`, then http://localhost:8765/ ([how](production/voice-review/README.md)) | Production |
 | Sync the backlog into issues and `docs/BACKLOG.md` | The Backlog sync workflow, after a push that changes `plan/lessons-backlog.yaml` (or run it by hand in Actions) | Maintainer |
 | Install external skills | `python3 tools/install-skills.py` | Maintainer |
 

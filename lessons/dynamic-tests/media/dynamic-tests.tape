@@ -48,7 +48,7 @@ Type@1ms `show TodaysNameFormatter 11 16 "today's formatter" --zoom 14`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 19s
 
 # ---- Scene 3: one test for all ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show AllExamplesInOneTest 12 18 "one test for every example" --zoom 14
 Enter
 Sleep 300ms
 Show
-Sleep 13s
+Sleep 21s
 
 # ---- Scene 4: a test for each ----
 Hide
@@ -75,8 +75,11 @@ Sleep 300ms
 Type@1ms `show EachExampleTest 13 20 "one test for each example" --zoom 15-16`
 Enter
 Sleep 300ms
+Type@1ms `show Formatters 33 42 "every file in the folder" --mark 35-36`
+Enter
+Sleep 300ms
 Show
-Sleep 16s
+Sleep 31s
 
 # ---- Scene 5: every failure named ----
 Hide

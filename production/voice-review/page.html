@@ -1,0 +1,153 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Voice review</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:64em;margin:2em auto;padding:0 1em 4em;color:#000;background:#fff}
+header{position:sticky;top:0;background:#fff;padding:.6em 0;border-bottom:1px solid #000;z-index:2;font-size:.9em}
+h2{margin:1.4em 0 .3em;font-size:1em}
+.line{display:flex;align-items:flex-start;gap:.6em;padding:.4em .2em;border-bottom:1px solid #ddd}
+.line.current{background:#f2f2f2}
+.num{color:#777;width:2.2em;text-align:right;font-size:.85em}
+.btn{font:inherit;border:1px solid #000;background:#fff;color:#000;border-radius:3px;min-width:2em;padding:.1em .4em;cursor:pointer;flex:none}
+.line.busy .play{opacity:.3}.line.ok .ok{background:#000;color:#fff}
+.text{flex:1}.text.typing{outline:1px solid #000;padding:0 .2em;background:#fff}.word{cursor:pointer}.word:hover{text-decoration:underline}
+.word.in{background:#e8e8e8}.word.edited{font-style:italic}
+.shown.strong{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
+.shown.light{text-decoration:underline dotted;text-underline-offset:3px}.shown.weak{color:#666}
+.syl{display:inline-block;cursor:pointer;padding:0 .15em;margin:0 1px;border:1px solid #999;border-radius:2px}
+.syl.strong{font-weight:800;border-color:#000}.syl.light{font-weight:500}.syl.weak{color:#888;border-style:dashed}
+.gap{cursor:pointer;position:relative}.line:hover .gap:not(.joined)::after{content:"·";position:absolute;left:0;right:0;text-align:center;color:#999}
+.gap:hover::after{color:#000!important}.gap:hover{background:#e6e6e6}.gap.joined{font-weight:800;background:#e6e6e6}.dropped{text-decoration:line-through;color:#999}
+</style></head><body>
+<header><b>Voice review</b> <span id="count"></span></header>
+<main id="list"></main>
+<script>
+let items=[];
+const LESSON=location.pathname.startsWith('/lesson/')?decodeURIComponent(location.pathname.slice(8)):null;
+let results={},current=null;
+const post=(p,b)=>fetch(p,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(b)}).then(r=>r.json());
+const STATES=["strong","light","weak"],MARK={strong:"ˈ",light:"ˌ",weak:""};
+const V="aeiouæɑɐɒɔəɛɜɪʊʌɚɝœøyɨʉ";
+function split(sounds){const marks={};let bare="";for(const c of sounds){if(c==="ˈ"||c==="ˌ")marks[bare.length]=c;else bare+=c;}
+  const nuc=[];let i=0;while(i<bare.length){if(V.includes(bare[i])){const st=i;while(i<bare.length&&V.includes(bare[i]))i++;if(bare[i]==="ː")i++;nuc.push([st,i]);}else i++;}
+  if(!nuc.length)return{bare,on:[0],nu:[0],st:["strong"]};
+  const on=nuc.map(([st],k)=>k===0?0:(st-1>=nuc[k-1][1]&&!V.includes(bare[st-1])?st-1:st));
+  const st=on.map((o,k)=>{const end=k+1<on.length?on[k+1]:bare.length;for(const p in marks){if(+p>=o&&+p<end)return marks[p]==="ˈ"?"strong":"light";}return"weak";});
+  return{bare,on,nu:nuc.map(n=>n[0]),st};}
+function compose(w){let out="",last=0;w.nu.forEach((n,k)=>{out+=w.bare.slice(last,n)+MARK[w.st[k]];last=n;});return out+w.bare.slice(last);}
+function letters(word,n){const w=word.replace(/['’]s$/,"");const isV=c=>/[aeiouy]/i.test(c);const g=[];let i=0;
+  while(i<w.length){if(isV(w[i])&&!(i===w.length-1&&/e/i.test(w[i])&&g.length)){const s=i;while(i<w.length&&isV(w[i]))i++;g.push([s,i]);}else i++;}
+  let on;if(g.length===n)on=g.map(([s],k)=>k===0?0:(s-1>=g[k-1][1]&&!isV(w[s-1])?s-1:s));
+  else on=[...Array(n).keys()].map(k=>Math.round(k*w.length/n));
+  const parts=on.map((o,k)=>w.slice(o,k+1<on.length?on[k+1]:w.length));parts[parts.length-1]+=word.slice(w.length);return parts;}
+function count(){const v=items.map(i=>results[i.id]).filter(Boolean);document.getElementById("count").textContent=v.filter(r=>r.verdict).length+" of "+items.length+" done";}
+function build(){let g="";const list=document.getElementById("list");
+  for(const it of items){if(it.group!==g){g=it.group;list.insertAdjacentHTML("beforeend","<h2>"+g+"</h2>");}
+    const r=results[it.id]||{};const line=document.createElement("div");line.className="line "+(r.verdict||"");line.id="l"+it.id;
+    line.innerHTML=`<span class="num">${items.indexOf(it)+1}</span><span class="text">${it.sentence.replace(/[&<]/g,c=>c==="&"?"&amp;":"&lt;")}</span>
+      <button class="btn edit" title="change the words">✎</button><button class="btn play" title="play">▶</button><button class="btn ok" title="save">✓</button>`;
+    line.sentence=r.text||it.sentence;list.appendChild(line);wire(it,line);}}
+function wire(it,line){
+  const audio=new Audio(typeof it.id==="number"?"/"+String(it.id).padStart(3,"0")+".wav":"");audio.preload="none";line.audio=audio;
+  let toks=null,timer=null,edited=new Set(),paused=false;const text=line.querySelector(".text");
+  const play=async()=>{document.querySelectorAll(".line").forEach(x=>x!==line&&x.audio&&x.audio.pause());focus(it.id);
+    if(!audio.getAttribute("src")){line.classList.add("busy");const r=await post("/try",{id:it.id,phrase:"",sentence:words});line.classList.remove("busy");if(r.error)return;audio.src="/"+r.url;}
+    audio.currentTime=0;audio.play();};
+  line.querySelector(".play").onclick=play;line.play=play;
+  const raw=()=>{let out="";toks.forEach((t,k)=>{if(t.word)out+=(t.pausePrev?" ‖ ":"")+(out&&!out.endsWith(" ")&&!t.joinPrev&&!t.pausePrev?" ":"")+compose(t.w);
+      else{const nx=toks[k+1]||{};if(nx.dropPunct)out+=" ";else if(nx.longPause)out+=t.punct+" ‖ ";else out+=t.punct+" ";}});return"/"+out.trim()+"/";};
+  let asked=0;
+  function revoice(){clearTimeout(timer);document.querySelectorAll(".line").forEach(x=>x.audio&&x.audio.pause());
+    const mine=++asked;line.classList.add("busy");saveDraft();
+    timer=setTimeout(async()=>{const r=await post("/try",{id:it.id,raw:raw()});
+      if(mine!==asked)return;line.classList.remove("busy");if(!r.error){audio.src="/"+r.url;results[it.id]={...(results[it.id]||{}),changed_url:r.url};post("/save",{id:it.id,changed_url:r.url});play();}},1200);}
+  function render(){text.innerHTML="";toks.forEach((t,k)=>{
+    if(!t.word){const p=document.createElement("span");p.textContent=t.punct;if((toks[k+1]||{}).dropPunct)p.className="dropped";text.appendChild(p);
+      if(toks[k+1]&&toks[k+1].word){const nx=toks[k+1];const g=document.createElement("span");g.className="gap"+(nx.longPause||nx.dropPunct?" joined":"");
+        g.textContent=nx.longPause?"‖":nx.dropPunct?"‿":" ";
+        g.onclick=()=>{if(!nx.longPause&&!nx.dropPunct)nx.longPause=true;else if(nx.longPause){nx.longPause=false;nx.dropPunct=true;}else nx.dropPunct=false;
+          edited.add(k+1);render();revoice();};text.appendChild(g);}
+      else text.append(" ");return;}
+    if(k>0&&toks[k-1].word){const g=document.createElement("span");g.className="gap"+(t.joinPrev||t.pausePrev?" joined":"");g.textContent=t.pausePrev?"‖":t.joinPrev?"‿":" ";
+      g.title=t.pausePrev?"click: say as one word":t.joinPrev?"click: back to normal":"click: pause here";
+      g.onclick=()=>{if(!t.pausePrev&&!t.joinPrev){t.pausePrev=true;}
+        else if(t.pausePrev){t.pausePrev=false;t.joinPrev=true;t.before=t.w.st.slice();t.w.st=t.w.st.map(()=>"weak");}
+        else{t.joinPrev=false;if(t.before)t.w.st=t.before;}
+        edited.add(k);if(t.pausePrev)paused=true;render();revoice();};text.appendChild(g);}
+    const span=document.createElement("span");span.className="word"+(t.inPhrase?" in":"")+(edited.has(k)?" edited":"");
+    if(t.open){span.classList.add("open");const parts=letters(t.word,t.w.on.length);
+      parts.forEach((p,s)=>{const b=document.createElement("span");b.className="syl "+t.w.st[s];b.textContent=p;
+        b.onclick=e=>{e.stopPropagation();t.w.st[s]=STATES[(STATES.indexOf(t.w.st[s])+1)%3];edited.add(k);render();revoice();};span.appendChild(b);});}
+    else{letters(t.word,t.w.on.length).forEach((p,s)=>{const b=document.createElement("span");b.className="shown "+t.w.st[s];b.textContent=p;span.appendChild(b);});
+      span.title="click to change its emphasis";span.onclick=()=>{t.open=true;render();};}
+    text.appendChild(span);});
+    const next=text.nextSibling;}
+  const stateOf=()=>toks.map(t=>t.word?{st:t.w.st,joinPrev:!!t.joinPrev,pausePrev:!!t.pausePrev,longPause:!!t.longPause,dropPunct:!!t.dropPunct,before:t.before||null,open:!!t.open}:null);
+  let words=(results[it.id]||{}).text||it.sentence;
+  async function load(){if(toks)return;toks=line.pre||(await post("/sentence",{sentence:words})).tokens;
+    toks.forEach(t=>{if(t.word){t.w=split(t.sounds);t.orig=t.w.st.slice();}});toks.forEach((t,k)=>{if(t.joinPrev)edited.add(k);});
+    const kept=(results[it.id]||{}).state;
+    const was=results[it.id]||{};const same=!was.sentence||was.sentence===it.sentence||was.in_lesson===it.sentence;
+    if(!same)delete results[it.id];
+    if(same&&kept&&kept.length===toks.length&&(was.text||it.sentence)===words){toks.forEach((t,k)=>{const c=kept[k];if(t.word&&c&&c.st.length===t.w.st.length){
+      const changed=c.st.join()!==t.w.st.join()||c.joinPrev!==!!t.joinPrev||c.pausePrev||c.longPause||c.dropPunct;
+      t.w.st=c.st;t.joinPrev=c.joinPrev;t.pausePrev=c.pausePrev;t.longPause=c.longPause;t.dropPunct=c.dropPunct;t.before=c.before;
+      if(changed)edited.add(k);}});
+      if((results[it.id]||{}).changed_url)audio.src="/"+results[it.id].changed_url;}
+    const ph=it.phrase.toLowerCase().split(/\s+/),ws=toks.map((t,k)=>t.word?k:-1).filter(k=>k>=0);
+    for(let a=0;a+ph.length<=ws.length;a++){if(ph.every((p,j)=>toks[ws[a+j]].word.toLowerCase()===p)){for(let j=0;j<ph.length;j++)toks[ws[a+j]].inPhrase=true;break;}}
+    render();}
+  line.addEventListener("mouseenter",load,{once:true});line.load=load;
+  function saveDraft(){const b=bodyFor((results[it.id]||{}).verdict||"");post("/save",b).then(r=>{if(!r.error)results[it.id]={...(results[it.id]||{}),...b};});}
+  function bodyFor(verdict){const body={id:it.id,phrase:it.phrase,group:it.group,sentence:it.sentence,verdict,state:stateOf(),sounds:null,sentence_sounds:null,readable:null,text:words!==it.sentence?words:null};
+    if(edited.size){
+      const phraseIdx=toks.map((t,k)=>t.inPhrase?k:-1).filter(k=>k>=0);
+      if(phraseIdx.length&&!toks.some(t=>t.pausePrev||t.longPause||t.dropPunct)&&[...edited].every(k=>toks[k].inPhrase))body.sounds="/"+phraseIdx.map((k,j)=>(j&&!toks[k].joinPrev?" ":"")+compose(toks[k].w)).join("")+"/";
+      else{body.sentence_sounds=raw();body.readable=toks.map(t=>(t.pausePrev||t.longPause?"| ":"")+(t.dropPunct?"(no pause) ":"")+(t.joinPrev?"+":"")+(t.word?t.word.split("").length&&letters(t.word,t.w.on.length).map((p,s)=>t.w.st[s]==="strong"?p.toUpperCase():p).join(""):t.punct)).join(" ").replace(/ ([,.:;?!)])/g,"$1");}}
+    return body;}
+  const written=()=>{let out="";toks.forEach((t,k)=>{
+      if(t.word){out+=(t.pausePrev?" [pause 400ms]":"")+(out?" ":"")+t.word;}
+      else{const nx=toks[k+1]||{};if(!nx.dropPunct)out+=t.punct;if(nx.longPause)out+=" [pause 400ms]";}});
+    return out.replace(/ +/g," ").trim();};
+  const pronounced=k=>{const t=toks[k];return t&&t.word&&!t.inPhrase&&t.orig&&t.w.st.length>1&&t.w.st.includes("strong")
+      &&t.w.st.join()!==t.orig.join()&&!t.joinPrev&&!(toks[k+1]&&toks[k+1].joinPrev);};
+  line.applyRule=(word,st)=>{if(!toks)return;let hit=false;toks.forEach(t=>{if(t.word===word&&t.w.st.length===st.length){t.w.st=st.slice();t.orig=st.slice();hit=true;}});
+    if(hit){render();audio.removeAttribute("src");audio.load();}};
+  async function keep(verdict){await load();const body=bodyFor(verdict);body.rule=true;body.lesson=it.lesson||null;
+    const moved=[...edited].filter(pronounced);
+    body.word_rules=moved.map(k=>({word:toks[k].word,sounds:"/"+compose(toks[k].w)+"/",st:toks[k].w.st}));
+    if(moved.length&&[...edited].every(k=>pronounced(k))){body.sentence_sounds=null;body.readable=null;}
+    const w=written();body.written=w===it.sentence.trim()?null:w;
+    const r=await post("/save",body);if(r.error)return;
+    results[it.id]={...(results[it.id]||{}),...body};line.className="line current "+verdict;count();
+    body.word_rules.forEach(r=>{toks.forEach(t=>{if(t.word===r.word)t.orig=r.st.slice();});
+      document.querySelectorAll(".line").forEach(l=>l!==line&&l.applyRule&&l.applyRule(r.word,r.st));});
+}
+  line.querySelector(".ok").onclick=()=>keep("ok");
+  const editBtn=line.querySelector(".edit");
+  editBtn.onclick=async()=>{await load();focus(it.id);document.querySelectorAll(".line").forEach(x=>x.audio&&x.audio.pause());
+    text.contentEditable="true";text.textContent=words;text.classList.add("typing");text.focus();
+    const sel=getSelection(),range=document.createRange();range.selectNodeContents(text);range.collapse(false);sel.removeAllRanges();sel.addRange(range);
+    let done=false;
+    const finish=async(keepIt)=>{if(done)return;done=true;text.contentEditable="false";text.classList.remove("typing");
+      const now=text.textContent.replace(/\s+/g," ").trim();
+      if(!keepIt||!now||now===words){render();return;}
+      words=now;line.sentence=now;toks=(await post("/sentence",{sentence:now})).tokens;toks.forEach(t=>{if(t.word)t.w=split(t.sounds);});
+      edited=new Set();render();revoice();};
+    text.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();finish(true);}if(e.key==="Escape"){e.preventDefault();finish(false);}};
+    text.onblur=()=>finish(true);};
+}
+function focus(id,scroll){if(current===id)return;document.querySelectorAll(".line.current").forEach(l=>l.classList.remove("current"));current=id;
+  const l=document.getElementById("l"+id);l.classList.add("current");l.load();if(scroll)l.scrollIntoView({block:"center"});}
+function next(){const it=items.find(i=>!(results[i.id]||{}).verdict&&i.id!==current)||items.find(i=>!(results[i.id]||{}).verdict);
+  if(it){focus(it.id,true);document.getElementById("l"+it.id).play();}}
+async function preload(){const lines=[...document.querySelectorAll(".line")];
+  for(let i=0;i<lines.length;i+=25){const batch=lines.slice(i,i+25);
+    const r=await post("/sentences",{sentences:batch.map(l=>l.sentence)});if(r.error)return;
+    batch.forEach((l,k)=>{l.pre=r.tokens[k];l.load();});}}
+document.addEventListener("click",e=>{if(e.target.tagName==="BUTTON")e.target.blur();},true);
+document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT"||e.target.isContentEditable)return;if(e.target.tagName==="BUTTON")e.target.blur();const k=e.key.toLowerCase();
+  if(k==="n"){next();return;}if(current==null)return;const l=document.getElementById("l"+current);
+  if(k===" "){e.preventDefault();l.play();}if(k==="o"){l.querySelector(".ok").click();setTimeout(next,300);}});
+Promise.all([fetch(LESSON?"/items/"+encodeURIComponent(LESSON):"/items").then(r=>r.json()),post("/results",{})]).then(([i,r])=>{
+  items=i;results=r||{};if(LESSON)document.title="Voice: "+LESSON;
+  if(LESSON)document.querySelector("header").insertAdjacentHTML("afterbegin","<b>"+LESSON+"</b> · every sentence its deck says. ");build();count();preload();});
+</script></body></html>

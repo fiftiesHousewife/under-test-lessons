@@ -62,7 +62,7 @@ Type@1ms `show TodaysSummaryPage 6 19 "web layer: the admin page today" --zoom 1
 Enter
 Sleep 300ms
 Show
-Sleep 23s
+Sleep 36s
 
 # ---- Scene 4: the unit tests ----
 Hide
@@ -86,11 +86,11 @@ Sleep 300ms
 Type@1ms `note "The *architecture rule*: which layer may use which."`
 Enter
 Sleep 300ms
-Type@1ms `show LayerRulesTest 23 33 "architecture rule" --zoom 30-31`
+Type@1ms `show LayerRulesTest 18 33 "architecture rule" --zoom 20-21 --mark 31`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 51s
 
 # ---- Scene 6: the rule finds the shortcut ----
 Hide

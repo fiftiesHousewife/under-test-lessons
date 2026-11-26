@@ -19,11 +19,11 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 **What secrets or personal data could leak?** Before anything runs, find what could leak secrets or personal data, or reach production, and mask or filter it out. Old code's settings often point at real systems, so one careless run can do real harm.
 
-**Techniques:** data masking, pseudonymisation (keyed substitutes), log filtering. **Tools:** Logbook, Datafaker, the JDK's HMAC. **References:** [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html); [NIST SP 800-122](https://doi.org/10.6028/NIST.SP.800-122), protecting personal data (2010); [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC (1997).
+**Techniques:** data masking, pseudonymisation (keyed substitutes), log filtering. **Tools:** Logbook, the JDK's HMAC. **References:** [OWASP Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html); [NIST SP 800-122](https://doi.org/10.6028/NIST.SP.800-122), protecting personal data (2010); [RFC 2104](https://www.rfc-editor.org/rfc/rfc2104), HMAC (1997).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
-| [Masking captured data so tests still work](masking-captured-data/README.md): one capture masked three ways (fixed text, keyed substitutes, seeded synthetic values); keyed substitutes keep joins and repeated values working, and a detector check fails on a field the data masking missed; includes what counts as anonymous | the JDK's HMAC, Datafaker | Java only | built |
+| [Masking captured data so tests still work](masking-captured-data/README.md): the shop's reports tested on a captured day of its real data, masked first; fixed text gives the tests wrong answers, keyed substitutes keep the joins and repeated values the code needs, and a guard on the test data fails on a field the masking missed; includes what counts as anonymous | the JDK's HMAC | Java only | built |
 | [Capturing what an old service receives and sends](capturing-with-logbook/README.md): [Logbook](https://github.com/zalando/logbook)'s servlet filter and client interceptor record real requests and responses, with the `Authorization` header and customers' emails filtered out at source, and the examples kept as approval tests | Logbook (MIT), ApprovalTests | Java 17 or later | built |
 
 ## Take stock

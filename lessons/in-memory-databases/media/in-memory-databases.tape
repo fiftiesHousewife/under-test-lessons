@@ -34,7 +34,7 @@ Type@1ms `show lessons/in-memory-databases/example/build.gradle.kts "/^dependenc
 Enter
 Sleep 300ms
 Show
-Sleep 21s
+Sleep 29s
 
 # ---- Scene 2: the real schema ----
 Hide
@@ -104,21 +104,24 @@ Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fifti
 Enter
 Sleep 300ms
 Show
-Sleep 32s
+Sleep 45s
 
 # ---- Scene 7: the strong tests ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *strong* tests: no invoices to start with, so the numbers can be exact."`
+Type@1ms `note "A fresh database *before each test*, thrown away after. The *strong* tests can check exact numbers."`
 Enter
 Sleep 300ms
-Type@1ms `show FreshDatabaseTest 28 45 "the strong tests" --zoom 33-36`
+Type@1ms `show FreshDatabaseTest 17 26 "before and after each test" --mark 19,25`
+Enter
+Sleep 300ms
+Type@1ms `show FreshDatabaseTest 33 45 "the strong tests" --zoom 35,44`
 Enter
 Sleep 300ms
 Show
-Sleep 22s
+Sleep 31s
 
 # ---- Scene 8: keeping the choice honest ----
 Hide
@@ -131,11 +134,11 @@ Sleep 300ms
 Type@1ms `show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/PortableSql.java 17 21 "what the check looks for" --zoom 17-21`
 Enter
 Sleep 300ms
-Type@1ms `show PortableSqlTest 14 26 "the check"`
+Type@1ms `show PortableSqlTest 12 26 "the check" --mark 12,16`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 36s
 
 # ---- Scene 9: the fresh database finds invoice 0 ----
 Hide

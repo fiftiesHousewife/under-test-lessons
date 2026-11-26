@@ -86,11 +86,11 @@ Sleep 300ms
 Type@1ms `note "The *sleeping* test: place an order, sleep 200 ms, then check. Run 5 times."`
 Enter
 Sleep 300ms
-Type@1ms `show SleepingTest 14 24 "the sleeping test" --zoom 20`
+Type@1ms `show SleepingTest 14 24 "the sleeping test" --zoom 15-20`
 Enter
 Sleep 300ms
 Show
-Sleep 23s
+Sleep 40s
 
 # ---- Scene 6: five runs find the flaky test ----
 Hide
@@ -125,7 +125,7 @@ Type@1ms `show WaitingTest 15 25 "the waiting test" --zoom 21-24`
 Enter
 Sleep 300ms
 Show
-Sleep 25s
+Sleep 38s
 
 # ---- Scene 8: a quiet machine ----
 Hide

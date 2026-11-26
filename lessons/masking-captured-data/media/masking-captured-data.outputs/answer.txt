@@ -1,22 +1,36 @@
 $ ./gradlew :lessons:masking-captured-data:test -Pcode=answer
-DetectorFindsTest > detectorFindsEveryKindOfPersonalDataBeforeMasking() PASSED
-DetectorFindsTest > detectorFindsEachKnownShapeOfPersonalNumber() PASSED
-DetectorFindsTest > detectorPassesSubstitutesTestEmailsAndOrdinaryValues() PASSED
-MaskedFieldsTest > namesEmailsAndAccountsAreReplaced() PASSED
-NothingPersonalLeftTest > maskedCaptureHasNothingThatLooksPersonal() FAILED
-    java.lang.AssertionError: [personal data left after masking]
+DayReportTest > countsEachCustomersOrders() FAILED
+    org.opentest4j.AssertionFailedError: [orders per customer]
+    Expecting actual:
+      [7]
+    to contain exactly (and in same order):
+      [3, 2, 1, 1]
+    but some elements were not found:
+      [3, 2, 1, 1]
+    and others were not expected:
+      [7]
+DayReportTest > listsWhatEachUnsettledAccountOwes() FAILED
+    org.opentest4j.AssertionFailedError: [pence owed by each unsettled account]
+    Expecting actual:
+      [140]
+    to contain exactly (and in same order):
+      [-500, 640]
+    but some elements were not found:
+      [-500, 640]
+    and others were not expected:
+      [140]
+TestDataHasNothingPersonalTest > theMaskedDayHasNothingThatLooksPersonal() FAILED
+    java.lang.AssertionError: [personal data left in the test data]
     Expecting empty but was: ["orders.csv row 4, note: an email address",
         "orders.csv row 7, note: a customer's name"]
-ReportsStillWorkTest > ordersAreStillGroupedByCustomer() FAILED
-    org.opentest4j.AssertionFailedError: [orders per customer]
-    expected: [3, 2, 1, 1]
-     but was: [7]
-ReportsStillWorkTest > ordersStillMatchPaymentsByAccount() FAILED
+SecondDayAnswerTest > listsWhatEachUnsettledAccountOwesOnTheSecondDay() FAILED
     org.opentest4j.AssertionFailedError: [pence owed by each unsettled account]
-    expected: [-500, 640]
-     but was: [140]
-SyntheticMaskingTest > syntheticValuesKeepTheReportsAndRepeat() PASSED
-PhoneInANoteAnswerTest > aPhoneNumberInANoteIsMaskedToo() FAILED
-    java.lang.AssertionError: [personal data left after masking an order with a phone number]
-    Expecting empty but was: ["orders.csv row 1, note: a phone number"]
-9 tests completed, 4 failed
+    Expecting actual:
+      [-500]
+    to contain exactly (and in same order):
+      [-700, 200]
+    but some elements were not found:
+      [-700, 200]
+    and others were not expected:
+      [-500]
+4 tests completed, 4 failed

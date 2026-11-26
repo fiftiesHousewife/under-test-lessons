@@ -86,11 +86,11 @@ Sleep 300ms
 Type@1ms `note "The *strong* test: WireMock verifies the request the code really sent."`
 Enter
 Sleep 300ms
-Type@1ms `show RefundRequestTest 35 44 "the strong test" --zoom 38-43`
+Type@1ms `show RefundRequestTest 22 44 "the strong test" --zoom 22,26-27,38-43`
 Enter
 Sleep 300ms
 Show
-Sleep 34s
+Sleep 60s
 
 # ---- Scene 6: the request is wrong ----
 Hide

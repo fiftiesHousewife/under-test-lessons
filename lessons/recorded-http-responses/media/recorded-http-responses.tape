@@ -44,7 +44,7 @@ Sleep 300ms
 Type@1ms `note "Step 2: add it as a test dependency of the lesson."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/recorded-http-responses/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10`
+Type@1ms `show lessons/recorded-http-responses/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 11`
 Enter
 Sleep 300ms
 Show
@@ -76,7 +76,7 @@ Type@1ms `show RealSupplierTest 14 18 "the test against the real service" --zoom
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 20s
 
 # ---- Scene 5: a recorded answer ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show lessons/recorded-http-responses/example/src/test/resources/suppli
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 25s
 
 # ---- Scene 6: making recordings from a stand-in ----
 Hide
@@ -100,11 +100,14 @@ Sleep 300ms
 Type@1ms `note "Making recordings: WireMock passes each question to a *stand-in* supplier on this machine, and keeps the answer."`
 Enter
 Sleep 300ms
+Type@1ms `show RecordingTest 48 59 "a stand-in supplier, and the recorder" --mark 50-51`
+Enter
+Sleep 300ms
 Type@1ms `show RecordingTest 83 98 "making recordings" --zoom 85-86`
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 37s
 
 # ---- Scene 7: the tests for recordings ----
 Hide
@@ -132,7 +135,7 @@ Type@1ms `show RecordedSupplierTest 18 45 "tests with recorded answers" --zoom 1
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 27s
 
 # ---- Scene 9: the recordings find two bugs, and personal data ----
 Hide
@@ -160,21 +163,24 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The cleaner: drop the token, and swap each name and email address for a *keyed* substitute."`
+Type@1ms `note "The masking step: drop the token, and swap each name and email address for a *keyed* substitute."`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedRecordingCleaner 43 63 "the cleaner" --zoom 57`
+Type@1ms `show KeyedRecordingCleaner 43 63 "the masking step" --zoom 57`
+Enter
+Sleep 300ms
+Type@1ms `show KeyedRecordingCleaner 100 110 "the keyed substitute" --mark 103-105`
 Enter
 Sleep 300ms
 Show
-Sleep 39s
+Sleep 41s
 
 # ---- Scene 11: the fix ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The client that checks what the supplier said first, and the cleaner:"`
+Type@1ms `note "The client that checks what the supplier said first, and the masking step:"`
 Enter
 Sleep 300ms
 Type@1ms `show PostcodeClient 18 26 "the fixed client" --zoom 21-24`

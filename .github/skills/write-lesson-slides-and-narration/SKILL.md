@@ -125,6 +125,9 @@ how to mark things up in a slides file.
 - **Words:** every slide and narration item read against [GLOSSARY.md](../../../GLOSSARY.md), "Writing for the voice"
   and "Don't say"; add any newly agreed phrase to [`dont-say.txt`](../../../lessons/_shared/dont-say.txt).
 - **Story:** what the lesson covers, then the example once, then the problem, in the order above.
+- **Shown, not told:** every library, setting, step or call the narration names is on screen in a scene (the real file,
+  its lines in the zoom) or a code panel; the slides set up, the scenes show, and nothing is told twice.
+- **No code in bullets:** at most one method or class name a bullet; more goes in a scene or a code panel.
 - **Names aloud:** a slide whose heading names a technique or tool says that name in its narration too ("The answer
   is characterisation tests"): the listener may not be looking. Name the established term the code shows, such as
   dependency injection for passing dependencies in.
@@ -132,7 +135,9 @@ how to mark things up in a slides file.
   the topic before ("With the old behaviour pinned down, we can turn to differential testing...").
 - **Subjects:** established open-source frameworks only; never this repository's or the toolkit's own tools, process
   or plugins, and never a vendor's product or price.
-- **Voice:** every changed slide voiced and listened to; anything said wrong goes in the pronunciation list.
+- **Voice:** every changed slide listened to, on its lesson's page in [the voice review](../../../production/voice-review/README.md)
+  (or its deck's **Edit voice**): emphasis, pauses and words put right by clicking, saved to the pronunciation list
+  and the narration; then the batch voiced once.
 - **Fit:** `./gradlew :lessons:video-tools:checkVideoScripts` passes: every scene's pause covers its narration, every
   live run's wait matches its output, the video stays under ten minutes, every slide has its clip, every live command
   its kept output, and nothing on the don't-say list is said. Code highlights (`--mark`) land on the lines the

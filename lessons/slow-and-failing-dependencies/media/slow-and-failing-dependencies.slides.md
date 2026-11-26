@@ -31,40 +31,9 @@ Say: Our example is an online shop. Before it gives a delivery date, it asks its
   stock, say kettles. The supplier answers with a number, as JSON. When the supplier can't say, the shop should tell the
   customer it will confirm by email. It must never keep the customer waiting, or show them an error page.
 
-## intro: A slow supplier holds up the shop
-- When the supplier answers 5 seconds late, the shop waits all 5, with no limit
-- When the connection drops, the shop throws an error page at the customer
-- The tests pass: the stand-in supplier always answers at once
-Picture: bug
-Say: Here is the problem. When the supplier answers 5 seconds late, the shop waits all 5 seconds, because it sets no
-  limit on how long to wait. When the connection drops, the shop throws an error at the customer. And the tests pass,
-  because the stand-in supplier in the tests always answers at once. Real services slow down and drop connections, most
-  often when they are busy. And one slow supplier then holds up every page that calls it.
-
-## intro: The fix: make the supplier fail, on purpose
-- In the test, the stand-in answers late, drops the connection, or sends garbage
-- The shop is allowed 3 seconds, and must say "supplier unavailable"
-- The code sets a time limit, a timeout, of half a second
-Picture: plug
-Say: The fix is to make the supplier slow, or broken, on purpose, in a test. This is called testing slow and failing
-  dependencies. The stand-in answers 5 seconds late, or drops the connection, or sends an OK status followed by garbage.
-  Each test allows the shop 3 seconds, and expects a clear answer: supplier unavailable. To pass, the code sets a
-  timeout of half a second: a limit on how long it will wait.
-
-## intro: How WireMock makes a service fail
-- Late: okJson("{\"units\": 12}").withFixedDelay(5000)
-- Broken: aResponse().withFault(Fault.CONNECTION_RESET_BY_PEER)
-- The limit: assertTimeoutPreemptively(THREE_SECONDS, ...)
-- Today: execution timed out after 3000 ms
-Picture: server
-Say: Here is how WireMock makes a service fail. A fixed delay holds the answer back, here for 5000 milliseconds. A fault
-  breaks the answer instead: a reset connection, an empty response, or garbage after an OK status. The test gives the
-  shop 3 seconds, and stops it if it takes longer, so a shop with no timeout can't hang the build. Today, the slow
-  supplier test stopped after 3 seconds, with the shop still waiting.
-
 Include: how-we-build
 
-## closing: When to test slow and failing dependencies
+## closing: When to test failing dependencies
 - For every call your code makes to a service it doesn't own
 - In discovery: find each call with no timeout, and decide what it should do
 - Then a test per fault: too slow, a dropped connection, a broken answer

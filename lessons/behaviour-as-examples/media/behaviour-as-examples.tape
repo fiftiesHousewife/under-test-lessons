@@ -48,7 +48,7 @@ Type@1ms `show RefundPolicyTest 19 30 "tests written from the code" --zoom 22-25
 Enter
 Sleep 300ms
 Show
-Sleep 25s
+Sleep 29s
 
 # ---- Scene 3: the returns team's examples ----
 Hide
@@ -62,7 +62,7 @@ Type@1ms `show lessons/behaviour-as-examples/example/src/test/resources/returns-
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 33s
 
 # ---- Scene 4: the strong test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show ReturnsTeamExamplesTest 19 27 "the returns team's examples, as a 
 Enter
 Sleep 300ms
 Show
-Sleep 24s
+Sleep 40s
 
 # ---- Scene 5: the examples and the code disagree ----
 Hide

@@ -26,38 +26,6 @@ Say: Our example is an old online shop. Its basket takes 5 percent off orders of
   them, and sends paid ones to the warehouse. Its checkout reserves the stock, adds VAT, takes the payment and sends the
   receipt. Each part has its old tests, which we won't change.
 
-## intro: The tests look better than they are
-- The shop has 13 old tests, and coverage counts every one
-- One checks nothing, one checks only that an answer exists
-- One is switched off, two wait with fixed sleeps, two only pass in order
-- Deleting them would lose what they do pin down
-Picture: magnifier
-Say: Here is the problem. The shop has 13 old tests, and coverage counts every one of them. But one test checks nothing
-  at all, and another checks only that an answer exists. One has been switched off. Two wait with fixed sleeps, and two
-  only pass in a certain order. We can't trust them as they are. And we can't just delete them, because some of them pin
-  down behaviour that nothing else records.
-
-## intro: The fix: record them, refuse new ones
-- An anti-pattern: a habit that makes a test look stronger than it is
-- ArchUnit rules find each one, naming its test, file and line
-- The register: each one written down, with the decision taken on it
-- Then a ratchet: anything not in the register fails the build
-Picture: checklist
-Say: An anti-pattern is a habit that makes a test look stronger than it is, also called a test smell. First, ArchUnit
-  rules find each one, and name its test, file and line. Then we write each one down in a register, with its decision.
-  Nothing is deleted. Then the register works as a ratchet, which turns one way only: old findings are allowed, and a
-  new one fails the build.
-
-## intro: How it works
-- Each kind of anti-pattern is one ArchUnit rule
-- The rules read the compiled tests: no test is run or changed
-- The register is a text file: one row per finding, with its decision
-- The ratchet fails the build, and says how many findings the register lacks
-Picture: terminal
-Say: How does it work? [pause 1600ms] Each kind of anti-pattern is one rule, written with ArchUnit. The rules read the
-  compiled tests, so no test is run or changed. The register is a plain text file, with one row for each finding and its
-  decision. And the ratchet fails the build, and says how many findings the register lacks.
-
 Include: how-we-build
 
 ## closing: What these checks leave out
@@ -94,7 +62,7 @@ Say: Test smells were first catalogued in 2001, in a paper called Refactoring Te
 ## closing: Find out more
 - https://www.archunit.org/userguide/html/000_Index.html — ArchUnit's user guide, with frozen rules
 - https://pmd.github.io/pmd/pmd_userdocs_cpd.html — PMD's copy-paste detector
-- {lessons-repo}/tree/main/lessons/anti-patterns-in-existing-tests — run this lesson yourself: its test code and examples
+- {lessons-repo}/tree/main/lessons/anti-patterns-in-existing-tests — run this lesson yourself: its tests and examples
 - Exercise: count mocks made by calling the mock method; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with ArchUnit's user guide, and PMD's copy-paste detector. The links on screen also take

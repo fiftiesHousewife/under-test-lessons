@@ -10,7 +10,7 @@ import java.util.function.IntConsumer;
 
 /**
  * FIXED: the same program, given how to print and how to end. It still reads its environment variable and standard
- * input. Production passes System.out::println and System::exit; a test passes its own.
+ * input. Whatever runs it chooses: Java's own printing and exit, or, in a test, its own that only record.
  */
 public final class PaymentImport {
 

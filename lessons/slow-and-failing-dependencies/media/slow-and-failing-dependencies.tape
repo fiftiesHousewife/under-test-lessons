@@ -62,7 +62,7 @@ Type@1ms `show TodaysStockClient 26 37 "today's stock client" --zoom 29-32`
 Enter
 Sleep 300ms
 Show
-Sleep 34s
+Sleep 37s
 
 # ---- Scene 4: the weak test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show StockAnswerTest 33 44 "the weak tests" --zoom 41-43`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 31s
 
 # ---- Scene 5: the strong tests ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show SupplierFaultTest 43 56 "the strong tests" --zoom 45-47`
 Enter
 Sleep 300ms
 Show
-Sleep 36s
+Sleep 41s
 
 # ---- Scene 6: the supplier fails ----
 Hide
@@ -121,7 +121,7 @@ Sleep 300ms
 Type@1ms `note "The client with a connect and a read timeout, and a clear fallback:"`
 Enter
 Sleep 300ms
-Type@1ms `show StockClient 30 43 "the fixed client" --zoom 33-38`
+Type@1ms `show StockClient 24 43 "the fixed client" --zoom 25,33`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:slow-and-failing-dependencies:test"`

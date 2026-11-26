@@ -62,7 +62,7 @@ Type@1ms `show TodaysInvoice 9 17 "today's invoice" --zoom 15`
 Enter
 Sleep 300ms
 Show
-Sleep 23s
+Sleep 36s
 
 # ---- Scene 4: the test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show InvoiceTest 13 33 "the test" --zoom 20`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 29s
 
 # ---- Scene 5: today's invoice can't be tested ----
 Hide
@@ -111,7 +111,7 @@ Type@1ms `show Invoice.java 9 24 "the invoice, rates passed in" --zoom 14-16`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 29s
 
 # ---- Scene 7: the test runs ----
 Hide

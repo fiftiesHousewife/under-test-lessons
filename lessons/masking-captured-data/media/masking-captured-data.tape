@@ -22,35 +22,7 @@ Set CursorBlink false
 Env LESSON "masking-captured-data"
 Source lessons/_shared/setup.tape
 
-# ---- Scene 1: step 1, the version catalogue ----
-Hide
-Type@1ms "scene"
-Enter
-Sleep 300ms
-Type@1ms `note "Step 1: Datafaker is in the version catalogue. The keyed hash comes with Java."`
-Enter
-Sleep 300ms
-Type@1ms `show libs.versions.toml "/datafaker/" gradle/libs.versions.toml`
-Enter
-Sleep 300ms
-Show
-Sleep 16s
-
-# ---- Scene 2: step 2, the dependencies ----
-Hide
-Type@1ms "scene"
-Enter
-Sleep 300ms
-Type@1ms `note "Step 2: the third way of data masking, made-up values, uses Datafaker."`
-Enter
-Sleep 300ms
-Type@1ms `show lessons/masking-captured-data/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 9`
-Enter
-Sleep 300ms
-Show
-Sleep 11s
-
-# ---- Scene 3: a day of real data ----
+# ---- Scene 1: a day of real data ----
 Hide
 Type@1ms "scene"
 Enter
@@ -65,87 +37,73 @@ Type@1ms `show lessons/masking-captured-data/example/src/test/resources/capture/
 Enter
 Sleep 300ms
 Show
-Sleep 27s
+Sleep 30s
 
-# ---- Scene 4: the reports the tests run ----
+# ---- Scene 2: the code under test ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The shop's two *reports*: orders per customer, and accounts not yet settled."`
+Type@1ms `note "The code under test: the shop's *two reports*."`
 Enter
 Sleep 300ms
 Type@1ms `show DayReport 14 27 "the reports" --zoom 22-26`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 25s
 
-# ---- Scene 5: today's data masking ----
+# ---- Scene 3: the tests of the reports ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The code under test: *today's* data masking. Fixed text everywhere, and no rule for the note."`
+Type@1ms `note "The tests of the reports, with the day's *real* answers:"`
 Enter
 Sleep 300ms
-Type@1ms `show TodaysMasking 14 23 "today's data masking" --zoom 16-19`
+Type@1ms `show DayReportTest 13 27 "the reports' tests" --zoom 15-25`
 Enter
 Sleep 300ms
 Show
 Sleep 27s
 
-# ---- Scene 6: the weak test ----
+# ---- Scene 4: today's test data ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The *weak* test: the fields it was told about have changed, and no order was lost."`
+Type@1ms `note "How the test data is made *today*: fixed text everywhere, and no rule for the note."`
 Enter
 Sleep 300ms
-Type@1ms `show MaskedFieldsTest 12 24 "the weak test" --zoom 18-19`
+Type@1ms `show TodaysMasking 13 26 "today's test data" --zoom 17-23`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 36s
 
-# ---- Scene 7: the reports still work ----
+# ---- Scene 5: the guard on the test data ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The first *strong* test: the reports give the same answers before and after data masking."`
+Type@1ms `note "A *guard* on the test data: every field scanned, even ones without a rule."`
 Enter
 Sleep 300ms
-Type@1ms `show ReportsStillWorkTest 13 25 "the reports still work" --zoom 16-17`
+Type@1ms `show TestDataHasNothingPersonalTest 15 21 "the guard" --mark 17,19`
+Enter
+Sleep 300ms
+Type@1ms `show PersonalDataDetector 36 50 "the shapes of personal numbers" --zoom 38-48`
 Enter
 Sleep 300ms
 Show
-Sleep 23s
+Sleep 41s
 
-# ---- Scene 8: the detector ----
+# ---- Scene 6: the tests fail on today's test data ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The second *strong* test: a detector scans every field, even ones without a rule."`
-Enter
-Sleep 300ms
-Type@1ms `show NothingPersonalLeftTest 11 16 "the detector check"`
-Enter
-Sleep 300ms
-Type@1ms `show PersonalDataDetector 65 79 "what looks personal" --zoom 67-77`
-Enter
-Sleep 300ms
-Show
-Sleep 28s
-
-# ---- Scene 9: today's data masking breaks the reports ----
-Hide
-Type@1ms "scene"
-Enter
-Sleep 300ms
-Type@1ms `note "Run the tests against today's data masking:"`
+Type@1ms `note "Run the tests on today's test data:"`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:masking-captured-data:test -Pcode=today"`
@@ -155,13 +113,13 @@ Show
 Wait+Screen@300s /completed, \d+ failed/
 Sleep 26s
 Hide
-Type@1ms `callout "Fixed text merges every customer and account, so both reports go wrong. And the notes still hold an email and a name."`
+Type@1ms `callout "Fixed text merges every customer and account, so both reports' tests fail. And the notes still hold an email and a name."`
 Enter
 Sleep 300ms
 Show
 Sleep 6s
 
-# ---- Scene 10: keyed substitutes ----
+# ---- Scene 7: keyed substitutes ----
 Hide
 Type@1ms "scene"
 Enter
@@ -169,21 +127,24 @@ Sleep 300ms
 Type@1ms `note "The fix: *keyed* substitutes. Same value, same key: same substitute."`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedSubstitutes 32 40 "keyed substitutes" --zoom 34-39`
+Type@1ms `show TestData 18 20 "the test data's key" --mark 18-20`
+Enter
+Sleep 300ms
+Type@1ms `show KeyedSubstitutes 17 40 "keyed substitutes" --zoom 27-28,34`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 53s
 
-# ---- Scene 11: the fixed data masking ----
+# ---- Scene 8: the fixed test data ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The fixed data masking: keyed substitutes, and fixed text only where nothing joins:"`
+Type@1ms `note "The fixed test data: keyed substitutes, and fixed text only where nothing joins:"`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedMasking 22 32 "the fixed data masking" --zoom 24-28`
+Type@1ms `show KeyedMasking 22 34 "the fixed test data" --zoom 24-32`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:masking-captured-data:test"`
@@ -193,7 +154,7 @@ Show
 Wait+Screen@300s /\d+ tests? passed\./
 Sleep 22s
 Hide
-Type@1ms `callout "The reports agree before and after data masking, the detector finds nothing, and Datafaker's seeded values pass too."`
+Type@1ms `callout "The reports' tests get the day's real answers, and the guard finds nothing personal left."`
 Enter
 Sleep 300ms
 Show

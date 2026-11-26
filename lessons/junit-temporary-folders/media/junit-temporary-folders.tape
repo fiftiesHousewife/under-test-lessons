@@ -62,7 +62,7 @@ Type@1ms `show FixedFolderTest 14 36 "tests with a fixed folder" --zoom 18`
 Enter
 Sleep 300ms
 Show
-Sleep 27s
+Sleep 31s
 
 # ---- Scene 4: tests with a temporary folder ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show TempDirTest 14 32 "tests with a temporary folder" --zoom 27`
 Enter
 Sleep 300ms
 Show
-Sleep 26s
+Sleep 37s
 
 # ---- Scene 5: the leftover file hides the bug ----
 Hide

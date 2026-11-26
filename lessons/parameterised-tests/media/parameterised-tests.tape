@@ -68,7 +68,7 @@ Type@1ms `show VatCopyPasteTest 11 28 --zoom 22`
 Enter
 Sleep 300ms
 Show
-Sleep 10s
+Sleep 23s
 
 # ---- Scene 4: the parameterised test ----
 Hide
@@ -78,11 +78,11 @@ Sleep 300ms
 Type@1ms `note "The *parameterised* test: the cases as a table, including every way a fifth of a penny can round."`
 Enter
 Sleep 300ms
-Type@1ms `show VatParameterisedTest 13 30 --zoom 20-24`
+Type@1ms `show VatParameterisedTest 13 30 --zoom 17-24`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 38s
 
 # ---- Scene 5: the table finds a bug ----
 Hide

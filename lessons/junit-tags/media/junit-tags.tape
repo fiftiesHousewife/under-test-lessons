@@ -34,7 +34,7 @@ Type@1ms `show StockCheckTest 8 22 "quick tests" --zoom 11`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 28s
 
 # ---- Scene 2: slow tests ----
 Hide
@@ -48,7 +48,7 @@ Type@1ms `show WarehouseStockTest 9 29 "slow tests" --zoom 15-18`
 Enter
 Sleep 300ms
 Show
-Sleep 21s
+Sleep 31s
 
 # ---- Scene 3: today's build runs everything ----
 Hide
@@ -86,7 +86,7 @@ Type@1ms `show WarehouseStockTest 9 11 "the slow test class" --mark 10`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 24s
 
 # ---- Scene 5: the quick task ----
 Hide

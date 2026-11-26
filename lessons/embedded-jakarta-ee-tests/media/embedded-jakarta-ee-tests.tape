@@ -58,6 +58,9 @@ Sleep 300ms
 Type@1ms `note "Two tax rates: the *standard* rate, marked @Standard, and a *reduced* rate added later, with no mark."`
 Enter
 Sleep 300ms
+Type@1ms `show Standard 9 14 "the mark" --mark 10`
+Enter
+Sleep 300ms
 Type@1ms `show StandardRate 5 13 "the standard rate" --zoom 7`
 Enter
 Sleep 300ms
@@ -65,7 +68,7 @@ Type@1ms `show ReducedRate 5 12 "the reduced rate"`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 23s
 
 # ---- Scene 4: the code under test ----
 Hide
@@ -79,7 +82,7 @@ Type@1ms `show TodaysCheckout 9 22 "today's checkout" --zoom 14-15`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 18s
 
 # ---- Scene 5: the test by hand ----
 Hide
@@ -93,7 +96,7 @@ Type@1ms `show CheckoutByHandTest 10 13 "the test by hand" --zoom 12`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 19s
 
 # ---- Scene 6: the test in a container ----
 Hide
@@ -103,11 +106,11 @@ Sleep 300ms
 Type@1ms `note "A test in a *container*: Weld starts inside the test, and wires the beans as the server would."`
 Enter
 Sleep 300ms
-Type@1ms `show CheckoutInContainerTest 15 24 "the test in a container" --zoom 18-19`
+Type@1ms `show CheckoutInContainerTest 15 24 "the test in a container" --zoom 18-19,23`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 38s
 
 # ---- Scene 7: the container finds the wiring bug ----
 Hide

@@ -18,16 +18,6 @@ Say: This lesson covers mutation testing, with PIT: a way to measure whether you
   whether they ran each line. We'll see tests that run every line and still miss most bugs, and how PIT plants small
   bugs and counts the ones caught.
 
-## intro: Every line runs, and most bugs slip through
-- A shop's tests run all 13 lines of its discount rules: 100% line coverage
-- Plant 13 small bugs in those lines, one at a time: the tests catch 5
-- The other 8 pass unnoticed: an order of exactly £50 could lose its discount
-Picture: coverage
-Say: Here is the problem. A shop's tests run every one of the 13 lines in its discount rules, so line coverage is 100
-  percent. Line coverage only counts the lines the tests ran. So we plant 13 small bugs in those lines, one at a time,
-  and run the tests against each. They catch 5. The other 8 slip through. One of them means an order of exactly 50
-  pounds loses its discount, and every test still passes.
-
 ## intro: Our example: a shop's discount rules
 - Orders of £50 or more get 5% off
 - Orders of £100 or more get 10% off
@@ -36,36 +26,6 @@ Picture: basket
 Say: Our example is a small piece of code from an online shop. It works out the discount on an order. Orders of 50
   pounds or more get 5 percent off. Orders of 100 pounds or more get 10 percent off. And loyal customers get 2 percent
   more on top.
-
-## intro: Weak tests that run every line
-- One checks only that the discount is more than zero
-- One uses £70, far from either boundary
-- One calls the code and checks nothing at all
-- One checks that the price is not null: a number never is
-Picture: checklist
-Say: The shop's tests run every line, but look at what they check. [pause 600ms] One checks only that the discount is
-  more than zero. One uses 70 pounds, far from either boundary. One calls the code, and checks nothing at all.
-  [pause 600ms] And one checks that the final price is not null. A number is never null, so that test can't fail.
-
-## intro: The fix: plant bugs, count the catches
-- Change one small thing, a mutation: "£50 or more" becomes "more than £50"
-- A test fails: the bug is caught. Every test passes: it survived
-- Bugs hide at a boundary, where a rule changes: test exactly £50, and £49.99
-Picture: boundary
-Say: The fix is to test the tests. Mutation testing changes one small thing in the code at a time. The change is called
-  a mutation. For example, 50 pounds or more becomes more than 50 pounds. If a test fails, the bug is caught. If every
-  test still passes, the bug survived. Many of these bugs sit at a boundary, the point where a rule changes. So a strong
-  test checks both sides: an order of exactly 50 pounds, and one of 49 pounds 99.
-
-## intro: How PIT runs
-- PIT is open source, and the build runs it from its own command line
-- One task plants the bugs and runs the tests: pitest
-- The result: "the tests caught 5 of 13 planted bugs (38%)"
-Picture: robot
-Say: PIT is the mutation testing tool for Java, and it's open source. The build runs it from its own command line,
-  as a task called pit test. It changes the compiled code in memory, one mutation at a time. For each change it runs only the
-  tests that reach that line, which keeps it fast. Then it reports every planted bug as caught or survived. For the
-  shop's tests today, it says 5 of 13 were caught.
 
 Include: how-we-build
 

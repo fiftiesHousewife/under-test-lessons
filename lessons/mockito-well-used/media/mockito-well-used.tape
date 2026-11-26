@@ -33,8 +33,11 @@ Sleep 300ms
 Type@1ms `show CardPayments 3 8 "the shop's own interface over the card provider" --zoom 3-4`
 Enter
 Sleep 300ms
+Type@1ms `show lessons/mockito-well-used/example/build.gradle.kts "/^dependencies/" "lesson build file" --mark 9`
+Enter
+Sleep 300ms
 Show
-Sleep 29s
+Sleep 38s
 
 # ---- Scene 2: the code under test ----
 Hide
@@ -62,7 +65,7 @@ Type@1ms `show MockEverythingTest 15 28 "the weak test" --zoom 26-27`
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 33s
 
 # ---- Scene 4: the strong test ----
 Hide
@@ -72,11 +75,11 @@ Sleep 300ms
 Type@1ms `note "The *strong* test: a fake order book, one mock where money leaves, and an *argument captor*."`
 Enter
 Sleep 300ms
-Type@1ms `show CapturedRefundTest 17 32 "the strong test" --zoom 28-31`
+Type@1ms `show CapturedRefundTest 17 32 "the strong test" --zoom 21-22,29,31 --mark 19`
 Enter
 Sleep 300ms
 Show
-Sleep 31s
+Sleep 46s
 
 # ---- Scene 5: the captor finds the bug ----
 Hide

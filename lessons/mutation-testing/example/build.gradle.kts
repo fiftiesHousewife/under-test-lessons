@@ -15,7 +15,7 @@ val unusedTests = when (code) {
     else -> listOf("*WeakTest", "*AnswerTest")
 }
 
-// The shared plugin's pitest task runs PIT; this lesson tells it which tests to leave out.
+// The pitest task runs PIT; this lesson tells it which tests to leave out.
 tasks.named<JavaExec>("pitest") {
     args("--excludedTestClasses=" + unusedTests.joinToString(","))
 }

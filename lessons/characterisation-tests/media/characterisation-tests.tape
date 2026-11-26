@@ -62,7 +62,7 @@ Type@1ms `show LegacyStatement 14 31 --zoom 21-22`
 Enter
 Sleep 300ms
 Show
-Sleep 19s
+Sleep 31s
 
 # ---- Scene 4: the weak test ----
 Hide
@@ -76,7 +76,7 @@ Type@1ms `show StatementWeakTest 16 24 --zoom 22-23`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 21s
 
 # ---- Scene 5: the characterisation test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show StatementCharacterisationTest 16 33 --zoom 25`
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 31s
 
 # ---- Scene 6: the tests pass, and the approved statement ----
 Hide
@@ -120,7 +120,10 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "Now run the same test against a tidier rewrite of the printer:"`
+Type@1ms `note "A tidier rewrite of the printer, and the same test run against it:"`
+Enter
+Sleep 300ms
+Type@1ms `show RefactoredStatement 15 31 "the tidier rewrite" --zoom 22`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:characterisation-tests:test -Pcode=today"`

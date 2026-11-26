@@ -13,6 +13,12 @@ Many planted bugs sit at **boundaries**, the points where a rule changes: orders
 boundary notices. A suite can run every line, for 100% coverage, and still let most planted bugs survive. This example
 shows exactly that.
 
+To add PIT to your own build, apply the [Gradle PIT plugin](https://gradle-pitest-plugin.solidsoft.info/)
+(`info.solidsoft.pitest`, in the version catalogue as `gradle-pitest-plugin`), which adds a `pitest` task, or, on
+Maven, [PIT's Maven plugin](https://pitest.org/quickstart/maven/) (`org.pitest:pitest-maven`, goal
+`mutationCoverage`). Either needs PIT's JUnit 5 support (`pitest-junit5`) to run JUnit 5 tests. The lesson's build
+already has the `pitest` task, and sets one of PIT's options to choose the tests.
+
 ## Run the example
 
 ```bash

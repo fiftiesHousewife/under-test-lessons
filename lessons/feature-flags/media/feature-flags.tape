@@ -62,7 +62,7 @@ Type@1ms `show Checkout 18 21 "the checkout" --zoom 19`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 33s
 
 # ---- Scene 4: the code under test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show DefaultFlagsTest 11 18 "tests with the default flag" --zoom 13`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 22s
 
 # ---- Scene 6: tests both ways ----
 Hide
@@ -100,11 +100,14 @@ Sleep 300ms
 Type@1ms `note "Tests that run *both ways*: the same checks with the flag off, then on."`
 Enter
 Sleep 300ms
-Type@1ms `show BothWaysTest 12 20 "tests both ways" --zoom 13`
+Type@1ms `show BothWaysTest 12 20 "tests both ways" --zoom 13-15`
+Enter
+Sleep 300ms
+Type@1ms `show Checkouts 29 43 "setting the flag" --mark 31-33,39,42`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 41s
 
 # ---- Scene 7: both ways finds the bug ----
 Hide

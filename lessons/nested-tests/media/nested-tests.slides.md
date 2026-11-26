@@ -11,15 +11,6 @@ Picture: road
 Say: Here, we look at nested tests: tests grouped by the situation they start from, so a missing case is easy to see.
   We'll see a loan marked repaid that was never approved, and how JUnit's nested classes show the gap.
 
-## intro: An unapproved loan is marked repaid
-- A loan that was only requested can be marked repaid, skipping approval
-- The 4 tests pass: none of them asks
-- In one flat list, with long names, the missing question is invisible
-Picture: bug
-Say: Here is the problem. A loan that was only requested, and never approved, can be marked as repaid. It skips the
-  approval altogether. Yet the 4 tests all pass, because none of them asks. They are one flat list, with long names, and
-  in a list like that a missing question is hard to spot.
-
 ## intro: Our example: a loan
 - A loan is requested, then approved, then repaid
 - Each step is allowed only from the state before it
@@ -27,24 +18,6 @@ Say: Here is the problem. A loan that was only requested, and never approved, ca
 Picture: statement
 Say: Our example is a loan. A loan is requested, then approved, then repaid. Each step is allowed only from the state
   just before it, and every other step must be refused.
-
-## intro: The fix: group the tests by situation
-- One group of tests for each state: requested, approved, repaid
-- Each group asks the same questions: can it be approved? can it be repaid?
-- Asked in every state, the missing question stands out, and it fails
-Picture: folders
-Say: The fix is to group the tests by situation, one group for each state the loan can be in: requested, approved and
-  repaid. Groups inside a test class are called nested tests. Each group asks the same 2 questions: can it be approved,
-  and can it be repaid? Ask them in every state, and the gap stands out. And today, it fails.
-
-## intro: How JUnit nests tests
-- @Nested on an inner class, with @DisplayName("when approved")
-- Its @BeforeEach sets up the state: loan.approve()
-- The report reads as a sentence: A loan > when requested > cannot be repaid FAILED
-Picture: robot
-Say: How does JUnit nest tests? You mark an inner class as nested, and give it a name that reads as words, a display
-  name, like when approved. Its set-up step runs before each of its tests, and puts the loan in that state. And the
-  report reads as a sentence: a loan, when requested, cannot be repaid. Failed.
 
 ## closing: When to nest tests
 - For anything with states or situations: workflows, accounts, orders, permissions
@@ -66,7 +39,7 @@ Say: Nested tests and display names have been part of JUnit since JUnit 5, in 20
 ## closing: Find out more
 - https://junit.org — JUnit, with its user guide on nested tests
 - {lessons-repo}/tree/main/lessons/nested-tests — run this lesson yourself: its test code and examples
-- Exercise: ask every situation whether a refused step leaves the loan as it was; the README has the steps and the answer
+- Exercise: ask each situation if a refused step leaves the loan as it was; the README has the steps and the answer
 Picture: globe
 Say: To find out more, read the JUnit user guide's section on nested tests. The links on screen also take you to this
   lesson's test code and examples, to run yourself. And try the exercise in the README: ask every situation one more

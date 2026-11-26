@@ -90,7 +90,7 @@ Type@1ms `show PaymentLineTest 11 19 "tests of the pieces" --zoom 17`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 16s
 
 # ---- Scene 6: made-up input ----
 Hide
@@ -104,7 +104,7 @@ Type@1ms `show SyntheticPayments 23 27 "made-up payments" --zoom 24`
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 27s
 
 # ---- Scene 7: the whole job ----
 Hide
@@ -114,14 +114,14 @@ Sleep 300ms
 Type@1ms `note "A test of the *whole job*: Spring Batch runs it, and the file is read back as *records*."`
 Enter
 Sleep 300ms
-Type@1ms `show WholeJobTest 31 38 "test of the whole job"`
+Type@1ms `show WholeJobTest 21 38 "test of the whole job" --zoom 21,25-29`
 Enter
 Sleep 300ms
-Type@1ms `show WholeJobTest 48 62 "run the job, compare the records" --zoom 57-61`
+Type@1ms `show WholeJobTest 48 62 "run the job, compare the records" --mark 57-61`
 Enter
 Sleep 300ms
 Show
-Sleep 28s
+Sleep 55s
 
 # ---- Scene 8: a day of real data, masked ----
 Hide
@@ -137,11 +137,11 @@ Sleep 300ms
 Type@1ms `show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-settlement.csv 1 8 "settlement file the bank accepted, masked"`
 Enter
 Sleep 300ms
-Type@1ms `show KeyedSubstitutes 29 33 "keyed substitutes" --zoom 31-32`
+Type@1ms `show KeyedSubstitutes 18 33 "keyed substitutes" --zoom 25-26 --mark 31-32`
 Enter
 Sleep 300ms
 Show
-Sleep 31s
+Sleep 42s
 
 # ---- Scene 9: the records name the gap ----
 Hide
@@ -173,6 +173,9 @@ Type@1ms `note "The writer that adds the closing line the bank checks:"`
 Enter
 Sleep 300ms
 Type@1ms `show BankSettlementJob 19 27 "the fixed writer" --zoom 24-26`
+Enter
+Sleep 300ms
+Type@1ms `show SettlementTotals 38 49 "the totals and the closing line" --mark 47-48`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:batch-file-in-file-out:test"`

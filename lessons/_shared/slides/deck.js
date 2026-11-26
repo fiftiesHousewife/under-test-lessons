@@ -198,6 +198,20 @@
     if (waiting) { setListening(true); return; }
     if (!event.target.closest('a, .notes, button')) { move(event.clientX < window.innerWidth / 3 ? -1 : 1); }
   });
+  // Edit voice: only where the voice review runs on this machine (production/voice-review), which
+  // answers at localhost; anywhere else the button never appears. It opens the review of this lesson's voice.
+  var REVIEW = 'http://localhost:8765';
+  var lesson = ((location.pathname || '').split('/').pop() || '').replace(/\.deck\.html$|\.html$/, '');
+  if (lesson && window.fetch && window.AbortController) {
+    var asking = new AbortController();
+    setTimeout(function () { asking.abort(); }, 1000);
+    fetch(REVIEW + '/ping', { signal: asking.signal }).then(function (answer) {
+      if (!answer.ok) { return; }
+      control('deck-edit', 'Edit voice', function () {
+        window.open(REVIEW + '/lesson/' + encodeURIComponent(lesson), 'voice-review');
+      });
+    }).catch(function () { /* not running here: no button */ });
+  }
   window.addEventListener('resize', fit);
   fit();
   show(current);

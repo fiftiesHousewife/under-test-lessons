@@ -30,11 +30,11 @@ Sleep 300ms
 Type@1ms `note "Step 1: add Logbook to the version catalogue, with Jetty and Apache's HTTP client for the old service."`
 Enter
 Sleep 300ms
-Type@1ms `show libs.versions.toml "/logbook|jetty|httpclient5/" gradle/libs.versions.toml`
+Type@1ms `show libs.versions.toml "/logbook|jetty|httpclient5|approvaltests/" gradle/libs.versions.toml`
 Enter
 Sleep 300ms
 Show
-Sleep 21s
+Sleep 26s
 
 # ---- Scene 2: step 2, the dependencies ----
 Hide
@@ -44,11 +44,11 @@ Sleep 300ms
 Type@1ms `note "Step 2: add Logbook's core, its JSON filters, its servlet filter and its HTTP client hook."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/capturing-with-logbook/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-13`
+Type@1ms `show lessons/capturing-with-logbook/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-13,19`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 20s
 
 # ---- Scene 3: where Logbook hooks in ----
 Hide
@@ -65,7 +65,7 @@ Type@1ms `show LoyaltyClient 25 31 "the loyalty client" --mark 27`
 Enter
 Sleep 300ms
 Show
-Sleep 24s
+Sleep 31s
 
 # ---- Scene 4: the code under test ----
 Hide
@@ -106,8 +106,11 @@ Sleep 300ms
 Type@1ms `show ApprovedCaptureTest 18 33 "the strong tests" --zoom 25-27`
 Enter
 Sleep 300ms
+Type@1ms `show ApprovedCaptureTest 39 45 "comparing with the approved file" --mark 41`
+Enter
+Sleep 300ms
 Show
-Sleep 25s
+Sleep 42s
 
 # ---- Scene 7: the recording holds the secrets ----
 Hide
@@ -138,7 +141,7 @@ Sleep 300ms
 Type@1ms `note "The recording with Logbook's filters: the Authorization header hidden, and every email replaced."`
 Enter
 Sleep 300ms
-Type@1ms `show FilteredCapture 19 26 "the filtered capture" --zoom 22-23`
+Type@1ms `show FilteredCapture 19 26 "the filtered capture" --zoom 22-24`
 Enter
 Sleep 300ms
 Type@1ms `run_live "./gradlew :lessons:capturing-with-logbook:test"`

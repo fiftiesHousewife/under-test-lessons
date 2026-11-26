@@ -30,48 +30,16 @@ Say: Our example is a shop's card payments. The till sends one message for each 
   is a database, so now and then it is busy for a moment. And one old till still sends pounds, so one message can never
   be read.
 
-## intro: One payment lost, another counted twice
-- When the payment book is busy for a moment, payment A-1002 is lost for good
-- When the same payment arrives a second time, the shop records it twice
-- The old till's unreadable message just disappears
-- The unit test passes: it hands the consumer one message, with no broker behind it
-Picture: bug
-Say: Here is the problem. When the payment book is busy for a moment, one payment, order A-1002, is lost for good. When
-  the same payment, for order A-1001, arrives a second time, the shop records it twice. And the old till's message,
-  which the consumer can't read, simply disappears. The unit test passes. It hands the consumer one message it built by
-  hand, so it can't catch any of this.
-
 ## intro: What a broker does
 - A broker holds messages on queues, until another program takes them
 - Acknowledging a message tells the broker it can forget it
-- Today's consumer acknowledges each one on arrival, before it records the payment
+- Acknowledge before the work is done, and a failure loses the message
+- Redeliver after a failure, and the same message can arrive twice
 Picture: queue
 Say: A broker is a program that holds messages on queues, until another program takes them. In Java, the standard way to
   send and take them is JMS, now called Jakarta Messaging. [pause 600ms] Acknowledging a message tells the broker it can
-  forget it. [pause 600ms] Today's consumer acknowledges each one as it arrives, before it records the payment. So a
-  failure loses it.
-
-## intro: The fix: a real broker inside the test
-- A test sends the example messages to a real broker, started inside the test
-- It checks what the consumer recorded, and what is left on each queue
-- The examples came from a test queue, read without taking any, then masked
-Picture: server
-Say: The fix is to test on a real broker. A message consumer test sends the example messages to a real broker, started
-  inside the test. Then it checks what the consumer recorded, and what is left on each queue. [pause 600ms] We read the
-  example messages from a test queue with a queue browser, which takes none off it. Then we masked their secrets, and
-  swapped each identifier for a substitute that stays the same.
-
-## intro: How an embedded Artemis broker looks
-- new EmbeddedActiveMQ(), reached in memory at vm://0, with setPersistenceEnabled(false)
-- As production: setMaxDeliveryAttempts(3), setDeadLetterAddress("payments.dead-letter")
-- The fix: createSession(Session.SESSION_TRANSACTED), then commit or rollback
-- Today: payments recorded expected [A-1001, A-1002, A-1004] but was [A-1001, A-1004]
-Picture: server
-Say: Here is how it looks. Artemis is a broker written in plain Java, so the test starts it in a fraction of a second.
-  The consumer reaches it in memory, with no network, and nothing is written to disk. The test sets it up as
-  production's broker is set up: 3 tries at each message, then the dead-letter queue, which keeps the messages the
-  consumer can't process. The fixed consumer commits each message only after the payment is recorded, and rolls it back
-  on a failure, so the broker delivers it again. Today, the test expected 3 payments recorded, and found 2.
+  forget it. [pause 600ms] Acknowledge it before the work is done, and a failure loses it. [pause 600ms] Deliver it
+  again after a failure, and the same message can arrive twice.
 
 Include: how-we-build
 

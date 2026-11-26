@@ -65,7 +65,7 @@ Type@1ms `show TodaysOrderTables 19 27 "today's code that saves orders" --zoom 2
 Enter
 Sleep 300ms
 Show
-Sleep 33s
+Sleep 38s
 
 # ---- Scene 4: the unit tests ----
 Hide
@@ -89,11 +89,11 @@ Sleep 300ms
 Type@1ms `note "The *black-box test* starts WireMock, writes a settings file, and starts the service as it ships."`
 Enter
 Sleep 300ms
-Type@1ms `show OrderServiceTest 42 55 "starting the service for each test" --zoom 45-48`
+Type@1ms `show OrderServiceTest 38 55 "starting the service for each test" --zoom 44-48 --mark 38`
 Enter
 Sleep 300ms
 Show
-Sleep 29s
+Sleep 34s
 
 # ---- Scene 6: the black-box test ----
 Hide
@@ -103,11 +103,14 @@ Sleep 300ms
 Type@1ms `note "It checks only what comes out: the *answer*, the *warehouse call*, and the *rows written*."`
 Enter
 Sleep 300ms
-Type@1ms `show OrderServiceTest 57 69 "the black-box test" --zoom 64-68`
+Type@1ms `show OrderServiceTest 57 69 "the black-box test" --zoom 59-63 --mark 65-68`
+Enter
+Sleep 300ms
+Type@1ms `show OrderServiceTest 81 94 "reading the rows written" --mark 84-87`
 Enter
 Sleep 300ms
 Show
-Sleep 24s
+Sleep 52s
 
 # ---- Scene 7: the order is lost ----
 Hide

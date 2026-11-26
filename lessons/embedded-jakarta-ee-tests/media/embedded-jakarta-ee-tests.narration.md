@@ -8,14 +8,17 @@ spoken.
    Contexts and Dependency Injection: the part of Jakarta E E that wires objects together.
 2. Step two. The lesson compiles against the CDI interface, which the application server provides in production. And
    its tests use Weld.
-3. Here are two tax rates. The standard rate, twenty percent, is marked standard: the team marked it when the reduced
-   rate, five percent, came along, with no mark at all.
-4. Here is the code under test, today's checkout. It asks the container for a tax rate, without saying which.
+3. First, the mark itself. It's a CDI qualifier: an annotation that lets code ask for a bean by name. The standard
+   rate carries the mark, and gives 20%. The reduced rate gives 5%, and has no mark at all.
+4. Here is the code under test, today's checkout. It asks the container for a tax rate, without saying which. The
+   reduced rate came along, and the checkout never changed.
 5. This is a unit test that builds the checkout by hand, and hands it the standard rate itself. So it
-   checks the sums, but not the wiring.
-6. Now, a test in a container. Weld, the same container application servers use, starts inside the
-   test, and wires the beans exactly as the server would.
+   checks the sums, but never gets the rate the server chooses.
+6. Next, a test in a container. Weld's JUnit extension starts Weld for each test. Weld is the container application
+   servers use, and here it runs inside the test, with no server to deploy to. The test lists the parts it needs: the
+   checkout and both rates. Then it asks Weld for the checkout, wired as the server would wire it, and checks that £10
+   comes to £12.
 7. We run the tests against today's checkout. By hand, it's right. In the container, the checkout gets the reduced
-   rate, because it's the only one without a mark. Five percent, instead of twenty.
-8. Now the checkout that asks for the standard rate, by name. We run the same tests. [pause 1s] It's wired as
-   intended.
+   rate, because it's the only one without a mark. So £10 comes to £10.50, instead of £12.
+8. Now the checkout that asks for the standard rate, by name: its constructor marks the rate it wants as standard. We
+   run the same tests. [pause 1s] It's wired as intended.

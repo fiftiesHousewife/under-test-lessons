@@ -10,16 +10,19 @@ narration, in [black-box-tests.slides.md](black-box-tests.slides.md). Written to
    address, the warehouse's address, and the port. The test starts it the same way, with its own settings.
 3. Here is the code under test, the code that saves orders today. It saves each order as 2 rows, the order and its
    line, in one transaction, so both are kept or neither is. It turns off automatic commits, and inserts the rows.
-   And then it never commits. When the connection closes, the database throws both rows away.
+   And then it never commits. Committing is the step that makes a change permanent. So when the connection closes, the
+   database throws both rows away.
 4. These are the unit tests. They check the order rules, with a stand-in warehouse, and a list in place
    of the database. An order with stock is placed and kept. An order without stock is refused. They pass, and they
    never run the web server, the warehouse call, or the database.
-5. Now, the black-box test. Before each test, it starts WireMock as the warehouse. It writes a settings
-   file, with a database in a temporary folder, the warehouse's address, and port 0, so the service takes any free
-   port. Then it starts the service through its entry point, as it ships.
-6. The test itself knows nothing about the classes inside. It posts an order, and checks the answer: 201 Created, with
-   the order's address and id. It checks the call the warehouse received. And it reads the rows written, straight from
-   the service's database.
+5. Next, the black-box test. At the top, it makes WireMock the warehouse, on any free port. Before each test, it
+   starts WireMock, and writes a settings file: an H2 database in a temporary folder, the warehouse's address, and
+   port 0, so the service takes any free port. Then it starts the service through its entry point, as it ships.
+6. The test itself knows nothing about the classes inside. First, WireMock answers as the warehouse would, and puts
+   the stock aside. Then REST Assured posts an order for 3 pens. The test checks the answer: 201 Created, with the
+   order's address and id. WireMock keeps every request it receives, so the test checks the call the warehouse got.
+   Below, plain database code reads the rows the service wrote, straight from its database. The requests can be
+   examples the people who run the service know well, or real ones, recorded, with their personal data masked.
 7. We run the tests against today's code. The unit tests pass. The refused order passes too, because nothing should be
    written. But the placed order fails. The answer was right, and the warehouse put the stock aside. Yet the service
    wrote no rows. The order is lost.

@@ -1,0 +1,340 @@
+# The voice review set: the phrases and words to hear, under their group headings. review_set.py finds each one in
+# the decks' narration, picks a sentence for it, and voices it. A line's number stays the same when this list grows,
+# so saved answers stay with their lines. 'Punctuation and numbers' is found by pattern, in review_set.py.
+
+## Phrases
+temporary folder
+whole application
+continuous integration server
+data masking
+personal data
+keyed hash
+keyed substitute
+test case
+test cases
+Apache licence
+MIT licence
+closing line
+first invoice
+planted bugs
+fresh database
+raw SQL
+dynamic tests
+standard rate
+reduced rate
+Martin Fowler's article
+cancelled order
+flaky tests
+fixed seed
+black-box test
+Michael Feathers
+OpenAPI schema
+open source
+empty folder
+real broker
+final price
+nested tests
+standard input
+Spring Boot
+compiled classes
+nightly job
+stand-in provider
+Jakarta EE
+message queue
+confirmation email
+JUnit extensions
+VAT rate
+secret key
+card provider
+throwaway container
+container runtime
+free port
+exchange rates
+web slice
+data slice
+order summary
+copy-paste detector
+batch job
+input file
+order service
+Authorization header
+email field
+bank statement
+running balance
+outgoing requests
+versioned artifact
+consumer-driven contracts
+main branch
+changed code
+customers table
+Functional Source License
+tax rate
+application server
+fake queue
+feature toggles
+mail server
+background thread
+shared settings
+end-of-day export
+accounts system
+free text
+argument captor
+existing tests
+Idempotency-Key header
+whole number
+percent off
+code under test
+
+## More phrases
+temporary folders
+test database
+payment book
+web page
+live rates
+order book
+made-up address
+number type
+lower case
+flag service
+integration server
+deterministic tests
+folder rule
+Jakarta Messaging
+Szczepan Faber
+Tom Akehurst
+Gojko Adzic's
+Pete Hodgson's
+Working Effectively
+Pact JVM
+stand-in server
+exchange rate
+error page
+empty response
+test key
+invoice book
+approval tests
+Refactoring Test Code
+Unit Test Patterns
+Gerard Meszaros
+Ward Cunningham's
+Dan North
+black-box tests
+customer data
+business rule
+customer service
+authorization filter
+Llewellyn Falco
+Ian Robinson
+coverage rule
+coverage check
+mutation tests
+Practical Mutation Testing
+production data
+change set
+customer records
+bug reports
+test methods
+net price
+test doubles
+Cloud Native Computing Foundation
+Paul Hammant
+invoice number
+Hypersonic SQL
+test task
+temp folder
+consumer test
+payment message
+final classes
+Richard Lipton
+Henry Coles
+Parallel Isolated Test
+inner class
+Stefan Birkner's System Rules
+Linux Foundation
+validation rules
+Koen Claessen
+John Hughes
+Richard North
+file system
+stability patterns
+Michael Nygard's
+Release It
+delivery service
+data layer
+date field
+text format
+clean code
+Uncle Bob's
+static method
+source set
+order number
+main method
+database tables
+content type
+test dependencies
+unit price
+full price
+differential test
+tax rates
+database server
+invoices table
+made-up values
+Social Security
+National Insurance
+Apache Artemis
+payments queue
+Byte Buddy
+System Stubs
+REST Assured
+day-first pattern
+whole-application test
+Federal Trade Commission
+
+## Acronyms
+AI
+API
+CDI
+COALESCE
+CSV
+EE
+EU
+FTC
+GDPR
+H2
+HMAC
+HTTP
+IDEA
+ISO
+JMS
+JSON
+JVM
+M1
+MIT
+NET
+NIST
+OK
+PIT
+PMD
+README
+REST
+RFC
+SQL
+TNG
+UK
+VAT
+XML
+XXX
+YAML
+ZIP
+
+## Code and product names
+ActiveMQ
+ApprovalTests
+ArchUnit
+AssertJ
+AsyncAPI
+DeMillo
+DiUS
+EasyMock
+IntelliJ
+JSONUnit
+JUnit
+JaCoCo
+JetBrains
+JsonUnit
+McKeeman
+OpenAPI
+OpenFeature
+ParameterizedTest
+PostgreSQL
+PowerMock
+QuickCheck
+RSpec
+SmartBear
+SpotBugs
+TestNG
+WildFly
+WireMock
+XMLUnit
+jetCheck
+xUnit
+
+## Names and other words
+Adzic
+Akehurst
+Artifactory
+Atlassian
+Awaitility
+Birkner
+Claessen
+Cunningham
+Datafaker
+Edinburgh
+Faber
+Gojko
+Gradle
+Haleby
+Hamcrest
+Hammant
+Haskell
+Hodgson
+Idempotency-Key
+Jakarta
+Koen
+Kotlin
+Linux
+Lipton
+Liquibase
+Llewellyn
+Luk
+Maven
+Meszaros
+Mockito
+Mozilla
+Nygard
+O'Brien
+Robinson
+Sayward
+Shopify
+Szczepan
+Testcontainers
+Toxiproxy
+Wikipedia
+Zalando
+bloggs
+changelog
+characterisation
+classpath
+diff-cover
+dir
+formatter
+euro
+postcode
+runtime
+scm
+servlet
+validator
+workflows
+Parameterised
+
+## Numbers and codes
+1.0.0
+1.01
+1.1.0
+1.17
+1.4
+1.8
+10.50
+12.5
+12.50
+19.99
+1AE
+1p
+3.99
+30th
+37.50
+4.1
+4.7
+2026-11-23
+A-1001
+realestate.com.au

@@ -95,3 +95,8 @@ tasks.check {
 underTest {
     maxClassesPerPackage = 44
 }
+
+// The deck's own script and styles are tested here (DeckListenTest drives deck.js), so a change to them reruns the tests.
+tasks.test {
+    inputs.dir(rootDir.resolve("lessons/_shared/slides")).withPropertyName("sharedSlides")
+}

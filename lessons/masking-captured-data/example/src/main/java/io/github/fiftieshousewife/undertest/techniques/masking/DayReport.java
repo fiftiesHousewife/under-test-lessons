@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/** The reports the shop runs on a day's orders and payments, and the tests run on a day of real data. */
+/** The code under test: the reports the shop runs on a day's orders and payments. */
 public final class DayReport {
 
     private DayReport() {

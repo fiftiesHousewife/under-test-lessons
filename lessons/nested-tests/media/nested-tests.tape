@@ -48,7 +48,7 @@ Type@1ms `show FlatLoanTest 10 37 "flat tests"`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 26s
 
 # ---- Scene 3: the nested tests ----
 Hide
@@ -62,21 +62,21 @@ Type@1ms `show LoanTest 12 33 "nested tests: when requested" --zoom 17-19`
 Enter
 Sleep 300ms
 Show
-Sleep 16s
+Sleep 25s
 
 # ---- Scene 4: the next situation ----
 Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The same two questions for an approved loan, and again for a repaid one."`
+Type@1ms `note "The same two questions for an approved loan, and again for a repaid one. Each group sets itself up first."`
 Enter
 Sleep 300ms
-Type@1ms `show LoanTest 35 56 "nested tests: when approved" --zoom 39-42`
+Type@1ms `show LoanTest 35 79 "nested tests: when approved, when repaid" --zoom 39-42,62-66`
 Enter
 Sleep 300ms
 Show
-Sleep 14s
+Sleep 23s
 
 # ---- Scene 5: the gap shows ----
 Hide

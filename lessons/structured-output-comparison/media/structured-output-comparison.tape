@@ -76,7 +76,7 @@ Type@1ms `show TodaysOrderSummary 18 21 "today's total" --zoom 20`
 Enter
 Sleep 300ms
 Show
-Sleep 12s
+Sleep 26s
 
 # ---- Scene 5: the loosened test ----
 Hide
@@ -90,7 +90,7 @@ Type@1ms `show ContainsTextTest 7 17 "the loosened test" --zoom 15`
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 23s
 
 # ---- Scene 6: the structured comparison ----
 Hide
@@ -100,11 +100,11 @@ Sleep 300ms
 Type@1ms `note "A *structured* comparison: every field and value, in any order. The id and time only have to be there."`
 Enter
 Sleep 300ms
-Type@1ms `show CompareJsonTest 13 27 "the structured comparison" --zoom 23-24`
+Type@1ms `show CompareJsonTest 13 27 "the structured comparison" --zoom 15,23-24`
 Enter
 Sleep 300ms
 Show
-Sleep 17s
+Sleep 32s
 
 # ---- Scene 7: the comparison finds the bug ----
 Hide

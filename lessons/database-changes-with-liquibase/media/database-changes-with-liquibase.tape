@@ -53,11 +53,11 @@ Sleep 300ms
 Type@1ms `note "Step 2: the application applies its own changes when it starts, so Liquibase is a main dependency."`
 Enter
 Sleep 300ms
-Type@1ms `show lessons/database-changes-with-liquibase/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10`
+Type@1ms `show lessons/database-changes-with-liquibase/example/build.gradle.kts 9 28 "lesson build file" --mark 10 --zoom 21-25`
 Enter
 Sleep 300ms
 Show
-Sleep 11s
+Sleep 31s
 
 # ---- Scene 3: the code under test ----
 Hide
@@ -71,7 +71,7 @@ Type@1ms `show lessons/database-changes-with-liquibase/example/src/main/resource
 Enter
 Sleep 300ms
 Show
-Sleep 22s
+Sleep 33s
 
 # ---- Scene 4: the test on an in-memory database ----
 Hide
@@ -84,8 +84,11 @@ Sleep 300ms
 Type@1ms `show InMemoryChangesTest 13 21 "the test on H2" --zoom 18-19`
 Enter
 Sleep 300ms
+Type@1ms `show DatabaseChanges 23 30 "the code that applies the changes" --mark 27-30`
+Enter
+Sleep 300ms
 Show
-Sleep 14s
+Sleep 42s
 
 # ---- Scene 5: the test on real PostgreSQL ----
 Hide
@@ -95,11 +98,11 @@ Sleep 300ms
 Type@1ms `note "The same changes applied to *real PostgreSQL*, in a throwaway container."`
 Enter
 Sleep 300ms
-Type@1ms `show RealPostgresChangesTest 19 30 "the test on PostgreSQL" --zoom 19-22`
+Type@1ms `show RealPostgresChangesTest 15 30 "the test on PostgreSQL" --zoom 15,18-22`
 Enter
 Sleep 300ms
 Show
-Sleep 15s
+Sleep 33s
 
 # ---- Scene 6: PostgreSQL refuses the change ----
 Hide
