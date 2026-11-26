@@ -70,18 +70,36 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
 - **Keep sentences short and simple.** If you would run out of breath reading one aloud, it's too long. Introduce a
   library in a sentence of its own, saying what it does, before its history: "WireMock is a library that stands in for
   another web service."
-- **Say what the lesson covers first**, then the problem. Never open with a bare "Here is the problem".
+- **Say what the lesson covers first**, then the example, then the problem. Never open with a bare "Here is the
+  problem", and vary the opening from the lessons beside it, never "This lesson is about" in every deck.
+- **Describe the example once,** on its own slide, before the problem; the problem builds on it and never repeats it.
 - **Vary the way into each topic**, linking it to the one before, as a person would: "Let's start with...",
   "Once the code runs safely, the next question is...", "Next up...", "That's where ... comes in", "Finally...".
   Never open two slides of a deck the same way; "Now we talk about" opens one slide at most.
 - **Contrast the outcomes before the problem**, and show a boundary with the values on each side of it: "Day 29: a
   refund. Day 31: store credit. Day 30: which?"
-- **Fewer words, more slides:** three or four points a slide, and a heading of 40 characters or less.
+- **Fewer words, more slides:** three or four points a slide, one item to a bullet, and a heading of 40 characters
+  or less.
+- **Bullets are plain English.** Code goes in a slide's code panel, never mixed into a sentence on a bullet.
+- **Never read code aloud.** Say what it is: "calling the mock method", not "mock()"; never a command, `./` or
+  `gradlew`.
+- **Say what code does,** not a class's name made into a phrase: "the code that saves orders", not "the order tables".
+- **End a sentence on what matters,** never on "something": "the only record of how the shop really behaves".
+- **Speak to the listener's world.** Never "this build" or "this repository": name the tool, or say what it does.
+  Don't explain what engineers already know, such as continuous integration.
+- **Only people see.** A report counts, a test gets; never "the test sees".
 - **Active voice, not passive:** "we tidy the printer up", not "the printer is tidied up"; "the schema stayed the
   same", not "the schema wasn't changed". The subject is the thing itself, or "we" for the lesson.
 - **Pauses** go between sentences, never inside a phrase ("This is [pause] the weak test").
 - **Pronunciation:** add each name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`, and check
-  it there before writing a new one.
+  it there before writing a new one. What reviewing taught:
+  - A phrase gets its own entry, with its stress: equal on both words where both matter ("feature flag", "Spring
+    Batch", "copy-paste"), on the first for a compound noun ("build file", "test case"), and on the word that differs
+    in a contrast. A word the voice shrinks needs its own stress too ("new code", not "new cd").
+  - Every name the list spells out needs its possessive as well ("WireMock's"), or the voice says the name, then "s".
+  - "read" is the present tense unless a phrase says otherwise: give the past tense a phrase ("line read", "be read").
+  - Status codes as developers say them ("201 = two oh one"); one-word terms as one word ("commandline", "classpath");
+    people's names as they say them ("Lukáš Křečan").
 
 The phrases below that a machine can spot are in [`lessons/_shared/dont-say.txt`](lessons/_shared/dont-say.txt), which
 `checkVideoScripts` applies to every slide and narration: add a phrase there when it's agreed, not only here.

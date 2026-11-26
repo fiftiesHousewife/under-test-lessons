@@ -84,46 +84,23 @@ a link and never spoken.
 
 ## Writing for the voice
 
-Before finishing, check every slide and narration item against [GLOSSARY.md](../../../GLOSSARY.md): its words, its
-"Don't say" table, and its rules for the voice.
+Every language rule is in [GLOSSARY.md](../../../GLOSSARY.md): its words, its "Writing for the voice" rules and its
+"Don't say" table, and the phrases the checks catch are in
+[`lessons/_shared/dont-say.txt`](../../../lessons/_shared/dont-say.txt). Read them before writing. What follows is only
+how to mark things up in a slides file.
 
-- Introduce each library or tool by what it does, where it is first named, before its history: "WireMock,
-  a library that stands in for another web service", not just "WireMock".
-- Short sentences. No semicolons: the voice runs straight through them.
-- Keep sentences short and simple, with judgement: if you would run out of breath reading one aloud, it's too long.
-  A library gets a sentence of its own to say what it does:
-  "Logbook is a library that writes down every request and answer."
-- Fewer words, more slides: three or four short points a slide, a heading of 40 characters or less, and a slide of its
-  own for each idea. Where a rule has a boundary, give it a slide, with the days or values on each side of it
-  ("Day 29: a refund. Day 31: store credit. Day 30: which?"), and contrast the two outcomes before the problem.
-- Pauses: `[pause 600ms]` to `[pause 1s]` between sentences on a slide that sets up the problem. Never a pause inside a
-  phrase ("This is [pause] the weak test"), and give lists of words such as given, when, then a short pause each.
-- Active voice, not passive: "we tidy the printer up", not "the printer is tidied up".
-- Say what happened, never invent a person: "we tidy the printer up", not "someone tidies the printer up"; "there's
-  no rule for the note", not "nobody wrote a rule". Say "the shop", or "a shop", never "that shop".
-- Words to avoid: "promises" (say "says" or "gives"), "plainly", "cleaning" for personal data, or "masking" on its own
-  (say "data masking", or "masked data"), and "document" for an OpenAPI or AsyncAPI file (say "schema").
-- Law and regulation: a US company's view first (the FTC, state privacy laws such as California's, HIPAA, PCI DSS),
-  with UK and EU law alongside it, never on its own. Check each at its primary source.
-- Add every name or phrase the voice gets wrong to `lessons/_shared/pronunciations.txt`: compound nouns stressed on the
-  first word ("card number", "stand-in"), tool names said as one name ("WireMock"), and numbers said as people say
-  them ("404 = four oh four").
-- Describe things in full, never in shorthand: "no test checks what happens when an order comes to exactly £50", not
-  "no test tries 50". The viewer doesn't know what the number refers to. The same goes for captions and callouts.
-- Never read a command aloud. Say what happens: "Now we run the strong tests". (The video checks fail on narration
-  containing backticks, `./` or `gradlew`.)
-- Numbers and symbols as words: "100 percent", "greater than or equal to 50". Years go in
-  [the pronunciation list](../../../lessons/_shared/pronunciations.txt), said as people say them
-  (`1978 = nineteen seventy-eight`), as do product names the voice gets wrong (`PIT = pit`, `Maven = mayven`).
-- If the voice misreads or oddly stresses a word or phrase ("lives" heard as "lies", "test suites"), rephrase it
-  rather than fight it.
-- Emphasise the words a scene turns on: `*weak*` in a caption shows in yellow; in the narration, a short pause before
-  the word lets it land: `Now, [pause 300ms] the weak tests.` Never capitals: the voice may spell them out.
-- Pause where a listener needs a moment: after a question (`Why does it matter? [pause 1s]`), and before the closing
-  sentence.
+- Pauses: `[pause 600ms]` to `[pause 1s]` between sentences on a slide that sets up the problem, after a question
+  (`Why does it matter? [pause 1s]`), and before the closing sentence; a short pause each for lists of words such as
+  given, when, then.
+- Emphasis: `*weak*` in a caption shows in yellow; in the narration, a short pause before the word lets it land:
+  `Now, [pause 300ms] the weak tests.` Never capitals: the voice may spell them out.
+- Numbers and symbols as words: "100 percent", "greater than or equal to 50"; years and product names go in
+  [the pronunciation list](../../../lessons/_shared/pronunciations.txt) (`1978 = nineteen seventy-eight`).
+- If the voice misreads a word ("lives" heard as "lies"), rephrase it rather than fight it.
 - Name a line of code ("look at line 24") only if the scene shows it marked (`show ... --mark 24`, see
-  [make-a-lesson-video](../make-a-lesson-video/SKILL.md)); the same goes for every line a live run's output names.
-  Say what the line does as well as its number, since the deck and captions are read without the code beside them.
+  [make-a-lesson-video](../make-a-lesson-video/SKILL.md)), and say what the line does as well as its number.
+- Law and regulation: a US company's view first (the FTC, state privacy laws, HIPAA, PCI DSS), with UK and EU law
+  alongside it, never on its own. Check each at its primary source.
 
 ## Captions on screen
 
@@ -141,31 +118,18 @@ Before finishing, check every slide and narration item against [GLOSSARY.md](../
 
 ## Before you finish: the review checklist
 
-What a full review of every deck with its voice found, so each new lesson gets it right the first time:
-
-- **Opening:** the first narration says what the lesson covers, then the problem. Each tool is introduced by what it
-  does, in a sentence of its own.
+- **Words:** every slide and narration item read against [GLOSSARY.md](../../../GLOSSARY.md), "Writing for the voice"
+  and "Don't say"; add any newly agreed phrase to [`dont-say.txt`](../../../lessons/_shared/dont-say.txt).
+- **Story:** what the lesson covers, then the example once, then the problem, in the order above.
 - **Names aloud:** a slide whose heading names a technique or tool says that name in its narration too ("The answer
-  is characterisation tests"): the listener may not be looking.
-- **One item to a bullet:** never two ideas joined by a semicolon on one bullet; give each its own.
-- **Overview slides:** a slide about a technique opens with its name and what it is, then the question it answers
-  ("With the old behaviour pinned down, we can turn to differential testing. Differential testing runs the old code
-  and its rewrite on the same inputs...").
-- **Vary the way into a topic:** never open two slides in a deck the same way. Link each topic to the one before, as
-  a person would: "Let's start with...", "Once the code runs safely, the next question is...", "Next up...", "From
-  what the code does, we move on to what it sends...", "That's where ... comes in", "Moving on...", "Finally...".
-  "Now we talk about" may open one slide at most. Name the established term the code shows, such as dependency injection for passing dependencies in.
-- **Known terms:** don't explain what engineers already know, such as continuous integration.
-- **Story:** contrast the outcomes before the problem; a boundary gets its own slide, with the values on each side; one
-  idea to a slide, three or four points, a heading of 40 characters or less.
-- **Sentences:** short and simple (the breath test), active voice, no invented "someone" or "nobody", no "that shop",
-  and only people see: reports count, tests get, filters record.
-- **Words:** checked against [GLOSSARY.md](../../../GLOSSARY.md) and its "Don't say" table, including data masking (not
-  cleaning, not masking alone), schema (not document), and "the series is a journey", never a map.
-- **Subjects:** established external frameworks only; never this repository's or the toolkit's own tools or process.
-  Law: US first, UK and EU alongside, each checked at its primary source.
-- **Voice:** every name, compound noun and number the voice gets wrong goes in the pronunciation list; listen to each
-  changed slide.
-- **Fit:** `./gradlew :lessons:video-tools:checkVideoScripts` passes: every scene's pause covers its narration, the
-  video stays under ten minutes, every slide has its clip, and every live command its kept output. Code highlights
-  (`--mark`) land on the lines the narration talks about, not on a brace or a blank line.
+  is characterisation tests"): the listener may not be looking. Name the established term the code shows, such as
+  dependency injection for passing dependencies in.
+- **Overview slides:** each opens with the technique's name and what it is, then the question it answers, linked to
+  the topic before ("With the old behaviour pinned down, we can turn to differential testing...").
+- **Subjects:** established open-source frameworks only; never this repository's or the toolkit's own tools, process
+  or plugins, and never a vendor's product or price.
+- **Voice:** every changed slide voiced and listened to; anything said wrong goes in the pronunciation list.
+- **Fit:** `./gradlew :lessons:video-tools:checkVideoScripts` passes: every scene's pause covers its narration, every
+  live run's wait matches its output, the video stays under ten minutes, every slide has its clip, every live command
+  its kept output, and nothing on the don't-say list is said. Code highlights (`--mark`) land on the lines the
+  narration talks about, not on a brace or a blank line.
