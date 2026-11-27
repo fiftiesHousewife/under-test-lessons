@@ -44,13 +44,10 @@ Records from the new web form arrive in lower case: `o'neill,sean,mr` must still
 ./gradlew :lessons:dynamic-tests:test -Pcode=answer   # today's formatter: 5 of 7 tests fail; lower-case.txt expected "Mr Sean O'Neill" but was "mr sean o'neill"
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/dynamic-tests.html) (its source is [`media/dynamic-tests.deck.html`](media/dynamic-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/dynamic-tests.tape), [the narration](media/dynamic-tests.narration.md) and
-  [the slides](media/dynamic-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=dynamic-tests`.
 
 ## When to use it
 

@@ -1,12 +1,12 @@
 ---
 name: write-lesson-slides-and-narration
-description: Write the story of a lesson video - its intro and closing slides, its terminal scenes' captions, and the narration the voice reads - so a newcomer understands what, why, when and how. Use when writing or improving a lesson's .slides.md, .narration.md or on-screen captions.
+description: Write the story of a lesson deck - its intro and closing slides, its scenes' notes, and the narration the voice reads - so a newcomer understands what, why, when and how. Use when writing or improving a lesson's .slides.md, .narration.md or its scenes' notes.
 ---
 
-# Writing a lesson video's slides and narration
+# Writing a lesson deck's slides and narration
 
-The viewer is an engineer who has never used the technique. Every video tells the same story, so viewers always know
-where they are. The mechanics of recording are in [make-a-lesson-video](../make-a-lesson-video/SKILL.md).
+The viewer is an engineer who has never used the technique. Every deck tells the same story, so viewers always know
+where they are. The mechanics of scenes and decks are in [make-a-lesson-deck](../make-a-lesson-deck/SKILL.md).
 
 ## Questions
 
@@ -37,18 +37,18 @@ a newcomer follows a concrete problem, and an abstract slide before it makes lit
    for the 2 slow tests"), and why that matters. Build on the example slide: never describe the example a second time.
 4. **The fix**, in a sentence or two, with the technique's own term explained through the example where it first
    appears ("label the slow tests: JUnit calls the label a tag"). No separate "what we'll compare" slide: the
-   terminal scenes show today's code, the weak tests and the strong ones.
+   scenes show today's code, the weak tests and the strong ones.
 5. **How the tool works**, as it really looks: the annotation, the setting, the command, not a description of them.
-6. **How we build**, the shared slide, `Include: how-we-build`. Never a terminal scene, and never rewritten per lesson.
+6. **How we build**, the shared slide, `Include: how-we-build`. Never a scene, and never rewritten per lesson.
 
-**Terminal scenes** (`media/<id>.tape`, narrated in `media/<id>.narration.md`, one item per scene):
+**Scenes** (`media/<id>.scenes`, narrated in `media/<id>.narration.md`, one item per scene):
 1. **The build, one step per scene:** the version catalogue entry, adding the plugin or library, configuring it. Show
    each change in its context, not as a lone line: the whole `plugins { }`, `dependencies { }` or configuration block,
    and catalogue entries under their `[versions]` and `[libraries]` headers (`show <file> /pattern/`).
 2. **The code under test, explained:** what each method takes and returns, and the rules it follows. Dwell on the
    code scenes, and only these: the code under test, the weak and strong tests and the fix. Walk through what the
-   code on screen does, in the order it reads, one idea a sentence, with `[pause 600ms]` between ideas, so a viewer
-   can follow it on screen. Say what each test sets up, what it checks, and what it misses. The build steps stay
+   code on the slide does, in the order it reads, one idea a sentence, with `[pause 600ms]` between ideas, so a viewer
+   can follow it. Say what each test sets up, what it checks, and what it misses. The build steps stay
    brief.
 3. **The *weak* tests, and what is weak about each one** (checks only "more than zero", uses a value far from any
    boundary, checks nothing, checks something that is always true).
@@ -96,19 +96,19 @@ how to mark things up in a slides file.
 - Pauses: `[pause 600ms]` to `[pause 1s]` between sentences on a slide that sets up the problem, after a question
   (`Why does it matter? [pause 1s]`), and before the closing sentence; a short pause each for lists of words such as
   given, when, then.
-- Emphasis: `*weak*` in a caption shows in yellow; in the narration, a short pause before the word lets it land:
+- Emphasis: in the narration, a short pause before the word lets it land:
   `Now, [pause 300ms] the weak tests.` Never capitals: the voice may spell them out.
 - Numbers and symbols as words: "100 percent", "greater than or equal to 50"; years and product names go in
   [the pronunciation list](../../../lessons/_shared/pronunciations.txt) (`1978 = nineteen seventy-eight`).
 - If the voice misreads a word ("lives" heard as "lies"), rephrase it rather than fight it.
 - Name a line of code ("look at line 24") only if the scene shows it marked (`show ... --mark 24`, see
-  [make-a-lesson-video](../make-a-lesson-video/SKILL.md)), and say what the line does as well as its number.
+  [make-a-lesson-deck](../make-a-lesson-deck/SKILL.md)), and say what the line does as well as its number.
 - Law and regulation: a US company's view first (the FTC, state privacy laws, HIPAA, PCI DSS), with UK and EU law
   alongside it, never on its own. Check each at its primary source.
 
-## Captions on screen
+## Scene notes
 
-- `note` lines are short headlines for the scene, not the narration word for word.
+- `note` lines become the scene slide's points: short headlines for the scene, not the narration word for word.
 - Plain English, following the toolkit's
   [GLOSSARY.md](https://github.com/fiftiesHousewife/under-test/blob/main/GLOSSARY.md); explain each industry term the
   first time.
@@ -125,8 +125,8 @@ how to mark things up in a slides file.
 - **Words:** every slide and narration item read against [GLOSSARY.md](../../../GLOSSARY.md), "Writing for the voice"
   and "Don't say"; add any newly agreed phrase to [`dont-say.txt`](../../../lessons/_shared/dont-say.txt).
 - **Story:** what the lesson covers, then the example once, then the problem, in the order above.
-- **Shown, not told:** every library, setting, step or call the narration names is on screen in a scene (the real file,
-  its lines in the zoom) or a code panel; the slides set up, the scenes show, and nothing is told twice.
+- **Shown, not told:** every library, setting, step or call the narration names is on a slide in a scene (the real
+  file, its lines marked) or a code panel; the slides set up, the scenes show, and nothing is told twice.
 - **No code in bullets:** at most one method or class name a bullet; more goes in a scene or a code panel.
 - **Names aloud:** a slide whose heading names a technique or tool says that name in its narration too ("The answer
   is characterisation tests"): the listener may not be looking. Name the established term the code shows, such as
@@ -138,7 +138,7 @@ how to mark things up in a slides file.
 - **Voice:** every changed slide listened to, on its lesson's page in [the voice review](../../../production/voice-review/README.md)
   (or its deck's **Edit voice**): emphasis, pauses and words put right by clicking, saved to the pronunciation list
   and the narration; then the batch voiced once.
-- **Fit:** `./gradlew :lessons:video-tools:checkVideoScripts` passes: every scene's pause covers its narration, every
-  live run's wait matches its output, the video stays under ten minutes, every slide has its clip, every live command
-  its kept output, and nothing on the don't-say list is said. Code highlights (`--mark`) land on the lines the
+- **Fit:** `./gradlew :lessons:video-tools:checkLessonDecks` passes: one narration item a scene, every slide has its
+  clip, every live command its kept output, fitting one screen, and nothing on the don't-say list is said. The deck
+  stays under ten minutes of narration. Code highlights (`--mark`) land on the lines the
   narration talks about, not on a brace or a blank line.

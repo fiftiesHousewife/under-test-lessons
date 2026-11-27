@@ -1,6 +1,6 @@
 # Narration: contract tests between teams
 
-One item per scene of [contract-tests-between-teams.tape](contract-tests-between-teams.tape). The intro and closing
+One item per scene of [contract-tests-between-teams.scenes](contract-tests-between-teams.scenes). The intro and closing
 slides have their own narration, in [contract-tests-between-teams.slides.md](contract-tests-between-teams.slides.md).
 Written to be spoken.
 

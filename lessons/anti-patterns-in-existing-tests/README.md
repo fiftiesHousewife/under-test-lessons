@@ -91,13 +91,10 @@ calls to Mockito's `mock(...)` instead, so the rule misses it.
 ./gradlew :lessons:anti-patterns-in-existing-tests:test -Pcode=answer   # the answer's rule alone: it finds the 2 tests of CheckoutEmailTest, neither in the register
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/anti-patterns-in-existing-tests.html) (its source is [`media/anti-patterns-in-existing-tests.deck.html`](media/anti-patterns-in-existing-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/anti-patterns-in-existing-tests.tape), [the narration](media/anti-patterns-in-existing-tests.narration.md) and
-  [the slides](media/anti-patterns-in-existing-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=anti-patterns-in-existing-tests`.
 
 ## When to use it
 

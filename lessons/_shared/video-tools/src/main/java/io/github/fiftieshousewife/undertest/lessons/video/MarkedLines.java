@@ -25,7 +25,7 @@ final class MarkedLines {
     record Said(int scene, String text) {
     }
 
-    static List<Problem> unshown(final Path tape, final Said said, final SceneContent content) {
+    static List<Problem> unshown(final Path sceneFile, final Said said, final SceneContent content) {
         final List<Problem> problems = new ArrayList<>();
         final Set<Integer> lines = new TreeSet<>();
         final Matcher named = LINE_NAMED.matcher(said.text());
@@ -34,7 +34,7 @@ final class MarkedLines {
         }
         for (final int line : lines) {
             if (!shows(content, line)) {
-                problems.add(new Problem(tape, "scene " + said.scene() + " names line " + line + " (in its"
+                problems.add(new Problem(sceneFile, "scene " + said.scene() + " names line " + line + " (in its"
                         + " narration, a callout or a live command's output), but doesn't show it marked; show the"
                         + " code in the scene with --mark " + line));
             }
@@ -70,12 +70,6 @@ final class MarkedLines {
             }
         }
         return false;
-    }
-
-    /* The lines a {@code show} line zooms in on ({@code --zoom 22-24}), or none. */
-    static Set<Integer> zoomed(final List<String> words) {
-        final int zoom = words.indexOf("--zoom");
-        return zoom >= 0 && zoom + 1 < words.size() ? marks(words.get(zoom + 1)) : Set.of();
     }
 
     /* The line numbers in a list such as {@code 18,22-24}. */

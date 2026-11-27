@@ -1,6 +1,6 @@
 # Narration: black-box tests of a whole application
 
-One item per scene of [black-box-tests.tape](black-box-tests.tape). The intro and closing slides have their own
+One item per scene of [black-box-tests.scenes](black-box-tests.scenes). The intro and closing slides have their own
 narration, in [black-box-tests.slides.md](black-box-tests.slides.md). Written to be spoken.
 
 1. Step one. The lesson needs 3 libraries, all already in the version catalogue. H2 is the order service's own

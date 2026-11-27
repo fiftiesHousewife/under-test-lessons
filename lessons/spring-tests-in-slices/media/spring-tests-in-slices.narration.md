@@ -1,6 +1,6 @@
 # Narration: Spring tests in slices
 
-One item per scene of [spring-tests-in-slices.tape](spring-tests-in-slices.tape). The intro and closing slides have
+One item per scene of [spring-tests-in-slices.scenes](spring-tests-in-slices.scenes). The intro and closing slides have
 their own narration, in [spring-tests-in-slices.slides.md](spring-tests-in-slices.slides.md). Written to be spoken.
 
 1. Step one. Spring Boot's list of versions goes in the version catalogue, with the test starters whose versions it

@@ -6,7 +6,7 @@ group: Videos and slides
 
 # Decks are published on GitHub Pages, with their voice
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** accepted · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): the decks are the lessons now; there is no video beside them
 
 ## Context and Problem Statement
 

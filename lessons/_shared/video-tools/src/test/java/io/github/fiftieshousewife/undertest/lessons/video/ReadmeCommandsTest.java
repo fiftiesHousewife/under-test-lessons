@@ -23,11 +23,11 @@ class ReadmeCommandsTest {
     void lesson() throws IOException {
         lessonFolder = Files.createDirectories(root.resolve("lessons/demo"));
         final Path media = Files.createDirectories(lessonFolder.resolve("media"));
-        Files.writeString(media.resolve("demo.tape"), """
-                # ---- Scene 1: weak ----
-                Type@1ms `run_live "./gradlew :lessons:demo:test -Pcode=today"`
-                # ---- Scene 2: strong ----
-                Type@1ms `run_live "./gradlew :lessons:demo:test"`
+        Files.writeString(media.resolve("demo.scenes"), """
+                ## Scene 1: weak
+                run_live "./gradlew :lessons:demo:test -Pcode=today"
+                ## Scene 2: strong
+                run_live "./gradlew :lessons:demo:test"
                 """);
         final Path outputs = Files.createDirectories(media.resolve("demo.outputs"));
         Files.writeString(outputs.resolve("01.txt"), "$ ./gradlew :lessons:demo:test -Pcode=today\n"
@@ -65,7 +65,7 @@ class ReadmeCommandsTest {
     }
 
     @Test
-    void refusesACommandTheVideoDoesntRunAndSaysPassesWhenOneFailed() throws IOException {
+    void refusesACommandNoSceneRunsAndSaysPassesWhenOneFailed() throws IOException {
         final List<String> problems = problems("""
                 ```bash
                 ./gradlew :lessons:demo:check               # everything
@@ -75,7 +75,7 @@ class ReadmeCommandsTest {
 
         assertAll(
                 () -> assertThat(problems).anyMatch(p -> p.contains(":lessons:demo:check")
-                        && p.contains("isn't one of the video's live commands")),
+                        && p.contains("isn't one of the deck's live commands")),
                 () -> assertThat(problems).anyMatch(p -> p.contains("says every test passes")));
     }
 

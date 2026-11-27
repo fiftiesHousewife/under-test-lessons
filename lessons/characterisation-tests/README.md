@@ -43,13 +43,10 @@ balance after it moved. A smaller approval, one per behaviour, says the same thi
 ./gradlew :lessons:characterisation-tests:test -Pcode=answer   # the rewrite: 2 of 5 tests fail; the small approval's difference is the fee and the closing balance
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/characterisation-tests.html) (its source is [`media/characterisation-tests.deck.html`](media/characterisation-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/characterisation-tests.tape), [the narration](media/characterisation-tests.narration.md) and
-  [the slides](media/characterisation-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=characterisation-tests`.
 
 ## When to use it
 

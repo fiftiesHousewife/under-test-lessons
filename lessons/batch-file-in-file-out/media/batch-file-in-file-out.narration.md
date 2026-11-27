@@ -1,6 +1,6 @@
 # Narration: batch file-in, file-out
 
-One item per scene of [batch-file-in-file-out.tape](batch-file-in-file-out.tape). The intro and closing slides have
+One item per scene of [batch-file-in-file-out.scenes](batch-file-in-file-out.scenes). The intro and closing slides have
 their own narration, in [batch-file-in-file-out.slides.md](batch-file-in-file-out.slides.md). Written to be spoken.
 
 1. Step one. We add two libraries to the version catalogue: Spring Batch, with its test library, and Datafaker, which

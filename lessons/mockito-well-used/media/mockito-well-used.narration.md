@@ -1,6 +1,6 @@
 # Narration: Mockito well used
 
-One item per scene of [mockito-well-used.tape](mockito-well-used.tape). The intro and closing slides have their own
+One item per scene of [mockito-well-used.scenes](mockito-well-used.scenes). The intro and closing slides have their own
 narration, in [mockito-well-used.slides.md](mockito-well-used.slides.md). Written to be spoken.
 
 1. The shop reaches the card provider through an interface of its own, called card payments. It is the one place money

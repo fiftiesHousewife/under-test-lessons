@@ -69,13 +69,10 @@ more, and the settlement file must hold every chunk's payments.
 ./gradlew :lessons:batch-file-in-file-out:test -Pcode=answer   # today's job: 3 of 7 tests fail; the answer counts 50 payment lines, not 250: the last chunk's
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/batch-file-in-file-out.html) (its source is [`media/batch-file-in-file-out.deck.html`](media/batch-file-in-file-out.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/batch-file-in-file-out.tape), [the narration](media/batch-file-in-file-out.narration.md) and
-  [the slides](media/batch-file-in-file-out.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=batch-file-in-file-out`.
 
 ## When to use it
 

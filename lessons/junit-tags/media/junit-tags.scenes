@@ -1,0 +1,42 @@
+# The scenes of the junit-tags deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# junit-tags.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in junit-tags.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: quick tests
+note "*Quick* tests of the stock check: a warehouse kept in memory, which answers at once."
+show StockCheckTest 8 22 "quick tests" --zoom 11
+
+## Scene 2: slow tests
+note "*Slow* tests: each one starts the warehouse's test system first, which takes 2 seconds."
+show WarehouseStockTest 9 29 "slow tests" --zoom 15-18
+
+## Scene 3: today's build runs everything
+note "Today's build has no tags. Run the quick task:"
+run_live "./gradlew :lessons:junit-tags:test -Pcode=today"
+callout "All 6 tests ran, the 2 slow warehouse tests too: every run waits for the warehouse."
+
+## Scene 4: the tag
+note "A *tag*: an annotation called Slow carries the JUnit tag named slow, and marks the slow test class."
+show Slow.java 9 14 "the tag" --zoom 12
+show WarehouseStockTest 9 11 "the slow test class" --mark 10
+
+## Scene 5: the quick task
+note "The *quick task* leaves out every test tagged 'slow'."
+show lessons/junit-tags/example/build.gradle.kts 10 20 "lesson build file" --zoom 14-18
+
+## Scene 6: the slow task
+note "The *slow task* runs only the tests tagged 'slow', and check depends on it."
+show lessons/junit-tags/example/build.gradle.kts 22 49 "lesson build file" --zoom 28-30 --mark 48
+
+## Scene 7: the quick task with tags
+note "Run the quick task again:"
+run_live "./gradlew :lessons:junit-tags:test"
+callout "Only the 4 quick tests ran. None of them waited for the warehouse."
+
+## Scene 8: the slow task for continuous integration
+note "And the slow task, as continuous integration runs it:"
+run_live "./gradlew :lessons:junit-tags:slowTest"
+callout "Only the 2 slow tests ran. Quick tests on every change, slow tests in continuous integration."

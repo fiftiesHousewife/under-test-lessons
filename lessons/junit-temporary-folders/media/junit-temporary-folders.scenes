@@ -1,0 +1,33 @@
+# The scenes of the junit-temporary-folders deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# junit-temporary-folders.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in junit-temporary-folders.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the export
+note "The end-of-day *export*: the day's orders into orders.csv, in the folder it is given."
+show OrdersExport 7 15 "the export" --zoom 13-14
+
+## Scene 2: the code under test
+note "The code under test: today's export. It meant to skip a cancelled order, but it returns."
+show TodaysOrdersExport 11 25 "today's export" --zoom 18-20
+
+## Scene 3: tests with a fixed folder
+note "Tests with a *fixed folder*: both write to the same place, and nothing cleans it up."
+show FixedFolderTest 14 36 "tests with a fixed folder" --zoom 18
+
+## Scene 4: tests with a temporary folder
+note "The same tests with *@TempDir*: each test gets its own empty folder, removed afterwards."
+show TempDirTest 14 32 "tests with a temporary folder" --zoom 27
+
+## Scene 5: the leftover file hides the bug
+note "Run both sets of tests against today's export:"
+run_live "./gradlew :lessons:junit-temporary-folders:test -Pcode=today"
+callout "The fixed folder's leftover file hid the bug. The temporary folder was empty, so the test failed."
+
+## Scene 6: the fixed export
+note "The export that leaves cancelled orders out, and always writes the file:"
+show FixedOrdersExport 11 19 "the fixed export" --zoom 16-17
+run_live "./gradlew :lessons:junit-temporary-folders:test"
+callout "Every test passes. Each one wrote, and read, only its own folder."

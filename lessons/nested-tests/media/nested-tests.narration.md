@@ -1,6 +1,6 @@
 # Narration: nested tests
 
-One item per scene of [nested-tests.tape](nested-tests.tape). The intro and closing slides have their own narration,
+One item per scene of [nested-tests.scenes](nested-tests.scenes). The intro and closing slides have their own narration,
 in [nested-tests.slides.md](nested-tests.slides.md). Written to be spoken.
 
 1. Here is the code under test, today's loan. Its repay step checks only one thing: whether the loan is already

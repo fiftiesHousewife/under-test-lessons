@@ -11,9 +11,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
- * What one scene of a video script puts on screen, read from the script itself: the code panels it shows (the same
- * lines {@code show} prints), the commands it runs live with the output kept for each ({@link LiveOutputs}), and its
- * callouts. Slide decks draw these as text.
+ * What one scene of a lesson's scene file ({@code <id>.scenes}) puts on its slide: the code panels it shows, the
+ * commands it runs live with the output kept for each ({@link LiveOutputs}), its notes and its callouts. A scene starts
+ * at its heading, {@code ## Scene N: title}; each line after it is one command ({@code note}, {@code show},
+ * {@code run_live} or {@code run_with_notes}, {@code callout}), its arguments in double quotes where they hold spaces.
+ * Blank lines, and other lines starting with {@code #}, are comments.
  */
 final class SceneContent {
 
@@ -26,7 +28,7 @@ final class SceneContent {
         }
     }
 
-    private static final Pattern TYPED = Pattern.compile("^Type(?:@\\S+)?\\s+([\"`])(.*)\\1\\s*$");
+    static final Pattern HEADING = Pattern.compile("^##\\s+Scene\\s+\\d+:\\s*(.*?)\\s*$");
     private static final List<String> LIVE = List.of("run_live", "run_with_notes");
     private static final Pattern WORD = Pattern.compile("\"([^\"]*)\"|(\\S+)");
 
@@ -53,43 +55,58 @@ final class SceneContent {
         return List.copyOf(calloutTexts);
     }
 
-    /* The scene's captions, as the video shows them at the top of the screen. */
+    /* The scene's notes, which its slide shows as points ({@link SceneSlide#points}). */
     List<String> notes() {
         return List.copyOf(noteTexts);
     }
 
-    /* Reads every scene of a script, in order; paths in {@code show} lines are relative to the repository root. */
-    static List<SceneContent> read(final Path root, final Path tape) {
-        final List<Path> places = ShownCode.places(root, tape);
+    /* Reads every scene of a scene file, in order; paths in {@code show} lines are relative to the repository root. */
+    static List<SceneContent> read(final Path root, final Path sceneFile) {
+        final List<Path> places = ShownCode.places(root, sceneFile);
         final List<SceneContent> scenes = new ArrayList<>();
         SceneContent current = null;
-        for (final String line : lines(tape)) {
-            if (line.matches("^#\\s*-+\\s*Scene\\s+\\d+:.*")) {
+        for (final String line : lines(sceneFile)) {
+            if (HEADING.matcher(line).matches()) {
                 current = new SceneContent();
                 scenes.add(current);
-            } else if (current != null) {
-                current.take(root, places, line);
+            } else if (current != null && isCommand(line)) {
+                current.take(root, places, words(line.strip()));
             }
         }
-        readOutputs(root, tape, scenes);
+        readOutputs(root, sceneFile, scenes);
         return scenes;
     }
 
-    private static void readOutputs(final Path root, final Path tape, final List<SceneContent> scenes) {
-        final String name = String.valueOf(tape.getFileName());
-        final Media media = new Media(root, name.endsWith(".tape") ? name.substring(0, name.length() - 5) : name);
+    /* Each scene's title, from its heading, in order. */
+    static List<String> titles(final Path sceneFile) {
+        final List<String> titles = new ArrayList<>();
+        for (final String line : lines(sceneFile)) {
+            final Matcher heading = HEADING.matcher(line);
+            if (heading.matches()) {
+                titles.add(heading.group(1));
+            }
+        }
+        return titles;
+    }
+
+    /* Each command line of the scene file, as its words, outside comments and blank lines. */
+    static List<List<String>> commandLines(final Path sceneFile) {
+        return lines(sceneFile).stream().filter(SceneContent::isCommand).map(line -> words(line.strip())).toList();
+    }
+
+    private static boolean isCommand(final String line) {
+        return !line.isBlank() && !line.strip().startsWith("#");
+    }
+
+    private static void readOutputs(final Path root, final Path sceneFile, final List<SceneContent> scenes) {
+        final String name = String.valueOf(sceneFile.getFileName());
+        final Media media = new Media(root, name.endsWith(Media.SCENES) ? name.substring(0,
+                name.length() - Media.SCENES.length()) : name);
         int index = 0;
         for (final SceneContent scene : scenes) {
             for (final String command : scene.liveCommands) {
                 scene.liveOutputs.add(LiveOutputs.read(media, index++, command));
             }
-        }
-    }
-
-    private void take(final Path root, final List<Path> places, final String line) {
-        final Matcher typed = TYPED.matcher(line);
-        if (typed.matches()) {
-            take(root, places, words(typed.group(2)));
         }
     }
 
@@ -103,7 +120,7 @@ final class SceneContent {
             case "callout" -> calloutTexts.add(words.get(1));
             case "note" -> noteTexts.add(words.get(1));
             default -> {
-                // other commands are set-up
+                // not a command a slide shows
             }
         }
     }

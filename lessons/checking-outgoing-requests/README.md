@@ -49,13 +49,10 @@ with odd pence, £19.99.
 ./gradlew :lessons:checking-outgoing-requests:test -Pcode=answer   # today's client: 3 of 5 tests fail; the answer finds the 1p refund was never sent, and 19.99 is not whole pence
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/checking-outgoing-requests.html) (its source is [`media/checking-outgoing-requests.deck.html`](media/checking-outgoing-requests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/checking-outgoing-requests.tape), [the narration](media/checking-outgoing-requests.narration.md) and
-  [the slides](media/checking-outgoing-requests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=checking-outgoing-requests`.
 
 ## When to use it
 

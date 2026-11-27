@@ -4,9 +4,9 @@ decision-makers: Lessons maintainers
 group: Using the lessons in a company
 ---
 
-# What runs inside a company is kept apart from what makes videos
+# What runs inside a company is kept apart from what voices the decks
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** accepted · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): the videos are gone, so the production group is the deck's voice alone
 
 ## Context and Problem Statement
 
@@ -38,20 +38,19 @@ Chosen: **three groups, each in its own place, with the line checked by the buil
 
 | Group | Runs with | Contents |
 |---|---|---|
-| **Inside**: safe in a company | JDK, Gradle, the company's Maven repository, the installed Chrome | Lesson examples, READMEs, narration, slides, `.tape` scripts as text, decks, deck voice clips, captured outputs, slide styles, pictures and `deck.js`, `build-logic/`, `config/quality/`, the video and lesson checks, deck building, slide drawing and PDFs through Chrome, captions made from the narration |
-| **Production**: outside only | VHS, ttyd, Python, Kokoro, ffmpeg, downloads from GitHub and PyPI | Recording, voicing, the fit check against a recording, zooms, splicing, burned-in captions, `speak-kokoro.py`, `setUpLessonVoice`, `video-check.tape`, `test-video-helpers.sh`, publishing videos and deck voice clips |
+| **Inside**: safe in a company | JDK, Gradle, the company's Maven repository, the installed Chrome | Lesson examples, READMEs, scene files, narration, slides, decks, deck voice clips, captured outputs and casts, slide styles, pictures and `deck.js`, `build-logic/`, `config/quality/`, the deck and lesson checks, deck building, slide drawing and PDFs through Chrome |
+| **Production**: outside only | Python, Kokoro, ffmpeg, downloads from GitHub and PyPI | Voicing the decks, `speak-kokoro.py`, `setUpLessonVoice`, the voice review |
 | **Maintainer**: this repo's upkeep | GitHub's API and tokens | The Backlog sync workflow, `tools/install-skills.py`, `apm.yml`, `plan/`, the Pages workflow |
 
 Chrome counts as inside, because it is already installed and allowed on company machines.
 
 * **Two Gradle modules.** `:lessons:video-tools` (in `lessons/_shared/video-tools`) is inside: the checks, deck
-  building, slide drawing, captions and the shared model of scenes, narration and slides. It keeps its name, so the
-  commands every lesson's README and video script name stay as they are. `:production:video-render` (in
-  `production/video-render`) is production: recording, voicing, assembling, the recording check and reading decks
-  aloud, with `speak-kokoro.py` and the helpers' own tests. It depends on `video-tools`, never the other way round.
+  building, slide drawing and the shared model of scenes, narration and slides. It keeps its name, so the commands
+  every lesson's README names stay as they are. `:production:deck-voice` (in `production/deck-voice`) is production:
+  reading decks aloud, with `speak-kokoro.py`. It depends on `video-tools`, never the other way round.
   `settings.gradle.kts` includes it only when its folder is there, so a copy without it still builds.
 * **One top-level folder per outside group:** `production/` and `maintainer/`. Everything else is inside.
-* **The build keeps the line.** `video-tools` has no dependency on `video-render`, so a class of the inside module that
+* **The build keeps the line.** `video-tools` has no dependency on `deck-voice`, so a class of the inside module that
   used a production class wouldn't compile; no extra rule is needed for that.
 * **A CI job proves the inside copy builds inside a company.** It copies the repo without `production/` and
   `maintainer/`, then runs `./gradlew check` with the network limited to one Maven repository.
@@ -59,7 +58,7 @@ Chrome counts as inside, because it is already installed and allowed on company 
   fetch Gradle.
 * **`tools/lesson-checks` skips, with a message, when the toolkit isn't checked out,** rather than failing inside a
   company.
-* **AGENTS.md and the video skills say which group each step belongs to.**
+* **AGENTS.md and the deck skills say which group each step belongs to.**
 
 **Companies take the whole repository.** No corporate branch, bundle or second repository is made. The modules and
 the ArchUnit rule keep the two sides apart. Inside a company the production module is never built, because
@@ -72,8 +71,8 @@ changes with each release.
 
 * Good, because a company knows exactly what it may run, and CI proves that set builds inside a company.
 * Bad, because `video-tools` has to be split, which touches most of its classes and every task that names it.
-* Bad, because a company whose rules forbid tools like Python scripts or VHS tapes on its network, even unused, has
-  to remove `production/` and `maintainer/` from its own copy.
+* Bad, because a company whose rules forbid tools like Python scripts on its network, even unused, has to remove
+  `production/` and `maintainer/` from its own copy.
 
 ### Confirmation
 

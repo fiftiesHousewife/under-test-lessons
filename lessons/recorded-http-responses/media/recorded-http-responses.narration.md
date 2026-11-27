@@ -1,7 +1,8 @@
 # Narration: recorded HTTP responses
 
-One item per scene of [recorded-http-responses.tape](recorded-http-responses.tape). The intro and closing slides have
-their own narration, in [recorded-http-responses.slides.md](recorded-http-responses.slides.md). Written to be spoken.
+One item per scene of [recorded-http-responses.scenes](recorded-http-responses.scenes). The intro and closing slides
+have their own narration, in [recorded-http-responses.slides.md](recorded-http-responses.slides.md). Written to be
+spoken.
 
 1. Step one. Add WireMock to the version catalogue.
 2. Step two. Add it as a test dependency of the lesson.

@@ -88,15 +88,11 @@ new version too, with a state for the new request.
 ./gradlew :lessons:contract-tests-between-teams:test -Pcode=answer   # today's stock service: 2 of 8 tests fail; the new request for an item the shop doesn't stock passes, the kettle still fails
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/contract-tests-between-teams.html)
   (its source is [`media/contract-tests-between-teams.deck.html`](media/contract-tests-between-teams.deck.html)).
   Arrow keys move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/contract-tests-between-teams.tape),
-  [the narration](media/contract-tests-between-teams.narration.md) and
-  [the slides](media/contract-tests-between-teams.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=contract-tests-between-teams`.
 
 ## When to use it
 

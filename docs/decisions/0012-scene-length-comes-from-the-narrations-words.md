@@ -1,12 +1,12 @@
 ---
-status: accepted
+status: superseded by 0041
 decision-makers: Lessons maintainers
 group: Videos and slides
 ---
 
 # Scene length comes from the narration's words
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** superseded by [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md)
 
 ## Context and Problem Statement
 

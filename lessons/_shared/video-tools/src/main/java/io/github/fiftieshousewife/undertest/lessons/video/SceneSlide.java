@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /*
- * A deck's slide for one scene of the example: its caption as points, and its callouts, beside the code panels and
- * commands it shows; the narration, which the voice reads, is in the speaker notes. A scene with no caption shows its
+ * A deck's slide for one scene of the example: its notes as points, and its callouts, beside the code panels and
+ * commands it shows; the narration, which the voice reads, is in the speaker notes. A scene with no notes shows its
  * narration.
  */
 @SuppressFBWarnings(value = "POTENTIAL_XML_INJECTION", justification = "Every piece of text is escaped")
@@ -36,7 +36,7 @@ final class SceneSlide {
                 .append("</aside></section>\n").toString();
     }
 
-    /* The scene's caption as points, or its narration where it has no caption, then its callouts. */
+    /* The scene's notes as points, or its narration where it has none, then its callouts. */
     private static void appendText(final StringBuilder html, final Slide scene, final SceneContent content) {
         final List<String> points = points(scene.title(), content.notes());
         if (points.isEmpty()) {
@@ -75,7 +75,7 @@ final class SceneSlide {
     }
 
     /*
-     * A scene's captions as points: each sentence or clause after a colon its own point, without the emphasis marks,
+     * A scene's notes as points: each sentence or clause after a colon its own point, without the emphasis marks,
      * and without a first clause that only repeats the slide's title ("The code under test: ...").
      */
     static List<String> points(final String title, final List<String> notes) {

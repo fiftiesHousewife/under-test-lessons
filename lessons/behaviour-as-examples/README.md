@@ -45,13 +45,10 @@ day, no receipt, the team's rules give store credit.
 ./gradlew :lessons:behaviour-as-examples:test -Pcode=answer   # today's refunds: 2 of 7 tests fail; the new row expected store credit but was nothing
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/behaviour-as-examples.html) (its source is [`media/behaviour-as-examples.deck.html`](media/behaviour-as-examples.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/behaviour-as-examples.tape), [the narration](media/behaviour-as-examples.narration.md) and
-  [the slides](media/behaviour-as-examples.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=behaviour-as-examples`.
 
 ## When to use it
 

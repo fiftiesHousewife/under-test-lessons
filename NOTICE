@@ -2,11 +2,11 @@ under-test-lessons
 Copyright The under-test contributors
 
 This product is licensed under the Apache License, Version 2.0 (see LICENSE). The licence covers everything in this
-repository: code, tools, decision guides, lessons, and generated videos and their layers.
+repository: code, tools, decision guides, lessons, and the generated decks and their voice clips.
 
 Third-party material:
 - Decision record format based on MADR (Markdown Architectural Decision Records), https://adr.github.io/madr/
 - Figures on the black-and-white slides (lessons/_shared/slides/figures/) are made from Open Peeps by Pablo Stanley,
   https://www.openpeeps.com/, released into the public domain (CC0 1.0), using the parts in the npm package
   @opeepsfun/open-peeps (MIT licence).
-- Slide voice: Kokoro model (Apache 2.0) through kokoro-onnx (MIT); terminal recording: VHS (MIT).
+- Slide voice: Kokoro model (Apache 2.0) through kokoro-onnx (MIT).

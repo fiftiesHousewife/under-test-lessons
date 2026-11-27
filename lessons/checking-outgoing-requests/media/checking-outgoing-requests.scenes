@@ -1,0 +1,37 @@
+# The scenes of the checking-outgoing-requests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# checking-outgoing-requests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in checking-outgoing-requests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add WireMock to the version catalogue."
+show libs.versions.toml "/wiremock/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency of the lesson."
+show lessons/checking-outgoing-requests/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10
+
+## Scene 3: the code under test
+note "The code under test: today's refund client. It sends the amount in *pounds*, and no Idempotency-Key header."
+show TodaysRefundClient 23 36 "today's refund client" --zoom 30
+
+## Scene 4: the weak test
+note "The *weak* test: a stand-in provider answers, and the test checks the answer was handled."
+show RefundResponseTest 35 39 "the weak test" --zoom 38
+
+## Scene 5: the strong test
+note "The *strong* test: WireMock verifies the request the code really sent."
+show RefundRequestTest 22 44 "the strong test" --zoom 22,26-27,38-43
+
+## Scene 6: the request is wrong
+note "Run the tests against today's code:"
+run_live "./gradlew :lessons:checking-outgoing-requests:test -Pcode=today"
+callout "The answer was handled. The request was wrong: no Idempotency-Key header, and 12.5 where the provider expects 1250 pence."
+
+## Scene 7: the fixed client
+note "The client that sends pence, and the Idempotency-Key header:"
+show RefundClient 19 29 "the fixed client" --zoom 22-26
+run_live "./gradlew :lessons:checking-outgoing-requests:test"
+callout "The request is the one the provider expects: method, address, headers and body."

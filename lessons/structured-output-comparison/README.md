@@ -60,13 +60,10 @@ can stop the clock and check the time exactly. Only the id, new on every run, ne
 ./gradlew :lessons:structured-output-comparison:test -Pcode=answer   # today's summary: 2 of 3 tests fail; the answer also finds generatedAt is the machine's time, not the clock's
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/structured-output-comparison.html) (its source is [`media/structured-output-comparison.deck.html`](media/structured-output-comparison.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/structured-output-comparison.tape), [the narration](media/structured-output-comparison.narration.md) and
-  [the slides](media/structured-output-comparison.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=structured-output-comparison`.
 
 ## When to use it
 

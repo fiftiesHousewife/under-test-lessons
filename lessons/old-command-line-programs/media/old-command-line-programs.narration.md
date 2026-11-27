@@ -1,6 +1,6 @@
 # Narration: old command-line programs
 
-One item per scene of [old-command-line-programs.tape](old-command-line-programs.tape). The intro and closing slides
+One item per scene of [old-command-line-programs.scenes](old-command-line-programs.scenes). The intro and closing slides
 have their own narration, in [old-command-line-programs.slides.md](old-command-line-programs.slides.md). Written to be
 spoken.
 

@@ -6,7 +6,7 @@ group: Videos and slides
 
 # Videos and decks are generated from text files, never edited by hand
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** accepted · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): the videos are no longer made; the decks are generated as this says, from each lesson's scene file (`<id>.scenes`, which replaced the `.tape` script), narration and slides
 
 ## Context and Problem Statement
 

@@ -1,0 +1,44 @@
+# The scenes of the mutation-testing deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# mutation-testing.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in mutation-testing.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: PIT, its support for JUnit 5, and the Gradle PIT plugin, in the version catalogue."
+show libs.versions.toml "/pitest/" "gradle/libs.versions.toml" --mark 44,112
+
+## Scene 2: step 2, PIT's own options
+note "Step 2: in your own build, the Gradle PIT plugin, or PIT's Maven plugin, adds the pitest task."
+note "The lesson's build has the task already. One of PIT's options chooses the weak tests or the strong tests:"
+show lessons/mutation-testing/example/build.gradle.kts 11 21 "lesson build file" --zoom 12-16
+
+## Scene 3: the code under test
+note "The code under test: discountPercent works out the discount, and finalPrice takes it off the total."
+show DiscountCalculator 18 40 --zoom 23-25
+
+## Scene 4: the weak tests
+note "The *weak* tests. Every line of the calculator runs, so line coverage is 100%."
+note "Each comment says what the test fails to check."
+show DiscountCalculatorWeakTest 18 39 --zoom 26-27
+
+## Scene 5: the weak test that checks a number is not null
+note "The last *weak* test checks that the final price is not null. An int never is, so the check can't fail."
+show DiscountCalculatorWeakTest 47 51 --zoom 49-50
+
+## Scene 6: PIT on the weak tests
+note "Run PIT against the *weak* tests. For every planted bug it shows which tests ran, and whether one failed."
+run_live "./gradlew :lessons:mutation-testing:pitest -Pcode=today"
+show DiscountCalculator 18 40 --mark 19,23,25,30,31,33,39 --zoom 25
+callout "Line 25: if >= 5_000 became > 5_000, an order of exactly £50 would lose its discount, and no test checks an order of exactly £50."
+
+## Scene 7: the strong tests
+note "The *strong* tests check exact values, on both sides of every boundary."
+show DiscountCalculatorStrongTest 18 40 --zoom 22-23
+
+## Scene 8: PIT on the strong tests
+note "Run PIT against the *strong* tests:"
+run_live "./gradlew :lessons:mutation-testing:pitest"
+show DiscountCalculator 18 40 --mark 19,23,25,30,31,33,39
+callout "Same 100% line coverage. Only mutation testing shows which tests catch bugs."

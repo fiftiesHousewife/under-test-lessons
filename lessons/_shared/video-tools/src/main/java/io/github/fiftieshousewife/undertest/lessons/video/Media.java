@@ -8,8 +8,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
-/* Where a lesson's video files live (lessons/<id>/media/<id>.*), and its scenes as its script plans them. */
+/* Where a lesson's deck and the files it is built from live: lessons/<id>/media/<id>.*. */
 record Media(Path root, String lesson) {
+
+    static final String SCENES = ".scenes";
 
     /* The lesson named, or every lesson with a slides file when the name is "all". */
     static List<Media> lessons(final Path root, final String lesson) {
@@ -37,18 +39,9 @@ record Media(Path root, String lesson) {
         return lesson + suffix;
     }
 
-    /* How long each live run took in the last recording, in seconds, from {@code <id>.timings}. */
-    List<Double> measuredRuns() {
-        final Path timings = file(".timings");
-        if (!java.nio.file.Files.isRegularFile(timings)) {
-            return List.of();
-        }
-        try {
-            return java.nio.file.Files.readAllLines(timings).stream().filter(line -> !line.isBlank())
-                    .map(line -> Double.valueOf(line.strip())).toList();
-        } catch (java.io.IOException e) {
-            throw new java.io.UncheckedIOException(e);
-        }
+    /* The lesson's scene file: what each scene's slide shows. */
+    Path scenes() {
+        return file(SCENES);
     }
 
     /* The lesson's slides, with shared slides from lessons/_shared/slides. */
@@ -69,15 +62,5 @@ record Media(Path root, String lesson) {
 
     String safeLesson() {
         return lesson.replace('\r', ' ').replace('\n', ' ');
-    }
-
-    /* The scenes, timed as the script plans them; {@code Recording} stretches them to a recorded video. */
-    List<Scene> plannedScenes() {
-        return TapeTimeline.scenes(root, file(".tape"), measuredRuns());
-    }
-
-    /* The zooms on key code, timed as the script plans them. */
-    List<ZoomTiming.Span> plannedZooms() {
-        return TapeTimeline.zooms(root, file(".tape"), measuredRuns());
     }
 }

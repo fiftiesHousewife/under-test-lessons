@@ -1,0 +1,34 @@
+# The scenes of the mockito-well-used deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# mockito-well-used.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in mockito-well-used.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the interface the shop owns
+note "The shop reaches the card provider through an *interface of its own*: the one place money leaves."
+show CardPayments 3 8 "the shop's own interface over the card provider" --zoom 3-4
+show lessons/mockito-well-used/example/build.gradle.kts "/^dependencies/" "lesson build file" --mark 9
+
+## Scene 2: the code under test
+note "The code under test: today's refunds. Look at what it *sends* to the card."
+show TodaysRefunds 21 27 "today's refunds" --zoom 25
+
+## Scene 3: the weak test
+note "The *weak* test: everything is a mock, and it checks the calls were made."
+show MockEverythingTest 15 28 "the weak test" --zoom 26-27
+
+## Scene 4: the strong test
+note "The *strong* test: a fake order book, one mock where money leaves, and an *argument captor*."
+show CapturedRefundTest 17 32 "the strong test" --zoom 21-22,29,31 --mark 19
+
+## Scene 5: the captor finds the bug
+note "Run both tests against today's refunds:"
+run_live "./gradlew :lessons:mockito-well-used:test -Pcode=today"
+callout "The weak test passes. The captor shows the card got the whole order back: 3750 cents, not 1250."
+
+## Scene 6: the fixed refunds
+note "The refunds that send the price of the returned items:"
+show FixedRefunds 21 27 "the fixed refunds" --zoom 25
+run_live "./gradlew :lessons:mockito-well-used:test"
+callout "The card gets 1250 cents back, the amount on the receipt. Every test passes."

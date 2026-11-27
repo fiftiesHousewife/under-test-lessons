@@ -1,6 +1,6 @@
 # Narration: JUnit extensions
 
-One item per scene of [junit-extensions.tape](junit-extensions.tape). The intro and closing slides have their own
+One item per scene of [junit-extensions.scenes](junit-extensions.scenes). The intro and closing slides have their own
 narration, in [junit-extensions.slides.md](junit-extensions.slides.md). Written to be spoken.
 
 1. Here is a line on a shop receipt. It reads two of the shop-wide settings: whether prices include VAT, and the VAT

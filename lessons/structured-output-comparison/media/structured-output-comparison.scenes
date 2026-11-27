@@ -1,0 +1,41 @@
+# The scenes of the structured-output-comparison deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# structured-output-comparison.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in structured-output-comparison.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add JSONUnit to the version catalogue."
+show libs.versions.toml "/json-unit/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency. It reads JSON with Jackson, which the code already uses."
+show lessons/structured-output-comparison/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10
+
+## Scene 3: the output
+note "The code writes an order summary as JSON. The *id* and the *time* are different on every run."
+show SummaryJson 21 28 "writing the summary" --zoom 23-24
+
+## Scene 4: the code under test
+note "The code under test: today's total. It adds up the prices, and forgets the quantities."
+show TodaysOrderSummary 18 21 "today's total" --zoom 20
+
+## Scene 5: the loosened test
+note "A *loosened* test: comparing the whole text broke on every run, so it now only checks for words."
+show ContainsTextTest 7 17 "the loosened test" --zoom 15
+
+## Scene 6: the structured comparison
+note "A *structured* comparison: every field and value, in any order. The id and time only have to be there."
+show CompareJsonTest 13 27 "the structured comparison" --zoom 15,23-24
+
+## Scene 7: the comparison finds the bug
+note "Run both tests against today's total:"
+run_live "./gradlew :lessons:structured-output-comparison:test -Pcode=today"
+callout "The loosened test passes. The structured comparison names the field, the value expected, and the value found."
+
+## Scene 8: the fixed total
+note "The total that multiplies price by quantity:"
+show FixedOrderSummary 18 21 "the fixed total" --zoom 20
+run_live "./gradlew :lessons:structured-output-comparison:test"
+callout "The structured comparison passes on every run, whatever the id and the time."

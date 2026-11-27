@@ -1,6 +1,6 @@
 # Narration: masking captured data so tests still work
 
-One item per scene of [masking-captured-data.tape](masking-captured-data.tape). The intro and closing slides have
+One item per scene of [masking-captured-data.scenes](masking-captured-data.scenes). The intro and closing slides have
 their own narration, in [masking-captured-data.slides.md](masking-captured-data.slides.md). Written to be spoken.
 
 1. Here are the 2 files. Ada Brennan's orders are on rows 2, 4 and 7, each with the same email address and account

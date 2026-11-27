@@ -1,7 +1,7 @@
 # Narration: feature flags
 
-One item per scene of [feature-flags.tape](feature-flags.tape). The intro and closing slides have their own narration,
-in [feature-flags.slides.md](feature-flags.slides.md). Written to be spoken.
+One item per scene of [feature-flags.scenes](feature-flags.scenes). The intro and closing slides have their own
+narration, in [feature-flags.slides.md](feature-flags.slides.md). Written to be spoken.
 
 1. Step one. Add the OpenFeature software development kit to the version catalogue.
 2. Step two. Add it to the lesson. The code itself asks the flag, so it is an ordinary dependency, not just a test one.

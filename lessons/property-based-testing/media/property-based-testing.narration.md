@@ -1,6 +1,6 @@
 # Narration: property-based testing
 
-One item per scene of [property-based-testing.tape](property-based-testing.tape). The intro and closing slides have
+One item per scene of [property-based-testing.scenes](property-based-testing.scenes). The intro and closing slides have
 their own narration, in [property-based-testing.slides.md](property-based-testing.slides.md). Written to be spoken.
 
 1. Step one. Add jetCheck to the version catalogue.

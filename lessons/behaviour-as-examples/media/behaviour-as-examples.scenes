@@ -1,0 +1,33 @@
+# The scenes of the behaviour-as-examples deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# behaviour-as-examples.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in behaviour-as-examples.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the code under test
+note "The code under test: today's refund rules, as the tills run them."
+show TodaysRefundPolicy 8 21 "today's refunds" --zoom 16
+
+## Scene 2: the weak tests
+note "*Weak* tests, written by reading the code: 5 days and 60 days, far from the 30-day boundary."
+show RefundPolicyTest 19 30 "tests written from the code" --zoom 22-25
+
+## Scene 3: the returns team's examples
+note "The rules as the *returns team* wrote them down: one named example per row, a table they can edit."
+show lessons/behaviour-as-examples/example/src/test/resources/returns-team-examples.csv 1 6 "the returns team's examples" --zoom 3
+
+## Scene 4: the strong test
+note "The *strong* test reads the team's table: each row is its own test, reported by the team's name for it."
+show ReturnsTeamExamplesTest 19 27 "the returns team's examples, as a test" --zoom 19-21
+
+## Scene 5: the examples and the code disagree
+note "Run the tests against today's code:"
+run_live "./gradlew :lessons:behaviour-as-examples:test -Pcode=today"
+callout "The team's example and the code disagree. That is a question for the returns team, not a test to delete."
+
+## Scene 6: the team's answer
+note "The returns team confirmed their example: the 30 days include the 30th day."
+show ShopRefundPolicy 8 21 "the refunds the team confirmed" --zoom 16
+run_live "./gradlew :lessons:behaviour-as-examples:test"
+callout "Every example passes. The table stays, as the rules written down, for the next change."

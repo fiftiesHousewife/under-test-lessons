@@ -33,12 +33,17 @@ class SlideDeckTest {
         Files.writeString(media.resolveSibling("Thing.java"), "class Thing {\n    int size() { return 1; }\n}\n");
         final Path other = Files.createDirectories(root.resolve("lessons/another/media"));
         Files.writeString(other.resolveSibling("Thing.java"), "class SomeoneElsesThing {\n}\n");
-        Files.writeString(media.resolve("demo.tape"), "# ---- Scene 1: the code under test ----\n"
-                + "Type@1ms `note \"The code under test: the thing & its *size*.\"`\n"
-                + "Type@1ms `show Thing 1 2 \"the thing\"`\nType@1ms `run_live \"./gradlew test\"`\n"
-                + "Type@1ms `callout \"It passes.\"`\nSleep 1s\n");
-        Files.writeString(media.resolve("demo.narration.md"), "1. Here is the code & its tests.\n");
+        writeTheScenes(media);
         return media;
+    }
+
+    private static void writeTheScenes(final Path media) throws IOException {
+        Files.writeString(media.resolve("demo.scenes"), "# The scenes of the demo deck.\n\n"
+                + "## Scene 1: the code under test\n"
+                + "note \"The code under test: the thing & its *size*.\"\n"
+                + "show Thing 1 2 \"the thing\"\nrun_live \"./gradlew test\"\n"
+                + "callout \"It passes.\"\n");
+        Files.writeString(media.resolve("demo.narration.md"), "1. Here is the code & its tests.\n");
     }
 
     /* A browser that only "prints" a PDF, by making an empty file where asked. */

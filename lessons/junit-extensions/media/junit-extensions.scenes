@@ -1,0 +1,37 @@
+# The scenes of the junit-extensions deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# junit-extensions.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in junit-extensions.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the shop's settings
+note "A line on a shop receipt reads the *shop-wide settings*: prices with VAT or not, and the rate."
+show ShopReceipt 4 11 "a shop receipt line" --zoom 7-8
+
+## Scene 2: the code under test
+note "The code under test: today's trade invoice. It switches a shop-wide setting off, and leaves it off."
+show TodaysTradeInvoice 8 15 "today's trade invoice" --zoom 12
+
+## Scene 3: set-up by hand
+note "Tests with *set-up by hand*: the settings set once, before all the tests, and never put back."
+show HandSetUpTest 12 32 "tests set up by hand" --zoom 15-19
+
+## Scene 4: the extension
+note "A *JUnit extension*: standard settings before each test, put back after, and a check nothing leaked."
+show StandardShopSettings 11 31 "the extension" --zoom 19-21,26-29 --mark 11
+
+## Scene 5: tests that use it
+note "The same tests, with *no set-up* of their own: one line asks JUnit to use the extension."
+show GuardedSettingsTest 11 27 "tests that use the extension" --zoom 12
+
+## Scene 6: the leak is caught
+note "Run both sets of tests against today's trade invoice:"
+run_live "./gradlew :lessons:junit-extensions:test -Pcode=today"
+callout "By hand, the innocent receipt test fails. The extension fails the test that left the setting changed."
+
+## Scene 7: the fixed trade invoice
+note "The trade invoice that writes its own price without VAT, and leaves the settings alone:"
+show FixedTradeInvoice 7 13 "the fixed trade invoice" --zoom 11
+run_live "./gradlew :lessons:junit-extensions:test"
+callout "Every test passes. The extension sets up and cleans up for every test that uses it."

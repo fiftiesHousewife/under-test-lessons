@@ -10,14 +10,14 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 /*
- * What each live command in a lesson's video script printed, kept in {@code <id>.outputs/01.txt}, {@code 02.txt} and so
- * on (one per live command, in script order; the first line is the command), so decks can show the output the video
- * shows. tools/capture-lesson-outputs.py runs the commands as a recording does and writes the files. The checks here
- * fail a live command without its output, and a scene that names a line (in its narration, a callout or a live
- * command's output) without showing that line of code marked ({@code show ... --mark N}), and kept output that shows a
- * personal path: a home folder, with a person's name or account, which must never be shown. {@code ANSWER_FILE} keeps
- * the output of the lesson's exercise answer, which no video runs. {@code SCREEN_ROWS} and {@code SCREEN_COLUMNS} are
- * what the video's terminal holds: 1920 by 1080 at font size 20, less its padding and window bar.
+ * What each live command in a lesson's scene file printed, kept in {@code <id>.outputs/01.txt}, {@code 02.txt} and so
+ * on (one per live command, in scene file order; the first line is the command), so decks can show it.
+ * tools/capture-lesson-outputs.py runs the commands and writes the files, with a cast of each for the deck to play. The
+ * checks here fail a live command without its output, and a scene that names a line (in its narration, a callout or a
+ * live command's output) without showing that line of code marked ({@code show ... --mark N}), and kept output that
+ * shows a personal path: a home folder, with a person's name or account, which must never be shown.
+ * {@code ANSWER_FILE} keeps the output of the lesson's exercise answer, which no scene runs. {@code SCREEN_ROWS} and
+ * {@code SCREEN_COLUMNS} are one screen of terminal, which a live run must fit: the casts are at most 36 rows high.
  */
 final class LiveOutputs {
 
@@ -35,12 +35,12 @@ final class LiveOutputs {
         return String.format(Locale.ROOT, "%02d.txt", index + 1);
     }
 
-    /* Every live command in the script, in order. */
+    /* Every live command in the scene file, in order. */
     static List<String> commands(final List<SceneContent> scenes) {
         return scenes.stream().flatMap(scene -> scene.commands().stream()).toList();
     }
 
-    /* The output kept for the live command at this place in the script, or none if it is missing or out of date. */
+    /* The output kept for the live command at this place in the scene file, or none if missing or out of date. */
     static List<String> read(final Media media, final int index, final String command) {
         return kept(media.file(FOLDER).resolve(fileName(index)), command);
     }
@@ -60,13 +60,13 @@ final class LiveOutputs {
 
     /* Problems in a lesson: live commands without kept output, and lines the narration names that aren't shown. */
     static List<Problem> problems(final Media media) {
-        final Path tape = media.file(".tape");
-        if (!Files.isRegularFile(tape)) {
+        final Path sceneFile = media.scenes();
+        if (!Files.isRegularFile(sceneFile)) {
             return List.of();
         }
         final List<SceneContent> scenes;
         try {
-            scenes = SceneContent.read(media.root(), tape);
+            scenes = SceneContent.read(media.root(), sceneFile);
         } catch (IllegalArgumentException e) {
             return List.of(); // a show line that finds no file, which LessonChecks.shows reports
         }
@@ -75,7 +75,7 @@ final class LiveOutputs {
         final List<String> paragraphs = Files.isRegularFile(narration) ? Narration.paragraphs(narration) : List.of();
         for (int i = 0; i < scenes.size(); i++) {
             final String said = paragraph(paragraphs, i) + " " + shownText(scenes.get(i));
-            problems.addAll(MarkedLines.unshown(tape, new MarkedLines.Said(i + 1, said), scenes.get(i)));
+            problems.addAll(MarkedLines.unshown(sceneFile, new MarkedLines.Said(i + 1, said), scenes.get(i)));
         }
         return problems;
     }
@@ -91,7 +91,7 @@ final class LiveOutputs {
     }
 
     /*
-     * The rows a kept output takes in the video's terminal: its command's line, then each line, a long one wrapping
+     * The rows a kept output takes on a screen of terminal: its command's line, then each line, a long one wrapping
      * onto more rows.
      */
     static int rowsOnScreen(final List<String> output) {
@@ -109,20 +109,20 @@ final class LiveOutputs {
     }
 
     private static List<Problem> keptOutput(final Media media, final int index, final String command) {
-        final Path tape = media.file(".tape");
+        final Path sceneFile = media.scenes();
         final List<String> output = read(media, index, command);
         final List<Problem> problems = new ArrayList<>();
         if (output.stream().anyMatch(line -> PERSONAL_PATH.matcher(line).find())) {
-            problems.add(new Problem(tape, "live command " + (index + 1) + "'s kept output shows a personal path;"
+            problems.add(new Problem(sceneFile, "live command " + (index + 1) + "'s kept output shows a personal path;"
                     + " capture it again with tools/capture-lesson-outputs.py"));
         }
         if (output.isEmpty()) {
-            problems.add(new Problem(tape, "live command " + (index + 1) + " (" + command + ") has no kept"
+            problems.add(new Problem(sceneFile, "live command " + (index + 1) + " (" + command + ") has no kept"
                     + " output for decks; run python3 tools/capture-lesson-outputs.py " + media.safeLesson()));
         }
         final int rows = rowsOnScreen(output);
         if (rows > SCREEN_ROWS) {
-            problems.add(new Problem(tape, "live command " + (index + 1) + " (" + command + ") prints " + rows
+            problems.add(new Problem(sceneFile, "live command " + (index + 1) + " (" + command + ") prints " + rows
                     + " rows, counting its command and lines that wrap, but one screen holds " + SCREEN_ROWS
                     + "; make it print less: fewer tests in the run, or shorter failure messages"));
         }

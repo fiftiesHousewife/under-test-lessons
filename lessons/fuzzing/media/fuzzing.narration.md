@@ -1,6 +1,6 @@
 # Narration: fuzzing
 
-One item per scene of [fuzzing.tape](fuzzing.tape). The intro and closing slides have their own narration, in
+One item per scene of [fuzzing.scenes](fuzzing.scenes). The intro and closing slides have their own narration, in
 [fuzzing.slides.md](fuzzing.slides.md). Written to be spoken.
 
 1. Step one. Add Jazzer's JUnit support to the version catalogue.

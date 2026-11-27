@@ -63,13 +63,10 @@ path: the service answers 404 and never calls the loyalty provider, and the call
 ./gradlew :lessons:capturing-with-logbook:test -Pcode=answer   # today's capture: 3 of 4 tests fail; the capture for a customer nobody has shows the caller's token
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/capturing-with-logbook.html) (its source is [`media/capturing-with-logbook.deck.html`](media/capturing-with-logbook.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/capturing-with-logbook.tape), [the narration](media/capturing-with-logbook.narration.md) and
-  [the slides](media/capturing-with-logbook.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=capturing-with-logbook`.
 
 ## When to use it
 

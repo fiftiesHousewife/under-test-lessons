@@ -6,7 +6,7 @@ group: How lessons are built
 
 # Decks play live runs from casts, not recorded video
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** accepted · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): VHS and the full lesson videos are gone too
 
 ## Context and Problem Statement
 

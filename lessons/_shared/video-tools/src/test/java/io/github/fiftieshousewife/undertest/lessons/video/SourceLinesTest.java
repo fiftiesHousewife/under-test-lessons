@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class SourceLinesTest {
 
     @Test
-    void picksLinesAsTheShowHelperDoes() {
+    void picksLinesForAShowPanel() {
         final List<String> toml = List.of("[versions]", "junit = \"6\"", "pit = \"1\"", "", "[libraries]", "x = 1",
                 "pit-core = { module = \"p\" }");
         final List<String> kotlin = List.of("plugins {", "    id(\"java\")", "}", "", "pitest {", "    threads = 2",

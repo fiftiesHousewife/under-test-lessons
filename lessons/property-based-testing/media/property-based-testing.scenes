@@ -1,0 +1,38 @@
+# The scenes of the property-based-testing deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# property-based-testing.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in property-based-testing.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add jetCheck to the version catalogue."
+show libs.versions.toml "/jetcheck/" "gradle/libs.versions.toml"
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency. A switch chooses which splitter the tests run against."
+show lessons/property-based-testing/example/build.gradle.kts "/libs.jetcheck/" "lesson build file: dependencies" --zoom 9
+show lessons/property-based-testing/example/build.gradle.kts "/^tasks.test/" "lesson build file: tests"
+
+## Scene 3: the code under test
+note "The code under test: everyone pays the same, and the first person pays whatever is left over."
+show FirstPayerSplitter 14 19 --zoom 17
+
+## Scene 4: the example tests
+note "*Example* tests: each checks one case its author thought of."
+show SplitterExampleTest 12 26
+
+## Scene 5: the property test
+note "The *property* test: three rules for every bill, checked on a hundred random bills."
+show SplitterPropertyTest 30 47 --zoom 33-34 --mark 44-46
+
+## Scene 6: the property finds a bug
+note "Run the tests against the splitter in use today:"
+run_live "./gradlew :lessons:property-based-testing:test -Pcode=today"
+callout "3 cents between 4 people: the first person pays all 3. None of the example tests checked a bill like this."
+
+## Scene 7: the fair splitter
+note "The fair splitter shares the leftover cents one each:"
+show FairSplitter 9 16 --zoom 13
+run_live "./gradlew :lessons:property-based-testing:test"
+callout "Every property holds, for every bill jetCheck tried."

@@ -1,0 +1,51 @@
+# The scenes of the anti-patterns-in-existing-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# anti-patterns-in-existing-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in anti-patterns-in-existing-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: *ArchUnit*, already in the version catalogue."
+show libs.versions.toml "/archunit/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the old online shop beside the checks
+note "Step 2: ArchUnit for the checks, and the old online shop in a *source set of its own*, compiled but never run."
+show lessons/anti-patterns-in-existing-tests/example/build.gradle.kts 10 30 "lesson build file" --zoom 18-20 --mark 26
+
+## Scene 3: old tests that check nothing, or are switched off
+note "The old tests: one checks *nothing*, one is *switched off*, one checks only that an answer *exists*."
+show BasketTest 19 22 "old test: the empty basket" --mark 21
+show RefundsTest 15 19 "old test: refunds to a gift card" --zoom 15-17
+show CheckoutTest 42 45 "old test: placing an order" --mark 44
+
+## Scene 4: old tests that wait, or depend on order
+note "Old tests that *wait* with fixed sleeps, and tests that only pass *in order*."
+show DispatcherTest 15 27 "old tests: sending orders to the warehouse" --zoom 18 --mark 25
+show OrderNumbersTest 10 24 "old tests: order numbers" --mark 10
+
+## Scene 5: an old test class that mocks everything
+note "An old test class that *mocks everything* the checkout uses."
+show CheckoutTest 14 40 "old tests: the checkout" --zoom 16-25
+
+## Scene 6: the checks: one rule for each kind
+note "The checks: *one rule for each kind*, over ArchUnit's view of each compiled test."
+show AntiPatternRules 28 61 "the anti-pattern rules" --zoom 29-33 --mark 59-61
+
+## Scene 7: the list, and the ratchet
+note "Two tests: the *list* of findings, and the *ratchet*, which compares them with the register."
+show AntiPatternChecksTest 23 45 "the checks" --zoom 23-24 --mark 30,41
+
+## Scene 8: today, no register yet
+note "Run the checks over the old tests, with no register yet:"
+run_live "./gradlew :lessons:anti-patterns-in-existing-tests:test -Pcode=today"
+callout "9 anti-patterns in 8 of 13 tests, each with its file and line. None is written down yet."
+
+## Scene 9: the register, after triage
+note "The *register*: each finding written down, with the decision taken on it."
+show lessons/anti-patterns-in-existing-tests/example/old-shop/anti-patterns.txt 1 13 "the register: old-shop/anti-patterns.txt" --zoom 5
+
+## Scene 10: the fix, every finding recorded
+note "The same checks, with the register:"
+run_live "./gradlew :lessons:anti-patterns-in-existing-tests:test"
+callout "Every anti-pattern is recorded, with its decision. No test was deleted, and a new one fails the build."

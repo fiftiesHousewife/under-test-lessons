@@ -61,13 +61,11 @@ less than nothing.
 ./gradlew :lessons:fuzzing:test -Pcode=answer   # today's reader: the kept crash, and a label weighing -5 grams accepted
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/fuzzing.html) (its source is
   [`media/fuzzing.deck.html`](media/fuzzing.deck.html)). Arrow keys move between slides, N shows the speaker notes, and
   printing gives one slide per page.
-- **Video:** made from [the script](media/fuzzing.tape), [the narration](media/fuzzing.narration.md) and
-  [the slides](media/fuzzing.slides.md).
 
 ## When to use it
 

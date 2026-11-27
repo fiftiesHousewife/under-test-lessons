@@ -1,8 +1,8 @@
 # Narration: coverage of changed code
 
-One item per scene of [coverage-of-changed-code.tape](coverage-of-changed-code.tape). The intro and closing slides have
-their own narration, in [coverage-of-changed-code.slides.md](coverage-of-changed-code.slides.md). Written to be spoken:
-short sentences, no commands read aloud.
+One item per scene of [coverage-of-changed-code.scenes](coverage-of-changed-code.scenes). The intro and closing slides
+have their own narration, in [coverage-of-changed-code.slides.md](coverage-of-changed-code.slides.md). Written to be
+spoken: short sentences, no commands read aloud.
 
 1. Step one. What changed. The build asks git which Java files the branch changed, compared with the main branch. This
    lesson's own history holds no such change, so the lesson names the example's change itself: one class, the bulk

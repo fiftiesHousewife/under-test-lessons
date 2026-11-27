@@ -1,7 +1,7 @@
 # Narration: differential testing
 
-One item per scene of [differential-testing.tape](differential-testing.tape). The intro and closing slides have their
-own narration, in [differential-testing.slides.md](differential-testing.slides.md). Written to be spoken.
+One item per scene of [differential-testing.scenes](differential-testing.scenes). The intro and closing slides have
+their own narration, in [differential-testing.slides.md](differential-testing.slides.md). Written to be spoken.
 
 1. Here is the old postage calculator. First it refuses a weight under 1 gram, or over 5 kilograms. Then each if
    returns the price of one band, from 85 pence up to 100 grams, to 3 pounds 15 up to a kilogram. Above that, each

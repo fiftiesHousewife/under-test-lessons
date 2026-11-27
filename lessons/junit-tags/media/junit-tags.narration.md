@@ -1,6 +1,6 @@
 # Narration: Tags: fast tests first, slow tests apart
 
-One item per scene of [junit-tags.tape](junit-tags.tape). The intro and closing slides have their own narration, in
+One item per scene of [junit-tags.scenes](junit-tags.scenes). The intro and closing slides have their own narration, in
 [junit-tags.slides.md](junit-tags.slides.md). Written to be spoken.
 
 1. Here are 2 of the 4 quick tests. They give the stock check a warehouse made from a map: 3 car seats on the shelf. One

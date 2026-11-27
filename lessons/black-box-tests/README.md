@@ -51,14 +51,11 @@ the test writes its own settings file and starts the service through the same en
 ./gradlew :lessons:black-box-tests:test -Pcode=answer   # today's code: 2 of 5 tests fail; the answer finds neither O-1001 nor O-1002 kept
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/black-box-tests.html) (its source is
   [`media/black-box-tests.deck.html`](media/black-box-tests.deck.html)). Arrow keys move between slides, N shows the
   speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/black-box-tests.tape), [the narration](media/black-box-tests.narration.md)
-  and [the slides](media/black-box-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=black-box-tests`.
 
 ## When to use it
 

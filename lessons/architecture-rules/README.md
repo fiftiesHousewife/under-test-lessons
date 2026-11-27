@@ -40,13 +40,10 @@ else: the service layer, the web layer itself and Java's own classes. It also ca
 ./gradlew :lessons:architecture-rules:test -Pcode=answer   # today's admin page: 2 of 3 tests fail; the answer names the 3 uses of storage
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/architecture-rules.html) (its source is [`media/architecture-rules.deck.html`](media/architecture-rules.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/architecture-rules.tape), [the narration](media/architecture-rules.narration.md) and
-  [the slides](media/architecture-rules.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=architecture-rules`.
 
 ## When to use it
 

@@ -20,8 +20,6 @@ final class SlideHtml {
     static final int HEIGHT = 1080;
     private static final java.util.regex.Pattern LESSON_LINK =
             java.util.regex.Pattern.compile("^lesson:\\s*(.+?)\\s*\\(([a-z0-9-]+)\\)$");
-    private static final java.util.regex.Pattern POINT =
-            java.util.regex.Pattern.compile("<li class=\"(point|link|link lesson)\">");
 
     private SlideHtml() {
     }
@@ -86,7 +84,7 @@ final class SlideHtml {
 
     /*
      * A point that starts with an address, escaped, with the address as a link that opens in a new tab: the deck can be
-     * clicked, and the video still shows the address.
+     * clicked, and a printed deck still shows the address.
      */
     static String linked(final String point) {
         final int end = point.indexOf(' ');
@@ -99,22 +97,6 @@ final class SlideHtml {
     static List<String> lessonLinks(final Slide slide) {
         return slide.points().stream().map(LESSON_LINK::matcher).filter(java.util.regex.Matcher::matches)
                 .map(link -> link.group(2)).toList();
-    }
-
-    /*
-     * One stage of a slide that builds up: its first {@code shown} points as they are, the rest hidden but keeping
-     * their places ({@code later}), and its picture hidden until the first point arrives ({@code before-picture}).
-     */
-    static String stage(final String page, final int shown) {
-        final java.util.regex.Matcher item = POINT.matcher(page);
-        final StringBuilder out = new StringBuilder();
-        int index = 0;
-        while (item.find()) {
-            item.appendReplacement(out, index++ < shown ? "$0" : "<li class=\"$1 later\">");
-        }
-        item.appendTail(out);
-        return shown > 0 ? out.toString() : out.toString().replaceFirst("<body class=\"([^\"]*)\">",
-                "<body class=\"$1 before-picture\">");
     }
 
     static String escape(final String text) {

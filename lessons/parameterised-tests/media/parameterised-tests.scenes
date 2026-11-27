@@ -1,0 +1,35 @@
+# The scenes of the parameterised-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# parameterised-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in parameterised-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the build
+note "Parameterised tests come with JUnit Jupiter: nothing to add."
+show libs.versions.toml "/^junit/" "gradle/libs.versions.toml"
+note "The lesson adds one switch, to choose which calculator the tests run against:"
+show lessons/parameterised-tests/example/build.gradle.kts "/^tasks.test/" "lesson build file"
+
+## Scene 2: the code under test
+note "The code under test: VAT at 20%. Twenty percent is a fifth, so it divides by five."
+show RoundingDownVat 9 12 --zoom 11
+
+## Scene 3: the copy-pasted tests
+note "*Copy-pasted* tests: one method per case, and every amount is a round number."
+show VatCopyPasteTest 11 28 --zoom 22
+
+## Scene 4: the parameterised test
+note "The *parameterised* test: the cases as a table, including every way a fifth of a penny can round."
+show VatParameterisedTest 13 30 --zoom 17-24
+
+## Scene 5: the table finds a bug
+note "Run the tests against the calculator in use today:"
+run_live "./gradlew :lessons:parameterised-tests:test -Pcode=today"
+callout "3 pence net should give 1 penny of VAT, and gives 0. The copy-pasted tests only checked amounts that divide by five."
+
+## Scene 6: the nearest-penny calculator
+note "The calculator that rounds to the nearest penny:"
+show NearestPennyVat 6 9 --zoom 8
+run_live "./gradlew :lessons:parameterised-tests:test"
+callout "Every row passes: each case named, each case checked."

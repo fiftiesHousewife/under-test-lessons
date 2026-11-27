@@ -11,12 +11,11 @@ import java.util.regex.Pattern;
 
 /**
  * Reads a lesson's narration file: a numbered list with one item per scene. Markdown emphasis and code marks are
- * removed, so the text can be shown as captions or read aloud.
+ * removed, so the text can be shown on a slide or read aloud.
  */
 public final class Narration {
 
     private static final Pattern ITEM = Pattern.compile("^\\d+\\.\\s+(.*)$");
-    private static final Pattern SCENE = Pattern.compile("^#\\s*-+\\s*Scene\\s+\\d+:.*-+\\s*$");
 
     private Narration() {
     }
@@ -48,12 +47,12 @@ public final class Narration {
         return markdown.replace("**", "").replace("`", "").replaceAll("\\s+", " ").strip();
     }
 
-    /* Captions and voice pair each scene with one narration item, so the counts must match. */
-    static Optional<Problem> checkSceneCount(final Path tape, final Path narration) {
-        final long scenes = readLines(tape).stream().filter(line -> SCENE.matcher(line).matches()).count();
+    /* The deck and its voice pair each scene with one narration item, so the counts must match. */
+    static Optional<Problem> checkSceneCount(final Path sceneFile, final Path narration) {
+        final int scenes = SceneContent.titles(sceneFile).size();
         final int items = Narration.rawParagraphs(narration).size();
-        return scenes == items ? Optional.empty() : Optional.of(new Problem(tape, scenes + " scenes but " + items
-                + " narration items; each scene needs exactly one item (look for a repeated scene line)"));
+        return scenes == items ? Optional.empty() : Optional.of(new Problem(sceneFile, scenes + " scenes but " + items
+                + " narration items; each scene needs exactly one item (look for a repeated scene heading)"));
     }
 
     /*

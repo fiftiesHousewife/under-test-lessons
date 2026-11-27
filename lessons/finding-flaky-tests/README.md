@@ -49,13 +49,10 @@ that names what was missing if time runs out.
 ./gradlew :lessons:finding-flaky-tests:test -Pcode=answer   # a busy machine: 1 of 15 runs fails, the sleeping test's third; none of the answer's 5 runs fails
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/finding-flaky-tests.html) (its source is [`media/finding-flaky-tests.deck.html`](media/finding-flaky-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/finding-flaky-tests.tape), [the narration](media/finding-flaky-tests.narration.md) and
-  [the slides](media/finding-flaky-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=finding-flaky-tests`.
 
 ## When to use it
 

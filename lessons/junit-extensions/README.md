@@ -48,13 +48,10 @@ and a car seat sells at the reduced VAT rate of 5%.
 ./gradlew :lessons:junit-extensions:test -Pcode=answer   # today's code: 3 of 7 tests fail; the answer's receipt was "Car seat  £120.00", not £105.00
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/junit-extensions.html) (its source is [`media/junit-extensions.deck.html`](media/junit-extensions.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/junit-extensions.tape), [the narration](media/junit-extensions.narration.md) and
-  [the slides](media/junit-extensions.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=junit-extensions`.
 
 ## When to use it
 

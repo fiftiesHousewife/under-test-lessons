@@ -1,12 +1,12 @@
 ---
-status: accepted
+status: superseded by 0041
 decision-makers: Lessons maintainers
 group: Using the lessons in a company
 ---
 
 # Companies receive finished videos and never run the voice
 
-**Decided by:** Lessons maintainers · **Status:** accepted · **Replaces:** the voice parts of
+**Decided by:** Lessons maintainers · **Status:** superseded by [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md) · **Replaces:** the voice parts of
 [Videos are recorded with VHS and voiced offline](0011-videos-are-recorded-with-vhs-and-voiced-offline.md) and
 [Every lesson works inside a company](0021-every-lesson-works-inside-a-company.md)
 

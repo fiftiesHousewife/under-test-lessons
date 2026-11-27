@@ -9,24 +9,23 @@ the words the lessons themselves use.
 
 | Word or phrase | Meaning | Replaces (don't use) |
 |---|---|---|
-| **lesson** | One technique taught with a runnable example, a narrated video and a slide deck. | module, unit, course |
+| **lesson** | One technique taught with a runnable example and a narrated slide deck. | module, unit, course |
 | **continuous integration (CI)** | The shared build that runs every test whenever a developer pushes a change. Said in full on a slide. Engineers know it, so it needs no explanation. | build machine, build server, the pipeline |
 | **today's code** | The example code as it is before the lesson's fix, chosen with `-Pcode=today` (or the lesson's own switch). | legacy version, broken version |
 | **the fix** | The example code after the change the lesson teaches. The default, so the build passes. | fixed version, solution |
 | **weak test** | A test that looks reasonable and passes, but would miss the bug the lesson shows. | bad test |
 | **strong test** | The test the technique produces, which finds the bug. | good test |
-| **scene** | One step of a video's terminal recording, marked `# ---- Scene N: title ----` in its script, with one narration item. | shot, clip |
-| **narration** | The words spoken over a video, one item per scene, in `media/<id>.narration.md`. | script (that is the `.tape` file), voiceover text |
-| **video script** | The `.tape` file that VHS records, scene by scene. | tape (in prose) |
+| **scene** | One step of a lesson's example, shown on one slide of its deck, marked `## Scene N: title` in its scene file, with one narration item. | shot, clip |
+| **narration** | The words a deck's voice says over its scenes, one item per scene, in `media/<id>.narration.md`. | script, voiceover text |
+| **scene file** | `media/<id>.scenes`: each scene's heading, then one line for each thing its slide shows (a note, a code panel, a live run, a callout). | script, tape |
 | **slides file** | `media/<id>.slides.md`: the intro and closing slides, with their points, picture and narration. |  |
 | **slide deck** | One self-contained HTML page per lesson, `media/<id>.deck.html`, with every slide and each scene's code. | presentation, PowerPoint |
-| **code panel** | A piece of a file shown in a video or deck, with its line numbers and a label saying what it is. | snippet |
-| **callout** | A short boxed sentence after a result, saying what it means. | caption (captions are the subtitles) |
-| **captions** | The subtitles made from the narration. | subtitles (in prose) |
-| **voice clip** | One short sound file of narration read aloud: one per slide of a deck, and one per scene for the video. Each is named by what it says, so a clip is made once and kept until its words change. | audio file, sound bite |
+| **code panel** | A piece of a file shown on a deck's slide, with its line numbers and a label saying what it is. | snippet |
+| **callout** | A short boxed sentence after a result, saying what it means. | caption |
+| **voice clip** | One short sound file of narration read aloud: one per slide of a deck. Each is named by what it says, so a clip is made once and kept until its words change. | audio file, sound bite |
 | **kept output** | What a live run printed, saved as text in `media/<id>.outputs/` so the deck can show it and the checks can hold the README to it. | log, snapshot |
-| **live run** | A command run on camera, whose real output the video shows. | demo |
-| **look** | The stylesheet and picture set that slides, decks and videos share. | theme (except for the files in `themes/`), skin |
+| **live run** | A command a scene runs, whose real output the deck plays from its cast. | demo |
+| **look** | The stylesheet and picture set that slides and decks share. | theme (except for the files in `themes/`), skin |
 | **picture set** | A folder of SVG pictures, found by name; the ink set is drawn for black and white. | icon set |
 | **container tests** | Tests that need a container runtime, kept in the `integrationTest` suite, skipped where there is none (as in the toolkit's glossary). | integration tests (in prose) |
 
@@ -108,7 +107,7 @@ Lessons are listened to as well as read. These come from reviewing every deck wi
     people's names as they say them ("Lukáš Křečan").
 
 The phrases below that a machine can spot are in [`lessons/_shared/dont-say.txt`](lessons/_shared/dont-say.txt), which
-`checkVideoScripts` applies to every slide and narration: add a phrase there when it's agreed, not only here.
+`checkLessonDecks` applies to every slide and narration: add a phrase there when it's agreed, not only here.
 
 | Don't say | Say instead | Why |
 |---|---|---|

@@ -83,7 +83,7 @@ If you want a voice, for your own slides or for whole decks in your company's ow
 ```
 
 The script is written by the lessons' own tool, from your slides' words. Like every step that runs inside a company,
-it needs only the JDK and Gradle: no VHS, ffmpeg, Python or voice engine. The recording needs only a microphone and
+it needs only the JDK and Gradle: no ffmpeg, Python or voice engine. The recording needs only a microphone and
 any app that saves `.m4a`, `.wav` or `.mp3`, which the decks play as they are: Windows' Sound Recorder saves `.m4a`,
 and so does QuickTime on a Mac. The live runs play from casts that the capture step writes, so nothing in a company
 ever records a terminal.
@@ -101,7 +101,7 @@ and every deck plays the same recording.
    `./gradlew :lessons:video-tools:buildLessonDecks`. The build needs only the JDK, Gradle and your Maven repository,
    as every step that runs inside a company does.
 3. **Publish** the decks, with their clips, to your internal site, as `tools/publish-decks.py` does for the public one.
-4. **Check** before publishing: `./gradlew :lessons:video-tools:checkVideoScripts` checks your slides as it checks the
+4. **Check** before publishing: `./gradlew :lessons:video-tools:checkLessonDecks` checks your slides as it checks the
    lessons' own: the same words and rules.
 
 Because your folder holds only what's yours, taking a new release is a pull and a rebuild. Nothing of yours is merged

@@ -1,7 +1,8 @@
 # Narration: Temporary folders
 
-One item per scene of [junit-temporary-folders.tape](junit-temporary-folders.tape). The intro and closing slides have
-their own narration, in [junit-temporary-folders.slides.md](junit-temporary-folders.slides.md). Written to be spoken.
+One item per scene of [junit-temporary-folders.scenes](junit-temporary-folders.scenes). The intro and closing slides
+have their own narration, in [junit-temporary-folders.slides.md](junit-temporary-folders.slides.md). Written to be
+spoken.
 
 1. Here is the export, as the accounts system relies on it. It names the file, orders dot csv, and its header. Its
    one method takes the day's orders, and the folder to write into, so a test can choose where the file goes.

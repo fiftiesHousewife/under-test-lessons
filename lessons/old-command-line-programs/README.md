@@ -68,13 +68,10 @@ night when nobody set `PAYMENT_LIMIT_PAISE`. Pin what the program does then, bef
 ./gradlew :lessons:old-command-line-programs:test -Pcode=answer   # the answer alone, against today's program: 1 test passed, so it holds before the change too
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/old-command-line-programs.html) (its source is [`media/old-command-line-programs.deck.html`](media/old-command-line-programs.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/old-command-line-programs.tape), [the narration](media/old-command-line-programs.narration.md) and
-  [the slides](media/old-command-line-programs.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=old-command-line-programs`.
 
 ## When to use it
 

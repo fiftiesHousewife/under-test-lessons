@@ -1,0 +1,38 @@
+# The scenes of the characterisation-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# characterisation-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in characterisation-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add ApprovalTests to the version catalogue."
+show libs.versions.toml "/approvaltests/" "gradle/libs.versions.toml"
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency of the lesson. There is nothing to configure."
+show lessons/characterisation-tests/example/build.gradle.kts "/libs.approvaltests/" "lesson build file" --zoom 9
+
+## Scene 3: the code under test
+note "The code under test: a statement printer that has run for years without tests."
+show LegacyStatement 14 31 --zoom 21-22
+
+## Scene 4: the weak test
+note "A *weak* test, the kind legacy code often has: it checks only that something came back."
+show StatementWeakTest 16 24 --zoom 22-23
+
+## Scene 5: the characterisation test
+note "The *characterisation* test: print a month that reaches every rule, and approve the whole statement."
+show StatementCharacterisationTest 16 33 --zoom 25
+
+## Scene 6: the tests pass, and the approved statement
+note "Run the tests against the legacy printer:"
+run_live "./gradlew :lessons:characterisation-tests:test"
+show StatementCharacterisationTest.printsTheSameStatementAsToday.approved.txt 1 10 "the approved statement" --zoom 3-4
+callout "After the rent the balance is exactly 0, and a fee is charged: a quirk, now pinned down."
+
+## Scene 7: the refactored printer
+note "A tidier rewrite of the printer, and the same test run against it:"
+show RefactoredStatement 15 31 "the tidier rewrite" --zoom 22
+run_live "./gradlew :lessons:characterisation-tests:test -Pcode=today"
+callout "The fee at zero has gone. Fix or bug? A question for the Application Owner."

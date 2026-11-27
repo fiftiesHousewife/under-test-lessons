@@ -7,26 +7,26 @@ a company takes, everything the lessons fetch, and the settings that route it. T
 
 - [Every lesson works inside a company](decisions/0021-every-lesson-works-inside-a-company.md)
 - [No lesson needs an AI tool](decisions/0024-no-lesson-needs-an-ai-tool.md)
-- [Companies receive finished videos and never run the voice](decisions/0025-companies-receive-finished-videos-and-never-run-the-voice.md)
-- [What runs inside a company is kept apart from what makes videos](decisions/0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md)
+- [What runs inside a company is kept apart from what voices the decks](decisions/0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md)
 - [Inside a company, a person records the voice](decisions/0027-inside-a-company-a-person-records-the-voice.md)
+- [Lessons are decks with their voice, and the videos are removed](decisions/0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md)
 
 ## What a company takes, and what it runs
 
 A company takes the whole repository. Inside, it builds and checks the lessons, changes them, and rebuilds their
-decks, with the JDK, Gradle, its own Maven repository and its installed Chrome. It never runs the tools that make the
-videos or the voice, and it needs no AI tool: every lesson works deterministically.
+decks, with the JDK, Gradle, its own Maven repository and its installed Chrome. It never runs the tool that voices the
+decks, and it needs no AI tool: every lesson works deterministically.
 
 | Part | Runs with | What it holds | Inside a company? |
 |---|---|---|---|
-| **Inside** | JDK, Gradle, the company's Maven repository, the installed Chrome | The lessons' code, READMEs, narration, slides, video scripts as text, decks and their voice clips, kept outputs, slide styles and pictures, the build's quality rules, the video and lesson checks, deck building, slide pictures and PDFs | Yes |
-| **Production** | VHS, ttyd, Python, the Kokoro voice, ffmpeg, downloads from GitHub and PyPI | Recording, reading narration aloud, joining and captioning videos, publishing videos | No: done by this repository, outside |
+| **Inside** | JDK, Gradle, the company's Maven repository, the installed Chrome | The lessons' code, READMEs, scene files, narration, slides, decks and their voice clips, kept outputs and casts, slide styles and pictures, the build's quality rules, the deck and lesson checks, deck building, slide pictures and PDFs | Yes |
+| **Production** | Python, the Kokoro voice, ffmpeg, downloads from GitHub and PyPI | Reading narration aloud into each deck's voice clips, and the voice review | No: done by this repository, outside |
 | **Maintainer** | GitHub's API and a token | This repository's own upkeep: the backlog and its issues, installing skills, the Pages workflow | No |
 
-The video tools are in two Gradle modules. `lessons/_shared/video-tools` is everything a company runs: the checks,
-deck building, slide pictures, captions and the recording script (`./gradlew check`, `buildLessonSlides`,
-`recordingScript`). `production/video-render` records videos and reads narration aloud (`renderLessonVideo`,
-`buildLessonDeckVoice`, `setUpLessonVoice`), and is never run in a company: leave the `production/` folder out of the
+The deck tools are in two Gradle modules. `lessons/_shared/video-tools` is everything a company runs: the checks,
+deck building, slide pictures and the recording script (`./gradlew check`, `buildLessonSlides`, `recordingScript`).
+`production/deck-voice` reads narration aloud (`buildLessonDeckVoice`, `setUpLessonVoice`), and is never run in a
+company: leave the `production/` folder out of the
 company's copy, and the build includes it only where the folder is there. The inside module doesn't depend on it, so
 the compiler keeps the two apart.
 
@@ -41,7 +41,7 @@ the compiler keeps the two apart.
 | Browser for slides and decks | Nothing: uses the installed Google Chrome | Name another approved browser with `lessonBrowser=<program>` |
 | Browser for browser tests (Playwright, planned) | Playwright downloads its own browsers on first use | Set `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1` and launch the installed Chrome (`setChannel("chrome")`) |
 
-Nothing else is fetched inside a company: the voice and the video tools are never run there.
+Nothing else is fetched inside a company: the voice is never run there.
 
 ## Container images
 
@@ -94,31 +94,17 @@ Everything the lessons use is under the Apache, MIT, BSD or Eclipse licences, ex
 Functional Source License (FSL-1.1-ALv2), becoming Apache 2.0 after two years; check your company accepts it. See
 [Liquibase 5 is used under the Functional Source License](decisions/0006-liquibase-5-is-used-under-the-functional-source-license.md).
 
-## The videos
+## The decks and their voice
 
-The videos are made here, outside any company network, and companies use them as they are. Their voice is Kokoro,
-an open-weight AI speech model, run on the machine that makes the videos; nothing it reads leaves that machine, and
-no company runs it. Publishing each lesson's finished video, with its captions, as an asset of each release is
-planned; see [the backlog](BACKLOG.md).
+Each lesson's **voiced deck** is the lesson: its slides with the narration read aloud (Listen, or V), and its live runs
+played from their casts. The voice is Kokoro, an open-weight AI speech model, run here on the machine that voices the
+decks; nothing it reads leaves that machine, and no company runs it. The clips are committed beside each deck, so a
+company takes them with the repository and its decks play as they are, published on its own site
+([branding the decks](branding-the-decks.md) says how).
 
-Each video is made as **separate layers**, so a company can rebrand or trim it in a video editor it already uses
-(for example Camtasia, Premiere Pro or Clipchamp), without recording anything again:
-
-| Layer | File | Use it to |
-|---|---|---|
-| Finished video | `<lesson>.mp4` | Use as it is |
-| Silent screen recording | `<lesson>.silent.mp4` | Put your own intro, outro or music around it |
-| Narration audio | `<lesson>.narration.m4a`, and one clip per scene | Re-time or trim the voice |
-| Captions | `<lesson>.vtt`, `<lesson>.srt` | Subtitles in any player or editor |
-| Quick-look animation | `<lesson>.gif` (silent) | Embed in wiki pages |
-
-A company that changes a lesson can't make a new video of it inside. It changes the code, README, slides and
-narration, rebuilds and checks the deck, and has a person record the changed slides (below). For a new video, the
-change comes back here as a pull request and is published with the next release. Your branding and edited videos
-live in your own repo or media library, never in this one.
-
-Where no video can be shown, each lesson's **voiced deck** is the lesson: its slides with the narration read aloud
-(Listen, or V).
+A company that changes a lesson changes the code, README, scene file, slides and narration, rebuilds and checks the
+deck, and has a person record the changed slides (below). For the machine voice, the change comes back here as a pull
+request and is voiced with the next release. Your branding lives in your own repo, never in this one.
 
 ## Voicing a changed slide: a person records it
 

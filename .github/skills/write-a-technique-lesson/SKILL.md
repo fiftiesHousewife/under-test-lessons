@@ -1,13 +1,13 @@
 ---
 name: write-a-technique-lesson
-description: Add or change a lesson under lessons/<id>/ - a runnable example with today's code and the fix, its README, video script, narration, slides and deck - following the recipe every lesson uses. Use when asked for a new lesson, or to change an existing one.
+description: Add or change a lesson under lessons/<id>/ - a runnable example with today's code and the fix, its README, scene file, narration, slides and deck - following the recipe every lesson uses. Use when asked for a new lesson, or to change an existing one.
 ---
 
 # Writing a technique lesson
 
 Every step in this skill is **[inside]** ([AGENTS.md](../../../AGENTS.md#which-group-each-step-is-in)): it needs only the
-JDK, Gradle and the installed Chrome, so it runs in a company too. Voicing the deck and making the video are
-**[production]**, in [make-a-lesson-video](../make-a-lesson-video/SKILL.md).
+JDK, Gradle and the installed Chrome, so it runs in a company too. Voicing the deck is **[production]**, in
+[make-a-lesson-deck](../make-a-lesson-deck/SKILL.md).
 
 Every lesson teaches an established external framework or library, never this repository's or the toolkit's own
 tools or process (a deck about our own process is separate work). Every lesson follows one recipe, and one flow,
@@ -66,7 +66,7 @@ tasks.jacocoTestCoverageVerification {
 
 In this order: title; one bold line saying what the technique does; a paragraph on the problem it solves and the tool;
 **Run the example** (the two commands, each with what it shows; run them, don't predict); a short list linking today's
-code, the weak test and the strong test; **Exercise** (below); **Watch it, or present it** (deck and video sources); **When to use it**;
+code, the weak test and the strong test; **Exercise** (below); **Present it** (the deck and its source); **When to use it**;
 **On older Java** (for each library that needs another version, the last one built for Java 8 and for Java 11, read
 from Maven Central, and where the `javax` names apply; [decision](../../../docs/decisions/0028-examples-build-on-current-java-and-say-what-to-use-on-older-java.md),
 and `./gradlew check` requires the section); **Find out more** (primary sources, and the toolkit's technique rule). Add the lesson to `lessons/README.md`, the
@@ -85,34 +85,34 @@ Every lesson has one exercise whose answer the build checks
 - **`-Pcode=answer`** runs it the way the exercise asks: the lesson's switch chooses today's code (or today's tests)
   with the answer added, and the run shows the answer working, with a number the README can state (6 of 13 caught,
   the bug named). Wire it in the lesson's build file next to `-Pcode=today`.
-- **The README's Exercise section**, before "Watch it, or present it": what to do, in two or three numbered steps,
+- **The README's Exercise section**, before "Present it": what to do, in two or three numbered steps,
   each naming the file to change; then the answer's file and its command in a `bash` block,
   `./gradlew :lessons:<id>:<task> -Pcode=answer   # what it shows`. `tools/capture-lesson-outputs.py` keeps that
-  command's output as `.outputs/answer.txt`, and `checkVideoScripts` holds the comment to it, as it does the video's
+  command's output as `.outputs/answer.txt`, and `checkLessonDecks` holds the comment to it, as it does the deck's
   live commands.
 - **The deck's last slide** gets one point naming the exercise ("Exercise: ...; the README has the steps and the
-  answer"), and its narration one sentence. The video stays as it is.
+  answer"), and its narration one sentence. The scenes stay as they are.
 
-## 4. The video, slides and deck
+## 4. The scenes, slides and deck
 
 1. Write the story with [write-lesson-slides-and-narration](../write-lesson-slides-and-narration/SKILL.md): the slides
    file (`Picture:` on every slide, `Include: how-we-build` when the build changes) and one narration item per scene.
 2. Get the line numbers to show: `grep -n "" <file> | sed -n '10,40p'`.
-3. Write the scene spec (copy `tools/new-video-script.example.json`) and generate the script:
-   `python3 tools/new-video-script.py spec.json lessons/<id>/media/<id>.tape`. Container lessons add an off-camera
-   step that fetches the image first (see `lessons/real-databases-in-tests/media/`).
-4. `./gradlew :lessons:video-tools:checkVideoScripts` (scene and narration counts, waits, quoting), then
+3. Write the scene file, `lessons/<id>/media/<id>.scenes`, by hand, copying a model one: one `## Scene N: title`
+   heading a scene, then its `note`, `show`, `run_live` and `callout` lines
+   ([make-a-lesson-deck](../make-a-lesson-deck/SKILL.md#write-the-scene-file)).
+4. Keep what the live runs print: `python3 tools/capture-lesson-outputs.py <id>`.
+5. `./gradlew :lessons:video-tools:checkLessonDecks` (scene and narration counts, code panels, kept outputs), then
    `./gradlew :lessons:video-tools:buildLessonSlides -Plesson=<id>` and commit the deck.
-5. Make the video with [make-a-lesson-video](../make-a-lesson-video/SKILL.md), alone on a quiet machine.
+6. Voice the deck with [make-a-lesson-deck](../make-a-lesson-deck/SKILL.md#the-decks-voice).
 
 ## Checklist
 - [ ] Today's code fails only the strong test, with a one-line message naming the problem; the fix passes everything.
 - [ ] `./gradlew check` passes (PMD and Checkstyle included); every README command was run.
-- [ ] Narration fits: each scene's pause covers (words / 2.6) * 1.35 + 1.5 seconds.
-- [ ] Each live run's output fits one screen, 36 rows with its command (`checkVideoScripts` checks it).
+- [ ] Each live run's output fits one screen, 36 rows with its command (`checkLessonDecks` checks it).
 - [ ] The README's On older Java section names the last Java 8 and Java 11 versions of the lesson's libraries.
 - [ ] The exercise: an `answer` package run by `-Pcode=answer` and by `check`; the README's Exercise section, whose
   answer command's output is kept; one point and one sentence on the deck's last slide.
-- [ ] Deck rebuilt and committed; lesson listed in `lessons/README.md`, the catalogue and the README.
+- [ ] Deck rebuilt, voiced and committed; lesson listed in `lessons/README.md`, the catalogue and the README.
 - [ ] No account names, personal paths or package names on screen; every slide and narration item checked against
   the glossary's words, its "Don't say" table and its rules for the voice.

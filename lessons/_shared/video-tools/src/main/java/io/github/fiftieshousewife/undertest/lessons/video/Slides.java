@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A lesson's slides, from {@code <id>.slides.md}: intro slides play before the terminal recording, closing slides
- * after it. Each slide is a heading {@code ## intro: Title} or {@code ## closing: Title}, then {@code - } lines for
+ * A lesson's slides, from {@code <id>.slides.md}: intro slides come before the scenes, closing slides
+ * after them. Each slide is a heading {@code ## intro: Title} or {@code ## closing: Title}, then {@code - } lines for
  * the points on screen (a point that is a URL is drawn as a link, and never spoken), an optional {@code Picture:}
  * line naming a picture in {@code lessons/_shared/slides/pictures}, then a {@code Say:} line (continued on indented
  * lines) for the narration. A line {@code Include: <name>} brings in the slides from

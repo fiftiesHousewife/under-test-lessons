@@ -1,6 +1,6 @@
 # Narration: database changes with Liquibase
 
-One item per scene of [database-changes-with-liquibase.tape](database-changes-with-liquibase.tape). The intro and
+One item per scene of [database-changes-with-liquibase.scenes](database-changes-with-liquibase.scenes). The intro and
 closing slides have their own narration, in
 [database-changes-with-liquibase.slides.md](database-changes-with-liquibase.slides.md). Written to be spoken.
 

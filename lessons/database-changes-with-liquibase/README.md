@@ -49,13 +49,10 @@ that only names the database. This exercise runs without a container.
 
 It writes out the SQL only: the real database is still the only way to know PostgreSQL takes it.
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/database-changes-with-liquibase.html) (its source is [`media/database-changes-with-liquibase.deck.html`](media/database-changes-with-liquibase.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/database-changes-with-liquibase.tape), [the narration](media/database-changes-with-liquibase.narration.md) and
-  [the slides](media/database-changes-with-liquibase.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=database-changes-with-liquibase`.
 
 ## When to use it
 

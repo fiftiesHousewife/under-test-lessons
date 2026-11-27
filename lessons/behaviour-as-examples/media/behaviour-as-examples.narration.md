@@ -1,7 +1,7 @@
 # Narration: behaviour written down as examples
 
-One item per scene of [behaviour-as-examples.tape](behaviour-as-examples.tape). The intro and closing slides have their
-own narration, in [behaviour-as-examples.slides.md](behaviour-as-examples.slides.md). Written to be spoken.
+One item per scene of [behaviour-as-examples.scenes](behaviour-as-examples.scenes). The intro and closing slides have
+their own narration, in [behaviour-as-examples.slides.md](behaviour-as-examples.slides.md). Written to be spoken.
 
 1. Here is the code under test, today's refund rules, as the tills run them. It counts the days between buying and
    returning. If the item comes back in time, with a receipt, the customer gets a refund to their card. In time means

@@ -1,0 +1,49 @@
+# The scenes of the message-consumers deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# message-consumers.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in message-consumers.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add Apache Artemis, a message broker, and the JMS API to the version catalogue."
+show libs.versions.toml "/artemis|jakarta-jms/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependencies
+note "Step 2: the shop's code needs only the JMS API; the tests get the whole broker."
+show lessons/message-consumers/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-12
+
+## Scene 3: the example messages
+note "Example messages, *browsed* from a test environment's queue, then *masked*."
+note "One, from an old till, gives dollars instead of cents: no code can ever read it."
+show lessons/message-consumers/example/src/test/resources/example-messages/payments.txt 1 7 "example messages" --zoom 6
+
+## Scene 4: the code under test
+note "The code under test: today's consumer. It *acknowledges* each message as it is received."
+show TodaysPaymentConsumer 30 50 "today's consumer" --zoom 33-38
+
+## Scene 5: the test with a hand-built message
+note "A unit test with a *hand-built* message: one good payment, and no broker."
+show PaymentByHandTest 20 28 "the test with a hand-built message" --zoom 22-25
+
+## Scene 6: a real broker in the test
+note "A *real* broker, started inside each test: no network, nothing on disk."
+note "Set up as production's: 3 tries, then the dead-letter queue."
+show PaymentsOnABrokerTest 16 17 "each test registers the broker" --mark 16-17
+show EmbeddedBroker 26 47 "the broker in the test" --zoom 42-43 --mark 31,37,40
+
+## Scene 7: the tests on the broker
+note "The tests on the broker: the example messages in, then what the consumer did."
+show PaymentsOnABrokerTest 19 49 "the tests on the broker" --zoom 21-24 --mark 36-37,43-44,48
+
+## Scene 8: the broker finds lost payments
+note "Run the tests against today's consumer:"
+run_live "./gradlew :lessons:message-consumers:test -Pcode=today"
+callout "The hand-built test passes. On the broker, a payment is lost and the unreadable message vanishes."
+
+## Scene 9: the fixed consumer
+note "The consumer with a *transacted* session: commit after recording, roll back on failure, record once:"
+show FixedPaymentConsumer 30 43 "the fixed consumer" --zoom 32,37-41
+show FixedPaymentConsumer 51 57 "each payment recorded once" --mark 54-56
+run_live "./gradlew :lessons:message-consumers:test"
+callout "Every payment recorded, the bad message kept for people to look at, and all in seconds."

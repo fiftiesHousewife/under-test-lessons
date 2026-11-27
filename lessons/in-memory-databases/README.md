@@ -59,13 +59,10 @@ the shared test database's table, typed in by hand, left that rule out, so it wo
 ./gradlew :lessons:in-memory-databases:test -Pcode=answer   # today's invoice book: 2 of 8 tests fail, and the answer passes: the fresh database refuses an invoice with no customer
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/in-memory-databases.html) (its source is [`media/in-memory-databases.deck.html`](media/in-memory-databases.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/in-memory-databases.tape), [the narration](media/in-memory-databases.narration.md) and
-  [the slides](media/in-memory-databases.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=in-memory-databases`.
 
 ## When to use it
 

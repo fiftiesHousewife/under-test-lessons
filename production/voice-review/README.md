@@ -1,7 +1,7 @@
 # Voice review
 
 A page for a person to hear what the lesson voice says and put it right by clicking: no phonetic symbols to read or
-type. It belongs to the **production** group, with [video-render](../video-render), because it runs the lesson voice
+type. It belongs to the **production** group, with [deck-voice](../deck-voice), because it runs the lesson voice
 (Kokoro); the build works without it, and nothing in a company needs it.
 
 ## Run it
@@ -10,7 +10,7 @@ type. It belongs to the **production** group, with [video-render](../video-rende
 ./gradlew :production:voice-review:reviewVoice      # then open http://localhost:8765/
 ```
 
-It needs the voice that `./gradlew :production:video-render:setUpLessonVoice` installs (the task sets it up first), and
+It needs the voice that `./gradlew :production:deck-voice:setUpLessonVoice` installs (the task sets it up first), and
 runs until stopped with Ctrl+C. Choose another port with `-PvoiceReviewPort=<port>`; the decks look for 8765.
 
 - **http://localhost:8765/** is the review set: the phrases, words and punctuation most likely to be said wrongly.
@@ -46,8 +46,8 @@ back as it was left. The tick then does the rest:
 | Changed words, and pauses | Written into the lesson's narration, in the slide's `Say:` paragraph or the scene's line in `narration.md`, the paragraph rewrapped; a pause is `[pause 400ms]` |
 | Emphasis anywhere else in a sentence | Kept in `build/voice-review/results.json`, for a person to fix: narration is plain words, so a sentence's emphasis can't be written into it, and a rule for one word would apply everywhere |
 
-Nothing reaches the decks until they are voiced again (`./gradlew :production:video-render:buildLessonDeckVoice`), and
-changed narration is checked as usual (`./gradlew :lessons:video-tools:checkVideoScripts`), so a batch of changes is
+Nothing reaches the decks until they are voiced again (`./gradlew :production:deck-voice:buildLessonDeckVoice`), and
+changed narration is checked as usual (`./gradlew :lessons:video-tools:checkLessonDecks`), so a batch of changes is
 reviewed, then voiced once.
 
 ## The review set

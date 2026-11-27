@@ -1,6 +1,6 @@
 # Narration: message consumers
 
-One item per scene of [message-consumers.tape](message-consumers.tape). The intro and closing slides have their own
+One item per scene of [message-consumers.scenes](message-consumers.scenes). The intro and closing slides have their own
 narration, in [message-consumers.slides.md](message-consumers.slides.md). Written to be spoken.
 
 1. Step one. Add 2 things to the version catalogue: Apache Artemis, a message broker, and the programming interface for

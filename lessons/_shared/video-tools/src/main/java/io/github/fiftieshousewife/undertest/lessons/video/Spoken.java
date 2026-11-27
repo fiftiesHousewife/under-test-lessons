@@ -10,7 +10,7 @@ import java.util.HexFormat;
  * markers. Its clip is named by the written words alone, so a pronunciation fix or a reflowed paragraph keeps the
  * clip's name, and a person's recording of it is never lost; what the voice was given decides whether a machine
  * voice must read it again. {@code MADE} says how the voice's sound is made into a clip: its gaps between sentences
- * cut to 0.4 s (in video-render). Changing how clips are made changes it, so every clip the voice read is read again
+ * cut to 0.4 s (in deck-voice). Changing how clips are made changes it, so every clip the voice read is read again
  * once.
  */
 record Spoken(String written, String said) {

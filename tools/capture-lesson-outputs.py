@@ -1,14 +1,14 @@
-"""Runs each live command in the lessons' video scripts and keeps what it printed, for the decks and the checks.
+"""Runs each live command in the lessons' scene files and keeps what it printed, for the decks and the checks.
 
     python3 tools/capture-lesson-outputs.py              every lesson
     python3 tools/capture-lesson-outputs.py <lesson id>  one lesson
     python3 tools/capture-lesson-outputs.py --list       the commands, without running them
     python3 tools/capture-lesson-outputs.py --from-kept <lesson id>   casts from the outputs kept, without running
 
-Each live command (run_live or run_with_notes in lessons/<id>/media/<id>.tape) runs from the repository root, as a
-recording runs it, and its output is kept in lessons/<id>/media/<id>.outputs/01.txt, 02.txt and so on, the command on
+Each live command (run_live or run_with_notes in lessons/<id>/media/<id>.scenes) runs from the repository root, and
+its output is kept in lessons/<id>/media/<id>.outputs/01.txt, 02.txt and so on, the command on
 the first line. A README's exercise answer command (-Pcode=answer) is kept as answer.txt beside them. Output goes
-through lessons/_shared/screen-output.pl, as the video's run_live does. Colour codes, notices the JVM or a sandbox
+through lessons/_shared/screen-output.pl. Colour codes, notices the JVM or a sandbox
 adds, and Gradle's closing time line are left out. A run that couldn't start, or whose output still shows a personal
 path after paths are made machine-independent, isn't kept: the script stops and says why.
 
@@ -24,27 +24,27 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCREEN_FILTER = os.path.join(ROOT, "lessons", "_shared", "screen-output.pl")
-# The README's command for a lesson's exercise answer, which no video runs: kept as answer.txt.
+# The README's command for a lesson's exercise answer, which no scene runs: kept as answer.txt.
 ANSWER = re.compile(r"^(\./gradlew :lessons:\S+[^#]*-Pcode=answer)\b")
-LIVE = re.compile(r"^Type(?:@\S+)?\s+[`\"](?:run_live|run_with_notes)\s+\"([^\"]+)\"")
+LIVE = re.compile(r"^(?:run_live|run_with_notes)\s+\"([^\"]+)\"")
 ESCAPE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
 NOISE = ("Picked up JAVA_TOOL_OPTIONS", "Caught exception: Could not", "BUILD SUCCESSFUL in ", "BUILD FAILED in ")
 PERSONAL_PATH = re.compile(r"/Users/[^/\s]+|/home/[^/\s]+|[A-Z]:\\Users\\")
-# The settings a recording makes off camera, so the output matches the video's, and no Gradle daemon: each run is its
+# Quiet Gradle, so the output shows what matters, and no Gradle daemon: each run is its
 # own process, so one left over from another session, or a sandbox, can't get in the way. The commands stay as written.
 QUIET = (" -Dorg.gradle.warning.mode=none -Dorg.gradle.configuration-cache=false -Dorg.gradle.logging.level=quiet"
          " -Dorg.gradle.daemon=false")
 
 
 def commands(lesson):
-    """The lesson's live commands, in script order."""
-    tape = os.path.join(ROOT, "lessons", lesson, "media", lesson + ".tape")
-    with open(tape, encoding="utf-8") as f:
+    """The lesson's live commands, in scene file order."""
+    scenes = os.path.join(ROOT, "lessons", lesson, "media", lesson + ".scenes")
+    with open(scenes, encoding="utf-8") as f:
         return [m.group(1) for m in (LIVE.match(line.strip()) for line in f) if m]
 
 
 def on_screen(output):
-    """The output as the video's run_live shows it: through lessons/_shared/screen-output.pl, the same filter."""
+    """The output as a viewer sees it on screen: through lessons/_shared/screen-output.pl."""
     return subprocess.run(["perl", SCREEN_FILTER], input=output, stdout=subprocess.PIPE, text=True, check=True).stdout
 
 
@@ -120,7 +120,7 @@ def cast(command, output, timed):
 
 
 def keep(command, path):
-    """Runs a command as a recording would and keeps what it showed, as text and as a cast to play in the deck, or
+    """Runs a command and keeps what it showed, as text and as a cast to play in the deck, or
     stops and says why it can't be kept."""
     environment = dict(os.environ, GRADLE_OPTS=os.environ.get("GRADLE_OPTS", "") + QUIET)
     printed, timed = run_timed(command, environment)
@@ -152,7 +152,7 @@ def capture(lesson):
 def lessons():
     found = []
     for lesson in sorted(os.listdir(os.path.join(ROOT, "lessons"))):
-        if os.path.isfile(os.path.join(ROOT, "lessons", lesson, "media", lesson + ".tape")):
+        if os.path.isfile(os.path.join(ROOT, "lessons", lesson, "media", lesson + ".scenes")):
             found.append(lesson)
     return found
 

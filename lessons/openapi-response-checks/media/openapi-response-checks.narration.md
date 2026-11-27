@@ -1,7 +1,8 @@
 # Narration: responses checked against the OpenAPI schema
 
-One item per scene of [openapi-response-checks.tape](openapi-response-checks.tape). The intro and closing slides have
-their own narration, in [openapi-response-checks.slides.md](openapi-response-checks.slides.md). Written to be spoken.
+One item per scene of [openapi-response-checks.scenes](openapi-response-checks.scenes). The intro and closing slides
+have their own narration, in [openapi-response-checks.slides.md](openapi-response-checks.slides.md). Written to be
+spoken.
 
 1. Step one. Add Atlassian's OpenAPI request validator to the version catalogue. It used to be called the Swagger
    request validator.

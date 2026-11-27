@@ -8,8 +8,8 @@ import java.nio.file.Path;
 import java.util.List;
 
 /*
- * Runs an outside program, such as the installed browser that draws slides, and returns what it printed. The tools
- * that make videos run ffmpeg and the voice through it too ({@code Ffmpeg}).
+ * Runs an outside program, such as the installed browser that draws slides, and returns what it printed. The deck's
+ * voice runs ffmpeg and the voice through it too ({@code Ffmpeg}, in production/deck-voice).
  */
 final class ExternalCommand {
 

@@ -54,13 +54,10 @@ system: tag just that test, so the quick task still runs the rest of the class.
 
 The three runs above leave the answer out; `check` runs both its tests with a task of its own, `answerTest`.
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/junit-tags.html) (its source is [`media/junit-tags.deck.html`](media/junit-tags.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/junit-tags.tape), [the narration](media/junit-tags.narration.md) and
-  [the slides](media/junit-tags.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=junit-tags`.
 
 ## When to use it
 

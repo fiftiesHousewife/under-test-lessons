@@ -1,0 +1,46 @@
+# The scenes of the spring-tests-in-slices deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# spring-tests-in-slices.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in spring-tests-in-slices.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: Spring Boot's list of versions, and its *test starters*, in the version catalogue."
+show libs.versions.toml "/spring-boot/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the test dependencies
+note "Step 2: the test starters for each slice, and *WireMock's standalone jar* for the courier."
+show lessons/spring-tests-in-slices/example/build.gradle.kts "/^dependencies/" "lesson build file"
+
+## Scene 3: the code under test
+note "The code under test: today's delivery answer. A change for the printed notes gave the date a *pattern*."
+show TodaysDeliveryView 8 17 "today's delivery answer" --zoom 12
+
+## Scene 4: the weak tests
+note "The *weak* tests: each one starts the whole application, and looks for words in the answer."
+show WholeApplication 21 43 "the whole application, with a stand-in courier" --zoom 21,40-43
+show DeliveriesApplicationTest 11 27 "the whole application, in every test" --mark 15,20,25
+
+## Scene 5: the web slice
+note "The *web* slice: only the controller and Spring's web layer, with the service stood in for."
+show DeliveryWebSliceTest 17 34 "the web slice" --zoom 17,23,31-33
+
+## Scene 6: the data slice
+note "The *data* slice: only the repository and an in-memory database."
+show DeliveryDataSliceTest 14 30 "the data slice" --zoom 14,27-29
+
+## Scene 7: the JSON slice
+note "The *JSON* slice: only Jackson, checking the answer field by field."
+show DeliveryJsonSliceTest 16 28 "the JSON slice" --zoom 16,26-27
+
+## Scene 8: the JSON slice names the date
+note "Run the tests against today's service:"
+run_live "./gradlew :lessons:spring-tests-in-slices:test -Pcode=today"
+callout "Every whole-application test passes. Only the JSON slice looks at the date: 23/11/2026, where the description says 2026-11-23."
+
+## Scene 9: the fixed service
+note "The answer with the date as the description gives it:"
+show DeliveryView 7 12 "the fixed delivery answer" --zoom 8
+run_live "./gradlew :lessons:spring-tests-in-slices:test"
+callout "All 9 tests pass: the slices check each layer, and one whole-application test checks the wiring."

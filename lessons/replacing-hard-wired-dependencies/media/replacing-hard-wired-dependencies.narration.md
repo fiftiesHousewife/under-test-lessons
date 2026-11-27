@@ -1,7 +1,7 @@
 # Narration: replacing hard-wired dependencies
 
-One item per scene of [replacing-hard-wired-dependencies.tape](replacing-hard-wired-dependencies.tape). The intro and
-closing slides have their own narration, in
+One item per scene of [replacing-hard-wired-dependencies.scenes](replacing-hard-wired-dependencies.scenes). The intro
+and closing slides have their own narration, in
 [replacing-hard-wired-dependencies.slides.md](replacing-hard-wired-dependencies.slides.md). Written to be spoken.
 
 1. Step one. Add Mockito to the version catalogue.

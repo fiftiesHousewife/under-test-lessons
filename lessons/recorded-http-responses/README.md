@@ -54,13 +54,10 @@ reads an empty town from it and says nothing is wrong.
 ./gradlew :lessons:recorded-http-responses:test -Pcode=answer   # today's client: 5 of 11 tests fail; the answer expected "answered 429" but was "no error"
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/recorded-http-responses.html) (its source is [`media/recorded-http-responses.deck.html`](media/recorded-http-responses.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/recorded-http-responses.tape), [the narration](media/recorded-http-responses.narration.md) and
-  [the slides](media/recorded-http-responses.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=recorded-http-responses`.
 
 ## When to use it
 

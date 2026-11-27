@@ -1,0 +1,42 @@
+# The scenes of the openapi-response-checks deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# openapi-response-checks.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in openapi-response-checks.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add the OpenAPI request validator to the version catalogue."
+show libs.versions.toml "/openapi-request-validator/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency, beside REST Assured."
+show lessons/openapi-response-checks/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 11
+
+## Scene 3: the published schema
+note "The *published schema*, openapi.yaml: what other teams build against."
+show lessons/openapi-response-checks/example/src/main/resources/openapi.yaml 16 47 "the OpenAPI schema" --zoom 40-41 --mark 22,28,44
+
+## Scene 4: the code under test
+note "The code under test: today's parcel service. The weight as *text*, and the error field *renamed*."
+show TodaysParcelBodies 10 21 "today's answers" --zoom 15-20
+
+## Scene 5: the weak tests
+note "The *weak* tests: the status code and a few fields they know."
+show ParcelFieldsTest 19 33 "the weak tests" --zoom 23-25
+
+## Scene 6: the strong tests
+note "The *strong* tests: the same checks, and every answer compared with the schema."
+show ParcelSchemaTest 13 24 "the strong tests" --mark 13,23
+show SchemaCheck 18 31 "the filter, built on Atlassian's validator" --zoom 23,30-31
+
+## Scene 7: the schema check names each contradiction
+note "Run the tests against today's service:"
+run_live "./gradlew :lessons:openapi-response-checks:test -Pcode=today"
+callout "The weak tests pass. The schema check names the field and the rule each answer breaks."
+
+## Scene 8: the fixed service
+note "The service that answers as the schema says:"
+show SchemaParcelBodies 10 21 "the fixed answers" --zoom 15-20
+run_live "./gradlew :lessons:openapi-response-checks:test"
+callout "The service and its schema agree, and every test that calls it keeps them that way."

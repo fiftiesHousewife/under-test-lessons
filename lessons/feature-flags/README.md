@@ -41,13 +41,10 @@ basket.
 ./gradlew :lessons:feature-flags:test -Pcode=answer   # today's new rules: the old and new rules disagree on 4950 baskets, the first at 50 cents
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/feature-flags.html) (its source is [`media/feature-flags.deck.html`](media/feature-flags.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/feature-flags.tape), [the narration](media/feature-flags.narration.md) and
-  [the slides](media/feature-flags.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=feature-flags`.
 
 ## When to use it
 

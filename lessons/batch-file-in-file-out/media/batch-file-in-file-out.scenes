@@ -1,0 +1,53 @@
+# The scenes of the batch-file-in-file-out deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# batch-file-in-file-out.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in batch-file-in-file-out.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add Spring Batch and Datafaker to the version catalogue."
+show libs.versions.toml "/spring-batch|datafaker/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependencies
+note "Step 2: the job uses Spring Batch; the tests use its test library and Datafaker."
+show lessons/batch-file-in-file-out/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 9
+
+## Scene 3: the code under test
+note "The code under test: a Spring Batch job. Read each payment, process it, write its line."
+show SettlementBatch 47 53 "the nightly job" --zoom 52
+
+## Scene 4: today's writer
+note "Today's writer: a header, then one line per payment, and nothing after them."
+show TodaysSettlementJob 21 27 "today's writer" --zoom 25-26
+
+## Scene 5: tests of the pieces
+note "Tests of the *pieces*: one line read, processed and written."
+show PaymentLineTest 11 19 "tests of the pieces" --zoom 17
+
+## Scene 6: made-up input
+note "Datafaker makes up a day's payments: realistic, never real, the same every run."
+show SyntheticPayments 23 27 "made-up payments" --zoom 24
+
+## Scene 7: the whole job
+note "A test of the *whole job*: Spring Batch runs it, and the file is read back as *records*."
+show WholeJobTest 21 38 "test of the whole job" --zoom 21,25-29
+show WholeJobTest 48 62 "run the job, compare the records" --mark 57-61
+
+## Scene 8: a day of real data, masked
+note "A day of real files, each account number swapped for a *keyed substitute*."
+show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-payments.csv 1 6 "captured payments, masked"
+show lessons/batch-file-in-file-out/example/src/test/resources/settlement/captured-settlement.csv 1 8 "settlement file the bank accepted, masked"
+show KeyedSubstitutes 18 33 "keyed substitutes" --zoom 25-26 --mark 31-32
+
+## Scene 9: the records name the gap
+note "Run the tests against today's job:"
+run_live "./gradlew :lessons:batch-file-in-file-out:test -Pcode=today"
+callout "Every piece is right. The records show the closing line, with the count and total, is missing."
+
+## Scene 10: the fixed job
+note "The writer that adds the closing line the bank checks:"
+show BankSettlementJob 19 27 "the fixed writer" --zoom 24-26
+show SettlementTotals 38 49 "the totals and the closing line" --mark 47-48
+run_live "./gradlew :lessons:batch-file-in-file-out:test"
+callout "Every record matches: the header, each payment, and the closing line."

@@ -24,13 +24,13 @@ class LiveOutputsTest {
         media = Files.createDirectories(root.resolve("lessons/demo/media"));
         Files.createDirectories(root.resolve("lessons/demo/example"));
         Files.writeString(root.resolve("lessons/demo/example/Code.java"), "code\n".repeat(30));
-        Files.writeString(media.resolve("demo.tape"), """
-                # ---- Scene 1: the code ----
-                Type@1ms `show Code.java 1 3 --mark 2`
-                # ---- Scene 2: the run ----
-                Type@1ms `run_live "echo line 24 failed"`
-                Type@1ms `callout "Look at line 24."`
-                Type@1ms `show Code.java 22 26 --mark 24`
+        Files.writeString(media.resolve("demo.scenes"), """
+                ## Scene 1: the code
+                show Code.java 1 3 --mark 2
+                ## Scene 2: the run
+                run_live "echo line 24 failed"
+                callout "Look at line 24."
+                show Code.java 22 26 --mark 24
                 """);
         Files.writeString(media.resolve("demo.narration.md"), "1. Line 2 says two.\n2. The run names line 24.\n");
     }
@@ -97,12 +97,12 @@ class LiveOutputsTest {
 
     @Test
     void failsALineNamedButNotShownMarkedWhereverItIsNamed() throws IOException {
-        Files.writeString(media.resolve("demo.tape"), """
-                # ---- Scene 1: the code ----
-                Type@1ms `show Code.java 1 3`
-                # ---- Scene 2: the run ----
-                Type@1ms `run_live "echo line 7 failed"`
-                Type@1ms `callout "Look at line 24."`
+        Files.writeString(media.resolve("demo.scenes"), """
+                ## Scene 1: the code
+                show Code.java 1 3
+                ## Scene 2: the run
+                run_live "echo line 7 failed"
+                callout "Look at line 24."
                 """);
         final Media demo = new Media(root, "demo");
         keep("echo line 7 failed", "line 7 failed");

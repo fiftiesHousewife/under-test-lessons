@@ -1,6 +1,6 @@
 # Narration: embedded Jakarta EE tests
 
-One item per scene of [embedded-jakarta-ee-tests.tape](embedded-jakarta-ee-tests.tape). The intro and closing slides
+One item per scene of [embedded-jakarta-ee-tests.scenes](embedded-jakarta-ee-tests.scenes). The intro and closing slides
 have their own narration, in [embedded-jakarta-ee-tests.slides.md](embedded-jakarta-ee-tests.slides.md). Written to be
 spoken.
 

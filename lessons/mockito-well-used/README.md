@@ -54,13 +54,10 @@ be refused, and send nothing to the card.
 ./gradlew :lessons:mockito-well-used:test -Pcode=answer   # today's refunds: 1 of 5 tests fails, the captor test; the answer passes
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/mockito-well-used.html) (its source is [`media/mockito-well-used.deck.html`](media/mockito-well-used.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/mockito-well-used.tape), [the narration](media/mockito-well-used.narration.md) and
-  [the slides](media/mockito-well-used.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=mockito-well-used`.
 
 ## When to use it
 

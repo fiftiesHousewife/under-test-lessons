@@ -43,13 +43,10 @@ service times out, the invoice must pass the error on, not charge a wrong amount
 ./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=answer   # today's invoice: 3 of 3 tests fail; the answer gets the live service's error, not the stand-in's
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/replacing-hard-wired-dependencies.html) (its source is [`media/replacing-hard-wired-dependencies.deck.html`](media/replacing-hard-wired-dependencies.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/replacing-hard-wired-dependencies.tape), [the narration](media/replacing-hard-wired-dependencies.narration.md) and
-  [the slides](media/replacing-hard-wired-dependencies.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=replacing-hard-wired-dependencies`.
 
 ## When to use it
 

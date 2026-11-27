@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
-# What a live run in a lesson video shows: a command's output with Gradle's padding taken out, so one run fits one
-# screen. Used by run_live (callout.sh) as the video records, and by tools/capture-lesson-outputs.py, so the outputs
-# kept for the checks and the decks are exactly what the video shows.
+# What a live run in a lesson deck shows: a command's output with Gradle's padding taken out, so one run fits one
+# screen. Used by tools/capture-lesson-outputs.py, so the outputs kept for the checks and the decks show only what
+# matters.
 #
 #   some-command 2>&1 | perl lessons/_shared/screen-output.pl
 #
@@ -17,7 +17,7 @@
 use strict;
 use warnings;
 
-$| = 1;    # pass each line on at once, so the video shows the run as it happens
+$| = 1;    # pass each line on at once, so the run shows as it happens
 my $in_advice = 0;
 my $held = undef;    # a "* What went wrong:" line, held until the next line says what failed
 while (my $line = <STDIN>) {

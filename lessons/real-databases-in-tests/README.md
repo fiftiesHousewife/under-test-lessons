@@ -64,13 +64,10 @@ you already know about; only the real database finds the ones you don't. This ex
 ./gradlew :lessons:real-databases-in-tests:test -Pcode=answer   # today's query: 1 of 2 tests fails; H2 sorting nulls as PostgreSQL does puts Dee before Eve, who never ordered
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/real-databases-in-tests.html) (its source is [`media/real-databases-in-tests.deck.html`](media/real-databases-in-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/real-databases-in-tests.tape), [the narration](media/real-databases-in-tests.narration.md) and
-  [the slides](media/real-databases-in-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=real-databases-in-tests`.
 
 ## When to use it
 

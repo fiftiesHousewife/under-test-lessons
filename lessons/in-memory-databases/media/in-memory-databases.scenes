@@ -1,0 +1,51 @@
+# The scenes of the in-memory-databases deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# in-memory-databases.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in in-memory-databases.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, H2 on the test classpath
+note "Step 1: H2, a database written in Java, from the version catalogue, on the test classpath."
+show lessons/in-memory-databases/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 12
+
+## Scene 2: the real schema
+note "The *real* schema: the file the application applies to production, and the tests apply too."
+show lessons/in-memory-databases/example/src/main/resources/db/schema.sql 1 8 "the schema" --zoom 2-6
+
+## Scene 3: the code under test
+note "The code under test: today's invoice book. The next number is the highest so far, plus one."
+show TodaysInvoiceBook 9 21 "today's invoice book" --zoom 16
+
+## Scene 4: the shared test database
+note "The old way: one *shared* test database on disk, set up by hand, never emptied."
+show SharedTestDatabase 18 40 "the shared test database" --zoom 34-37
+
+## Scene 5: the weak test
+note "The *weak* test: the first number is more than 0, and the next follows on."
+show SharedDatabaseTest 12 21 "the weak test" --zoom 19-20
+
+## Scene 6: a fresh database for each test
+note "A *fresh* in-memory database for each test, with the real schema, gone when the test ends."
+show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/FreshDatabase.java 11 36 "a fresh database" --zoom 20-22
+
+## Scene 7: the strong tests
+note "A fresh database *before each test*, thrown away after. The *strong* tests can check exact numbers."
+show FreshDatabaseTest 17 26 "before and after each test" --mark 19,25
+show FreshDatabaseTest 33 45 "the strong tests" --zoom 35,44
+
+## Scene 8: keeping the choice honest
+note "Keeping the choice *honest*: no SQL that only one database runs, or that depends on the database."
+show lessons/in-memory-databases/example/src/test/java/io/github/fiftieshousewife/undertest/techniques/inmemory/PortableSql.java 17 21 "what the check looks for" --zoom 17-21
+show PortableSqlTest 12 26 "the check" --mark 12,16
+
+## Scene 9: the fresh database finds invoice 0
+note "Run the tests against today's invoice book:"
+run_live "./gradlew :lessons:in-memory-databases:test -Pcode=today"
+callout "The shared database hid it: on a fresh one, the shop's first invoice is number 0."
+
+## Scene 10: the fixed invoice book
+note "The fix: with no invoices yet, the highest number counts as 0. Plain SQL, the same everywhere:"
+show FixedInvoiceBook 9 12 "the fixed invoice book" --zoom 12
+run_live "./gradlew :lessons:in-memory-databases:test"
+callout "Every test starts empty, in milliseconds, so no leftover row can hide a bug."

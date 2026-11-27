@@ -74,14 +74,11 @@ of exactly £50 would lose its discount.
 ./gradlew :lessons:mutation-testing:pitest -Pcode=answer   # today's tests and the answer: 6 of 13 planted bugs caught
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/mutation-testing.html) (its source is
   [`media/mutation-testing.deck.html`](media/mutation-testing.deck.html)). Arrow keys move between slides, N shows the
   speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/mutation-testing.tape), [the narration](media/mutation-testing.narration.md) and
-  [the slides](media/mutation-testing.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=mutation-testing`.
 
 ## When to use it
 

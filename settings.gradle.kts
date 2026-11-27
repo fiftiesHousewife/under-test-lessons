@@ -26,13 +26,13 @@ rootDir.resolve("lessons").listFiles()?.sorted()?.forEach { dir ->
         project(":lessons:${dir.name}").projectDir = dir.resolve("example")
     }
 }
-// Tools for lesson videos: checks, recording, captions, voice and assembly.
+// Tools for lesson decks: the checks of what decks are built from, slide pictures, decks and recording scripts.
 include(":lessons:video-tools")
 project(":lessons:video-tools").projectDir = rootDir.resolve("lessons/_shared/video-tools")
-// The tools that make videos and their voice run outside a company only; a copy without production/ still builds.
-if (rootDir.resolve("production/video-render").isDirectory) {
-    include(":production:video-render")
-    project(":production:video-render").projectDir = rootDir.resolve("production/video-render")
+// The deck's voice and its review run outside a company only; a copy without production/ still builds.
+if (rootDir.resolve("production/deck-voice").isDirectory) {
+    include(":production:deck-voice")
+    project(":production:deck-voice").projectDir = rootDir.resolve("production/deck-voice")
     include(":production:voice-review")
     project(":production:voice-review").projectDir = rootDir.resolve("production/voice-review")
 }

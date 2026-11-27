@@ -14,7 +14,7 @@ The repo's tools grew in two languages. The Java video tools are held to every q
 (Checkstyle, PMD, SpotBugs, coverage), but a set of Python scripts grew beside them with no checks at all: keeping a
 lesson's live outputs and casts, generating video scripts, publishing the decks and the lessons table. Two of them are
 inside steps, which
-[What runs inside a company is kept apart from what makes videos](0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md)
+[What runs inside a company is kept apart from what voices the decks](0026-what-runs-inside-a-company-is-kept-apart-from-what-makes-videos.md)
 says need only the JDK and Gradle, so a company without Python couldn't run them.
 
 ## Decision Outcome

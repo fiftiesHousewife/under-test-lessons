@@ -1,0 +1,33 @@
+# The scenes of the nested-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# nested-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in nested-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the code under test
+note "The code under test: today's loan. Repaying is refused only when the loan is already repaid."
+show TodaysLoan 23 29 "today's loan" --zoom 25
+
+## Scene 2: the flat tests
+note "*Flat* tests: one list, each name packing in a situation and a result."
+show FlatLoanTest 10 37 "flat tests"
+
+## Scene 3: the nested tests
+note "*Nested* tests: one class per situation. First, a requested loan."
+show LoanTest 12 33 "nested tests: when requested" --zoom 17-19
+
+## Scene 4: the next situation
+note "The same two questions for an approved loan, and again for a repaid one. Each group sets itself up first."
+show LoanTest 35 79 "nested tests: when approved, when repaid" --zoom 39-42,62-66
+
+## Scene 5: the gap shows
+note "Run the tests against today's loan:"
+run_live "./gradlew :lessons:nested-tests:test -Pcode=today"
+callout "The report reads like a specification. A requested loan can be repaid: money back that was never lent."
+
+## Scene 6: the fixed loan
+note "The loan that allows each step only from the state before it:"
+show FixedLoan 16 31 "the fixed loan" --zoom 26
+run_live "./gradlew :lessons:nested-tests:test"
+callout "Every situation, every question, answered. Nesting made the missing case easy to see."

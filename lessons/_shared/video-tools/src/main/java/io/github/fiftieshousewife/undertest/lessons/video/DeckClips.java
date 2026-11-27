@@ -78,7 +78,7 @@ final class DeckClips {
                     + found.stream().map(file -> String.valueOf(file.getFileName())).collect(Collectors.joining(
                             " and ")) + "; the deck plays " + clip.getFileName() + ", so remove the other"));
         }
-        final double expected = VideoLength.spoken(slide.written());
+        final double expected = Pauses.spokenSeconds(slide.written());
         final double seconds = ClipLength.seconds(clip);
         if (seconds >= 0 && (seconds < expected * TOO_SHORT || seconds > expected * TOO_LONG)) {
             warnings.add(new Problem(clip, String.format(Locale.ROOT, "slide %d (\"%s\") takes %.1f s, but its"

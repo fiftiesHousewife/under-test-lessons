@@ -1,5 +1,5 @@
-# Phrases slides and narration never use, each a regular expression = why. Checked by checkVideoScripts in every
-# slide's Say text and every video narration, not the bullets; source notes and links are left out. The rules behind them
+# Phrases slides and narration never use, each a regular expression = why. Checked by checkLessonDecks in every
+# slide's Say text and every scene's narration, not the bullets; source notes and links are left out. The rules behind them
 # are in GLOSSARY.md, "Writing for the voice".
 \bnobody\b = an invented actor: say what is true instead ("there's no rule for")
 \bsomeone\b = an invented actor: name who, or use "we"

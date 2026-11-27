@@ -1,8 +1,8 @@
 # Narration: checking the requests your code sends
 
-One item per scene of [checking-outgoing-requests.tape](checking-outgoing-requests.tape). The intro and closing slides
-have their own narration, in [checking-outgoing-requests.slides.md](checking-outgoing-requests.slides.md). Written to be
-spoken.
+One item per scene of [checking-outgoing-requests.scenes](checking-outgoing-requests.scenes). The intro and closing
+slides have their own narration, in [checking-outgoing-requests.slides.md](checking-outgoing-requests.slides.md).
+Written to be spoken.
 
 1. Step one. Add WireMock to the version catalogue.
 2. Step two. Add it as a test dependency of the lesson.

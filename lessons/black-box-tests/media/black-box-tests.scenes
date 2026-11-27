@@ -1,0 +1,43 @@
+# The scenes of the black-box-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# black-box-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in black-box-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the lesson's libraries
+note "Step 1: the lesson's libraries: a database, a client for its web requests, and a stand-in warehouse."
+show lessons/black-box-tests/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-12
+
+## Scene 2: the application as it ships
+note "The order service as it ships: started from a *settings file*."
+show OrderService 13 20 "the entry point"
+show ShopApplication 21 31 "starting the service" --zoom 22-28
+
+## Scene 3: the code under test
+note "The code under test: the code that saves orders today. Two rows in one transaction, and *no commit*."
+show TodaysOrderTables 19 27 "today's code that saves orders" --zoom 21-23
+
+## Scene 4: the unit tests
+note "The *unit tests*: the order rules, with a stand-in warehouse and a list for a database."
+show OrderTakingTest 19 34 "the unit tests" --zoom 21-22
+
+## Scene 5: starting the application
+note "The *black-box test* starts WireMock, writes a settings file, and starts the service as it ships."
+show OrderServiceTest 38 55 "starting the service for each test" --zoom 44-48 --mark 38
+
+## Scene 6: the black-box test
+note "It checks only what comes out: the *answer*, the *warehouse call*, and the *rows written*."
+show OrderServiceTest 57 69 "the black-box test" --zoom 59-63 --mark 65-68
+show OrderServiceTest 81 94 "reading the rows written" --mark 84-87
+
+## Scene 7: the order is lost
+note "Run the tests against today's code:"
+run_live "./gradlew :lessons:black-box-tests:test -Pcode=today"
+callout "The answer said 201 Created and the stock was put aside, but no rows were written: the order is lost."
+
+## Scene 8: the fixed code that saves orders
+note "The fixed code commits the transaction:"
+show OrderTables 19 28 "the fixed code that saves orders" --zoom 24
+run_live "./gradlew :lessons:black-box-tests:test"
+callout "The answer, the warehouse call and the rows written are all what the shop expects."

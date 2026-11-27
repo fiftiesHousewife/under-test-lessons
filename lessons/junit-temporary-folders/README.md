@@ -49,13 +49,10 @@ just the header.
 ./gradlew :lessons:junit-temporary-folders:test -Pcode=answer   # today's export: 2 of 5 tests fail, the answer too: "No orders.csv was written"
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/junit-temporary-folders.html) (its source is [`media/junit-temporary-folders.deck.html`](media/junit-temporary-folders.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/junit-temporary-folders.tape), [the narration](media/junit-temporary-folders.narration.md) and
-  [the slides](media/junit-temporary-folders.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=junit-temporary-folders`.
 
 ## When to use it
 

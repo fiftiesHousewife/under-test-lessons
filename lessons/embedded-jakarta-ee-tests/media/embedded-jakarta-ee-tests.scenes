@@ -1,0 +1,43 @@
+# The scenes of the embedded-jakarta-ee-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# embedded-jakarta-ee-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in embedded-jakarta-ee-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add Weld's JUnit support and the CDI API to the version catalogue."
+show libs.versions.toml "/weld|cdi/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependencies
+note "Step 2: the CDI API to compile against (the server provides it), and Weld for the tests."
+show lessons/embedded-jakarta-ee-tests/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-12
+
+## Scene 3: the two rates
+note "Two tax rates: the *standard* rate, marked @Standard, and a *reduced* rate added later, with no mark."
+show Standard 9 14 "the mark" --mark 10
+show StandardRate 5 13 "the standard rate" --zoom 7
+show ReducedRate 5 12 "the reduced rate"
+
+## Scene 4: the code under test
+note "The code under test: today's checkout. It asks the container for *a* tax rate."
+show TodaysCheckout 9 22 "today's checkout" --zoom 14-15
+
+## Scene 5: the test by hand
+note "A unit test builds the checkout *by hand*, and hands it the standard rate itself."
+show CheckoutByHandTest 10 13 "the test by hand" --zoom 12
+
+## Scene 6: the test in a container
+note "A test in a *container*: Weld starts inside the test, and wires the beans as the server would."
+show CheckoutInContainerTest 15 24 "the test in a container" --zoom 18-19,23
+
+## Scene 7: the container finds the wiring bug
+note "Run the tests against today's checkout:"
+run_live "./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=today"
+callout "By hand, it's right. In the container, the checkout gets the reduced rate: 5% instead of 20%."
+
+## Scene 8: the fixed checkout
+note "The checkout that asks for the standard rate by name:"
+show StandardCheckout 15 18 "the fixed checkout" --zoom 16
+run_live "./gradlew :lessons:embedded-jakarta-ee-tests:test"
+callout "Wired as intended, and tested in seconds, with no application server."

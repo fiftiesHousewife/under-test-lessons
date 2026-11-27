@@ -1,7 +1,7 @@
 # Narration: architecture rules
 
-One item per scene of [architecture-rules.tape](architecture-rules.tape). The intro and closing slides have their own
-narration, in [architecture-rules.slides.md](architecture-rules.slides.md). Written to be spoken.
+One item per scene of [architecture-rules.scenes](architecture-rules.scenes). The intro and closing slides have their
+own narration, in [architecture-rules.slides.md](architecture-rules.slides.md). Written to be spoken.
 
 1. Step one. Add ArchUnit to the version catalogue.
 2. Step two. Add it as a test dependency of the lesson. There is nothing to configure: ArchUnit is an ordinary library,

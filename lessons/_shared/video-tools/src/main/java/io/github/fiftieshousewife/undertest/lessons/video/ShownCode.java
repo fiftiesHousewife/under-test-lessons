@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-/* The code panel a video script's {@code show} line puts on screen, read as the {@code show} helper reads it. */
+/* The code panel a scene file's {@code show} line puts on its slide. */
 final class ShownCode {
 
     private ShownCode() {
@@ -35,9 +35,9 @@ final class ShownCode {
         return new Panel(plain.label(), plain.lines(), marked);
     }
 
-    /* Where a script's {@code show} lines look for files: its lesson's folder first, then the shared ones. */
-    static List<Path> places(final Path root, final Path tape) {
-        final Path lesson = tape.toAbsolutePath().resolveSibling("..").normalize();
+    /* Where a scene file's {@code show} lines look for files: its lesson's folder first, then the shared ones. */
+    static List<Path> places(final Path root, final Path sceneFile) {
+        final Path lesson = sceneFile.toAbsolutePath().resolveSibling("..").normalize();
         return List.of(lesson, root.resolve("lessons/_shared"), root.resolve("build-logic"), root.resolve("gradle"));
     }
 
@@ -61,7 +61,7 @@ final class ShownCode {
     private static Panel patternPanel(final Path file, final List<String> args) {
         final List<String> all = lines(file);
         final String name = name(file);
-        // awk reads the pattern as a string first, so a doubled backslash in a script means a single one
+        // a doubled backslash in a scene file's pattern means a single one, as it did for the old shell helper's awk
         final String pattern = args.get(1).substring(1, args.get(1).length() - 1).replace("\\\\", "\\");
         final String label = args.size() > 2 ? args.get(2) : name;
         return new Panel(label, name.endsWith(".toml") ? SourceLines.tomlMatches(all, pattern)
@@ -77,7 +77,7 @@ final class ShownCode {
     }
 
     /*
-     * The file a {@code show} line names: a path, an exact file name, or part of a name, as the helper finds it,
+     * The file a {@code show} line names: a path, an exact file name, or part of a name,
      * searching the lesson's own folder before the shared ones, so a name used in two lessons finds this lesson's file.
      */
     static Path find(final Path root, final List<Path> places, final String target) {

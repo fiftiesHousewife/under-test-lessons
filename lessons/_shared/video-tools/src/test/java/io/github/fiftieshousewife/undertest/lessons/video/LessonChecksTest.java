@@ -28,16 +28,12 @@ class LessonChecksTest {
     void writeALesson() throws IOException {
         final Path media = Files.createDirectories(media());
         Files.writeString(media.resolveSibling("Thing.java"), "class Thing {\n}\n");
-        Files.writeString(media.resolve("demo.tape"), """
-                # ---- Scene 1: the thing ----
-                Hide
-                Type@1ms `show Thing 1 5 "the thing"`
-                Show
-                Sleep 2s
-                # ---- Scene 2: a missing file ----
-                Type@1ms `show Nowhere 1 2`
-                Show
-                Sleep 30s
+        Files.writeString(media.resolve("demo.scenes"), """
+                ## Scene 1: the thing
+                show Thing 1 5 "the thing"
+
+                ## Scene 2: a missing file
+                show Nowhere 1 2
                 """);
         Files.writeString(media.resolve("demo.narration.md"),
                 "1. Here is the thing, which the narration describes at some length before moving on to the next.\n"
@@ -46,22 +42,19 @@ class LessonChecksTest {
     }
 
     @Test
-    void findsPanelsOutOfRangeShortScenesAndSlidesWithoutSourcesOrLinks() {
+    void findsPanelsOutOfRangeAndSlidesWithoutSourcesOrLinks() {
         final Path root = root();
-        final Path tape = media().resolve("demo.tape");
-        final Path narration = media().resolve("demo.narration.md");
+        final Path scenes = media().resolve("demo.scenes");
         final Path slides = media().resolve("demo.slides.md");
 
         assertAll(
-                () -> assertThat(new VideoScriptChecker().check(root)).extracting(Problem::message)
+                () -> assertThat(new SceneFileChecker().check(root)).extracting(Problem::message)
                         .anyMatch(message -> message.contains("asks for lines up to 5")),
-                () -> assertThat(LessonChecks.shows(root, tape)).extracting(Problem::message)
+                () -> assertThat(LessonChecks.shows(root, scenes)).extracting(Problem::message)
                         .anyMatch(message -> message.contains("nothing found for Nowhere")),
-                () -> assertThat(LessonChecks.sceneTimes(tape, narration)).extracting(Problem::message)
-                        .containsExactly("scene 1 shows for 2 s but its narration needs 11 s; lengthen its last Sleep"),
                 () -> assertThat(SlideFileChecks.slides(slides)).extracting(Problem::message).containsExactly(
                         "no Sources: line; name where each fact on the slides comes from",
                         "no {lessons-repo} link on the closing slides"),
-                () -> assertThat(LessonChecks.needed("One two three [pause 1s]")).isBetween(4.4, 4.5));
+                () -> assertThat(Pauses.spokenSeconds("One two three [pause 1s]")).isBetween(2.1, 2.2));
     }
 }

@@ -27,7 +27,7 @@ gives everything left over to the first person: fine with a cent left over, unfa
   shares the leftover cents one each, and passes.
 
 Why jetCheck: it runs inside ordinary JUnit tests, with nothing else to set up. jqwik, the better-known property-test engine for JUnit, is a good choice too; its
-[README](https://github.com/jqwik-team/jqwik) says it is in maintenance mode, with no new features planned. The lesson's seed is fixed, so every run, and the video, finds the same failing bill.
+[README](https://github.com/jqwik-team/jqwik) says it is in maintenance mode, with no new features planned. The lesson's seed is fixed, so every run, the deck's included, finds the same failing bill.
 jetCheck discourages a fixed seed, because a real project finds more with a new seed on each run; in your own tests,
 leave it out.
 
@@ -47,13 +47,10 @@ exactly one share, and leave every other share as it was.
 ./gradlew :lessons:property-based-testing:test -Pcode=answer   # the splitter in use today: 2 of 5 tests fail; one more cent on 10 cents between 11 people moves every share
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) (its source is [`media/property-based-testing.deck.html`](media/property-based-testing.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/property-based-testing.tape), [the narration](media/property-based-testing.narration.md) and
-  [the slides](media/property-based-testing.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=property-based-testing`.
 
 ## When to use it
 

@@ -6,12 +6,13 @@ group: Using the lessons in a company
 
 # Inside a company, a person records the voice
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** accepted · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): there are no videos, so the note on the video side no longer applies
 
 ## Context and Problem Statement
 
 A company that changes a lesson needs its changed slides voiced, but no speech engine runs inside a company
-([Companies receive finished videos and never run the voice](0025-companies-receive-finished-videos-and-never-run-the-voice.md)).
+([Companies receive finished videos and never run the voice](0025-companies-receive-finished-videos-and-never-run-the-voice.md),
+now [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md)).
 The deck already looks up each clip by a hash of its text and plays only the clips that match, so most of the means is
 in place. But clips are named by the text *after* the pronunciation list is applied. One new entry in
 `pronunciations.txt` renames the clip of every slide that uses that word. A machine voice just reads those slides
@@ -37,7 +38,7 @@ Chosen: **a person records the changed clips, from a script the build writes.**
    the voice is given. Reflowing a paragraph, or a pronunciation fix, keeps the clip. The change renames every
    committed clip, so it is made once, by a migration that renames the files.
 2. **A recording script, built inside:**
-   `./gradlew :lessons:video-checks:recordingScript -Plesson=<id>` (with `-Pmissing=true` for only the slides that
+   `./gradlew :lessons:video-tools:recordingScript -Plesson=<id>` (with `-Pmissing=true` for only the slides that
    have no clip). It writes a printable page with one entry per clip: the file name, the slide's title, the text to
    read, the pauses written as directions ("pause 1.6 s"), and reading hints from the pronunciation list
    ("PIT: say *pit*").
@@ -56,10 +57,8 @@ Chosen: **a person records the changed clips, from a script the build writes.**
 6. **Recordings of company staff stay in the company.** A person's recorded voice is that person's personal data. A
    company's change to code, slides or narration can come back here as a pull request; its clips come back only if
    the person agrees in writing.
-7. **On the video side**, the 2.6 words a second in
-   [Scene length comes from the narration's words](0012-scene-length-comes-from-the-narrations-words.md) is Kokoro's
-   speed. If a published video is ever voiced by a person, scenes are timed from that person's clips. Pause markers
-   stay: a speech engine gets them as silence, a person as directions.
+7. **Pause markers stay:** a speech engine gets them as silence, a person as directions. The 2.6 words a second the
+   recording script times each clip by is Kokoro's speed.
 
 ### Consequences
 
@@ -88,6 +87,6 @@ Windows' desktop voices (System.Speech), eSpeak NG, Flite, Festival and MaryTTS 
 * Good, because nothing is needed.
 * Bad, because a changed lesson's deck goes quiet exactly where it changed.
 
-**The published videos and decks keep the Kokoro voice,** made here. A person's recorded voice for the whole series
+**The published decks keep the Kokoro voice,** made here. A person's recorded voice for the whole series
 was considered. It would remove Kokoro and its set-up, but it would mean recording about 600 clips now, and again for
 every change while the lessons are still changing. It can be revisited once the lessons settle.

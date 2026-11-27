@@ -1,7 +1,7 @@
 # Narration: finding flaky tests
 
-One item per scene of [finding-flaky-tests.tape](finding-flaky-tests.tape). The intro and closing slides have their own
-narration, in [finding-flaky-tests.slides.md](finding-flaky-tests.slides.md). Written to be spoken.
+One item per scene of [finding-flaky-tests.scenes](finding-flaky-tests.scenes). The intro and closing slides have their
+own narration, in [finding-flaky-tests.slides.md](finding-flaky-tests.slides.md). Written to be spoken.
 
 1. Step one. Add Awaitility to the version catalogue.
 2. Step two. Add it to the lesson. Only the tests need to wait, so it is a test dependency.

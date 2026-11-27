@@ -1,7 +1,8 @@
 # Narration: fake behind an interface
 
-One item per scene of [fake-behind-an-interface.tape](fake-behind-an-interface.tape). The intro and closing slides have
-their own narration, in [fake-behind-an-interface.slides.md](fake-behind-an-interface.slides.md). Written to be spoken.
+One item per scene of [fake-behind-an-interface.scenes](fake-behind-an-interface.scenes). The intro and closing slides
+have their own narration, in [fake-behind-an-interface.slides.md](fake-behind-an-interface.slides.md). Written to be
+spoken.
 
 1. Let's start with the interface: a short list of what a queue can do. Its 2 methods send a message on a topic, and
    commit. The shop's code reaches the queue only through it, so a test can hand over a stand-in instead.

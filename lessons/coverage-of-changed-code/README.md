@@ -79,14 +79,11 @@ line totals on both sides of each boundary, is enough to get it to pass.
 ./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=answer   # the weak test and the answer: all 11 planted bugs caught, the gate passes
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/coverage-of-changed-code.html) (its
   source is [`media/coverage-of-changed-code.deck.html`](media/coverage-of-changed-code.deck.html)). Arrow keys move
   between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/coverage-of-changed-code.tape),
-  [the narration](media/coverage-of-changed-code.narration.md) and [the slides](media/coverage-of-changed-code.slides.md)
-  with `./gradlew :production:video-render:renderLessonVideo -Plesson=coverage-of-changed-code`.
 
 ## When to use it
 

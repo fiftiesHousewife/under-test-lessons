@@ -1,7 +1,7 @@
 # Narration: dynamic tests
 
-One item per scene of [dynamic-tests.tape](dynamic-tests.tape). The intro and closing slides have their own narration,
-in [dynamic-tests.slides.md](dynamic-tests.slides.md). Written to be spoken.
+One item per scene of [dynamic-tests.scenes](dynamic-tests.scenes). The intro and closing slides have their own
+narration, in [dynamic-tests.slides.md](dynamic-tests.slides.md). Written to be spoken.
 
 1. Here is a folder of examples, the kind old systems often have. Each file holds a customer record, as the old system
    stores it, and the name expected at the top of a letter.

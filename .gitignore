@@ -54,19 +54,8 @@ apm_modules/
 research_notes/
 reports/
 
-### Generated lesson videos (published with releases, not kept in git) ###
-lessons/*/media/*.gif
-lessons/*/media/*.mp4
-lessons/*/media/*.webm
-lessons/*/media/*.cast
-lessons/*/media/*.mp3
-lessons/*/media/*.wav
-lessons/*/media/*.vtt
-lessons/*/media/*.srt
-lessons/*/media/*.m4a
+### The voice's store of spoken clips, and slide pictures for a quick look (deck-voice, buildLessonSlides) ###
 lessons/*/media/*.voice/
-lessons/*/media/*.timings
-lessons/*/media/*.zooms
 .narratty/
 
 ### Python ###
@@ -81,7 +70,6 @@ __pycache__/
 
 # Reviews left in the root for the maintainer to read: kept out of the repository.
 /voiceover-review.md
-*.live.log
 
 # Inputs Jazzer saves where a fuzz run fails; the ones worth keeping move beside their test
 lessons/*/example/crash-*

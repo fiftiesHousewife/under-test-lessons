@@ -21,7 +21,7 @@ import narration  # noqa: E402
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 REVIEW = os.path.join(ROOT, "build/voice-review")
 LIST = os.path.join(ROOT, "lessons/_shared/pronunciations.txt")
-SPEAK = os.path.join(ROOT, "production/video-render/speak-kokoro.py")
+SPEAK = os.path.join(ROOT, "production/deck-voice/speak-kokoro.py")
 PUNCTUATION = [
     ("a colon before a list", r":\s+\w+,\s+\w+,? and "), ("a colon before an explanation", r"\w: [a-z]"),
     ("brackets", r"\("), ("a dash", r" (—|–|-) "), ("quotation marks", r"\"[^\"]+\""), ("a question", r"\?$"),

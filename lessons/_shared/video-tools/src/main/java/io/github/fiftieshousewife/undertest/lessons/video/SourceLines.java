@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/* Picks lines of a source file the way the {@code show} helper does, each prefixed with its line number. */
+/* Picks lines of a source file for a {@code show} panel, each prefixed with its line number. */
 final class SourceLines {
 
     static final String GAP = "   ⋮";

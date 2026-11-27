@@ -94,13 +94,10 @@ twice, and Ada Brennan paid only part of one.
 ./gradlew :lessons:masking-captured-data:test -Pcode=answer   # today's test data: all 4 tests fail; fixed text merges the two accounts into one
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/masking-captured-data.html) (its source is [`media/masking-captured-data.deck.html`](media/masking-captured-data.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/masking-captured-data.tape), [the narration](media/masking-captured-data.narration.md) and
-  [the slides](media/masking-captured-data.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=masking-captured-data`.
 
 ## When to use it
 

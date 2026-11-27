@@ -11,7 +11,7 @@ import re
 import xml.etree.ElementTree as ElementTree
 
 # A problem the lesson checks print: a file of a lesson, then what is wrong with it.
-LESSON_PROBLEM = re.compile(r"(lessons/[^\s:]+\.(?:tape|md|yaml)): (.+)")
+LESSON_PROBLEM = re.compile(r"(lessons/[^\s:]+\.(?:scenes|md|yaml)): (.+)")
 
 LIMIT = 4000  # GitHub cuts an annotation's message near here
 

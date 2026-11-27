@@ -1,7 +1,7 @@
 # Narration: outside-in HTTP tests
 
-One item per scene of [outside-in-http-tests.tape](outside-in-http-tests.tape). The intro and closing slides have their
-own narration, in [outside-in-http-tests.slides.md](outside-in-http-tests.slides.md). Written to be spoken.
+One item per scene of [outside-in-http-tests.scenes](outside-in-http-tests.scenes). The intro and closing slides have
+their own narration, in [outside-in-http-tests.slides.md](outside-in-http-tests.slides.md). Written to be spoken.
 
 1. Step one. Add REST Assured, a test library, to the version catalogue. Only the tests use it.
 2. Step two. Add it as a test dependency of the lesson.

@@ -1,5 +1,5 @@
 """The voice review server: serves the review page, voices a sentence as it is changed, and saves each change. See
-README.md. Production only: it runs the lesson voice (Kokoro), set up by :production:video-render:setUpLessonVoice.
+README.md. Production only: it runs the lesson voice (Kokoro), set up by :production:deck-voice:setUpLessonVoice.
 
     ./gradlew :production:voice-review:reviewVoice          (or, from the repository root:)
     build/voice/venv/bin/python production/voice-review/server.py [port]
@@ -29,7 +29,7 @@ PAUSE_SECONDS = 0.4
 VOICE = dict(voice=os.environ.get("KOKORO_VOICE", "bf_emma"), speed=float(os.environ.get("KOKORO_SPEED", "1.0")),
              lang="en-gb")
 
-spec = importlib.util.spec_from_file_location("speak", os.path.join(ROOT, "production/video-render/speak-kokoro.py"))
+spec = importlib.util.spec_from_file_location("speak", os.path.join(ROOT, "production/deck-voice/speak-kokoro.py"))
 speak = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(speak)
 

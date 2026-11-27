@@ -43,13 +43,10 @@ arrives the same way: a zero rate, 0%, for things like books?
 ./gradlew :lessons:embedded-jakarta-ee-tests:test -Pcode=answer   # today's checkout: 2 of 4 tests fail; with a third rate Weld refuses to start, WELD-001409: Ambiguous dependencies for type TaxRate
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/embedded-jakarta-ee-tests.html) (its source is [`media/embedded-jakarta-ee-tests.deck.html`](media/embedded-jakarta-ee-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/embedded-jakarta-ee-tests.tape), [the narration](media/embedded-jakarta-ee-tests.narration.md) and
-  [the slides](media/embedded-jakarta-ee-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=embedded-jakarta-ee-tests`.
 
 ## When to use it
 

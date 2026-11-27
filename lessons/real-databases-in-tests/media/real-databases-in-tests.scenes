@@ -1,0 +1,37 @@
+# The scenes of the real-databases-in-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# real-databases-in-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in real-databases-in-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add Testcontainers, the PostgreSQL driver, and H2 to the version catalogue."
+show libs.versions.toml "/testcontainers|postgresql|h2/" gradle/libs.versions.toml
+
+## Scene 2: step 2, a suite for container tests
+note "Step 2: container tests get their own suite, so tests that need no containers stay quick."
+show lessons/real-databases-in-tests/example/build.gradle.kts "/^testing/" "lesson build file" --zoom 17-22
+
+## Scene 3: the code under test
+note "The code under test: today's query. Who should sales call first? Oldest order first."
+show CustomerRepository 15 17 "today's query" --zoom 15-17
+
+## Scene 4: the test on an in-memory database
+note "A test on *H2*, a database held in memory: quick, and not the database production uses."
+show InMemoryDatabaseTest 13 24 "the test on H2" --zoom 15-16
+
+## Scene 5: the test on real PostgreSQL
+note "The same test on *real PostgreSQL*, started in a container for the test, and thrown away after."
+show RealPostgresTest 18 34 "the test on PostgreSQL" --zoom 21-25
+
+## Scene 6: PostgreSQL disagrees
+note "Run both suites against today's query:"
+run_live "./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest -Pcode=today"
+callout "H2 puts customers who never ordered first. PostgreSQL puts them last: sales would never call them."
+
+## Scene 7: the fixed query
+note "The query that says where customers who never ordered belong:"
+show CustomerRepository 19 21 "the fixed query" --zoom 19-21
+run_live "./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest"
+callout "Both databases agree, because the query no longer leaves it to the database."

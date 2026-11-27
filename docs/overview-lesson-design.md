@@ -1,9 +1,8 @@
 # The overview lesson: testing old Java code, a journey
 
-One video and deck that comes before all the others: what each kind of test and each technique is for, when to reach
-for it, and which lesson teaches it. About eight minutes, slides only (no terminal), every lesson linked from the
-deck. To be built as `lessons/testing-old-java-code/` (needs a slides-only mode in the video tools: the video is the
-intro and closing slides with their narration, and no recording).
+One deck that comes before all the others: what each kind of test and each technique is for, when to reach for it,
+and which lesson teaches it. About eight minutes, slides only (no scenes), every lesson linked from the deck. Built as
+`lessons/testing-old-java-code/`: intro and closing slides with their narration, and no scene file.
 
 ## The sequence
 

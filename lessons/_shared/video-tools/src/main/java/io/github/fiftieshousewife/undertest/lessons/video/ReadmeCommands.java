@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
 
 /*
  * Holds a lesson's README to what its commands really print. Each {@code ./gradlew :lessons:...} line in the README
- * must be one of the video's live commands, whose output is kept ({@link LiveOutputs}); and what its comment says must
+ * must be one of the deck's live commands, whose output is kept ({@link LiveOutputs}); and what its comment says must
  * match that output: every number it gives appears there, "only ... fails" means exactly one test failed, "fails" that
  * one did, and "every ... passes" (or holds, matches) that none did. A lesson's exercise answer ({@code -Pcode=answer})
- * isn't in the video; its output is kept beside the live ones and checked the same way. CI keeps the outputs afresh
+ * isn't in the deck; its output is kept beside the live ones and checked the same way. CI keeps the outputs afresh
  * before checking, so there the commands really run. {@code ANSWER_SWITCH} is how a README runs the exercise's answer.
  */
 final class ReadmeCommands {
@@ -33,10 +33,10 @@ final class ReadmeCommands {
     /* What the README says that its commands' outputs don't bear out. */
     static List<Problem> problems(final Media media) {
         final Path readme = media.folder().resolveSibling("README.md");
-        if (!Files.isRegularFile(readme) || !Files.isRegularFile(media.file(".tape"))) {
+        if (!Files.isRegularFile(readme) || !Files.isRegularFile(media.scenes())) {
             return List.of();
         }
-        final List<String> live = LiveOutputs.commands(SceneContent.read(media.root(), media.file(".tape")));
+        final List<String> live = LiveOutputs.commands(SceneContent.read(media.root(), media.scenes()));
         final List<Problem> problems = new ArrayList<>();
         for (final String line : lines(readme)) {
             final Matcher command = COMMAND.matcher(line.strip());
@@ -66,13 +66,13 @@ final class ReadmeCommands {
         if (claim.command().endsWith(ANSWER_SWITCH)) {
             return answer(media, claim);
         }
-        return List.of(new Problem(claim.readme(), "`" + claim.command() + "` isn't one of the video's live"
-                + " commands, so what the README says it shows can't be checked; run it in the video, or leave it"
+        return List.of(new Problem(claim.readme(), "`" + claim.command() + "` isn't one of the deck's live"
+                + " commands, so what the README says it shows can't be checked; run it in a scene, or leave it"
                 + " out"));
     }
 
     /*
-     * The exercise's answer command, which no video runs: its output is kept as {@code answer.txt} with the live ones
+     * The exercise's answer command, which no scene runs: its output is kept as {@code answer.txt} with the live ones
      * ({@link LiveOutputs#readAnswer}), and what the README says about it is held to that.
      */
     private static List<Problem> answer(final Media media, final Claim claim) {

@@ -39,13 +39,10 @@ Callers make mistakes too. One who sends `"night": 2`, misspelling the field, mu
 ./gradlew :lessons:outside-in-http-tests:test -Pcode=answer   # today's service: 3 of 4 tests fail; the answer expected 400 but was 200
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/outside-in-http-tests.html) (its source is [`media/outside-in-http-tests.deck.html`](media/outside-in-http-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/outside-in-http-tests.tape), [the narration](media/outside-in-http-tests.narration.md) and
-  [the slides](media/outside-in-http-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=outside-in-http-tests`.
 
 ## When to use it
 

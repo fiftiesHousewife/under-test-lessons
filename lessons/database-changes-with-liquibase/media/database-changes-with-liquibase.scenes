@@ -1,0 +1,38 @@
+# The scenes of the database-changes-with-liquibase deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# database-changes-with-liquibase.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in database-changes-with-liquibase.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add Liquibase to the version catalogue."
+show libs.versions.toml "/liquibase/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependency
+note "Step 2: the application applies its own changes when it starts, so Liquibase is a main dependency."
+show lessons/database-changes-with-liquibase/example/build.gradle.kts 9 28 "lesson build file" --mark 10 --zoom 21-25
+
+## Scene 3: the code under test
+note "The code under test: today's changelog. The second change was written as *raw SQL*."
+show lessons/database-changes-with-liquibase/example/src/main/resources/db/changelog-today.yaml 11 15 "today's changelog" --zoom 15
+
+## Scene 4: the test on an in-memory database
+note "A test applies every change to *H2*, the in-memory database the developers use."
+show InMemoryChangesTest 13 21 "the test on H2" --zoom 18-19
+show DatabaseChanges 23 30 "the code that applies the changes" --mark 27-30
+
+## Scene 5: the test on real PostgreSQL
+note "The same changes applied to *real PostgreSQL*, in a throwaway container."
+show RealPostgresChangesTest 15 30 "the test on PostgreSQL" --zoom 15,18-22
+
+## Scene 6: PostgreSQL refuses the change
+note "Run both suites against today's changelog:"
+run_live "./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today"
+callout "H2 takes the change. PostgreSQL has no TINYINT type: this release would have failed in production."
+
+## Scene 7: the fixed changelog
+note "The change written as a Liquibase change, which writes the right SQL for each database:"
+show lessons/database-changes-with-liquibase/example/src/main/resources/db/changelog.yaml 11 18 "the fixed changelog" --zoom 15-18
+run_live "./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest"
+callout "Both databases take every change. Liquibase wrote SMALLINT for PostgreSQL."

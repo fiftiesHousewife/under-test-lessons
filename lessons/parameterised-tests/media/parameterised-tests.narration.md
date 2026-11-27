@@ -1,7 +1,7 @@
 # Narration: parameterised tests
 
-One item per scene of [parameterised-tests.tape](parameterised-tests.tape). The intro and closing slides have their own
-narration, in [parameterised-tests.slides.md](parameterised-tests.slides.md). Written to be spoken.
+One item per scene of [parameterised-tests.scenes](parameterised-tests.scenes). The intro and closing slides have their
+own narration, in [parameterised-tests.slides.md](parameterised-tests.slides.md). Written to be spoken.
 
 1. Parameterised tests come with JUnit Jupiter, so there is nothing to add: JUnit is already in the version
    catalogue. The lesson's build file adds one switch, to choose the calculator in use today or

@@ -1,7 +1,7 @@
 # Narration: characterisation tests
 
-One item per scene of [characterisation-tests.tape](characterisation-tests.tape). The intro and closing slides have their
-own narration, in [characterisation-tests.slides.md](characterisation-tests.slides.md). Written to be spoken.
+One item per scene of [characterisation-tests.scenes](characterisation-tests.scenes). The intro and closing slides have
+their own narration, in [characterisation-tests.slides.md](characterisation-tests.slides.md). Written to be spoken.
 
 1. Step one. Add ApprovalTests to the version catalogue.
 2. Step two. Add it as a test dependency of the lesson. There is nothing to configure.

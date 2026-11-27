@@ -64,13 +64,10 @@ ways, and each must be kept in the dead-letter queue, not skipped. Try one that 
 ./gradlew :lessons:message-consumers:test -Pcode=answer   # today's consumer: 4 of 6 tests fail; the message with no order is skipped, and the dead-letter queue is empty
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/message-consumers.html) (its source is [`media/message-consumers.deck.html`](media/message-consumers.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/message-consumers.tape), [the narration](media/message-consumers.narration.md) and
-  [the slides](media/message-consumers.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=message-consumers`.
 
 ## When to use it
 

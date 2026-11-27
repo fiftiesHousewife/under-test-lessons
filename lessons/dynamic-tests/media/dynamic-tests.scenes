@@ -1,0 +1,34 @@
+# The scenes of the dynamic-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# dynamic-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in dynamic-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the examples
+note "A folder of *examples*: each file holds a customer record, and the name expected on a letter."
+show lessons/dynamic-tests/example/src/test/resources/examples/apostrophe.txt 1 2 "one example file"
+
+## Scene 2: the code under test
+note "The code under test: today's name formatter. It capitalises the first letter of each word."
+show TodaysNameFormatter 11 16 "today's formatter" --zoom 14
+
+## Scene 3: one test for all
+note "*One test* loops over every example."
+show AllExamplesInOneTest 12 18 "one test for every example" --zoom 14-16
+
+## Scene 4: a test for each
+note "A *test factory* makes one test for each example file, named after the file."
+show EachExampleTest 13 20 "one test for each example" --zoom 15-16
+show Formatters 33 42 "every file in the folder" --mark 35-36
+
+## Scene 5: every failure named
+note "Run the tests against today's formatter:"
+run_live "./gradlew :lessons:dynamic-tests:test -Pcode=today"
+callout "The loop shows one failure, then stops. The factory names all three: apostrophes and hyphens."
+
+## Scene 6: the fixed formatter
+note "The formatter that starts a word after a space, hyphen or apostrophe:"
+show LetterNameFormatter 14 22 "the fixed formatter" --zoom 19
+run_live "./gradlew :lessons:dynamic-tests:test"
+callout "Every example passes. A new example is just a new file: no new test code."

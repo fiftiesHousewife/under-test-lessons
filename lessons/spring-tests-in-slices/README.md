@@ -66,13 +66,10 @@ courier answers with nothing.
 ./gradlew :lessons:spring-tests-in-slices:test -Pcode=answer   # today's service: 9 tests, only the JSON slice fails; the courier's client passes on its own
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/spring-tests-in-slices.html) (its source is [`media/spring-tests-in-slices.deck.html`](media/spring-tests-in-slices.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/spring-tests-in-slices.tape), [the narration](media/spring-tests-in-slices.narration.md) and
-  [the slides](media/spring-tests-in-slices.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=spring-tests-in-slices`.
 
 ## When to use it
 

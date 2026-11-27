@@ -1,6 +1,6 @@
 # Slides: testing old Java code, a journey
 
-The overview lesson: slides only, with no video script. Each technique slide links the lessons that teach it; planned
+The overview lesson: slides only, with no scene file. Each technique slide links the lessons that teach it; planned
 lessons are marked "coming". Written to be spoken: plain English, each term explained before it is used.
 
 Sources: this series' own lessons and their READMEs, and its catalogue (lessons/CATALOGUE.md). Every fact on these slides is shown in a linked lesson, except

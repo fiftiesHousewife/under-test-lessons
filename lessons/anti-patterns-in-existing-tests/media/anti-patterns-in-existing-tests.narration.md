@@ -1,6 +1,6 @@
 # Narration: anti-patterns in existing tests
 
-One item per scene of [anti-patterns-in-existing-tests.tape](anti-patterns-in-existing-tests.tape). The intro and
+One item per scene of [anti-patterns-in-existing-tests.scenes](anti-patterns-in-existing-tests.scenes). The intro and
 closing slides have their own narration, in
 [anti-patterns-in-existing-tests.slides.md](anti-patterns-in-existing-tests.slides.md). Written to be spoken.
 

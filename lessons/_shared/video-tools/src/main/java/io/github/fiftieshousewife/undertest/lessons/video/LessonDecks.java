@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>{@code slides <root> <id|all>}: draws each slide's pictures with the installed browser;</li>
  *   <li>{@code deck <root> <id|all> [pdf]}: writes each deck, with the voice clips it has, and a PDF if asked.</li>
  * </ul>
- * Making videos and reading narration aloud is {@code LessonVideo}'s, on the machine that makes the videos.
+ * Reading narration aloud is {@code LessonDeckVoice}'s, in production/deck-voice.
  */
 @Slf4j
 public final class LessonDecks {

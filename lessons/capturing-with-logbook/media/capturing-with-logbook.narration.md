@@ -1,6 +1,6 @@
 # Narration: capturing what an old service receives and sends
 
-One item per scene of [capturing-with-logbook.tape](capturing-with-logbook.tape). The intro and closing slides have
+One item per scene of [capturing-with-logbook.scenes](capturing-with-logbook.scenes). The intro and closing slides have
 their own narration, in [capturing-with-logbook.slides.md](capturing-with-logbook.slides.md). Written to be spoken.
 
 1. Step one. Add Logbook to the version catalogue, with one version for its 4 modules. The old service runs on Jetty

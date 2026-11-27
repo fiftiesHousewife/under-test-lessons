@@ -7,8 +7,8 @@
 [![lessons: 38](https://img.shields.io/badge/lessons-38-brightgreen)](lessons/CATALOGUE.md)
 [![slide decks: HTML](https://img.shields.io/badge/slide%20decks-HTML%20%2B%20CSS-lightgrey)](docs/decisions/0003-the-look-is-set-by-css-and-the-newspaper-style-is-the-default.md)
 
-**Short, practical lessons on testing old code: each one a runnable before-and-after example, a narrated video and a
-slide deck.**
+**Short, practical lessons on testing old code: each one a runnable before-and-after example and a narrated slide
+deck.**
 
 These lessons go with [under-test](https://github.com/fiftiesHousewife/under-test), a toolkit for getting old code
 properly tested across many repositories. The lessons are about Java. The toolkit decides *which* technique a repository needs; these lessons
@@ -172,20 +172,19 @@ Each lesson's README says what to run and what you'll see. Lessons with containe
 keep them in an `integrationTest` suite, which skips itself where there is no container runtime such as Docker
 Desktop, Colima or Podman, so everything else still runs everywhere.
 
-## Watch it, present it, rebrand it
+## Present it, rebrand it
 
-Every lesson comes three ways, all generated from the same few text files in its `media/` folder, so a change to the
-narration or the code shows up everywhere:
+Every lesson comes two ways, both from the same few text files in its folder, so a change to the narration or the code
+shows up in both:
 
-- **A narrated video**, about three minutes: slides, then the example running in a terminal, then closing slides,
-  with captions. Made with `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>`, using
-  [VHS](https://github.com/charmbracelet/vhs) to record the terminal and an offline voice (Kokoro).
 - **A slide deck**, `media/<id>.deck.html`, published as a web page ([all decks](https://fiftieshousewife.github.io/under-test-lessons/)): one self-contained page with the intro slides, a slide for each step of the
-  example showing its code and commands, and the closing slides. Arrow keys move between slides, N shows the speaker
-  notes, and printing gives one slide per page.
+  example showing its code and playing its live runs, and the closing slides. Each slide has its narration as a voice
+  clip, read by an offline voice (Kokoro), to hear with Listen. Arrow keys move between slides, N shows the speaker
+  notes, and printing gives one slide per page. It is built from the lesson's scenes (`media/<id>.scenes`), narration
+  and slides, and the output its live runs printed.
 - **The runnable example** itself, for anyone who would rather read and run the code.
 
-Slides, decks and videos share one look, set by CSS. To rebrand, edit a stylesheet or a picture and run one command,
+Slides and decks share one look, set by CSS. To rebrand, edit a stylesheet or a picture and run one command,
 which always rebuilds every deck and slide image:
 
 ```bash
@@ -210,17 +209,17 @@ lessonPictureFrame=soft        # or none, or circle
 Point those at your own stylesheet and pictures folder to rebrand (pictures are found by name there first, then in the
 shared set), or set both to nothing for the colour look the shared files give on their own.
 
-How the videos are made, and the rules that keep them short and reliable, are in
-[the make-a-lesson-video skill](.github/skills/make-a-lesson-video/SKILL.md).
+How the decks are made, and the rules that keep them short and reliable, are in
+[the make-a-lesson-deck skill](.github/skills/make-a-lesson-deck/SKILL.md).
 
 ## Using these lessons inside a company
 
 The lessons are built to run where everything comes through a company's repository manager, container images come
 from its own registry and traffic goes through a proxy server. [Using the lessons inside a company](docs/using-inside-a-company.md)
-says what a company takes and runs (the whole repository, but never the video and voice tools, and no AI tool),
+says what a company takes and runs (the whole repository, but never the voice tools, and no AI tool),
 everything the lessons fetch and the settings that route it (the Gradle distribution, libraries, the JDK, your own
 container images, Testcontainers' clean-up image, proxy settings, the installed browser), licences, how to use the
-finished videos, how a person records a changed slide, and the links on slides.
+decks and their voice, how a person records a changed slide, and the links on slides.
 
 ## Working on this repo
 

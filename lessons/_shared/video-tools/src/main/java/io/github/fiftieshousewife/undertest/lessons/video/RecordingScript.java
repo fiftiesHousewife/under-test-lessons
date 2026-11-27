@@ -98,7 +98,7 @@ public final class RecordingScript {
     private static String entry(final String label, final Spoken slide, final List<String> hints) {
         return "<div class=\"clip\"><p><b>" + SlideHtml.escape(label) + "</b> · save as <span"
                 + " class=\"file\">" + slide.clipStem() + ".m4a</span> · about "
-                + Math.round(LessonChecks.spoken(slide.written())) + " seconds</p><p class=\"words\">"
+                + Math.round(Pauses.spokenSeconds(slide.written())) + " seconds</p><p class=\"words\">"
                 + SlideHtml.withPauseDirections(slide.written()) + "</p>"
                 + (hints.isEmpty() ? "" : "<p class=\"hints\">" + String.join(" · ", hints) + "</p>")
                 + "</div>";

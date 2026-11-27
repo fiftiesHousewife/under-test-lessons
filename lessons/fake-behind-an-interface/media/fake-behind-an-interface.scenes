@@ -1,0 +1,37 @@
+# The scenes of the fake-behind-an-interface deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# fake-behind-an-interface.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in fake-behind-an-interface.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the interface
+note "The shop talks to its message queue through an *interface*. Messages are delivered on commit."
+show MessageQueue 3 13 "the shop's interface to the queue" --zoom 9-12
+
+## Scene 2: the code under test
+note "The code under test: today's order placement. Look at where it *commits*."
+show TodaysOrderPlacement 16 22 "today's order placement" --zoom 18-20
+
+## Scene 3: the mock test
+note "A test with a *mock* queue: it checks each call was made."
+show MockedQueueTest 16 23 "the mock test" --zoom 20-22
+
+## Scene 4: the fake
+note "A *fake* queue: it holds messages until commit, then delivers them, like the real queue."
+show InMemoryMessageQueue 10 29 "the fake queue" --zoom 21-23
+
+## Scene 5: the fake test
+note "A test with the *fake*: it checks what was *delivered*."
+show FakeQueueTest 13 20 "the fake test" --zoom 18-19
+
+## Scene 6: the fake finds the bug
+note "Run the tests against today's order placement:"
+run_live "./gradlew :lessons:fake-behind-an-interface:test -Pcode=today"
+callout "The mock test passes. The fake shows the fraud check never arrives: it was sent after the commit."
+
+## Scene 7: the fixed order placement
+note "The order placement that commits once, at the end:"
+show FixedOrderPlacement 16 22 "the fixed order placement" --zoom 21
+run_live "./gradlew :lessons:fake-behind-an-interface:test"
+callout "Both messages are delivered. The fake checks results, so it doesn't care how the code gets there."

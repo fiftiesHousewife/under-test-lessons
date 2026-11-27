@@ -48,13 +48,10 @@ instead of an answer, then closes the connection.
 ./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=answer   # today's client: 5 of 7 tests fail; the random bytes escape as an UncheckedIOException
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/slow-and-failing-dependencies.html) (its source is [`media/slow-and-failing-dependencies.deck.html`](media/slow-and-failing-dependencies.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/slow-and-failing-dependencies.tape), [the narration](media/slow-and-failing-dependencies.narration.md) and
-  [the slides](media/slow-and-failing-dependencies.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=slow-and-failing-dependencies`.
 
 ## When to use it
 

@@ -1,0 +1,46 @@
+# The scenes of the coverage-of-changed-code deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# coverage-of-changed-code.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in coverage-of-changed-code.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the list of changed classes
+note "Step 1: the build asks git what the branch changed. This lesson names its example change."
+show lessons/coverage-of-changed-code/example/build.gradle.kts 10 22 "lesson build file" --zoom 15-19
+
+## Scene 2: step 2, PIT on the changed classes only
+note "Step 2: PIT plants bugs only in the changed classes."
+show lessons/coverage-of-changed-code/example/build.gradle.kts 23 31 "lesson build file" --mark 24 --zoom 28-30
+
+## Scene 3: step 3, the gate
+note "Step 3: a gate after PIT fails the build if any planted bug in the changed classes survived."
+show lessons/coverage-of-changed-code/example/build.gradle.kts 33 50 "lesson build file" --zoom 39-41
+
+## Scene 4: step 4, coverage of the changed classes
+note "Step 4: the coverage gate counts only the changed classes, and asks for every line."
+show lessons/coverage-of-changed-code/example/build.gradle.kts 57 70 "lesson build file" --zoom 59-61
+
+## Scene 5: the change
+note "The change: a bulk discount. 10 or more of an item get 5% off the line, 50 or more get 10%."
+show BulkDiscount.java 7 27 "the changed class" --zoom 14-18
+
+## Scene 6: the weak test
+note "The change's *weak* test: every new line runs, but nothing exact is checked."
+show BulkDiscountWeakTest 11 29 "the weak test" --zoom 20-23
+
+## Scene 7: PIT on the changed class, with the weak test
+note "Run PIT, on the changed class only, with the *weak* test:"
+run_live "./gradlew :lessons:coverage-of-changed-code:pitest -Pcode=today"
+show BulkDiscount.java 13 27 "the changed class" --mark 14,15,17,18,25,26 --zoom 17
+callout "Line 17: if >= 10 became > 10, a line of exactly 10 items would lose its discount, and no test buys exactly 10."
+
+## Scene 8: the strong test
+note "The *strong* test: both sides of each boundary, and exact prices."
+show BulkDiscountStrongTest 12 32 "the strong test" --zoom 19-22
+
+## Scene 9: PIT on the changed class, with the strong test
+note "Run PIT with the *strong* test:"
+run_live "./gradlew :lessons:coverage-of-changed-code:pitest"
+show BulkDiscount.java 13 27 "the changed class" --mark 14,15,17,18,25,26
+callout "Only the changed class was mutated, and every planted bug in it was caught. The old code is left for later."

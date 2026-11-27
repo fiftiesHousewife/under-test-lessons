@@ -37,13 +37,10 @@ Each nested class asks two questions. Ask a third in every situation: does a ref
 ./gradlew :lessons:nested-tests:test -Pcode=answer   # today's loan: 2 of 13 tests fail; the answer expected REQUESTED but was REPAID
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) (its source is [`media/nested-tests.deck.html`](media/nested-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/nested-tests.tape), [the narration](media/nested-tests.narration.md) and
-  [the slides](media/nested-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=nested-tests`.
 
 ## When to use it
 

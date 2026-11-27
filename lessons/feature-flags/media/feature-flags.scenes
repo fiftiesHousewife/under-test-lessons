@@ -1,0 +1,42 @@
+# The scenes of the feature-flags deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# feature-flags.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in feature-flags.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add the OpenFeature SDK to the version catalogue."
+show libs.versions.toml "/openfeature/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependency
+note "Step 2: add it to the lesson. The code itself asks the flag, so it is a main dependency."
+show lessons/feature-flags/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 9
+
+## Scene 3: the checkout and its flag
+note "The checkout asks a *flag* which shipping rules to use: the old ones, or the new ones."
+show Checkout 18 21 "the checkout" --zoom 19
+
+## Scene 4: the code under test
+note "The code under test: today's *new* shipping rules, behind the flag."
+show TodaysNewShipping 8 14 "today's new rules" --zoom 8
+
+## Scene 5: tests with the default flag
+note "Tests that never set the flag: they only run the *old* rules."
+show DefaultFlagsTest 11 18 "tests with the default flag" --zoom 13
+
+## Scene 6: tests both ways
+note "Tests that run *both ways*: the same checks with the flag off, then on."
+show BothWaysTest 12 20 "tests both ways" --zoom 13-15
+show Checkouts 29 43 "setting the flag" --mark 31-33,39,42
+
+## Scene 7: both ways finds the bug
+note "Run the tests against today's new rules:"
+run_live "./gradlew :lessons:feature-flags:test -Pcode=today"
+callout "With the flag on, a €20 basket ships free: the threshold is in euros, compared with cents."
+
+## Scene 8: the fixed new rules
+note "The new rules, comparing cents with cents:"
+show NewShipping 8 14 "the fixed new rules" --zoom 8
+run_live "./gradlew :lessons:feature-flags:test"
+callout "Both ways agree. Now the flag can be switched on, and later the old rules removed."

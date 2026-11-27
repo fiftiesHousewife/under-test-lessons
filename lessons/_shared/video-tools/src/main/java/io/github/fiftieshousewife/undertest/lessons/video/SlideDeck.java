@@ -20,13 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 final class SlideDeck {
 
-    private static final Pattern SCENE = Pattern.compile("^#\\s*-+\\s*Scene\\s+\\d+:\\s*(.*?)\\s*-+\\s*$");
     private static final Pattern HEADING = Pattern.compile("^#\\s+(.+)$");
 
     private SlideDeck() {
     }
 
-    /* Writes {@code <id>.deck.html} next to the lesson's video script, and the PDF too if asked. */
+    /* Writes {@code <id>.deck.html} next to the lesson's scene file, and the PDF too if asked. */
     static Path write(final Media media, final boolean pdf) {
         final Path deck = media.file(".deck.html");
         try {
@@ -77,8 +76,8 @@ final class SlideDeck {
         final List<String> sections = new ArrayList<>();
         slides.intro().forEach(slide -> sections.add(section(slide, pictures, "")));
         final List<Slide> scenes = scenes(media);
-        final List<SceneContent> contents = Files.isRegularFile(media.file(".tape"))
-                ? SceneContent.read(media.root(), media.file(".tape")) : List.of();
+        final List<SceneContent> contents = Files.isRegularFile(media.scenes())
+                ? SceneContent.read(media.root(), media.scenes()) : List.of();
         int runs = 0;
         for (int i = 0; i < scenes.size(); i++) {
             final SceneContent content = i < contents.size() ? contents.get(i) : new SceneContent();
@@ -96,13 +95,13 @@ final class SlideDeck {
                 + "</aside></section>\n";
     }
 
-    /* One slide per scene of the video script, titled by the scene, with its narration as the text. */
+    /* One slide per scene of the scene file, titled by the scene, with its narration as the text. */
     static List<Slide> scenes(final Media media) {
         final List<String> paragraphs = sceneNarrations(media);
         if (paragraphs.isEmpty()) {
             return List.of();
         }
-        final List<String> titles = matches(media.file(".tape"), SCENE);
+        final List<String> titles = SceneContent.titles(media.scenes());
         final List<Slide> scenes = new ArrayList<>();
         for (int i = 0; i < paragraphs.size(); i++) {
             final String title = titles.get(i);
@@ -114,18 +113,18 @@ final class SlideDeck {
 
     /* Each scene's narration as spoken, pause markers kept: one per scene that has both a title and narration. */
     static List<String> sceneNarrations(final Media media) {
-        final Path tape = media.file(".tape");
+        final Path scenes = media.scenes();
         final Path narration = media.file(".narration.md");
-        if (!Files.isRegularFile(tape) || !Files.isRegularFile(narration)) {
+        if (!Files.isRegularFile(scenes) || !Files.isRegularFile(narration)) {
             return List.of();
         }
         final List<String> paragraphs = Narration.paragraphs(narration);
-        return paragraphs.subList(0, Math.min(matches(tape, SCENE).size(), paragraphs.size()));
+        return paragraphs.subList(0, Math.min(SceneContent.titles(scenes).size(), paragraphs.size()));
     }
 
     /* The lesson's name, from the first heading of its README. */
     static String title(final Media media) {
-        final Path readme = media.file(".tape").resolveSibling("../README.md").normalize();
+        final Path readme = media.folder().resolveSibling("README.md");
         final List<String> headings = Files.isRegularFile(readme) ? matches(readme, HEADING) : List.of();
         return headings.isEmpty() ? media.safeLesson() : headings.getFirst();
     }

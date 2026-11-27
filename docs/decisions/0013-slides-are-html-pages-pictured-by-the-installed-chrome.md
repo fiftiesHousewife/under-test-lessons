@@ -6,7 +6,7 @@ group: Videos and slides
 
 # Slides are HTML pages pictured by the installed Chrome
 
-**Decided by:** Lessons maintainers · **Status:** accepted
+**Decided by:** Lessons maintainers · **Status:** accepted · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): the videos are no longer made; the slides are pictured for the decks and for a quick look
 
 ## Context and Problem Statement
 

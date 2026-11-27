@@ -45,9 +45,9 @@ jobs:
         run: python3 tools/build-failure-annotations.py check.log lessons
 
   # The lessons on Windows, run the way a person there runs them: gradlew.bat, with Windows' own line endings in
-  # play. Container tests skip themselves (the runner's Docker runs only Windows containers). The video tools' tests,
-  # which use shell scripts as stand-ins, and with them the video tools' coverage, and the production tools that make
-  # videos, run on the Linux job only.
+  # play. Container tests skip themselves (the runner's Docker runs only Windows containers). The deck tools' tests,
+  # which use shell scripts as stand-ins, and with them the deck tools' coverage, and the deck's voice, run on the
+  # Linux job only.
   windows:
     runs-on: windows-latest
     steps:
@@ -63,7 +63,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v5
       - name: Run all checks
         shell: pwsh
-        run: .\gradlew.bat check --continue "-PtoolkitDir=.toolkit" "-PunderTest.integrationTestsMaySkip=true" -x :lessons:video-tools:test -x :lessons:video-tools:requireTests -x :lessons:video-tools:jacocoTestCoverageVerification -x :production:video-render:check 2>&1 | Tee-Object -FilePath check.log
+        run: .\gradlew.bat check --continue "-PtoolkitDir=.toolkit" "-PunderTest.integrationTestsMaySkip=true" -x :lessons:video-tools:test -x :lessons:video-tools:requireTests -x :lessons:video-tools:jacocoTestCoverageVerification -x :production:deck-voice:check 2>&1 | Tee-Object -FilePath check.log
       - name: Say why the checks failed
         if: failure()
         run: python tools/build-failure-annotations.py check.log lessons

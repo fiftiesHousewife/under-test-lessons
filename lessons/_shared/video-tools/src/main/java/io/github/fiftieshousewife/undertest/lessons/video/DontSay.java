@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 /*
  * Phrases the narration never uses, from lessons/_shared/dont-say.txt: each line a regular expression, then " = " and
- * why. Every slide's Say text and every video narration paragraph is checked, so a rule agreed once holds in every
+ * why. Every slide's Say text and every scene's narration is checked, so a rule agreed once holds in every
  * lesson.
  */
 final class DontSay {
@@ -47,16 +47,16 @@ final class DontSay {
                 .toList();
     }
 
-    /* Everything the voice says in the lesson: the slides' Say text and the video's narration. */
+    /* Everything the voice says in the lesson: the slides' Say text and the scenes' narration. */
     private static List<String> spoken(final Media media) {
         final Path narration = media.file(".narration.md");
-        final Stream<String> video = Files.isRegularFile(narration)
+        final Stream<String> scenes = Files.isRegularFile(narration)
                 ? Narration.paragraphs(narration).stream() : Stream.empty();
         final Stream<String> slides = Files.isRegularFile(media.file(".slides.md"))
                 ? Stream.concat(media.slides().intro().stream(), media.slides().closing().stream())
                         .map(Slide::narration)
                 : Stream.empty();
-        return Stream.concat(slides, video).toList();
+        return Stream.concat(slides, scenes).toList();
     }
 
     private static String excerpt(final String text, final Pattern phrase) {

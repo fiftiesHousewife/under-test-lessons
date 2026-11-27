@@ -1,0 +1,47 @@
+# The scenes of the capturing-with-logbook deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# capturing-with-logbook.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in capturing-with-logbook.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add Logbook to the version catalogue, with Jetty and Apache's HTTP client for the old service."
+show libs.versions.toml "/logbook|jetty|httpclient5|approvaltests/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependencies
+note "Step 2: add Logbook's core, its JSON filters, its servlet filter and its HTTP client hook."
+show lessons/capturing-with-logbook/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10-13,19
+
+## Scene 3: where Logbook hooks in
+note "Logbook inside the old service: a servlet filter for what it *receives*, a client hook for what it *sends*."
+show CustomerServer 28 40 "the old service's server" --zoom 36
+show LoyaltyClient 25 31 "the loyalty client" --mark 27
+
+## Scene 4: the code under test
+note "The code under test: today's capture set-up. Its one header filter *replaces* Logbook's default."
+show TodaysCapture 18 23 "today's capture" --zoom 20
+
+## Scene 5: the weak test
+note "The *weak* test: checks that each request and answer has an entry, never what the entries say."
+show CaptureRecordsTest 15 23 "the weak test" --zoom 18-22
+
+## Scene 6: the strong tests
+note "The *strong* tests: no secret in the recording, and the whole recording matches its approved file."
+show ApprovedCaptureTest 18 33 "the strong tests" --zoom 25-27
+show ApprovedCaptureTest 39 45 "comparing with the approved file" --mark 41
+
+## Scene 7: the recording holds the secrets
+note "Run the tests against today's capture:"
+run_live "./gradlew :lessons:capturing-with-logbook:test -Pcode=today"
+callout "Everything was recorded, so the weak test passed. So were both tokens and the customer's email, as they are."
+
+## Scene 8: the filtered capture
+note "The recording with Logbook's filters: the Authorization header hidden, and every email replaced."
+show FilteredCapture 19 26 "the filtered capture" --zoom 22-24
+run_live "./gradlew :lessons:capturing-with-logbook:test"
+callout "Logbook's filters mask each message before it is written, and the recording matches its approved file."
+
+## Scene 9: the approved capture
+note "The approved capture: checked by a person, kept beside the tests, and holding no secrets."
+show ApprovedCaptureTest.matchesTheApprovedCapture.approved.txt 1 18 "the approved capture" --zoom 4-8

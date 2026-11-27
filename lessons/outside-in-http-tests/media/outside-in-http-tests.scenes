@@ -1,0 +1,37 @@
+# The scenes of the outside-in-http-tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# outside-in-http-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in outside-in-http-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add REST Assured to the version catalogue."
+show libs.versions.toml "/rest-assured/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency of the lesson."
+show lessons/outside-in-http-tests/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10
+
+## Scene 3: the code under test
+note "The code under test: today's booking service. It always answers *200 OK*, even when it refuses a booking."
+show TodaysBookingHandler 13 21 "today's booking service" --zoom 17-19
+
+## Scene 4: the tests from inside
+note "Tests from *inside*: they call the service's classes directly."
+show BookingRulesTest 9 19 "tests from inside" --zoom 15-17
+
+## Scene 5: the tests from outside
+note "Tests from *outside*: REST Assured sends real HTTP requests to the running service, as a caller would."
+show BookingApiTest 13 35 "tests from outside" --zoom 22-26 --mark 13,17
+
+## Scene 6: the outside tests get what callers get
+note "Run the tests against today's service:"
+run_live "./gradlew :lessons:outside-in-http-tests:test -Pcode=today"
+callout "The inside tests pass. Callers get 200 OK for a refused booking, and no address for a new one."
+
+## Scene 7: the fixed service
+note "The service that answers 201 Created, or 400 Bad Request:"
+show BookingHandler 20 35 "the fixed service" --zoom 29-31
+run_live "./gradlew :lessons:outside-in-http-tests:test"
+callout "The API now tells callers what happened, and the outside tests keep it that way."

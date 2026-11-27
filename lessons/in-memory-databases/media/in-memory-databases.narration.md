@@ -1,6 +1,6 @@
 # Narration: when an in-memory database is enough
 
-One item per scene of [in-memory-databases.tape](in-memory-databases.tape). The intro and closing slides have their
+One item per scene of [in-memory-databases.scenes](in-memory-databases.scenes). The intro and closing slides have their
 own narration, in [in-memory-databases.slides.md](in-memory-databases.slides.md). Written to be spoken.
 
 1. Step one. H2, a SQL database written in Java, is already in the version catalogue. It goes on the test classpath,

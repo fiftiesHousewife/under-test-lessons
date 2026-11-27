@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /*
  * How the voice should say words it would otherwise get wrong, such as "PIT" read as letters. Applied only to the
- * spoken narration; captions keep the written form. The file has one {@code word = how to say it} per line, and lines
+ * spoken narration; slides keep the written form. The file has one {@code word = how to say it} per line, and lines
  * starting with {@code #} are comments. A word may be a phrase, and may start or end with a sign, as in C++. All the
  * words are replaced in one pass, the longest first where two could match at the same place, so a phrase wins over a
  * word inside it, and what one rule puts in is never changed by another.

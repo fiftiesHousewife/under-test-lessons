@@ -44,13 +44,10 @@ penny too: 3 pence refunded gives 0.6 pence of VAT back, which is 1 penny.
 ./gradlew :lessons:parameterised-tests:test -Pcode=answer   # the calculator in use today: 5 of 15 tests fail, 2 of them refunds: -3 gives 0, -998 gives -199
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/parameterised-tests.html) (its source is [`media/parameterised-tests.deck.html`](media/parameterised-tests.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/parameterised-tests.tape), [the narration](media/parameterised-tests.narration.md) and
-  [the slides](media/parameterised-tests.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=parameterised-tests`.
 
 ## When to use it
 

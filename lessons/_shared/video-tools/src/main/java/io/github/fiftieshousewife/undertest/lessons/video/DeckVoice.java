@@ -7,9 +7,9 @@ import java.util.List;
 
 /*
  * A deck's voice: each slide's narration read aloud once and kept as a small sound file in {@code <id>.deck-voice/},
- * beside the deck, so the slides can be heard without making the video. A clip is named by its written words
+ * beside the deck, so the slides can be heard. A clip is named by its written words
  * ({@link Spoken#clipName}), so a deck plays only clips that match it and a person's recording survives a pronunciation
- * fix. Reading the clips aloud is {@code DeckReader}'s job, on the machine that makes the videos. The voice makes
+ * fix. Reading the clips aloud is {@code DeckReader}'s job, in production/deck-voice. The voice makes
  * {@code .m4a} clips; a person may record any of the {@code FORMATS} (Windows' Sound Recorder saves {@code .m4a}),
  * which the deck looks for in that order.
  */

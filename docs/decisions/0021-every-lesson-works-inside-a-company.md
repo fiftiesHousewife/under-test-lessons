@@ -6,7 +6,7 @@ group: Using the lessons in a company
 
 # Every lesson works inside a company
 
-**Decided by:** Lessons maintainers · **Status:** accepted · **Replaces:** [Lessons download nothing at run time from outside a company's repository manager](0004-lessons-download-nothing-at-run-time-from-outside-a-companys-repository-manager.md)
+**Decided by:** Lessons maintainers · **Status:** accepted · **Replaces:** [Lessons download nothing at run time from outside a company's repository manager](0004-lessons-download-nothing-at-run-time-from-outside-a-companys-repository-manager.md) · **Updated by:** [Lessons are decks with their voice, and the videos are removed](0041-lessons-are-decks-with-their-voice-and-the-videos-are-removed.md): VHS is gone, so its exception no longer applies: every lesson is its voiced deck
 
 ## Context and Problem Statement
 

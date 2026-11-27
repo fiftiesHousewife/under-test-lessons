@@ -1,8 +1,8 @@
 # Narration: mutation testing
 
-One item per scene of [mutation-testing.tape](mutation-testing.tape). The intro and closing slides have their own
+One item per scene of [mutation-testing.scenes](mutation-testing.scenes). The intro and closing slides have their own
 narration, in [mutation-testing.slides.md](mutation-testing.slides.md). Written to be spoken: short sentences, no
-commands read aloud. Captions use this text as written; the voice also applies
+commands read aloud. The deck shows this text as written; the voice also applies
 [the pronunciation list](../../_shared/pronunciations.txt), so "PIT" is said "pit".
 
 1. Step one. PIT is open source. The version catalogue holds its version, and its support for JUnit 5. Below them is the

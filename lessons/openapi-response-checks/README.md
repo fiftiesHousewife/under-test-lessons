@@ -51,13 +51,10 @@ the list breaks. A test that checks a few fields wouldn't notice; the schema che
 ./gradlew :lessons:openapi-response-checks:test -Pcode=answer   # today's service: 2 of 5 tests fail; the answer passes, as the check refuses LOST, a status the schema doesn't allow
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/openapi-response-checks.html) (its source is [`media/openapi-response-checks.deck.html`](media/openapi-response-checks.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/openapi-response-checks.tape), [the narration](media/openapi-response-checks.narration.md) and
-  [the slides](media/openapi-response-checks.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=openapi-response-checks`.
 
 ## When to use it
 

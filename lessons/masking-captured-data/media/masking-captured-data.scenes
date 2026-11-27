@@ -1,0 +1,44 @@
+# The scenes of the masking-captured-data deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# masking-captured-data.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in masking-captured-data.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: a day of real data
+note "A day of *real* data: orders and payments, joined by account number."
+show lessons/masking-captured-data/example/src/test/resources/capture/orders.csv 1 8 "the day's orders" --mark 2,4,7
+show lessons/masking-captured-data/example/src/test/resources/capture/payments.csv 1 6 "the day's payments" --mark 2,4
+
+## Scene 2: the code under test
+note "The code under test: the shop's *two reports*."
+show DayReport 14 27 "the reports" --zoom 22-26
+
+## Scene 3: the tests of the reports
+note "The tests of the reports, with the day's *real* answers:"
+show DayReportTest 13 27 "the reports' tests" --zoom 15-25
+
+## Scene 4: today's test data
+note "How the test data is made *today*: fixed text everywhere, and no rule for the note."
+show TodaysMasking 13 26 "today's test data" --zoom 17-23
+
+## Scene 5: the guard on the test data
+note "A *guard* on the test data: every field scanned, even ones without a rule."
+show TestDataHasNothingPersonalTest 15 21 "the guard" --mark 17,19
+show PersonalDataDetector 36 50 "the shapes of personal numbers" --zoom 38-48
+
+## Scene 6: the tests fail on today's test data
+note "Run the tests on today's test data:"
+run_live "./gradlew :lessons:masking-captured-data:test -Pcode=today"
+callout "Fixed text merges every customer and account, so both reports' tests fail. And the notes still hold an email and a name."
+
+## Scene 7: keyed substitutes
+note "The fix: *keyed* substitutes. Same value, same key: same substitute."
+show TestData 18 20 "the test data's key" --mark 18-20
+show KeyedSubstitutes 17 40 "keyed substitutes" --zoom 27-28,34
+
+## Scene 8: the fixed test data
+note "The fixed test data: keyed substitutes, and fixed text only where nothing joins:"
+show KeyedMasking 22 34 "the fixed test data" --zoom 24-32
+run_live "./gradlew :lessons:masking-captured-data:test"
+callout "The reports' tests get the day's real answers, and the guard finds nothing personal left."

@@ -1,6 +1,6 @@
 # Narration: comparing structured output
 
-One item per scene of [structured-output-comparison.tape](structured-output-comparison.tape). The intro and closing
+One item per scene of [structured-output-comparison.scenes](structured-output-comparison.scenes). The intro and closing
 slides have their own narration, in [structured-output-comparison.slides.md](structured-output-comparison.slides.md).
 Written to be spoken.
 

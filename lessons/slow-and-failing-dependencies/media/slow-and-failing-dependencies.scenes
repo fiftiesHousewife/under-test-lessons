@@ -1,0 +1,37 @@
+# The scenes of the slow-and-failing-dependencies deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# slow-and-failing-dependencies.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in slow-and-failing-dependencies.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add WireMock to the version catalogue."
+show libs.versions.toml "/wiremock/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the test dependency
+note "Step 2: add it as a test dependency of the lesson."
+show lessons/slow-and-failing-dependencies/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10
+
+## Scene 3: the code under test
+note "The code under test: today's stock client. *No timeout*, and a failed connection is thrown on."
+show TodaysStockClient 26 37 "today's stock client" --zoom 29-32
+
+## Scene 4: the weak test
+note "The *weak* tests: a stand-in supplier answers at once, with stock or with 503."
+show StockAnswerTest 33 44 "the weak tests" --zoom 41-43
+
+## Scene 5: the strong tests
+note "The *strong* tests: WireMock makes the supplier slow, or breaks the connection."
+show SupplierFaultTest 43 56 "the strong tests" --zoom 45-47
+
+## Scene 6: the supplier fails
+note "Run the tests against today's code:"
+run_live "./gradlew :lessons:slow-and-failing-dependencies:test -Pcode=today"
+callout "A slow supplier kept the shop waiting, and a broken connection became an exception, not an answer."
+
+## Scene 7: the fixed client
+note "The client with a connect and a read timeout, and a clear fallback:"
+show StockClient 24 43 "the fixed client" --zoom 25,33
+run_live "./gradlew :lessons:slow-and-failing-dependencies:test"
+callout "Too slow, reset, empty or broken: the shop answers supplier unavailable within a second."

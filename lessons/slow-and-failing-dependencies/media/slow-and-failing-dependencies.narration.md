@@ -1,8 +1,8 @@
 # Narration: slow and failing dependencies
 
-One item per scene of [slow-and-failing-dependencies.tape](slow-and-failing-dependencies.tape). The intro and closing
-slides have their own narration, in [slow-and-failing-dependencies.slides.md](slow-and-failing-dependencies.slides.md).
-Written to be spoken.
+One item per scene of [slow-and-failing-dependencies.scenes](slow-and-failing-dependencies.scenes). The intro and
+closing slides have their own narration, in
+[slow-and-failing-dependencies.slides.md](slow-and-failing-dependencies.slides.md). Written to be spoken.
 
 1. Step one. Add WireMock to the version catalogue.
 2. Step two. Add it as a test dependency of the lesson.

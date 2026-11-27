@@ -1,13 +1,13 @@
 # Lesson catalogue and plan
 
 Every lesson follows the same shape (see [the write-a-technique-lesson skill](../.github/skills/write-a-technique-lesson/SKILL.md)
-and [the make-a-lesson-video skill](../.github/skills/make-a-lesson-video/SKILL.md)): intro slides (what it is, why it
+and [the make-a-lesson-deck skill](../.github/skills/make-a-lesson-deck/SKILL.md)): intro slides (what it is, why it
 matters, how the tool works), the build set-up one step at a time, a weak "before" and a strong "after" run live, and
 closing slides (when to use it, where the tool came from, links to find out more). Technique rules live in the
 toolkit, [under-test](https://github.com/fiftiesHousewife/under-test/tree/main/techniques).
 
-**Needs** says what recording a lesson's video takes beyond Java and Gradle: lessons marked *Java only* can be made
-anywhere; the rest wait for that tool to be available where videos are recorded.
+**Needs** says what running a lesson's live runs takes beyond Java and Gradle: lessons marked *Java only* can be made
+anywhere; the rest wait for that tool to be available where the live runs are kept.
 
 ## Start here
 
@@ -244,14 +244,14 @@ The series is about Java; TypeScript, front-end and browser-only testing are out
 
 ## Plan
 
-1. **First, Java only.** Lessons any machine can build and record, in the order of the designs above. Old
+1. **First, Java only.** Lessons any machine can build and run, in the order of the designs above. Old
    command-line programs (System Stubs) follows them: its "before" needs `System.out` and `System.exit`, which the
    build's forbidden-API check rejects, so it needs an agreed exception first.
 2. **Then, containers and larger set-ups.** Testcontainers, Spring tests, contract tests, batch jobs and AI-written
-   tests, once Docker is available where videos are recorded.
+   tests, once Docker is available where the live runs are kept.
 3. **Last, other tools.** Stand-in commands (bats), server-rendered pages (a browser), and anything else that needs
    tools beyond Java and Docker.
 
-Each lesson is done when its example builds in `./gradlew check`, its video is made by `renderLessonVideo`, and its
+Each lesson is done when its example builds in `./gradlew check`, its deck is built and voiced, and its
 facts are checked at the source (the tool's own site, release history and papers), with the sources named in its
 slides file.

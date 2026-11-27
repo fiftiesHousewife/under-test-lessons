@@ -51,13 +51,10 @@ order of exactly CHF 100, the smallest that needs a fraud check.
 ./gradlew :lessons:fake-behind-an-interface:test -Pcode=answer   # today's order placement: 2 of 5 tests fail; no fraud check is even sent for order A-3, at the boundary
 ```
 
-## Watch it, or present it
+## Present it
 
 - **Slide deck:** [open it](https://fiftieshousewife.github.io/under-test-lessons/fake-behind-an-interface.html) (its source is [`media/fake-behind-an-interface.deck.html`](media/fake-behind-an-interface.deck.html)). Arrow keys
   move between slides, N shows the speaker notes, and printing gives one slide per page.
-- **Video:** made from [the script](media/fake-behind-an-interface.tape), [the narration](media/fake-behind-an-interface.narration.md) and
-  [the slides](media/fake-behind-an-interface.slides.md) with
-  `./gradlew :production:video-render:renderLessonVideo -Plesson=fake-behind-an-interface`.
 
 ## When to use it
 

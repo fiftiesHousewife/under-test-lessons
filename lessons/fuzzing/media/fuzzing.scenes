@@ -1,0 +1,42 @@
+# The scenes of the fuzzing deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# fuzzing.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in fuzzing.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: step 1, the version catalogue
+note "Step 1: add *Jazzer's* JUnit support to the version catalogue."
+show libs.versions.toml "/jazzer/" gradle/libs.versions.toml
+
+## Scene 2: step 2, the dependency
+note "Step 2: add it to the lesson, for the tests."
+show lessons/fuzzing/example/build.gradle.kts "/^dependencies/" "lesson build file" --zoom 10
+
+## Scene 3: the code under test
+note "The code under test: *today's* label reader."
+show TodaysLabelReader 12 24 "today's label reader" --zoom 20-22
+
+## Scene 4: the example tests
+note "The *example* tests: lines someone typed."
+show LabelExamplesTest 12 31 "the example tests" --zoom 17-18
+
+## Scene 5: the fuzz test
+note "The *fuzz* test: read the line, or refuse it. Nothing else."
+show LabelReaderFuzzTest 12 24 "the fuzz test" --zoom 16-23
+
+## Scene 6: the fuzzer finds a crash
+note "Fuzz today's reader:"
+run_live "./gradlew :lessons:fuzzing:fuzz -Pcode=today"
+callout "Jazzer found a line nobody wrote: an empty postcode crashes the reader."
+
+## Scene 7: the crash, kept as a test
+note "Keep the line Jazzer found, and replay it in every test run:"
+run_live "./gradlew :lessons:fuzzing:test -Pcode=today"
+callout "The example tests pass. The kept line fails, naming the exception."
+
+## Scene 8: the fixed reader
+note "The *fixed* reader refuses what it can't read:"
+show FixedLabelReader 17 29 "the fixed reader" --zoom 24-27
+run_live "./gradlew :lessons:fuzzing:test"
+callout "The kept line is refused now, with the reason, and every test passes."

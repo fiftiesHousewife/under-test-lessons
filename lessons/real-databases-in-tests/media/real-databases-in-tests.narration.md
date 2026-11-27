@@ -1,7 +1,8 @@
 # Narration: real databases in tests
 
-One item per scene of [real-databases-in-tests.tape](real-databases-in-tests.tape). The intro and closing slides have
-their own narration, in [real-databases-in-tests.slides.md](real-databases-in-tests.slides.md). Written to be spoken.
+One item per scene of [real-databases-in-tests.scenes](real-databases-in-tests.scenes). The intro and closing slides
+have their own narration, in [real-databases-in-tests.slides.md](real-databases-in-tests.slides.md). Written to be
+spoken.
 
 1. Step one. Add Testcontainers, the PostgreSQL driver, and the H2 database, to the version catalogue.
 2. Step two. Tests that need a container get a suite of their own, called integration test. It adds Testcontainers,
