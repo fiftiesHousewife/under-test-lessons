@@ -63,6 +63,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #117 | [The inside tools are Java Gradle tasks, with the quality checks the rest of the code has](https://github.com/fiftiesHousewife/under-test-lessons/issues/117) | deliverable | Lessons Owner | ai | – |
+| #120 | [The videos are removed: lessons are decks, with their voice](https://github.com/fiftiesHousewife/under-test-lessons/issues/120) | deliverable | Lessons Owner | ai | – |
 | #118 | [The Python the voice needs has its own checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/118) | deliverable | Lessons Owner | ai | – |
 | #119 | [New tools are Java: a decision, and a line in AGENTS.md](https://github.com/fiftiesHousewife/under-test-lessons/issues/119) | deliverable | Lessons Owner | ai | – |
 | #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
