@@ -22,7 +22,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #115 | [Lesson: checks after release](https://github.com/fiftiesHousewife/under-test-lessons/issues/115) | deliverable | Lessons Owner | ai | – |
-| #106 | [Lesson: fuzzing with Jazzer](https://github.com/fiftiesHousewife/under-test-lessons/issues/106) | deliverable | Lessons Owner | ai | – |
 | #109 | [Lesson: metamorphic tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/109) | deliverable | Lessons Owner | ai | – |
 | #107 | [Lesson: concurrency tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/107) | deliverable | Lessons Owner | ai | – |
 | #108 | [Lesson: AI-drafted tests, judged by mutation testing](https://github.com/fiftiesHousewife/under-test-lessons/issues/108) | deliverable | Lessons Owner | ai | – |
@@ -63,6 +62,9 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
+| #117 | [The inside tools are Java Gradle tasks, with the quality checks the rest of the code has](https://github.com/fiftiesHousewife/under-test-lessons/issues/117) | deliverable | Lessons Owner | ai | – |
+| #118 | [The Python the voice needs has its own checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/118) | deliverable | Lessons Owner | ai | – |
+| #119 | [New tools are Java: a decision, and a line in AGENTS.md](https://github.com/fiftiesHousewife/under-test-lessons/issues/119) | deliverable | Lessons Owner | ai | – |
 | #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
 | #94 | [The README's lesson count comes from the catalogue](https://github.com/fiftiesHousewife/under-test-lessons/issues/94) | deliverable | Lessons Owner | tool | – |
 
