@@ -20,7 +20,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #115 | [Lesson: checks after release](https://github.com/fiftiesHousewife/under-test-lessons/issues/115) | deliverable | Lessons Owner | ai | – |
-| #109 | [Lesson: metamorphic tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/109) | deliverable | Lessons Owner | ai | – |
 | #107 | [Lesson: concurrency tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/107) | deliverable | Lessons Owner | ai | – |
 | #108 | [Lesson: AI-drafted tests, judged by mutation testing](https://github.com/fiftiesHousewife/under-test-lessons/issues/108) | deliverable | Lessons Owner | ai | – |
 | #110 | [Lesson: load tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/110) | deliverable | Lessons Owner | ai | – |
