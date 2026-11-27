@@ -20,10 +20,9 @@ Written to be spoken.
    fields the order screen reads, so they pass after the rename too. The break would show only when the two services
    meet.
 7. The strong tests start with the consumer. Two annotations at the top hand the test to Pact, and name the provider,
-   the stock service. The order screen's team writes down each answer it relies on, as an interaction in a pact.
-   Given three kettles in stock, a request for the kettle gets 200, with the code, and any whole number called
-   available. Below it, Pact stands in for the stock service with exactly these answers, runs the client against them,
-   and writes the pact file.
+   the stock service. The order screen's team writes down each answer it relies on, as an interaction in a pact. Given
+   three kettles in stock, a request for the kettle gets a 200 status code. Below it, Pact stands in for the stock
+   service with exactly these answers, runs the client against them, and writes the pact file.
 8. This is the pact file, the agreement both teams check. The answer holds the field available, and a matching rule
    says it must be a whole number. Below the pact, a copy step in the build file stands in for publishing it. In a
    company, the order screen's build publishes the pact to the package repository, as a versioned artifact, numbered

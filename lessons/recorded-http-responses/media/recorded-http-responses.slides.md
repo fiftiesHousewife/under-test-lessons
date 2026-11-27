@@ -10,9 +10,9 @@ for signing data); Java Security Standard Algorithm Names (HmacSHA256, which eve
 - The fix: replay the supplier's answers
 - The tool: WireMock
 Picture: road
-Say: This time, the topic is recorded HTTP responses: a supplier's real answers, saved and replayed in tests. WireMock
-  is a library that stands in for another web service. We'll see a postcode client that trips over the rare answers.
-  Then WireMock replays them, on demand.
+Say: This time, [pause 400ms] the topic is recorded HTTP responses: a supplier's real answers, saved and replayed in
+  tests. WireMock is a library that stands in for another web service. We'll see a postcode client that trips over the
+  rare answers. Then WireMock replays them, on demand.
 
 ## intro: Our example: a postcode lookup
 - A supplier's web service turns a postcode into a town

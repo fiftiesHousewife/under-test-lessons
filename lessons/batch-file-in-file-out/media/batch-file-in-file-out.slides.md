@@ -13,8 +13,9 @@ keyed hash, February 1997); Java Security Standard Algorithm Names (HmacSHA256).
 - The fix: test the whole file
 - The tool: JUnit
 Picture: road
-Say: This time, the topic is testing a batch job whole: a file goes in, a file comes out, and the test checks the whole
-  file. We'll see a settlement file that loses its closing line, and how a JUnit test with its own folder catches it.
+Say: This time, [pause 400ms] the topic is testing a batch job whole: a file goes in, a file comes out, and the test
+  checks the whole file. We'll see a settlement file that loses its closing line, and how a JUnit test with its own
+  folder catches it.
 
 ## intro: Our example: a nightly settlement file
 - Each night, a Spring Batch job reads the day's payments

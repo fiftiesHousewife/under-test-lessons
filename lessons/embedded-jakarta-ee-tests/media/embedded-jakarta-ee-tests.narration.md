@@ -5,7 +5,7 @@ have their own narration, in [embedded-jakarta-ee-tests.slides.md](embedded-jaka
 spoken.
 
 1. Step one. Add Weld's JUnit support to the version catalogue, with the programming interface for CDI. CDI is short for
-   Contexts and Dependency Injection: the part of Jakarta E E that wires objects together.
+   Contexts and Dependency Injection: the part of Jakarta EE that wires objects together.
 2. Step two. The lesson compiles against the CDI interface, which the application server provides in production. And
    its tests use Weld.
 3. First, the mark itself. It's a CDI qualifier: an annotation that lets code ask for a bean by name. The standard

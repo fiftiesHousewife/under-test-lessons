@@ -15,7 +15,7 @@ their own narration, in [junit-temporary-folders.slides.md](junit-temporary-fold
    annotation. Before the test, JUnit makes a new, empty folder and passes it in. After the test, JUnit deletes it. So
    no test can read a file another one left behind, and tests with their own folders can safely run at the same time.
 5. We run both sets of tests against today's export. With the fixed folder, both tests pass. The cancelled-order test
-   read the file the first test wrote, so the missing file went unnoticed. With temporary folders, that test fails,
-   and says no orders file was written.
+   read the file the first test wrote, so the missing file went unnoticed. With temporary folders, the test fails, and
+   says no orders file was written.
 6. Now the export that leaves cancelled orders out, and always writes the file. We run the same tests. [pause 1s]
    Every test passes.

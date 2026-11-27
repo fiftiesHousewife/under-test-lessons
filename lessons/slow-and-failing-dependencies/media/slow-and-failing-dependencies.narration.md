@@ -14,8 +14,8 @@ Written to be spoken.
    drops the connection. Real services do both, most often when they are busy.
 5. Now, the strong tests. The first makes the supplier answer 5 seconds late, with a fixed delay. The test allows the
    shop 3 seconds, and stops it there if it's still waiting, so a shop with no timeout can't hang the build. The second
-   test runs 3 times, once for each fault: a connection reset, an empty response, and an OK status followed by
-   garbage. Every time, the shop must say, supplier unavailable.
+   test runs 3 times, once for each fault: a connection reeset, [pause 400ms] an empty response, [pause 400ms] and an OK
+   status followed by garbage. Every time, the shop must say, supplier unavailable.
 6. We run the tests against today's code. The weak tests pass. The 4 strong tests fail. The slow supplier kept the shop
    waiting past its 3 seconds. And each broken connection came back as an exception, not as a clear answer. In the
    shop, one slow supplier would hold up every page that calls it.

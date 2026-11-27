@@ -338,3 +338,75 @@ Parameterised
 2026-11-23
 A-1001
 realestate.com.au
+
+## Compounds to check
+test annotation
+Idempotency-Key header
+container tests
+example tests
+H2 database
+refund rules
+example files
+example messages
+order book
+closing balance
+test key
+test database
+test factory
+test system
+test slices
+invoice book
+payment book
+folder rule
+check task
+temp dir annotation
+refunds address
+warehouse call
+shipping rules
+tracking service
+booking service
+PIT plugin
+PostgreSQL driver
+masking step
+display name
+test suite
+pact test
+regression test
+payments queue
+mock queue
+SQL file
+orders file
+
+## Naming words to check
+changed classes
+changed lines
+fixed test
+returned item
+recorded answers
+cancelled orders
+Nested tests
+received file
+loosened test
+flat tests
+disabled test
+waiting message
+requested loan
+mistyped price
+failing dependencies
+running service
+refused order
+placed order
+flaky tests
+flaky test
+sleeping test
+
+## Words to check
+the refund
+a refund
+repaid
+by default
+continuous integration
+Jakarta EE
+PostgreSQL
+Testcontainers
+uses

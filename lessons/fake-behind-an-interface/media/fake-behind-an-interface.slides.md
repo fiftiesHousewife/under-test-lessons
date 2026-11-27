@@ -36,8 +36,8 @@ Say: When should you use a fake? [pause 1600ms] For systems your code talks to a
 - Fakes need no library: they are ordinary code
 Picture: book
 Say: Gerard Meszaros named fakes, among other kinds of test doubles, in his book, x Unit Test Patterns, in 2007. Martin
-  Fowler's article, Mocks Aren't Stubs, explains the difference well. And fakes need no library at all: they are
-  ordinary code.
+  Fowler's article, Mocks [pause 400ms] Aren't [pause 400ms] Stubs, explains the difference well. And fakes need no
+  library at all: they are ordinary code.
 
 ## closing: Find out more
 - https://martinfowler.com/articles/mocksArentStubs.html — Mocks Aren't Stubs

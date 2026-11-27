@@ -19,10 +19,10 @@ narration, in [black-box-tests.slides.md](black-box-tests.slides.md). Written to
    starts WireMock, and writes a settings file: an H2 database in a temporary folder, the warehouse's address, and
    port 0, so the service takes any free port. Then it starts the service through its entry point, as it ships.
 6. The test itself knows nothing about the classes inside. First, WireMock answers as the warehouse would, and puts the
-   stock aside. Then REST Assured posts an order for 3 pens. The test checks the answer: 201 Created, with the order's
-   address and id. WireMock keeps every request it receives, so the test checks the call the warehouse got. Below, plain
-   database code reads the rows the service wrote, straight from its database. The requests can be examples that the
-   people who run the service know well. Or they can be real ones, recorded, with their personal data masked.
+   stock aside. Then REST Assured posts an order for 3 pens. The test checks the answer: 201 [pause 400ms] Created, with
+   the order's address and id. WireMock keeps every request it receives, so the test checks the call the warehouse got.
+   Below, plain database code reads the rows the service wrote, straight from its database. The requests can be examples
+   that the people who run the service know well. Or they can be real ones, recorded, with their personal data masked.
 7. We run the tests against today's code. The unit tests pass. The refused order passes too, because nothing should be
    written. But the placed order fails. The answer was right, and the warehouse put the stock aside. Yet the service
    wrote no rows. The order is lost.

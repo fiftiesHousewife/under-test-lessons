@@ -16,5 +16,5 @@ own narration, in [outside-in-http-tests.slides.md](outside-in-http-tests.slides
    of the classes inside, these tests keep working while we rewrite an old service underneath them.
 6. We run the tests against today's service. The inside tests pass. The outside tests fail, and say exactly what came
    back. A refused booking comes back as 200 OK, where the test expected 400, and a new booking has no address.
-7. Now the service that answers 201 Created, or 400 Bad Request. We run the same tests. [pause 1s]
+7. Now the service that answers 201 [pause 400ms] Created, or 400 Bad Request. We run the same tests. [pause 1s]
    Every test passes.

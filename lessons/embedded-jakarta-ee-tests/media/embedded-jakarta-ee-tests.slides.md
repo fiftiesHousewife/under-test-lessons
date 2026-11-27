@@ -27,7 +27,7 @@ Include: how-we-build
 - Before adding a bean that could change which bean other code is given
 - Keep server-level tests for what truly needs the server: security, transactions across systems
 Picture: map
-Say: When should you use embedded tests? [pause 1600ms] For old Java E E and Jakarta E E code: CDI beans, and E J Bs
+Say: When should you use embedded tests? [pause 1600ms] For old Java EE and Jakarta EE code: CDI beans, and EJBs
   too, with Weld's extra support. Use them before adding any bean that could change what others get. And keep the slow
   server tests for what truly needs a server.
 
@@ -36,7 +36,7 @@ Say: When should you use embedded tests? [pause 1600ms] For old Java E E and Jak
 - Weld is its reference implementation, inside WildFly and other servers
 - weld-junit brings it into JUnit tests
 Picture: book
-Say: CDI arrived with Java E E six, in 2009, and lives on in Jakarta E E. Weld is its reference implementation, the one
+Say: CDI arrived with Java EE six, in 2009, and lives on in Jakarta EE. Weld is its reference implementation, the one
   inside WildFly and other servers. And the Weld team's JUnit support brings it into ordinary tests.
 
 ## closing: Find out more

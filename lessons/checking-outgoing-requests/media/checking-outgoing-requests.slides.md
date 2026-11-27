@@ -26,7 +26,7 @@ Picture: basket
 Say: Our example is a shop that gives money back to customers. For each refund, it posts a request to a payment
   provider: the order's number, and the amount in pence, as JSON. It also sends a header called Idempotency-Key, which
   names the refund. If the same refund arrives twice, say after a timeout and a retry, the provider pays it only once.
-  The provider answers 201 Created, with an id for the refund.
+  The provider answers 201 [pause 400ms] Created, with an id for the refund.
 
 Include: how-we-build
 

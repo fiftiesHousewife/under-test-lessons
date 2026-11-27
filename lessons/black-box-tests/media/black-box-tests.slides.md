@@ -25,7 +25,8 @@ Say: Our subject this time is black-box tests: the whole application started as 
 Picture: basket
 Say: Our example is a shop's order service. A customer orders a quantity of one product. The service asks the
   warehouse's web service to put that stock aside. Then it keeps the order in its own database, as 2 rows: the order,
-  and its line. It answers 201 Created, with the order's id. Or, when the warehouse is short of stock, 409 Conflict.
+  and its line. It answers 201 [pause 400ms] Created, with the order's id. Or, when the warehouse is short of stock, 409
+  Conflict.
 
 Include: how-we-build
 

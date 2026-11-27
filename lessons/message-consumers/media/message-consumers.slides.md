@@ -15,9 +15,9 @@ at-most-once, after processing at-least-once).
 - The fix: a real broker inside the test
 - The tool: Apache Artemis, inside the test
 Picture: road
-Say: This time, the topic is testing message consumers: the code that takes messages off a queue. Artemis is a message
-  broker, the server that passes messages between programs. We'll see a payment lost, and another recorded twice. Then
-  Artemis, started inside the test, catches both.
+Say: This time, [pause 400ms] the topic is testing message consumers: the code that takes messages off a queue. Artemis
+  is a message broker, the server that passes messages between programs. We'll see a payment lost, and another recorded
+  twice. Then Artemis, started inside the test, catches both.
 
 ## intro: Our example: card payments for a shop
 - The till sends one message per card payment: the order, the customer and the amount in pence

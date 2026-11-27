@@ -54,6 +54,6 @@ Say: Szczepan Faber started Mockito in 2008. It is free [pause 400ms] and open s
 - Exercise: check that a refused return sends no money to the card; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the Mockito documentation, and its own advice on writing good tests. Martin Fowler's
-  article, Mocks Aren't Stubs, explains the kinds of stand-in. The links on screen also take you to this lesson's test
-  code and examples, to run yourself. And try the exercise in the README: check that a refused return sends no money to
-  the card at all.
+  article, Mocks [pause 400ms] Aren't [pause 400ms] Stubs, explains the kinds of stand-in. The links on screen also take
+  you to this lesson's test code and examples, to run yourself. And try the exercise in the README: check that a refused
+  return sends no money to the card at all.
