@@ -1,0 +1,12 @@
+$ ./gradlew :lessons:metamorphic-tests:test -Pcode=answer
+BasketExamplesTest > anEmptyBasketCostsNothing() PASSED
+BasketExamplesTest > anEverydayBasketCostsItsPrices() PASSED
+BasketExamplesTest > aBigBasketGetsTwentyPercentOff() PASSED
+BasketRelationsTest > theOrderOfTheLinesNeverChangesTheTotal() PASSED
+BasketRelationsTest > oneMoreItemNeverCostsLess() FAILED
+    java.lang.AssertionError: [one more item cost less 501 times, the first]
+    Expecting empty but was: ["3 rice: ¥8,940, with one more green tea: ¥8,176"]
+SplitLineAnswerTest > splittingALineInTwoNeverChangesTheTotal() FAILED
+    java.lang.AssertionError: [splitting a line changed the total 1,091 times]
+    Expecting empty but was: ["3 rice, 3 soy sauce: ¥8,347, with a line split: ¥8,346"]
+6 tests completed, 2 failed

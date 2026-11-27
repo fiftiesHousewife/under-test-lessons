@@ -421,6 +421,7 @@ items:
       - "It follows the write-a-technique-lesson checklist"
       - "Its facts are checked at their sources, named in its slides file"
     notes: "Placed in Dig deeper: where old code has no specification and no one knows the exact answer, check how answers relate across related inputs (one more item never costs less). Built straight after fuzzing; JUnit only."
+    status: "done"
   - key: "lesson-concurrency-tests"
     type: "deliverable"
     title: "Lesson: concurrency tests"

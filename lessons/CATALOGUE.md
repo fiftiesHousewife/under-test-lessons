@@ -68,7 +68,7 @@ anywhere; the rest wait for that tool to be available where the live runs are ke
 | [Behaviour written down as examples](behaviour-as-examples/README.md): the rules as named examples the experts wrote, run against today's code | JUnit parameterised tests (`@CsvFileSource`); Cucumber only when business people write the examples | Java only | built |
 | [Responses checked against the OpenAPI schema](openapi-response-checks/README.md): every answer the tests see checked against the published document | OpenAPI request validator (formerly swagger-request-validator), REST Assured, JDK HTTP server | Java only | built |
 | [Contract tests between teams](contract-tests-between-teams/README.md): the order screen writes down what it relies on as a pact, and the stock service verifies it in its own build; the pact travels as a versioned artifact through the company's package repository, without a broker | Pact JVM | Java only | built |
-| Metamorphic tests: old code with no specification, and no one sure of the right answer; check how the answers relate across related inputs ("one more item never costs less") | JUnit 6 | Java only | next |
+| [Metamorphic tests](metamorphic-tests/README.md): old code with no specification, and no one sure of the right answer; check how the answers relate across related inputs ("one more item never costs less") | JUnit 6 | Java only | built |
 
 ## Unplug it
 
@@ -157,7 +157,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 |---|---|---|
 | mutation-testing | [Mutation testing](mutation-testing/README.md), [Coverage of changed code](coverage-of-changed-code/README.md) | built |
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md), [Masking captured data so tests still work](masking-captured-data/README.md), [Capturing what an old service receives and sends](capturing-with-logbook/README.md) | built |
-| property-based-testing | [Property-based testing](property-based-testing/README.md), [Fuzzing](fuzzing/README.md) | built |
+| property-based-testing | [Property-based testing](property-based-testing/README.md), [Fuzzing](fuzzing/README.md), [Metamorphic tests](metamorphic-tests/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md), [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
@@ -205,6 +205,7 @@ adding its row first.
 | Characterisation tests (`characterisation-tests`) | A bank statement printer | A test that checks something came back | The whole statement approved as it is, so a tidy-up that changes an amount is caught | `-Pcode=today` |
 | Property-based testing (`property-based-testing`) | Splitting a bill in cents | Example tests the author thought of | A rule checked on many generated bills finds the split that loses a cent | `-Pcode=today` |
 | Fuzzing (`fuzzing`) | An old reader of a courier's parcel labels: name, postcode and weight, separated by semicolons; it must read a line or refuse it with an `IllegalArgumentException` | Example tests of a good label and the two mistakes someone thought of pass; a line with an empty postcode crashes the reader with `StringIndexOutOfBoundsException` | Jazzer's `@FuzzTest` states the contract, read or refuse; the fuzz task finds the crashing line in seconds, and the kept input replays as a regression test in every build | `-Pcode=today` |
+| Metamorphic tests (`metamorphic-tests`) | An old pricing of a shop's basket in whole yen: spend ¥10,000 or more and get 20% off, with no record of how the discount should work | Example tests of an empty, an everyday and a big basket, each total worked out by hand, pass; none is near ¥10,000, where today's code gives 20% off every line, so 3 bags of rice plus a green tea cost less than the rice alone | Two metamorphic relations checked on all 3,125 baskets of up to 4 each of 5 products: one more item never costs less (broken 501 times today), and the order of the lines never changes the total; the fix never takes a basket below ¥10,000 | `-Pcode=today` |
 | Parameterised tests (`parameterised-tests`) | VAT at 20% in pence | Copy-pasted tests on round numbers | A table of cases, each named, finds the rounding bug | `-Pcode=today` |
 | Differential testing (`differential-testing`) | Postage by weight, old and rewritten | The rewrite's own examples | Old against new on every weight finds a mistyped price | `-Pcode=today` |
 | Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
@@ -237,10 +238,9 @@ adding its row first.
 
 The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
-1. **Metamorphic tests,** with JUnit: checking answers nobody can state, by how they relate across related inputs.
-2. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
-3. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
-4. **Load tests,** then a decision on formal verification.
+1. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
+2. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
+3. **Load tests,** then a decision on formal verification.
 
 ## Plan
 

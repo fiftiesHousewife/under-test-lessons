@@ -1,0 +1,9 @@
+{"version": 2, "width": 80, "height": 10, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:metamorphic-tests:test"}
+[0.0, "o", "$ ./gradlew :lessons:metamorphic-tests:test\r\n"]
+[5.046, "o", "BasketRelationsTest > theOrderOfTheLinesNeverChangesTheTotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.056, "o", "BasketRelationsTest > oneMoreItemNeverCostsLess() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.066, "o", "BasketExamplesTest > anEmptyBasketCostsNothing() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.076, "o", "BasketExamplesTest > anEverydayBasketCostsItsPrices() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.086, "o", "BasketExamplesTest > aBigBasketGetsTwentyPercentOff() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.096, "o", "SplitLineAnswerTest > splittingALineInTwoNeverChangesTheTotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.203, "o", "\u001b[1mAll 6 tests passed.\u001b[0m\r\n"]

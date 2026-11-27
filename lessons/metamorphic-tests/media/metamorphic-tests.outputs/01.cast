@@ -1,0 +1,10 @@
+{"version": 2, "width": 82, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:metamorphic-tests:test -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:metamorphic-tests:test -Pcode=today\r\n"]
+[5.955, "o", "BasketExamplesTest > anEmptyBasketCostsNothing() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.965, "o", "BasketExamplesTest > anEverydayBasketCostsItsPrices() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.975, "o", "BasketExamplesTest > aBigBasketGetsTwentyPercentOff() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.985, "o", "BasketRelationsTest > theOrderOfTheLinesNeverChangesTheTotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.995, "o", "BasketRelationsTest > oneMoreItemNeverCostsLess() \u001b[31mFAILED\u001b[0m\r\n"]
+[6.005, "o", "    java.lang.AssertionError: [one more item cost less 501 times, the first]\r\n"]
+[6.015, "o", "    Expecting empty but was: [\"3 rice: \u00a58,940, with one more green tea: \u00a58,176\"]\r\n"]
+[6.129, "o", "\u001b[1m5 tests completed, 1 failed\u001b[0m\r\n"]

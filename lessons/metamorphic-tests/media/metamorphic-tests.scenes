@@ -1,0 +1,33 @@
+# The scenes of the metamorphic tests deck, in order. Each "## Scene N: title" is one slide, spoken with item N of
+# metamorphic-tests.narration.md. Each line under a heading puts one thing on the slide:
+#   note "<text>"         a line of text
+#   show <file> ...       a code panel: <from> <to> or /pattern/, then a label; --mark and --zoom mark lines
+#   run_live "<command>"  a live run, played from its cast in metamorphic-tests.outputs/
+#   callout "<text>"      a boxed sentence saying what a result means
+
+## Scene 1: the code under test
+note "The code under test: *today's* basket pricing."
+show TodaysBasketPricing 11 25 "today's basket pricing" --zoom 18-21
+
+## Scene 2: the example tests
+note "The *example* tests: baskets whose totals were worked out by hand."
+show BasketExamplesTest 11 31 "the example tests" --mark 22-23,28-29
+
+## Scene 3: every basket
+note "The baskets to check: every mix of up to 4 each of 5 products."
+show Baskets 12 36 "every basket" --mark 13-17,32-34
+
+## Scene 4: the metamorphic tests
+note "The *metamorphic* tests: no expected totals, only how two totals compare."
+show BasketRelationsTest 18 45 "the metamorphic tests" --mark 23-25,38-40
+
+## Scene 5: today's pricing
+note "Run the tests on today's pricing:"
+run_live "./gradlew :lessons:metamorphic-tests:test -Pcode=today"
+callout "The example tests pass. Three bags of rice cost 8,940 yen; add green tea, and the basket costs 8,176."
+
+## Scene 6: the fixed pricing
+note "The *fixed* pricing: the discount never takes a basket below ¥10,000."
+show FixedBasketPricing 15 22 "the fixed pricing" --zoom 17-21
+run_live "./gradlew :lessons:metamorphic-tests:test"
+callout "Every relation holds on all 3,125 baskets, and the example tests still pass."

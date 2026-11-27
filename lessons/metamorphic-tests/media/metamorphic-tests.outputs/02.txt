@@ -1,0 +1,8 @@
+$ ./gradlew :lessons:metamorphic-tests:test
+BasketRelationsTest > theOrderOfTheLinesNeverChangesTheTotal() PASSED
+BasketRelationsTest > oneMoreItemNeverCostsLess() PASSED
+BasketExamplesTest > anEmptyBasketCostsNothing() PASSED
+BasketExamplesTest > anEverydayBasketCostsItsPrices() PASSED
+BasketExamplesTest > aBigBasketGetsTwentyPercentOff() PASSED
+SplitLineAnswerTest > splittingALineInTwoNeverChangesTheTotal() PASSED
+All 6 tests passed.
