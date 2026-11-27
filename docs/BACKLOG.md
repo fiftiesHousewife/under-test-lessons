@@ -23,9 +23,9 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 |---|---|---|---|---|---|
 | #115 | [Lesson: checks after release](https://github.com/fiftiesHousewife/under-test-lessons/issues/115) | deliverable | Lessons Owner | ai | – |
 | #106 | [Lesson: fuzzing with Jazzer](https://github.com/fiftiesHousewife/under-test-lessons/issues/106) | deliverable | Lessons Owner | ai | – |
+| #109 | [Lesson: metamorphic tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/109) | deliverable | Lessons Owner | ai | – |
 | #107 | [Lesson: concurrency tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/107) | deliverable | Lessons Owner | ai | – |
 | #108 | [Lesson: AI-drafted tests, judged by mutation testing](https://github.com/fiftiesHousewife/under-test-lessons/issues/108) | deliverable | Lessons Owner | ai | – |
-| #109 | [Lesson: metamorphic tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/109) | deliverable | Lessons Owner | ai | – |
 | #110 | [Lesson: load tests](https://github.com/fiftiesHousewife/under-test-lessons/issues/110) | deliverable | Lessons Owner | ai | – |
 | #111 | [Decide whether to teach formal verification](https://github.com/fiftiesHousewife/under-test-lessons/issues/111) | deliverable | Lessons Owner | ai | – |
 | #58 | [Lesson: recording current behaviour from real traffic, with Keploy](https://github.com/fiftiesHousewife/under-test-lessons/issues/58) | deliverable | Lessons Owner | ai | – |
