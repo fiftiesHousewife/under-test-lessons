@@ -14,12 +14,12 @@ exist. [OpenFeature](https://openfeature.dev) is an open standard for flags, wit
 ./gradlew :lessons:feature-flags:test                # the fixed new rules: both ways give the same answers
 ```
 
-The example works out shipping: £3.99, free from £50.
+The example works out shipping: €3.99, free from €50.
 [`Checkout`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/flags/Checkout.java) asks the
 `new-shipping` flag whether to use the old rules or the new ones.
 
 - [`TodaysNewShipping`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/flags/today/TodaysNewShipping.java)
-  compares a threshold in pounds with a basket in pence.
+  compares a threshold in euros with a basket in cents.
 - [`DefaultFlagsTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/DefaultFlagsTest.java)
   is the "before": it never sets the flag, so it only runs the old rules.
 - [`BothWaysTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/BothWaysTest.java)
@@ -31,14 +31,14 @@ Two baskets check only two prices. While both rules exist, the new ones must cha
 basket.
 
 1. Add a test class beside [`BothWaysTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/BothWaysTest.java)
-   that works out shipping for every basket from 0p to £100, once with the flag off and once with it on, using
+   that works out shipping for every basket from 0 cents to €100, once with the flag off and once with it on, using
    [`Checkouts`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/Checkouts.java).
 2. Count the baskets where the two answers differ, and expect none.
 3. Compare with the answer, [`OldAndNewAgreeAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/flags/answer/OldAndNewAgreeAnswerTest.java),
    which runs against today's new rules with:
 
 ```bash
-./gradlew :lessons:feature-flags:test -Pcode=answer   # today's new rules: the old and new rules disagree on 4950 baskets, the first at 50p
+./gradlew :lessons:feature-flags:test -Pcode=answer   # today's new rules: the old and new rules disagree on 4950 baskets, the first at 50 cents
 ```
 
 ## Watch it, or present it

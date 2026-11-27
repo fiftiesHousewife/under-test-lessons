@@ -14,7 +14,7 @@ public final class TodaysPaymentImport {
 
     @SuppressForbidden // System.out: allowed in today's code only, so the lesson shows old code as it really is
     public static void main(final String[] args) {
-        final long limit = Long.parseLong(System.getenv("PAYMENT_LIMIT_PENCE"));
+        final long limit = Long.parseLong(System.getenv("PAYMENT_LIMIT_PAISE"));
         final BufferedReader input = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
         final List<String> lines = input.lines().toList();
         long total = 0;
@@ -24,9 +24,9 @@ public final class TodaysPaymentImport {
                 System.out.println("over the limit: " + payment.account());
                 System.exit(1);
             }
-            System.out.println("accepted " + payment.account() + " " + payment.pence());
-            total += payment.pence();
+            System.out.println("accepted " + payment.account() + " " + payment.paise());
+            total += payment.paise();
         }
-        System.out.println(lines.size() + " payments, " + total + " pence");
+        System.out.println(lines.size() + " payments, " + total + " paise");
     }
 }

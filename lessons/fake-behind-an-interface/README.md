@@ -36,15 +36,15 @@ interface. Messages are delivered on commit.
 
 ## Exercise
 
-Orders of £100 or more get a fraud check, and the tests try £150 and £25. The edge is worth its own test: an order of
-exactly £100, the smallest that needs a fraud check.
+Orders of CHF 100 or more get a fraud check, and the tests try CHF 150 and CHF 25. The edge is worth its own test: an
+order of exactly CHF 100, the smallest that needs a fraud check.
 
 1. Add a test class beside [`FakeQueueTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/FakeQueueTest.java)
-   that places an order of 10,000 pence through the fake queue,
+   that places an order of 10,000 centimes through the fake queue,
    [`InMemoryMessageQueue`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/InMemoryMessageQueue.java).
 2. Expect a fraud-check message to be sent for it. Today's code loses every fraud check, so check what was sent,
    delivered or not, with the fake's `sent`; that finds a bug of its own.
-3. Compare with the answer, [`HundredPoundOrderAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/answer/HundredPoundOrderAnswerTest.java),
+3. Compare with the answer, [`HundredFrancOrderAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/fake/answer/HundredFrancOrderAnswerTest.java),
    which runs against today's order placement with:
 
 ```bash

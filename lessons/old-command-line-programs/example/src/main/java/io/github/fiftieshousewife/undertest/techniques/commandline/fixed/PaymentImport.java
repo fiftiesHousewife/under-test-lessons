@@ -24,7 +24,7 @@ public final class PaymentImport {
 
     /** Imports the payments, then ends once: with 0 if all were accepted, or 1 at the first one over the limit. */
     public void run() {
-        final long limit = Long.parseLong(System.getenv("PAYMENT_LIMIT_PENCE"));
+        final long limit = Long.parseLong(System.getenv("PAYMENT_LIMIT_PAISE"));
         final List<Payment> payments = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8))
             .lines().map(Payment::parse).toList();
         exit.accept(importPayments(payments, limit));
@@ -37,10 +37,10 @@ public final class PaymentImport {
                 print.accept("over the limit: " + payment.account());
                 return 1;
             }
-            print.accept("accepted " + payment.account() + " " + payment.pence());
-            total += payment.pence();
+            print.accept("accepted " + payment.account() + " " + payment.paise());
+            total += payment.paise();
         }
-        print.accept(payments.size() + " payments, " + total + " pence");
+        print.accept(payments.size() + " payments, " + total + " paise");
         return 0;
     }
 }

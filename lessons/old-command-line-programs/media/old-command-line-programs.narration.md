@@ -18,11 +18,11 @@ spoken.
    it ends.
 6. Now the strong test. It runs the whole program, with what it takes from the system swapped for stand-ins. A
    stand-in like this is called a stub. Each stub is a field marked with System Stubs' annotation, and System Stubs puts
-   the real one back after every test. One sets the environment variable to 50000 pence, one gives the program its
+   the real one back after every test. One sets the environment variable to 50000 paise, one gives the program its
    standard input, and one catches what it prints. The exit code needs something else. System Stubs used to catch
    Java's exit with the security manager, which Java 24 permanently disabled. So the last field holds the exit code,
    and the test passes the program its own exit, which only records the number.
-7. Here is one test. It lowers the limit to 2000 pence, and gives the program three payments. It expects the first to
+7. Here is one test. It lowers the limit to 2000 paise, and gives the program three payments. It expects the first to
    be accepted, the second to stop the program, and the exit code to be 1.
 8. We run the tests against today's program. [pause 1s] The first test passes: System Stubs runs today's code
    unchanged. Then today's program calls Java's exit, and that stops the whole test run. The other tests never run

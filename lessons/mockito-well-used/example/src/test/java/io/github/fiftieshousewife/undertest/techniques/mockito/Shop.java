@@ -12,7 +12,7 @@ import java.util.Set;
 public final class Shop {
 
     public static final Order MUG_AND_TEAPOT =
-            // A mug at £12.50 and a teapot at £25.00, paid by the card ending 4242.
+            // A mug at $12.50 and a teapot at $25.00, paid by the card ending 4242.
             new Order("card ending 4242",
             List.of(new Line("mug", 1250), new Line("teapot", 2500)));
 

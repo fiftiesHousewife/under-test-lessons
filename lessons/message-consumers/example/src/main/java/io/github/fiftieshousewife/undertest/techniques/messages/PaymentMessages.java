@@ -6,7 +6,7 @@ import jakarta.jms.TextMessage;
 import java.util.HashMap;
 import java.util.Map;
 
-/** Reads a payment from a message such as {@code payment=P-501;order=A-1001;customer=customer-7f3a;pence=2599}. */
+/** Reads a payment from a message such as {@code payment=P-501;order=A-1001;customer=customer-7f3a;cents=2599}. */
 public final class PaymentMessages {
 
     private PaymentMessages() {
@@ -14,11 +14,11 @@ public final class PaymentMessages {
 
     public static Payment read(final Message message) throws JMSException {
         final Map<String, String> fields = fields(text(message));
-        final String pence = fields.getOrDefault("pence", "");
-        if (!fields.containsKey("payment") || !fields.containsKey("order") || !pence.matches("\\d{1,9}")) {
-            throw new PaymentNotRecorded("no payment id or order, or the amount is not a whole number of pence");
+        final String cents = fields.getOrDefault("cents", "");
+        if (!fields.containsKey("payment") || !fields.containsKey("order") || !cents.matches("\\d{1,9}")) {
+            throw new PaymentNotRecorded("no payment id or order, or the amount is not a whole number of cents");
         }
-        return new Payment(fields.get("payment"), fields.get("order"), Integer.parseInt(pence));
+        return new Payment(fields.get("payment"), fields.get("order"), Integer.parseInt(cents));
     }
 
     private static String text(final Message message) throws JMSException {

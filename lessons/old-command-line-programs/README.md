@@ -19,8 +19,9 @@ given its exit.
 ```
 
 The example is a nightly payments import. Payments arrive on standard input, one per line (`ACC-1001,2500`: an account
-and an amount in pence); the largest payment allowed comes from the environment variable `PAYMENT_LIMIT_PENCE`. The
-program prints each payment it accepts and a total, and stops at the first payment over the limit with exit code 1.
+and an amount in paise, so ₹25.00, as 100 paise make a rupee); the largest payment allowed comes from the environment
+variable `PAYMENT_LIMIT_PAISE`. The program prints each payment it accepts and a total, and stops at the first payment
+over the limit with exit code 1.
 
 - [`TodaysPaymentImport`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/commandline/today/TodaysPaymentImport.java)
   is the old program: `System.getenv`, `System.in`, `System.out` and `System.exit`, all in `main`.
@@ -54,10 +55,10 @@ field in quotes when it holds a comma or a line break, so read them with a CSV p
 ## Exercise
 
 The strong tests pin the program's two normal endings, 0 and 1. A script that runs it every night meets a third: a
-night when nobody set `PAYMENT_LIMIT_PENCE`. Pin what the program does then, before anyone changes it.
+night when nobody set `PAYMENT_LIMIT_PAISE`. Pin what the program does then, before anyone changes it.
 
 1. Add a test class beside [`PaymentImportTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/commandline/PaymentImportTest.java) whose `EnvironmentVariables` removes
-   `PAYMENT_LIMIT_PENCE`, and give the program one payment on standard input.
+   `PAYMENT_LIMIT_PAISE`, and give the program one payment on standard input.
 2. Check what happens: it fails with a `NumberFormatException` before it reads a payment, prints nothing, and never
    reaches its exit.
 3. Compare with the answer, [`NoLimitSetAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/commandline/answer/NoLimitSetAnswerTest.java). Today's program behaves

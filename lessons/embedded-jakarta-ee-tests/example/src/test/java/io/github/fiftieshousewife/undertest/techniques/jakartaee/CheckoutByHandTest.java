@@ -9,6 +9,6 @@ class CheckoutByHandTest {
 
     @Test
     void addsVatAtTheStandardRate() {
-        assertThat(Checkouts.byHand(new StandardRate()).totalPence(1000)).isEqualTo(1200);
+        assertThat(Checkouts.byHand(new StandardRate()).totalCents(1000)).isEqualTo(1200);
     }
 }

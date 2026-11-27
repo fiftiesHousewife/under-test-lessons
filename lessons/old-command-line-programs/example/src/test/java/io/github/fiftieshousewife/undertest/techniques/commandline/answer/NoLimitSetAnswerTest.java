@@ -21,7 +21,7 @@ import uk.org.webcompere.systemstubs.stream.SystemOut;
 
 /*
  * THE EXERCISE'S ANSWER: the strong tests pin the program's two normal endings. This pins a third, a night when
- * nobody set PAYMENT_LIMIT_PENCE: the program fails before it reads a payment, prints nothing, and never reaches its
+ * nobody set PAYMENT_LIMIT_PAISE: the program fails before it reads a payment, prints nothing, and never reaches its
  * exit. Today's program does the same without reaching System.exit, so {@code -Pcode=answer} can run it against today's
  * program, and the pinned behaviour holds on both.
  */
@@ -39,7 +39,7 @@ class NoLimitSetAnswerTest {
 
     @Test
     void withNoLimitSetTheProgramFailsBeforeImportingAnything() {
-        environment.remove("PAYMENT_LIMIT_PENCE");
+        environment.remove("PAYMENT_LIMIT_PAISE");
         input.setInputStream(new ByteArrayInputStream("ACC-1001,2500\n".getBytes(StandardCharsets.UTF_8)));
         assertAll(
                 () -> assertThatThrownBy(program()).isInstanceOf(NumberFormatException.class),

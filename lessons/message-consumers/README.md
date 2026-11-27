@@ -17,7 +17,7 @@ disk, so the test sees acknowledgement, redelivery and the dead-letter queue as 
 
 The example takes a shop's card payments from the `payments` queue and records each in a payment book.
 [The example messages](example/src/test/resources/example-messages/payments.txt) include one, from an old till, that
-gives pounds instead of pence and can never be read.
+gives dollars instead of cents and can never be read.
 
 - [`TodaysPaymentConsumer`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/messages/today/TodaysPaymentConsumer.java)
   acknowledges each message as it is received, then logs and skips any it can't record.
@@ -49,9 +49,9 @@ Collect them in a test environment first, with the queue owner's agreement, then
 
 ## Exercise
 
-The example messages hold one that no one can read: pounds instead of pence. A message can be unreadable in other
+The example messages hold one that no one can read: dollars instead of cents. A message can be unreadable in other
 ways, and each must be kept in the dead-letter queue, not skipped. Try one that names no order at all:
-`customer=customer-19c2;pence=500`.
+`customer=customer-19c2;cents=500`.
 
 1. Add a test class beside [`PaymentsOnABrokerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/messages/PaymentsOnABrokerTest.java)
    that sends just that message to [the broker in the test](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/messages/EmbeddedBroker.java),

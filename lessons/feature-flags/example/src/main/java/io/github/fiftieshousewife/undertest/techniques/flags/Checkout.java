@@ -15,8 +15,8 @@ public final class Checkout {
         this.replacement = replacement;
     }
 
-    public int shippingPence(final int basketPence) {
+    public int shippingCents(final int basketCents) {
         final boolean useNew = flags.getBooleanValue("new-shipping", false);
-        return (useNew ? replacement : classic).pence(basketPence);
+        return (useNew ? replacement : classic).cents(basketCents);
     }
 }

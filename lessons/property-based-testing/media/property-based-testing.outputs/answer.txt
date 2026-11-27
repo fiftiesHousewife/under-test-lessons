@@ -1,9 +1,9 @@
 $ ./gradlew :lessons:property-based-testing:test -Pcode=answer
-FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() PASSED
-SplitterExampleTest > givesTheOddPennyToSomeone() PASSED
+FirstPayerSplitterTest > givesTheFirstPersonEveryCentLeftOver() PASSED
+SplitterExampleTest > givesTheOddCentToSomeone() PASSED
 SplitterExampleTest > splitsEvenly() PASSED
-SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() FAILED
-    java.lang.AssertionError: Unfair bill found: 3 pence between 4 people gives [3, 0, 0, 0]
-OneMorePennyAnswerTest > oneMorePennyChangesOneShareByOnePenny() FAILED
-    java.lang.AssertionError: One more penny moved other shares: 10 pence between 11 people gives [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], and one more gives [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOneCent() FAILED
+    java.lang.AssertionError: Unfair bill found: 3 cents between 4 people gives [3, 0, 0, 0]
+OneMoreCentAnswerTest > oneMoreCentChangesOneShareByOneCent() FAILED
+    java.lang.AssertionError: One more cent moved other shares: 10 cents between 11 people gives [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], and one more gives [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 5 tests completed, 2 failed

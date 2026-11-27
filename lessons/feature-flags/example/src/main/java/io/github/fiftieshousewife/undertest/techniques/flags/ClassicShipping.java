@@ -4,7 +4,7 @@ package io.github.fiftieshousewife.undertest.techniques.flags;
 public final class ClassicShipping implements ShippingRules {
 
     @Override
-    public int pence(final int basketPence) {
-        return basketPence >= 5000 ? 0 : 399;
+    public int cents(final int basketCents) {
+        return basketCents >= 5000 ? 0 : 399;
     }
 }

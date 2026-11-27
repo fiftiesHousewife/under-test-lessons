@@ -1,4 +1,4 @@
 {"version": 2, "width": 86, "height": 5, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:old-command-line-programs:test -Pcode=answer"}
 [0.0, "o", "$ ./gradlew :lessons:old-command-line-programs:test -Pcode=answer\r\n"]
-[5.247, "o", "NoLimitSetAnswerTest > withNoLimitSetTheProgramFailsBeforeImportingAnything() \u001b[32mPASSED\u001b[0m\r\n"]
-[5.357, "o", "\u001b[1m1 test passed.\u001b[0m\r\n"]
+[5.366, "o", "NoLimitSetAnswerTest > withNoLimitSetTheProgramFailsBeforeImportingAnything() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.476, "o", "\u001b[1m1 test passed.\u001b[0m\r\n"]

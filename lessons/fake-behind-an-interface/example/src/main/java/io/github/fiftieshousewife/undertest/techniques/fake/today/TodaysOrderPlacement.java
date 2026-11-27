@@ -13,11 +13,11 @@ public final class TodaysOrderPlacement implements OrderPlacement {
     }
 
     @Override
-    public void place(final String orderId, final int pence) {
-        queue.send("orders", orderId + " " + pence);
+    public void place(final String orderId, final int centimes) {
+        queue.send("orders", orderId + " " + centimes);
         queue.commit();
-        if (pence > FRAUD_CHECK_PENCE) { // TODAY, too: an order of exactly £100 is left out
-            queue.send("fraud-checks", orderId + " " + pence);
+        if (centimes > FRAUD_CHECK_CENTIMES) { // TODAY, too: an order of exactly CHF 100 is left out
+            queue.send("fraud-checks", orderId + " " + centimes);
         }
     }
 }

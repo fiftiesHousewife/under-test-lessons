@@ -96,7 +96,7 @@ Show
 Wait+Screen@300s /completed, \d+ failed/
 Sleep 14s
 Hide
-Type@1ms `callout "The weak test passes. The captor shows the card got the whole order back: 3750 pence, not 1250."`
+Type@1ms `callout "The weak test passes. The captor shows the card got the whole order back: 3750 cents, not 1250."`
 Enter
 Sleep 300ms
 Show
@@ -120,7 +120,7 @@ Show
 Wait+Screen@300s /\d+ tests? passed\./
 Sleep 9s
 Hide
-Type@1ms `callout "The card gets 1250 pence back, the amount on the receipt. Every test passes."`
+Type@1ms `callout "The card gets 1250 cents back, the amount on the receipt. Every test passes."`
 Enter
 Sleep 300ms
 Show

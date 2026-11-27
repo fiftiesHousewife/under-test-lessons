@@ -134,7 +134,7 @@ Every lesson, under its stage, is in [the catalogue](lessons/CATALOGUE.md).
 | Lesson | Tools | What you'll see |
 |---|---|---|
 | [Parameterised tests](lessons/parameterised-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/parameterised-tests.html) | [JUnit](https://junit.org/) | A table of VAT cases finds a rounding bug that copy-pasted tests miss |
-| [Property-based testing](lessons/property-based-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) | [jetCheck](https://github.com/JetBrains/jetCheck) | jetCheck finds the bill split that loses a penny |
+| [Property-based testing](lessons/property-based-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) | [jetCheck](https://github.com/JetBrains/jetCheck) | jetCheck finds the bill split that loses a cent |
 | [Fuzzing](lessons/fuzzing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/fuzzing.html) | [Jazzer](https://github.com/CodeIntelligenceTesting/jazzer) | The example tests pass, yet in under a second Jazzer finds a line nobody would type that crashes the label reader |
 | [Nested tests](lessons/nested-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) | [JUnit](https://junit.org/) | Tests grouped by a loan's state show the one question nobody asked |
 | [Dynamic tests](lessons/dynamic-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/dynamic-tests.html) | [JUnit](https://junit.org/) | A folder of example files, such as an old regression pack, becomes one named test each |

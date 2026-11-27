@@ -16,19 +16,19 @@ code just looks things up in is a small fake, not a mock.
 ./gradlew :lessons:mockito-well-used:test                # the fixed refunds: every test passes
 ```
 
-The example refunds a returned mug (£12.50) from an order of a mug and a teapot (£37.50 in all). The shop finds orders
+The example refunds a returned mug ($12.50) from an order of a mug and a teapot ($37.50 in all). The shop finds orders
 in its [`OrderBook`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/OrderBook.java) and pays refunds through
 [`CardPayments`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/CardPayments.java), its own interface over the card provider's library.
 
 - [`TodaysRefunds`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/today/TodaysRefunds.java)
-  reports the right refund, £12.50, but sends the card the whole order's total, £37.50.
+  reports the right refund, $12.50, but sends the card the whole order's total, $37.50.
 - [`MockEverythingTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mockito/MockEverythingTest.java)
   is the "before": both interfaces are mocks, and it checks the order was looked up and that some refund was sent.
   It passes.
 - [`CapturedRefundTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/mockito/CapturedRefundTest.java)
   is the "after": the order book is a fake (a map of real orders), the only mock is the card payments, and an
   `ArgumentCaptor` catches the refund sent, so the test checks its card and amount. It fails on today's code with
-  `expected: Refund[card=card ending 4242, pence=1250] but was: Refund[card=card ending 4242, pence=3750]`.
+  `expected: Refund[card=card ending 4242, cents=1250] but was: Refund[card=card ending 4242, cents=3750]`.
 - [`FixedRefunds`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/fixed/FixedRefunds.java) sends the price of the returned items.
 - [`Order`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/mockito/Order.java) prices a
   return by matching each returned item to one line, each line used once, so returning one of two mugs refunds one

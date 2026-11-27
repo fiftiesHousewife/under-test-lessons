@@ -35,7 +35,7 @@ arrives the same way: a zero rate, 0%, for things like books?
 
 1. Add a test class beside [`CheckoutInContainerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/CheckoutInContainerTest.java)
    with a `ZeroRate` of its own: a `TaxRate` of 0, `@ApplicationScoped`, with no mark.
-2. Start Weld with the checkout and all three rates, and expect £10.00 net to cost £12.00 (1000 and 1200 pence).
+2. Start Weld with the checkout and all three rates, and expect €10.00 net to cost €12.00 (1000 and 1200 cents).
 3. Compare with the answer, [`ZeroRateAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/jakartaee/answer/ZeroRateAnswerTest.java),
    which runs against today's checkout with:
 

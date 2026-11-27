@@ -1,7 +1,7 @@
 # Payment messages browsed from the payments queue in the test environment, without taking them off it.
 # Masked before saving: each customer's id is replaced by a keyed substitute, so the same customer keeps the same one.
-# A-1003 came from an old till that sends pounds, not pence: no consumer can ever read it.
-payment=P-501;order=A-1001;customer=customer-7f3a;pence=2599
-payment=P-502;order=A-1002;customer=customer-19c2;pence=1250
-payment=P-503;order=A-1003;customer=customer-7f3a;pence=12.50
-payment=P-504;order=A-1004;customer=customer-b804;pence=899
+# A-1003 came from an old till that sends dollars, not cents: no consumer can ever read it.
+payment=P-501;order=A-1001;customer=customer-7f3a;cents=2599
+payment=P-502;order=A-1002;customer=customer-19c2;cents=1250
+payment=P-503;order=A-1003;customer=customer-7f3a;cents=12.50
+payment=P-504;order=A-1004;customer=customer-b804;cents=899

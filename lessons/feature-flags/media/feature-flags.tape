@@ -107,7 +107,7 @@ Type@1ms `show Checkouts 29 43 "setting the flag" --mark 31-33,39,42`
 Enter
 Sleep 300ms
 Show
-Sleep 41s
+Sleep 42s
 
 # ---- Scene 7: both ways finds the bug ----
 Hide
@@ -124,7 +124,7 @@ Show
 Wait+Screen@300s /completed, \d+ failed/
 Sleep 13s
 Hide
-Type@1ms `callout "With the flag on, a £20 basket ships free: the threshold is in pounds, compared with pence."`
+Type@1ms `callout "With the flag on, a €20 basket ships free: the threshold is in euros, compared with cents."`
 Enter
 Sleep 300ms
 Show
@@ -135,7 +135,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The new rules, comparing pence with pence:"`
+Type@1ms `note "The new rules, comparing cents with cents:"`
 Enter
 Sleep 300ms
 Type@1ms `show NewShipping 8 14 "the fixed new rules" --zoom 8`

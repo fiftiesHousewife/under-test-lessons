@@ -19,16 +19,16 @@ Say: Let's look at testing an old command-line program whole: its settings, its 
   import that's never tested whole. Then System Stubs runs the whole program inside a test.
 
 ## intro: Our example: a nightly payments import
-- Payments arrive on standard input, one per line: an account and an amount in pence
+- Payments arrive on standard input, one per line: an account and an amount in paise
 - The largest payment allowed comes from an environment variable
 - It prints each payment accepted, and stops with exit code 1 at one over the limit
 - A script runs it nightly, and reads the exit code: 0 means done, 1 means look
 Picture: statement
 Say: Our example is a nightly payments import. Payments arrive on standard input, the stream a program reads its data
-  from, one per line: an account, and an amount in pence. The largest payment allowed comes from an environment
-  variable, a setting the script passes in. The program prints each payment it accepts, and a total. At the first
-  payment over the limit, it stops, with exit code 1. The exit code is the code a program ends with. A script runs the
-  import every night, and reads that code. 0 means done. 1 means a person must look.
+  from, one per line: an account, and an amount in paise. A hundred paise make 1 rupee. The largest payment allowed
+  comes from an environment variable, a setting the script passes in. The program prints each payment it accepts, and
+  a total. At the first payment over the limit, it stops, with exit code 1. The exit code is the code a program ends
+  with. A script runs the import every night, and reads that code. 0 means done. 1 means a person must look.
 
 Include: how-we-build
 

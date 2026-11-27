@@ -111,7 +111,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "One test: a limit of 2000 pence, and three payments. The second is over the limit."`
+Type@1ms `note "One test: a limit of 2000 paise, and three payments. The second is over the limit."`
 Enter
 Sleep 300ms
 Type@1ms `show PaymentImportTest 40 48 "one strong test" --zoom 42-44`

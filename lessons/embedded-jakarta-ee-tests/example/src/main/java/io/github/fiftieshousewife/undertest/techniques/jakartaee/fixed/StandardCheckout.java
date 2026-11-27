@@ -18,7 +18,7 @@ public class StandardCheckout implements Checkout {
     }
 
     @Override
-    public int totalPence(final int netPence) {
-        return Checkout.withVat(netPence, rate);
+    public int totalCents(final int netCents) {
+        return Checkout.withVat(netCents, rate);
     }
 }

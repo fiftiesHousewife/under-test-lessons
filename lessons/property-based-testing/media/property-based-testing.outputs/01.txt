@@ -1,7 +1,7 @@
 $ ./gradlew :lessons:property-based-testing:test -Pcode=today
-FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() PASSED
-SplitterExampleTest > givesTheOddPennyToSomeone() PASSED
+FirstPayerSplitterTest > givesTheFirstPersonEveryCentLeftOver() PASSED
+SplitterExampleTest > givesTheOddCentToSomeone() PASSED
 SplitterExampleTest > splitsEvenly() PASSED
-SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() FAILED
-    java.lang.AssertionError: Unfair bill found: 3 pence between 4 people gives [3, 0, 0, 0]
+SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOneCent() FAILED
+    java.lang.AssertionError: Unfair bill found: 3 cents between 4 people gives [3, 0, 0, 0]
 4 tests completed, 1 failed

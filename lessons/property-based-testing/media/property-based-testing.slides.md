@@ -4,21 +4,21 @@ Sources: the jetCheck README (what it is, its inspiration in QuickCheck and Hypo
 IntelliJ IDEA); Claessen and Hughes, QuickCheck, ICFP 2000.
 
 ## intro: Property-based testing
-- The problem: one person pays every penny left over
+- The problem: one person pays every cent left over
 - The fix: state rules, try 100 bills
 - The tool: jetCheck
 Picture: road
 Say: Let's look at property-based testing: rules that must always hold, checked against hundreds of made-up inputs.
   jetCheck is a library that makes up those inputs, and checks the rules against each. We'll see a bill split where one
-  person pays every penny left over. Then jetCheck finds the unfair split.
+  person pays every cent left over. Then jetCheck finds the unfair split.
 
 ## intro: Our example: splitting a bill
-- Share a bill, in pence, between several people
+- Share a bill, in cents, between several people
 - Everyone pays the same, and one person pays what's left over
-- Fair means no two shares differ by more than a penny
+- Fair means no two shares differ by more than a cent
 Picture: pizza
-Say: Our example splits a bill, in pence, between several people. Everyone pays the same share, and one person has to
-  pay the pennies left over. To be fair, no two people should pay more than a penny apart.
+Say: Our example splits a bill, in cents, between several people. Everyone pays the same share, and one person has to
+  pay the cents left over. To be fair, no two people should pay more than a cent apart.
 
 Include: how-we-build
 
@@ -43,8 +43,8 @@ Say: The idea comes from QuickCheck, by Koen Claessen and John Hughes, for the H
 ## closing: Find out more
 - https://github.com/JetBrains/jetCheck — jetCheck, its README and examples
 - {lessons-repo}/tree/main/lessons/property-based-testing — run this lesson yourself: its test code and examples
-- Exercise: add a rule that a penny more changes only one share; the README has the steps and the answer
+- Exercise: add a rule that a cent more changes only one share; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with jetCheck's README, which has more examples of properties. The links on screen also
   take you to this lesson's test code and examples, to run yourself. And try the exercise in the README: one more rule,
-  that adding a penny to the bill adds a penny to just one share.
+  that adding a cent to the bill adds a cent to just one share.

@@ -79,7 +79,7 @@ Type@1ms `show SplitterExampleTest 12 26`
 Enter
 Sleep 300ms
 Show
-Sleep 20s
+Sleep 23s
 
 # ---- Scene 5: the property test ----
 Hide
@@ -110,7 +110,7 @@ Show
 Wait+Screen@300s /completed, \d+ failed/
 Sleep 12s
 Hide
-Type@1ms `callout "3 pence between 4 people: the first person pays all 3. None of the example tests checked a bill like this."`
+Type@1ms `callout "3 cents between 4 people: the first person pays all 3. None of the example tests checked a bill like this."`
 Enter
 Sleep 300ms
 Show
@@ -121,7 +121,7 @@ Hide
 Type@1ms "scene"
 Enter
 Sleep 300ms
-Type@1ms `note "The fair splitter shares the leftover pence one each:"`
+Type@1ms `note "The fair splitter shares the leftover cents one each:"`
 Enter
 Sleep 300ms
 Type@1ms `show FairSplitter 9 16 --zoom 13`

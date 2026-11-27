@@ -2,7 +2,7 @@ $ ./gradlew :lessons:feature-flags:test -Pcode=today
 BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new shipping rules switched on: false PASSED
 BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new shipping rules switched on: true FAILED
     org.opentest4j.MultipleFailuresError: Multiple Failures (1 failure)
-    	org.opentest4j.AssertionFailedError: [a £20 basket]
+    	org.opentest4j.AssertionFailedError: [a €20 basket]
     expected: 399
      but was: 0
 DefaultFlagsTest > smallBasketPaysForDeliveryAndBigBasketDoesNot() PASSED

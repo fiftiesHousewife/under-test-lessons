@@ -20,7 +20,7 @@ class CheckoutInContainerTest {
 
     @Test
     void addsVatAtTheStandardRate() {
-        assertThat(weld.select(Checkouts.chosen()).get().totalPence(1000)).as("£10 with VAT").isEqualTo(1200);
+        assertThat(weld.select(Checkouts.chosen()).get().totalCents(1000)).as("€10 with VAT").isEqualTo(1200);
     }
 
     @Test

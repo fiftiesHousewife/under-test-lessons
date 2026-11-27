@@ -21,8 +21,8 @@ public final class FixedRefunds implements Refunds {
     @Override
     public int refund(final String orderId, final List<String> returnedItems) {
         final Order order = orders.find(orderId);
-        final int pence = order.priceOf(returnedItems);
-        payments.refund(new Refund(order.card(), pence));
-        return pence;
+        final int cents = order.priceOf(returnedItems);
+        payments.refund(new Refund(order.card(), cents));
+        return cents;
     }
 }

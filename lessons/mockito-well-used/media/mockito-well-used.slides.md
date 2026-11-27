@@ -8,7 +8,7 @@ a type you don't own, don't mock value objects, don't mock everything); site.moc
 stubs and fakes.
 
 ## intro: Mockito well used
-- The problem: A £12.50 mug returned, £37.50 refunded
+- The problem: A $12.50 mug returned, $37.50 refunded
 - The fix: mock only where the money leaves
 - The tool: Mockito
 Picture: road
@@ -17,13 +17,13 @@ Say: We're going to look at using Mockito well. Mockito is a library that makes 
   for the wrong amount, while every test passes. Then a fake and one mock catch it.
 
 ## intro: Our example: refunds for returned items
-- A customer orders a mug at £12.50 and a teapot at £25
-- The mug comes back, so £12.50 goes back to the card
+- A customer orders a mug at $12.50 and a teapot at $25
+- The mug comes back, so $12.50 goes back to the card
 - The money leaves through the card provider
 Picture: basket
-Say: Our example is a shop's refunds. A customer orders a mug at £12.50, and a teapot at £25. The mug comes back, so
-  £12.50 should go back to the card the order was paid with. And that money [pause 400ms] leaves the shop [pause 400ms]
-  through the card provider.
+Say: Our example is a shop's refunds. A customer orders a mug at 12 dollars 50, and a teapot at 25 dollars. The mug
+  comes back, so 12 dollars 50 should go back to the card the order was paid with. And that money [pause 400ms]
+  leaves the shop [pause 400ms] through the card provider.
 
 Include: how-we-build
 

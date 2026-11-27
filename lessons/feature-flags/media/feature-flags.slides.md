@@ -5,21 +5,21 @@ Maven Central as dev.openfeature:sdk since October 2022); Pete Hodgson, "Feature
 martinfowler.com, 2017; Paul Hammant, "Branch by Abstraction", 2007.
 
 ## intro: Feature flags
-- The problem: the new rules ship a £20 basket free
+- The problem: the new rules ship a €20 basket free
 - The fix: test both ways
 - The tool: OpenFeature
 Picture: road
 Say: This lesson covers feature flags: shipping new code behind a switch, and testing it with the switch both off and
-  on. OpenFeature is a standard way for code to read its flags. We'll see new shipping rules that would give a £20
-  basket free delivery. Then OpenFeature lets a test choose each side.
+  on. OpenFeature is a standard way for code to read its flags. We'll see new shipping rules that would give a basket
+  of 20 euros free delivery. Then OpenFeature lets a test choose each side.
 
 ## intro: Our example: shipping costs
-- Delivery costs £3.99, and is free from £50
+- Delivery costs €3.99, and is free from €50
 - The old rules have run for years
 - New rules, written for the same prices, wait behind a switch
 Picture: basket
-Say: Our example works out the shop's shipping costs. Delivery costs £3.99, and it's free from £50. The old rules have
-  run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
+Say: Our example works out the shop's shipping costs. Delivery costs 3 euros 99, and it's free from 50 euros. The old
+  rules have run for years. New rules, written to give the same prices, wait behind a switch, ready to be turned on.
 
 Include: how-we-build
 
@@ -45,8 +45,8 @@ Say: Paul Hammant named branch by abstraction in 2007. Pete Hodgson's article on
 - https://openfeature.dev — OpenFeature, with its Java software development kit (SDK)
 - https://martinfowler.com/articles/feature-toggles.html — Feature Toggles, by Pete Hodgson
 - {lessons-repo}/tree/main/lessons/feature-flags — run this lesson yourself: its test code and examples
-- Exercise: check the old and new rules agree on every basket up to £100; the README has the steps and the answer
+- Exercise: check the old and new rules agree on every basket up to €100; the README has the steps and the answer
 Picture: globe
 Say: To find out more, start with the OpenFeature site, and Pete Hodgson's article on feature toggles. The links on
   screen also take you to this lesson's test code and examples, to run yourself. And try the exercise in the README:
-  check that the old and new rules charge the same for every basket up to £100.
+  check that the old and new rules charge the same for every basket up to 100 euros.

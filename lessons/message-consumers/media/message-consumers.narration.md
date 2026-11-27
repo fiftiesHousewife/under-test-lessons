@@ -9,8 +9,8 @@ narration, in [message-consumers.slides.md](message-consumers.slides.md). Writte
    the test, with no network and no container.
 3. These are the example messages. We collected them by browsing the payments queue in a test environment. Browsing
    reads every message without taking any off the queue. Then we masked them: each customer has a substitute that stays
-   the same. Line 6 is the old till's message, for order A 1003. Its amount is in pounds, 12 pounds 50, where the others
-   give pence.
+   the same. Line 6 is the old till's message, for order A 1003. Its amount is in dollars, 12 dollars 50, where the others
+   give cents.
 4. Here is the code under test, today's consumer. Its session acknowledges each message as soon as it arrives. That
    tells the broker to forget it, before the book records the payment. If recording fails, the consumer logs it, and
    moves on.

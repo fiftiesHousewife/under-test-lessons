@@ -16,9 +16,9 @@ spoken.
    checks the sums, but never gets the rate the server chooses.
 6. Next, a test in a container. Weld's JUnit extension starts Weld for each test. Weld is the container application
    servers use, and here it runs inside the test, with no server to deploy to. The test lists the parts it needs: the
-   checkout and both rates. Then it asks Weld for the checkout, wired as the server would wire it, and checks that £10
-   comes to £12.
+   checkout and both rates. Then it asks Weld for the checkout, wired as the server would wire it, and checks that
+   10 euros comes to 12 euros.
 7. We run the tests against today's checkout. Built by hand, the checkout is right. In the container, the checkout gets
-   the reduced rate, because it's the only one without a mark. So £10 comes to £10.50, instead of £12.
+   the reduced rate, because it's the only one without a mark. So 10 euros comes to 10 euros 50, instead of 12 euros.
 8. Now the checkout that asks for the standard rate, by name: its constructor marks the rate it wants as standard. We
    run the same tests. [pause 1s] It's wired as intended.

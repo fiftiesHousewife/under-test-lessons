@@ -20,7 +20,7 @@ import uk.org.webcompere.systemstubs.stream.SystemOut;
 class PaymentImportTest {
 
     @SystemStub
-    private final EnvironmentVariables environment = new EnvironmentVariables("PAYMENT_LIMIT_PENCE", "50000");
+    private final EnvironmentVariables environment = new EnvironmentVariables("PAYMENT_LIMIT_PAISE", "50000");
     @SystemStub
     private final SystemIn input = new SystemIn();
     @SystemStub
@@ -33,13 +33,13 @@ class PaymentImportTest {
         Programs.paymentImport(output, exitCode::set).execute();
         assertAll(
             () -> assertThat(output.getLines()).containsExactly(
-                "accepted ACC-1001 2500", "accepted ACC-1002 50000", "2 payments, 52500 pence"),
+                "accepted ACC-1001 2500", "accepted ACC-1002 50000", "2 payments, 52500 paise"),
             () -> assertThat(exitCode).as("exit code").hasValue(0));
     }
 
     @Test
     void stopsAtThePaymentOverTheLimitAndEndsWithOne() throws Throwable {
-        environment.set("PAYMENT_LIMIT_PENCE", "2000");
+        environment.set("PAYMENT_LIMIT_PAISE", "2000");
         input.setInputStream(Lines.of("ACC-1001,1500", "ACC-1002,2500", "ACC-1003,1000"));
         Programs.paymentImport(output, exitCode::set).execute();
         assertAll(

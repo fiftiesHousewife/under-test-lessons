@@ -1,7 +1,7 @@
 {"version": 2, "width": 82, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:embedded-jakarta-ee-tests:test"}
 [0.0, "o", "$ ./gradlew :lessons:embedded-jakarta-ee-tests:test\r\n"]
-[5.975, "o", "CheckoutInContainerTest > theReducedRateIsStillThereForThingsThatNeedIt() \u001b[32mPASSED\u001b[0m\r\n"]
-[5.985, "o", "CheckoutInContainerTest > addsVatAtTheStandardRate() \u001b[32mPASSED\u001b[0m\r\n"]
-[5.995, "o", "CheckoutByHandTest > addsVatAtTheStandardRate() \u001b[32mPASSED\u001b[0m\r\n"]
-[6.005, "o", "ZeroRateAnswerTest > aThirdRateLeavesTheCheckoutOnTheStandardRate() \u001b[32mPASSED\u001b[0m\r\n"]
-[6.114, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]
+[5.453, "o", "CheckoutInContainerTest > theReducedRateIsStillThereForThingsThatNeedIt() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.463, "o", "CheckoutInContainerTest > addsVatAtTheStandardRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.473, "o", "CheckoutByHandTest > addsVatAtTheStandardRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.579, "o", "ZeroRateAnswerTest > aThirdRateLeavesTheCheckoutOnTheStandardRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.689, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]

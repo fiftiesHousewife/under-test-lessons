@@ -16,8 +16,8 @@ import org.junit.jupiter.api.Test;
  */
 class SplitterPropertyTest {
 
-    /* A bill to split: the total in pence, and the number of people. */
-    record Bill(int totalPence, int people) {
+    /* A bill to split: the total in cents, and the number of people. */
+    record Bill(int totalCents, int people) {
     }
 
     private static final long SEED = 20_240_601L;
@@ -28,21 +28,21 @@ class SplitterPropertyTest {
     // must give the same result every run, so this one keeps a fixed seed.
     @SuppressWarnings("deprecation")
     @Test
-    void sharesAddUpToTheTotalAndDifferByAtMostOnePenny() {
+    void sharesAddUpToTheTotalAndDifferByAtMostOneCent() {
         try {
             PropertyChecker.customized().withSeed(SEED).forAll(Generator.zipWith(Generator.integers(0, 1_000),
                     Generator.integers(1, 12), Bill::new), this::isFair);
         } catch (PropertyFalsified falsified) {
             final Bill bill = (Bill) falsified.getBreakingValue();
-            fail("Unfair bill found: " + bill.totalPence() + " pence between " + bill.people() + " people gives "
-                    + splitter.split(bill.totalPence(), bill.people()));
+            fail("Unfair bill found: " + bill.totalCents() + " cents between " + bill.people() + " people gives "
+                    + splitter.split(bill.totalCents(), bill.people()));
         }
     }
 
     private boolean isFair(final Bill bill) {
-        final List<Integer> shares = splitter.split(bill.totalPence(), bill.people());
+        final List<Integer> shares = splitter.split(bill.totalCents(), bill.people());
         return shares.size() == bill.people()
-                && shares.stream().mapToInt(Integer::intValue).sum() == bill.totalPence()
+                && shares.stream().mapToInt(Integer::intValue).sum() == bill.totalCents()
                 && Collections.max(shares) - Collections.min(shares) <= 1;
     }
 }

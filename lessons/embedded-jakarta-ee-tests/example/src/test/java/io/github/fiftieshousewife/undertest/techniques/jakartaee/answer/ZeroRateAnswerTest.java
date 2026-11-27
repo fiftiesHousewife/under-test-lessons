@@ -35,6 +35,6 @@ class ZeroRateAnswerTest {
 
     @Test
     void aThirdRateLeavesTheCheckoutOnTheStandardRate() {
-        assertThat(weld.select(Checkouts.chosen()).get().totalPence(1000)).isEqualTo(1200);
+        assertThat(weld.select(Checkouts.chosen()).get().totalCents(1000)).isEqualTo(1200);
     }
 }

@@ -21,8 +21,8 @@ public final class TodaysRefunds implements Refunds {
     @Override
     public int refund(final String orderId, final List<String> returnedItems) {
         final Order order = orders.find(orderId);
-        final int pence = order.priceOf(returnedItems);
+        final int cents = order.priceOf(returnedItems);
         payments.refund(new Refund(order.card(), order.total()));
-        return pence;
+        return cents;
     }
 }

@@ -14,17 +14,17 @@ explanation of the bug. Here we use [jetCheck](https://github.com/JetBrains/jetC
 ./gradlew :lessons:property-based-testing:test                # the fair splitter: every property holds
 ```
 
-The example shares a bill, in pence, between several people.
+The example shares a bill, in cents, between several people.
 [`FirstPayerSplitter`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/properties/FirstPayerSplitter.java)
-gives everything left over to the first person: fine with a penny left over, unfair with more.
+gives everything left over to the first person: fine with a cent left over, unfair with more.
 
 - [`SplitterExampleTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/SplitterExampleTest.java)
-  checks the cases its author thought of. They all leave 0 or 1 penny over, so they pass.
+  checks the cases its author thought of. They all leave 0 or 1 cent over, so they pass.
 - [`SplitterPropertyTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/SplitterPropertyTest.java)
   states three rules for every bill: one share per person, shares that add up to the total, and no two shares more
-  than a penny apart. jetCheck finds a bill that breaks them, and shrinks it to the smallest one.
+  than a cent apart. jetCheck finds a bill that breaks them, and shrinks it to the smallest one.
 - [`FairSplitter`](example/src/main/java/io/github/fiftieshousewife/undertest/techniques/properties/FairSplitter.java)
-  shares the leftover pence one each, and passes.
+  shares the leftover cents one each, and passes.
 
 Why jetCheck: it runs inside ordinary JUnit tests, with nothing else to set up. jqwik, the better-known property-test engine for JUnit, is a good choice too; its
 [README](https://github.com/jqwik-team/jqwik) says it is in maintenance mode, with no new features planned. The lesson's seed is fixed, so every run, and the video, finds the same failing bill.
@@ -33,18 +33,18 @@ leave it out.
 
 ## Exercise
 
-The three rules each look at one bill. A fourth rule can compare two: adding a penny to the bill must add a penny to
+The three rules each look at one bill. A fourth rule can compare two: adding a cent to the bill must add a cent to
 exactly one share, and leave every other share as it was.
 
 1. Add a test class beside [`SplitterPropertyTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/SplitterPropertyTest.java),
    with the splitter [`Splitters`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/Splitters.java) picks and a fixed seed.
-2. For each bill jetCheck makes, split it, then split it with one penny more, and check that exactly one share grew,
-   by one penny.
-3. Compare with the answer, [`OneMorePennyAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/answer/OneMorePennyAnswerTest.java),
+2. For each bill jetCheck makes, split it, then split it with one cent more, and check that exactly one share grew,
+   by one cent.
+3. Compare with the answer, [`OneMoreCentAnswerTest`](example/src/test/java/io/github/fiftieshousewife/undertest/techniques/properties/answer/OneMoreCentAnswerTest.java),
    which runs against the splitter in use today with:
 
 ```bash
-./gradlew :lessons:property-based-testing:test -Pcode=answer   # the splitter in use today: 2 of 5 tests fail; one more penny on 10 pence between 11 people moves every share
+./gradlew :lessons:property-based-testing:test -Pcode=answer   # the splitter in use today: 2 of 5 tests fail; one more cent on 10 cents between 11 people moves every share
 ```
 
 ## Watch it, or present it

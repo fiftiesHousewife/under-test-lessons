@@ -20,7 +20,7 @@ class PaymentByHandTest {
     @Test
     void recordsThePaymentInAMessage() throws JMSException {
         final TextMessage message = mock(TextMessage.class);
-        when(message.getText()).thenReturn("payment=P-501;order=A-1001;customer=customer-7f3a;pence=2599");
+        when(message.getText()).thenReturn("payment=P-501;order=A-1001;customer=customer-7f3a;cents=2599");
 
         Consumers.using(mock(ConnectionFactory.class), book).handle(message);
 

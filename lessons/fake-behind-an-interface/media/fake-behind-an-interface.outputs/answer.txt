@@ -11,7 +11,7 @@ FakeQueueTest > bigOrderReachesTheWarehouseAndTheFraudCheck() FAILED
 FakeQueueTest > smallOrderSkipsTheFraudCheck() PASSED
 MockedQueueTest > bigOrderSendsBothMessagesAndCommits() PASSED
 QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() PASSED
-HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsSendsAFraudCheck() FAILED
+HundredFrancOrderAnswerTest > orderOfExactlyOneHundredFrancsSendsAFraudCheck() FAILED
     org.opentest4j.AssertionFailedError: [fraud checks sent, delivered or not]
     Expecting actual:
       []

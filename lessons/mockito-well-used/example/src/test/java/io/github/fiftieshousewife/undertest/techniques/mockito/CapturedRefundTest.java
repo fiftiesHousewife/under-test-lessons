@@ -27,7 +27,7 @@ class CapturedRefundTest {
 
         assertAll(
                 () -> verify(payments).refund(sent.capture()),
-                () -> assertThat(refunded).as("pence refunded").isEqualTo(1250),
+                () -> assertThat(refunded).as("cents refunded").isEqualTo(1250),
                 () -> assertThat(sent.getValue()).as("refund sent").isEqualTo(new Refund("card ending 4242", 1250)));
     }
 }

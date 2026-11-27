@@ -58,7 +58,7 @@ Sleep 300ms
 Type@1ms `note "Example messages, *browsed* from a test environment's queue, then *masked*."`
 Enter
 Sleep 300ms
-Type@1ms `note "One, from an old till, gives pounds instead of pence: no code can ever read it."`
+Type@1ms `note "One, from an old till, gives dollars instead of cents: no code can ever read it."`
 Enter
 Sleep 300ms
 Type@1ms `show lessons/message-consumers/example/src/test/resources/example-messages/payments.txt 1 7 "example messages" --zoom 6`

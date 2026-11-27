@@ -13,10 +13,10 @@ public final class FixedOrderPlacement implements OrderPlacement {
     }
 
     @Override
-    public void place(final String orderId, final int pence) {
-        queue.send("orders", orderId + " " + pence);
-        if (pence >= FRAUD_CHECK_PENCE) {
-            queue.send("fraud-checks", orderId + " " + pence);
+    public void place(final String orderId, final int centimes) {
+        queue.send("orders", orderId + " " + centimes);
+        if (centimes >= FRAUD_CHECK_CENTIMES) {
+            queue.send("fraud-checks", orderId + " " + centimes);
         }
         queue.commit();
     }

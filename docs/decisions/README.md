@@ -25,6 +25,7 @@ below in step when adding a record.
 | [Decks play live runs from casts, not recorded video](0035-decks-play-live-runs-from-casts-not-recorded-video.md) | accepted |
 | [Tools are Java Gradle tasks, and Python only serves the voice](0036-tools-are-java-gradle-tasks-and-python-only-serves-the-voice.md) | accepted |
 | [Lessons are levelled by their technique, not their library](0037-lessons-are-levelled-by-their-technique.md) | accepted |
+| [Examples use several currencies, and spoken amounts are words](0038-examples-use-several-currencies-and-spoken-amounts-are-words.md) | accepted |
 
 ## Videos and slides
 
@@ -42,6 +43,8 @@ below in step when adding a record.
 | [Slides about a thing show it drawn in the speech bubble, and more people come from Open Doodles](0030-slides-about-a-thing-show-it-drawn-in-the-speech-bubble.md) | accepted |
 | [Diagrams are drawn in Excalidraw and exported in the build](0031-diagrams-are-drawn-in-excalidraw.md) | accepted |
 | [Decks show their place in the series; lessons are not numbered](0032-decks-show-their-place-in-the-series-and-lessons-are-not-numbered.md) | accepted |
+| [Voice fixes are made by ear, by clicking, in a review page](0039-voice-fixes-are-made-by-ear-in-a-review-page.md) | accepted |
+| [Slides set up, scenes show, and bullets hold no code](0040-slides-set-up-scenes-show-and-bullets-hold-no-code.md) | accepted |
 
 ## Using the lessons in a company
 

@@ -9,7 +9,7 @@ narration, in [mockito-well-used.slides.md](mockito-well-used.slides.md). Writte
    dependency, because only the tests make stand-ins.
 2. Here is the code under test, today's refunds. It finds the order, and works out the price of the items that came
    back. Now look at line 25. It sends the card a refund of the whole order's total, not the price it has just worked
-   out. So the receipt says 12 pounds 50, and the card gets 37 pounds 50.
+   out. So the receipt says 12 dollars 50, and the card gets 37 dollars 50.
 3. Next, the weak test. Everything around the refunds is a mock, made with Mockito. It tells the order book what to
    answer, then checks that the code asked the order book, and sent some refund. Those checks repeat the code, line by
    line, so they agree with its mistakes. And any refund will do, whatever its amount.
@@ -18,6 +18,6 @@ narration, in [mockito-well-used.slides.md](mockito-well-used.slides.md). Writte
    argument captor. When the test checks that a refund went to the card, the captor catches the refund the code really
    sent. Then the test checks that refund's card and amount, as well as the amount the code reports.
 5. We run the tests against today's refunds. The weak test passes. The strong test fails. The refund sent to the card
-   was 3750 pence, when only the mug, at 1250 pence, came back.
+   was 3750 cents, when only the mug, at 1250 cents, came back.
 6. Now the refunds that send the price of the returned items. We run the same tests. [pause 1s] Every test passes. And
    the strong test would keep passing if we tidied the code, because it checks what the code sent, not how.

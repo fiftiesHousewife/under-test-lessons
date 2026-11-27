@@ -13,7 +13,7 @@ class DefaultFlagsTest {
         final Checkout checkout = Checkouts.withDefaultFlags();
 
         assertAll(
-                () -> assertThat(checkout.shippingPence(2000)).as("a £20 basket").isEqualTo(399),
-                () -> assertThat(checkout.shippingPence(6000)).as("a £60 basket").isZero());
+                () -> assertThat(checkout.shippingCents(2000)).as("a €20 basket").isEqualTo(399),
+                () -> assertThat(checkout.shippingCents(6000)).as("a €60 basket").isZero());
     }
 }

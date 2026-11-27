@@ -12,12 +12,12 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 /*
  * THE EXERCISE'S ANSWER: one more message no one can read, of another kind: it names no order at all. Like the
- * pounds-not-pence one, it must be kept in the dead-letter queue, not skipped. Run it against today's consumer with
+ * dollars-not-cents one, it must be kept in the dead-letter queue, not skipped. Run it against today's consumer with
  * {@code -Pcode=answer}.
  */
 class NoOrderAnswerTest {
 
-    private static final String NO_ORDER = "customer=customer-19c2;pence=500";
+    private static final String NO_ORDER = "customer=customer-19c2;cents=500";
 
     @RegisterExtension
     final EmbeddedBroker broker = new EmbeddedBroker();

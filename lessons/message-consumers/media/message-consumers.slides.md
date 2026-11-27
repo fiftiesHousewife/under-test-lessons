@@ -20,14 +20,14 @@ Say: This time, [pause 400ms] the topic is testing message consumers: the code t
   twice. Then Artemis, started inside the test, catches both.
 
 ## intro: Our example: card payments for a shop
-- The till sends one message per card payment: the order, the customer and the amount in pence
+- The till sends one message per card payment: the order, the customer and the amount in cents
 - The shop's consumer takes each one, and records the payment in its payment book
 - The book is a database, and can be busy for a moment
-- An old till still sends pounds, so one message can never be read
+- An old till still sends dollars, so one message can never be read
 Picture: tag
 Say: Our example is a shop's card payments. The till sends one message for each payment, with the order, the customer,
-  and the amount in pence. The shop's consumer takes each message, and records the payment in its payment book. The book
-  is a database, so now and then it is busy for a moment. And one old till still sends pounds, so one message can never
+  and the amount in cents. The shop's consumer takes each message, and records the payment in its payment book. The book
+  is a database, so now and then it is busy for a moment. And one old till still sends dollars, so one message can never
   be read.
 
 ## intro: What a broker does
