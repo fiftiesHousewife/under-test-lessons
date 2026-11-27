@@ -8,8 +8,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
-| #112 | [Decks with clips replace the lesson videos: the full video mode is removed](https://github.com/fiftiesHousewife/under-test-lessons/issues/112) | deliverable | Lessons Owner | ai | – |
-| #113 | [Deck clips record only the scenes that changed, in one session per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/113) | deliverable | Lessons Owner | ai | – |
 | #114 | [The code scenes talk the viewer through the code on screen](https://github.com/fiftiesHousewife/under-test-lessons/issues/114) | deliverable | Lessons Owner | ai | – |
 | #2 | [Review every lesson's deck, with its voice and clips](https://github.com/fiftiesHousewife/under-test-lessons/issues/2) | deliverable | Lessons Owner | person | – |
 | #99 | [Slides about a thing show it drawn in the speech bubble](https://github.com/fiftiesHousewife/under-test-lessons/issues/99) | deliverable | Lessons Owner | ai | – |
@@ -63,7 +61,6 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 | | Item | Type | Owner | Done by | Waiting on |
 |---|---|---|---|---|---|
 | #117 | [The inside tools are Java Gradle tasks, with the quality checks the rest of the code has](https://github.com/fiftiesHousewife/under-test-lessons/issues/117) | deliverable | Lessons Owner | ai | – |
-| #120 | [The videos are removed: lessons are decks, with their voice](https://github.com/fiftiesHousewife/under-test-lessons/issues/120) | deliverable | Lessons Owner | ai | – |
 | #118 | [The Python the voice needs has its own checks](https://github.com/fiftiesHousewife/under-test-lessons/issues/118) | deliverable | Lessons Owner | ai | – |
 | #119 | [New tools are Java: a decision, and a line in AGENTS.md](https://github.com/fiftiesHousewife/under-test-lessons/issues/119) | deliverable | Lessons Owner | ai | – |
 | #57 | [Commit apm.lock.yaml](https://github.com/fiftiesHousewife/under-test-lessons/issues/57) | deliverable | Lessons Owner | tool | – |
@@ -73,6 +70,7 @@ Ordered by horizon (now, next, later), then items that are ready before items wa
 
 Work decided against, kept in the backlog file as a record.
 
+- [Deck clips record only the scenes that changed, in one session per lesson](https://github.com/fiftiesHousewife/under-test-lessons/issues/113): Dropped: decks play live runs from casts, kept by the capture step, not recorded clips (decision 0035).
 - [Render every lesson's video in the black-and-white look](https://github.com/fiftiesHousewife/under-test-lessons/issues/3): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
 - [Render videos in CI and publish them with each release](https://github.com/fiftiesHousewife/under-test-lessons/issues/12): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
 - [Lesson: the overview's video, from its slides](https://github.com/fiftiesHousewife/under-test-lessons/issues/15): Overtaken: the voiced decks, with their live runs as clips, replace each lesson's full video.
