@@ -58,4 +58,4 @@ Say: WireMock was created by Tom Akehurst, and is free under the Apache licence.
 Picture: globe
 Say: To find out more, start with WireMock's guides to verifying requests, and to matching headers and bodies. The links
   on screen also describe the Idempotency-Key header, and take you to this lesson's test code and examples, to run
-  yourself. And try the exercise in the README: check that refunds of 1p and £19.99 are sent as whole pence.
+  yourself. And try the exercise in the README: check that refunds of 1 penny and 19 pounds 99 are sent as whole pence.

@@ -7,7 +7,7 @@ spoken.
 1. Step one. Add WireMock to the version catalogue.
 2. Step two. Add it as a test dependency of the lesson.
 3. Here is the code under test, today's refund client. It builds the refund as JSON, and posts it to the payment
-   provider. Look at the amount. It divides the pence by 100, so a refund of £12.50 goes out as 12.5. The provider
+   provider. Look at the amount. It divides the pence by 100, so a refund of 12 pounds 50 goes out as 12.5. The provider
    expects pence. And the client sets no Idempotency-Key header, so a refund sent twice could be paid twice.
 4. This is the weak test. A stand-in provider, made with WireMock, answers 201 [pause 400ms] Created, with a refund id.
    The test checks that the client hands that id back. It never looks at what the client sent. So a wrong amount, or a

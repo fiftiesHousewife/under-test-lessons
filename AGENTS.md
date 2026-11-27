@@ -89,6 +89,7 @@ is missing; with other assistants, run it once after cloning.
 | Dependencies kept current (pre-releases ignored) | Ben Manes versions plugin: `./gradlew dependencyUpdates`; checked in CI, failing if `quality.failOnStaleDependencies=true` |
 | Local variables `final` where not reassigned; braces always; no star imports | Checkstyle |
 | Versions only in [`gradle/libs.versions.toml`](gradle/libs.versions.toml) | Review |
+| New tools are Java Gradle tasks; Python only where the voice library needs it ([decision](docs/decisions/0036-tools-are-java-gradle-tasks-and-python-only-serves-the-voice.md)) | Review |
 | Ids use the `io.github.fiftieshousewife` namespace | Review |
 
 Tests that need a container go in the `integrationTest` source set, and skip themselves where there's no container runtime.

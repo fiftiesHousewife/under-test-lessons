@@ -130,7 +130,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 **How do we write tests that stay useful?** Write fewer tests that check more, with tables of cases, generated inputs and tests grouped by situation, set up cleanly and fast to run. Tests people trust get run, read and kept.
 
-**Techniques:** parameterised tests, property-based testing, test fixtures, test tagging. **Tools:** JUnit, jetCheck, Gradle. **References:** the [JUnit User Guide](https://docs.junit.org/current/user-guide/); Claessen and Hughes, [*QuickCheck*](https://doi.org/10.1145/351240.351266) (2000); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007).
+**Techniques:** parameterised tests, property-based testing, test fixtures, test tagging. **Tools:** JUnit, jetCheck, Jazzer, Gradle. **References:** the [JUnit User Guide](https://docs.junit.org/current/user-guide/); Claessen and Hughes, [*QuickCheck*](https://doi.org/10.1145/351240.351266) (2000); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
@@ -141,7 +141,7 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Temporary folders](junit-temporary-folders/README.md): each test gets its own empty folder, removed afterwards, so no test reads a file another left behind | JUnit 6 | Java only | built |
 | [Tags: fast tests first, slow tests apart](junit-tags/README.md): the slow tests labelled, the quick ones run on every change, the slow ones by continuous integration | JUnit 6, Gradle | Java only | built |
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
-| Fuzzing: a coverage-guided fuzzer feeds an old parser inputs nobody wrote a test for, and finds the one that crashes it | Jazzer | Java only | next |
+| [Fuzzing](fuzzing/README.md): a coverage-guided fuzzer feeds an old parser inputs nobody wrote a test for, and finds the one that crashes it | Jazzer | Java only | built |
 | Concurrency tests: run a class from many threads at once, and find the state it shares unsafely | Lincheck or jcstress | Java only | next |
 | Proving one function correct: a specification of a pure function, checked by a verifier | OpenJML or KeY, once their support for current Java is checked | Java only | later: to decide |
 
@@ -157,7 +157,7 @@ the techniques it teaches in its `lesson.yaml`, and `./gradlew check` fails if t
 |---|---|---|
 | mutation-testing | [Mutation testing](mutation-testing/README.md), [Coverage of changed code](coverage-of-changed-code/README.md) | built |
 | characterisation-tests | [Characterisation tests](characterisation-tests/README.md), [Black-box tests of a whole application](black-box-tests/README.md), [Masking captured data so tests still work](masking-captured-data/README.md), [Capturing what an old service receives and sends](capturing-with-logbook/README.md) | built |
-| property-based-testing | [Property-based testing](property-based-testing/README.md) | built |
+| property-based-testing | [Property-based testing](property-based-testing/README.md), [Fuzzing](fuzzing/README.md) | built |
 | architecture-rules | [Architecture rules](architecture-rules/README.md), [Anti-patterns in existing tests](anti-patterns-in-existing-tests/README.md) | built |
 | refactoring-for-testability | [Replacing hard-wired dependencies](replacing-hard-wired-dependencies/README.md), [Old command-line programs](old-command-line-programs/README.md) | built |
 | structured-output-comparison | [Comparing structured output](structured-output-comparison/README.md) | built |
@@ -237,11 +237,10 @@ adding its row first.
 
 The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
-1. **Fuzzing,** with Jazzer: inputs nobody wrote a test for, found automatically.
-2. **Metamorphic tests,** with JUnit: checking answers nobody can state, by how they relate across related inputs.
-3. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
-4. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
-5. **Load tests,** then a decision on formal verification.
+1. **Metamorphic tests,** with JUnit: checking answers nobody can state, by how they relate across related inputs.
+2. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
+3. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
+4. **Load tests,** then a decision on formal verification.
 
 ## Plan
 

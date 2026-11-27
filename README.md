@@ -36,7 +36,7 @@ The lessons follow the stages a team goes through with old code. Each stage answ
 | **Open it up** | How do we test code that won't let us in? | Make the smallest changes that let a test reach the code: pass in what it reaches out for, such as the clock or a service, and start only as much of the framework as a test needs. | dependency injection, seams, slice testing | Mockito, System Stubs, Weld, Spring Boot test | Feathers, *Working Effectively with Legacy Code* (2004); Fowler, [*Inversion of Control Containers and the Dependency Injection Pattern*](https://martinfowler.com/articles/injection.html) (2004) |
 | **Change with a safety net** | How do we change it without breaking it? | Compare the old code and its rewrite on thousands of inputs, put new code behind a switch, and try each database change before production. Each difference is caught while it's cheap to fix. | differential testing, feature flags, database migration testing | JUnit, OpenFeature, Liquibase, Testcontainers | McKeeman, *Differential Testing for Software* (1998); Hodgson, [*Feature Toggles*](https://martinfowler.com/articles/feature-toggles.html) (2016); Sadalage and Ambler, *Refactoring Databases* (2006) |
 | **Stop the rot** | How do we keep it from getting worse? | Add checks every build runs: rules for how the code is built, and gates that hold each change to full coverage, whatever the old code around it. Without them, each change quietly undoes the work. | architecture fitness functions, quality gates on changed code, ratchets | ArchUnit, JaCoCo, PIT | Ford, Parsons and Kua, *Building Evolutionary Architectures* (2017); Petrović, Ivanković, Fraser and Just, [*Practical Mutation Testing at Scale*](https://arxiv.org/abs/2102.11378) (2021) |
-| **Hone the tests** | How do we write tests that stay useful? | Write fewer tests that check more, with tables of cases, generated inputs and tests grouped by situation, set up cleanly and fast to run. Tests people trust get run, read and kept. | parameterised tests, property-based testing, test fixtures, test tagging | JUnit, jetCheck, Gradle | the [JUnit User Guide](https://docs.junit.org/current/user-guide/); Claessen and Hughes, [*QuickCheck*](https://doi.org/10.1145/351240.351266) (2000); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007) |
+| **Hone the tests** | How do we write tests that stay useful? | Write fewer tests that check more, with tables of cases, generated inputs and tests grouped by situation, set up cleanly and fast to run. Tests people trust get run, read and kept. | parameterised tests, property-based testing, test fixtures, test tagging | JUnit, jetCheck, Jazzer, Gradle | the [JUnit User Guide](https://docs.junit.org/current/user-guide/); Claessen and Hughes, [*QuickCheck*](https://doi.org/10.1145/351240.351266) (2000); Meszaros, [*xUnit Test Patterns*](http://xunitpatterns.com) (2007) |
 
 Every lesson, under its stage, is in [the catalogue](lessons/CATALOGUE.md).
 
@@ -135,6 +135,7 @@ Every lesson, under its stage, is in [the catalogue](lessons/CATALOGUE.md).
 |---|---|---|
 | [Parameterised tests](lessons/parameterised-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/parameterised-tests.html) | [JUnit](https://junit.org/) | A table of VAT cases finds a rounding bug that copy-pasted tests miss |
 | [Property-based testing](lessons/property-based-testing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/property-based-testing.html) | [jetCheck](https://github.com/JetBrains/jetCheck) | jetCheck finds the bill split that loses a penny |
+| [Fuzzing](lessons/fuzzing/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/fuzzing.html) | [Jazzer](https://github.com/CodeIntelligenceTesting/jazzer) | The example tests pass, yet in under a second Jazzer finds a line nobody would type that crashes the label reader |
 | [Nested tests](lessons/nested-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/nested-tests.html) | [JUnit](https://junit.org/) | Tests grouped by a loan's state show the one question nobody asked |
 | [Dynamic tests](lessons/dynamic-tests/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/dynamic-tests.html) | [JUnit](https://junit.org/) | A folder of example files, such as an old regression pack, becomes one named test each |
 | [JUnit extensions](lessons/junit-extensions/README.md) · [deck](https://fiftieshousewife.github.io/under-test-lessons/junit-extensions.html) | [JUnit](https://junit.org/) | Shared settings old tests set up by hand become one extension that puts them back and names the test that leaked |
@@ -145,11 +146,10 @@ Every lesson, under its stage, is in [the catalogue](lessons/CATALOGUE.md).
 
 In the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
-1. **Fuzzing,** with Jazzer.
-2. **Metamorphic tests,** with JUnit.
-3. **Concurrency tests,** with Lincheck or jcstress.
-4. **AI-drafted tests, judged by mutation testing,** with no AI tool needed.
-5. **Message consumers on Kafka** and **load tests**.
+1. **Metamorphic tests,** with JUnit.
+2. **Concurrency tests,** with Lincheck or jcstress.
+3. **AI-drafted tests, judged by mutation testing,** with no AI tool needed.
+4. **Message consumers on Kafka** and **load tests**.
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 

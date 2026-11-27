@@ -1,0 +1,8 @@
+$ ./gradlew :lessons:fuzzing:test -Pcode=today
+LabelExamplesTest > refusesALabelWithAFieldMissing() PASSED
+LabelExamplesTest > refusesAWeightThatIsNotANumber() PASSED
+LabelExamplesTest > readsAGoodLabel() PASSED
+LabelReaderFuzzTest > readsOrRefusesEveryLine(byte[]) > <empty input> PASSED
+LabelReaderFuzzTest > readsOrRefusesEveryLine(byte[]) > crash-ea421fe5f2e93241bce651a5842dc000225b3a36 FAILED
+    com.code_intelligence.jazzer.junit.FuzzTestFindingException: java.lang.StringIndexOutOfBoundsException: Range [0, -1) out of bounds for length 0
+5 tests completed, 1 failed

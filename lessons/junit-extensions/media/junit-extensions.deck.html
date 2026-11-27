@@ -249,7 +249,7 @@ li.point::before { border-radius: 0; width: 14px; height: 14px; top: 22px; }
  29      void shopReceiptShowsPriceWithVat() {
  30          assertThat(new ShopReceipt().line(&quot;Car seat&quot;, 10_000)).isEqualTo(&quot;Car seat  £120.00&quot;);
  31      }
- 32  }</pre></figure></main><aside class="notes">These are tests with set-up by hand, the way many old tests do it. They set the shop's settings once, before all the tests, and never put them back. The trade invoice test runs first, and leaves VAT switched off. So the receipt test, run second, gets £100 plus VAT, not £120.</aside><audio class="voice" preload="none" src="junit-extensions.deck-voice/a72b3e2a4c3440b2.m4a"></audio></section>
+ 32  }</pre></figure></main><aside class="notes">These are tests with set-up by hand, the way many old tests do it. They set the shop's settings once, before all the tests, and never put them back. The trade invoice test runs first, and leaves VAT switched off. So the receipt test, run second, gets 100 pounds plus VAT, not 120 pounds.</aside><audio class="voice" preload="none" src="junit-extensions.deck-voice/92f6426f6e6e3815.m4a"></audio></section>
 <section class="deck-slide"><main class="slide scene"><section class="text"><h1>The extension</h1><div class="rule"></div><ul class="scene-points"><li class="point">A JUnit extension</li><li class="point">Standard settings before each test, put back after, and a check nothing leaked</li></ul></section><figure class="code" style="--code-size: 18px"><figcaption>the extension</figcaption><pre><mark> 11  public final class StandardShopSettings implements BeforeEachCallback, AfterEachCallback {</mark>
  12  
  13      private static final Map&lt;String, String&gt; STANDARD =

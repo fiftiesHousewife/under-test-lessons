@@ -1,0 +1,15 @@
+$ ./gradlew :lessons:fuzzing:test -Pcode=answer
+LabelExamplesTest > refusesALabelWithAFieldMissing() PASSED
+LabelExamplesTest > refusesAWeightThatIsNotANumber() PASSED
+LabelExamplesTest > readsAGoodLabel() PASSED
+LabelReaderFuzzTest > readsOrRefusesEveryLine(byte[]) > <empty input> PASSED
+LabelReaderFuzzTest > readsOrRefusesEveryLine(byte[]) > crash-ea421fe5f2e93241bce651a5842dc000225b3a36 FAILED
+    com.code_intelligence.jazzer.junit.FuzzTestFindingException: java.lang.StringIndexOutOfBoundsException: Range [0, -1) out of bounds for length 0
+WeightRuleAnswerTest > acceptsOnlyWeightsTheCourierTakes(byte[]) > <empty input> PASSED
+WeightRuleAnswerTest > acceptsOnlyWeightsTheCourierTakes(byte[]) > negative-weight FAILED
+    java.lang.AssertionError: [grams on a label the reader accepted]
+    Expecting actual:
+      -5
+    to be between:
+      [1, 30000]
+7 tests completed, 2 failed

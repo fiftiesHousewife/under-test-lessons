@@ -10,8 +10,8 @@ closing slides have their own narration, in
    gets the exchange rate from a singleton, the one and only live rate service, which calls the bank over the network.
    When code reaches for something, instead of being given it, that's a hard-wired dependency, and a test can't swap it.
 4. Now, the test. Mockito makes a stand-in for the exchange rates. Before each test, we tell it what to answer: one
-   euro seventeen to the pound. Then the test hands it to the invoice. £12.50 comes to 1463 euro cents, rounding up
-   the half cent. And an empty invoice costs nothing.
+   euro seventeen to the pound. Then the test hands it to the invoice. 12 pounds 50 comes to 1463 euro cents,
+   rounding up the half cent. And an empty invoice costs nothing.
 5. We run the test against today's invoice. Both tests fail with the same error, before they check a single number.
    Today's invoice has nowhere to take the stand-in, so it calls the live service. A test machine has no network, and
    no account for the bank.

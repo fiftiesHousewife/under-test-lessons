@@ -82,3 +82,8 @@ __pycache__/
 # Reviews left in the root for the maintainer to read: kept out of the repository.
 /voiceover-review.md
 *.live.log
+
+# Inputs Jazzer saves where a fuzz run fails; the ones worth keeping move beside their test
+lessons/*/example/crash-*
+lessons/*/example/timeout-*
+lessons/*/example/.cifuzz-corpus/

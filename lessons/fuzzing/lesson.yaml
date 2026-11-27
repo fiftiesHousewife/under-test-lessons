@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../schema/lesson.schema.json
+id: fuzzing
+title: Fuzzing
+techniques: [property-based-testing]
+level: advanced
+buildsOn: [property-based-testing]

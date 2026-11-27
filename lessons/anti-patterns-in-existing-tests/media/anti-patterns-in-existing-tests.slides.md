@@ -22,9 +22,9 @@ Say: In this lesson, we look at the tests you already have, and the habits that 
 - Its checkout reserves stock, adds VAT, takes payment and sends a receipt
 - Each part has old tests, which we keep as they are
 Picture: basket
-Say: Our example is an old online shop. Its basket takes 5 percent off orders of £50 or more. It refunds orders, numbers
-  them, and sends paid ones to the warehouse. Its checkout reserves the stock, adds VAT, takes the payment and sends the
-  receipt. Each part has its old tests, which we won't change.
+Say: Our example is an old online shop. Its basket takes 5 percent off orders of 50 pounds or more. It refunds orders,
+  numbers them, and sends paid ones to the warehouse. Its checkout reserves the stock, adds VAT, takes the payment and
+  sends the receipt. Each part has its old tests, which we won't change.
 
 Include: how-we-build
 

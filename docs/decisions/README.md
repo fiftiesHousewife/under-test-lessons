@@ -23,6 +23,8 @@ below in step when adding a record.
 | [A lesson that teaches a step of the toolkit's journey names that step's skill](0033-a-lesson-that-teaches-a-step-of-the-journey-names-that-steps-skill.md) | superseded |
 | [Lessons teach established external frameworks](0034-lessons-teach-established-external-frameworks.md) | accepted |
 | [Decks play live runs from casts, not recorded video](0035-decks-play-live-runs-from-casts-not-recorded-video.md) | accepted |
+| [Tools are Java Gradle tasks, and Python only serves the voice](0036-tools-are-java-gradle-tasks-and-python-only-serves-the-voice.md) | accepted |
+| [Lessons are levelled by their technique, not their library](0037-lessons-are-levelled-by-their-technique.md) | accepted |
 
 ## Videos and slides
 

@@ -1,0 +1,31 @@
+$ ./gradlew :lessons:fuzzing:fuzz -Pcode=today
+LabelReaderFuzzTest > readsOrRefusesEveryLine(byte[]) > <empty input> PASSED
+INFO: found LLVMFuzzerCustomMutator (0x105704c20). Disabling -len_control by default.
+INFO: Running with entropic power schedule (0xFF, 100).
+INFO: Seed: 1818902637
+INFO: Loaded 1 modules   (512 inline 8-bit counters): 512 [0x140a48000, 0x140a48200),
+INFO: Loaded 1 PC tables (512 PCs): 512 [0x129b2be00,0x129b2de00),
+INFO:        0 files found in lessons/fuzzing/example/.cifuzz-corpus/io.github.fiftieshousewife.undertest.techniques.fuzzing.LabelReaderFuzzTest/readsOrRefusesEveryLine
+INFO:        0 files found in lessons/fuzzing/example/build/resources/test/io/github/fiftieshousewife/undertest/techniques/fuzzing/LabelReaderFuzzTestInputs/readsOrRefusesEveryLine
+INFO:        0 files found in /var/folders/l6/rb7w10wn61xgw3pqd7nqt3hr0000gn/T/jazzer-java-seeds7891852018652673147
+INFO: -max_len is not provided; libFuzzer will not generate inputs larger than 4096 bytes
+INFO: A corpus is not provided, starting from an empty corpus
+#2	INITED cov: 15 ft: 15 corp: 1/1b exec/s: 0 rss: 579Mb
+#6	NEW    cov: 15 ft: 18 corp: 2/3b lim: 4 exec/s: 0 rss: 579Mb L: 2/2 MS: 8 CrossOver-Custom-CopyPart-Custom-CrossOver-Custom-CrossOver-Custom-
+#15	NEW    cov: 15 ft: 21 corp: 3/6b lim: 4 exec/s: 0 rss: 579Mb L: 3/3 MS: 8 ChangeByte-Custom-ChangeBinInt-Custom-EraseBytes-Custom-CrossOver-Custom-
+#43	NEW    cov: 15 ft: 24 corp: 4/10b lim: 4 exec/s: 0 rss: 579Mb L: 4/4 MS: 6 CopyPart-Custom-ShuffleBytes-Custom-CopyPart-Custom-
+#87	NEW    cov: 18 ft: 27 corp: 5/14b lim: 4 exec/s: 0 rss: 579Mb L: 4/4 MS: 8 ChangeBit-Custom-ChangeByte-Custom-ChangeBit-Custom-InsertByte-Custom-
+#270	REDUCE cov: 18 ft: 27 corp: 5/13b lim: 4 exec/s: 0 rss: 579Mb L: 3/4 MS: 6 ChangeByte-Custom-ChangeBit-Custom-EraseBytes-Custom-
+#307	REDUCE cov: 18 ft: 27 corp: 5/12b lim: 4 exec/s: 0 rss: 579Mb L: 2/4 MS: 4 InsertByte-Custom-EraseBytes-Custom-
+MS: 2 CrossOver-Custom-; base unit: cd9aeb9f43d9aadb4e36572c8a6b81aebdd52c15
+0xff,0xff,0x3b,0x3b,
+\377\377;;
+artifact_prefix='lessons/fuzzing/example/src/test/resources/io/github/fiftieshousewife/undertest/techniques/fuzzing/LabelReaderFuzzTestInputs/readsOrRefusesEveryLine/'; Test unit written to lessons/fuzzing/example/src/test/resources/io/github/fiftieshousewife/undertest/techniques/fuzzing/LabelReaderFuzzTestInputs/readsOrRefusesEveryLine/crash-ea421fe5f2e93241bce651a5842dc000225b3a36
+Base64: //87Ow==
+Done 533 runs in 0 second(s)
+LabelReaderFuzzTest > readsOrRefusesEveryLine(byte[]) > Fuzzing... FAILED
+    com.code_intelligence.jazzer.junit.FuzzTestFindingException: java.lang.StringIndexOutOfBoundsException: Range [0, -1) out of bounds for length 0
+2 tests completed, 1 failed
+* What went wrong:
+Execution failed for task ':lessons:fuzzing:fuzz'.
+> There were failing tests. See the report at: file://lessons/fuzzing/example/build/reports/tests/fuzz/index.html

@@ -1,5 +1,5 @@
 # Phrases slides and narration never use, each a regular expression = why. Checked by checkVideoScripts in every
-# slide's bullets and Say text, and every video narration; source notes and links are left out. The rules behind them
+# slide's Say text and every video narration, not the bullets; source notes and links are left out. The rules behind them
 # are in GLOSSARY.md, "Writing for the voice".
 \bnobody\b = an invented actor: say what is true instead ("there's no rule for")
 \bsomeone\b = an invented actor: name who, or use "we"
@@ -18,3 +18,4 @@ it may not be\. = say what may not have happened: "may not have finished yet"
 \border tables\b = say what the code does: "the code that saves orders"
 \bcustomers know\b = say what the business means: "the prices the business means to charge"
 never (reads |checks )?what was written = say what the test ignores: "it never checks what those entries say"
+([£€$¥₹]|CHF ?)\d = the voice reads "£3.99" as "pound three point nine nine": write the amount as words, "3 pounds 99" or "50 euros"

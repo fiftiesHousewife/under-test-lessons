@@ -76,7 +76,7 @@ Type@1ms `show InvoiceTest 13 33 "the test" --zoom 20`
 Enter
 Sleep 300ms
 Show
-Sleep 29s
+Sleep 31s
 
 # ---- Scene 5: today's invoice can't be tested ----
 Hide

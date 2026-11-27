@@ -9,7 +9,7 @@ narration, in [junit-extensions.slides.md](junit-extensions.slides.md). Written 
    for VAT off, [pause 300ms] and never switches it back.
 3. These are tests with set-up by hand, the way many old tests do it. They set the shop's settings once,
    before all the tests, and never put them back. The trade invoice test runs first, and leaves VAT switched off. So
-   the receipt test, run second, gets £100 plus VAT, not £120.
+   the receipt test, run second, gets 100 pounds plus VAT, not 120 pounds.
 4. Next, a JUnit extension: a small class that JUnit runs around each test. It has 2 methods that JUnit calls back.
    Before each test, it saves the settings, and sets the standard ones: prices include VAT, at 20%. After each test,
    it puts back what was there, and fails the test if it left any setting changed, saying which one.
