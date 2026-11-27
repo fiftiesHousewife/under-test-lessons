@@ -20,8 +20,6 @@ import lombok.extern.slf4j.Slf4j;
  *   <li>{@code assemble <root> <id>}: combines the silent video, the narration and the captions (burned into the
  *   picture unless {@code video.burnCaptions} is false, and as a captions track) into {@code <id>.mp4},
  *   and writes the narration as {@code <id>.narration.m4a} too;</li>
- *   <li>{@code clips <root> <id>}: records the lesson's changed live-run scenes, in one session, into
- *   {@code <id>.deck-clips/}, for the deck to play ({@link LiveRunClips});</li>
  *   <li>{@code deckvoice <root> <id|all> <command...>}: reads each deck slide's narration aloud into
  *   {@code <id>.deck-voice/}, then rewrites the deck so it can play them ({@link DeckVoice}).</li>
  * </ul>
@@ -43,7 +41,6 @@ public final class LessonVideo {
         switch (args[0]) {
             case "record" -> new Recorder(Clock.systemUTC()).record(media);
             case "voice" -> voice(media, List.of(Arrays.copyOfRange(args, 3, args.length)));
-            case "clips" -> LiveRunClips.record(media);
             default -> FinishedVideo.assemble(media);
         }
     }

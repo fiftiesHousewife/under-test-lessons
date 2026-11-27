@@ -1,0 +1,5 @@
+{"version": 2, "width": 80, "height": 6, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:junit-tags:slowTest"}
+[0.0, "o", "$ ./gradlew :lessons:junit-tags:slowTest\r\n"]
+[7.042, "o", "WarehouseStockTest > refusesAnItemTheWarehouseDoesNotStock() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.056, "o", "WarehouseStockTest > sendsTheLastOneOnTheShelf() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.066, "o", "2 tests tagged slow ran, 0 failed.\r\n"]

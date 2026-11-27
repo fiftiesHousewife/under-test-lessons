@@ -18,7 +18,7 @@ final class SceneSlide {
     }
 
     @SuppressFBWarnings(value = "POTENTIAL_XML_INJECTION", justification = "Every piece of text is escaped")
-    static String section(final Slide scene, final SceneContent content, final Optional<String> clip) {
+    static String section(final Slide scene, final SceneContent content, final Optional<String> cast) {
         final StringBuilder html = new StringBuilder("<section class=\"deck-slide\"><main class=\"slide scene\">"
                 + "<section class=\"text\"><h1>").append(SlideHtml.escape(scene.title()))
                 .append("</h1><div class=\"rule\"></div>");
@@ -26,9 +26,9 @@ final class SceneSlide {
         html.append("</section><figure class=\"code\" style=\"--code-size: ").append(codeSize(content))
                 .append("px\">");
         appendPanels(html, content);
-        if (clip.isPresent()) {
-            html.append("<video class=\"live-run\" src=\"").append(SlideHtml.escape(clip.get()))
-                    .append("\" muted playsinline preload=\"auto\"></video>");
+        if (cast.isPresent()) {
+            html.append("<div class=\"live-run cast\"><script type=\"application/x-asciicast\">")
+                    .append(cast.get().replace("</", "<\\/")).append("</script></div>");
         } else {
             appendCommands(html, content);
         }

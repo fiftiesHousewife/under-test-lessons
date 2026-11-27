@@ -2,3 +2,4 @@
 id: nested-tests
 title: Nested tests
 techniques: [tests-from-cases]
+level: beginner

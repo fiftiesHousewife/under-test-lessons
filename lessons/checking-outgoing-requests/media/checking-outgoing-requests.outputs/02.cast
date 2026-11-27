@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:checking-outgoing-requests:test"}
+[0.0, "o", "$ ./gradlew :lessons:checking-outgoing-requests:test\r\n"]
+[6.163, "o", "RefundKeyTest > eachRefundHasItsOwnKeyAndARetryRepeatsIt() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.173, "o", "RefundRequestTest > sendsTheRefundTheProviderExpects() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.281, "o", "RefundResponseTest > outageAndSilenceSayTheProviderIsUnavailable() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.291, "o", "RefundResponseTest > acceptedRefundGivesItsId() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.301, "o", "OddAmountsAnswerTest > oddAmountsAreSentInWholePence() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.708, "o", "\u001b[1mAll 5 tests passed.\u001b[0m\r\n"]

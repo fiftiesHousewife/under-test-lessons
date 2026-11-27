@@ -42,7 +42,7 @@ class LessonFileChecksTest {
     @Test
     void reportsTechniquesAndLinksTheToolkitDoesNotHave() {
         TestRepo.write(root, "lessons/feature-flags/lesson.yaml",
-                "id: feature-flags\ntitle: Flags\ntechniques: [flags]\n");
+                "id: feature-flags\ntitle: Flags\ntechniques: [flags]\nlevel: beginner\n");
         TestRepo.write(root, "docs/research/old-review.md", techniqueLink("snapshot-testing"));
         TestRepo.write(root, "docs/plan.md", techniqueLink("snapshot-testing"));
 
@@ -56,7 +56,8 @@ class LessonFileChecksTest {
 
     @Test
     void aLessonWithAnExampleMustTeachATechniqueAndAMapNeedNot() {
-        TestRepo.write(root, "lessons/feature-flags/lesson.yaml", "id: feature-flags\ntitle: Flags\ntechniques: []\n");
+        TestRepo.write(root, "lessons/feature-flags/lesson.yaml",
+                "id: feature-flags\ntitle: Flags\ntechniques: []\nlevel: beginner\n");
         final List<String> withoutExample = LessonFileChecks.check(root, Optional.empty()).stream()
                 .map(Problem::message).toList();
         TestRepo.write(root, "lessons/feature-flags/example/build.gradle.kts", "plugins { }\n");

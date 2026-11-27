@@ -2,3 +2,5 @@
 id: coverage-of-changed-code
 title: Coverage of changed code
 techniques: [mutation-testing]
+level: advanced
+buildsOn: [mutation-testing]

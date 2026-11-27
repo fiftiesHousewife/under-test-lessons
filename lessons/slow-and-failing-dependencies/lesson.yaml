@@ -2,3 +2,5 @@
 id: slow-and-failing-dependencies
 title: Slow and failing dependencies
 techniques: [recorded-http-responses]
+level: intermediate
+buildsOn: [outside-in-http-tests]

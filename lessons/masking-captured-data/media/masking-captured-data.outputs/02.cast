@@ -1,0 +1,7 @@
+{"version": 2, "width": 83, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:masking-captured-data:test"}
+[0.0, "o", "$ ./gradlew :lessons:masking-captured-data:test\r\n"]
+[5.251, "o", "DayReportTest > countsEachCustomersOrders() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.261, "o", "DayReportTest > listsWhatEachUnsettledAccountOwes() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.271, "o", "TestDataHasNothingPersonalTest > theMaskedDayHasNothingThatLooksPersonal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.281, "o", "SecondDayAnswerTest > listsWhatEachUnsettledAccountOwesOnTheSecondDay() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.393, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]

@@ -1,0 +1,10 @@
+{"version": 2, "width": 85, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:dynamic-tests:test"}
+[0.0, "o", "$ ./gradlew :lessons:dynamic-tests:test\r\n"]
+[4.943, "o", "AllExamplesInOneTest > everyExampleFormatsAsExpected() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.953, "o", "EachExampleTest > eachExampleFormatsAsExpected() > apostrophe.txt \u001b[32mPASSED\u001b[0m\r\n"]
+[4.963, "o", "EachExampleTest > eachExampleFormatsAsExpected() > double-barrelled.txt \u001b[32mPASSED\u001b[0m\r\n"]
+[4.973, "o", "EachExampleTest > eachExampleFormatsAsExpected() > hyphenated-first-name.txt \u001b[32mPASSED\u001b[0m\r\n"]
+[4.983, "o", "EachExampleTest > eachExampleFormatsAsExpected() > plain-name.txt \u001b[32mPASSED\u001b[0m\r\n"]
+[4.993, "o", "EachExampleTest > eachExampleFormatsAsExpected() > several-words.txt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.003, "o", "LowerCaseAnswerTest > lowerCaseRecordsFormatAsExpected() > lower-case.txt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.116, "o", "\u001b[1mAll 7 tests passed.\u001b[0m\r\n"]

@@ -81,3 +81,4 @@ __pycache__/
 
 # Reviews left in the root for the maintainer to read: kept out of the repository.
 /voiceover-review.md
+*.live.log

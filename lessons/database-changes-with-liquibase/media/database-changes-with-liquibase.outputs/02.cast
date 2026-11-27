@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest"}
+[0.0, "o", "$ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest\r\n"]
+[1.01, "o", "FailedChangeTest > aRefusedChangeSaysWhy() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.17, "o", "InMemoryChangesTest > everyChangeApplies() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.33, "o", "PostgresSqlAnswerTest > theLoyaltyLevelGetsATypePostgresHas(Path) \u001b[32mPASSED\u001b[0m\r\n"]
+[1.49, "o", "\u001b[1mAll 3 tests passed.\u001b[0m\r\n"]
+[1.65, "o", "RealPostgresChangesTest > everyChangeApplies() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.81, "o", "\u001b[1m1 test passed.\u001b[0m\r\n"]

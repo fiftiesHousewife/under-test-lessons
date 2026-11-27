@@ -242,7 +242,13 @@ run_live() {
   printf '$ %s\n' "$1"
   local start end
   start=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
-  bash -c "$1" </dev/null 2>&1 | perl "$_VIDEO_SHARED/screen-output.pl"
+  # Beside the run times, every live run's full output is kept (<lesson>.live.log), to see what a session saw.
+  if [ -n "${VIDEO_TIMINGS:-}" ]; then
+    printf '$ %s\n' "$1" >>"${VIDEO_TIMINGS%.timings}.live.log"
+    bash -c "$1" </dev/null 2>&1 | tee -a "${VIDEO_TIMINGS%.timings}.live.log" | perl "$_VIDEO_SHARED/screen-output.pl"
+  else
+    bash -c "$1" </dev/null 2>&1 | perl "$_VIDEO_SHARED/screen-output.pl"
+  fi
   end=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
   [ -n "${VIDEO_TIMINGS:-}" ] && perl -e "printf \"%.3f\\n\", $end - $start" >>"$VIDEO_TIMINGS"
   _VIDEO_LAST=live

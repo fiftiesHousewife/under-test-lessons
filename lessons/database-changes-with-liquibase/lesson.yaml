@@ -2,3 +2,5 @@
 id: database-changes-with-liquibase
 title: Database changes with Liquibase
 techniques: [testcontainers]
+level: intermediate
+buildsOn: [real-databases-in-tests]

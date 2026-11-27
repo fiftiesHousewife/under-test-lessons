@@ -2,3 +2,5 @@
 id: recorded-http-responses
 title: Recorded HTTP responses
 techniques: [recorded-http-responses]
+level: intermediate
+buildsOn: [outside-in-http-tests]

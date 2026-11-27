@@ -10,6 +10,6 @@ ZeroRateAnswerTest > aThirdRateLeavesTheCheckoutOnTheStandardRate() FAILED
       at injection point [BackedAnnotatedParameter] Parameter 1 of [BackedAnnotatedConstructor] @Inject public io.github.fiftieshousewife.undertest.techniques.jakartaee.today.TodaysCheckout(TaxRate)
       at io.github.fiftieshousewife.undertest.techniques.jakartaee.today.TodaysCheckout.<init>(TodaysCheckout.java:0)
       Possible dependencies:
-      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.ReducedRate] with qualifiers [@Any @Default],
-      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.answer.ZeroRateAnswerTest$ZeroRate] with qualifiers [@Any @Default]
+      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.answer.ZeroRateAnswerTest$ZeroRate] with qualifiers [@Any @Default],
+      - Managed Bean [class io.github.fiftieshousewife.undertest.techniques.jakartaee.ReducedRate] with qualifiers [@Any @Default]
 4 tests completed, 2 failed

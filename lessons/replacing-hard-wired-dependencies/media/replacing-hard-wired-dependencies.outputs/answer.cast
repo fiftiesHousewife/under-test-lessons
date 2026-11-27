@@ -1,0 +1,11 @@
+{"version": 2, "width": 84, "height": 12, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=answer\r\n"]
+[5.35, "o", "InvoiceTest > anEmptyInvoiceCostsNothing() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.36, "o", "    java.lang.IllegalStateException: cannot reach the bank's exchange-rate service\r\n"]
+[5.37, "o", "InvoiceTest > convertsTheTotalRoundingToTheNearestCent() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.38, "o", "    java.lang.IllegalStateException: cannot reach the bank's exchange-rate service\r\n"]
+[5.49, "o", "RatesTimeOutAnswerTest > anInvoiceIsNotChargedWhenTheRatesTimeOut() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.5, "o", "    org.opentest4j.AssertionFailedError:\r\n"]
+[5.51, "o", "    expected: \"the bank's service timed out\"\r\n"]
+[5.52, "o", "     but was: \"cannot reach the bank's exchange-rate service\"\r\n"]
+[5.53, "o", "\u001b[1m3 tests completed, 3 failed\u001b[0m\r\n"]

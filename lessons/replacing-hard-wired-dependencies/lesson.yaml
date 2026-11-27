@@ -2,3 +2,4 @@
 id: replacing-hard-wired-dependencies
 title: Replacing hard-wired dependencies
 techniques: [refactoring-for-testability]
+level: beginner

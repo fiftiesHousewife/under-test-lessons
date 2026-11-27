@@ -1,0 +1,10 @@
+{"version": 2, "width": 80, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:junit-temporary-folders:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:junit-temporary-folders:test -Pcode=answer\r\n"]
+[4.949, "o", "FixedFolderTest > writesOneLinePerOrder() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.959, "o", "FixedFolderTest > leavesOutCancelledOrders() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.067, "o", "TempDirTest > writesOneLinePerOrder(Path) \u001b[32mPASSED\u001b[0m\r\n"]
+[5.077, "o", "TempDirTest > leavesOutCancelledOrders(Path) \u001b[31mFAILED\u001b[0m\r\n"]
+[5.087, "o", "    java.lang.AssertionError: No orders.csv was written\r\n"]
+[5.097, "o", "AllCancelledAnswerTest > aDayOfCancelledOrdersWritesJustTheHeader(Path) \u001b[31mFAILED\u001b[0m\r\n"]
+[5.107, "o", "    java.lang.AssertionError: No orders.csv was written\r\n"]
+[5.118, "o", "\u001b[1m5 tests completed, 2 failed\u001b[0m\r\n"]

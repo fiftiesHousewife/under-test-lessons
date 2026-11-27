@@ -1,0 +1,6 @@
+{"version": 2, "width": 80, "height": 7, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:structured-output-comparison:test"}
+[0.0, "o", "$ ./gradlew :lessons:structured-output-comparison:test\r\n"]
+[5.858, "o", "CompareJsonTest > summaryHasTheExpectedLinesAndTotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.868, "o", "ContainsTextTest > summaryMentionsEveryItemAndATotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.878, "o", "FixedClockAnswerTest > summaryHasTheTimeFromItsClock() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.988, "o", "\u001b[1mAll 3 tests passed.\u001b[0m\r\n"]

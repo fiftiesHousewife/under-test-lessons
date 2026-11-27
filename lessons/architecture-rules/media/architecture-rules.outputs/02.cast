@@ -1,0 +1,6 @@
+{"version": 2, "width": 80, "height": 7, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:architecture-rules:test"}
+[0.0, "o", "$ ./gradlew :lessons:architecture-rules:test\r\n"]
+[5.959, "o", "LayerRulesTest > onlyTheServiceLayerUsesStorage() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.969, "o", "OrderSummaryPageTest > bothPagesCountTheOrders() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.075, "o", "WebDependenciesAnswerTest > theWebLayerUsesOnlyTheServiceLayerAndJava() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.185, "o", "\u001b[1mAll 3 tests passed.\u001b[0m\r\n"]

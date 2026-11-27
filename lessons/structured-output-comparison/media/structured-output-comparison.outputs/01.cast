@@ -1,0 +1,7 @@
+{"version": 2, "width": 82, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:structured-output-comparison:test -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:structured-output-comparison:test -Pcode=today\r\n"]
+[5.574, "o", "CompareJsonTest > summaryHasTheExpectedLinesAndTotal() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.584, "o", "    org.opentest4j.AssertionFailedError: JSON documents are different:\r\n"]
+[5.594, "o", "    Different value found in node \"totalPence\", expected: <1120> but was: <370>.\r\n"]
+[5.604, "o", "ContainsTextTest > summaryMentionsEveryItemAndATotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.614, "o", "\u001b[1m2 tests completed, 1 failed\u001b[0m\r\n"]

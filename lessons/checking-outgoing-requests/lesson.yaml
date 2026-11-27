@@ -2,3 +2,5 @@
 id: checking-outgoing-requests
 title: Checking the requests your code sends
 techniques: [recorded-http-responses]
+level: intermediate
+buildsOn: [mockito-well-used]

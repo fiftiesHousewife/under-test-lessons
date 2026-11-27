@@ -2,3 +2,5 @@
 id: black-box-tests
 title: Black-box tests of a whole application
 techniques: [characterisation-tests]
+level: intermediate
+buildsOn: [outside-in-http-tests]

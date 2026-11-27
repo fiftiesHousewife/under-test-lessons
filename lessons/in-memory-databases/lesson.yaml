@@ -2,3 +2,4 @@
 id: in-memory-databases
 title: When an in-memory database is enough
 techniques: [in-memory-databases]
+level: beginner

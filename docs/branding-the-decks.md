@@ -85,7 +85,7 @@ If you want a voice, for your own slides or for whole decks in your company's ow
 The script is written by the lessons' own tool, from your slides' words. Like every step that runs inside a company,
 it needs only the JDK and Gradle: no VHS, ffmpeg, Python or voice engine. The recording needs only a microphone and
 any app that saves `.m4a`, `.wav` or `.mp3`, which the decks play as they are: Windows' Sound Recorder saves `.m4a`,
-and so does QuickTime on a Mac. The live-run clips come with each release of the lessons, so nothing in a company
+and so does QuickTime on a Mac. The live runs play from casts that the capture step writes, so nothing in a company
 ever records a terminal.
 
 The script gives each clip the file name to save it under, how long it takes at the decks' pace ("about 12 seconds"),

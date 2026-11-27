@@ -4,7 +4,7 @@
 
 The index follows the catalogue (lessons/CATALOGUE.md): its groups, and the built lessons in each, in order, marked
 where a deck has its voice. Each deck becomes <out>/<lesson id>.html, with its voice clips (<lesson id>.deck-voice/)
-beside it, and gains series.js: its place in the series ("Lesson 7 of 38 · <group>"), links back to the index and on
+beside it, and the asciinema player its live runs play in (vendor/), and gains series.js: its place in the series ("Lesson 7 of 38 · <group>"), links back to the index and on
 to the next lesson, and, while you listen, the next lesson carries on when one ends. The decks themselves are not changed in the repository.
 """
 import html
@@ -110,6 +110,8 @@ def publish_deck(lesson, neighbours, out, place=""):
         page = f.read()
     # Links to other lessons point at their deck files in the repository; published, each deck is <id>.html.
     page = re.sub(r'href="\.\./\.\./([a-z0-9-]+)/media/\1\.deck\.html', r'href="\1.html', page)
+    # The asciinema player the decks share, kept once in lessons/_shared/slides/vendor, is published beside them.
+    page = page.replace('"../../_shared/slides/vendor/', '"vendor/')
     tag = (f'<script src="series.js" data-previous="{html.escape(before or "")}"'
            f' data-next="{html.escape(following or "")}"'
            f' data-place="{html.escape(place)}"></script>')
@@ -118,9 +120,142 @@ def publish_deck(lesson, neighbours, out, place=""):
         f.write(page)
     if voice_of(lesson):
         shutil.copytree(voice_of(lesson), os.path.join(out, lesson + ".deck-voice"), dirs_exist_ok=True)
-    clips = os.path.join("lessons", lesson, "media", lesson + ".deck-clips")
-    if os.path.isdir(clips):
-        shutil.copytree(clips, os.path.join(out, lesson + ".deck-clips"), dirs_exist_ok=True)
+    if '"vendor/asciinema-player/' in page:
+        shutil.copytree(os.path.join("lessons", "_shared", "slides", "vendor"), os.path.join(out, "vendor"),
+                        dirs_exist_ok=True)
+
+
+LEVELS = ["beginner", "intermediate", "advanced"]
+
+
+def setting(name):
+    """A setting from gradle.properties, such as the lessons' repository address."""
+    with open("gradle.properties", encoding="utf-8") as f:
+        for line in f:
+            if line.startswith(name + "="):
+                return line.split("=", 1)[1].strip()
+    return ""
+
+
+def lesson_file(lesson):
+    """A lesson's level and what it builds on, from its lesson.yaml."""
+    path = os.path.join("lessons", lesson, "lesson.yaml")
+    found = {"level": "", "buildsOn": []}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                key, _, value = line.partition(":")
+                if key == "level":
+                    found["level"] = value.strip()
+                elif key == "buildsOn":
+                    found["buildsOn"] = [v.strip() for v in value.strip().strip("[]").split(",") if v.strip()]
+    return found
+
+
+def readme_line(lesson):
+    """The README's one bold line: what the technique does."""
+    path = os.path.join("lessons", lesson, "README.md")
+    if not os.path.exists(path):
+        return ""
+    with open(path, encoding="utf-8") as f:
+        text = f.read()
+    bold = re.search(r"^\*\*(.+?)\*\*\s*$", text, re.M | re.S)
+    return re.sub(r"\s+", " ", bold.group(1)).strip() if bold else ""
+
+
+def catalogue_rows():
+    """Each built lesson's catalogue row: (stage number, stage, the stage's question, lesson id, name, what it shows,
+    tools), in the catalogue's order; the first stage a lesson appears in is its stage."""
+    rows, stage, number, question, seen = [], None, 0, "", set()
+    with open(CATALOGUE, encoding="utf-8") as f:
+        for line in f:
+            heading = re.match(r"^## (.+)$", line)
+            if heading:
+                stage, question = heading.group(1).strip(), ""
+                continue
+            asked = re.match(r"^\*\*([^*]+\?)\*\*", line)
+            if asked and stage:
+                number += 1
+                question = asked.group(1)
+            row = re.match(r"^\| \[([^\]]+)\]\(([a-z0-9-]+)/README\.md\)(?::\s*([^|]*))?\s*\|\s*([^|]*)\|", line)
+            if row and stage and row.group(2) not in seen and deck_of(row.group(2)):
+                seen.add(row.group(2))
+                rows.append((number if question else 0, stage, question, row.group(2), row.group(1),
+                             (row.group(3) or "").strip(), row.group(4).strip()))
+    return rows
+
+
+def write_lessons_table(out):
+    """lessons.html: every lesson in one table, by stage, reason, tools and level, to sort and filter."""
+    repo = setting("lessonsRepoUrl")
+    names = {}
+    body = []
+    rows = catalogue_rows()
+    for _, _, _, lesson, name, _, _ in rows:
+        names[lesson] = name
+    for number, stage, question, lesson, name, shows, tools in rows:
+        about = lesson_file(lesson)
+        level = about["level"]
+        first = ", ".join(f'<a href="{b}.html#1">{html.escape(names.get(b, b))}</a>' for b in about["buildsOn"])
+        stage_cell = (f"{number}. " if number else "") + html.escape(stage)
+        body.append(
+            f'<tr data-stage="{number}" data-level="{LEVELS.index(level) if level in LEVELS else 9}">'
+            f'<td><a href="{lesson}.html#1">{html.escape(name)}</a></td>'
+            f'<td data-sort="{number:02d}">{stage_cell}</td>'
+            f'<td>{inline(question)}</td>'
+            f'<td>{html.escape(readme_line(lesson))}</td>'
+            f'<td>{inline(tools)}</td>'
+            f'<td data-sort="{LEVELS.index(level) if level in LEVELS else 9}"><span class="level {level}">{level}</span></td>'
+            f'<td>{inline(shows)}</td>'
+            f'<td>{first}</td>'
+            f'<td><a href="{repo}/tree/main/lessons/{lesson}">code</a></td></tr>')
+    stages = sorted({(r[0], r[1]) for r in rows})
+    stage_options = "".join(f'<option value="{n}">{(str(n) + ". ") if n else ""}{html.escape(t)}</option>' for n, t in stages)
+    with open(os.path.join(out, "lessons.html"), "w", encoding="utf-8") as f:
+        f.write(LESSONS_PAGE.replace("__ROWS__", "".join(body)).replace("__STAGES__", stage_options)
+                .replace("__COUNT__", str(len(rows))))
+
+
+LESSONS_PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Every lesson, in one table</title>
+<style>
+body{font:15px/1.5 Georgia,serif;background:#f3efe4;color:#111;margin:2rem auto;padding:0 16px;max-width:110rem}
+h1{font-family:Helvetica,Arial,sans-serif;text-transform:uppercase;font-size:1.4rem}
+a{color:#111}.bar{font:14px Helvetica,Arial,sans-serif;margin:1rem 0;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+select,input{font:inherit;padding:.2rem .4rem;background:#fff;border:1px solid #999}
+table{border-collapse:collapse;width:100%;background:#fbf9f3}
+th{font:13px Helvetica,Arial,sans-serif;text-transform:uppercase;text-align:left;padding:.5rem;border-bottom:2px solid #111;
+cursor:pointer;white-space:nowrap;position:sticky;top:0;background:#f3efe4}
+th:hover{text-decoration:underline}td{padding:.5rem;border-bottom:1px solid #ddd6c4;vertical-align:top}
+td:first-child{font-weight:bold;min-width:12rem}td:nth-child(2){white-space:nowrap}
+.level{font:12px Helvetica,Arial,sans-serif;padding:.1rem .45rem;border:1px solid #111;border-radius:3px;white-space:nowrap}
+.level.intermediate{background:#e2dccb}.level.advanced{background:#111;color:#f3efe4}
+.count{color:#555}
+</style></head><body>
+<h1>Every lesson, in one table</h1>
+<p class="bar"><a href="index.html">The lessons in order</a>
+<label>Stage <select id="stage"><option value="">all</option>__STAGES__</select></label>
+<label>Level <select id="level"><option value="">all</option><option value="0">beginner</option>
+<option value="1">intermediate</option><option value="2">advanced</option></select></label>
+<label>Find <input id="find" placeholder="a tool, a word"></label>
+<span class="count"><span id="shown">__COUNT__</span> of __COUNT__ lessons</span></p>
+<p class="bar" style="margin-top:-.5rem;color:#555">Click a heading to sort by it. The level is the technique's, whatever the
+library: beginner is one idea you can use the same day; intermediate needs a judgement about what to check, or changes
+how code is built; advanced changes how you think about correctness, or spans teams and systems.</p>
+<table><thead><tr><th>Lesson</th><th>Stage</th><th>Its question</th><th>What it does</th><th>Tools</th><th>Level</th>
+<th>What the lesson shows</th><th>Do first</th><th></th></tr></thead><tbody id="rows">__ROWS__</tbody></table>
+<script>
+const rows=[...document.querySelectorAll("#rows tr")],stage=document.getElementById("stage"),
+  level=document.getElementById("level"),find=document.getElementById("find");
+function filter(){const s=stage.value,l=level.value,q=find.value.toLowerCase();let n=0;
+  rows.forEach(r=>{const show=(!s||r.dataset.stage===s)&&(!l||r.dataset.level===l)&&(!q||r.textContent.toLowerCase().includes(q));
+    r.hidden=!show;if(show)n++;});document.getElementById("shown").textContent=n;}
+[stage,level].forEach(e=>e.onchange=filter);find.oninput=filter;
+document.querySelectorAll("th").forEach((th,i)=>th.onclick=()=>{const up=th.dataset.dir!=="up";th.dataset.dir=up?"up":"down";
+  const key=r=>{const c=r.children[i];return c.dataset.sort??c.textContent.trim().toLowerCase();};
+  rows.sort((a,b)=>(key(a)>key(b)?1:key(a)<key(b)?-1:0)*(up?1:-1)).forEach(r=>document.getElementById("rows").appendChild(r));});
+</script></body></html>
+"""
 
 
 def main(out):
@@ -150,11 +285,13 @@ def main(out):
                 '<style>body{font:18px/1.6 Georgia,serif;background:#f3efe4;color:#111;max-width:44rem;'
                 'margin:2rem auto;padding:0 16px}h1,h2{font-family:Helvetica,Arial,sans-serif;text-transform:uppercase}'
                 'h2{font-size:1rem;margin-top:2rem}a{color:#111}a.listen{font:14px Helvetica,Arial,sans-serif;'
-                'margin-left:.5rem}.question{margin:.4rem 0}.kit{font:14px/1.55 Helvetica,Arial,sans-serif;color:#333;'
+                'margin-left:.5rem}.start{font:16px Helvetica,Arial,sans-serif}.question{margin:.4rem 0}.kit{font:14px/1.55 Helvetica,Arial,sans-serif;color:#333;'
                 'margin:.4rem 0 .8rem}.kit a{color:#333}</style></head><body>'
-                '<h1>Lesson slide decks</h1>'
+                '<h1>Lesson slide decks</h1><p class="start"><a href="lessons.html">Every lesson in one table: '
+                'by stage, reason, tools and level</a></p>'
                 + "".join(sections) + "</body></html>\n")
-    print(f"{len(order)} decks gathered into {out}, in the catalogue's order")
+    write_lessons_table(out)
+    print(f"{len(order)} decks gathered into {out}, in the catalogue's order, with every lesson in lessons.html")
 
 
 if __name__ == "__main__":

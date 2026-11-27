@@ -2,3 +2,5 @@
 id: anti-patterns-in-existing-tests
 title: Anti-patterns in existing tests
 techniques: [architecture-rules]
+level: intermediate
+buildsOn: [mutation-testing]

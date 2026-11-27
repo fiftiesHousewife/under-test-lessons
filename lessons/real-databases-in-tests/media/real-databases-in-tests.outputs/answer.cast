@@ -1,0 +1,8 @@
+{"version": 2, "width": 102, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:real-databases-in-tests:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:real-databases-in-tests:test -Pcode=answer\r\n"]
+[1.01, "o", "InMemoryDatabaseTest > customersWhoNeverOrderedComeFirst() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.17, "o", "PostgresNullOrderingAnswerTest > customersWhoNeverOrderedComeFirstWhenNullsSortAsOnPostgres() \u001b[31mFAILED\u001b[0m\r\n"]
+[1.18, "o", "    org.opentest4j.AssertionFailedError: [who sales should call first check first element]\r\n"]
+[1.19, "o", "    expected: \"Eve\"\r\n"]
+[1.2, "o", "     but was: \"Dee\"\r\n"]
+[1.81, "o", "\u001b[1m2 tests completed, 1 failed\u001b[0m\r\n"]

@@ -1,0 +1,10 @@
+{"version": 2, "width": 97, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:batch-file-in-file-out:test"}
+[0.0, "o", "$ ./gradlew :lessons:batch-file-in-file-out:test\r\n"]
+[6.054, "o", "WholeJobTest > aMaskedCaptureGivesTheSettlementFileTheBankAccepted() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.064, "o", "WholeJobTest > syntheticPaymentsGiveTheirRecordsAndTheClosingTotals() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.074, "o", "KeyedSubstitutesTest > anAccountGetsTheSameSubstituteInThePaymentsAndTheSettlementFile() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.085, "o", "PaymentLineTest > readsAPaymentAndWritesItsSettlementLine() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.095, "o", "ManyChunksAnswerTest > theFileHoldsALineForEveryPaymentInEveryChunk() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.105, "o", "SettlementTotalsTest > aRestartedStepCountsTheLinesWrittenBeforeItFailed() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.115, "o", "SettlementTotalsTest > aFreshStepStartsFromNothing() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.224, "o", "\u001b[1mAll 7 tests passed.\u001b[0m\r\n"]

@@ -2,3 +2,4 @@
 id: outside-in-http-tests
 title: Outside-in HTTP tests
 techniques: [business-rule-tests]
+level: beginner

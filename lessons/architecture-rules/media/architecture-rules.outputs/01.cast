@@ -1,0 +1,8 @@
+{"version": 2, "width": 143, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:architecture-rules:test -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:architecture-rules:test -Pcode=today\r\n"]
+[5.951, "o", "LayerRulesTest > onlyTheServiceLayerUsesStorage() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.961, "o", "    java.lang.AssertionError: Constructor <web.today.TodaysSummaryPage.<init>(storage.OrderStore)> has parameter of type <storage.OrderStore>\r\n"]
+[5.971, "o", "    Field <web.today.TodaysSummaryPage.store> has type <storage.OrderStore>\r\n"]
+[5.981, "o", "    Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>\r\n"]
+[5.991, "o", "OrderSummaryPageTest > bothPagesCountTheOrders() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.001, "o", "\u001b[1m2 tests completed, 1 failed\u001b[0m\r\n"]

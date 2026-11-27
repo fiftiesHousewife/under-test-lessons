@@ -1,0 +1,13 @@
+{"version": 2, "width": 80, "height": 14, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:outside-in-http-tests:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:outside-in-http-tests:test -Pcode=answer\r\n"]
+[5.552, "o", "BookingApiTest > bookingTwoNightsCreatesABooking() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.562, "o", "    java.lang.AssertionError: 1 expectation failed.\r\n"]
+[5.572, "o", "    Expected status code <201> but was <200>.\r\n"]
+[5.582, "o", "BookingApiTest > bookingNoNightsIsRefused() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.592, "o", "    java.lang.AssertionError: 1 expectation failed.\r\n"]
+[5.602, "o", "    Expected status code <400> but was <200>.\r\n"]
+[5.707, "o", "BookingRulesTest > twoNightsCostTwiceTheNightlyRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.717, "o", "MisspeltFieldAnswerTest > bookingWithAMisspeltFieldIsRefused() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.727, "o", "    java.lang.AssertionError: 1 expectation failed.\r\n"]
+[5.737, "o", "    Expected status code <400> but was <200>.\r\n"]
+[5.747, "o", "\u001b[1m4 tests completed, 3 failed\u001b[0m\r\n"]

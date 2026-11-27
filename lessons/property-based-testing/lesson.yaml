@@ -2,3 +2,5 @@
 id: property-based-testing
 title: Property-based testing
 techniques: [property-based-testing]
+level: intermediate
+buildsOn: [parameterised-tests]

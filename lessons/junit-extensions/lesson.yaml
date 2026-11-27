@@ -2,3 +2,4 @@
 id: junit-extensions
 title: JUnit extensions
 techniques: [repeatable-tests]
+level: intermediate

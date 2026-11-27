@@ -1,0 +1,12 @@
+{"version": 2, "width": 81, "height": 13, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:spring-tests-in-slices:test"}
+[0.0, "o", "$ ./gradlew :lessons:spring-tests-in-slices:test\r\n"]
+[6.358, "o", "DeliveryJsonSliceTest > writesTheFieldsTheDescriptionPromises() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.471, "o", "DeliveriesApplicationTest > showsWhatTheCourierSays() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.481, "o", "DeliveriesApplicationTest > listsTheCustomersDeliveries() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.491, "o", "DeliveriesApplicationTest > leavesOutWhatHasBeenDelivered() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.501, "o", "DeliveriesWiringTest > answersWithEveryPartJoinedUp() \u001b[32mPASSED\u001b[0m\r\n"]
+[9.613, "o", "DeliveryDataSliceTest > findsTheDeliveriesStillToComeEarliestFirst() \u001b[32mPASSED\u001b[0m\r\n"]
+[10.021, "o", "DeliveryWebSliceTest > answersWithTheCustomersDeliveries() \u001b[32mPASSED\u001b[0m\r\n"]
+[10.031, "o", "DeliveryWebSliceTest > answersNotFoundForAnAddressItDoesNotHave() \u001b[32mPASSED\u001b[0m\r\n"]
+[10.041, "o", "CourierClientAnswerTest > saysNotKnownWhenTheCourierAnswersWithNothing() \u001b[32mPASSED\u001b[0m\r\n"]
+[10.551, "o", "\u001b[1mAll 9 tests passed.\u001b[0m\r\n"]

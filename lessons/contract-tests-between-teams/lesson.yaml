@@ -2,3 +2,5 @@
 id: contract-tests-between-teams
 title: Contract tests between teams
 techniques: [contract-testing]
+level: advanced
+buildsOn: [outside-in-http-tests]

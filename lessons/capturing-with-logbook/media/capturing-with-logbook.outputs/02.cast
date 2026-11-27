@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:capturing-with-logbook:test"}
+[0.0, "o", "$ ./gradlew :lessons:capturing-with-logbook:test\r\n"]
+[6.357, "o", "ApprovedCaptureTest > matchesTheApprovedCapture() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.367, "o", "ApprovedCaptureTest > writesNoSecrets() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.476, "o", "CaptureRecordsTest > recordsWhatTheServiceReceivesAndSends() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.486, "o", "UnknownCustomerAnswerTest > approvesTheCaptureForACustomerNobodyHas() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.597, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]
+[6.607, "o", "Approvals: every output matches its approved file.\r\n"]

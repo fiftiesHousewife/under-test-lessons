@@ -1,0 +1,10 @@
+{"version": 2, "width": 119, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:slow-and-failing-dependencies:test"}
+[0.0, "o", "$ ./gradlew :lessons:slow-and-failing-dependencies:test\r\n"]
+[6.052, "o", "SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [1] fault = CONNECTION_RESET_BY_PEER \u001b[32mPASSED\u001b[0m\r\n"]
+[6.063, "o", "SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [2] fault = EMPTY_RESPONSE \u001b[32mPASSED\u001b[0m\r\n"]
+[6.073, "o", "SupplierFaultTest > brokenConnectionSaysTheSupplierIsUnavailable(Fault) > [3] fault = MALFORMED_RESPONSE_CHUNK \u001b[32mPASSED\u001b[0m\r\n"]
+[7.18, "o", "SupplierFaultTest > slowSupplierCostsTheShopOneTimeout() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.19, "o", "StockAnswerTest > supplierWithStockGivesTheUnits() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.2, "o", "StockAnswerTest > supplierOutageSaysTheSupplierIsUnavailable() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.21, "o", "RandomDataAnswerTest > randomDataSaysTheSupplierIsUnavailable() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.723, "o", "\u001b[1mAll 7 tests passed.\u001b[0m\r\n"]

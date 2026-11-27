@@ -50,6 +50,9 @@ final class SlideDeck {
         for (int i = 0; i < sections.size(); i++) {
             html.append(DeckVoice.withVoice(sections.get(i), i < voice.size() ? voice.get(i) : ""));
         }
+        if (sections.stream().anyMatch(section -> section.contains("live-run cast"))) {
+            html.append(Casts.PLAYER);
+        }
         return html.append("<script>\n").append(SlideHtml.read(media.sharedSlides().resolve("deck.js")))
                 .append("</script></body></html>\n").toString();
     }
@@ -76,20 +79,15 @@ final class SlideDeck {
         final List<Slide> scenes = scenes(media);
         final List<SceneContent> contents = Files.isRegularFile(media.file(".tape"))
                 ? SceneContent.read(media.root(), media.file(".tape")) : List.of();
+        int runs = 0;
         for (int i = 0; i < scenes.size(); i++) {
-            sections.add(SceneSlide.section(scenes.get(i), i < contents.size() ? contents.get(i) : new SceneContent(),
-                    clip(media, i)));
+            final SceneContent content = i < contents.size() ? contents.get(i) : new SceneContent();
+            final Optional<String> run = content.commands().isEmpty() ? Optional.empty() : Casts.of(media, runs + 1);
+            runs += content.commands().size();
+            sections.add(SceneSlide.section(scenes.get(i), content, run));
         }
         slides.closing().forEach(slide -> sections.add(section(slide, pictures, "")));
         return sections;
-    }
-
-    /* The scene's clip, cut from the recording, as the deck refers to it, where one was cut. */
-    private static Optional<String> clip(final Media media, final int index) {
-        final Path folder = media.file(".deck-clips");
-        final String name = "scene-" + (index + 1) + ".mp4";
-        return Files.isRegularFile(folder.resolve(name))
-                ? Optional.of(folder.getFileName() + "/" + name) : Optional.empty();
     }
 
     private static String section(final Slide slide, final List<Path> pictures, final String paragraph) {

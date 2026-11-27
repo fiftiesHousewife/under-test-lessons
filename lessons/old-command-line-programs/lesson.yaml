@@ -2,3 +2,4 @@
 id: old-command-line-programs
 title: Old command-line programs
 techniques: [refactoring-for-testability]
+level: intermediate

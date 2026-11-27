@@ -2,3 +2,5 @@
 id: masking-captured-data
 title: Masking captured data so tests still work
 techniques: [characterisation-tests]
+level: intermediate
+buildsOn: [capturing-with-logbook]

@@ -144,22 +144,26 @@
     setListening(!muting);
   }
   // A live run's clip plays from its start, muted, whenever its slide comes up, and stops when the slide goes.
-  function playClips() {
+  // A live run kept as a cast plays in the asciinema player: from its start whenever its slide comes up, with long
+  // waits shortened (the run's own pauses, such as Gradle starting, kept to a second), and paused when the slide goes.
+  function playCast(slide, here) {
+    var box = slide.querySelector('.live-run.cast');
+    if (!box || !window.AsciinemaPlayer) { return; }
+    if (!here) { if (box.player) { box.player.pause(); } return; }
+    if (box.player) { box.player.dispose(); }
+    var cast = box.querySelector('script').textContent;
+    box.player = window.AsciinemaPlayer.create({ data: cast }, box, {
+      autoPlay: true, idleTimeLimit: 1, fit: 'width', controls: false, theme: 'monokai', terminalFontSize: '15px'
+    });
+  }
+  function playRuns() {
     slides.forEach(function (slide, i) {
-      var clip = slide.querySelector('video.live-run');
-      if (!clip) { return; }
-      if (i === current) {
-        clip.currentTime = 0;
-        var playing = clip.play();
-        if (playing && playing.catch) { playing.catch(function () { /* the slide still shows its first frame */ }); }
-      } else {
-        clip.pause();
-      }
+      playCast(slide, i === current);
     });
   }
   function show(index, byHand) {
     current = Math.max(0, Math.min(slides.length - 1, index));
-    playClips();
+    playRuns();
     slides.forEach(function (slide, i) { slide.classList.toggle('current', i === current); });
     counter.textContent = (current + 1) + ' / ' + slides.length;
     history.replaceState(null, '', '#' + (current + 1));

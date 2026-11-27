@@ -1,0 +1,10 @@
+{"version": 2, "width": 80, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:junit-extensions:test"}
+[0.0, "o", "$ ./gradlew :lessons:junit-extensions:test\r\n"]
+[4.95, "o", "GuardedSettingsTest > tradeInvoiceShowsPriceWithoutVat() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.96, "o", "GuardedSettingsTest > shopReceiptShowsPriceWithVat() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.97, "o", "HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.98, "o", "HandSetUpTest > shopReceiptShowsPriceWithVat() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.99, "o", "PricesTest > aCreditIsWrittenWithItsSignInFront() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.0, "o", "PricesTest > vatIsRoundedToTheNearestPenny() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.011, "o", "ReducedRateAnswerTest > aReceiptAfterADeliveryNoteKeepsTheReducedRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.121, "o", "\u001b[1mAll 7 tests passed.\u001b[0m\r\n"]

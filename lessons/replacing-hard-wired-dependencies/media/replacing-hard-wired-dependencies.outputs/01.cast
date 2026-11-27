@@ -1,0 +1,7 @@
+{"version": 2, "width": 84, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:replacing-hard-wired-dependencies:test -Pcode=today\r\n"]
+[5.351, "o", "InvoiceTest > anEmptyInvoiceCostsNothing() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.361, "o", "    java.lang.IllegalStateException: cannot reach the bank's exchange-rate service\r\n"]
+[5.371, "o", "InvoiceTest > convertsTheTotalRoundingToTheNearestCent() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.381, "o", "    java.lang.IllegalStateException: cannot reach the bank's exchange-rate service\r\n"]
+[5.391, "o", "\u001b[1m2 tests completed, 2 failed\u001b[0m\r\n"]

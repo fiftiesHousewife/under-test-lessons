@@ -2,3 +2,4 @@
 id: junit-temporary-folders
 title: Temporary folders
 techniques: [repeatable-tests]
+level: beginner

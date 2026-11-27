@@ -28,7 +28,7 @@ record TestRepo(Path root) {
         write(root, "lessons/" + id + "/README.md", "# " + id + "\n");
         write(root, "lessons/" + id + "/lesson.yaml",
                 "# yaml-language-server: $schema=../../schema/lesson.schema.json\n"
-                        + "id: " + id + "\ntitle: A lesson\ntechniques: [" + techniques + "]\n");
+                        + "id: " + id + "\ntitle: A lesson\ntechniques: [" + techniques + "]\nlevel: beginner\n");
         return this;
     }
 

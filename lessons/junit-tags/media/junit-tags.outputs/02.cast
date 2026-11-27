@@ -1,0 +1,7 @@
+{"version": 2, "width": 80, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:junit-tags:test"}
+[0.0, "o", "$ ./gradlew :lessons:junit-tags:test\r\n"]
+[5.048, "o", "DeliveryChargeTest > isFreeOnABasketOfExactlyFiftyPounds() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.058, "o", "DeliveryChargeTest > chargesOnABasketJustUnderFiftyPounds() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.068, "o", "StockCheckTest > refusesWhenThereIsNotEnoughStock() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.078, "o", "StockCheckTest > sendsWhenThereIsEnoughStock() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.187, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]

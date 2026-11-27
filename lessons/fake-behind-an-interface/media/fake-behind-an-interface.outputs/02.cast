@@ -1,0 +1,8 @@
+{"version": 2, "width": 87, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:fake-behind-an-interface:test"}
+[0.0, "o", "$ ./gradlew :lessons:fake-behind-an-interface:test\r\n"]
+[5.464, "o", "FakeQueueTest > bigOrderReachesTheWarehouseAndTheFraudCheck() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.474, "o", "FakeQueueTest > smallOrderSkipsTheFraudCheck() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.883, "o", "MockedQueueTest > bigOrderSendsBothMessagesAndCommits() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.491, "o", "QueueClientRuleTest > onlyTheConnectionCodeUsesTheQueueClient() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.501, "o", "HundredPoundOrderAnswerTest > orderOfExactlyOneHundredPoundsSendsAFraudCheck() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.611, "o", "\u001b[1mAll 5 tests passed.\u001b[0m\r\n"]

@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:property-based-testing:test"}
+[0.0, "o", "$ ./gradlew :lessons:property-based-testing:test\r\n"]
+[5.15, "o", "SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.16, "o", "FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.17, "o", "SplitterExampleTest > givesTheOddPennyToSomeone() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.18, "o", "SplitterExampleTest > splitsEvenly() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.19, "o", "OneMorePennyAnswerTest > oneMorePennyChangesOneShareByOnePenny() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.301, "o", "\u001b[1mAll 5 tests passed.\u001b[0m\r\n"]

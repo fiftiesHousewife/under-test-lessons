@@ -1,0 +1,13 @@
+{"version": 2, "width": 108, "height": 14, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:junit-extensions:test -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:junit-extensions:test -Pcode=today\r\n"]
+[5.146, "o", "GuardedSettingsTest > tradeInvoiceShowsPriceWithoutVat() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.156, "o", "    java.lang.AssertionError: The test left a shop setting changed: prices.include.vat was true, now false\r\n"]
+[5.167, "o", "GuardedSettingsTest > shopReceiptShowsPriceWithVat() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.177, "o", "HandSetUpTest > tradeInvoiceShowsPriceWithoutVat() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.187, "o", "HandSetUpTest > shopReceiptShowsPriceWithVat() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.197, "o", "    org.opentest4j.AssertionFailedError:\r\n"]
+[5.207, "o", "    expected: \"Car seat  \u00a3120.00\"\r\n"]
+[5.217, "o", "     but was: \"Car seat  \u00a3100.00 + VAT\"\r\n"]
+[5.227, "o", "PricesTest > aCreditIsWrittenWithItsSignInFront() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.237, "o", "PricesTest > vatIsRoundedToTheNearestPenny() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.247, "o", "\u001b[1m6 tests completed, 2 failed\u001b[0m\r\n"]

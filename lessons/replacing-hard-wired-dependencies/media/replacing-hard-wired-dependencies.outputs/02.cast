@@ -1,0 +1,6 @@
+{"version": 2, "width": 80, "height": 7, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:replacing-hard-wired-dependencies:test"}
+[0.0, "o", "$ ./gradlew :lessons:replacing-hard-wired-dependencies:test\r\n"]
+[5.347, "o", "InvoiceTest > anEmptyInvoiceCostsNothing() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.357, "o", "InvoiceTest > convertsTheTotalRoundingToTheNearestCent() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.367, "o", "RatesTimeOutAnswerTest > anInvoiceIsNotChargedWhenTheRatesTimeOut() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.476, "o", "\u001b[1mAll 3 tests passed.\u001b[0m\r\n"]

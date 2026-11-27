@@ -2,3 +2,5 @@
 id: real-databases-in-tests
 title: Real databases in tests
 techniques: [testcontainers]
+level: intermediate
+buildsOn: [in-memory-databases]

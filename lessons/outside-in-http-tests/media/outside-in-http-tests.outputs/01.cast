@@ -1,0 +1,10 @@
+{"version": 2, "width": 80, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:outside-in-http-tests:test -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:outside-in-http-tests:test -Pcode=today\r\n"]
+[5.345, "o", "BookingApiTest > bookingTwoNightsCreatesABooking() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.355, "o", "    java.lang.AssertionError: 1 expectation failed.\r\n"]
+[5.365, "o", "    Expected status code <201> but was <200>.\r\n"]
+[5.375, "o", "BookingApiTest > bookingNoNightsIsRefused() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.385, "o", "    java.lang.AssertionError: 1 expectation failed.\r\n"]
+[5.395, "o", "    Expected status code <400> but was <200>.\r\n"]
+[5.405, "o", "BookingRulesTest > twoNightsCostTwiceTheNightlyRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.415, "o", "\u001b[1m3 tests completed, 2 failed\u001b[0m\r\n"]

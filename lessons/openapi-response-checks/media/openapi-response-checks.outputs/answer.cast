@@ -1,0 +1,11 @@
+{"version": 2, "width": 145, "height": 12, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:openapi-response-checks:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:openapi-response-checks:test -Pcode=answer\r\n"]
+[5.455, "o", "ParcelFieldsTest > aParcelNobodySent() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.967, "o", "ParcelFieldsTest > aParcelOnItsWay() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.476, "o", "ParcelSchemaTest > aParcelNobodySent() \u001b[31mFAILED\u001b[0m\r\n"]
+[6.486, "o", "    java.lang.AssertionError: GET /parcels/P-0000 answered 404, body: required property 'error' not found\r\n"]
+[6.496, "o", "    GET /parcels/P-0000 answered 404, body: property 'message' is not defined in the schema and the schema does not allow additional properties\r\n"]
+[6.507, "o", "ParcelSchemaTest > aParcelOnItsWay() \u001b[31mFAILED\u001b[0m\r\n"]
+[6.517, "o", "    java.lang.AssertionError: GET /parcels/P-1001 answered 200, field weightGrams: string found, integer expected\r\n"]
+[6.527, "o", "UnlistedStatusAnswerTest > aStatusTheDocumentDoesNotListIsRefused() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.637, "o", "\u001b[1m5 tests completed, 2 failed\u001b[0m\r\n"]

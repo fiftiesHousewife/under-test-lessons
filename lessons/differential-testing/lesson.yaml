@@ -2,3 +2,5 @@
 id: differential-testing
 title: Differential testing
 techniques: [differential-testing]
+level: intermediate
+buildsOn: [characterisation-tests]

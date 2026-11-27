@@ -1,0 +1,10 @@
+{"version": 2, "width": 160, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:property-based-testing:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:property-based-testing:test -Pcode=answer\r\n"]
+[4.947, "o", "FirstPayerSplitterTest > givesTheFirstPersonEveryPennyLeftOver() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.958, "o", "SplitterExampleTest > givesTheOddPennyToSomeone() \u001b[32mPASSED\u001b[0m\r\n"]
+[4.968, "o", "SplitterExampleTest > splitsEvenly() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.077, "o", "SplitterPropertyTest > sharesAddUpToTheTotalAndDifferByAtMostOnePenny() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.087, "o", "    java.lang.AssertionError: Unfair bill found: 3 pence between 4 people gives [3, 0, 0, 0]\r\n"]
+[5.097, "o", "OneMorePennyAnswerTest > oneMorePennyChangesOneShareByOnePenny() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.107, "o", "    java.lang.AssertionError: One more penny moved other shares: 10 pence between 11 people gives [10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], and one more gives [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]\r\n"]
+[5.117, "o", "\u001b[1m5 tests completed, 2 failed\u001b[0m\r\n"]

@@ -38,11 +38,11 @@ Every step belongs to one of three groups ([decision](docs/decisions/0026-what-r
 | Step | Command | Group |
 |---|---|---|
 | Check everything | `./gradlew check` | Inside |
-| Check video scripts and deck clips | `./gradlew :lessons:video-tools:checkVideoScripts` | Inside |
+| Check video scripts and deck voices | `./gradlew :lessons:video-tools:checkVideoScripts` | Inside |
 | Rebuild decks and slide pictures | `./gradlew :lessons:video-tools:buildLessonSlides` | Inside |
 | Write captions | `./gradlew :lessons:video-tools:buildLessonCaptions -Plesson=<id>` | Inside |
 | A script for a person to record the voice | `./gradlew :lessons:video-tools:recordingScript -Plesson=<id>` | Inside |
-| Keep what live commands print | `python3 tools/capture-lesson-outputs.py <id>` | Inside |
+| Keep what live commands print, and their casts the decks play | `python3 tools/capture-lesson-outputs.py <id>` | Inside |
 | Generate a video script | `python3 tools/new-video-script.py spec.json <tape>` | Inside |
 | Voice a deck | `./gradlew :production:video-render:buildLessonDeckVoice -Plesson=<id>` | Production |
 | Make a video | `./gradlew :production:video-render:renderLessonVideo -Plesson=<id>` | Production |

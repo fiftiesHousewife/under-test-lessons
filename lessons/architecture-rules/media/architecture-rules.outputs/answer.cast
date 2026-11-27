@@ -1,0 +1,13 @@
+{"version": 2, "width": 146, "height": 14, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:architecture-rules:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:architecture-rules:test -Pcode=answer\r\n"]
+[5.954, "o", "LayerRulesTest > onlyTheServiceLayerUsesStorage() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.964, "o", "    java.lang.AssertionError: Constructor <web.today.TodaysSummaryPage.<init>(storage.OrderStore)> has parameter of type <storage.OrderStore>\r\n"]
+[5.974, "o", "    Field <web.today.TodaysSummaryPage.store> has type <storage.OrderStore>\r\n"]
+[5.984, "o", "    Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>\r\n"]
+[6.097, "o", "OrderSummaryPageTest > bothPagesCountTheOrders() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.107, "o", "WebDependenciesAnswerTest > theWebLayerUsesOnlyTheServiceLayerAndJava() \u001b[31mFAILED\u001b[0m\r\n"]
+[6.117, "o", "    java.lang.AssertionError: [web classes that use something other than the service layer or Java]\r\n"]
+[6.127, "o", "    Expecting empty but was: [\"Constructor <web.today.TodaysSummaryPage.<init>(storage.OrderStore)> has parameter of type <storage.OrderStore>\",\r\n"]
+[6.137, "o", "        \"Field <web.today.TodaysSummaryPage.store> has type <storage.OrderStore>\",\r\n"]
+[6.147, "o", "        \"Method <web.today.TodaysSummaryPage.summary()> calls method <storage.OrderStore.count()>\"]\r\n"]
+[6.257, "o", "\u001b[1m3 tests completed, 2 failed\u001b[0m\r\n"]

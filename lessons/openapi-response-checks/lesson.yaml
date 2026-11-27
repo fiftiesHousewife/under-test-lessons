@@ -2,3 +2,4 @@
 id: openapi-response-checks
 title: Responses checked against the OpenAPI schema
 techniques: [openapi-response-checks]
+level: intermediate

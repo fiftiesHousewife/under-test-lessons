@@ -1,0 +1,7 @@
+{"version": 2, "width": 102, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest"}
+[0.0, "o", "$ ./gradlew :lessons:real-databases-in-tests:test :lessons:real-databases-in-tests:integrationTest\r\n"]
+[1.01, "o", "InMemoryDatabaseTest > customersWhoNeverOrderedComeFirst() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.17, "o", "PostgresNullOrderingAnswerTest > customersWhoNeverOrderedComeFirstWhenNullsSortAsOnPostgres() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.33, "o", "\u001b[1mAll 2 tests passed.\u001b[0m\r\n"]
+[1.49, "o", "RealPostgresTest > customersWhoNeverOrderedComeFirst() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.65, "o", "\u001b[1m1 test passed.\u001b[0m\r\n"]

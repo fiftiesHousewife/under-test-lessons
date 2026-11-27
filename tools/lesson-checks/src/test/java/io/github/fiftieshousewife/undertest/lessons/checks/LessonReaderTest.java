@@ -42,7 +42,8 @@ class LessonReaderTest {
     @Test
     void reportsAFileThatBreaksTheSchemaOrNamesTheWrongFolder() {
         new TestRepo(root).lesson("right-folder", "");
-        TestRepo.write(root, "lessons/right-folder/lesson.yaml", "id: wrong-folder\ntitle: A lesson\ntechniques: []\n");
+        TestRepo.write(root, "lessons/right-folder/lesson.yaml",
+                "id: wrong-folder\ntitle: A lesson\ntechniques: []\nlevel: beginner\n");
         TestRepo.write(root, "lessons/broken/README.md", "# Broken\n");
         TestRepo.write(root, "lessons/broken/lesson.yaml", "id: broken\ncolour: red\n");
         final List<Problem> problems = new ArrayList<>();

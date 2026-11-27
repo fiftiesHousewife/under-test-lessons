@@ -1,0 +1,11 @@
+{"version": 2, "width": 138, "height": 12, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:contract-tests-between-teams:test"}
+[0.0, "o", "$ ./gradlew :lessons:contract-tests-between-teams:test\r\n"]
+[6.551, "o", "StockServicePactTest > meetsThePact(PactVerificationContext) > order-screen - a request for the kettle's stock \u001b[32mPASSED\u001b[0m\r\n"]
+[6.763, "o", "StockClientPactTest > readsHowManyAreAvailable(MockServer) \u001b[32mPASSED\u001b[0m\r\n"]
+[6.872, "o", "StockClientPactTest > refusesAnItemTheShopDoesNotStock(MockServer) \u001b[32mPASSED\u001b[0m\r\n"]
+[6.882, "o", "StockClientTest > readsHowManyAreAvailable() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.995, "o", "StockServiceTest > anItemNobodyStocks() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.005, "o", "StockServiceTest > anItemOnTheShelves() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.015, "o", "NewPactVersionAnswerTest > meetsVersion110(PactVerificationContext) > order-screen - a request for an item the shop doesn't stock \u001b[32mPASSED\u001b[0m\r\n"]
+[7.025, "o", "NewPactVersionAnswerTest > meetsVersion110(PactVerificationContext) > order-screen - a request for the kettle's stock \u001b[32mPASSED\u001b[0m\r\n"]
+[7.435, "o", "\u001b[1mAll 8 tests passed.\u001b[0m\r\n"]

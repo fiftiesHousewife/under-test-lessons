@@ -2,3 +2,4 @@
 id: capturing-with-logbook
 title: Capturing what an old service receives and sends
 techniques: [characterisation-tests]
+level: intermediate

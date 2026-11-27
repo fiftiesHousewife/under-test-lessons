@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:black-box-tests:test"}
+[0.0, "o", "$ ./gradlew :lessons:black-box-tests:test\r\n"]
+[11.461, "o", "OrderServiceTest > anOrderWithoutStockIsRefusedAndNothingIsWritten() \u001b[32mPASSED\u001b[0m\r\n"]
+[11.571, "o", "OrderServiceTest > anOrderIsReservedAnsweredAndKept() \u001b[32mPASSED\u001b[0m\r\n"]
+[11.581, "o", "OrderTakingTest > anOrderWithStockIsPlacedAndKept() \u001b[32mPASSED\u001b[0m\r\n"]
+[11.591, "o", "OrderTakingTest > anOrderWithoutStockIsRefusedAndNotKept() \u001b[32mPASSED\u001b[0m\r\n"]
+[11.699, "o", "TwoOrdersAnswerTest > twoOrdersInARowAreBothKept() \u001b[32mPASSED\u001b[0m\r\n"]
+[12.112, "o", "\u001b[1mAll 5 tests passed.\u001b[0m\r\n"]

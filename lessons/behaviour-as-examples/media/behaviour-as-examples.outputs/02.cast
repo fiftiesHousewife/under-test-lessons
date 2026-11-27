@@ -1,0 +1,10 @@
+{"version": 2, "width": 116, "height": 11, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:behaviour-as-examples:test"}
+[0.0, "o", "$ ./gradlew :lessons:behaviour-as-examples:test\r\n"]
+[5.251, "o", "ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned the next day with a receipt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.261, "o", "ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 30th day with a receipt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.272, "o", "ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned on the 31st day with a receipt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.282, "o", "ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned within 30 days without a receipt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.292, "o", "ReturnsTeamExamplesTest > returnsTeamExample(ArgumentsAccessor) > returned after 30 days without a receipt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.302, "o", "RefundPolicyTest > refundsDependOnDaysAndReceipt() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.312, "o", "ThirtiethDayAnswerTest > returnsTeamExample(ArgumentsAccessor) > returned on the 30th day without a receipt \u001b[32mPASSED\u001b[0m\r\n"]
+[5.424, "o", "\u001b[1mAll 7 tests passed.\u001b[0m\r\n"]

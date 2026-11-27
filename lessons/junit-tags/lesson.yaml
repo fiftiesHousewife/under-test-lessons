@@ -2,3 +2,4 @@
 id: junit-tags
 title: "Tags: fast tests first, slow tests apart"
 techniques: [junit-tags]
+level: beginner

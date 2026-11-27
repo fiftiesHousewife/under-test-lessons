@@ -2,3 +2,5 @@
 id: message-consumers
 title: Message consumers
 techniques: [embedded-jakarta-ee-tests]
+level: advanced
+buildsOn: [fake-behind-an-interface]

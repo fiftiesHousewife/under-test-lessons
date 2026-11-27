@@ -1,0 +1,8 @@
+{"version": 2, "width": 117, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:anti-patterns-in-existing-tests:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:anti-patterns-in-existing-tests:test -Pcode=answer\r\n"]
+[6.358, "o", "MockCallsAnswerTest > findsTheTestsOfAClassThatMakesFiveMocksWithCalls() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.368, "o", "The answer's rule, counting mock() calls too: 2 anti-patterns not in the register.\r\n"]
+[6.378, "o", "  kind               test                                             where                    decision\r\n"]
+[6.388, "o", "  mocks-everything   CheckoutEmailTest.mailsTheReceipt                CheckoutEmailTest.java:29 not in the register\r\n"]
+[6.398, "o", "  mocks-everything   CheckoutEmailTest.recordsTheSale                 CheckoutEmailTest.java:35 not in the register\r\n"]
+[6.409, "o", "\u001b[1m1 test passed.\u001b[0m\r\n"]

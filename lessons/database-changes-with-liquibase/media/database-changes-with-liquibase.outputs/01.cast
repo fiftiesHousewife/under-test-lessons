@@ -1,0 +1,8 @@
+{"version": 2, "width": 91, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today"}
+[0.0, "o", "$ ./gradlew :lessons:database-changes-with-liquibase:test :lessons:database-changes-with-liquibase:integrationTest -Pcode=today\r\n"]
+[1.01, "o", "FailedChangeTest > aRefusedChangeSaysWhy() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.17, "o", "InMemoryChangesTest > everyChangeApplies() \u001b[32mPASSED\u001b[0m\r\n"]
+[1.33, "o", "\u001b[1mAll 2 tests passed.\u001b[0m\r\n"]
+[1.49, "o", "RealPostgresChangesTest > everyChangeApplies() \u001b[31mFAILED\u001b[0m\r\n"]
+[1.5, "o", "    java.sql.SQLException: a database change failed: ERROR: type \"tinyint\" does not exist\r\n"]
+[1.81, "o", "\u001b[1m1 test completed, 1 failed\u001b[0m\r\n"]

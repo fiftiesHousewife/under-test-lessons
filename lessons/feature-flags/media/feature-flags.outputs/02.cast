@@ -1,0 +1,7 @@
+{"version": 2, "width": 118, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:feature-flags:test"}
+[0.0, "o", "$ ./gradlew :lessons:feature-flags:test\r\n"]
+[5.253, "o", "BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new shipping rules switched on: false \u001b[32mPASSED\u001b[0m\r\n"]
+[5.263, "o", "BothWaysTest > smallBasketPaysForDeliveryAndBigBasketDoesNot(boolean) > new shipping rules switched on: true \u001b[32mPASSED\u001b[0m\r\n"]
+[5.273, "o", "DefaultFlagsTest > smallBasketPaysForDeliveryAndBigBasketDoesNot() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.381, "o", "OldAndNewAgreeAnswerTest > theNewRulesChargeWhatTheOldOnesDoForEveryBasketUpToAHundredPounds() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.493, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]

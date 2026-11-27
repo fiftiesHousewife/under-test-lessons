@@ -2,3 +2,4 @@
 id: finding-flaky-tests
 title: Finding flaky tests
 techniques: [repeatable-tests]
+level: beginner

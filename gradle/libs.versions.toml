@@ -4,6 +4,7 @@
 # The shared code-quality standards every project applies, through build-logic's lesson plugin.
 java-conventions = "0.5.1"
 jetcheck = "0.3.0"
+jazzer = "0.30.0"
 approvaltests = "32.1.0"
 archunit = "1.5.1"
 mockito = "5.24.0"
@@ -75,6 +76,7 @@ spring-boot = "4.2.0"
 
 [libraries]
 jetcheck = { module = "org.jetbrains:jetCheck", version.ref = "jetcheck" }
+jazzer-junit = { module = "com.code-intelligence:jazzer-junit", version.ref = "jazzer" }
 approvaltests = { module = "com.approvaltests:approvaltests", version.ref = "approvaltests" }
 archunit = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }

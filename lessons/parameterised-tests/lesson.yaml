@@ -2,3 +2,4 @@
 id: parameterised-tests
 title: Parameterised tests
 techniques: [tests-from-cases]
+level: beginner

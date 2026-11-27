@@ -2,3 +2,5 @@
 id: architecture-rules
 title: Architecture rules
 techniques: [architecture-rules]
+level: intermediate
+buildsOn: [fake-behind-an-interface]

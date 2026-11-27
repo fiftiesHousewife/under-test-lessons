@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:openapi-response-checks:test"}
+[0.0, "o", "$ ./gradlew :lessons:openapi-response-checks:test\r\n"]
+[6.457, "o", "ParcelSchemaTest > aParcelNobodySent() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.965, "o", "ParcelSchemaTest > aParcelOnItsWay() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.975, "o", "ParcelFieldsTest > aParcelNobodySent() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.985, "o", "ParcelFieldsTest > aParcelOnItsWay() \u001b[32mPASSED\u001b[0m\r\n"]
+[6.995, "o", "UnlistedStatusAnswerTest > aStatusTheDocumentDoesNotListIsRefused() \u001b[32mPASSED\u001b[0m\r\n"]
+[7.107, "o", "\u001b[1mAll 5 tests passed.\u001b[0m\r\n"]

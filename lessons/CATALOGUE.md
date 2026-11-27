@@ -61,13 +61,14 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 
 **What is the code really for?** Work out with the people who know the business what the code is meant to do, and write it down as examples that run as tests, with the schemas and contracts other teams rely on. Where code and example disagree, ask the business.
 
-**Techniques:** specification by example, behaviour-driven development, consumer-driven contract testing, schema validation. **Tools:** JUnit, Cucumber, Pact JVM, OpenAPI request validator. **References:** Adzic, *Specification by Example* (2011); North, [*Introducing BDD*](https://dannorth.net/introducing-bdd/) (2006); Robinson, [*Consumer-Driven Contracts*](https://martinfowler.com/articles/consumerDrivenContracts.html) (2006); the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html).
+**Techniques:** specification by example, behaviour-driven development, metamorphic testing, consumer-driven contract testing, schema validation. **Tools:** JUnit, Cucumber, Pact JVM, OpenAPI request validator. **References:** Adzic, *Specification by Example* (2011); North, [*Introducing BDD*](https://dannorth.net/introducing-bdd/) (2006); Robinson, [*Consumer-Driven Contracts*](https://martinfowler.com/articles/consumerDrivenContracts.html) (2006); the [OpenAPI Specification](https://spec.openapis.org/oas/latest.html).
 
 | Lesson | Tools | Needs | Status |
 |---|---|---|---|
 | [Behaviour written down as examples](behaviour-as-examples/README.md): the rules as named examples the experts wrote, run against today's code | JUnit parameterised tests (`@CsvFileSource`); Cucumber only when business people write the examples | Java only | built |
 | [Responses checked against the OpenAPI schema](openapi-response-checks/README.md): every answer the tests see checked against the published document | OpenAPI request validator (formerly swagger-request-validator), REST Assured, JDK HTTP server | Java only | built |
 | [Contract tests between teams](contract-tests-between-teams/README.md): the order screen writes down what it relies on as a pact, and the stock service verifies it in its own build; the pact travels as a versioned artifact through the company's package repository, without a broker | Pact JVM | Java only | built |
+| Metamorphic tests: old code with no specification, and no one sure of the right answer; check how the answers relate across related inputs ("one more item never costs less") | JUnit 6 | Java only | next |
 
 ## Unplug it
 
@@ -142,7 +143,6 @@ anywhere; the rest wait for that tool to be available where videos are recorded.
 | [Property-based testing](property-based-testing/README.md): state a rule and let a tool try many inputs | jetCheck | Java only | built |
 | Fuzzing: a coverage-guided fuzzer feeds an old parser inputs nobody wrote a test for, and finds the one that crashes it | Jazzer | Java only | next |
 | Concurrency tests: run a class from many threads at once, and find the state it shares unsafely | Lincheck or jcstress | Java only | next |
-| Metamorphic tests: where there is no exact expected answer, check how the answers relate across related inputs | JUnit 6 | Java only | later |
 | Proving one function correct: a specification of a pure function, checked by a verifier | OpenJML or KeY, once their support for current Java is checked | Java only | later: to decide |
 
 ## Every toolkit technique, and its lesson
@@ -204,6 +204,7 @@ adding its row first.
 | Mutation testing (`mutation-testing`) | A shop's discount rules | Weak tests: every line runs, answers barely checked | Strong tests check the exact answer at every boundary; PIT counts planted bugs caught | `-Pcode=today` |
 | Characterisation tests (`characterisation-tests`) | A bank statement printer | A test that checks something came back | The whole statement approved as it is, so a tidy-up that changes an amount is caught | `-Pcode=today` |
 | Property-based testing (`property-based-testing`) | Splitting a bill in pence | Example tests the author thought of | A rule checked on many generated bills finds the split that loses a penny | `-Pcode=today` |
+| Fuzzing (`fuzzing`) | An old reader of a courier's parcel labels: name, postcode and weight, separated by semicolons; it must read a line or refuse it with an `IllegalArgumentException` | Example tests of a good label and the two mistakes someone thought of pass; a line with an empty postcode crashes the reader with `StringIndexOutOfBoundsException` | Jazzer's `@FuzzTest` states the contract, read or refuse; the fuzz task finds the crashing line in seconds, and the kept input replays as a regression test in every build | `-Pcode=today` |
 | Parameterised tests (`parameterised-tests`) | VAT at 20% in pence | Copy-pasted tests on round numbers | A table of cases, each named, finds the rounding bug | `-Pcode=today` |
 | Differential testing (`differential-testing`) | Postage by weight, old and rewritten | The rewrite's own examples | Old against new on every weight finds a mistyped price | `-Pcode=today` |
 | Feature flags (`feature-flags`) | Shipping costs, old and new rules behind a flag | Tests with the flag at its default | The same checks with the flag off and on | `-Pcode=today` |
@@ -237,9 +238,10 @@ adding its row first.
 The series is about Java; TypeScript, front-end and browser-only testing are out of its scope. In order:
 
 1. **Fuzzing,** with Jazzer: inputs nobody wrote a test for, found automatically.
-2. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
-3. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
-4. **Metamorphic tests and load tests,** then a decision on formal verification.
+2. **Metamorphic tests,** with JUnit: checking answers nobody can state, by how they relate across related inputs.
+3. **Concurrency tests,** with Lincheck or jcstress: old code is full of shared state.
+4. **AI-drafted tests, judged by mutation testing:** no AI tool needed, since the drafted tests are kept as files.
+5. **Load tests,** then a decision on formal verification.
 
 ## Plan
 

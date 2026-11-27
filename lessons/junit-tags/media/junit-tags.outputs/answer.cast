@@ -1,0 +1,8 @@
+{"version": 2, "width": 80, "height": 9, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:junit-tags:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:junit-tags:test -Pcode=answer\r\n"]
+[5.151, "o", "DeliveryChargeTest > isFreeOnABasketOfExactlyFiftyPounds() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.161, "o", "DeliveryChargeTest > chargesOnABasketJustUnderFiftyPounds() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.171, "o", "StockCheckTest > refusesWhenThereIsNotEnoughStock() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.182, "o", "StockCheckTest > sendsWhenThereIsEnoughStock() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.192, "o", "LargeBasketAnswerTest > deliveryIsFreeOnALargeBasket() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.3, "o", "\u001b[1mAll 5 tests passed.\u001b[0m\r\n"]

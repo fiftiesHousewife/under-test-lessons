@@ -1,0 +1,7 @@
+{"version": 2, "width": 80, "height": 8, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:outside-in-http-tests:test"}
+[0.0, "o", "$ ./gradlew :lessons:outside-in-http-tests:test\r\n"]
+[5.855, "o", "BookingApiTest > bookingTwoNightsCreatesABooking() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.865, "o", "BookingApiTest > bookingNoNightsIsRefused() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.876, "o", "BookingRulesTest > twoNightsCostTwiceTheNightlyRate() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.886, "o", "MisspeltFieldAnswerTest > bookingWithAMisspeltFieldIsRefused() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.995, "o", "\u001b[1mAll 4 tests passed.\u001b[0m\r\n"]

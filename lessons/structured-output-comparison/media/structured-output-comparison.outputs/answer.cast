@@ -1,0 +1,11 @@
+{"version": 2, "width": 127, "height": 12, "env": {"TERM": "xterm-256color"}, "title": "./gradlew :lessons:structured-output-comparison:test -Pcode=answer"}
+[0.0, "o", "$ ./gradlew :lessons:structured-output-comparison:test -Pcode=answer\r\n"]
+[5.453, "o", "CompareJsonTest > summaryHasTheExpectedLinesAndTotal() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.463, "o", "    org.opentest4j.AssertionFailedError: JSON documents are different:\r\n"]
+[5.473, "o", "    Different value found in node \"totalPence\", expected: <1120> but was: <370>.\r\n"]
+[5.483, "o", "ContainsTextTest > summaryMentionsEveryItemAndATotal() \u001b[32mPASSED\u001b[0m\r\n"]
+[5.493, "o", "FixedClockAnswerTest > summaryHasTheTimeFromItsClock() \u001b[31mFAILED\u001b[0m\r\n"]
+[5.503, "o", "    net.javacrumbs.jsonunit.core.internal.Opentest4jExceptionFactory$JsonAssertError: JSON documents are different:\r\n"]
+[5.513, "o", "    Different value found in node \"generatedAt\", expected: <\"2026-03-01T09:30:00Z\"> but was: <\"2026-11-27T11:15:10.296718Z\">.\r\n"]
+[5.523, "o", "    Different value found in node \"totalPence\", expected: <1120> but was: <370>.\r\n"]
+[5.533, "o", "\u001b[1m3 tests completed, 2 failed\u001b[0m\r\n"]

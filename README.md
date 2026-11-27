@@ -146,9 +146,10 @@ Every lesson, under its stage, is in [the catalogue](lessons/CATALOGUE.md).
 In the order they will be made, from [the catalogue](lessons/CATALOGUE.md#next-lessons):
 
 1. **Fuzzing,** with Jazzer.
-2. **Concurrency tests,** with Lincheck or jcstress.
-3. **AI-drafted tests, judged by mutation testing,** with no AI tool needed.
-4. **Message consumers on Kafka,** **metamorphic tests** and **load tests**.
+2. **Metamorphic tests,** with JUnit.
+3. **Concurrency tests,** with Lincheck or jcstress.
+4. **AI-drafted tests, judged by mutation testing,** with no AI tool needed.
+5. **Message consumers on Kafka** and **load tests**.
 
 Some built lessons also have fixes to come; they are listed in [the backlog](docs/BACKLOG.md).
 
